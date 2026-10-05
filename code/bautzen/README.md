@@ -78,20 +78,30 @@ python3 code/bautzen/bautzen_ocv_channels_csv.py --verify-only  # verify only
 
 ### `fig_bautzen_ocv_paper.py` — the paper figure, JSON result, report, pin block
 
-**Pending** — this is the last open piece of the mirror; everything it needs is
-committed already (`data/bautzen/bautzen_ocv_channels.csv` + its meta JSON, the
-two reference JSONs, `core.LABEL_EN` + `core.translate()` for the German doc
-strings and the plotting conventions of `../lumo/fig_lumo_ocv_paper.py`). It mirrors
-`../lumo/fig_lumo_ocv_paper.py`: it recomputes every plotted number from
-`data/bautzen/bautzen_ocv_channels.csv` and pins it against the two committed
-reference JSONs; a single deviation aborts with exit code != 0. It writes the
-figure to `figures/bautzen/`, the result JSON to
+The plotting counterpart of `../lumo/fig_lumo_ocv_paper.py`, sharing its
+structure — recompute every plotted number from
+`data/bautzen/bautzen_ocv_channels.csv`, pin it against the two committed
+reference JSONs, one figure set, one result JSON, one Markdown report, no
+timestamps, exit code != 0 on any pin failure. The two reference JSONs, the
+channel table + meta and `core.LABEL_EN` (for the German doc strings) are the
+only inputs. Five figures, one per question:
+
+| file | panel content |
+| --- | --- |
+| `figures/bautzen/fig_bautzen_ocv_paper_A.png` | the six channels one panel each on one shared y axis, per-overpass dots and the series/state median bar, one column group per series |
+| `figures/bautzen/fig_bautzen_ocv_paper_B.png` | the deck-edge mask layer: band contrast per series and state against the detect gate, mask visibility (Wilson 95% CI), deck-edge pixel count, and the in-series gamma^2 effect size per state |
+| `figures/bautzen/fig_bautzen_ocv_paper_C.png` | the two cut dates against cuts shifted by +/-2..12 weeks (placebo sweeps), for band contrast and for gamma^2 |
+| `figures/bautzen/fig_bautzen_ocv_paper_D.png` | bridge minus control, date by date: the paired per-date difference with the RS / DS1 / DS2 bands and the step/placebo reading of that difference |
+| `figures/bautzen/fig_bautzen_ocv_paper_E.png` | seasonality and environment controls: monthly medians per series, and gamma^2 against air temperature / relative humidity at the overpass instant |
+
+It writes the figures to `figures/bautzen/`, the result JSON to
 `data/bautzen/fig_bautzen_ocv_paper.json` and the report to
 `figures/bautzen/fig_bautzen_ocv_paper.md`.
 
 ```bash
-python3 code/bautzen/fig_bautzen_ocv_paper.py            # full run
-python3 code/bautzen/fig_bautzen_ocv_paper.py --quick    # permutation tests copied
+python3 code/bautzen/fig_bautzen_ocv_paper.py            # full run (~6 min)
+python3 code/bautzen/fig_bautzen_ocv_paper.py --quick    # placebo sweeps copied
+bash figures/bautzen/fig_bautzen_ocv_paper.sh            # the same, via the wrapper
 ```
 
 Where the site deviates from the LUMO definitions (the deck band is only reached
@@ -99,8 +109,11 @@ through the local geometry-anchored gate, and the state and the season are
 confounded), the deviation is documented in the module docstring and in the
 generated report — the numbers are not silently made to look like LUMO's.
 
-Status of the mirror so far: `bautzen_ocv_stats.py`, `bautzen_ocv_masks.py`,
-`bautzen_ocv_core.py` and `bautzen_ocv_channels_csv.py` are complete, and the
-generator already verifies **every** committed per-date mask/state value and all
-effect sizes of the two reference JSONs (`VERIFICATION OK`, zero problems, two
-independent traversals cross-checked).
+Status of the mirror: `bautzen_ocv_stats.py`, `bautzen_ocv_masks.py`,
+`bautzen_ocv_core.py`, `bautzen_ocv_channels_csv.py` and
+`fig_bautzen_ocv_paper.py` are complete. The generator verifies **every**
+committed per-date mask/state value and all effect sizes of the two reference
+JSONs (`VERIFICATION OK`, zero problems, two independent traversals
+cross-checked); the figure script reproduces the two reference JSONs pin by pin
+(8656 checks, 0 failures) and translates the 56 German doc strings.
+

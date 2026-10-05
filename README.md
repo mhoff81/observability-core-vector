@@ -91,8 +91,9 @@ cd research/observability-core-vector
 bash figures/lumo/fig_lumo_ocv_paper.sh            # ~5 min (two permutation tests)
 bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min (permutation tests copied)
 
-# Bautzen: the same for the bridge — **script pending**, see code/bautzen/README.md
-# bash figures/bautzen/fig_bautzen_ocv_paper.sh
+# Bautzen: the same for the bridge (deck-edge mask instead of the echo mask)
+bash figures/bautzen/fig_bautzen_ocv_paper.sh            # ~6 min
+bash figures/bautzen/fig_bautzen_ocv_paper.sh --quick    # ~1 min (placebos copied)
 
 # if `python3` of the PATH is a virtualenv without numpy/matplotlib:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
