@@ -1,7 +1,7 @@
 {
  "data": {
-  "csv": "data/lumo_ocv_channels.csv",
-  "csv_meta": "data/lumo_ocv_channels_meta.json",
+  "csv": "data/lumo/lumo_ocv_channels.csv",
+  "csv_meta": "data/lumo/lumo_ocv_channels_meta.json",
   "csv_sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb",
   "mask_shape_majority": [
    400,
@@ -8191,20 +8191,20 @@
   }
  },
  "meta": {
-  "csv": "data/lumo_ocv_channels.csv",
+  "csv": "data/lumo/lumo_ocv_channels.csv",
   "csv_sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb",
   "figures": [
-   "figures/fig_lumo_ocv_paper_A.png",
-   "figures/fig_lumo_ocv_paper_B.png",
-   "figures/fig_lumo_ocv_paper_C.png",
-   "figures/fig_lumo_ocv_paper_D.png",
-   "figures/fig_lumo_ocv_paper_E.png"
+   "figures/lumo/fig_lumo_ocv_paper_A.png",
+   "figures/lumo/fig_lumo_ocv_paper_B.png",
+   "figures/lumo/fig_lumo_ocv_paper_C.png",
+   "figures/lumo/fig_lumo_ocv_paper_D.png",
+   "figures/lumo/fig_lumo_ocv_paper_E.png"
   ],
-  "generator": "code/fig_lumo_ocv_paper.py",
+  "generator": "code/lumo/fig_lumo_ocv_paper.py",
   "n_overpasses": 178,
   "note": "no timestamps on purpose: repeated runs must be identical",
   "quick": false,
-  "report": "figures/fig_lumo_ocv_paper.md",
+  "report": "figures/lumo/fig_lumo_ocv_paper.md",
   "seeds": {
    "n_boot": 2000,
    "n_perm_4class": 1000,

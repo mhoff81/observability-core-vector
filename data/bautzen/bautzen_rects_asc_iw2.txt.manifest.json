@@ -1,0 +1,304 @@
+{
+  "half": 40,
+  "orbit_direction": "ASCENDING",
+  "polarisation": "VV",
+  "rects": [
+    {
+      "burst_id": "58e0cdd0-b04e-4562-a453-e3a8c761aeb2",
+      "cols": 80,
+      "date": "2025-04-02",
+      "mean_intensity": 26353.8315625,
+      "name": "S1A-SLC-20250402T165103-311751-IW2-VV-012052",
+      "rows": 80
+    },
+    {
+      "burst_id": "756846ee-2b2e-4bf7-93ea-b9fc8dfce3df",
+      "cols": 80,
+      "date": "2025-04-08",
+      "mean_intensity": 27984.114375,
+      "name": "S1A-SLC-20250408T165218-311751-IW2-VV-476071",
+      "rows": 80
+    },
+    {
+      "burst_id": "d4f73800-79ef-4ba8-9f1c-c20a1b634cdc",
+      "cols": 80,
+      "date": "2025-04-14",
+      "mean_intensity": 24024.10765625,
+      "name": "S1A-SLC-20250414T165103-311751-IW2-VV-014917",
+      "rows": 80
+    },
+    {
+      "burst_id": "d79c308d-8f18-43ed-b909-37d8b2c63add",
+      "cols": 80,
+      "date": "2025-04-20",
+      "mean_intensity": 29003.78859375,
+      "name": "S1A-SLC-20250420T165219-311751-IW2-VV-477902",
+      "rows": 80
+    },
+    {
+      "burst_id": "734c9c07-2d7b-47f4-95a5-d8cd40794894",
+      "cols": 80,
+      "date": "2025-04-26",
+      "mean_intensity": 25594.30546875,
+      "name": "S1A-SLC-20250426T165104-311751-IW2-VV-017563",
+      "rows": 80
+    },
+    {
+      "burst_id": "739f70c4-b4be-49b0-8903-2b573990ddee",
+      "cols": 80,
+      "date": "2025-05-02",
+      "mean_intensity": 27209.72109375,
+      "name": "S1A-SLC-20250502T165219-311751-IW2-VV-479715",
+      "rows": 80
+    },
+    {
+      "burst_id": "0c3bee2a-4391-4441-b6a5-601ced62dacb",
+      "cols": 80,
+      "date": "2025-05-08",
+      "mean_intensity": 24690.5525,
+      "name": "S1A-SLC-20250508T165104-311751-IW2-VV-019509",
+      "rows": 80
+    },
+    {
+      "burst_id": "ea8a38ff-8420-45ee-91f5-669cd374dc46",
+      "cols": 80,
+      "date": "2025-05-14",
+      "mean_intensity": 28039.5246875,
+      "name": "S1A-SLC-20250514T165218-311751-IW2-VV-481358",
+      "rows": 80
+    },
+    {
+      "burst_id": "3845c9f9-436f-40ab-99c6-3ec4a86528a2",
+      "cols": 80,
+      "date": "2025-05-20",
+      "mean_intensity": 24089.78375,
+      "name": "S1A-SLC-20250520T165105-311751-IW2-VV-020748",
+      "rows": 80
+    },
+    {
+      "burst_id": "b1d42d93-380f-4655-84e8-eb155f281b98",
+      "cols": 80,
+      "date": "2025-05-26",
+      "mean_intensity": 28261.61640625,
+      "name": "S1A-SLC-20250526T165218-311751-IW2-VV-482912",
+      "rows": 80
+    },
+    {
+      "burst_id": "4efcc114-dbf0-4659-8321-23003f3416c8",
+      "cols": 80,
+      "date": "2025-06-01",
+      "mean_intensity": 24281.4634375,
+      "name": "S1A-SLC-20250601T165107-311751-IW2-VV-022022",
+      "rows": 80
+    },
+    {
+      "burst_id": "5c71d59b-1358-42f8-97eb-3f47f972b85f",
+      "cols": 80,
+      "date": "2025-06-07",
+      "mean_intensity": 26857.9628125,
+      "name": "S1A-SLC-20250607T165217-311751-IW2-VV-484456",
+      "rows": 80
+    },
+    {
+      "burst_id": "de73a9cc-6c0c-471f-ab4d-1147884b12c1",
+      "cols": 80,
+      "date": "2025-06-13",
+      "mean_intensity": 24381.5565625,
+      "name": "S1A-SLC-20250613T165108-311751-IW2-VV-023324",
+      "rows": 80
+    },
+    {
+      "burst_id": "469d4210-d2fe-4fca-8601-ced4fb5ec6a3",
+      "cols": 80,
+      "date": "2025-06-19",
+      "mean_intensity": 25699.6475,
+      "name": "S1A-SLC-20250619T165216-311751-IW2-VV-485985",
+      "rows": 80
+    },
+    {
+      "burst_id": "5de9a39e-3aa3-450a-821f-a5b108b636a4",
+      "cols": 80,
+      "date": "2025-06-25",
+      "mean_intensity": 23386.485,
+      "name": "S1A-SLC-20250625T165108-311751-IW2-VV-024612",
+      "rows": 80
+    },
+    {
+      "burst_id": "5c4b5ecc-75b6-434d-b4fd-f5147142b206",
+      "cols": 80,
+      "date": "2025-07-01",
+      "mean_intensity": 24369.55171875,
+      "name": "S1A-SLC-20250701T165216-311751-IW2-VV-487554",
+      "rows": 80
+    },
+    {
+      "burst_id": "e3f1193c-ac5b-4b62-adc5-f098fa7066b7",
+      "cols": 80,
+      "date": "2025-07-07",
+      "mean_intensity": 18807.01421875,
+      "name": "S1A-SLC-20250707T165109-311751-IW2-VV-025899",
+      "rows": 80
+    },
+    {
+      "burst_id": "67bb2a55-120d-466a-8f9f-c7ba6c21e386",
+      "cols": 80,
+      "date": "2025-07-13",
+      "mean_intensity": 24458.47140625,
+      "name": "S1A-SLC-20250713T165215-311751-IW2-VV-489088",
+      "rows": 80
+    },
+    {
+      "burst_id": "3c5dc03e-ba83-48d0-a662-815c913784c1",
+      "cols": 80,
+      "date": "2025-07-19",
+      "mean_intensity": 19451.51375,
+      "name": "S1A-SLC-20250719T165110-311751-IW2-VV-027201",
+      "rows": 80
+    },
+    {
+      "burst_id": "28389778-7033-485f-a13a-2b50b8837b74",
+      "cols": 80,
+      "date": "2025-07-25",
+      "mean_intensity": 21054.94484375,
+      "name": "S1A-SLC-20250725T165215-311751-IW2-VV-490637",
+      "rows": 80
+    },
+    {
+      "burst_id": "002a1d74-2629-4456-ae20-cc47fc9c8dc6",
+      "cols": 80,
+      "date": "2025-07-31",
+      "mean_intensity": 18334.68296875,
+      "name": "S1A-SLC-20250731T165110-311751-IW2-VV-028516",
+      "rows": 80
+    },
+    {
+      "burst_id": "2a78530c-c2b4-413d-8b7f-b67671a8f16a",
+      "cols": 80,
+      "date": "2025-08-06",
+      "mean_intensity": 21235.3940625,
+      "name": "S1A-SLC-20250806T165215-311751-IW2-VV-492181",
+      "rows": 80
+    },
+    {
+      "burst_id": "b304a754-b0d4-4a0c-afb9-f4f22c2a4990",
+      "cols": 80,
+      "date": "2025-08-12",
+      "mean_intensity": 19134.69125,
+      "name": "S1A-SLC-20250812T165111-311751-IW2-VV-029857",
+      "rows": 80
+    },
+    {
+      "burst_id": "f9ff8163-f6c8-4c27-915f-2697d14864b9",
+      "cols": 80,
+      "date": "2025-08-18",
+      "mean_intensity": 20275.68046875,
+      "name": "S1A-SLC-20250818T165215-311751-IW2-VV-493943",
+      "rows": 80
+    },
+    {
+      "burst_id": "8c15480d-ce82-48db-9347-6a6277382672",
+      "cols": 80,
+      "date": "2025-08-24",
+      "mean_intensity": 19251.1225,
+      "name": "S1A-SLC-20250824T165111-311751-IW2-VV-031192",
+      "rows": 80
+    },
+    {
+      "burst_id": "140a5991-9f87-4b8a-9f91-fcb85cb64906",
+      "cols": 80,
+      "date": "2025-08-30",
+      "mean_intensity": 24551.66765625,
+      "name": "S1A-SLC-20250830T165215-311751-IW2-VV-495706",
+      "rows": 80
+    },
+    {
+      "burst_id": "8f2236c8-95a2-4f34-9daf-abfdd5a2cfec",
+      "cols": 80,
+      "date": "2025-09-05",
+      "mean_intensity": 18524.30359375,
+      "name": "S1A-SLC-20250905T165112-311751-IW2-VV-032528",
+      "rows": 80
+    },
+    {
+      "burst_id": "d5700f58-07cf-4264-8cd9-f68ef189b6db",
+      "cols": 80,
+      "date": "2025-09-11",
+      "mean_intensity": 23476.78859375,
+      "name": "S1A-SLC-20250911T165215-311751-IW2-VV-497494",
+      "rows": 80
+    },
+    {
+      "burst_id": "f560d4c6-3ceb-4228-ad79-a3ab8c58e14d",
+      "cols": 80,
+      "date": "2025-09-17",
+      "mean_intensity": 18519.4340625,
+      "name": "S1A-SLC-20250917T165112-311751-IW2-VV-033894",
+      "rows": 80
+    },
+    {
+      "burst_id": "4a705669-0b65-4c62-86a1-2c52297d54a3",
+      "cols": 80,
+      "date": "2025-09-23",
+      "mean_intensity": 19965.103125,
+      "name": "S1A-SLC-20250923T165215-311751-IW2-VV-499289",
+      "rows": 80
+    },
+    {
+      "burst_id": "db1fde7c-f004-4de8-905c-018360d23871",
+      "cols": 80,
+      "date": "2025-09-29",
+      "mean_intensity": 19381.99125,
+      "name": "S1A-SLC-20250929T165112-311751-IW2-VV-035264",
+      "rows": 80
+    },
+    {
+      "burst_id": "b6c23b7d-f8f8-4fdf-bd3d-05dcb82d9011",
+      "cols": 80,
+      "date": "2025-10-05",
+      "mean_intensity": 18994.0715625,
+      "name": "S1A-SLC-20251005T165216-311751-IW2-VV-501106",
+      "rows": 80
+    },
+    {
+      "burst_id": "8eff3948-22f2-4028-9933-7cfbc1b88ab2",
+      "cols": 80,
+      "date": "2025-10-11",
+      "mean_intensity": 18673.75546875,
+      "name": "S1A-SLC-20251011T165113-311751-IW2-VV-036625",
+      "rows": 80
+    },
+    {
+      "burst_id": "cd30f31f-3e72-45e5-8ced-6e2930a58461",
+      "cols": 80,
+      "date": "2025-10-17",
+      "mean_intensity": 18788.11421875,
+      "name": "S1A-SLC-20251017T165216-311751-IW2-VV-502903",
+      "rows": 80
+    },
+    {
+      "burst_id": "7f76c37c-d5ed-46cc-a1b5-790392fc31ab",
+      "cols": 80,
+      "date": "2025-10-23",
+      "mean_intensity": 18921.4428125,
+      "name": "S1A-SLC-20251023T165112-311751-IW2-VV-037979",
+      "rows": 80
+    },
+    {
+      "burst_id": "1c3888d0-8fce-4708-adfc-8a407bad9668",
+      "cols": 80,
+      "date": "2025-10-29",
+      "mean_intensity": 24837.43625,
+      "name": "S1A-SLC-20251029T165215-311751-IW2-VV-504706",
+      "rows": 80
+    }
+  ],
+  "site": {
+    "lat": 51.166529,
+    "lon": 14.429699
+  },
+  "subswath": "IW2",
+  "window": {
+    "end": "2025-11-01T00:00:00.000Z",
+    "start": "2025-04-01T00:00:00.000Z"
+  }
+}

@@ -7,7 +7,7 @@ Port of ``analyze_lumo_tower_coherence.read_complex_bin``,
 
 This file is needed *only* by the one-shot generator ``lumo_ocv_channels_csv.py``
 (masks are not committed because they require the 1394-directory burst cache).
-The figure pipeline itself reads only the derived ``data/lumo_ocv_channels.csv``
+The figure pipeline itself reads only the derived ``data/lumo/lumo_ocv_channels.csv``
 and needs neither cache nor mask.
 """
 from __future__ import annotations

@@ -22,8 +22,8 @@ Figures:
   E  controls: severity trend, season/orbit strata, mask brightness, wind
 
 Usage:
-  python3 code/fig_lumo_ocv_paper.py            # recompute everything (~8-12 min)
-  python3 code/fig_lumo_ocv_paper.py --quick    # without the two permutation tests
+  python3 code/lumo/fig_lumo_ocv_paper.py            # recompute everything (~8-12 min)
+  python3 code/lumo/fig_lumo_ocv_paper.py --quick    # without the two permutation tests
 """
 from __future__ import annotations
 
@@ -101,7 +101,7 @@ def save_fig(fig, name, out_dir=None):
     png = os.path.join(out_dir, name + ".png")
     fig.savefig(png)
     plt.close(fig)
-    print(f"  {os.path.relpath(png, HERE)}")
+    print(f"  {os.path.relpath(png)}")
     return png
 
 
@@ -178,8 +178,8 @@ def compute(quick=False):
 
     X, y, complete = core.feature_dataset(rows)
     res["data"] = {
-        "csv": "data/lumo_ocv_channels.csv",
-        "csv_meta": "data/lumo_ocv_channels_meta.json",
+        "csv": "data/lumo/lumo_ocv_channels.csv",
+        "csv_meta": "data/lumo/lumo_ocv_channels_meta.json",
         "csv_sha256": core.sha256(core.CSV_PATH),
         "n_overpasses": len(rows),
         "n_by_state": core.n_by_state(rows),
@@ -598,7 +598,7 @@ def fig_a(res, out_dir=None):
         f"({res['data']['n_overpasses']} coherence overpasses; "
         + ", ".join(f"{s} n={n_by_state[s]}" for s in states)
         + ")\n"
-        "dots = single overpasses, bar = median;  input: data/lumo_ocv_channels.csv",
+        "dots = single overpasses, bar = median;  input: data/lumo/lumo_ocv_channels.csv",
         fontsize=7.6)
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     return save_fig(fig, "fig_lumo_ocv_paper_A", out_dir)
@@ -891,7 +891,7 @@ def report(res, pins, quick):
     A("# OCV observability package — do [gamma^2, P, D] separate the LUMO states?")
     A("")
     A("Figures A–E of `research/observability-core-vector/`. This file is generated "
-      "by `code/fig_lumo_ocv_paper.py` and deliberately contains no wall-clock "
+      "by `code/lumo/fig_lumo_ocv_paper.py` and deliberately contains no wall-clock "
       "timestamp, so two runs produce identical bytes (the figure PNGs are "
       "deterministic for the same reason).")
     A("")
@@ -980,7 +980,7 @@ def report(res, pins, quick):
     A("## 4. Figures")
     A("")
     A("### Figure A — raw distributions per state "
-      "(`figures/fig_lumo_ocv_paper_A.png`)")
+      "(`figures/lumo/fig_lumo_ocv_paper_A.png`)")
     A("")
     A("Dots are single overpasses, the bar is the median; the input is the "
       "overpass table of section 2, nothing else.")
@@ -991,7 +991,7 @@ def report(res, pins, quick):
         for key in ["gamma2"] + core.DIMS]))
     A("")
     A("### Figure B — in-sample effect sizes "
-      "(`figures/fig_lumo_ocv_paper_B.png`)")
+      "(`figures/lumo/fig_lumo_ocv_paper_B.png`)")
     A("")
     A("SDS = 10 |Cliff's delta| (0 = identical distributions, 2 = large "
       "separation, 4 = complete separation); *pooled* compares healthy with all "
@@ -1038,7 +1038,7 @@ def report(res, pins, quick):
         for key in ["gamma2"] + core.DIMS]))
     A("")
     A("### Figure C — 4-class LDA, leave-one-out "
-      "(`figures/fig_lumo_ocv_paper_C.png`)")
+      "(`figures/lumo/fig_lumo_ocv_paper_C.png`)")
     A("")
     A("Balanced accuracy over the shrinkage grid (uniform priors, standardised "
       "features, identical fold construction as the committed pipeline):")
@@ -1069,7 +1069,7 @@ def report(res, pins, quick):
         for k, v in perm.items()]))
     A("")
     A("### Figure D — out-of-fold scores of the six state pairs "
-      "(`figures/fig_lumo_ocv_paper_D.png`)")
+      "(`figures/lumo/fig_lumo_ocv_paper_D.png`)")
     A("")
     A("Scores come from a Fisher LDA (shrinkage "
       f"{core.HEADLINE_LAMBDA:g}) fitted without the test point; SDS is computed "
@@ -1103,7 +1103,7 @@ def report(res, pins, quick):
         for pk in PAIR_KEYS]))
     A("")
     A("### Figure E — controls: severity, strata, mask brightness, wind "
-      "(`figures/fig_lumo_ocv_paper_E.png`)")
+      "(`figures/lumo/fig_lumo_ocv_paper_E.png`)")
     A("")
     m = fe["monotonicity"]
     hy, sp = m["hypothesis"], m.get("spearman_severity_vs_value") or {}
@@ -1161,7 +1161,7 @@ def report(res, pins, quick):
     A("## 5. Verification against the committed LUMO results")
     A("")
     A("The package recomputes every number from scratch and compares it with the "
-      "five committed reference JSONs in `data/reference/` (copies of the LUMO "
+      "five committed reference JSONs in `data/lumo/reference/` (copies of the LUMO "
       "project outputs):")
     A("")
     A(md_table(["reference file", "pinned blocks"], [
@@ -1210,10 +1210,10 @@ def report(res, pins, quick):
     A("")
     A("```bash")
     A("cd research/observability-core-vector")
-    A("python3 code/lumo_ocv_channels_csv.py    # rebuild data/lumo_ocv_channels.csv")
-    A("python3 code/fig_lumo_ocv_paper.py      # figures A-E, JSON and this report")
-    A("bash figures/fig_lumo_ocv_paper.sh      # the same, via the shell wrapper")
-    A("python3 code/fig_lumo_ocv_paper.py --quick   # skip the permutation tests")
+    A("python3 code/lumo/lumo_ocv_channels_csv.py      # rebuild data/lumo/lumo_ocv_channels.csv")
+    A("python3 code/lumo/fig_lumo_ocv_paper.py         # figures A-E, JSON and this report")
+    A("bash figures/lumo/fig_lumo_ocv_paper.sh         # the same, via the shell wrapper")
+    A("python3 code/lumo/fig_lumo_ocv_paper.py --quick  # skip the permutation tests")
     A("```")
     A("")
     A("Determinism: all random draws use fixed seeds "
@@ -1270,13 +1270,13 @@ def build_json(res, pins_summary, quick):
     """Self-contained result JSON: everything the figures plot, plus the pins."""
     return {
         "meta": {
-            "generator": "code/fig_lumo_ocv_paper.py",
+            "generator": "code/lumo/fig_lumo_ocv_paper.py",
             "quick": bool(quick),
             "csv": res["data"]["csv"],
             "csv_sha256": res["data"]["csv_sha256"],
             "n_overpasses": res["data"]["n_overpasses"],
-            "figures": ["figures/fig_lumo_ocv_paper_%s.png" % k for k in "ABCDE"],
-            "report": "figures/fig_lumo_ocv_paper.md",
+            "figures": ["figures/lumo/fig_lumo_ocv_paper_%s.png" % k for k in "ABCDE"],
+            "report": "figures/lumo/fig_lumo_ocv_paper.md",
             "versions": {
                 "python": platform.python_version(),
                 "numpy": np.__version__,
@@ -1331,11 +1331,11 @@ def main(argv=None):
         json.dump(build_json(res, s, args.quick), fh, indent=1, sort_keys=True,
                   default=json_default)
         fh.write("\n")
-    print(f"  {os.path.relpath(args.json, HERE)}")
+    print(f"  {os.path.relpath(args.json)}")
 
     with open(args.md, "w", encoding="utf-8") as fh:
         fh.write(report(res, s, args.quick))
-    print(f"  {os.path.relpath(args.md, HERE)}")
+    print(f"  {os.path.relpath(args.md)}")
 
     print(f"done in {time.perf_counter() - t0:.1f}s, "
           f"{s['n_failed']} pin failures")

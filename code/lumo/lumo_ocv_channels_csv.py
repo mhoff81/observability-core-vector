@@ -14,7 +14,7 @@ committed, ~100 MB, a pipeline artefact).
 
 This generator reads the cache **once**, computes the mask geometry with the
 same thresholds and definitions as ``analyze_lumo_echo_mask_vector.py`` and
-writes the result as *columns* into ``data/lumo_ocv_channels.csv``. Afterwards
+writes the result as *columns* into ``data/lumo/lumo_ocv_channels.csv``. Afterwards
 that CSV is the only input of the figure pipeline — the cache is never needed
 again.
 
@@ -30,8 +30,8 @@ Only the 178 ``coherence`` rows get values; the remaining rows of the copied
 CSV stay empty in the new columns.
 
 Usage:
-  python3 code/lumo_ocv_channels_csv.py                  # build + verify
-  python3 code/lumo_ocv_channels_csv.py --verify-only    # verify only
+  python3 code/lumo/lumo_ocv_channels_csv.py                # build + verify
+  python3 code/lumo/lumo_ocv_channels_csv.py --verify-only  # verify only
 """
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, os.pardir, "data")
+DATA = os.path.join(HERE, os.pardir, os.pardir, "data", "lumo")
 REF = os.path.join(DATA, "reference")
 
 sys.path.insert(0, HERE)
@@ -53,7 +53,8 @@ DEFAULT_CSV = os.path.join(DATA, "lumo_channels.csv")
 DEFAULT_OUT = os.path.join(DATA, "lumo_ocv_channels.csv")
 DEFAULT_META = os.path.join(DATA, "lumo_ocv_channels_meta.json")
 DEFAULT_BURST_DIR = os.path.abspath(os.path.join(
-    HERE, os.pardir, os.pardir, os.pardir, "lumo_dam6_analysis", "monthly_bursts"))
+    HERE, os.pardir, os.pardir, os.pardir, os.pardir,
+    "lumo_dam6_analysis", "monthly_bursts"))
 
 COH_JSON = os.path.join(REF, "lumo_tower_coherence_states.json")
 EMV_JSON = os.path.join(REF, "lumo_echo_mask_vector.json")
@@ -221,7 +222,7 @@ def build(args):
     n_by_state = {lab: sum(1 for r in rows if r["damage_label"] == lab)
                   for lab in ("healthy", "DAM 3", "DAM 4", "DAM 6")}
     meta = {
-        "generator": "code/lumo_ocv_channels_csv.py",
+        "generator": "code/lumo/lumo_ocv_channels_csv.py",
         "source_csv": os.path.relpath(args.csv, DATA),
         "source_csv_sha256": sha256(args.csv),
         "out_csv": os.path.relpath(args.out, DATA),
@@ -247,7 +248,7 @@ def build(args):
         "n_rows_unmatched": n_unmatched,
         "cross_check_n_masked_vs_committed": {"n_checked": check["n_checked"],
                                               "n_mismatch": check["n_mismatch"]},
-        "committed_reference": "data/reference/lumo_tower_coherence_states.json",
+        "committed_reference": "data/lumo/reference/lumo_tower_coherence_states.json",
         "created_rows": n_filled,
     }
     with open(args.meta, "w") as fh:
@@ -375,10 +376,10 @@ def main():
                 f"ERROR: burst cache not found: {args.burst_dir}\n"
                 f"        (needed only once; --verify-only checks without cache)")
         meta, _rows = build(args)
-        print(f"written: {os.path.relpath(args.out, HERE)} "
+        print(f"written: {os.path.relpath(args.out)} "
               f"({meta['created_rows']} rows extended, "
               f"{meta['n_rows_unmatched']} without cache match)")
-        print(f"written: {os.path.relpath(args.meta, HERE)}")
+        print(f"written: {os.path.relpath(args.meta)}")
 
     rep = verify(args, cache_dir=(None if args.no_cache_verify else args.burst_dir))
     print(json.dumps(rep, indent=1, sort_keys=True))

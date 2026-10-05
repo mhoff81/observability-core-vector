@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """OCV-Paper — data layer.
 
-Reads only ``data/lumo_ocv_channels.csv`` (the copy of ``lumo_channels.csv``
+Reads only ``data/lumo/lumo_ocv_channels.csv`` (the copy of ``lumo_channels.csv``
 extended with A/D/F/S/P) plus the five committed reference JSONs in
-``data/reference/``. No burst cache, no third-party imports — but the same
+``data/lumo/reference/``. No burst cache, no third-party imports — but the same
 ordering, the same field names and the same conventions as the LUMO project
 analysis scripts (see ``lumo_ocv_stats.py``).
 """
@@ -18,10 +18,14 @@ import numpy as np
 
 import lumo_ocv_stats as st
 
+# Layout: this package lives in ``code/lumo/``; its inputs and outputs are in
+# ``data/lumo/`` and its figures in ``figures/lumo/``. The per-site subfolders
+# keep the LUMO package and the Bautzen package (``code/bautzen/``) apart — see
+# the root README.
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, os.pardir, "data")
+DATA = os.path.join(HERE, os.pardir, os.pardir, "data", "lumo")
 REF = os.path.join(DATA, "reference")
-FIGDIR = os.path.join(HERE, os.pardir, "figures")
+FIGDIR = os.path.join(HERE, os.pardir, os.pardir, "figures", "lumo")
 
 CSV_PATH = os.path.join(DATA, "lumo_ocv_channels.csv")
 CSV_META_PATH = os.path.join(DATA, "lumo_ocv_channels_meta.json")

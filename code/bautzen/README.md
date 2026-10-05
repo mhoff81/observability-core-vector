@@ -1,0 +1,106 @@
+# `code/bautzen/` — Bautzen OpenLabs bridge package: analysis and plotting scripts
+
+The bridge counterpart of [`../lumo/`](../lumo/README.md): same file names
+(`…_stats.py`, `…_masks.py`, `…_core.py`, `…_channels_csv.py`,
+`fig_…_ocv_paper.py`), same JSON/Markdown/CSV shape, same determinism rules —
+**only the mask layer is swapped**. The site is the bridge of the Bautzen
+OpenLabs test field; the intervention is a retrofitted structural health
+monitoring (SHM) installation, documented as the states RS / DS1 / DS2.
+
+Paths below are relative to the **repository root**; the scripts are started from
+there (the wrapper `../../figures/bautzen/fig_bautzen_ocv_paper.sh` does that):
+inputs and outputs in `data/bautzen/`, figures in `figures/bautzen/`.
+
+### `bautzen_ocv_stats.py` — statistics layer (port of the LUMO primitives)
+
+`_stats`, `welch_mw_test`, `cliffs_delta`, `cliffs_delta_bruteforce`,
+`_u_from_ranks`, `bootstrap_delta_ci`, `delta_block`, `sign_test`, `sds_from`,
+`by_state`, `vals`, `pairs_block` — the same functions, with the site's own
+constants: `STATE_ORDER = [RS, DS1, DS2]`, `SEVERITY = {RS: 0, DS1: 1, DS2: 2}`,
+`REFERENCE_STATE = "RS"` (the pre-intervention state, LUMO's "healthy"),
+`DAMAGED = [DS1, DS2]`, seeds `RNG_SEED = 7`, `BOOT_SEED = 42`, `N_PERM =
+20000`, `N_BOOT = 5000`, `BOOT_MAIN = 10000`, `BOOT_STRATA = 2000`,
+`PLACEBO_WEEKS = (2, 4, 6, 8, 10, 12)` and the `WINTER_MONTHS` / `SUMMER_MONTHS`
+strata.
+
+### `bautzen_ocv_masks.py` — mask layer (the deck edge, the site's only deviation)
+
+The bridge deck is a bright, geometrically known line, so the mask is **anchored
+geodetically** instead of by threshold: the deck band sits at the rect centre
+(`CENTER_ROW = CENTER_COL = 40`, from the 28.90 m deck axis / 5.90 m deck width
+and the 80 x 80 px rect), the search ROI is the band ± `ANCHOR_HALF = 4` rows and
+± `COL_HALF = 4` columns, the band itself is the anchor row ± `BAND_HALF = 1`.
+A pixel is masked when `|z|^2 >= K_LOCAL = 1.5 x median(neighbour azimuth rows)`;
+the house gates are `MIN_N_MASKED = 2` and a visible deck edge from
+`CONTRAST_DETECT = 1.5` (band/neighbour contrast). A *global* echo rule of the
+LUMO kind is not usable here — the scene clutter pulls the median up and n
+collapses to ~0.
+
+`load_intensity`, `load_complex`, `largest_component`, `gamma2` (on the selected
+pixels, floor-corrected), `house_mask`, `date_mask`, `analyse_series` (takes
+**intensities**, one date per row — see the note in the module),
+`add_persistence` (frequency map built **per series**, because the deck mask
+differs between bridge and control and between ASC and DESC),
+`state_metrics`, `discrimination`, `counts_of`, `unions`.
+
+### `bautzen_ocv_core.py` — data layer and constants
+
+Paths (`CSV_PATH`, `CSV_META_PATH`, `METEO_PATH`, `REFERENCE_FILES`), the four
+series (`ASC`/`DESC` bridge and control 500 m east of the bridge, committed
+German keys `SERIES` + English `SERIES_EN`), the state rule `state_of()` — assigned
+by **overpass time**, not by date, because both state boundaries fall in the
+middle of a day (`OVERPASS_LOCAL = {ASC: 18:51, DESC: 07:08}`, `CUT_DS1 =
+2025-05-12 10:00`, `CUT_DS2 = 2025-09-29 10:00`, windows in `STATE_WINDOWS`) —
+the channel/feature order (`FEATURES = [gamma2, P, D, A, F, S]`), the model sets
+of Figure D (`MODELS`, `HEADLINE_PAIR = "gamma2PD"`), the seeds
+(`N_PERM_PAIR`, `RNG_SEED`, …) and the loaders: `load_csv()`,
+`load_csv_meta()`, `load_reference()`, `load_meteo()`, `pixels_to_mask()` (rebuilds
+a per-date mask from the committed `mask_pixels` column), `geom_of()`,
+`is_bridge()`, `month_of()`, `by_series()`, `n_by_state()`, `feature_dataset()`,
+`sha256()`.
+
+### `bautzen_ocv_channels_csv.py` — generator of the channel table
+
+Enumerates the four committed rect text files (`data/bautzen/bautzen_rects_*.txt`)
+into `data/bautzen/bautzen_ocv_channels.csv`: one row per date and series with
+`gamma2` and the deck-edge channels `A, D, F, S, P` plus the auditable
+ingredients (`anchor_row, peak_row, band_contrast, mask_pixels, …`) and the state
+of the date. No burst cache, no network — a fresh clone rebuilds the table
+offline. It verifies against the two committed reference JSONs
+(`data/bautzen/reference/bautzen_deck_edge_mask.json`,
+`…_state.json`) date by date, and cross-checks the two independent traversals
+(channel path vs. analysis path) against each other:
+
+```bash
+python3 code/bautzen/bautzen_ocv_channels_csv.py                # build + verify
+python3 code/bautzen/bautzen_ocv_channels_csv.py --verify-only  # verify only
+```
+
+### `fig_bautzen_ocv_paper.py` — the paper figure, JSON result, report, pin block
+
+**Pending** — this is the last open piece of the mirror; everything it needs is
+committed already (`data/bautzen/bautzen_ocv_channels.csv` + its meta JSON, the
+two reference JSONs, `core.LABEL_EN` + `core.translate()` for the German doc
+strings and the plotting conventions of `../lumo/fig_lumo_ocv_paper.py`). It mirrors
+`../lumo/fig_lumo_ocv_paper.py`: it recomputes every plotted number from
+`data/bautzen/bautzen_ocv_channels.csv` and pins it against the two committed
+reference JSONs; a single deviation aborts with exit code != 0. It writes the
+figure to `figures/bautzen/`, the result JSON to
+`data/bautzen/fig_bautzen_ocv_paper.json` and the report to
+`figures/bautzen/fig_bautzen_ocv_paper.md`.
+
+```bash
+python3 code/bautzen/fig_bautzen_ocv_paper.py            # full run
+python3 code/bautzen/fig_bautzen_ocv_paper.py --quick    # permutation tests copied
+```
+
+Where the site deviates from the LUMO definitions (the deck band is only reached
+through the local geometry-anchored gate, and the state and the season are
+confounded), the deviation is documented in the module docstring and in the
+generated report — the numbers are not silently made to look like LUMO's.
+
+Status of the mirror so far: `bautzen_ocv_stats.py`, `bautzen_ocv_masks.py`,
+`bautzen_ocv_core.py` and `bautzen_ocv_channels_csv.py` are complete, and the
+generator already verifies **every** committed per-date mask/state value and all
+effect sizes of the two reference JSONs (`VERIFICATION OK`, zero problems, two
+independent traversals cross-checked).
