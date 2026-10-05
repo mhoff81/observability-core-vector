@@ -1,0 +1,45 @@
+{
+ "burst_dir": "/home/projects/lumo_dam6_analysis/monthly_bursts",
+ "committed_reference": "data/reference/lumo_tower_coherence_states.json",
+ "created_rows": 178,
+ "cross_check_n_masked_vs_committed": {
+  "n_checked": 178,
+  "n_mismatch": 0
+ },
+ "dimensions": {
+  "A": "n_masked (identical to coherence_masked_pixels)",
+  "D": "n_masked / bbox_area",
+  "F": "number of 8-neighbourhood components of the mask",
+  "P": "mean pixel frequency inside the own mask; frequency map from the dates of the majority chip shape",
+  "S": "distance mask centroid <-> peak pixel (px)"
+ },
+ "generator": "code/lumo_ocv_channels_csv.py",
+ "mask_definition": {
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_by_state": {
+  "DAM 3": 25,
+  "DAM 4": 16,
+  "DAM 6": 16,
+  "healthy": 121
+ },
+ "n_cache_dirs_matched": 482,
+ "n_cache_skipped": 0,
+ "n_overpasses": 178,
+ "n_rows_filled_by_burst_id": 178,
+ "n_rows_filled_by_date_orbit": 0,
+ "n_rows_unmatched": 0,
+ "out_csv": "lumo_ocv_channels.csv",
+ "persistence": {
+  "majority_shape": [
+   400,
+   11
+  ],
+  "n_excluded_other_shape": 1,
+  "n_majority_shape": 177
+ },
+ "source_csv": "lumo_channels.csv",
+ "source_csv_sha256": "f02eb8965853ba8e586a81b12edbb6a5afc9bed7c12c58e94fa705bad9e96101"
+}

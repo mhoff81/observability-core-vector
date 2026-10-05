@@ -1,0 +1,656 @@
+{
+ "meta": {
+  "n_total_committed": 178,
+  "n_complete": 177,
+  "n_excluded_incomplete": 1,
+  "persistence": {
+   "majority_shape": [
+    400,
+    11
+   ],
+   "n_majority_shape": 177,
+   "n_excluded_other_shape": 1
+  },
+  "n_by_state": {
+   "healthy": 120,
+   "DAM3": 25,
+   "DAM4": 16,
+   "DAM6": 16
+  }
+ },
+ "models": {
+  "gamma2": "gamma2 (1D)",
+  "PDS": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+  "gamma2PD": "[gamma2, P, D] (Hauptwahl x3)",
+  "x_6d": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)"
+ },
+ "shrinkage": 0.5,
+ "n_perm": 500,
+ "n_boot": 2000,
+ "pairs": {
+  "healthy_vs_DAM3": {
+   "class_a": "healthy",
+   "class_b": "DAM3",
+   "n": [
+    120,
+    25
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      120,
+      25
+     ],
+     "delta": -0.6453333333333333,
+     "sds": 6.453333333333333,
+     "delta_ci95": [
+      -0.8606833333333334,
+      -0.3886500000000001
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.10578842315369262,
+     "perm_null_mean_sds": 2.635626666666667,
+     "perm_null_p95_sds": 8.974333333333327
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      120,
+      25
+     ],
+     "delta": -0.011333333333333334,
+     "sds": 0.11333333333333334,
+     "delta_ci95": [
+      -0.25601666666666667,
+      0.24539999999999962
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.9560878243512974,
+     "perm_null_mean_sds": 1.6750933333333333,
+     "perm_null_p95_sds": 4.51033333333333
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      120,
+      25
+     ],
+     "delta": -0.08333333333333333,
+     "sds": 0.8333333333333333,
+     "delta_ci95": [
+      -0.3146833333333333,
+      0.14671666666666638
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.6906187624750499,
+     "perm_null_mean_sds": 1.7928933333333334,
+     "perm_null_p95_sds": 5.254666666666665
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      120,
+      25
+     ],
+     "delta": 0.012,
+     "sds": 0.12,
+     "delta_ci95": [
+      -0.22133333333333333,
+      0.24066666666666667
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.9540918163672655,
+     "perm_null_mean_sds": 1.54824,
+     "perm_null_p95_sds": 4.202333333333331
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": -5.285423333333333,
+     "ci95": [
+      -7.920166666666667,
+      -2.2531666666666674
+     ],
+     "ci_excludes_zero": true
+    },
+    "PDS": {
+     "diff_mean": -5.466619999999999,
+     "ci95": [
+      -7.893666666666667,
+      -2.559666666666668
+     ],
+     "ci_excludes_zero": true
+    },
+    "x_6d": {
+     "diff_mean": -5.537850000000001,
+     "ci95": [
+      -8.026666666666667,
+      -2.6196666666666686
+     ],
+     "ci_excludes_zero": true
+    }
+   }
+  },
+  "healthy_vs_DAM4": {
+   "class_a": "healthy",
+   "class_b": "DAM4",
+   "n": [
+    120,
+    16
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.20416666666666666,
+     "sds": 2.0416666666666665,
+     "delta_ci95": [
+      -0.40625,
+      0.0020833333333333333
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.47704590818363274,
+     "perm_null_mean_sds": 2.7161875,
+     "perm_null_p95_sds": 8.188541666666666
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.240625,
+     "sds": 2.40625,
+     "delta_ci95": [
+      -0.5072916666666667,
+      0.026093749999999718
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.3013972055888224,
+     "perm_null_mean_sds": 2.0235625,
+     "perm_null_p95_sds": 5.57552083333333
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": 0.00625,
+     "sds": 0.0625,
+     "delta_ci95": [
+      -0.3135677083333333,
+      0.31875
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.9720558882235529,
+     "perm_null_mean_sds": 2.0146041666666665,
+     "perm_null_p95_sds": 5.146354166666666
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.05625,
+     "sds": 0.5625,
+     "delta_ci95": [
+      -0.35940104166666664,
+      0.2448177083333332
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.8043912175648703,
+     "perm_null_mean_sds": 1.8355,
+     "perm_null_p95_sds": 4.521354166666666
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": -0.7563229166666666,
+     "ci95": [
+      -3.09375,
+      2.1255208333333306
+     ],
+     "ci_excludes_zero": false
+    },
+    "PDS": {
+     "diff_mean": 0.3917083333333333,
+     "ci95": [
+      -2.3651041666666672,
+      3.281770833333331
+     ],
+     "ci_excludes_zero": false
+    },
+    "x_6d": {
+     "diff_mean": -0.7169479166666666,
+     "ci95": [
+      -3.14609375,
+      2.1265624999999915
+     ],
+     "ci_excludes_zero": false
+    }
+   }
+  },
+  "healthy_vs_DAM6": {
+   "class_a": "healthy",
+   "class_b": "DAM6",
+   "n": [
+    120,
+    16
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.011458333333333333,
+     "sds": 0.11458333333333333,
+     "delta_ci95": [
+      -0.2520833333333333,
+      0.221875
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.9700598802395209,
+     "perm_null_mean_sds": 2.7915208333333332,
+     "perm_null_p95_sds": 9.104166666666666
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.5020833333333333,
+     "sds": 5.020833333333333,
+     "delta_ci95": [
+      -0.7562760416666666,
+      -0.19778645833333403
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.043912175648702596,
+     "perm_null_mean_sds": 1.8217291666666666,
+     "perm_null_p95_sds": 4.638020833333331
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.14479166666666668,
+     "sds": 1.4479166666666667,
+     "delta_ci95": [
+      -0.41354166666666664,
+      0.16145833333333334
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.530938123752495,
+     "perm_null_mean_sds": 2.0073541666666666,
+     "perm_null_p95_sds": 5.698958333333333
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      120,
+      16
+     ],
+     "delta": -0.4322916666666667,
+     "sds": 4.322916666666667,
+     "delta_ci95": [
+      -0.671875,
+      -0.1333072916666668
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.04590818363273453,
+     "perm_null_mean_sds": 1.7896666666666665,
+     "perm_null_p95_sds": 4.179687499999998
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": 0.7158072916666668,
+     "ci95": [
+      -1.5833333333333333,
+      3.0945312499999957
+     ],
+     "ci_excludes_zero": false
+    },
+    "PDS": {
+     "diff_mean": 4.096802083333334,
+     "ci95": [
+      0.8122395833333333,
+      6.9375
+     ],
+     "ci_excludes_zero": true
+    },
+    "x_6d": {
+     "diff_mean": 3.334838541666667,
+     "ci95": [
+      0.26041666666666674,
+      5.96875
+     ],
+     "ci_excludes_zero": true
+    }
+   }
+  },
+  "DAM3_vs_DAM4": {
+   "class_a": "DAM3",
+   "class_b": "DAM4",
+   "n": [
+    25,
+    16
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.165,
+     "sds": 1.6500000000000001,
+     "delta_ci95": [
+      -0.515125,
+      0.23
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.6087824351297405,
+     "perm_null_mean_sds": 3.114,
+     "perm_null_p95_sds": 9.004999999999995
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.595,
+     "sds": 5.949999999999999,
+     "delta_ci95": [
+      -0.85,
+      -0.29
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.0658682634730539,
+     "perm_null_mean_sds": 2.3291000000000004,
+     "perm_null_p95_sds": 6.15
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.685,
+     "sds": 6.8500000000000005,
+     "delta_ci95": [
+      -0.905,
+      -0.4048750000000007
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.03592814371257485,
+     "perm_null_mean_sds": 2.3925,
+     "perm_null_p95_sds": 6.3024999999999975
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.655,
+     "sds": 6.550000000000001,
+     "delta_ci95": [
+      -0.91,
+      -0.35475000000000134
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.02594810379241517,
+     "perm_null_mean_sds": 2.1852,
+     "perm_null_p95_sds": 5.852499999999997
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": 4.79615,
+     "ci95": [
+      2.1000000000000014,
+      7.301249999999994
+     ],
+     "ci_excludes_zero": true
+    },
+    "PDS": {
+     "diff_mean": 3.8966999999999996,
+     "ci95": [
+      -0.15000000000000036,
+      7.3500000000000005
+     ],
+     "ci_excludes_zero": false
+    },
+    "x_6d": {
+     "diff_mean": 4.4815249999999995,
+     "ci95": [
+      0.6987499999999998,
+      7.700000000000001
+     ],
+     "ci_excludes_zero": true
+    }
+   }
+  },
+  "DAM3_vs_DAM6": {
+   "class_a": "DAM3",
+   "class_b": "DAM6",
+   "n": [
+    25,
+    16
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": 0.13,
+     "sds": 1.3,
+     "delta_ci95": [
+      -0.23,
+      0.475
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.6806387225548902,
+     "perm_null_mean_sds": 3.2705,
+     "perm_null_p95_sds": 9.602499999999997
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.15,
+     "sds": 1.5,
+     "delta_ci95": [
+      -0.49,
+      0.23012499999999933
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.5688622754491018,
+     "perm_null_mean_sds": 2.2441999999999998,
+     "perm_null_p95_sds": 5.652499999999997
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.025,
+     "sds": 0.25,
+     "delta_ci95": [
+      -0.39,
+      0.335
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.9421157684630739,
+     "perm_null_mean_sds": 2.3476000000000004,
+     "perm_null_p95_sds": 7.354999999999995
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      25,
+      16
+     ],
+     "delta": -0.115,
+     "sds": 1.1500000000000001,
+     "delta_ci95": [
+      -0.47012499999999996,
+      0.255
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.7125748502994012,
+     "perm_null_mean_sds": 2.1581,
+     "perm_null_p95_sds": 5.352499999999998
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": -0.26970000000000005,
+     "ci95": [
+      -3.4499999999999997,
+      3.05
+     ],
+     "ci_excludes_zero": false
+    },
+    "PDS": {
+     "diff_mean": 0.16677499999999998,
+     "ci95": [
+      -3.65125,
+      4.1
+     ],
+     "ci_excludes_zero": false
+    },
+    "x_6d": {
+     "diff_mean": -0.006650000000000004,
+     "ci95": [
+      -3.65,
+      3.7512499999999935
+     ],
+     "ci_excludes_zero": false
+    }
+   }
+  },
+  "DAM4_vs_DAM6": {
+   "class_a": "DAM4",
+   "class_b": "DAM6",
+   "n": [
+    16,
+    16
+   ],
+   "per_model": {
+    "gamma2": {
+     "label": "gamma2 (1D)",
+     "n": [
+      16,
+      16
+     ],
+     "delta": -0.2734375,
+     "sds": 2.734375,
+     "delta_ci95": [
+      -0.6330078125,
+      0.1328125
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.43313373253493015,
+     "perm_null_mean_sds": 2.82359375,
+     "perm_null_p95_sds": 7.8125
+    },
+    "PDS": {
+     "label": "[P, D, S] (Maskenmorphologie-Kontrolle)",
+     "n": [
+      16,
+      16
+     ],
+     "delta": -0.3671875,
+     "sds": 3.671875,
+     "delta_ci95": [
+      -0.7109375,
+      0.03125
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.2375249500998004,
+     "perm_null_mean_sds": 2.52015625,
+     "perm_null_p95_sds": 6.875
+    },
+    "gamma2PD": {
+     "label": "[gamma2, P, D] (Hauptwahl x3)",
+     "n": [
+      16,
+      16
+     ],
+     "delta": -0.1953125,
+     "sds": 1.953125,
+     "delta_ci95": [
+      -0.578125,
+      0.2109375
+     ],
+     "ci_excludes_zero": false,
+     "perm_p": 0.5269461077844312,
+     "perm_null_mean_sds": 2.66640625,
+     "perm_null_p95_sds": 7.0351562499999964
+    },
+    "x_6d": {
+     "label": "[gamma2, P, D, A, F, S] (voller 6D-Vektor)",
+     "n": [
+      16,
+      16
+     ],
+     "delta": -0.4921875,
+     "sds": 4.921875,
+     "delta_ci95": [
+      -0.8046875,
+      -0.12480468750000107
+     ],
+     "ci_excludes_zero": true,
+     "perm_p": 0.0998003992015968,
+     "perm_null_mean_sds": 2.41625,
+     "perm_null_p95_sds": 6.09375
+    }
+   },
+   "paired_diff_vs_gamma2": {
+    "gamma2PD": {
+     "diff_mean": -0.5974609375,
+     "ci95": [
+      -4.375,
+      3.28125
+     ],
+     "ci_excludes_zero": false
+    },
+    "PDS": {
+     "diff_mean": 0.7849609375,
+     "ci95": [
+      -4.21875,
+      5.46875
+     ],
+     "ci_excludes_zero": false
+    },
+    "x_6d": {
+     "diff_mean": 1.95875,
+     "ci95": [
+      -1.953125,
+      5.9375
+     ],
+     "ci_excludes_zero": false
+    }
+   }
+  }
+ }
+}
