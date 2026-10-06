@@ -22,7 +22,7 @@ read off".
 | LUMO lattice tower (Hannover) | `code/lumo/`, `data/lumo/`, `figures/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | [`figures/lumo/fig_lumo_ocv_paper.md`](figures/lumo/fig_lumo_ocv_paper.md) |
 | Bautzen OpenLabs bridge | `code/bautzen/`, `data/bautzen/`, `figures/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | [`figures/bautzen/fig_bautzen_ocv_paper.md`](figures/bautzen/fig_bautzen_ocv_paper.md), [`…fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md) |
 | KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md) |
-| Carolabrücke (Dresden) | `code/carola/`, `data/carola/`, `figures/carola/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-girder deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/carola/fig_carola_ocv_paper.md`](figures/carola/fig_carola_ocv_paper.md) |
+| Carolabrücke (Dresden) | `code/carola/`, `data/carola/`, `figures/carola/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-girder deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/carola/fig_carola_ocv_paper.md`](figures/carola/fig_carola_ocv_paper.md), [`…fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md) |
 
 The Bautzen package is a **strict mirror** of the LUMO one — same module names,
 same file layout, same JSON/Markdown shapes, same determinism — and only the
@@ -142,6 +142,18 @@ for the full verdict and [`code/carola/README.md`](code/carola/README.md) for th
 module list.
 
 A companion figure,
+[`figures/carola/fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md),
+keeps the **time axis** instead of pooling the two states: it splits the chips
+into the four rolling one-month windows around the collapse (M-3, M-2, M-1 before
+the event and M+1 after it) and shows the same six echo-mask dimensions per
+window (jittered strips for `gamma2`/`P`/`S`/`D`, the `(P, D)` plane and the 6D
+fingerprint against the pre-baseline). Its reading is deliberately narrower than
+the pooled headline: the three pre windows are **not** stationary, and against
+that month-to-month noise only `D` clears the bootstrap CI in the adjacent-month
+contrast — `P`, the sharpest pooled difference, moves by only −0.19 with a CI
+spanning zero — so the month axis narrows the verdict rather than reproducing it.
+
+A companion figure,
 [`figures/bautzen/fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md),
 reads the **amplitude** `A(t)` and the **phase** `phi(t)` of the deck edge **over
 the deck-edge pixels only** (not the whole bridge) across the same four series and
@@ -215,6 +227,7 @@ bash figures/kdlo/fig_kdlo_ocv_paper.sh --quick          # ~35 s (no permutation
 # deck mask recomputed from a committed window-payload cache)
 bash figures/carola/fig_carola_ocv_paper.sh              # ~21 min
 bash figures/carola/fig_carola_ocv_paper.sh --quick      # ~6 min (no permutation null)
+bash figures/carola/fig_carola_ocv_months.sh             # ~14 s (month-by-month companion)
 
 # if `python3` of the PATH is a virtualenv without numpy/matplotlib:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh

@@ -7,6 +7,7 @@ figures/
 │              and the companion fig_bautzen_ocv_amp_phase.sh|.md|.png
 ├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].png
 ├── carola/    Carolabrücke, Dresden — fig_carola_ocv_paper.sh|.md|[A-E].png
+│              and the companion fig_carola_ocv_months.sh|.md|.png
 └── README.md
 ```
 
@@ -25,6 +26,7 @@ bash figures/bautzen/fig_bautzen_ocv_paper.sh      # ~6 min, deck-edge mask
 bash figures/kdlo/fig_kdlo_ocv_paper.sh            # ~1 min, epoch contrast
 bash figures/carola/fig_carola_ocv_paper.sh        # ~21 min, bridge collapse
 bash figures/carola/fig_carola_ocv_paper.sh --quick # ~6 min, no permutation null
+bash figures/carola/fig_carola_ocv_months.sh       # ~14 s, month-by-month companion
 
 # if the python3 of PATH lacks numpy/matplotlib, name the interpreter:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
@@ -164,5 +166,41 @@ structure around the collapse date, so season, weather, traffic and pipeline
 generation move with the state (each contrast is shown beside its co-variate
 control), and the pipeline's own `coherence_masked_pixels` is not the mask of
 these chips (it agrees with the recomputed `A` on 60 of 1,713 rows only).
+
+## `carola/fig_carola_ocv_months.sh` → `../code/carola/fig_carola_ocv_months.py`
+
+The **standalone companion** of the Carola paper figure, on the *time axis*
+around the collapse instead of the two pooled states: the same six echo-mask
+dimensions `x = [gamma2, P, D, A, F, S]` but split into the four rolling
+one-month windows that straddle the event (the collapse date `2024-09-11` opens
+M+1, so M-1 is pure pre and M+1 pure post), plus the English report
+[`carola/fig_carola_ocv_months.md`](carola/fig_carola_ocv_months.md) and
+[`../data/carola/fig_carola_ocv_months.json`](../data/carola/fig_carola_ocv_months.json):
+
+| window | range | state | chips |
+| --- | --- | --- | --- |
+| M-3 | [2024-06-11, 2024-07-11) | pre-collapse (healthy) | 42 |
+| M-2 | [2024-07-11, 2024-08-11) | pre-collapse (healthy) | 52 |
+| M-1 | [2024-08-11, 2024-09-11) | pre-collapse (healthy) | 56 |
+| M+1 | [2024-09-11, 2024-10-11) | post-collapse | 60 |
+
+| file | panel content |
+| --- | --- |
+| `carola/fig_carola_ocv_months.png` | 2 x 3: (a)-(d) one jittered strip per window for `gamma2`, `P`, `S`, `D` with the window median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by window (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each window's median divided by the pre-baseline median on a log axis |
+
+The figure adds **one** image to the site and does **not** touch the committed
+reference JSONs or the figures A–E pin block. Its reading is deliberately
+narrower than the pooled headline: the three pre windows are **not** stationary
+(`gamma2`'s median roughly halves twice over M-3..M-1, 0.158 → 0.072 → 0.037),
+and against that month-to-month noise only `D` clears the bootstrap CI in the
+single adjacent-month contrast M+1 vs. M-1 (median 0.0073 → 0.0058, Cliff's
+delta −0.36); `P` — the sharpest pooled difference in the A–E figures — moves by
+only −0.19 here, with a CI that spans zero. The month axis therefore narrows the
+pooled verdict rather than reproducing it, and the report says so.
+
+```bash
+bash figures/carola/fig_carola_ocv_months.sh            # ~14 s
+PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_months.sh
+```
 
 

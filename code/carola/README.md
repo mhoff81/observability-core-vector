@@ -153,6 +153,53 @@ One string of the result JSON stays in the reference's own wording: the
 `carola_echo_mask_gamma2.json` and is therefore copied verbatim; the report
 renders that reading in English instead.
 
+### `fig_carola_ocv_months.py` — the echo-mask dimensions month by month around the collapse
+
+The **standalone companion** of the paper figure (the Carola analogue of
+`../bautzen/fig_bautzen_ocv_amp_phase.py`). Where the A–E figures pool the two
+states (`pre-collapse (healthy)` vs. `post-collapse`), this script keeps the
+*time axis* and splits the committed chip export into the four rolling
+one-month windows anchored at the event, so the reader sees **when** the mask
+moved, not only **that** it moved:
+
+```
+M-3   [2024-06-11, 2024-07-11)     pre-collapse (healthy)     42 chips
+M-2   [2024-07-11, 2024-08-11)     pre-collapse (healthy)     52 chips
+M-1   [2024-08-11, 2024-09-11)     pre-collapse (healthy)     56 chips
+M+1   [2024-09-11, 2024-10-11)     post-collapse              60 chips
+```
+
+The collapse date opens M+1, so M-1 is pure pre and M+1 pure post and the two
+are the only adjacent-month contrast the script tests (per-chip Cliff's delta
+with a seeded percentile bootstrap CI, plus the same comparison against the
+three pre windows pooled). `compute()` reads only
+`data/carola/carola_ocv_channels.csv` and recomputes each dimension's per-window
+block with `carola_ocv_stats`; the figure is a 2 x 3 panel — (a)-(d) jittered
+strips per window for `gamma2`, `P`, `S`, `D` with the window median, the IQR and
+the collapse cut, (e) the `(P, D)` plane coloured by window on a symlog y axis,
+(f) the 6D fingerprint, each window's median over the pre-baseline median on a
+log axis. `main()` writes the figure to `figures/carola/fig_carola_ocv_months.png`,
+the result JSON to `data/carola/fig_carola_ocv_months.json` and the English
+report to `figures/carola/fig_carola_ocv_months.md`:
+
+```bash
+python3 code/carola/fig_carola_ocv_months.py            # ~14 s
+bash figures/carola/fig_carola_ocv_months.sh            # the same, via the wrapper
+python3 code/carola/fig_carola_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
+```
+
+It adds **no** number to the A–E pin contract and touches none of it (it never
+reads the committed reference JSONs), and it is deterministic like the rest of
+the package (fixed seed for the jitter and the bootstrap, no timestamps), so
+repeated runs produce byte-identical PNG, JSON and Markdown. Its reading is
+deliberately narrower than the pooled one: the three pre windows are **not**
+stationary (`gamma2`'s median roughly halves twice over M-3..M-1, 0.158 → 0.072
+→ 0.037), and against that month-to-month noise only `D` clears the bootstrap CI
+in the adjacent-month contrast M+1 vs. M-1 (median 0.0073 → 0.0058, delta −0.36);
+`P` — the sharpest pooled difference of the A–E figures — moves by only −0.19
+here, with a CI that spans zero, so the month axis narrows the pooled verdict
+rather than reproducing it.
+
 The module and site names keep their `carola_` prefix although the folder already
 says `carola/`: the import statements (`import carola_ocv_core as core`), the
 reference file names and every command line in the reports stay parallel to the
