@@ -1,0 +1,26 @@
+{
+ "asset_date_groups_with_differing_payloads": 264,
+ "asset_date_groups_with_several_segments": 264,
+ "generator": "code/carola/carola_ocv_masks.py --extract",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_deduplicated_same_payload": 472,
+ "n_rows": 1717,
+ "n_without_echo": 0,
+ "n_without_index": 0,
+ "out_cache": "carola_windows_mask_cache.txt",
+ "segment_resolved": true,
+ "source_index": "carola_windows_index.txt",
+ "source_segments": "carola_segments.txt",
+ "source_windows": "/home/projects/carola_analysis/carola_windows_full.txt",
+ "source_windows_sha256": "f33a22a5caabe538b9e55fa1271aa74e2c721802d57f5bf0be73fe081c80963c",
+ "window_size": 80,
+ "window_sizes": {
+  "7x7 (excluded)": 265,
+  "80x80": 1717
+ }
+}

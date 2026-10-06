@@ -1,0 +1,224 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-09-04T16:58:06Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 4214231,
+  "bounds": {
+    "minlat": 51.0527453,
+    "minlon": 13.7463558,
+    "maxlat": 51.0563302,
+    "maxlon": 13.7474556
+  },
+  "nodes": [
+    24969638,
+    24969642,
+    1516305860,
+    13058578205,
+    1516305858,
+    12915137090,
+    24969649,
+    902630932,
+    1516305838,
+    24969654,
+    1516305824,
+    24969660
+  ],
+  "geometry": [
+    { "lat": 51.0563302, "lon": 13.7463558 },
+    { "lat": 51.0557379, "lon": 13.7465859 },
+    { "lat": 51.0546732, "lon": 13.7469878 },
+    { "lat": 51.0542472, "lon": 13.7471498 },
+    { "lat": 51.0540748, "lon": 13.7472153 },
+    { "lat": 51.0538290, "lon": 13.7472966 },
+    { "lat": 51.0536097, "lon": 13.7473692 },
+    { "lat": 51.0534056, "lon": 13.7474138 },
+    { "lat": 51.0532564, "lon": 13.7474407 },
+    { "lat": 51.0530376, "lon": 13.7474556 },
+    { "lat": 51.0529115, "lon": 13.7474500 },
+    { "lat": 51.0527453, "lon": 13.7474361 }
+  ],
+  "tags": {
+    "access": "no",
+    "bridge": "yes",
+    "cycleway:both": "no",
+    "demolished:highway": "primary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweight:signed": "no",
+    "name": "Carolabrücke",
+    "name:etymology:wikidata": "Q60380",
+    "note": "Brückenzug A + B wurden zurückgebaut",
+    "oneway": "yes",
+    "parking:both": "no",
+    "parking:both:restriction": "no_parking",
+    "ref": "B 170",
+    "shoulder": "no",
+    "sidewalk": "no",
+    "smoothness": "good",
+    "source:maxspeed": "DE:urban",
+    "surface": "asphalt",
+    "wikidata": "Q1044279",
+    "wikipedia": "de:Carolabrücke (Dresden)"
+  }
+},
+{
+  "type": "way",
+  "id": 10368500,
+  "bounds": {
+    "minlat": 51.0527520,
+    "minlon": 13.7466724,
+    "maxlat": 51.0563786,
+    "maxlon": 13.7477176
+  },
+  "nodes": [
+    24969600,
+    1516305833,
+    1516305842,
+    24969694,
+    12915137091,
+    1516305859,
+    1516305862,
+    24969602,
+    1516305866,
+    1150742665,
+    1516305869,
+    3373019619
+  ],
+  "geometry": [
+    { "lat": 51.0527520, "lon": 13.7477176 },
+    { "lat": 51.0531677, "lon": 13.7476463 },
+    { "lat": 51.0534020, "lon": 13.7475811 },
+    { "lat": 51.0536275, "lon": 13.7475081 },
+    { "lat": 51.0538521, "lon": 13.7474260 },
+    { "lat": 51.0540926, "lon": 13.7473380 },
+    { "lat": 51.0548353, "lon": 13.7470587 },
+    { "lat": 51.0555638, "lon": 13.7467943 },
+    { "lat": 51.0557780, "lon": 13.7467412 },
+    { "lat": 51.0559892, "lon": 13.7467008 },
+    { "lat": 51.0561763, "lon": 13.7466810 },
+    { "lat": 51.0563786, "lon": 13.7466724 }
+  ],
+  "tags": {
+    "access": "no",
+    "bridge": "yes",
+    "cycleway:left": "no",
+    "cycleway:right": "separate",
+    "demolished:highway": "primary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweight:signed": "no",
+    "name": "Carolabrücke",
+    "name:etymology:wikidata": "Q60380",
+    "note": "Brückenzug A + B wurden zurückgebaut",
+    "oneway": "yes",
+    "parking:both": "no",
+    "parking:both:restriction": "no_parking",
+    "ref": "B 170",
+    "shoulder": "no",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "concrete",
+    "smoothness": "excellent",
+    "source:maxspeed": "DE:urban",
+    "surface": "asphalt",
+    "wikidata": "Q1044279",
+    "wikipedia": "de:Carolabrücke (Dresden)"
+  }
+},
+{
+  "type": "way",
+  "id": 1422377883,
+  "bounds": {
+    "minlat": 51.0527645,
+    "minlon": 13.7462044,
+    "maxlat": 51.0563100,
+    "maxlon": 13.7472241
+  },
+  "nodes": [
+    30890840,
+    13071595757,
+    13162748876,
+    13071595758,
+    13071595759,
+    13071595760,
+    30894135
+  ],
+  "geometry": [
+    { "lat": 51.0563100, "lon": 13.7462044 },
+    { "lat": 51.0539009, "lon": 13.7470957 },
+    { "lat": 51.0538164, "lon": 13.7471212 },
+    { "lat": 51.0536073, "lon": 13.7471844 },
+    { "lat": 51.0533314, "lon": 13.7472241 },
+    { "lat": 51.0530057, "lon": 13.7472008 },
+    { "lat": 51.0527645, "lon": 13.7471291 }
+  ],
+  "tags": {
+    "bridge": "razed",
+    "electrified": "contact_line",
+    "frequency": "0",
+    "gauge": "1450",
+    "maxspeed": "40",
+    "operator": "DVB",
+    "railway": "razed",
+    "razed:railway": "tram",
+    "source:maxspeed": "Geschwindigkeitssignal an der Haltestelle \"Synagoge\"",
+    "voltage": "600"
+  }
+},
+{
+  "type": "way",
+  "id": 1422377884,
+  "bounds": {
+    "minlat": 51.0527580,
+    "minlon": 13.7462633,
+    "maxlat": 51.0563178,
+    "maxlon": 13.7472854
+  },
+  "nodes": [
+    1516305820,
+    13071595761,
+    13071595762,
+    13071595763,
+    13071595764,
+    13071595765,
+    13071595766,
+    13071595767,
+    1516305871
+  ],
+  "geometry": [
+    { "lat": 51.0527580, "lon": 13.7471875 },
+    { "lat": 51.0529187, "lon": 13.7472292 },
+    { "lat": 51.0530674, "lon": 13.7472620 },
+    { "lat": 51.0533228, "lon": 13.7472854 },
+    { "lat": 51.0536009, "lon": 13.7472433 },
+    { "lat": 51.0538123, "lon": 13.7471955 },
+    { "lat": 51.0540611, "lon": 13.7470974 },
+    { "lat": 51.0547773, "lon": 13.7468312 },
+    { "lat": 51.0563178, "lon": 13.7462633 }
+  ],
+  "tags": {
+    "bridge": "razed",
+    "electrified": "contact_line",
+    "frequency": "0",
+    "gauge": "1450",
+    "maxspeed": "40",
+    "operator": "DVB",
+    "railway": "razed",
+    "razed:railway": "tram",
+    "source:maxspeed": "Geschwindigkeitssignal an der Haltestelle \"Synagoge\"",
+    "voltage": "600"
+  }
+}
+
+  ]
+}

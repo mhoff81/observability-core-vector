@@ -2,7 +2,8 @@
 
 The bridge counterpart of [`../lumo/`](../lumo/README.md): same file names
 (`…_stats.py`, `…_masks.py`, `…_core.py`, `…_channels_csv.py`,
-`fig_…_ocv_paper.py`), same JSON/Markdown/CSV shape, same determinism rules —
+`fig_…_ocv_paper.py`, plus the companion `fig_…_ocv_amp_phase.py`), same
+JSON/Markdown/CSV shape, same determinism rules —
 **only the mask layer is swapped**. The site is the bridge of the Bautzen
 OpenLabs test field; the intervention is a retrofitted structural health
 monitoring (SHM) installation, documented as the states RS / DS1 / DS2.
@@ -109,9 +110,61 @@ through the local geometry-anchored gate, and the state and the season are
 confounded), the deviation is documented in the module docstring and in the
 generated report — the numbers are not silently made to look like LUMO's.
 
+### `fig_bautzen_ocv_amp_phase.py` — amplitude/phase time series of the deck edge
+
+The **standalone companion** of the paper figure: instead of the six OCV channels
+it reports the polar decomposition of the coherent deck-edge sum, `A(t)` and
+`phi(t)`, **over the deck-edge pixels only** (not the whole chip), plus the
+**paired differential phase** `dphi(t)` between the bridge and its control
+rectangle. With the complex chip `z` of one overpass and `z_sel = z[mask]` the
+deck-edge pixels of `masks.date_mask` (`N` pixels, energy `S2 = sum |z_sel|^2`):
+
+```
+A(t)    = |sum z_sel| / sqrt(N * S2)                in [0, 1]    coherence amplitude
+phi(t)  = arg(sum z_sel)                            in (-pi, pi] interferometric phase
+dphi(t) = wrap(phi_bridge(t) - phi_control(t))      in (-pi, pi] paired differential phase
+```
+
+`A(t)^2` is *exactly* the site's coherence channel, so the script cross-checks
+`A^2 == gamma2_band_raw` (plus the pixel count `n_masked` and the band contrast)
+against every committed row of `data/bautzen/bautzen_ocv_channels.csv` — **515
+checks** (412 from the table, 67 for the pairing and its wrap identity, 36 for the
+state deltas), exit code != 0 on any failure. The four series (bridge/control ×
+ASC/DESC) are carried through the amplitude and phase panels, the states RS/DS1/DS2
+are the background bands and the two cut dates the dashed lines; the phase is
+summarised **circularly** (circular mean and resultant length `R`), never
+arithmetically.
+
+The differential panel works on the **pair**: bridge and control share every
+overpass time, so `dphi` is formed date by date without interpolation — ASC 28
+pairs (8 control overpasses have an empty deck-edge mask and are left out), DESC
+35 pairs. It removes what both rectangles see in common (season, atmosphere,
+repeat-pass baseline); the panel is drawn once per geometry, under its bridge
+column.
+
+Section 4 closes with the **state-to-state** shift
+`delta = wrap(circmean(state) - circmean(RS))` (RS → DS1, RS → DS2), for the paired
+`dphi` and for the absolute `phi` of each of the four series as counter-check. It
+is deliberately *not* the difference of the series' own state phases — the
+circular mean is not linear — and each delta carries a seeded percentile bootstrap
+interval (20 000 resamples, fixed seed, so the run stays deterministic). Every one
+of those intervals covers nearly the whole circle, so all twelve deltas are
+reported as **not resolvable** at 5–23 overpasses per state.
+
+It adds **one** figure and does **not** touch the committed reference JSONs or
+the figures A–E pin block (the reference files hold no amplitude or phase). It
+writes the figure to `figures/bautzen/fig_bautzen_ocv_amp_phase.png`, the result
+JSON to `data/bautzen/fig_bautzen_ocv_amp_phase.json` and the report to
+`figures/bautzen/fig_bautzen_ocv_amp_phase.md`:
+
+```bash
+python3 code/bautzen/fig_bautzen_ocv_amp_phase.py            # ~2 s
+bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh            # the same, via the wrapper
+```
+
 Status of the mirror: `bautzen_ocv_stats.py`, `bautzen_ocv_masks.py`,
-`bautzen_ocv_core.py`, `bautzen_ocv_channels_csv.py` and
-`fig_bautzen_ocv_paper.py` are complete. The generator verifies **every**
+`bautzen_ocv_core.py`, `bautzen_ocv_channels_csv.py`, `fig_bautzen_ocv_paper.py`
+and `fig_bautzen_ocv_amp_phase.py` are complete. The generator verifies **every**
 committed per-date mask/state value and all effect sizes of the two reference
 JSONs (`VERIFICATION OK`, zero problems, two independent traversals
 cross-checked); the figure script reproduces the two reference JSONs pin by pin

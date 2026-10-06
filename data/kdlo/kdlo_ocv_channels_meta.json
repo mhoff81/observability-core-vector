@@ -1,0 +1,260 @@
+{
+ "columns": [
+  "part",
+  "state",
+  "month",
+  "year",
+  "season",
+  "echo_mode",
+  "id",
+  "acquisition_ts",
+  "pass_label",
+  "orbit_direction",
+  "displacement_los_m",
+  "brightness_ratio",
+  "measured_frequency_hz",
+  "baseline_frequency_hz",
+  "frequency_drop_pct",
+  "wind_speed_ms",
+  "temperature_c",
+  "traffic_load_label",
+  "status",
+  "phase_detected_frequency_hz",
+  "phase_coherence",
+  "phase_status",
+  "coherence_gamma2",
+  "coherence_masked_pixels",
+  "ndvi",
+  "ndvi_scene_date",
+  "ndvi_confound_flagged",
+  "sub_aperture_modulation",
+  "coherent_sum_amplitude",
+  "registration_status",
+  "phase_rms_rad",
+  "condition_label",
+  "campaign_label",
+  "phase_snr_db",
+  "phase_observable",
+  "phase_unobservable_reason",
+  "snow_depth_m",
+  "snowfall_cm",
+  "precipitation_mm",
+  "wind_gust_ms",
+  "intensity",
+  "incidence_angle_deg",
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "mask_rows",
+  "mask_cols",
+  "bbox_area",
+  "row_span",
+  "col_span",
+  "centroid_r",
+  "centroid_c",
+  "peak_r",
+  "peak_c",
+  "peak_intensity",
+  "gamma2_mask"
+ ],
+ "created_rows": 60,
+ "db_columns": [
+  "phase_snr_db",
+  "phase_observable",
+  "phase_unobservable_reason",
+  "snow_depth_m",
+  "snowfall_cm",
+  "precipitation_mm",
+  "wind_gust_ms",
+  "intensity",
+  "incidence_angle_deg"
+ ],
+ "db_extra": {
+  "columns": [
+   "phase_snr_db",
+   "phase_observable",
+   "phase_unobservable_reason",
+   "snow_depth_m",
+   "snowfall_cm",
+   "precipitation_mm",
+   "wind_gust_ms",
+   "intensity",
+   "incidence_angle_deg"
+  ],
+  "fetched_at": null,
+  "file": "kdlo/kdlo_db_extra.json",
+  "n_rows": 60,
+  "sha256": "23412abd5260808c24baa91b374b20dd9e49bb880023b406b01f40cfda3c3a25",
+  "source": null
+ },
+ "definitions": {
+  "A": "echo-mask area (n_masked) \u2014 recomputed from the committed strip cache and equal to coherence_masked_pixels",
+  "D": "echo-mask density D = A / bbox_area",
+  "F": "echo-mask fragmentation F = number of 8-connected components",
+  "P": "echo-mask persistence P = mean pixel frequency of the own mask across the 64 dates of the majority strip shape",
+  "S": "echo-mask shift S = ||mask centroid - peak pixel||  [px]",
+  "echo_mode": "compact A <= 10 px, distributed A >= 25 px, intermediate in between (pipeline discriminator)",
+  "gamma2_mask": "masked coherence recomputed from the strip; must equal coherence_gamma2",
+  "month": "month number of the acquisition day",
+  "part": "part1/part2 \u2014 which committed raw file the row came from",
+  "peak_intensity": "max |z|^2 of the full-dwell strip",
+  "season": "winter_Oct-Feb / summer_Mar-Jul / shoulder_Aug-Sep (pipeline season_of split, verbatim)",
+  "state": "epoch from the acquisition day: pre = 2022-06-02..2022-12-11, rebuild = 2023-05-04..2024-09-19, single = 2022-12-23 (between the windows, in no state statistic)",
+  "year": "year of the acquisition day"
+ },
+ "derived_columns": [
+  "part",
+  "state",
+  "month",
+  "year",
+  "season",
+  "echo_mode"
+ ],
+ "generator": "code/kdlo/kdlo_ocv_channels_csv.py",
+ "mask_columns": [
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "mask_rows",
+  "mask_cols",
+  "bbox_area",
+  "row_span",
+  "col_span",
+  "centroid_r",
+  "centroid_c",
+  "peak_r",
+  "peak_c",
+  "peak_intensity",
+  "gamma2_mask"
+ ],
+ "n_by_echo_mode": {
+  "compact": 13,
+  "distributed": 45,
+  "intermediate": 2
+ },
+ "n_by_part": {
+  "part1": 17,
+  "part2": 43
+ },
+ "n_by_state": {
+  "pre": 16,
+  "rebuild": 43
+ },
+ "n_states_rows": 59,
+ "out_csv": "kdlo_ocv_channels.csv",
+ "raw_parts": {
+  "1": {
+   "asset_id": "93b18457-2e4d-4d20-a444-be1c4733423b",
+   "file": "kdlo/fig_kdlo_1_raw.json",
+   "n_rows": 17,
+   "sha256": "b761e0a4cb220792ec17c0b28f1345e763e460bb0c9bd21c16bcd6791587b093",
+   "window": [
+    "2022-06-01",
+    "2022-12-23"
+   ]
+  },
+  "2": {
+   "asset_id": "93b18457-2e4d-4d20-a444-be1c4733423b",
+   "file": "kdlo/fig_kdlo_2_raw.json",
+   "n_rows": 43,
+   "sha256": "4b58b6b8dae8b5974b90a66c2519adcd081687365b078fa444f7eca5ff708496",
+   "window": [
+    "2023-05-01",
+    "2024-09-30"
+   ]
+  }
+ },
+ "reference_files": {
+  "fem_frequencies": {
+   "file": "kdlo_fem_frequencies.json",
+   "sha256": "7be3d647ee8848b40062f8caf81a7c196ca5a14976f192c089f9f528d5114d52"
+  },
+  "kdlo_1_channels": {
+   "file": "fig_kdlo_1_channels.json",
+   "sha256": "bcdea45a80758eaee8007788537731375baa67eedc67481f39fdc5149357d9e0"
+  },
+  "kdlo_2_channels": {
+   "file": "fig_kdlo_2_channels.json",
+   "sha256": "ca0a66e0f850e6b8c43a416e19a2e5553a307ccc0f274180b0a637e9459c206a"
+  },
+  "s1_availability": {
+   "file": "kdlo_s1_availability.json",
+   "sha256": "3afedc5fb5c83a5b5207a0135754fa4a46a2f0c4fb3cb9ec32ceeef5b19da18b"
+  }
+ },
+ "singleton_day": "2022-12-23",
+ "source_columns": [
+  "id",
+  "acquisition_ts",
+  "pass_label",
+  "orbit_direction",
+  "displacement_los_m",
+  "brightness_ratio",
+  "measured_frequency_hz",
+  "baseline_frequency_hz",
+  "frequency_drop_pct",
+  "wind_speed_ms",
+  "temperature_c",
+  "traffic_load_label",
+  "status",
+  "phase_detected_frequency_hz",
+  "phase_coherence",
+  "phase_status",
+  "coherence_gamma2",
+  "coherence_masked_pixels",
+  "ndvi",
+  "ndvi_scene_date",
+  "ndvi_confound_flagged",
+  "sub_aperture_modulation",
+  "coherent_sum_amplitude",
+  "registration_status",
+  "phase_rms_rad",
+  "condition_label",
+  "campaign_label"
+ ],
+ "state_windows": {
+  "pre": [
+   "2022-06-02",
+   "2022-12-11"
+  ],
+  "rebuild": [
+   "2023-05-04",
+   "2024-09-19"
+  ]
+ },
+ "strip_cache": {
+  "acceptance": {
+   "A == coherence_masked_pixels": "exact (integer)",
+   "gamma2_mask == coherence_gamma2": "abs(diff) <= 1e-12",
+   "shape": "[400, 11]"
+  },
+  "capture": "tower/backend/src/cli/analysis/kdlo_strip_capture.rs \u2014 CopernicusClient::download_burst_strip_ranged",
+  "days_without_strip": [],
+  "decoder": "decode_slc_rect_at_location(annotation, tiff, lat, lon, 11, 400)",
+  "dir": "strips",
+  "majority_shape": [
+   400,
+   11
+  ],
+  "manifest": "strips/manifest.json",
+  "manifest_sha256": "2c2e5fde8ba0c2a8956784ff35e58c0f35e5c88dd501aa7a48e0d08e5e009598",
+  "mask_rule": {
+   "gamma2": "|sum(z[mask])|^2 / (A * sum(|z[mask]|^2)), clamped to [0,1]",
+   "intensity": "|z|^2 of the 11 x 400 full-dwell strip samples",
+   "mask": "intensity >= 0.30 * peak and intensity >= 5.0 * median",
+   "median": "sorted(intensity)[len // 2] \u2014 the *upper* median the Rust pipeline uses (np.median is a diagnostic only)",
+   "min_n_masked": 2,
+   "peak": "max(intensity)"
+  },
+  "n_attached_to_csv_rows": 60,
+  "n_excluded_other_shape": 0,
+  "n_majority_shape": 64,
+  "n_strips": 64,
+  "n_with_mask": 64,
+  "n_without_mask": 0
+ }
+}

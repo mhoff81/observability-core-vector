@@ -1,0 +1,194 @@
+{
+  "part": "part1",
+  "window": {
+    "start": "2022-06-01",
+    "end": "2022-12-23"
+  },
+  "n_measurements": 17,
+  "date_first": "2022-06-02",
+  "date_last": "2022-12-23",
+  "passes": [
+    "afternoon",
+    "morning"
+  ],
+  "alternate_pass_days": [
+    "2022-08-25"
+  ],
+  "orbits": [
+    "DESCENDING"
+  ],
+  "lumo_reference": {
+    "ascending_gamma2": 0.0617,
+    "descending_gamma2": 0.0261,
+    "healthy_gamma2": 0.0379
+  },
+  "pred_min_coherence": 0.15,
+  "coherence_gamma2": {
+    "n": 17,
+    "median": 0.003535867017357631,
+    "p25": 0.0011258961238700064,
+    "p75": 0.006837209388926593,
+    "min": 0.00047299709250516505,
+    "max": 0.02936431747713154
+  },
+  "coherence_masked_pixels": {
+    "n": 17,
+    "median": 119.0,
+    "p25": 60.0,
+    "p75": 180.0,
+    "min": 5.0,
+    "max": 237.0
+  },
+  "phase_coherence": {
+    "n": 17,
+    "median": 0.1680643538551614,
+    "p25": 0.16104727757164755,
+    "p75": 0.18035689437854938,
+    "min": 0.15643480266984489,
+    "max": 0.21877484728822919
+  },
+  "phase_snr_db": {
+    "n": 17,
+    "median": -16.32529474539839,
+    "p25": -16.866462259259468,
+    "p75": -15.382946936352237,
+    "min": -18.03844885036512,
+    "max": -13.635925352556745
+  },
+  "phase_rms_rad": {
+    "n": 17,
+    "median": 4.103811773124002,
+    "p25": 4.019331731052329,
+    "p75": 4.222409172842576,
+    "min": 3.3112814040580023,
+    "max": 4.612153443381853
+  },
+  "weather": {
+    "temperature_c": {
+      "n": 17,
+      "median": 17.9,
+      "p25": 1.3,
+      "p75": 22.7,
+      "min": -24.6,
+      "max": 24.8
+    },
+    "wind_speed_ms": {
+      "n": 17,
+      "median": 5.22,
+      "p25": 3.32,
+      "p75": 7.22,
+      "min": 0.41,
+      "max": 13.72
+    },
+    "snow_depth_m": {
+      "n": 17,
+      "median": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "min": 0.0,
+      "max": 0.27
+    },
+    "precipitation_mm": {
+      "n": 17,
+      "median": 0.0,
+      "p25": 0.0,
+      "p75": 0.0,
+      "min": 0.0,
+      "max": 0.2
+    }
+  },
+  "phase_observable": {
+    "observable": 0,
+    "not_observable": 0,
+    "reasons": [
+      "low_coherence"
+    ]
+  },
+  "echo_modes": {
+    "compact": {
+      "n": 1,
+      "days": [
+        "2022-06-02"
+      ],
+      "gamma2_median": 0.02936431747713154,
+      "mask_range_px": [
+        0,
+        10
+      ]
+    },
+    "distributed": {
+      "n": 15,
+      "days": [
+        "2022-06-14",
+        "2022-07-08",
+        "2022-07-20",
+        "2022-08-01",
+        "2022-08-13",
+        "2022-08-25",
+        "2022-09-06",
+        "2022-09-18",
+        "2022-09-30",
+        "2022-10-12",
+        "2022-10-24",
+        "2022-11-05",
+        "2022-11-29",
+        "2022-12-11",
+        "2022-12-23"
+      ],
+      "gamma2_median": 0.003327897464276924,
+      "mask_range_px": [
+        25,
+        1000000
+      ]
+    }
+  },
+  "collapse_pair": {
+    "2022-12-11": {
+      "last_intact": {
+        "day": "2022-12-11",
+        "pass_label": "afternoon",
+        "gamma2": 0.019928279168188158,
+        "masked_pixels": 60.0,
+        "temperature_c": -3.2,
+        "wind_speed_ms": 5.6,
+        "phase_coherence": 0.15863762313143093
+      },
+      "first_collapsed": {
+        "day": "2022-12-23",
+        "pass_label": "afternoon",
+        "gamma2": 0.0013393056912106268,
+        "masked_pixels": 63.0,
+        "temperature_c": -24.6,
+        "wind_speed_ms": 13.72,
+        "phase_coherence": 0.1776807806501268
+      }
+    },
+    "series_context": {
+      "gamma2_median": 0.003535867017357631,
+      "gamma2_min": 0.00047299709250516505,
+      "gamma2_max": 0.02936431747713154,
+      "n": 17
+    }
+  },
+  "request_ids": [
+    "a6c473de-9a16-438e-a3fb-7ac5d8e7fdff",
+    "3288f495-fc24-4700-a506-684c326fc2b1",
+    "31b8d7f4-3ffa-4f76-a39b-c11e37370185",
+    "81c8973c-a3fb-48bb-a636-2d2a788ba4c4",
+    "fdfedcdb-4c78-4cd6-8c29-9982840527f3",
+    "89ccd938-0af6-414f-b874-4656913605a5",
+    "fc93f5bc-dee2-44a1-98e0-9a206b180b10",
+    "d1e4aecb-3942-498c-b10e-baab7ae1d533",
+    "860ae95d-4837-47b8-af36-e0684d1a3d10",
+    "b3620ac6-aaf9-44a7-aa24-e56491c99626",
+    "0bd4674e-d19e-4e77-93f2-67a5f166fa94",
+    "aa3fc9f5-8897-4534-8057-f3729554cc90",
+    "f7900ba4-2b6a-454e-9378-04ef4e47c51d",
+    "fbe23341-8b15-476a-84eb-e978cbd0ba36",
+    "b4117ccf-e941-4861-b5f6-733b03fba9f5",
+    "4efdb908-2fa6-440a-a2c6-add2e6a607cb",
+    "d6ac0a97-72f1-4842-ab14-28b1d438654d",
+    "2b195269-910e-46f9-9f9c-0249c9ddfb78",
+    "9edb59d4-ad7e-46ab-b107-150b98f1d07e"
+  ]
+}

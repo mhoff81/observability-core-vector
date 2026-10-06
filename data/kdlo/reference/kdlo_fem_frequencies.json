@@ -1,0 +1,360 @@
+{
+  "asset_id": "93b18457-2e4d-4d20-a444-be1c4733423b",
+  "assumptions": {
+    "anchor_ratios": [
+      0.5,
+      0.65,
+      0.8
+    ],
+    "cable_areas_m2": [
+      0.0002,
+      0.00035,
+      0.0005
+    ],
+    "cable_youngs_modulus_pa": 160000000000.0,
+    "element_discretization_applied": false,
+    "element_discretization_m": 5.0,
+    "guy_data_source": "not documented anywhere in the project — assumption grid, not measurement",
+    "guy_levels_m": [
+      60.0,
+      120.0,
+      240.0,
+      360.0,
+      470.0
+    ],
+    "solidity_ratio": 0.25,
+    "tier_table": [
+      {
+        "base_radius_m": 6.0,
+        "bracing_profile": "L 80x80x8",
+        "height_m": 60.0,
+        "leg_count": 3,
+        "leg_profile": "L 200x200x16",
+        "top_radius_m": 4.0
+      },
+      {
+        "base_radius_m": 4.0,
+        "bracing_profile": "L 70x70x7",
+        "height_m": 60.0,
+        "leg_count": 3,
+        "leg_profile": "L 180x180x14",
+        "top_radius_m": 3.0
+      },
+      {
+        "base_radius_m": 3.0,
+        "bracing_profile": "L 65x65x6",
+        "height_m": 120.0,
+        "leg_count": 3,
+        "leg_profile": "L 150x150x12",
+        "top_radius_m": 2.2
+      },
+      {
+        "base_radius_m": 2.2,
+        "bracing_profile": "L 60x60x6",
+        "height_m": 120.0,
+        "leg_count": 3,
+        "leg_profile": "L 120x120x10",
+        "top_radius_m": 1.7
+      },
+      {
+        "base_radius_m": 1.7,
+        "bracing_profile": "L 55x55x5",
+        "height_m": 110.0,
+        "leg_count": 3,
+        "leg_profile": "L 100x100x10",
+        "top_radius_m": 1.3
+      },
+      {
+        "base_radius_m": 1.3,
+        "bracing_profile": "L 50x50x5",
+        "height_m": 49.7,
+        "leg_count": 3,
+        "leg_profile": "L 90x90x8",
+        "top_radius_m": 1.1
+      }
+    ],
+    "wind_pressure_n_m2": 800.0
+  },
+  "known_model_quirks": [
+    "generate_lattice_tower ignores element_discretization_m (one element per member, 120 m tiers included)",
+    "the 200 kg antenna point mass is attached to every tier's top ring because regenerate_segments passes a single-tier slice",
+    "each per-tier segment is fixed at its own base, so the stored baselines are cantilever frequencies, not mast frequencies",
+    "the production model contains no guy cables, although the mast is a guyed lattice (OSM tower:construction=guyed_lattice)"
+  ],
+  "path_a_per_tier": [
+    {
+      "elements": 9,
+      "fundamental_hz": 9.467555287799945,
+      "label": "Mast 0-520 m-tier-0",
+      "nodes": 6,
+      "segment_index": 0,
+      "stored_fundamental_hz": 9.4676
+    },
+    {
+      "elements": 9,
+      "fundamental_hz": 2.2911666518751037,
+      "label": "Mast 0-520 m-tier-1",
+      "nodes": 6,
+      "segment_index": 1,
+      "stored_fundamental_hz": 2.2912
+    },
+    {
+      "elements": 9,
+      "fundamental_hz": 2.5662635928513926,
+      "label": "Mast 0-520 m-tier-2",
+      "nodes": 6,
+      "segment_index": 2,
+      "stored_fundamental_hz": 2.5663
+    },
+    {
+      "elements": 9,
+      "fundamental_hz": 3.715867625317294,
+      "label": "Mast 0-520 m-tier-3",
+      "nodes": 6,
+      "segment_index": 3,
+      "stored_fundamental_hz": 3.7159
+    },
+    {
+      "elements": 9,
+      "fundamental_hz": 1.4293207262405443,
+      "label": "Mast 0-520 m-tier-4",
+      "nodes": 6,
+      "segment_index": 4,
+      "stored_fundamental_hz": 1.4293
+    },
+    {
+      "elements": 9,
+      "fundamental_hz": 3.5746545974857704,
+      "label": "Mast 0-520 m-tier-5",
+      "nodes": 6,
+      "segment_index": 5,
+      "stored_fundamental_hz": 3.5747
+    }
+  ],
+  "path_b_whole_mast": {
+    "description": "one generate_lattice_tower call over all 6 tiers (chained rings, single fixed base)",
+    "elements": 54,
+    "f_hz": [
+      0.18954761523036887,
+      0.1989682523267004,
+      0.233781408916508,
+      0.3413879992831097,
+      0.3736174464418143,
+      0.4515994294143547
+    ],
+    "lumped_mass_t": 96.23971426345334,
+    "nodes": 21
+  },
+  "path_c_guyed": [
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 63.43494882292201,
+      "anchor_ratio": 0.5,
+      "cable_area_m2": 0.0002,
+      "f1_all_cables_active_hz": 5.009439064546692,
+      "f1_raw_hz": 1.8507939339236803,
+      "f1_self_supporting_hz": 0.3618011895614685,
+      "f1_sway_hz": null,
+      "f_hz": [
+        1.8507939339236803,
+        3.715817672395815,
+        3.7800125066112007,
+        4.473498599154825,
+        5.3465142730124695,
+        6.251894110239156
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 63.43494882292201,
+      "anchor_ratio": 0.5,
+      "cable_area_m2": 0.00035,
+      "f1_all_cables_active_hz": 3.366018906468866,
+      "f1_raw_hz": 2.371473330718587,
+      "f1_self_supporting_hz": 0.259602659913508,
+      "f1_sway_hz": null,
+      "f_hz": [
+        2.371473330718587,
+        3.6377153765089685,
+        4.260933362954507,
+        5.133795534773485,
+        5.654048063818512,
+        5.667937186775215
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 63.43494882292201,
+      "anchor_ratio": 0.5,
+      "cable_area_m2": 0.0005,
+      "f1_all_cables_active_hz": 6.260229537852648,
+      "f1_raw_hz": 2.0183798443808785,
+      "f1_self_supporting_hz": 0.3021989420036383,
+      "f1_sway_hz": null,
+      "f_hz": [
+        2.0183798443808785,
+        2.8107102328525673,
+        2.852926478033565,
+        3.9797239326315363,
+        4.582598421252916,
+        4.969658979828716
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 56.97613244420336,
+      "anchor_ratio": 0.65,
+      "cable_area_m2": 0.0002,
+      "f1_all_cables_active_hz": 4.257735296280174,
+      "f1_raw_hz": 3.4113319833358378,
+      "f1_self_supporting_hz": 0.12973291662343692,
+      "f1_sway_hz": null,
+      "f_hz": [
+        3.4113319833358378,
+        4.801962943642449,
+        5.135683795262819,
+        6.243546717644037,
+        7.43163534479163,
+        7.569764125449222
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 56.97613244420336,
+      "anchor_ratio": 0.65,
+      "cable_area_m2": 0.00035,
+      "f1_all_cables_active_hz": 3.96583788552807,
+      "f1_raw_hz": 0.5405396947916168,
+      "f1_self_supporting_hz": 0.10815210595242646,
+      "f1_sway_hz": null,
+      "f_hz": [
+        0.5405396947916168,
+        3.9521778791984277,
+        4.434560694180198,
+        6.064135634858647,
+        6.2289186630448325,
+        6.77295144520795
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 56.97613244420336,
+      "anchor_ratio": 0.65,
+      "cable_area_m2": 0.0005,
+      "f1_all_cables_active_hz": 4.736756705124796,
+      "f1_raw_hz": 1.7232551620846137,
+      "f1_self_supporting_hz": 0.16252600594519834,
+      "f1_sway_hz": null,
+      "f_hz": [
+        1.7232551620846137,
+        2.74704092580567,
+        3.2404477367616527,
+        4.232486189477888,
+        5.214973821990718,
+        5.824917996368994
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 51.34019174590991,
+      "anchor_ratio": 0.8,
+      "cable_area_m2": 0.0002,
+      "f1_all_cables_active_hz": 2.4588782195801833,
+      "f1_raw_hz": 1.9638179018900892,
+      "f1_self_supporting_hz": 0.30140469086705163,
+      "f1_sway_hz": null,
+      "f_hz": [
+        1.9638179018900892,
+        4.246693247381346,
+        4.271777623568229,
+        5.963912029042452,
+        7.200088932970741,
+        7.507626356814509
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 51.34019174590991,
+      "anchor_ratio": 0.8,
+      "cable_area_m2": 0.00035,
+      "f1_all_cables_active_hz": 5.956538704884662,
+      "f1_raw_hz": 2.264672763617752,
+      "f1_self_supporting_hz": 0.2046148690487933,
+      "f1_sway_hz": null,
+      "f_hz": [
+        2.264672763617752,
+        3.2727604974467783,
+        4.7830334408775155,
+        5.438519792352328,
+        5.649416527822186,
+        6.8874050524062405
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    },
+    {
+      "active_guys": 10,
+      "anchor_inclination_from_horizontal_deg": 51.34019174590991,
+      "anchor_ratio": 0.8,
+      "cable_area_m2": 0.0005,
+      "f1_all_cables_active_hz": 5.247251994059186,
+      "f1_raw_hz": 2.1782980195012955,
+      "f1_self_supporting_hz": 0.24292517375625286,
+      "f1_sway_hz": null,
+      "f_hz": [
+        2.1782980195012955,
+        3.6282788545340328,
+        4.471027620301261,
+        5.023752438598678,
+        5.655545257799273,
+        6.236265777937962
+      ],
+      "mast_elements": 54,
+      "nodes": 36,
+      "sway_mode_index": null,
+      "tension_only_iterations": 2,
+      "total_guys": 15
+    }
+  ],
+  "payload_source": "kdlo_tower_analysis/kdlo_rebuild_backfill.py:97-131 (mirrored verbatim)",
+  "site": "KDLO-TV tower, Garden City SD (OSM node 357089613)",
+  "solver": "tower_backend::ec_solver::solver_engine::solve_eigenmodes"
+}

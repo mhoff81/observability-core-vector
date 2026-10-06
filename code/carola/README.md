@@ -1,0 +1,159 @@
+# `code/carola/` — Carola site package: analysis and plotting scripts
+
+Five Python modules, no package, no dependencies beyond the standard library plus
+numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
+scripts still run, just with fewer p-values). This is the Carola Brücke
+(Dresden) half of the repository; the LUMO tower lives in `../lumo/`, Bautzen in
+`../bautzen/` and KDLO in `../kdlo/`.
+
+The site is the collapsed **Carolabrücke** (bridge `way` B 170, Wikidata
+Q1044279). Its record is a **per-girder chip export**: per acquisition the
+pipeline stored one 80 x 80 complex chip per girder request (segment 0/1/2 →
+Girder A/B/C) plus 7 x 7 chips for the wrongly typed tower asset. The package
+analyses the two states of the *same* structure around the collapse date
+`2024-09-11`:
+
+```
+pre-collapse (healthy)   <   2024-09-11   <=   post-collapse
+```
+
+so season, weather, traffic and pipeline generation all move with the state. The
+observability core vector is `OCV = [gamma2, P, D]`; the full mask vector is
+`x = [gamma2, P, D, A, F, S]`, carried in **two layers**:
+
+* **echo mask** — the whole 80 x 80 chip (the layer of the 6D vector), the
+  project-wide bridge-deck echo rule `intensity >= 0.30 x peak` **and**
+  `intensity >= 5 x np.median(intensity)`, `A >= 2`;
+* **deck mask** — the very same rule on the *girder's own* chip, i.e. the same
+  six dimensions restricted to Girder A / B / C (the layer this package adds).
+
+The mask layer rests on a **committed cache**
+(`data/carola/carola_windows_mask_cache.txt`): the 182 MB chip payloads do not
+belong in the repository, so the cache carries the echo mask of every chip plus
+the sufficient statistics, and the build re-verifies the rule on it.
+
+Neither layer's `A` is the pipeline's own `coherence_masked_pixels` column: that
+column was computed on the pre-fix *asset-point* chip while the committed export
+holds the per-girder re-extraction, so the two agree only by coincidence
+(**60 of 1,713** rows). The site's analysis project therefore recomputed the mask
+from the payloads — and this package re-derives it from the committed cache.
+
+All paths below are relative to the **repository root** and the scripts are
+always started from there (the wrapper `../../figures/carola/fig_carola_ocv_paper.sh`
+does that): inputs in `data/carola/`, figures in `figures/carola/`.
+
+### `carola_ocv_stats.py` — statistics layer (verbatim port)
+
+`_stats`, `welch_mw_test`, `cliffs_delta` (+ `cliffs_delta_bruteforce`),
+`bootstrap_delta_ci`, `delta_block`, `sign_test`, `sds_from`, `by_state`, `vals`,
+`season_of`, `strata_pair`, `fit_lda`, `predict_lda`, `loo_cv`,
+`permutation_test`, `fit_linear_score`, `score_row`, `oof_scores`, `delta_sds`,
+`permutation_p`, `paired_bootstrap_diff`, plus the port of the site's own
+correlation/regression battery (`spearman`, `mannwhitney`, `pair_block`,
+`ols_fit`, `f_test`). Copied line by line from `../kdlo/kdlo_ocv_stats.py`, which
+is itself a verbatim port of the LUMO project analysis scripts, so a difference
+in the Carola numbers cannot come from a difference in the statistics. The only
+Carola edits are naming: the state field is `state` and the two states are the
+site's collapse alphabet `pre-collapse (healthy)` / `post-collapse`
+(`analyze_carola_coherence.STATE_LABELS`).
+
+### `carola_ocv_core.py` — data layer, constants and loaders
+
+Paths, the analysis channels (`OCV = [gamma2, P, D]`), the 6D feature vector
+(`FEATURES = [gamma2, P, D, A, F, S]`, `DIMS`), the axis/title labels, the
+weather and control columns (`WEATHER`, `CONTROLS`), the three girders
+(`GIRDERS`), the model/seed constants (`MODELS`, `HEADLINE_PAIR = x_6d`,
+`LAMBDA_GRID`, `HEADLINE_LAMBDA = 0.5`, `RNG_SEED = 7`, `N_BOOT = 10000`,
+`N_PERM = 1000`) and the loaders (`load_csv`, `load_csv_meta`, `load_cache`,
+`load_manifest`, `load_measurements`, `load_segments`, `load_reference`).
+`MASK_COLUMNS` lists the echo-mask columns the generator appends, so that
+`CSV_COLUMNS` (and the CSV header) carry the whole 6D vector.
+
+It also carries the small shared aggregates (`row_brief`, `summ`, `by_girder`,
+`summary_by_state`, `day_of`, `state_of`, `echo_mode_of`).
+
+### `carola_ocv_masks.py` — the two mask layers (port of `../kdlo/kdlo_ocv_masks.py`)
+
+The module owns the mask rule of both layers: `echo_mask` (`0.30 x peak`,
+`5 x np.median`, `A >= 2`), `largest_component` / `connected_components_8`
+(port of the LUMO `_largest`), `gamma2_of` (`|sum z|^2 / (A sum |z|^2)`,
+clamped to [0, 1]), `vector_from_row` (`A`, `D = A / bbox_area`, `F`, `S`, the
+six dimensions, the bbox/centroid/peak geometry and the masked `gamma2`),
+`add_persistence` (`P` = mean pixel frequency of the own mask over all chips of
+the majority shape) and the cache I/O (`load_cache`, `load_manifest`, `extract`).
+
+`extract()` is the one-time offline step: it reads the 182 MB
+`carola_windows_full.txt`, applies the mask rule to every chip, resolves the
+per-girder segment from the committed `carola_windows_index.txt` +
+`carola_segments.txt`, drops byte-identical duplicate payloads, and writes the
+cache plus its manifest (the source file's sha256 included). After that the
+cache is the only mask input. `python3 code/carola/carola_ocv_masks.py --check`
+is the acceptance test of the committed cache: every masked pixel must satisfy
+both thresholds, the brightest masked pixel must *be* the peak
+(`max_masked == peak`), `A >= 2`, and the recomputed `gamma2` must agree with the
+stored sufficient statistics (472 duplicate payloads deduplicated, 1,717
+80 x 80 rows, no chip without an echo mask).
+
+### `carola_ocv_channels_csv.py` — build `data/carola/carola_ocv_channels.csv`
+
+Reads the committed cache and the committed measurement extract
+(`carola_measurements_full.txt`), recomputes the six mask dimensions of every
+chip, derives `segment`, `girder_index`, `state`, `pre_collapse`, `day`, `month`,
+`year`, `season` and `echo_mode`, and writes the channel table (1,717 rows,
+57 columns) plus `carola_ocv_channels_meta.json` (file sha256s, the mask rule,
+the guard counts, the derived-column definitions, the `coherence_masked_pixels`
+cross-check and the per-state summary of every channel). The build **refuses to
+write** if a chip has no echo mask or if the mask layer cannot be verified.
+
+```bash
+python3 code/carola/carola_ocv_channels_csv.py                 # build + verify
+python3 code/carola/carola_ocv_channels_csv.py --verify-only   # verify only
+# one-time re-extraction of the mask cache (needs the 182 MB payload file):
+python3 code/carola/carola_ocv_masks.py --extract
+python3 code/carola/carola_ocv_masks.py --check
+```
+
+### `fig_carola_ocv_paper.py` — figures A–E, JSON result, report, pin block
+
+The main script. `compute()` recalculates every number of the five figures from
+`data/carola/carola_ocv_channels.csv`; `pin_all()` then compares each number with
+the three committed reference JSONs in `data/carola/reference/`
+(**474 checks**: 414 exact, 60 within `1e-12` — the closed-form OLS report of the
+site's analysis, whose sums ran in a different order). Recomputed and pinned
+number by number: the state table, the per-girder and per-request (8-char
+prefix) tables, the SDS block, the nested OLS / inverse-N battery of
+`carola_echo_mask_gamma2.json`; the per-window `gamma2` and `n_masked` of
+`carola_coherence_states.json` (**925** of its **1,454** stored windows are still
+in the current export, and all 925 match exactly); and the committed map extract
+`carola_bridge_osm.json`, pinned structurally (Carolabrücke, B 170, Q1044279,
+two 12-node bridge ways, two razed DVB ways). A single deviation ends the run
+with exit code 1.
+
+`main()` writes the five figures to `figures/carola/`, the result JSON to
+`data/carola/fig_carola_ocv_paper.json` and the English report to
+`figures/carola/fig_carola_ocv_paper.md`.
+
+```bash
+python3 code/carola/fig_carola_ocv_paper.py            # full run, ~21 min
+python3 code/carola/fig_carola_ocv_paper.py --quick    # ~6 min, without the permutation null
+python3 code/carola/fig_carola_ocv_paper.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
+```
+
+`CAROLA_RES_CACHE=<path>` pickles the `compute()` result and reuses it on the
+next run (the second run then takes seconds) — a developer aid, never used by the
+wrapper.
+
+Wall-clock times are only printed to stdout, never written into an artifact: with
+the fixed seeds (RNG seed 7, 10000 bootstrap draws, 2000 for the strata, 1000
+label permutations) two runs produce identical JSON, Markdown and PNG files (the
+JSON's `quick` flag is the only difference between a `--quick` and a full run).
+
+One string of the result JSON stays in the reference's own wording: the
+`scenario_reading` of the `sds` block is a *pinned* value of
+`carola_echo_mask_gamma2.json` and is therefore copied verbatim; the report
+renders that reading in English instead.
+
+The module and site names keep their `carola_` prefix although the folder already
+says `carola/`: the import statements (`import carola_ocv_core as core`), the
+reference file names and every command line in the reports stay parallel to the
+other three sites, which is what makes the four packages readable as one diff.
