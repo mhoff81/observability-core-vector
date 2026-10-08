@@ -1,0 +1,6 @@
+asset_id|asset_name|segment_index|label|fundamental_hz|reference_intensity|segment_latitude|segment_longitude
+af683c7e-416a-4395-86cc-094ee83d9497|Yeongdeok Wind Turbine (Samgye-ri)|0|turbine-mast-section-0|6.805913696972|||
+af683c7e-416a-4395-86cc-094ee83d9497|Yeongdeok Wind Turbine (Samgye-ri)|1|turbine-mast-section-1|6.930518158154|||
+af683c7e-416a-4395-86cc-094ee83d9497|Yeongdeok Wind Turbine (Samgye-ri)|2|turbine-mast-section-2|5.059948243366|||
+af683c7e-416a-4395-86cc-094ee83d9497|Yeongdeok Wind Turbine (Samgye-ri)|3|turbine-mast-section-3|3.316248846216|||
+af683c7e-416a-4395-86cc-094ee83d9497|Yeongdeok Wind Turbine (Samgye-ri)|4|turbine-mast-section-4|3.418133828262|||

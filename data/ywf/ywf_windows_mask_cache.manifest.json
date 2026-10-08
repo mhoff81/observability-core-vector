@@ -1,0 +1,27 @@
+{
+ "asset_date_groups": 32,
+ "asset_date_groups_with_differing_payloads": 0,
+ "asset_date_groups_with_repeated_segment": 1,
+ "asset_date_groups_with_several_segments": 24,
+ "asset_date_groups_with_several_segments_with_differing_payloads": 0,
+ "generator": "code/ywf/ywf_ocv_masks.py --extract",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_deduplicated_same_payload": 24,
+ "n_rows": 17,
+ "n_without_echo": 16,
+ "n_without_index": 0,
+ "segment_resolved": false,
+ "source_index": "ywf_windows_index.txt",
+ "source_segments": "ywf_segments.txt",
+ "source_windows": "ywf_windows_full.txt",
+ "source_windows_sha256": "41b8838e80aebb2184a5da8bf9941ff55afc0a280a24742cfa620caa053b21bf",
+ "window_size": 7,
+ "window_sizes": {
+  "7x7": 33
+ }
+}
