@@ -177,37 +177,39 @@ states are not separable in the analysed window. The per-track deck-mask table
 while `A_des` does not — but with only 5-6 post chips per track the report
 carries that split as one more co-variate to read, not a verdict.
 
-### `fig_morandi_ocv_months.py` — the echo-mask dimensions month by month around the collapse
+### `fig_morandi_ocv_months.py` — the echo-mask dimensions over the 24 months before the collapse
 
 The **standalone companion** of the paper figure. Where the A–E figures pool the
 two states (`pre-collapse (healthy)` vs. `post-collapse`), this script keeps the
-*time axis* and splits the committed chip export into the four rolling one-month
-windows anchored at the event, so the reader sees **when** the mask moved, not
-only **that** it moved:
+*time axis* and splits the committed chip export into the **24 rolling one-month
+windows anchored at the event** (`M-24` … `M-1`) plus the month the collapse
+opens (`M+1`), so the reader sees **when** the mask moved, not only **that** it
+moved:
 
 ```
-M-3   [2018-05-14, 2018-06-14)     pre-collapse (healthy)     10 chips
-M-2   [2018-06-14, 2018-07-14)     pre-collapse (healthy)      8 chips
-M-1   [2018-07-14, 2018-08-14)     pre-collapse (healthy)     10 chips
+M-24  [2016-08-14, 2016-09-14)     pre-collapse (healthy)      first record month
+…
+M-1   [2018-07-14, 2018-08-14)     pre-collapse (healthy)      last
 M+1   [2018-08-14, 2018-09-14)     post-collapse              11 chips
 ```
 
 The collapse date opens M+1, so M-1 is pure pre and M+1 pure post and the two
 are the only adjacent-month contrast the script tests (per-chip Cliff's delta
 with a seeded percentile bootstrap CI, plus the same comparison against the
-three pre windows pooled). `compute()` reads only
+24 pre windows pooled). The fingerprint baseline is the **record-start** month
+`M-24` (2016-08). `compute()` reads only
 `data/morandi/morandi_ocv_channels.csv` and recomputes each dimension's
 per-window block with `morandi_ocv_stats`; the figure is a 2 x 3 panel — (a)-(d)
-jittered strips per window for `gamma2`, `P`, `S`, `D` with the window median,
-the IQR and the collapse cut, (e) the `(P, D)` plane coloured by window on a
-symlog y axis, (f) the 6D fingerprint, each window's median over the
-pre-baseline median on a log axis. `main()` writes the figure to
+one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median and
+the IQR, (e) the `(P, D)` plane coloured by month on a symlog y axis, (f) the 6D
+fingerprint, each month's median over the `M-24` baseline median on a log axis.
+`main()` writes the figure to
 `figures/morandi/fig_morandi_ocv_months.png`, the result JSON to
 `data/morandi/fig_morandi_ocv_months.json` and the English report to
 `figures/morandi/fig_morandi_ocv_months.md`:
 
 ```bash
-python3 code/morandi/fig_morandi_ocv_months.py            # ~7 s
+python3 code/morandi/fig_morandi_ocv_months.py            # ~15 s
 bash figures/morandi/fig_morandi_ocv_months.sh            # the same, via the wrapper
 python3 code/morandi/fig_morandi_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
 ```
@@ -216,10 +218,13 @@ It adds **no** number to the A–E pin contract and touches none of it (it never
 reads the committed reference JSONs), and it is deterministic like the rest of
 the package (fixed seed for the jitter and the bootstrap, no timestamps), so
 repeated runs produce byte-identical PNG, JSON and Markdown. Its reading is
-narrower still than the pooled one: with only 8-11 chips per window **no**
-dimension clears the bootstrap CI in either contrast (M+1 vs. M-1 or M+1 vs. the
-pooled pre side), so the month axis shows the co-variate noise the pooled figure
-already flags rather than a resolvable step.
+narrower still than the pooled one: the 24 pre months carry 221 chips (median 10
+per month, and the *last* pre month 10) while the first post month carries 11, so
+**no** dimension clears the bootstrap CI in either contrast (M+1 vs. M-1 or M+1
+vs. the pooled pre side) — the month axis shows the co-variate noise the pooled
+figure already flags rather than a resolvable step (`gamma2` does swing widely
+across the pre months, 0.032 … 0.790 month to month, with the *last* pre month at
+0.258).
 
 Wall-clock times are only printed to stdout, never written into an artifact: with
 the fixed seeds (RNG seed 7, 10000 bootstrap draws, 1000 label permutations) two

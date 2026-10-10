@@ -21,7 +21,7 @@ read off".
 | --- | --- | --- | --- | --- |
 | LUMO lattice tower (Hannover) | `code/lumo/`, `data/lumo/`, `figures/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | [`figures/lumo/fig_lumo_ocv_paper.md`](figures/lumo/fig_lumo_ocv_paper.md) |
 | Bautzen OpenLabs bridge | `code/bautzen/`, `data/bautzen/`, `figures/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | [`figures/bautzen/fig_bautzen_ocv_paper.md`](figures/bautzen/fig_bautzen_ocv_paper.md), [`…fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md) |
-| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md) |
+| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md), [`…fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md) |
 | Carolabrücke (Dresden) | `code/carola/`, `data/carola/`, `figures/carola/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-girder deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/carola/fig_carola_ocv_paper.md`](figures/carola/fig_carola_ocv_paper.md), [`…fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md) |
 | Ponte Morandi / Polcevera (Genova) | `code/morandi/`, `data/morandi/`, `figures/morandi/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/morandi/fig_morandi_ocv_paper.md`](figures/morandi/fig_morandi_ocv_paper.md), [`…fig_morandi_ocv_months.md`](figures/morandi/fig_morandi_ocv_months.md) |
 | Champlain Towers South (Surfside) | `code/cts/`, `data/cts/`, `figures/cts/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-cache (`0.30 x peak`, `5 x np.median`) — plus a first-class **difference-in-differences** layer (target vs. two control towers) | [`figures/cts/fig_cts_ocv_paper.md`](figures/cts/fig_cts_ocv_paper.md), [`…fig_cts_ocv_months.md`](figures/cts/fig_cts_ocv_months.md); DiD: [`data/cts/reference/cts_reference_did_ctn.md`](data/cts/reference/cts_reference_did_ctn.md), [`…did_placebo_ctn_vs_cte.md`](data/cts/reference/cts_reference_did_placebo_ctn_vs_cte.md) |
@@ -162,6 +162,23 @@ Read [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md)
 for the full verdict and [`code/kdlo/README.md`](code/kdlo/README.md) for the
 module list.
 
+A companion figure,
+[`figures/kdlo/fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md),
+keeps the **time axis** instead of pooling the two epochs. Uniquely among the
+companions it does **not** roll 24 one-month windows, because the KDLO record has
+no dense pre-collapse stretch: it is 60 acquisitions in two disjoint epochs (16
+`pre` 2022-06-02…2022-12-11, 43 `rebuild` 2023-05-04…2024-09-19, one acquisition
+2022-12-23 in neither), so the axis is the whole record by **calendar month** —
+28 buckets, four of them empty — taken from `acquisition_ts`. The collapse month
+2022-12 is **mixed** (it holds both the last `pre` acquisition and the singleton),
+so the collapse cut is drawn inside that bucket, and the four-month acquisition
+gap keeps its four empty buckets and a dotted gap line rather than being filled.
+The reading is descriptive: the six pure `pre` months carry 16 acquisitions, the
+mixed collapse bucket 2, and **1** of six dimensions clears the bootstrap CI
+against the last month before the collapse — the record is read as its own
+co-variation, never as damage. The companion adds no number to the A–E pin
+contract.
+
 ## What the Carola figure shows
 
 The same five panels for the collapsed **Carolabrücke** (Dresden), on the 1,717
@@ -201,14 +218,16 @@ module list.
 A companion figure,
 [`figures/carola/fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md),
 keeps the **time axis** instead of pooling the two states: it splits the chips
-into the four rolling one-month windows around the collapse (M-3, M-2, M-1 before
-the event and M+1 after it) and shows the same six echo-mask dimensions per
-window (jittered strips for `gamma2`/`P`/`S`/`D`, the `(P, D)` plane and the 6D
-fingerprint against the pre-baseline). Its reading is deliberately narrower than
-the pooled headline: the three pre windows are **not** stationary, and against
-that month-to-month noise only `D` clears the bootstrap CI in the adjacent-month
-contrast — `P`, the sharpest pooled difference, moves by only −0.19 with a CI
-spanning zero — so the month axis narrows the verdict rather than reproducing it.
+into the **24 rolling one-month windows before** the collapse (M-24, 2022-09,
+through M-1, 2024-08) plus the month the event opens (M+1) and shows the same six
+echo-mask dimensions per month (one dot per chip for `gamma2`/`P`/`D`/`A` with the
+month median and IQR, the `(P, D)` plane and the 6D fingerprint against the
+record-start `M-24` baseline). Its reading is deliberately narrower than the
+pooled headline: the 24 pre months carry 892 chips (median 40 per month) and are
+**not** stationary (`gamma2` ranges 0.013 … 0.297 month to month), and against
+that noise only `D` clears the bootstrap CI in the adjacent-month contrast —
+`P`, the sharpest pooled difference, moves by only −0.192 with a CI spanning zero —
+so the month axis narrows the verdict rather than reproducing it.
 
 ## What the Morandi figure shows
 
@@ -248,12 +267,14 @@ the module list.
 
 A companion figure,
 [`figures/morandi/fig_morandi_ocv_months.md`](figures/morandi/fig_morandi_ocv_months.md),
-keeps the **time axis** instead of pooling the two states: the four rolling
-one-month windows around the collapse (M-3, M-2, M-1 before the event and M+1
-after it), each carrying only 8–11 chips. Against that noise **no** dimension
-clears the bootstrap CI in the adjacent-month contrast M+1 vs. M-1, so the month
-axis shows the co-variate scatter the pooled figure already flags rather than a
-resolvable step.
+keeps the **time axis** instead of pooling the two states: the **24 rolling
+one-month windows before** the collapse (M-24, 2016-08, through M-1, 2018-07) plus
+the month the event opens (M+1). The 24 pre months carry 221 chips (median 10 per
+month), the first post month 11, and `gamma2`'s monthly median swings from 0.032 to
+0.790 across the pre months alone. Against that noise **no** dimension clears the
+bootstrap CI in the adjacent-month contrast M+1 vs. M-1, so the month axis shows
+the co-variate scatter the pooled figure already flags rather than a resolvable
+step.
 
 A companion figure,
 [`figures/bautzen/fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md),
@@ -302,17 +323,20 @@ A companion figure,
 the **time axis** instead of pooling the two states and, uniquely among the sites,
 reaches back to the **first images of the footprint**: `F0` is the record start
 (`2015-09-21`, the ASC rel-48 IW3 stratum's first acquisition — **no** Sentinel-1
-data for this footprint exist in 2014), then the three rolling one-month windows
-before the collapse (`M-3`, `M-2`, `M-1`) and the first month after it (`M+1`).
-It shows the same six echo-mask dimensions per window (jittered strips for
-`gamma2`/`P`/`S`/`D`, the `(P, D)` plane and the 6D fingerprint against the `F0`
-baseline). The reading is deliberately narrow: against the **first-images** epoch
-`F0` the long baseline clears the bootstrap CI in **0** of the six dimensions, and
-against the adjacent `M-1` it is again **0** of six — the `F0` baseline carries
-only 8 chips and seven years of drift, and the post month is bare sand, so the
-`F0 -> M+1` step conflates long-term drift, season and the collapse and is carried
-as co-variation around the collapse cut, **never** as a damage verdict. The
-companion adds no number to the A–F pin contract.
+data for this footprint exist in 2014), then the **24 rolling one-month windows
+before the collapse** (`M-24`, 2019-06, through `M-1`, 2021-05) and the first
+month after it (`M+1`). It shows the same six echo-mask dimensions per month (one
+dot per chip for `gamma2`/`P`/`D`/`A`, the `(P, D)` plane and the 6D fingerprint
+against the `F0` baseline) and draws the **acquisition gap** between `F0`
+and `M-24` as a labelled dotted line (`gap 3.7 yr`, measured from the window days)
+instead of interpolating it. The reading is
+deliberately narrow: the 24 pre months carry 236 chips (median 10 per month) and
+the first post month 8, and against the **first-images** epoch `F0` the long
+baseline clears the bootstrap CI in **0** of the six dimensions — and against the
+adjacent `M-1` again **0** of six — the post month is bare sand, so the
+`F0 -> M+1` step spans six years of drift and conflates that drift, season and the
+collapse and is carried as co-variation around the collapse cut, **never** as a
+damage verdict. The companion adds no number to the A–F pin contract.
 
 ## What the YWF figure shows
 
@@ -531,25 +555,26 @@ bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh        # ~2 s (amplitude/phase
 # committed strip cache)
 bash figures/kdlo/fig_kdlo_ocv_paper.sh                  # ~1 min
 bash figures/kdlo/fig_kdlo_ocv_paper.sh --quick          # ~35 s (no permutation null)
+bash figures/kdlo/fig_kdlo_ocv_months.sh                 # ~11 s (calendar-month companion)
 
 # Carola: the same for the collapsed bridge (per-girder chip export, echo mask and
 # deck mask recomputed from a committed window-payload cache)
 bash figures/carola/fig_carola_ocv_paper.sh              # ~21 min
 bash figures/carola/fig_carola_ocv_paper.sh --quick      # ~6 min (no permutation null)
-bash figures/carola/fig_carola_ocv_months.sh             # ~14 s (month-by-month companion)
+bash figures/carola/fig_carola_ocv_months.sh             # ~36 s (24-month companion)
 
 # Morandi: the same for the collapsed viaduct (per-track chip export, echo mask and
 # deck mask recomputed from a committed window-payload cache) — an honest null
 bash figures/morandi/fig_morandi_ocv_paper.sh            # full run (permutation null)
 bash figures/morandi/fig_morandi_ocv_paper.sh --quick    # ~23 s (no permutation null)
-bash figures/morandi/fig_morandi_ocv_months.sh           # ~7 s (month-by-month companion)
+bash figures/morandi/fig_morandi_ocv_months.sh           # ~15 s (24-month companion)
 
 # CTS: the difference-in-differences site (four footprints of one orbit, echo mask
 # and per-track deck mask recomputed from a committed window cache)
 python3 code/cts/cts_ocv_masks.py --check                # mask rule on every cache row
 python3 code/cts/cts_ocv_channels_csv.py                 # build the channel table
 python3 code/cts/cts_ocv_did.py --verify                 # pin the three DiD references
-bash figures/cts/fig_cts_ocv_months.sh                   # ~10 s (F0 + M-3..M+1 companion)
+bash figures/cts/fig_cts_ocv_months.sh                   # ~19 s (F0 + M-24..M+1 companion)
 
 # YWF: the Yeongdeok wind-turbine tower (one 7 x 7 window payload, 33 unique chips,
 # one mask layer, echo coverage instead of a contrast — split by state and,

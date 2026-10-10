@@ -1,6 +1,6 @@
 # `code/kdlo/` — KDLO site package: analysis and plotting scripts
 
-Five Python modules, no package, no dependencies beyond the standard library plus
+Seven Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values of the control
 tests; without it the scripts still run, just with fewer p-values). This is the
 KDLO half of the repository; the LUMO tower site lives in `../lumo/` and Bautzen
@@ -136,6 +136,64 @@ python3 code/kdlo/fig_kdlo_ocv_paper.py --figdir /tmp/x --json /tmp/y.json --md 
 Wall-clock times are only printed to stdout, never written into an artifact: with
 the fixed seeds (RNG seed 7, 10000 bootstrap draws, 2000 for the strata, 1000
 label permutations) two runs produce identical JSON, Markdown and PNG files.
+
+### `fig_kdlo_ocv_months.py` — the echo-mask dimensions month by month over the record
+
+The **standalone companion** of the paper figure, run by
+`figures/kdlo/fig_kdlo_ocv_months.sh` from the repository root. Where the A–E
+figures pool the two **epochs** (`pre-collapse` vs. `during-rebuild`), this script
+keeps the *time axis*, so the reader sees **when** the mask moved, not only **that**
+it moved. It reads only `data/kdlo/kdlo_ocv_channels.csv`, recomputes each
+calendar month's block with `kdlo_ocv_stats`, draws one figure and writes a small
+JSON + English report. It adds **no** number to the A–E pin contract and touches
+none of it (it never reads `data/kdlo/reference/`).
+
+Why the axis is **calendar months over the whole record** and not the 24 rolling
+windows of the other sites: the KDLO record is 60 acquisitions in two **disjoint**
+epochs (`pre` 2022-06-02..2022-12-11 16 acquisitions, `rebuild`
+2023-05-04..2024-09-19 43 acquisitions), so there is no dense 24-month pre-stretch
+to roll; the axis is the whole record by **calendar month** (28 buckets, 4 of them
+empty) and the acquisition gap is drawn, not filled. The CSV carries no `day`
+column — the month is taken from `acquisition_ts` through `core.day_of`.
+
+```
+pre     2022-06-02..2022-12-11   standing mast      16 acquisitions
+single  2022-12-23               in neither epoch    1 acquisition
+rebuild 2023-05-04..2024-09-19   during the rebuild 43 acquisitions
+```
+
+Two properties of the record are kept visible rather than smoothed away. The
+collapse month **2022-12 is mixed** (it holds the last `pre` acquisitions, to
+2022-12-11, and the `single` 2022-12-23 that belongs to neither epoch), so the
+collapse cut is drawn *inside* that bucket (a red dot and label at a fractional
+x) instead of on a boundary; and the **4-month acquisition gap** between the
+epochs (`2023-01 … 2023-04`, no acquisitions) stays on the axis as four empty
+buckets with a dotted gap line. Panel (f) is therefore read against the first
+record month (`2022-06`) as the 1.0 line, and the epoch tints (`pre` blue,
+`rebuild` orange) mark which side of the cut a month belongs to.
+
+The figure is 2 x 3: (a)–(d) one dot per acquisition for `gamma2`, `P`, `D`, `A`
+with the month median and IQR (`D` on a symlog y axis, `linthresh=0.01`, so the
+near-zero cluster stays visible); (e) the `(P, D)` plane, one dot per acquisition
+coloured by month; (f) the 6D fingerprint — each month's median divided by the
+`2022-06` baseline median on a log axis. `main()` writes the PNG to
+`figures/kdlo/fig_kdlo_ocv_months.png`, the JSON to
+`data/kdlo/fig_kdlo_ocv_months.json` and the report to
+`figures/kdlo/fig_kdlo_ocv_months.md`:
+
+```bash
+python3 code/kdlo/fig_kdlo_ocv_months.py            # ~11 s
+bash figures/kdlo/fig_kdlo_ocv_months.sh            # the same, via the wrapper
+python3 code/kdlo/fig_kdlo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
+```
+
+It is deterministic (fixed seeds, no timestamps), so two runs are byte-identical,
+and it is **descriptive**: the 6 pure `pre` months carry 16 acquisitions (two to
+three per month), the collapse month 2, so every interval is very wide and the
+month axis is read as the record's own co-variation over two disjoint windows —
+the reconstruction, the season, the acquisition geometry and the pre/post mix move
+with the collapse date as well — **never** as damage.
+
 
 The module and site names keep their `kdlo_` prefix although the folder already
 says `kdlo/`: the import statements (`import kdlo_ocv_core as core`), the

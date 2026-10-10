@@ -6,6 +6,8 @@ figures/
 ├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
 │              and the companion fig_bautzen_ocv_amp_phase.sh|.md|.png
 ├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].png
+│              and the companion fig_kdlo_ocv_months.sh|.md|.png (calendar months
+│              over the whole record, two disjoint epochs, no 24-month pre stretch)
 ├── carola/    Carolabrücke, Dresden — fig_carola_ocv_paper.sh|.md|[A-E].png
 │              and the companion fig_carola_ocv_months.sh|.md|.png
 ├── morandi/   Ponte Morandi, Genova — fig_morandi_ocv_paper.sh|.md|[A-E].png
@@ -57,15 +59,16 @@ bash figures/lumo/fig_lumo_ocv_paper.sh            # full run, ~5 min
 bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min, permutation tests copied
 bash figures/bautzen/fig_bautzen_ocv_paper.sh      # ~6 min, deck-edge mask
 bash figures/kdlo/fig_kdlo_ocv_paper.sh            # ~1 min, epoch contrast
+bash figures/kdlo/fig_kdlo_ocv_months.sh           # ~11 s, calendar-month companion
 bash figures/carola/fig_carola_ocv_paper.sh        # ~21 min, bridge collapse
 bash figures/carola/fig_carola_ocv_paper.sh --quick # ~6 min, no permutation null
-bash figures/carola/fig_carola_ocv_months.sh       # ~14 s, month-by-month companion
+bash figures/carola/fig_carola_ocv_months.sh       # ~36 s, 24-month companion
 bash figures/morandi/fig_morandi_ocv_paper.sh      # full run (permutation null)
 bash figures/morandi/fig_morandi_ocv_paper.sh --quick # ~23 s, no permutation null
-bash figures/morandi/fig_morandi_ocv_months.sh     # ~7 s, month-by-month companion
+bash figures/morandi/fig_morandi_ocv_months.sh     # ~15 s, 24-month companion
 bash figures/cts/fig_cts_ocv_paper.sh              # ~15 min, permutation null
 bash figures/cts/fig_cts_ocv_paper.sh --quick      # ~50 s, no permutation null
-bash figures/cts/fig_cts_ocv_months.sh             # ~10 s, months companion (F0 + M-3..M+1)
+bash figures/cts/fig_cts_ocv_months.sh             # ~19 s, months companion (F0 + M-24..M+1)
 bash figures/ywf/fig_ywf_ocv_paper.sh              # ~8 s, echo coverage + pins
 python3 code/ywf/fig_ywf_ocv_weeks.py              # ~10 s, pre-window companion (no wrapper)
 bash figures/espoo/fig_espoo_ocv_paper.sh          # ~4.5 min, event-free control + pins
@@ -184,6 +187,47 @@ reference files into two that are recomputed exactly and two that are only pinne
 structurally. 2884 checks in a full run, 2875 in `--quick`; exit code != 0 on any
 failure.
 
+## `kdlo/fig_kdlo_ocv_months.sh` → `../code/kdlo/fig_kdlo_ocv_months.py`
+
+The **standalone companion** of the KDLO paper figure, on the *time axis* over the
+whole record. The other sites' month companions roll 24 one-month windows because
+their records carry a dense pre-collapse stretch; the KDLO record is 60
+acquisitions in two **disjoint** epochs, so the axis here is the whole record by
+**calendar month** (28 buckets, 4 of them empty) taken from the `acquisition_ts`
+column (`core.day_of` — the CSV has no `day` column), plus the English report
+[`kdlo/fig_kdlo_ocv_months.md`](kdlo/fig_kdlo_ocv_months.md) and
+[`../data/kdlo/fig_kdlo_ocv_months.json`](../data/kdlo/fig_kdlo_ocv_months.json):
+
+| epoch | range | acquisitions |
+| --- | --- | --- |
+| pre | 2022-06-02 … 2022-12-11 | 16 |
+| (neither) | 2022-12-23 | 1 |
+| rebuild | 2023-05-04 … 2024-09-19 | 43 |
+
+| file | panel content |
+| --- | --- |
+| `kdlo/fig_kdlo_ocv_months.png` | 2 x 3: (a)-(d) one dot per acquisition per calendar month for `gamma2`, `P`, `D`, `A` with the month median and the IQR, the epoch tints (pre blue, rebuild orange) and the collapse cut drawn *inside* the mixed bucket 2022-12 as a red dot and label at a fractional x; (e) the `(P, D)` plane, one dot per acquisition coloured by month (symlog y, `linthresh=0.01`); (f) the 6D fingerprint — each month's median divided by the `2022-06` (first record month) baseline median on a log axis, the 1.0 line drawn |
+
+The figure adds **one** image to the site and does **not** touch the committed
+reference JSONs or the figures A–E pin block (it never reads
+`../data/kdlo/reference/`). Two properties of the record are kept visible rather
+than smoothed away: the collapse month **2022-12 is mixed** (the last `pre`
+acquisitions to 2022-12-11 *and* the 2022-12-23 acquisition that belongs to
+neither epoch), which is why the cut sits inside that bucket instead of on a
+boundary, and the record's **4-month acquisition gap** (2023-01 … 2023-04, four
+empty buckets with a dotted gap line). The reading is descriptive: the 6 pure
+`pre` months carry 16 acquisitions (two to three per month) and the collapse
+month 2, so every interval is very wide; against the last month before the
+collapse the mixed bucket clears the bootstrap CI in **1** of six dimensions and
+the pooled epoch contrast (`rebuild` vs. `pre`) also in **1** of six, so the axis
+is read as the record's own co-variation over two disjoint windows — never as
+damage.
+
+```bash
+bash figures/kdlo/fig_kdlo_ocv_months.sh            # ~11 s
+PYTHON=/usr/bin/python3 bash figures/kdlo/fig_kdlo_ocv_months.sh
+```
+
 ## `carola/fig_carola_ocv_paper.sh` → `../code/carola/fig_carola_ocv_paper.py`
 
 Five figures on the **collapsed Carolabrücke** (Dresden), on the 1,717 committed
@@ -219,35 +263,37 @@ these chips (it agrees with the recomputed `A` on 60 of 1,713 rows only).
 
 The **standalone companion** of the Carola paper figure, on the *time axis*
 around the collapse instead of the two pooled states: the same six echo-mask
-dimensions `x = [gamma2, P, D, A, F, S]` but split into the four rolling
-one-month windows that straddle the event (the collapse date `2024-09-11` opens
-M+1, so M-1 is pure pre and M+1 pure post), plus the English report
+dimensions `x = [gamma2, P, D, A, F, S]` but split into the **24 rolling
+one-month windows before the event** (`M-24` 2022-09-11 … `M-1` 2024-08-11) plus
+the month the collapse opens (`2024-09-11` opens M+1, so M-1 is pure pre and M+1
+pure post), plus the English report
 [`carola/fig_carola_ocv_months.md`](carola/fig_carola_ocv_months.md) and
 [`../data/carola/fig_carola_ocv_months.json`](../data/carola/fig_carola_ocv_months.json):
 
 | window | range | state | chips |
 | --- | --- | --- | --- |
-| M-3 | [2024-06-11, 2024-07-11) | pre-collapse (healthy) | 42 |
-| M-2 | [2024-07-11, 2024-08-11) | pre-collapse (healthy) | 52 |
+| M-24 | [2022-09-11, 2022-10-11) | pre-collapse (healthy) | 16 |
+| … | one calendar month each | pre-collapse (healthy) | 14 … 56 |
 | M-1 | [2024-08-11, 2024-09-11) | pre-collapse (healthy) | 56 |
 | M+1 | [2024-09-11, 2024-10-11) | post-collapse | 60 |
 
 | file | panel content |
 | --- | --- |
-| `carola/fig_carola_ocv_months.png` | 2 x 3: (a)-(d) one jittered strip per window for `gamma2`, `P`, `S`, `D` with the window median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by window (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each window's median divided by the pre-baseline median on a log axis |
+| `carola/fig_carola_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `M-24` (record-start) baseline median on a log axis |
 
 The figure adds **one** image to the site and does **not** touch the committed
 reference JSONs or the figures A–E pin block. Its reading is deliberately
-narrower than the pooled headline: the three pre windows are **not** stationary
-(`gamma2`'s median roughly halves twice over M-3..M-1, 0.158 → 0.072 → 0.037),
-and against that month-to-month noise only `D` clears the bootstrap CI in the
-single adjacent-month contrast M+1 vs. M-1 (median 0.0073 → 0.0058, Cliff's
-delta −0.36); `P` — the sharpest pooled difference in the A–E figures — moves by
-only −0.19 here, with a CI that spans zero. The month axis therefore narrows the
-pooled verdict rather than reproducing it, and the report says so.
+narrower than the pooled headline: the 24 pre months carry 892 chips (median 40
+per month) and are **not** stationary (`gamma2`'s monthly median ranges
+0.0133 … 0.2975 over M-24..M-1), and against that month-to-month noise only `D`
+clears the bootstrap CI in the single adjacent-month contrast M+1 vs. M-1 (median
+0.0073 → 0.0058, Cliff's delta −0.355); `P` — the sharpest pooled difference in
+the A–E figures — moves by only −0.192 here, with a CI that spans zero, and
+`gamma2` runs the other way (+0.078, CI spanning zero). The month axis therefore
+narrows the pooled verdict rather than reproducing it, and the report says so.
 
 ```bash
-bash figures/carola/fig_carola_ocv_months.sh            # ~14 s
+bash figures/carola/fig_carola_ocv_months.sh            # ~36 s
 PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_months.sh
 ```
 
@@ -296,32 +342,35 @@ recomputed `A` on 0 of 232 rows.
 
 The **standalone companion** of the Morandi paper figure, on the *time axis*
 around the collapse instead of the two pooled states: the same six echo-mask
-dimensions `x = [gamma2, P, D, A, F, S]` but split into the four rolling
-one-month windows that straddle the event (the collapse date `2018-08-14` opens
-M+1, so M-1 is pure pre and M+1 pure post), plus the English report
+dimensions `x = [gamma2, P, D, A, F, S]` but split into the **24 rolling
+one-month windows before the event** (`M-24` 2016-08-14 … `M-1` 2018-07-14) plus
+the month the collapse opens (`2018-08-14` opens M+1, so M-1 is pure pre and M+1
+pure post), plus the English report
 [`morandi/fig_morandi_ocv_months.md`](morandi/fig_morandi_ocv_months.md) and
 [`../data/morandi/fig_morandi_ocv_months.json`](../data/morandi/fig_morandi_ocv_months.json):
 
 | window | range | state | chips |
 | --- | --- | --- | --- |
-| M-3 | [2018-05-14, 2018-06-14) | pre-collapse (healthy) | 10 |
-| M-2 | [2018-06-14, 2018-07-14) | pre-collapse (healthy) | 8 |
+| M-24 | [2016-08-14, 2016-09-14) | pre-collapse (healthy) | 4 |
+| … | one calendar month each | pre-collapse (healthy) | 4 … 10 |
 | M-1 | [2018-07-14, 2018-08-14) | pre-collapse (healthy) | 10 |
 | M+1 | [2018-08-14, 2018-09-14) | post-collapse | 11 |
 
 | file | panel content |
 | --- | --- |
-| `morandi/fig_morandi_ocv_months.png` | 2 x 3: (a)-(d) one jittered strip per window for `gamma2`, `P`, `S`, `D` with the window median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by window (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each window's median divided by the pre-baseline median on a log axis |
+| `morandi/fig_morandi_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `M-24` (record-start) baseline median on a log axis |
 
 The figure adds **one** image to the site and does **not** touch the committed
 reference JSONs or the figures A–E pin block. Its reading is deliberately
-narrower than the pooled one: with only 8–11 chips per window **no** dimension
-clears the bootstrap CI in the adjacent-month contrast M+1 vs. M-1 or against
-the pooled pre side, so the month axis shows the co-variate scatter the pooled
-figure already flags rather than a resolvable step.
+narrower than the pooled one: the 24 pre months carry 221 chips (median 10 per
+month), the first post month 11, so **no** dimension clears the bootstrap CI in
+the adjacent-month contrast M+1 vs. M-1 or against the pooled pre side — the
+month axis shows the co-variate scatter the pooled figure already flags rather
+than a resolvable step (`gamma2`'s monthly median swings 0.032 … 0.790 across the
+pre months alone).
 
 ```bash
-bash figures/morandi/fig_morandi_ocv_months.sh            # ~7 s
+bash figures/morandi/fig_morandi_ocv_months.sh            # ~15 s
 PYTHON=/usr/bin/python3 bash figures/morandi/fig_morandi_ocv_months.sh
 ```
 
@@ -383,29 +432,33 @@ The time-axis **companion** of the CTS paper script (like
 [`morandi/fig_morandi_ocv_months.sh`](morandi/fig_morandi_ocv_months.sh) are for
 their sites): instead of the two pooled states it keeps the time axis and shows
 the **first Sentinel-1 images of the footprint** (`F0`, the 2015-09 record start),
-the three one-month windows before the collapse and the **first month after** it
-(`2021-06-24` opens `M+1`). It produces the English report
+the **24 rolling one-month windows before the collapse** (`M-24` 2019-06-24 …
+`M-1` 2021-05-24) and the **first month after** it (`2021-06-24` opens `M+1`). It
+produces the English report
 [`cts/fig_cts_ocv_months.md`](cts/fig_cts_ocv_months.md) and
 [`../data/cts/fig_cts_ocv_months.json`](../data/cts/fig_cts_ocv_months.json):
 
 | file | panel content |
 | --- | --- |
-| `cts/fig_cts_ocv_months.png` | 2 x 3: (a)-(d) one jittered strip per window for `gamma2`, `P`, `S`, `D` with the window median, the IQR, the collapse cut as a dashed line and the record gap (`F0` -> `M-3`, seven years) as a dotted line; (e) the `(P, D)` plane, one dot per chip coloured by window (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each window's median divided by the `F0` (first-images) baseline median on a log axis |
+| `cts/fig_cts_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR, the collapse cut as a dashed line and the record gap (`F0` -> `M-24`, labelled `gap 3.7 yr`, its length computed from the window days) as a dotted line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `F0` (first-images) baseline median on a log axis |
 
-The five windows are `F0` `[2015-09-21, 2015-11-01)`, `M-3` `[2021-03-24,
-2021-04-24)`, `M-2` `[2021-04-24, 2021-05-24)`, `M-1` `[2021-05-24, 2021-06-24)`
-and `M+1` `[2021-06-24, 2021-07-24)`, so **48 chips** (8 / 12 / 8 / 12 / 8). The
-`F0` baseline is 2015 rather than 2014 because **no** Sentinel-1 data for this
+The 26 windows are `F0` `[2015-09-21, 2015-11-01)` followed by `M-24` …
+`M-1` (one calendar month each) and `M+1` `[2021-06-24, 2021-07-24)`, so **252
+chips** (8 in `F0`, 236 across the 24 pre months, 8 in `M+1`; 4 … 12 per month).
+The `F0` baseline is 2015 rather than 2014 because **no** Sentinel-1 data for this
 footprint exist before 2015-09-21 (the ASC rel-48 IW3 stratum's first
 acquisition; `../data/cts/cts_acquisition_census.md`) — the report states that
-rather than inventing a 2014 window. The month axis is descriptive and carries the
+rather than inventing a 2014 window, and it draws the resulting **3.7-year
+acquisition gap** between `F0` and `M-24` as a dotted line rather than
+interpolating it. The month axis is descriptive and carries the
 site's standing caveat: the post state is *bare sand*, and the long `F0 -> M+1`
-baseline conflates seven years of drift, season and the collapse, so the panels are
-read as co-variation, **never** as damage. This companion adds **no** number to
-the paper script's A–F pin contract.
+baseline spans six years of drift, season and the collapse, so the panels are
+read as co-variation, **never** as damage — **0** of the six dimensions clears the
+bootstrap CI against either `F0` or the adjacent `M-1`. This companion adds **no**
+number to the paper script's A–F pin contract.
 
 ```bash
-bash figures/cts/fig_cts_ocv_months.sh            # ~10 s
+bash figures/cts/fig_cts_ocv_months.sh            # ~19 s
 PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_months.sh
 ```
 

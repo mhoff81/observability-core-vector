@@ -1,6 +1,6 @@
 # `code/cts/` — Champlain Towers South site package: analysis and plotting scripts
 
-Five Python modules, no package, no dependencies beyond the standard library plus
+Seven Python modules, no package, no dependencies beyond the standard library plus
 numpy / (scipy only for the p-values; without it the scripts still run, just with
 fewer p-values). This is the **Champlain Towers South** (Surfside, Miami-Dade,
 FL, 25.87306 N 80.12083 W) half of the repository; the LUMO tower lives in
@@ -185,7 +185,7 @@ python3 code/cts/fig_cts_ocv_paper.py --figdir figures/cts \
         --json data/cts/fig_cts_ocv_paper.json   # explicit outputs
 ```
 
-### `fig_cts_ocv_months.py` — the echo-mask dimensions from the first images to the month after the collapse
+### `fig_cts_ocv_months.py` — the echo-mask dimensions from the first images through the 24 pre-collapse months to the month after the collapse
 
 The time-axis **companion** of `fig_cts_ocv_paper.py` (like
 `../carola/fig_carola_ocv_months.py` and `../morandi/fig_morandi_ocv_months.py`
@@ -193,9 +193,10 @@ are companions of their paper scripts), run by
 `figures/cts/fig_cts_ocv_months.sh` from the repository root. It reads only
 `data/cts/cts_ocv_channels.csv` and keeps the time axis instead of the two pooled
 states: the **first Sentinel-1 images available for the footprint** (`F0`, the
-2015-09 record start), the three one-month windows before the collapse and the
-**first month after** it (`2021-06-24` opens `M+1`). It adds no number to the
-A–F pin contract and touches none of it.
+2015-09 record start), the **24 rolling one-month windows before the collapse**
+(`M-24` 2019-06-24 … `M-1` 2021-05-24) and the **first month after** it
+(`2021-06-24` opens `M+1`). It adds no number to the A–F pin contract and touches
+none of it.
 
 Why the baseline is 2015 and not 2014: Sentinel-1 data for **this** footprint do
 not exist in 2014 — Sentinel-1A launched on 2014-04-03, and the suitable orbit
@@ -203,19 +204,27 @@ not exist in 2014 — Sentinel-1A launched on 2014-04-03, and the suitable orbit
 (`data/cts/cts_acquisition_census.md`; the Step-0 census already queried from
 2014-10-01 and found nothing usable earlier). `F0` is therefore the record-start
 epoch that carries the first images that actually exist, and the report documents
-that rather than inventing a 2014 window.
+that rather than inventing a 2014 window. Because `F0` is the *only* usable
+window before 2019, the month axis carries a **3.7-year acquisition gap** between
+`F0` and `M-24`; it is drawn as a dotted line and labelled with its length
+(`GAP_LABEL` = `gap {GAP_YEARS:.1f} yr` → **`gap 3.7 yr`**, computed from the
+`F0` window end to the first pre window, not hard-coded), and the series line is
+broken across it so no month is interpolated.
 
-The figure is 2 x 3: (a)–(d) one jittered strip per window for `gamma2`, `P`,
-`S`, `D` with the window median, the IQR and the collapse cut as a dashed line
-(plus the dotted record gap between `F0` and `M-3`); (e) the `(P, D)` plane, one
-dot per chip coloured by window (symlog y); (f) the 6D fingerprint — each window's
+The figure is 2 x 3: (a)–(d) one dot per chip per month for `gamma2`, `P`, `D`,
+`A` with the month median and the IQR, the collapse cut as a dashed line (plus
+the dotted record gap between `F0` and `M-24`); (e) the `(P, D)` plane, one dot
+per chip coloured by month (symlog y); (f) the 6D fingerprint — each month's
 median divided by the `F0` (first-images) baseline median on a log axis. It writes
 the PNG to `figures/cts/`, the JSON to `data/cts/fig_cts_ocv_months.json` and the
 report to `figures/cts/fig_cts_ocv_months.md`. It is deterministic (fixed seeds,
-no timestamps), so two runs are byte-identical.
+no timestamps), so two runs are byte-identical. Its reading stays descriptive:
+the 24 pre months carry 236 chips (median 10 per month) and the first post month 8,
+and **0** of the six dimensions clears the bootstrap CI against either `F0` (the
+long contrast) or the adjacent `M-1`.
 
 ```bash
-python3 code/cts/fig_cts_ocv_months.py            # ~10 s
+python3 code/cts/fig_cts_ocv_months.py            # ~19 s
 bash figures/cts/fig_cts_ocv_months.sh            # the same, via the wrapper
 python3 code/cts/fig_cts_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
 ```
