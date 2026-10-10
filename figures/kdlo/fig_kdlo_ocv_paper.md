@@ -18,7 +18,7 @@ Input is the committed `kdlo/kdlo_ocv_channels.csv` (`60` acquisitions, sha256 `
 
 The echo-mask dimensions are recomputed from the committed full-dwell strip cache `strips/` (64 strips, manifest sha256 `2c2e5fde8ba0c2a8...`) with the rule of the pipeline itself — so `A` reproduces `coherence_masked_pixels` exactly and the recomputed masked coherence reproduces `coherence_gamma2` to 1e-12 on all 60 acquisitions (the generator refuses to write the CSV otherwise). `P` is a property of the whole record (the 64 dates), so it cannot be checked against a single row.
 
-Recomputed against the four committed reference JSONs: **2985 checks, 0 failures** (2985 exact, 0 within 1e-12; max |deviation| 0). Of those, 128 are structural checks of `kdlo_s1_availability.json` and 67 of `kdlo_fem_frequencies.json` — those two files are catalogue and eigenmode-solver output and are **not** rederivable from the record, so they are pinned structurally and reported honestly as such.
+Recomputed against the four committed reference JSONs: **3045 checks, 0 failures** (3045 exact, 0 within 1e-12; max |deviation| 0). Of those, 188 are structural checks of `kdlo_s1_availability.json` and 67 of `kdlo_fem_frequencies.json` — those two files are catalogue and eigenmode-solver output and are **not** rederivable from the record, so they are pinned structurally and reported honestly as such.
 
 ## 3. What moves — and what does not
 
@@ -96,7 +96,7 @@ Three handicaps remain, none of which the pinning can remove: the labels are epo
 - **Not "after the reconstruction".** The record ends 2024-09-19 while the antenna reached 1,542 ft on 2024-08-19, so the second epoch is *during* the rebuild.
 - **Not independent evidence.** `gamma^2` and `A` come from the same interferogram and the same pipeline; the phase channels come from the same processing chain. Coherence, mask size and phase activity are three views of one scattering geometry, not three experiments.
 - **Not a second site.** The LUMO and Bautzen packages in this repository are separate sites with their own records; the agreement or disagreement between the three is a cross-site question this package does not answer.
-- **Not a re-measurement.** The two reference files that are not rederivable (`kdlo_s1_availability.json`, `kdlo_fem_frequencies.json`) are pinned structurally (128 + 67 checks) and treated as given; only the two channel JSONs are recomputed field by field from the committed record.
+- **Not a re-measurement.** The two reference files that are not rederivable (`kdlo_s1_availability.json`, `kdlo_fem_frequencies.json`) are pinned structurally (188 + 67 checks) and treated as given; only the two channel JSONs are recomputed field by field from the committed record.
 - **Not a large sample.** 16 `pre` vs. 43 `rebuild` acquisitions on one geometry; strata with fewer than 3 acquisitions on one side are reported as `n/a` instead of being silently dropped, and the 1 missing repeat day(s) of part 1 are reported rather than interpolated.
 
 ## 8. Reproduce
@@ -106,5 +106,5 @@ bash figures/kdlo/fig_kdlo_ocv_paper.sh          # full run, all pins
 python3 code/kdlo/fig_kdlo_ocv_paper.py --quick  # without the permutation null
 ```
 
-Verdict of this run: **2985 checks, 0 failures** (case: full); the package is reproducible and the figures are byte-deterministic.
+Verdict of this run: **3045 checks, 0 failures** (case: full); the package is reproducible and the figures are byte-deterministic.
 

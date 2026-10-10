@@ -152,7 +152,15 @@ spends its length on why that is *not* automatically damage:
   **scattering geometry** — the record cannot separate the two readings;
 * two of the four reference JSONs (`kdlo_s1_availability.json`,
   `kdlo_fem_frequencies.json`) are catalogue and solver output and are **pinned
-  structurally**, not recomputed;
+  structurally**, not recomputed — the first of them also carries the era block
+  (`figure_0`) and the geometry break that separates it from the record;
+* the **2015-2021 ascending IW2 era** (162 acquisition days, rel. orbit 136,
+  ~00:2x UTC) is a *different* geometry and is **not** in this record: with no
+  full-dwell strips for it, `P`/`D`/`F`/`S` cannot be recomputed, so it is kept as
+  catalogue facts plus a committed, sha-pinned export of its decoded rows
+  (`data/kdlo/fig_kdlo_0_raw.json`, evidence — never pooled into the 60 rows), and
+  the 69-day blind gap into the descending track (2021-12-19 → 2022-02-26) is
+  drawn, never interpolated;
 * with the echo-mask dimensions in the model the per-acquisition classifier does
   clear the label permutation (p = 0.023), but the 1D `gamma2` baseline alone
   scores *higher* (0.686 vs. 0.643), so the mask dimensions move the permutation
@@ -492,10 +500,11 @@ observability-core-vector/
 │   │              from it, and the five committed reference JSONs
 │   ├── bautzen/   the four rect files, the generated channel table, the two
 │   │              committed reference JSONs and the hourly weather series
-│   ├── kdlo/      the two committed raw API dumps, the vendored nine-column DB
-│   │              extraction, the generated channel table, the four committed
-│   │              reference JSONs and the committed strip cache (64 full-dwell
-│   │              SLC strips + manifest)
+│   ├── kdlo/      the two committed raw API dumps of the record plus the
+│   │              2015-2021 era export (committed evidence, never read as rows),
+│   │              the vendored nine-column DB extraction, the generated channel
+│   │              table, the four committed reference JSONs and the committed
+│   │              strip cache (64 full-dwell SLC strips + manifest)
 │   ├── carola/    the committed mask cache of the chip export (1717 echo masks in
 │   │              mask coordinates), the committed measurement extract and
 │   │              segments/index files, the generated channel table and the
@@ -603,8 +612,9 @@ bash figures/espoo/fig_espoo_ocv_months.sh               # ~4 s (month-by-month 
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
 
 # rebuild the channel tables (LUMO needs the local burst cache, Bautzen only
-# the committed rect files, KDLO the two committed raw files plus the committed
-# strip cache, Carola the committed mask cache of the chip export)
+# the committed rect files, KDLO the two committed raw record files — the era
+# export is committed evidence and is not read — plus the committed strip cache,
+# Carola the committed mask cache of the chip export)
 python3 code/lumo/lumo_ocv_channels_csv.py
 python3 code/bautzen/bautzen_ocv_channels_csv.py
 python3 code/kdlo/kdlo_ocv_channels_csv.py

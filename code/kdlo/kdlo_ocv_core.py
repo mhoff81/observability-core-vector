@@ -30,8 +30,16 @@ instead of papered over:
     ``[gamma2, P, D, A, F, S]`` — the shape of the LUMO package, with ``A``
     pinned bit-exactly to the pipeline's own count and ``gamma2`` to its own
     coherence.
-  * **one geometry.** Only S1A descending relative orbit 12 at ~12:43 UTC exists
-    over this site before 2025-04; there is no ascending/descending split.
+  * **two geometries, never pooled.** The record itself is one descending track
+    (S1A rel. orbit 12, ~12:43 UTC, swath IW1) from 2022-06-02 on. Before it lies
+    a different one: the **ascending IW2 era** (S1A/S1B rel. orbit 136, ~00:2x
+    UTC, 2015-03-20..2021-12-19, 162 acquisition days), which ends in the S1B
+    failure and a 69-day stretch with no ascending scene at all
+    (``av.epochs.geometry_break``). That era is measured in the backend and its
+    catalogue evidence is ``av.figure_0``, but it is **not** in this CSV: its
+    echo-mask geometry would have to be recomputed from the 162 full-dwell
+    strips, and the committed strip cache carries only the 60 acquisitions of
+    parts 1/2. See ``ERA_PART`` and ``availability_checks``.
   * **"after the rebuild" does not exist.** The record ends 2024-09-19, i.e.
     *during* the construction (1,542 ft reached 2024-08-19). The second state is
     therefore "during the rebuild", not "repaired".
@@ -80,6 +88,38 @@ PARTS = {
         "reference_from": 1},
 }
 PART_ORDER = [1, 2]
+
+# The pre-collapse **ascending IW2 era**, which the record measures one paced
+# request per overpass day (``kdlo_rebuild_backfill.py --only part0 --by-day``;
+# the wide-window path trips the CDSE WAF on a seven-year window). It is a
+# separate geometry and a separate series: it is never pooled with parts 1/2.
+#
+# It is deliberately **outside this CSV** (`PART_ORDER`), because the echo-mask
+# geometry P/D/F/S is recomputed from the committed strip cache and
+# ``data/kdlo/strips/`` holds only the 60 acquisitions of parts 1/2. Its
+# catalogue evidence (162 days, 324 bursts, one ascending geometry) lives in the
+# availability reference as ``figure_0`` and is pinned by ``availability_checks``.
+ERA_PART = 0
+ERA_WINDOW = ("2015-01-01", "2021-12-19")
+ERA_DAYS_EXPECTED = 162
+ERA_BURSTS_EXPECTED = 324
+ERA_ORBIT = "ASCENDING|136"
+ERA_SWATH = "IW2"
+ERA_FIRST_DAY = "2015-03-20"   # first ascending IW2 scene over the site
+# One era day carries the CDSE metadata anomaly: its burst name reads 00:2x UTC
+# while its `ContentDate` sits two hours below it (22:2x of the previous day), so
+# the pipeline's `morning` slot filter drops it and it is recovered on the
+# alternate `afternoon` slot (it stays the same ascending acquisition — only the
+# catalogue hour is wrong). A catalogue fact, like the windows above: the era has
+# no rows in this record, so it cannot be recomputed from one.
+ERA_METADATA_ANOMALY_DAYS = ["2020-08-13"]
+# The geometry break that separates the era from the record. Both dates are
+# derived from the CDSE catalogue by ``kdlo_s1_availability.py`` (last ascending
+# scene, then the blind stretch, then the first descending scene of the track
+# that carries the collapse and the rebuild) — never asserted from the prose.
+GEOMETRY_BREAK = {"last_ascending_day_before": "2021-12-19",
+                  "first_descending_day_of_stretch": "2022-02-26",
+                  "blind_gap_days": 69}
 
 # ---------------------------------------------------------------------------
 # States = epochs. The windows are the committed sampling dates of the two
@@ -221,7 +261,8 @@ N_BOOT_STRATA = 2000
 N_PERM_2CLASS = 1000
 N_PERM_PAIR = 1000
 # n of the two epoch states in the committed record (16 + 43 = 59 of 60 rows;
-# the 60th is the singleton 2022-12-23, which belongs to neither state)
+# the 60th is the singleton 2022-12-23, which belongs to neither state). The
+# ascending era contributes no row to any state: it is outside this CSV.
 N_BY_STATE_EXPECTED = {"pre": 16, "rebuild": 43}
 
 
@@ -770,6 +811,65 @@ def availability_checks(avail, rows, prov):
             {k: sum(b[col].get(k, 0) for b in ep["per_year"].values()) for k in ep[col]},
             ep[col])
 
+    # --- the pre-collapse ascending era: catalogue evidence, not record rows --
+    # `figure_0` (2015-2021, ascending IW2, rel. orbit 136) is measured in the
+    # backend but deliberately outside this CSV (see ERA_PART): everything
+    # checked here is a fact of the *reference* — the CDSE catalogue and the
+    # backend's own per-part accounting — never of the merged rows of parts 1/2.
+    era = avail["figure_0"]
+    chk("av.figure_0.name", "fig_kdlo_0_channels", era["name"])
+    chk("av.figure_0.window", list(ERA_WINDOW),
+        [era["window"]["start"], era["window"]["end"]])
+    chk("av.figure_0.n_acquisition_days", ERA_DAYS_EXPECTED, era["n_acquisition_days"])
+    chk("av.figure_0.n_bursts", ERA_BURSTS_EXPECTED, era["n_bursts"])
+    chk("av.figure_0.bursts_per_day_all_two",
+        sorted(set(era["bursts_per_day"].values())), [2])
+    chk("av.figure_0.n_bursts_eq_sum_over_days", sum(era["bursts_per_day"].values()),
+        era["n_bursts"])
+    chk("av.figure_0.days_are_unique", len(era["acquisition_days"]),
+        len(set(era["acquisition_days"])))
+    chk("av.figure_0.bursts_per_day_keys_are_the_days",
+        sorted(era["bursts_per_day"]), sorted(era["acquisition_days"]))
+    chk("av.figure_0.swaths", [ERA_SWATH], era["swaths"])
+    chk("av.figure_0.polarisations", ["VH", "VV"], era["polarisations"])
+    chk("av.figure_0.one_geometry", [ERA_ORBIT], list(era["orbits"]))
+    chk("av.figure_0.orbits_sum", sum(era["orbits"].values()), era["n_products"])
+    chk("av.figure_0.platforms_sum", sum(era["platforms"].values()), era["n_products"])
+    chk("av.figure_0.platforms_keys_subset",
+        sorted(set(era["platforms"]) - {"S1A", "S1B", "S1C", "S1D"}), [])
+    chk("av.figure_0.days_inside_window",
+        all(era["window"]["start"] <= d <= era["window"]["end"]
+            for d in era["acquisition_days"]), True)
+    # A mixed 6-day (S1A+S1B) / 12-day revisit: the 12-day gap rule does not
+    # apply, so the file must carry the reason instead of an invented gap list.
+    chk("av.figure_0.no_invented_repeat_gaps", era["missing_repeat_days"], [])
+    chk("av.figure_0.cadence_note_present", bool(era.get("cadence_note")), True)
+
+    # --- the geometry break, derived from the catalogue, never asserted -----
+    gb = ep["geometry_break"]
+    chk("av.epochs.geometry_break.blind_gap_days", GEOMETRY_BREAK["blind_gap_days"],
+        gb["blind_gap_days"])
+    chk("av.epochs.geometry_break.last_ascending_day_before",
+        GEOMETRY_BREAK["last_ascending_day_before"], gb["last_ascending_day_before"])
+    chk("av.epochs.geometry_break.first_descending_day_of_stretch",
+        GEOMETRY_BREAK["first_descending_day_of_stretch"],
+        gb["first_descending_day_of_stretch"])
+    chk("av.epochs.geometry_break.era_ends_at_the_last_ascending_day",
+        gb["last_ascending_day_before"], era["acquisition_days"][-1])
+    chk("av.epochs.geometry_break.no_ascending_day_inside_gap",
+        [], gb["ascending_days_inside_gap"])
+    chk("av.epochs.geometry_break.gap_contains_no_measured_day",
+        all(not (gb["last_ascending_day_before"] < d
+                 < gb["first_descending_day_of_stretch"]) for d in days_of(rows)), True)
+    # The record is one geometry, and it starts after the break: no ascending
+    # row can ever be pooled into it by accident.
+    chk("av.record.one_orbit_direction",
+        ["DESCENDING"], sorted({r.get("orbit_direction") for r in rows}))
+    chk("av.record.starts_after_the_geometry_break",
+        min(days_of(rows)) > gb["first_descending_day_of_stretch"], True)
+    chk("av.record.no_era_day_pooled_in",
+        sorted(set(era["acquisition_days"]) & set(days_of(rows))), [])
+
     # --- archive availability --------------------------------------------
     on = avail["online"]
     chk("av.online.window.start_before_end",
@@ -784,8 +884,50 @@ def availability_checks(avail, rows, prov):
     chk("av.pipeline.asset_id", pl["asset_id"], prov[1]["asset_id"])
     chk("av.pipeline.asset_id_eq_part2", pl["asset_id"], prov[2]["asset_id"])
     chk("av.pipeline.asset_name_non_empty", bool(pl["asset_name"].strip()), True)
-    chk("av.pipeline.measured_in_figure_windows", pl["measured_in_figure_windows"],
-        len(rows))
+    # The backend holds more than this record does: `figure_0` (the 2015-2021
+    # ascending era) is measured there, but its rows are not in this CSV
+    # (ERA_PART). So "measured in figure windows == committed rows" holds for the
+    # record's own windows only, and the era's part is tied in explicitly — an
+    # era day that lost its measurement can never hide behind a green check.
+    rec = sum(pl["parts"][PARTS[p]["key"]]["measured_days"] for p in PART_ORDER)
+    era_key = f"part{ERA_PART}"
+    chk("av.pipeline.measured_in_record_windows", rec, len(rows))
+    chk("av.pipeline.measured_in_figure_windows",
+        rec + pl["parts"][era_key]["measured_days"], pl["measured_in_figure_windows"])
+    chk("av.pipeline.figure_0_is_the_era",
+        pl["parts"][era_key]["window"], list(ERA_WINDOW))
+    chk("av.pipeline.figure_0.expected_days",
+        ERA_DAYS_EXPECTED, pl["parts"][era_key]["expected_days"])
+    chk("av.pipeline.figure_0.measured_days",
+        pl["parts"][era_key]["expected_days"], pl["parts"][era_key]["measured_days"])
+    chk("av.pipeline.figure_0.missing_days", pl["parts"][era_key]["missing_days"], [])
+    chk("av.pipeline.figure_0.metadata_anomaly_days",
+        ERA_METADATA_ANOMALY_DAYS, pl["parts"][era_key]["metadata_anomaly_days"])
+    chk("av.pipeline.figure_0.n_requests_ge_days",
+        pl["parts"][era_key]["n_requests"] >= ERA_DAYS_EXPECTED, True)
+    chk("av.pipeline.figure_0.days_inside_window",
+        all(pl["parts"][era_key]["window"][0] <= d
+            <= pl["parts"][era_key]["window"][1] for d in era["acquisition_days"]), True)
+    # The era's decoded rows, as exported by `kdlo_export_raw.py --part 0` and as
+    # committed next to this record. The committed copy is pinned by sha256, so
+    # the report's numbers cannot drift from the evidence (and a missing copy
+    # fails loudly instead of vanishing).
+    exp = pl.get("figure_0_raw_export") or {}
+    chk("av.pipeline.figure_0.raw_export.status", "ok", exp.get("status"))
+    chk("av.pipeline.figure_0.raw_export.window", list(ERA_WINDOW), exp.get("window"))
+    chk("av.pipeline.figure_0.raw_export.n_days", ERA_DAYS_EXPECTED, exp.get("n_days"))
+    chk("av.pipeline.figure_0.raw_export.first_day", ERA_FIRST_DAY, exp.get("first_day"))
+    chk("av.pipeline.figure_0.raw_export.last_day",
+        GEOMETRY_BREAK["last_ascending_day_before"], exp.get("last_day"))
+    chk("av.pipeline.figure_0.raw_export.n_rows_ge_days",
+        exp.get("n_rows", 0) >= ERA_DAYS_EXPECTED, True)
+    chk("av.pipeline.figure_0.raw_export.sha256_len", len(exp.get("sha256") or ""), 64)
+    _era_export = os.path.join(DATA, "fig_kdlo_0_raw.json")
+    if not os.path.exists(_era_export):
+        chk("av.pipeline.figure_0.raw_export.committed", "missing", "present")
+    else:
+        chk("av.pipeline.figure_0.raw_export.committed_sha256",
+            exp.get("sha256"), sha256(_era_export))
     chk("av.pipeline.measured_total",
         pl["measured_in_figure_windows"] + pl["measured_outside_figure_windows"],
         pl["measured_total"])
@@ -809,8 +951,10 @@ def availability_checks(avail, rows, prov):
                     and r["pass_label"] != PARTS[p]["nominal_pass"]}))
         chk(f"av.pipeline.{key}.days_inside_window",
             all(pp["window"][0] <= d <= pp["window"][1] for d in days), True)
+    # The expected day counts of all three catalogue windows (the two record
+    # parts and the era) must be the days the backend has actually measured.
     chk("av.pipeline.parts.expected_days_total",
-        sum(pl["parts"][PARTS[p]["key"]]["expected_days"] for p in PART_ORDER),
+        sum(pl["parts"][f"part{p}"]["expected_days"] for p in [ERA_PART] + PART_ORDER),
         pl["measured_in_figure_windows"])
     chk("av.pipeline.parts.windows_are_the_record_windows",
         [pl["parts"][PARTS[p]["key"]]["window"] for p in PART_ORDER],

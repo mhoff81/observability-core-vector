@@ -183,7 +183,7 @@
   },
   "s1_availability": {
    "file": "kdlo_s1_availability.json",
-   "sha256": "3afedc5fb5c83a5b5207a0135754fa4a46a2f0c4fb3cb9ec32ceeef5b19da18b"
+   "sha256": "8d56dd42b79d7efc5d373bace9905e24c876a2b5764b36e3d82d89d8fcc483d9"
   }
  },
  "singleton_day": "2022-12-23",

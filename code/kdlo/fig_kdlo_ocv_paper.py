@@ -34,8 +34,14 @@ What is different from the LUMO/Bautzen packages, and what this file therefore
     which is why every effect size of this package is reported twice: once on all
     rows and once on the **month-matched** subset, and why panel C also fits the
     weather-only model as a competitor.
-  * **one geometry.** Only S1A descending relative orbit 12 exists over this
-    site, so there is no ascending/descending stratum and no orbit control.
+  * **one geometry in the record.** Every row is S1A descending relative orbit 12,
+    so *within the record* there is no ascending/descending stratum and no orbit
+    control. That is a property of the record, not of the site: 2015-03-20 ..
+    2021-12-19 was covered by an **ascending IW2 track (rel. orbit 136)**. That era
+    is measured in the backend and pinned as `figure_0` in the availability
+    reference, but it is deliberately outside this record — no full-dwell strips
+    exist for it, so `P`/`D`/`F`/`S` cannot be recomputed (`core.ERA_PART`).
+    Figure E names it and the geometry break (69 d) instead.
   * **the mask layer rests on a committed strip cache.** The record itself
     carries only ``A = coherence_masked_pixels``; ``P``, ``D``, ``F`` and ``S``
     and the whole ``P`` frequency map are recomputed here from the 64 committed
@@ -413,6 +419,16 @@ def compute(quick=False):
         "collapse_pair": core.part_stats(core.rows_of_part(rows, 1), 1).get(
             "collapse_pair"),
         "availability": core.availability_checks(ref["s1_availability"], rows, prov),
+        # The 2015-2021 ascending IW2 era is catalogue/backend evidence, never a
+        # row series (no strips -> no P/D/F/S), so it enters Figure E as text: its
+        # size, and the geometry break that separates it from this record.
+        "era": {"days": ref["s1_availability"]["figure_0"]["n_acquisition_days"],
+                "first_day": ref["s1_availability"]["figure_0"]["acquisition_days"][0],
+                "last_day": ref["s1_availability"]["figure_0"]["acquisition_days"][-1],
+                "blind_gap_days": ref["s1_availability"]["epochs"][
+                    "geometry_break"]["blind_gap_days"],
+                "first_descending_day": ref["s1_availability"]["epochs"][
+                    "geometry_break"]["first_descending_day_of_stretch"]},
         "fem": core.fem_checks(ref["fem_frequencies"]),
     }
     res["fig_e"] = fe
@@ -743,10 +759,14 @@ def fig_e(res, out_dir=None):
     ax2.grid(False)
     ax.margins(y=0.42)
     au, fe_ = fe["availability"], fe["fem"]
+    era = fe["era"]
     ax.text(0.02, 0.99,
             "mirror checks on the two pin-only files\n"
             f"  S1 availability: {len(au)} structural checks\n"
             f"  FEM frequencies: {len(fe_)} structural checks\n"
+            f"ascending IW2 era {era['first_day']}..{era['last_day']}: "
+            f"{era['days']} days, not in this record\n"
+            f"  (blind gap {era['blind_gap_days']} d to {era['first_descending_day']})\n"
             "wind/temperature medians move little\n"
             f"singleton {res['data']['singleton_day']}: "
             f"gamma^2 {fe['singleton'][res['data']['singleton_day']]['gamma2']:.6f}"

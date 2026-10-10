@@ -48,9 +48,10 @@ model/seed constants (`MODELS`, `HEADLINE_PAIR`, `LAMBDA_GRID`,
 It also carries the two aggregate blocks the committed channel JSONs were written
 with — `summ`, `row_brief`, `echo_modes_of`, `phase_observable_of`,
 `part_stats` — and the two pin-only mirrors of the files that cannot be
-recomputed from the record: `availability_checks` (128 structural checks of
-`kdlo_s1_availability.json`) and `fem_checks` (67 checks of
-`kdlo_fem_frequencies.json`).
+recomputed from the record: `availability_checks` (188 structural checks of
+`kdlo_s1_availability.json` — the record's two windows plus the 2015-2021
+ascending IW2 era as `figure_0` and the geometry break that separates it) and
+`fem_checks` (67 checks of `kdlo_fem_frequencies.json`).
 
 ### `kdlo_ocv_masks.py` — the echo-mask layer (port of `../lumo/lumo_ocv_masks.py`)
 
@@ -94,6 +95,16 @@ The build **fails** if a row has no echo mask or if any `A`/`gamma2_mask`
 deviates from the record, so the CSV cannot be written with a lookalike mask. The
 verification repeats that comparison and additionally re-hashes every committed
 strip (`--no-strip-verify` skips only the hashing).
+
+The **2015-2021 ascending IW2 era** (`part0`: 162 acquisition days, rel. orbit 136,
+~00:2x UTC) is *not* a row source here. Its echo-mask geometry would have to be
+recomputed from full-dwell strips and `data/kdlo/strips/` holds only the 60
+acquisitions of parts 1/2, so an era row would carry no `P`/`D`/`F`/`S`. Its
+decoded rows are exported instead (`kdlo_export_raw.py --part 0` in the KDLO
+project) to `data/kdlo/fig_kdlo_0_raw.json` — a file this package deliberately
+never reads: it is committed *evidence*, and the availability reference pins its
+sha256. The era is therefore present as catalogue facts (`figure_0`, the 162 days,
+the 69-day blind gap) and as backend accounting — never as pooled rows.
 
 ```bash
 python3 code/kdlo/kdlo_ocv_channels_csv.py                 # build + verify
