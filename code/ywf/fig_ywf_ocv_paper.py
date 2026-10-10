@@ -281,6 +281,7 @@ def compute():
     rows = mask_rows(core.load_csv())
     windows, unique = core.chip_table()
     coverage = core.coverage_block(unique)
+    coverage_by_orbit = core.coverage_by_orbit(unique)
     manifest = core.load_manifest()
     meta = core.load_csv_meta()
     by_state = st.by_state(rows)
@@ -311,6 +312,7 @@ def compute():
         "windows": windows,
         "unique": unique,
         "coverage": coverage,
+        "coverage_by_orbit": coverage_by_orbit,
         "timeline": timeline_block(windows, unique),
         "payload_groups": payload_groups(windows),
         "echo_modes": echo_mode_block(rows),
@@ -404,6 +406,15 @@ def findings(res):
             "fisher": res["coverage"]["fisher"],
             "power": res["power"],
         },
+        "echo_coverage_by_orbit": {
+            "n_orbits": res["coverage_by_orbit"]["n_orbits"],
+            "orbits": res["coverage_by_orbit"]["orbits"],
+            "n_unique_chips": res["coverage_by_orbit"]["n_unique_chips"],
+            "per_orbit": res["coverage_by_orbit"]["per_orbit"],
+            "fisher": res["coverage_by_orbit"]["fisher"],
+            "fisher_by_state": res["coverage_by_orbit"]["fisher_by_state"],
+            "note": res["coverage_by_orbit"]["note"],
+        },
         "echo_mask_by_state": echo_mask_by_state(res["rows"]),
         "echo_modes_by_state": res["echo_modes"],
         "pipeline_column": {
@@ -441,6 +452,19 @@ def findings(res):
                          "sha256": core.sha256(core.SEGMENTS_PATH)},
             "channels_csv": {"path": "data/ywf/ywf_ocv_channels.csv",
                              "sha256": core.sha256(core.CSV_PATH)},
+            # the two resolved references: the pass geometry of every chip and
+            # the road the tower fell on. They are *not* inputs of the mask or of
+            # the channel table (nothing below reads them), they are pinned here
+            # because they are the committed statement of where and which pass
+            # this record comes from.
+            "burst_geometry": {
+                "path": "data/ywf/reference/ywf_bursts.json",
+                "sha256": core.sha256(core.REF_BURSTS)},
+            "osm_road_extract": {
+                "path": "data/ywf/reference/ywf_osm_road.json",
+                "sha256": core.sha256(core.REF_OSM_ROAD)},
+            "osm_anchor": {"path": "data/ywf/reference/ywf_geometry.json",
+                           "sha256": core.sha256(core.REF_GEOMETRY)},
         },
         "figures": [f"figures/ywf/fig_ywf_ocv_paper_{L}.png" for L in "ABCDE"],
     }
@@ -864,6 +888,14 @@ def pin_all(res, ref):
                       ("segments", core.SEGMENTS_PATH)):
         P.cmp(f"meta.inputs.{key}.sha256", meta["inputs"][key]["sha256"],
               core.sha256(path))
+    # the two resolved references are *not* inputs of the channel table (nothing
+    # below reads them), so they are pinned through the analysis-layer reference
+    # this script owns: the recorded digest is re-derived from the file on disk
+    for key, path in (("burst_geometry", core.REF_BURSTS),
+                      ("osm_road_extract", core.REF_OSM_ROAD),
+                      ("osm_anchor", core.REF_GEOMETRY)):
+        P.cmp(f"reference.sources.{key}.sha256",
+              ref["sources"][key]["sha256"], core.sha256(path))
     P.cmp("manifest.source_windows_sha256", man["source_windows_sha256"],
           core.sha256(core.WINDOWS_PATH))
 
@@ -915,6 +947,31 @@ def pin_all(res, ref):
     P.cmp("coverage.table_n_chip_sum",
           sum(sum(row) for row in res["coverage"]["fisher"]["table"]),
           len(res["unique"]))
+
+    # 5) the orbit cross-cut of the same coverage -----------------------------
+    ob = res["coverage_by_orbit"]
+    P.cmp("meta.coverage_by_orbit", res["coverage_by_orbit"],
+          meta["coverage_by_orbit"])
+    P.cmp("coverage_by_orbit.table_n_echo_sum",
+          sum(row[0] for row in ob["fisher"]["table"]),
+          len(res["echo_rows"]))
+    P.cmp("coverage_by_orbit.table_n_chip_sum",
+          sum(sum(row) for row in ob["fisher"]["table"]),
+          len(res["unique"]))
+    P.cmp("coverage_by_orbit.sum_n_chips",
+          sum(b["n_chips"] for b in ob["per_orbit"].values()),
+          len(res["unique"]))
+    P.cmp("coverage_by_orbit.sum_n_with_echo",
+          sum(b["n_with_echo"] for b in ob["per_orbit"].values()),
+          len(res["echo_rows"]))
+    for key in ("pre", "post"):
+        P.cmp(f"coverage_by_orbit.sum_by_state.{key}.n_chips",
+              sum(b["by_state"][key]["n_chips"] for b in ob["per_orbit"].values()),
+              res["coverage"]["per_state"][key]["n_chips"])
+        P.cmp(f"coverage_by_orbit.sum_by_state.{key}.n_with_echo",
+              sum(b["by_state"][key]["n_with_echo"]
+                  for b in ob["per_orbit"].values()),
+              res["coverage"]["per_state"][key]["n_with_echo"])
     return P
 
 
@@ -942,6 +999,7 @@ def report(res, pins, wrote_reference):
     cov = res["coverage"]["per_state"]
     fis = res["coverage"]["fisher"]
     pw, ch, ct = res["power"], res["channels"], res["controls_delta"]
+    ob = res["coverage_by_orbit"]
     sec_labels = [lab for lab, b in res["composition"]["sections"].items()
                   if b["n"]]
     sec_txt = ", ".join(f"`{lab}`" for lab in sec_labels) or "none"
@@ -962,6 +1020,8 @@ def report(res, pins, wrote_reference):
     md.append("mask = intensity >= 0.30*peak AND >= 5.0*np.median(intensity), A >= 2")
     md.append("layer: echo mask (whole 7x7 window) — the record is not "
               "segment-resolved, so there is no per-mast-section layer")
+    md.append("cross-cuts: state (pre/post) · orbit (ASC/DESC, descriptive — "
+              "both orbits straddle the event)")
     md.append("```")
     md.append("")
     md.append("## What is recomputed, and what is pinned")
@@ -979,6 +1039,14 @@ def report(res, pins, wrote_reference):
     md.append(f"| `data/ywf/reference/{os.path.basename(core.REF_FINDINGS)}` | "
               f"the committed analysis-layer reference this script defines and "
               f"pins |")
+    md.append(f"| `data/ywf/reference/{os.path.basename(core.REF_BURSTS)}` | "
+              f"resolved: which CDSE burst, sub-swath, relative orbit and "
+              f"polarisation each of the {meta['n_unique_chips']} chips is "
+              f"(`ywf_bursts_resolve.py --check`) |")
+    md.append(f"| `data/ywf/reference/{os.path.basename(core.REF_OSM_ROAD)}` + "
+              f"`{os.path.basename(core.REF_GEOMETRY)}` | resolved: the OSM way "
+              f"the tower fell on, and the burst grid estimated from the "
+              f"committed footprints (`ywf_osm_anchor.py --check`) |")
     md.append("")
     md.append(f"The record holds **{meta['n_windows']}** committed windows on "
               f"**{len(res['timeline'])}** acquisition dates, **{meta['n_rows']}** of "
@@ -1024,6 +1092,56 @@ def report(res, pins, wrote_reference):
               f"**{need}** post-event chips at alpha = {pw['fisher_alpha']} — so "
               f"this record's coverage contrast is limited by the *surviving "
               f"echo*, not only by the length of the record.")
+    md.append("")
+
+    md.append("### A2 — the same coverage, split by orbit direction")
+    md.append("")
+    md.append("Every unique chip of this record is the same mast section, so "
+              "beside the state the only cross-cut the record carries is the "
+              "pass geometry (ascending / descending). Both orbits pass over "
+              "the site *and* both straddle the collapse date:")
+    md.append("")
+    body = []
+    for o in core.ORBITS:
+        b = ob["per_orbit"][o]
+        bpre, bpost = b["by_state"]["pre"], b["by_state"]["post"]
+        body.append([core.ORBIT_SHORT[o], b["n_chips"], b["n_with_echo"],
+                     b["n_without_echo"],
+                     f"{(b['echo_rate'] or 0.0) * 100:.1f} %",
+                     f"{bpre['n_with_echo']}/{bpre['n_chips']}",
+                     f"{bpost['n_with_echo']}/{bpost['n_chips']}"])
+    md += md_table(["orbit", "unique chips", "with echo", "without echo",
+                    "echo rate", "pre", "post"], body)
+    md.append("")
+    asc = ob["per_orbit"][core.ORBITS[0]]
+    desc = ob["per_orbit"][core.ORBITS[1]]
+    md.append(f"The two orbits are **indistinguishable** in this record: "
+              f"{asc['n_with_echo']} of {asc['n_chips']} ascending chips carry "
+              f"an echo ({fmt(asc['echo_rate'], 3)}) against "
+              f"{desc['n_with_echo']} of {desc['n_chips']} descending ones "
+              f"({fmt(desc['echo_rate'], 3)}). Fisher exact on "
+              f"`{ob['fisher']['table_rows']} x {ob['fisher']['table_cols']}` = "
+              f"{ob['fisher']['table']}: "
+              f"**p = {ob['fisher']['p_two_sided']:.4f}**. `pass_label` "
+              f"(morning / afternoon) is the identical cut — "
+              f"{core.ORBIT_SHORT[core.ORBITS[0]]} = morning, "
+              f"{core.ORBIT_SHORT[core.ORBITS[1]]} = afternoon.")
+    md.append("")
+    md.append(f"The one surviving post-event echo (`2026-03-16`) is an "
+              f"**ascending** pass, so the descending side holds no post-event "
+              f"echo at all "
+              f"({desc['by_state']['post']['n_with_echo']} of "
+              f"{desc['by_state']['post']['n_chips']} chips). The block is "
+              f"therefore read as a *description* of where the "
+              f"{len(res['echo_rows'])} echoes sit over the two pass "
+              f"geometries, never as an orbit contrast: with "
+              f"{pw['n_post_chips']} post-event chips it cannot repair the "
+              f"power limit of §A, and the pre/post tests within an orbit stay "
+              f"descriptive too "
+              f"(`{core.ORBIT_SHORT[core.ORBITS[0]]}` p = "
+              f"{ob['fisher_by_state'][core.ORBITS[0]]:.4f}, "
+              f"`{core.ORBIT_SHORT[core.ORBITS[1]]}` p = "
+              f"{ob['fisher_by_state'][core.ORBITS[1]]:.4f}).")
     md.append("")
 
     md.append("## B — the channels (where the mask holds)")
@@ -1095,6 +1213,61 @@ def report(res, pins, wrote_reference):
               f"{em['post']['n_echo_chips']}.")
     md.append("")
 
+    md.append("## What this record cannot do")
+    md.append("")
+    md.append("The echo mask is the **only** layer this record can carry. Four "
+              "structural facts of the export set that limit, and none of them is "
+              "about the state of the tower:")
+    md.append("")
+    md.append("| structural fact | consequence |")
+    md.append("| --- | --- |")
+    md.append(f"| one **7 x 7 px window** per acquisition (49 px, "
+              f"`TOWER_WINDOW_SIZE = 7`) | every number above is computed on 49 "
+              f"complex samples; a band or an edge test needs a resolvable ground "
+              f"extent per pixel *along* the band axis |")
+    md.append("| **no rect spec** — a window carries no pixel spacing | the ground "
+              "extent is only *estimated*, from the committed burst footprints "
+              f"(`data/ywf/reference/{os.path.basename(core.REF_GEOMETRY)}`); "
+              f"Bautzen, which carries a rect spec, is the one site of the family "
+              f"that gets a deck-edge layer |")
+    md.append(f"| **no per-section coordinates** — the export's "
+              f"`segment_latitude` / `segment_longitude` are empty for all five "
+              f"mast sections | there is no second anchor and no per-girder "
+              f"re-extraction, so the record is not segment-resolved "
+              f"(`segment_resolved = {man['segment_resolved']}`, "
+              f"{man['n_deduplicated_same_payload']} duplicate windows) |")
+    md.append("| the target is **outside the frame and sub-pixel** — the road "
+              "anchor stands ~36.85 m from the asset point, so the carriageway's "
+              "near edge is 8.10 px (ascending/IW3) / 9.33 px (descending/IW2) "
+              "across range from the window centre against the 6 px a 7 x 7 frame "
+              "reaches (`road_vs_window`), and a ~7 m carriageway is a couple of "
+              "pixels across the range axis but under one across the azimuth axis "
+              f"(`road_vs_pixel_grid`) | not one committed pixel crosses the road, "
+              f"so no deck-like edge exists in this record, at any state of the "
+              f"tower |")
+    md.append("")
+    md.append(f"The {man['n_without_echo']} echo-free chips are echo-free in "
+              f"**two** different ways, and neither is an empty payload: some "
+              f"have exactly one pixel passing both thresholds (the rule requires "
+              f"`A >= 2`, so the mask is refused), the others have *none*, "
+              f"because the peak does not stand 5x above the median — a single "
+              f"bright pixel and a flat window both collapse into the same "
+              f"`echo_mask_present = 0` here.")
+    md.append("")
+    md.append("The record's second cross-cut is a **sub-swath** split, not just a "
+              "pass split: ascending is IW3 on relative orbit 54 (09:2x UT), "
+              "descending is IW2 on relative orbit 61 (21:2x UT). At 129.4 E the "
+              "ascending pass is the local **evening** one (18:00 local solar "
+              "time) and the descending one the local morning (06:00), so the "
+              "export's own `pass_label` (ascending = `morning`) follows the UTC "
+              "clock and is not a statement about local time or illumination. The "
+              "record also interleaves **VV and VH** acquisitions; the mask rule "
+              "is a per-window relative threshold, so the mask channels are "
+              "invariant to that gain, but the export's absolute columns "
+              "(`intensity`, `brightness_ratio`) are not — they stay provenance "
+              "(`data/ywf/reference/ywf_bursts.json` resolves the polarisation of "
+              "every chip).")
+    md.append("")
     md.append("## Pins")
     md.append("")
     if wrote_reference:
@@ -1127,6 +1300,11 @@ def report(res, pins, wrote_reference):
     md.append("| the committed inputs | their sha256 digests "
               f"(`{os.path.basename(core.WINDOWS_PATH)}`, cache, manifest, "
               f"measurements, segments) |")
+    md.append("| the two resolved references | the sha256 digests of "
+              f"`{os.path.basename(core.REF_BURSTS)}` (the pass geometry of the "
+              f"chips), `{os.path.basename(core.REF_OSM_ROAD)}` and "
+              f"`{os.path.basename(core.REF_GEOMETRY)}` (the road and the "
+              f"estimated grid), each re-derived and checked by its own module |")
     md.append("")
     md.append("### Reading (not a claim of damage)")
     md.append("")
@@ -1188,6 +1366,7 @@ def build_json(res, pins_summary, wrote_reference):
         "n_echo_chips": len(res["echo_rows"]),
         "meta": res["meta"],
         "coverage": res["coverage"],
+        "coverage_by_orbit": res["coverage_by_orbit"],
         "power": res["power"],
         "echo_modes": res["echo_modes"],
         "composition": res["composition"],

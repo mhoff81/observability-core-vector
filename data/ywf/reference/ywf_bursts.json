@@ -1,0 +1,1827 @@
+{
+ "bursts": {
+  "07c31e2c-4f3b-498f-be8c-e3d872b1aac2": {
+   "AbsoluteBurstId": 10645989,
+   "AzimuthTime": "2025-11-10T21:23:38.680545Z",
+   "BeginningDateTime": "2025-11-10T21:23:39.703842Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-11-10T21:23:40.748876Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "07c31e2c-4f3b-498f-be8c-e3d872b1aac2",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251110T212339-129734-IW2-VH-040171",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "8315b992-11c3-4147-b957-9137aecff95a",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251110T212330_20251110T212358_004957_009CEB_BA6D.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/11/10/S1C_IW_SLC__1SDV_20251110T212330_20251110T212358_004957_009CEB_BA6D.SAFE/measurement/s1c-iw2-slc-vh-20251110t212330-20251110t212358-004957-009ceb-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "0b94ea6e-d31e-4c9f-83d0-4ea41084e764": {
+   "AbsoluteBurstId": 129965530,
+   "AzimuthTime": "2025-08-12T21:24:44.135058Z",
+   "BeginningDateTime": "2025-08-12T21:24:45.158840Z",
+   "ByteOffset": 120715,
+   "EndingDateTime": "2025-08-12T21:24:46.195608Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.075321,
+       36.351569
+      ],
+      [
+       129.563646,
+       36.427758
+      ],
+      [
+       129.07999,
+       36.497751
+      ],
+      [
+       129.038798,
+       36.305304
+      ],
+      [
+       129.52214,
+       36.239468
+      ],
+      [
+       130.033484,
+       36.167444
+      ],
+      [
+       130.075321,
+       36.351569
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "0b94ea6e-d31e-4c9f-83d0-4ea41084e764",
+   "LinesPerBurst": 1505,
+   "Name": "S1A-SLC-20250812T212445-129735-IW2-VH-493097",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "fbda460d-9432-4c2c-bff1-19001f4445cd",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250812T212443_20250812T212513_060508_078629_3E84.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/08/12/S1A_IW_SLC__1SDV_20250812T212443_20250812T212513_060508_078629_3E84.SAFE/measurement/s1a-iw2-slc-vh-20250812t212444-20250812t212512-060508-078629-002.tiff",
+   "SamplesPerBurst": 24577,
+   "SwathIdentifier": "IW2"
+  },
+  "10f11dbc-f6e3-473d-891b-d837c9211f89": {
+   "AbsoluteBurstId": 7623208,
+   "AzimuthTime": "2025-08-06T09:22:42.992201Z",
+   "BeginningDateTime": "2025-08-06T09:22:44.144868Z",
+   "ByteOffset": 577020995,
+   "EndingDateTime": "2025-08-06T09:22:45.041169Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "10f11dbc-f6e3-473d-891b-d837c9211f89",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20250806T092244-114052-IW3-VV-029125",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "e8c5a07f-62eb-4975-bf85-66bed0f62cad",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20250806T092231_20250806T092257_003550_0071C5_2A43.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/08/06/S1C_IW_SLC__1SDV_20250806T092231_20250806T092257_003550_0071C5_2A43.SAFE/measurement/s1c-iw3-slc-vv-20250806t092231-20250806t092257-003550-0071c5-006.tiff",
+   "SamplesPerBurst": 23863,
+   "SwathIdentifier": "IW3"
+  },
+  "119a73cf-9513-4f0c-b9fe-73675781d33e": {
+   "AbsoluteBurstId": 137467595,
+   "AzimuthTime": "2026-04-09T09:23:39.432444Z",
+   "BeginningDateTime": "2026-04-09T09:23:40.592360Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2026-04-09T09:23:41.488661Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "119a73cf-9513-4f0c-b9fe-73675781d33e",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20260409T092340-114052-IW3-VV-527699",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "81f81755-8fac-4cb1-bf56-4e9de3186a12",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260409T092312_20260409T092342_064001_080D53_C3CE.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/04/09/S1A_IW_SLC__1SDV_20260409T092312_20260409T092342_064001_080D53_C3CE.SAFE/measurement/s1a-iw3-slc-vv-20260409t092314-20260409t092342-064001-080d53-006.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "19713401-f23f-4a54-986c-8a9f9a2f595b": {
+   "AbsoluteBurstId": 133708722,
+   "AzimuthTime": "2025-12-10T09:23:44.920318Z",
+   "BeginningDateTime": "2025-12-10T09:23:46.059691Z",
+   "ByteOffset": 1310136219,
+   "EndingDateTime": "2025-12-10T09:23:46.956585Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "19713401-f23f-4a54-986c-8a9f9a2f595b",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20251210T092346-114052-IW3-VV-510783",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "8f171fa7-4b4a-4aea-8d2f-c31841858c85",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251210T092318_20251210T092348_062251_07CB3F_004B.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/12/10/S1A_IW_SLC__1SDV_20251210T092318_20251210T092348_062251_07CB3F_004B.SAFE/measurement/s1a-iw3-slc-vv-20251210t092320-20251210t092348-062251-07cb3f-006.tiff",
+   "SamplesPerBurst": 24067,
+   "SwathIdentifier": "IW3"
+  },
+  "254b5e2c-4335-4870-ad69-aafcbb9b3fa3": {
+   "AbsoluteBurstId": 11021876,
+   "AzimuthTime": "2025-11-22T21:23:38.208991Z",
+   "BeginningDateTime": "2025-11-22T21:23:39.234360Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-11-22T21:23:40.279394Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "254b5e2c-4335-4870-ad69-aafcbb9b3fa3",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251122T212339-129734-IW2-VH-041678",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "fc0fa617-4a61-4473-8306-1da9c9882352",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251122T212329_20251122T212357_005132_00A2CE_D874.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/11/22/S1C_IW_SLC__1SDV_20251122T212329_20251122T212357_005132_00A2CE_D874.SAFE/measurement/s1c-iw2-slc-vh-20251122t212329-20251122t212357-005132-00a2ce-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "260823ab-0f83-4ebf-8b86-a31f17c5dbe0": {
+   "AbsoluteBurstId": 9142439,
+   "AzimuthTime": "2025-09-23T21:23:38.987408Z",
+   "BeginningDateTime": "2025-09-23T21:23:40.020996Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-09-23T21:23:41.066030Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "260823ab-0f83-4ebf-8b86-a31f17c5dbe0",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20250923T212340-129734-IW2-VV-034591",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "89732c08-c9f2-495f-a6f0-bb53f2445d37",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20250923T212330_20250923T212358_004257_00871F_18D3.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/09/23/S1C_IW_SLC__1SDV_20250923T212330_20250923T212358_004257_00871F_18D3.SAFE/measurement/s1c-iw2-slc-vv-20250923t212330-20250923t212358-004257-00871f-005.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "263aeddf-359a-4c72-84de-9b28fdf99c6e": {
+   "AbsoluteBurstId": 132205172,
+   "AzimuthTime": "2025-10-23T09:23:47.997647Z",
+   "BeginningDateTime": "2025-10-23T09:23:49.122619Z",
+   "ByteOffset": 1289268515,
+   "EndingDateTime": "2025-10-23T09:23:50.018327Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "263aeddf-359a-4c72-84de-9b28fdf99c6e",
+   "LinesPerBurst": 1510,
+   "Name": "S1A-SLC-20251023T092349-114052-IW3-VH-503763",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "efbf6276-6486-48f2-9bf2-d8ba67375370",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251023T092321_20251023T092351_061551_07AFD3_C3B0.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/10/23/S1A_IW_SLC__1SDV_20251023T092321_20251023T092351_061551_07AFD3_C3B0.SAFE/measurement/s1a-iw3-slc-vh-20251023t092323-20251023t092351-061551-07afd3-003.tiff",
+   "SamplesPerBurst": 23715,
+   "SwathIdentifier": "IW3"
+  },
+  "33a93c41-317b-44d0-ab02-ba7dd245753e": {
+   "AbsoluteBurstId": 134836384,
+   "AzimuthTime": "2026-01-15T09:23:41.425690Z",
+   "BeginningDateTime": "2026-01-15T09:23:42.579436Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2026-01-15T09:23:43.475737Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "33a93c41-317b-44d0-ab02-ba7dd245753e",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20260115T092342-114052-IW3-VV-515973",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "dbf91026-a1ba-4e0c-bb7e-a4abd88a0bae",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260115T092314_20260115T092344_062776_07DF85_3AA5.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/01/15/S1A_IW_SLC__1SDV_20260115T092314_20260115T092344_062776_07DF85_3AA5.SAFE/measurement/s1a-iw3-slc-vv-20260115t092316-20260115t092344-062776-07df85-006.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "405a9ed7-038d-4416-98ef-f209e101efe7": {
+   "AbsoluteBurstId": 15532525,
+   "AzimuthTime": "2026-04-15T21:23:35.822841Z",
+   "BeginningDateTime": "2026-04-15T21:23:36.856415Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2026-04-15T21:23:37.901449Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "405a9ed7-038d-4416-98ef-f209e101efe7",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20260415T212336-129734-IW2-VH-060037",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "1d692481-9ac9-4b8c-89fb-ddd64fcdf518",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20260415T212327_20260415T212355_007232_00EA85_F4A5.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/04/15/S1C_IW_SLC__1SDV_20260415T212327_20260415T212355_007232_00EA85_F4A5.SAFE/measurement/s1c-iw2-slc-vh-20260415t212327-20260415t212355-007232-00ea85-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "468f78a6-c66a-4356-82b5-9b00a26f37fa": {
+   "AbsoluteBurstId": 134084609,
+   "AzimuthTime": "2025-12-22T09:23:43.575174Z",
+   "BeginningDateTime": "2025-12-22T09:23:44.704253Z",
+   "ByteOffset": 1310136219,
+   "EndingDateTime": "2025-12-22T09:23:45.601147Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "468f78a6-c66a-4356-82b5-9b00a26f37fa",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20251222T092344-114052-IW3-VH-512515",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "a8fdeb7d-6307-436e-8c6a-48ed29e97efa",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251222T092316_20251222T092346_062426_07D203_3F8F.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/12/22/S1A_IW_SLC__1SDV_20251222T092316_20251222T092346_062426_07D203_3F8F.SAFE/measurement/s1a-iw3-slc-vh-20251222t092318-20251222t092346-062426-07d203-003.tiff",
+   "SamplesPerBurst": 24067,
+   "SwathIdentifier": "IW3"
+  },
+  "49904f06-e60e-4b51-9278-ed9aa0cd7a55": {
+   "AbsoluteBurstId": 135588158,
+   "AzimuthTime": "2026-02-08T09:23:39.838800Z",
+   "BeginningDateTime": "2026-02-08T09:23:40.990493Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2026-02-08T09:23:41.886794Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "49904f06-e60e-4b51-9278-ed9aa0cd7a55",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20260208T092340-114052-IW3-VV-519275",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "fc2a2f8e-fe1f-4b20-b218-a7088a67b3b6",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260208T092313_20260208T092342_063126_07EC6B_D15A.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/02/08/S1A_IW_SLC__1SDV_20260208T092313_20260208T092342_063126_07EC6B_D15A.SAFE/measurement/s1a-iw3-slc-vv-20260208t092315-20260208t092342-063126-07ec6b-006.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "49b8dc41-03fa-4174-80be-277508248db8": {
+   "AbsoluteBurstId": 12149538,
+   "AzimuthTime": "2025-12-28T21:23:36.417461Z",
+   "BeginningDateTime": "2025-12-28T21:23:37.444870Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-12-28T21:23:38.489904Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "49b8dc41-03fa-4174-80be-277508248db8",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251228T212337-129734-IW2-VV-046272",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "2c67bd7e-2168-41c7-b1ad-f7f4a53075eb",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251228T212328_20251228T212356_005657_00B4C0_A529.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/12/28/S1C_IW_SLC__1SDV_20251228T212328_20251228T212356_005657_00B4C0_A529.SAFE/measurement/s1c-iw2-slc-vv-20251228t212328-20251228t212356-005657-00b4c0-005.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "4c16b16f-90e0-42f3-af86-0b397ee97a46": {
+   "AbsoluteBurstId": 9894214,
+   "AzimuthTime": "2025-10-17T21:23:39.384794Z",
+   "BeginningDateTime": "2025-10-17T21:23:40.412201Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-10-17T21:23:41.457235Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "4c16b16f-90e0-42f3-af86-0b397ee97a46",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251017T212340-129734-IW2-VH-037317",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "3d9a2116-a37a-424c-928c-2fb24489864d",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251017T212331_20251017T212359_004607_0091C5_38FA.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/10/17/S1C_IW_SLC__1SDV_20251017T212331_20251017T212359_004607_0091C5_38FA.SAFE/measurement/s1c-iw2-slc-vh-20251017t212331-20251017t212359-004607-0091c5-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "503282e2-6481-4cb1-8eb7-edf11763f6c3": {
+   "AbsoluteBurstId": 136715821,
+   "AzimuthTime": "2026-03-16T09:23:39.191404Z",
+   "BeginningDateTime": "2026-03-16T09:23:40.353392Z",
+   "ByteOffset": 1310081787,
+   "EndingDateTime": "2026-03-16T09:23:41.250286Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "503282e2-6481-4cb1-8eb7-edf11763f6c3",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20260316T092340-114052-IW3-VV-524352",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "b4574861-0492-41e0-86c8-23a637a43780",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260316T092312_20260316T092342_063651_080040_B09C.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/03/16/S1A_IW_SLC__1SDV_20260316T092312_20260316T092342_063651_080040_B09C.SAFE/measurement/s1a-iw3-slc-vv-20260316t092314-20260316t092342-063651-080040-006.tiff",
+   "SamplesPerBurst": 24066,
+   "SwathIdentifier": "IW3"
+  },
+  "6206efd6-37d3-4b17-b499-7ac4471af09e": {
+   "AbsoluteBurstId": 11397764,
+   "AzimuthTime": "2025-12-04T21:23:37.717527Z",
+   "BeginningDateTime": "2025-12-04T21:23:38.753158Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-12-04T21:23:39.798192Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "6206efd6-37d3-4b17-b499-7ac4471af09e",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251204T212338-129734-IW2-VH-043187",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "4f157437-e04f-4606-b117-2a0a0a43028f",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251204T212329_20251204T212357_005307_00A8B3_BDBF.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/12/04/S1C_IW_SLC__1SDV_20251204T212329_20251204T212357_005307_00A8B3_BDBF.SAFE/measurement/s1c-iw2-slc-vh-20251204t212329-20251204t212357-005307-00a8b3-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "68342649-b108-49e6-b430-2037ab20abf8": {
+   "AbsoluteBurstId": 130325735,
+   "AzimuthTime": "2025-08-24T09:23:47.315073Z",
+   "BeginningDateTime": "2025-08-24T09:23:48.460601Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2025-08-24T09:23:49.356902Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "68342649-b108-49e6-b430-2037ab20abf8",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20250824T092348-114052-IW3-VH-494779",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "357921eb-f5e2-4e40-91bc-b395da5d6537",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250824T092320_20250824T092350_060676_078CBB_78B1.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/08/24/S1A_IW_SLC__1SDV_20250824T092320_20250824T092350_060676_078CBB_78B1.SAFE/measurement/s1a-iw3-slc-vh-20250824t092322-20250824t092350-060676-078cbb-003.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "6864eaaf-f01a-46a5-b015-437e48b96edc": {
+   "AbsoluteBurstId": 11773651,
+   "AzimuthTime": "2025-12-16T21:23:37.273851Z",
+   "BeginningDateTime": "2025-12-16T21:23:38.297150Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-12-16T21:23:39.342184Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "6864eaaf-f01a-46a5-b015-437e48b96edc",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251216T212338-129734-IW2-VH-044730",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "1660ebfe-6de3-4671-8435-1a4fafe8bcce",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251216T212329_20251216T212356_005482_00AEBA_636E.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/12/16/S1C_IW_SLC__1SDV_20251216T212329_20251216T212356_005482_00AEBA_636E.SAFE/measurement/s1c-iw2-slc-vh-20251216t212329-20251216t212356-005482-00aeba-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "69afaf69-c4c4-4389-be38-8ebb019855b2": {
+   "AbsoluteBurstId": 135212271,
+   "AzimuthTime": "2026-01-27T09:23:40.612714Z",
+   "BeginningDateTime": "2026-01-27T09:23:41.752074Z",
+   "ByteOffset": 1310136219,
+   "EndingDateTime": "2026-01-27T09:23:42.648968Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "69afaf69-c4c4-4389-be38-8ebb019855b2",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20260127T092341-114052-IW3-VH-517586",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "fbbd4ead-39ca-46cb-95ec-f7cdfeb8a312",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260127T092313_20260127T092343_062951_07E5D2_78D5.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/01/27/S1A_IW_SLC__1SDV_20260127T092313_20260127T092343_062951_07E5D2_78D5.SAFE/measurement/s1a-iw3-slc-vh-20260127t092315-20260127t092343-062951-07e5d2-003.tiff",
+   "SamplesPerBurst": 24067,
+   "SwathIdentifier": "IW3"
+  },
+  "6a482ef8-4b15-4639-b8ec-9280780ef9f7": {
+   "AbsoluteBurstId": 129949848,
+   "AzimuthTime": "2025-08-12T09:23:47.131547Z",
+   "BeginningDateTime": "2025-08-12T09:23:48.272963Z",
+   "ByteOffset": 1310136219,
+   "EndingDateTime": "2025-08-12T09:23:49.169857Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "6a482ef8-4b15-4639-b8ec-9280780ef9f7",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20250812T092348-114052-IW3-VV-493016",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "c1cdcf86-7ef3-4e9d-acce-08a8f481f49b",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250812T092320_20250812T092350_060501_0785D8_CE51.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/08/12/S1A_IW_SLC__1SDV_20250812T092320_20250812T092350_060501_0785D8_CE51.SAFE/measurement/s1a-iw3-slc-vv-20250812t092322-20250812t092350-060501-0785d8-006.tiff",
+   "SamplesPerBurst": 24067,
+   "SwathIdentifier": "IW3"
+  },
+  "74291700-a88f-4a9f-9a43-2f9c4f9be9e6": {
+   "AbsoluteBurstId": 133332834,
+   "AzimuthTime": "2025-11-28T09:23:45.954661Z",
+   "BeginningDateTime": "2025-11-28T09:23:47.091979Z",
+   "ByteOffset": 1301382307,
+   "EndingDateTime": "2025-11-28T09:23:47.988280Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "74291700-a88f-4a9f-9a43-2f9c4f9be9e6",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20251128T092347-114052-IW3-VV-509025",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "074b7782-38ba-44f0-9b0d-ae183401b4c0",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251128T092319_20251128T092349_062076_07C461_8C41.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/11/28/S1A_IW_SLC__1SDV_20251128T092319_20251128T092349_062076_07C461_8C41.SAFE/measurement/s1a-iw3-slc-vv-20251128t092321-20251128t092349-062076-07c461-006.tiff",
+   "SamplesPerBurst": 23922,
+   "SwathIdentifier": "IW3"
+  },
+  "765863f6-26ba-4abc-a915-7eb0d3cf4319": {
+   "AbsoluteBurstId": 132956947,
+   "AzimuthTime": "2025-11-16T09:23:46.938995Z",
+   "BeginningDateTime": "2025-11-16T09:23:48.086593Z",
+   "ByteOffset": 1310136219,
+   "EndingDateTime": "2025-11-16T09:23:48.983487Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "765863f6-26ba-4abc-a915-7eb0d3cf4319",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20251116T092348-114052-IW3-VV-507273",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "7805c333-0d20-469b-9e3b-d71c546c9b4c",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251116T092320_20251116T092350_061901_07BD89_1EC0.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/11/16/S1A_IW_SLC__1SDV_20251116T092320_20251116T092350_061901_07BD89_1EC0.SAFE/measurement/s1a-iw3-slc-vv-20251116t092322-20251116t092350-061901-07bd89-006.tiff",
+   "SamplesPerBurst": 24067,
+   "SwathIdentifier": "IW3"
+  },
+  "79d2ad8b-ed70-4399-b7f0-194276839ccb": {
+   "AbsoluteBurstId": 130701623,
+   "AzimuthTime": "2025-09-05T09:23:47.336133Z",
+   "BeginningDateTime": "2025-09-05T09:23:48.483733Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2025-09-05T09:23:49.380034Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "79d2ad8b-ed70-4399-b7f0-194276839ccb",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20250905T092348-114052-IW3-VH-496553",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "19caa511-2382-4f1d-929a-ddecbd3e3505",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250905T092320_20250905T092350_060851_0793A9_9281.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/09/05/S1A_IW_SLC__1SDV_20250905T092320_20250905T092350_060851_0793A9_9281.SAFE/measurement/s1a-iw3-slc-vh-20250905t092322-20250905t092350-060851-0793a9-003.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "7efb95d3-4a91-43ca-b362-f3f3e7fdf442": {
+   "AbsoluteBurstId": 135964046,
+   "AzimuthTime": "2026-02-20T09:23:39.253120Z",
+   "BeginningDateTime": "2026-02-20T09:23:40.404830Z",
+   "ByteOffset": 1310081787,
+   "EndingDateTime": "2026-02-20T09:23:41.301724Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "7efb95d3-4a91-43ca-b362-f3f3e7fdf442",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20260220T092340-114052-IW3-VV-520948",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "eb8314c4-7402-41da-905e-4222c676ba15",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260220T092312_20260220T092342_063301_07F2F4_9FEF.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/02/20/S1A_IW_SLC__1SDV_20260220T092312_20260220T092342_063301_07F2F4_9FEF.SAFE/measurement/s1a-iw3-slc-vv-20260220t092314-20260220t092342-063301-07f2f4-006.tiff",
+   "SamplesPerBurst": 24066,
+   "SwathIdentifier": "IW3"
+  },
+  "80ad07b6-6eb7-4b41-940e-28653719aaa4": {
+   "AbsoluteBurstId": 15908412,
+   "AzimuthTime": "2026-04-27T21:23:36.421809Z",
+   "BeginningDateTime": "2026-04-27T21:23:37.455383Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2026-04-27T21:23:38.500417Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "80ad07b6-6eb7-4b41-940e-28653719aaa4",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20260427T212337-129734-IW2-VV-061555",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "c1e4ee59-6a56-4289-b924-8a133b71d10c",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20260427T212328_20260427T212356_007407_00F073_42CF.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/04/27/S1C_IW_SLC__1SDV_20260427T212328_20260427T212356_007407_00F073_42CF.SAFE/measurement/s1c-iw2-slc-vv-20260427t212328-20260427t212356-007407-00f073-005.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "80d3ba10-8253-4c3d-8cb4-d91f7dfa7568": {
+   "AbsoluteBurstId": 131453397,
+   "AzimuthTime": "2025-09-29T09:23:47.875913Z",
+   "BeginningDateTime": "2025-09-29T09:23:49.009108Z",
+   "ByteOffset": 1301382307,
+   "EndingDateTime": "2025-09-29T09:23:49.905409Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "80d3ba10-8253-4c3d-8cb4-d91f7dfa7568",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20250929T092349-114052-IW3-VH-500156",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "e5fad05f-1c5b-46a9-9318-266b5b594d73",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250929T092321_20250929T092350_061201_07A1BC_06BB.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/09/29/S1A_IW_SLC__1SDV_20250929T092321_20250929T092350_061201_07A1BC_06BB.SAFE/measurement/s1a-iw3-slc-vh-20250929t092323-20250929t092350-061201-07a1bc-003.tiff",
+   "SamplesPerBurst": 23922,
+   "SwathIdentifier": "IW3"
+  },
+  "81969a05-af4e-4f58-ad11-10cd2ee5499a": {
+   "AbsoluteBurstId": 131077510,
+   "AzimuthTime": "2025-09-17T09:23:47.619934Z",
+   "BeginningDateTime": "2025-09-17T09:23:48.761351Z",
+   "ByteOffset": 1301273515,
+   "EndingDateTime": "2025-09-17T09:23:49.657652Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "81969a05-af4e-4f58-ad11-10cd2ee5499a",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20250917T092348-114052-IW3-VH-498351",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "230c0f29-3810-4782-b5ac-eced965d87d5",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20250917T092320_20250917T092350_061026_079AAF_4CE3.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/09/17/S1A_IW_SLC__1SDV_20250917T092320_20250917T092350_061026_079AAF_4CE3.SAFE/measurement/s1a-iw3-slc-vh-20250917t092322-20250917t092350-061026-079aaf-003.tiff",
+   "SamplesPerBurst": 23920,
+   "SwathIdentifier": "IW3"
+  },
+  "8c6f8313-01e7-4fa8-b895-4c1db260fa09": {
+   "AbsoluteBurstId": 132581059,
+   "AzimuthTime": "2025-11-04T09:23:47.713403Z",
+   "BeginningDateTime": "2025-11-04T09:23:48.850707Z",
+   "ByteOffset": 1301382307,
+   "EndingDateTime": "2025-11-04T09:23:49.747008Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "8c6f8313-01e7-4fa8-b895-4c1db260fa09",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20251104T092348-114052-IW3-VH-505537",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "31180d82-3755-4ba7-b901-467b56cf7ab5",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251104T092320_20251104T092350_061726_07B6C1_3B35.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/11/04/S1A_IW_SLC__1SDV_20251104T092320_20251104T092350_061726_07B6C1_3B35.SAFE/measurement/s1a-iw3-slc-vh-20251104t092322-20251104t092350-061726-07b6c1-003.tiff",
+   "SamplesPerBurst": 23922,
+   "SwathIdentifier": "IW3"
+  },
+  "96f213e3-6b49-4940-a4bd-dee1c9c0bcd0": {
+   "AbsoluteBurstId": 10270101,
+   "AzimuthTime": "2025-10-29T21:23:39.029522Z",
+   "BeginningDateTime": "2025-10-29T21:23:40.056946Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-10-29T21:23:41.101980Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "96f213e3-6b49-4940-a4bd-dee1c9c0bcd0",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251029T212340-129734-IW2-VH-038676",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "3898eb74-f470-44f8-91e7-994895c3ea98",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251029T212330_20251029T212358_004782_009714_DC30.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/10/29/S1C_IW_SLC__1SDV_20251029T212330_20251029T212358_004782_009714_DC30.SAFE/measurement/s1c-iw2-slc-vh-20251029t212330-20251029t212358-004782-009714-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "b36bda67-6191-4d19-bbec-c7a204f196b0": {
+   "AbsoluteBurstId": 9518327,
+   "AzimuthTime": "2025-10-05T21:23:39.353119Z",
+   "BeginningDateTime": "2025-10-05T21:23:40.388748Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-10-05T21:23:41.433782Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "b36bda67-6191-4d19-bbec-c7a204f196b0",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20251005T212340-129734-IW2-VH-035959",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "d06ee3c8-8fcd-4bf9-8bb1-23f987b40ec4",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20251005T212331_20251005T212359_004432_008C77_084C.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/10/05/S1C_IW_SLC__1SDV_20251005T212331_20251005T212359_004432_008C77_084C.SAFE/measurement/s1c-iw2-slc-vh-20251005t212331-20251005t212359-004432-008c77-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  },
+  "bbcd97c5-ecac-488d-93ff-22c4348dcfda": {
+   "AbsoluteBurstId": 131829285,
+   "AzimuthTime": "2025-10-11T09:23:48.498318Z",
+   "BeginningDateTime": "2025-10-11T09:23:49.637679Z",
+   "ByteOffset": 1297465795,
+   "EndingDateTime": "2025-10-11T09:23:50.533980Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "bbcd97c5-ecac-488d-93ff-22c4348dcfda",
+   "LinesPerBurst": 1511,
+   "Name": "S1A-SLC-20251011T092349-114052-IW3-VV-501962",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "f593f78c-ea03-4e29-afcd-1eb88faa50ed",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20251011T092321_20251011T092351_061376_07A8CA_39E2.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VV",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/10/11/S1A_IW_SLC__1SDV_20251011T092321_20251011T092351_061376_07A8CA_39E2.SAFE/measurement/s1a-iw3-slc-vv-20251011t092323-20251011t092351-061376-07a8ca-006.tiff",
+   "SamplesPerBurst": 23850,
+   "SwathIdentifier": "IW3"
+  },
+  "d2d590cd-d6ad-4b30-b115-316450527b9c": {
+   "AbsoluteBurstId": 134460496,
+   "AzimuthTime": "2026-01-03T09:23:42.387086Z",
+   "BeginningDateTime": "2026-01-03T09:23:43.540831Z",
+   "ByteOffset": 1310081787,
+   "EndingDateTime": "2026-01-03T09:23:44.437725Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       129.414884,
+       36.278009
+      ],
+      [
+       129.863976,
+       36.337117
+      ],
+      [
+       130.296545,
+       36.392285
+      ],
+      [
+       130.255003,
+       36.597108
+      ],
+      [
+       129.822222,
+       36.537367
+      ],
+      [
+       129.372927,
+       36.473683
+      ],
+      [
+       129.414884,
+       36.278009
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "d2d590cd-d6ad-4b30-b115-316450527b9c",
+   "LinesPerBurst": 1512,
+   "Name": "S1A-SLC-20260103T092343-114052-IW3-VH-514247",
+   "OperationalMode": "IW",
+   "OrbitDirection": "ASCENDING",
+   "ParentProductId": "b1d4715e-ce38-4d62-969b-b2c1bc60a65d",
+   "ParentProductName": "S1A_IW_SLC__1SDV_20260103T092315_20260103T092345_062601_07D8C7_FBCF.SAFE",
+   "PlatformSerialIdentifier": "A",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 54,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2026/01/03/S1A_IW_SLC__1SDV_20260103T092315_20260103T092345_062601_07D8C7_FBCF.SAFE/measurement/s1a-iw3-slc-vh-20260103t092317-20260103t092345-062601-07d8c7-003.tiff",
+   "SamplesPerBurst": 24066,
+   "SwathIdentifier": "IW3"
+  },
+  "ddbeed94-d257-4202-8b91-098e3ff1a8ee": {
+   "AbsoluteBurstId": 8766552,
+   "AzimuthTime": "2025-09-11T21:23:38.892068Z",
+   "BeginningDateTime": "2025-09-11T21:23:39.931808Z",
+   "ByteOffset": 479578627,
+   "EndingDateTime": "2025-09-11T21:23:40.976842Z",
+   "GeoFootprint": {
+    "coordinates": [
+     [
+      [
+       130.113101,
+       36.517504
+      ],
+      [
+       129.600285,
+       36.593669
+      ],
+      [
+       129.115554,
+       36.663627
+      ],
+      [
+       129.0743,
+       36.471184
+      ],
+      [
+       129.55871,
+       36.405385
+      ],
+      [
+       130.071185,
+       36.333385
+      ],
+      [
+       130.113101,
+       36.517504
+      ]
+     ]
+    ],
+    "type": "Polygon"
+   },
+   "Id": "ddbeed94-d257-4202-8b91-098e3ff1a8ee",
+   "LinesPerBurst": 1517,
+   "Name": "S1A-SLC-20250911T212339-129734-IW2-VH-033233",
+   "OperationalMode": "IW",
+   "OrbitDirection": "DESCENDING",
+   "ParentProductId": "9e9e0157-23d9-44c7-a52b-5e83fc9f6a6b",
+   "ParentProductName": "S1C_IW_SLC__1SDV_20250911T212330_20250911T212358_004082_0081D1_211B.SAFE",
+   "PlatformSerialIdentifier": "C",
+   "PolarisationChannels": "VH",
+   "RelativeOrbitNumber": 61,
+   "S3Path": "/eodata/Sentinel-1/SAR/IW_SLC__1S/2025/09/11/S1C_IW_SLC__1SDV_20250911T212330_20250911T212358_004082_0081D1_211B.SAFE/measurement/s1c-iw2-slc-vh-20250911t212330-20250911t212358-004082-0081d1-002.tiff",
+   "SamplesPerBurst": 26338,
+   "SwathIdentifier": "IW2"
+  }
+ },
+ "collected_by": "code/ywf/ywf_bursts_resolve.py --write",
+ "index": "data/ywf/ywf_windows_index.txt",
+ "index_field": "6th field (burst_id) of data/ywf/ywf_windows_index.txt",
+ "index_sha256": "75ca6e86fdf7625712387e43bbcc469b41d3b1ea4825b707d27877cdaedc5a1a",
+ "n_bursts": 33,
+ "note": "resolved from the live CDSE catalogue \u2014 a mutable external input, so this file is pinned structurally by --check and by the pin block of figs. A-E, never re-derived offline",
+ "query": "$filter=Id eq '<burst_id>' (one query per distinct index id)",
+ "source": "https://catalogue.dataspace.copernicus.eu/odata/v1/Bursts"
+}

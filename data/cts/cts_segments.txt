@@ -1,0 +1,2 @@
+asset_id|asset_name|segment_index|label|fundamental_hz|reference_intensity
+6b3f7f30-edbb-53f4-b923-135a1e51658b|Champlain Towers South|0|Überbau (11 Felder, 704.0 m)|

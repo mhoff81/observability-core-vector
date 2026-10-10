@@ -1,0 +1,44 @@
+{
+  "asset": {
+    "key": "cts",
+    "label": "Champlain Towers South",
+    "data_dir": "/home/projects/cts_analysis",
+    "out_dir": "/home/projects/cts_analysis",
+    "meas": "cts_measurements_full.txt",
+    "windows": "cts_windows_full.txt",
+    "segments": "cts_segments.txt",
+    "event_date": "2021-06-24",
+    "event_kind": "documented_event",
+    "control_for": null,
+    "per_girder": false,
+    "asset_id": null,
+    "notes": [
+      "Three physical states in the archive, each with a tight bracket: intact (last pass 2021-06-21T23:28:23Z, 53.89 h before the collapse), standing remnant (exactly one pass 2021-07-03T23:28:24Z, 26.53 h before the demolition), cleared lot (from 2021-07-15).",
+      "The demolition-bracketing pair is a DELIBERATE change: it calibrates the channel, it is not a precursor.",
+      "Precursor question (NIST: two garage-column/pool-deck connection failures in early June 2021, ~3 weeks of load redistribution): the binding limit is SAMPLING, not SNR - 2 acquisitions in the last 21 days, 3 in 30, 5 in 60. A step/trend model has no power; the only legitimate probe is a pair-rank test of 2021-06-09 -> 2021-06-21 against the intact-era 12-day pairs. One pair => a null result is NOT informative.",
+      "The NIST initiation DAY stays to_pin: the report was not reachable during this run, so the window is not counted rather than filled with a plausible date.",
+      "Resolution: at IW SLC (~2.3 m x 14 m) the 42.5 m tower is a few pixels; at ~39 deg incidence the east facade smears ~52 m in ground range, so roof and ground mix. Attribution therefore rests on a data-driven mask from the INTACT state (Phase 0 convention) and on the temporal series (176 dates), not on spatial averaging.",
+      "ASC only: DESC has 5+1 acquisitions in six years (EQS-9 non-suitability justified with these numbers, not asserted). Platform independence (EQS-10) is NOT establishable before the event - S1A only.",
+      "Controls: Champlain Towers North (165 m N) and East (~90 m N) share identical strata, dates and counts with CTS; they must never be pooled, only compared per stratum (difference-in-differences).",
+      "Published claim to qualify, not to use: ERS InSAR of the 1990s reported ~2 mm/yr at this site (Wdowinski et al. 2020) - stale, regional, and not the identified mechanism; that magnitude lies below this machinery's floor.",
+      "Post state is BARE SAND: its intensity is moisture-driven (Open-Meteo precipitation is attached before any model is fitted), so a change in W5 is not evidence about the collapse."
+    ],
+    "placebo": false
+  },
+  "event_sentence": "Documented event 2021-06-24",
+  "method": "whole-bridge coherence gamma2 = |sum(z)|^2/(N*sum(|z|^2)) over the masked deck echo (intensity >= peak_frac*peak AND >= median_mult*window median), grouped by the persisted segment/FEM assignment.",
+  "params": {
+    "peak_frac": 0.3,
+    "median_mult": 5.0,
+    "min_n_masked": 2,
+    "event": "2021-06-24",
+    "pre_window_months": 6
+  },
+  "n_windows": 712,
+  "n_usable": 711,
+  "skipped": {
+    "no_measurement": 0,
+    "no_echo": 1
+  },
+  "groups": {}
+}

@@ -1,0 +1,5 @@
+# morandi tracks — the two Sentinel-1 observation tracks of the deck (girder-equivalents)
+# generated from morandi_analysis/morandi_coregister.json (pinned: reproduction)
+track|label|orbit|orbit_direction|rel_orbit|platform|rect_file|npz_file|first|last|master|n_dates|n_pre|n_post|n_masked_pixels
+A_asc|S1A/S1B ASC rel-15 IW1 VV|ASCENDING|ASCENDING|15|S1A/S1B|ref_rects_A_asc_400.txt|windows_asc_15_iw1_vv.npz|2016-09-01|2018-09-09|2018-08-10|119|114|5|640
+A_des|S1A/S1B DESC rel-66 IW1 VV|DESCENDING|DESCENDING|66|S1A/S1B|ref_rects_A_des_400.txt|windows_des_66_iw1_vv.npz|2016-08-24|2018-09-13|2018-08-08|115|109|6|640

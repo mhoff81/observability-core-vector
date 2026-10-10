@@ -1,0 +1,10 @@
+{
+  "A_asc": {
+    "n_masked_px": 640,
+    "n_dates": 119
+  },
+  "A_des": {
+    "n_masked_px": 640,
+    "n_dates": 115
+  }
+}

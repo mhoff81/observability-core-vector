@@ -39,7 +39,13 @@ The mask layer
     ``data/ywf/ywf_windows_full.txt`` (38 kB, committed in full) and re-verified
     from the committed cache ``data/ywf/ywf_windows_mask_cache.txt``;
   * the mask rule is the project-wide echo definition (``0.30 x peak`` **and**
-    ``5 x np.median``, ``min_n_masked = 2``), identical to Carola's.
+    ``5 x np.median``, ``min_n_masked = 2``), identical to Carola's;
+  * the coverage of that mask is reported twice: per state
+    (:func:`coverage_block`, the headline) and per **orbit direction**
+    (:func:`coverage_by_orbit`, ascending / descending). The orbit block is the
+    record's only second cross-cut — every unique chip is the same mast section
+    — and it is descriptive: both orbits straddle the collapse date and the one
+    surviving post-event echo is an ascending pass.
 
 ``A`` is *not* the pipeline's own ``coherence_masked_pixels``: that column was
 computed on the pre-fix asset-point chip of the whole-scene window (75, 133, ...
@@ -50,7 +56,8 @@ px), while this package recomputes the echo mask of the committed 7x7 window
 Reference file (``data/ywf/reference/``)
 ----------------------------------------
   ywf_ocv_findings.json   the committed analysis-layer reference: the
-                          echo-coverage table and its Fisher test, the mask
+                          echo-coverage table and its Fisher test, the same
+                          coverage split by orbit direction, the mask
                           dimensions per state, the pipeline-column and
                           co-variate controls, the timeline and the record's
                           provenance facts. This site has **no upstream analysis
@@ -90,6 +97,17 @@ CSV_PATH = os.path.join(DATA, "ywf_ocv_channels.csv")
 CSV_META_PATH = os.path.join(DATA, "ywf_ocv_channels_meta.json")
 REF_FINDINGS = os.path.join(REFERENCE, "ywf_ocv_findings.json")
 
+# The pass geometry and the road anchor of the record — the two references this
+# package *resolves* from public catalogues instead of reading them out of the
+# export (``ywf_bursts_resolve.py`` against the CDSE burst catalogue,
+# ``ywf_osm_anchor.py`` against the OSM way). Each is checked by its own module
+# (``--check``); the figure pins their digests beside the five committed extract
+# files, because they are what fix *which pass* and *which road* the record's
+# chips belong to.
+REF_BURSTS = os.path.join(REFERENCE, "ywf_bursts.json")
+REF_OSM_ROAD = os.path.join(REFERENCE, "ywf_osm_road.json")
+REF_GEOMETRY = os.path.join(REFERENCE, "ywf_geometry.json")
+
 SITE = "Yeongdeok Wind Farm (Samgye-ri)"
 SITE_SHORT = "YWF"
 ASSET_ID = "af683c7e-416a-4395-86cc-094ee83d9497"
@@ -100,6 +118,13 @@ EVENT = COLLAPSE_DATE
 STATES = list(st.STATE_ORDER)
 PRE, POST = STATES
 STATE_SHORT = dict(st.STATE_SHORT)
+
+# The two pass geometries of the record (ascending / descending), the only
+# cross-cut of the echo coverage besides the state. Both straddle the collapse
+# date, so an orbit split is *descriptive*: it states how the echoes distribute
+# over the two pass geometries, it is not an orbit contrast of the two states.
+ORBITS = ["ASCENDING", "DESCENDING"]
+ORBIT_SHORT = {"ASCENDING": "ASC", "DESCENDING": "DESC"}
 
 OCV = ["gamma2", "P", "D"]
 FEATURES = ["gamma2", "P", "D", "A", "F", "S"]
@@ -226,6 +251,18 @@ def state_of(day):
     return PRE if str(day) < COLLAPSE_DATE else POST
 
 
+def orbit_of(row):
+    """Normalised orbit direction of a chip record or of a CSV row.
+
+    A ``chip_table`` record carries the measurement's ``orbit_direction`` under
+    ``orbit`` (``read_windows``), a CSV row carries it under
+    ``orbit_direction`` — this reads either shape and returns ``"ASCENDING"`` /
+    ``"DESCENDING"`` (upper case, stripped), or ``None`` when the cell is empty.
+    """
+    v = row.get("orbit") or row.get("orbit_direction")
+    return (str(v).strip().upper() or None) if v else None
+
+
 def echo_mode_of(a):
     """Echo-mode bucket of a masked-pixel count, on the site's own scale.
 
@@ -276,6 +313,15 @@ def chip_table(path=WINDOWS_PATH):
     ``(asset, day)`` whose payloads are byte identical share a group, and the
     record is *not* segment-resolved (see the module docstring).
 
+    ``burst_id`` is the **CDSE burst id** of the committed window index (the 6th
+    field of ``ywf_windows_index.txt``, ``masks.read_index``) — *not* the
+    ``request_id`` column of the measurement extract, which is a different column
+    with a different value (one single distinct value in this record). The CSV
+    carries the extract's ``request_id`` from the extract itself
+    (``ywf_ocv_channels_csv.row_of`` reads it out of ``src``), so the two ids are
+    never conflated again; ``code/ywf/ywf_bursts_resolve.py`` resolves the 33
+    burst ids against the public CDSE catalogue.
+
     ``windows`` keeps every committed line in file order; ``unique`` keeps the
     first occurrence of each ``(asset, day, payload)`` — the mask layer's
     reference set, i.e. the rows of ``ywf_windows_mask_cache.txt``.
@@ -308,7 +354,7 @@ def chip_table(path=WINDOWS_PATH):
             "segment": section_label_of(sect) or meta["segment"],
             "section_index": sect,
             "date": meta["date"], "ts": meta["ts"],
-            "request_id": meta["request_id"], "w": w, "h": h,
+            "burst_id": meta["burst_id"], "w": w, "h": h,
             "digest": digest, "z": z,
             "px": res["px"] if res else [],
             "orbit": m.get("orbit_direction"), "pass_label": m.get("pass_label"),
@@ -557,6 +603,67 @@ def coverage_block(chips, event=COLLAPSE_DATE):
     }
 
 
+def coverage_by_orbit(chips, event=COLLAPSE_DATE):
+    """Echo coverage of the *unique* chips per orbit direction.
+
+    The record's second cross-cut beside the state. Both orbits pass over the
+    site and both straddle the collapse date, and the only surviving post-event
+    echo sits on an ascending pass, so the block is reported as the
+    *distribution* of the echoes over the two pass geometries — with 6
+    post-event chips it is descriptive, never an orbit contrast — and it is
+    pinned field by field exactly like the state block.
+
+    ``chips`` is the ``unique`` list of :func:`chip_table`; the shape of
+    ``per_orbit`` matches :func:`coverage_block`'s ``per_state`` (including the
+    ``by_state`` cross-tab), so the two blocks read as one diff.
+    """
+    table, block, fisher_state = {}, {}, {}
+    for o in ORBITS:
+        sub = [c for c in chips if orbit_of(c) == o]
+        n_echo = sum(1 for c in sub if c["mask"] is not None)
+        table[o] = [n_echo, len(sub) - n_echo]
+        by_state = {}
+        for s in STATES:
+            ssub = [c for c in sub if c["state"] == s]
+            s_echo = sum(1 for c in ssub if c["mask"] is not None)
+            by_state[STATE_SHORT[s]] = {
+                "n_chips": len(ssub), "n_with_echo": s_echo,
+                "n_without_echo": len(ssub) - s_echo,
+                "echo_rate": (s_echo / len(ssub)) if ssub else None,
+            }
+        pa, pb = STATE_SHORT[PRE], STATE_SHORT[POST]
+        fisher_state[o] = fisher_p(by_state[pa]["n_with_echo"],
+                                   by_state[pa]["n_without_echo"],
+                                   by_state[pb]["n_with_echo"],
+                                   by_state[pb]["n_without_echo"])
+        block[o] = {
+            "n_chips": len(sub), "n_with_echo": n_echo,
+            "n_without_echo": len(sub) - n_echo,
+            "echo_rate": (n_echo / len(sub)) if sub else None,
+            "by_state": by_state,
+        }
+    o1, o2 = ORBITS[0], ORBITS[1]
+    return {
+        "event": event,
+        "window_px": 49,
+        "n_orbits": len(ORBITS),
+        "orbits": list(ORBITS),
+        "n_unique_chips": len(chips),
+        "per_orbit": block,
+        "fisher": {
+            "table_rows": list(ORBITS), "table_cols": ["echo", "no_echo"],
+            "table": [table[o1], table[o2]],
+            "p_two_sided": fisher_p(table[o1][0], table[o1][1],
+                                    table[o2][0], table[o2][1]),
+        },
+        "fisher_by_state": fisher_state,
+        "note": ("both orbits straddle the collapse date and the only "
+                 "post-event echo chip is an ascending pass: this block "
+                 "describes where the echoes sit over the two pass "
+                 "geometries, it is not an orbit contrast of the states"),
+    }
+
+
 # ---------------------------------------------------------------------------
 # CLI — a read-only brief of the committed layer
 # ---------------------------------------------------------------------------
@@ -570,6 +677,7 @@ def main(argv=None):
 
     windows, unique = chip_table()
     cov = coverage_block(unique)
+    cov_orbit = coverage_by_orbit(unique)
     manifest = load_manifest()
     print(f"{SITE} — event {COLLAPSE_DATE}")
     print(f"  {len(windows)} committed windows on "
@@ -583,19 +691,29 @@ def main(argv=None):
     p = cov["fisher"]["p_two_sided"]
     print(f"  Fisher exact (echo vs. state): p = "
           f"{'n/a (scipy missing)' if p is None else f'{p:.4f}'}")
+    for o in ORBITS:
+        b = cov_orbit["per_orbit"][o]
+        print(f"  {ORBIT_SHORT[o]:>4}: {b['n_chips']:3d} unique chips, "
+              f"{b['n_with_echo']:3d} with an echo "
+              f"({(b['echo_rate'] or 0.0) * 100:.1f} %)")
+    po = cov_orbit["fisher"]["p_two_sided"]
+    print(f"  Fisher exact (echo vs. orbit): p = "
+          f"{'n/a (scipy missing)' if po is None else f'{po:.4f}'}"
+          f"  (descriptive: both orbits straddle the event)")
     print(f"  not segment-resolved: "
           f"{manifest.get('n_deduplicated_same_payload')} duplicated windows, "
           f"segment_resolved={manifest.get('segment_resolved')}")
     if args.chips:
         print()
-        print(f"{'date':10s} {'seg':>3s} {'A':>2s} {'D':>5s} {'F':>2s} "
-              f"{'S':>5s} {'P':>5s} {'gamma2':>6s}  echo_mode")
+        print(f"{'date':10s} {'seg':>3s} {'orb':>4s} {'A':>2s} {'D':>5s} "
+              f"{'F':>2s} {'S':>5s} {'P':>5s} {'gamma2':>6s}  echo_mode")
         for c in sorted(unique, key=lambda r: (r["date"], r["segment"])):
             v = vector_of(c)
+            orb = ORBIT_SHORT.get(orbit_of(c)) or "-"
             if v is None:
-                print(f"{c['date']:10s} {c['segment']:>3s}  - no echo")
+                print(f"{c['date']:10s} {c['segment']:>3s} {orb:>4s}  no echo")
                 continue
-            print(f"{c['date']:10s} {c['segment']:>3s} {v['A']:2d} "
+            print(f"{c['date']:10s} {c['segment']:>3s} {orb:>4s} {v['A']:2d} "
                   f"{v['D']:5.2f} {v['F']:2d} {v['S']:5.2f} {v['P']:5.3f} "
                   f"{v['gamma2']:6.3f}  {echo_mode_of(v['A'])}")
     return 0

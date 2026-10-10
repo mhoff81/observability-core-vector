@@ -1,0 +1,47 @@
+{
+ "generator": "code/cts/cts_ocv_masks.py --extract",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_per_track": {
+  "beach_asc_48_iw3": 178,
+  "cte_asc_48_iw3": 177,
+  "ctn_asc_48_iw3": 178,
+  "cts_asc_48_iw3": 178
+ },
+ "n_rows": 711,
+ "n_without_echo": 1,
+ "out_cache": "cts_windows_mask_cache.txt",
+ "quantile_mask_pixels": {
+  "beach_asc_48_iw3": 640,
+  "cte_asc_48_iw3": 640,
+  "ctn_asc_48_iw3": 640,
+  "cts_asc_48_iw3": 640
+ },
+ "source_npz_dir": "/home/projects/cts_analysis",
+ "source_npz_files": {
+  "cts_windows_beach_asc_48_iw3.npz": {
+   "sha256": "b5103f4d8fe2914f7ef7e7a3f99e124c8dd1c5ad52ba971d63dfad1ca3d80a6d",
+   "track": "beach_asc_48_iw3"
+  },
+  "cts_windows_cte_asc_48_iw3.npz": {
+   "sha256": "121450fc34affd6f2a3c9e721f4c386eab69e85e2123b8ad636393efdc325b44",
+   "track": "cte_asc_48_iw3"
+  },
+  "cts_windows_ctn_asc_48_iw3.npz": {
+   "sha256": "a1f72266c37d3651249992711278412b35686c848d616f9365a97bcd0fef1ef3",
+   "track": "ctn_asc_48_iw3"
+  },
+  "cts_windows_cts_asc_48_iw3.npz": {
+   "sha256": "560a58741b2a31961c4d7c095974de2868e8566f74f439363ad52326bc5def3d",
+   "track": "cts_asc_48_iw3"
+  }
+ },
+ "window_size": 80,
+ "window_sizes": {
+  "80x80": 712
+ }
+}

@@ -1,0 +1,270 @@
+{
+ "date_range": [
+  "2016-08-24",
+  "2018-09-13"
+ ],
+ "deck_mask_export": "fixed 640-px (10 %) quantile mask (morandi_deck_channels.csv / morandi_registration.json)",
+ "event": "2018-08-14",
+ "features": [
+  "gamma2",
+  "P",
+  "D",
+  "A",
+  "F",
+  "S"
+ ],
+ "generator": "code/morandi/morandi_ocv_channels_csv.py",
+ "girders": [
+  "A_asc",
+  "A_des"
+ ],
+ "girders_counts": {
+  "A_asc": 119,
+  "A_des": 113
+ },
+ "inputs": {
+  "deck_channels": {
+   "file": "morandi_deck_channels.csv",
+   "sha256": "ac91b8684c065e7b9039eb7736988cb76ae7397e5f1923deb2293c8f163128f4"
+  },
+  "mask_cache": {
+   "file": "morandi_windows_mask_cache.txt",
+   "sha256": "ef3e8dad67b107b4bbf2a74e1eb5e15d0dda44c46a10a4ab36b187aec3c1f66a"
+  },
+  "mask_cache_manifest": {
+   "file": "morandi_windows_mask_cache.manifest.json",
+   "sha256": "3bfca6dbac4ad7b69ee651b12f47243a296c01d4a8dc5abe002a9509494556dc"
+  },
+  "measurements": {
+   "file": "morandi_weather_table.csv",
+   "sha256": "7f0e4064838767250a1589c2c1ed5ba12df0010e9e53df3382002e78435ef872"
+  },
+  "tracks": {
+   "file": "morandi_tracks.txt",
+   "sha256": "0834a43157d6778f237ed7e24e9234f70fc6b52052b070d69d8549b79d1cbb07"
+  }
+ },
+ "mask_cache_manifest": {
+  "crop": [
+   160,
+   240,
+   160,
+   240
+  ],
+  "generator": "code/morandi/morandi_ocv_masks.py --extract",
+  "mask_rule": {
+   "median_kind": "np.median",
+   "median_mult": 5.0,
+   "min_n_masked": 2,
+   "peak_frac": 0.3
+  },
+  "n_clipped_or_odd_shape": 5,
+  "n_deduplicated_same_key": 0,
+  "n_per_track": {
+   "A_asc": 119,
+   "A_des": 113
+  },
+  "n_rows": 232,
+  "n_without_echo": 2,
+  "out_cache": "morandi_windows_mask_cache.txt",
+  "source_rect_files": {
+   "ref_rects_A_asc_400.txt": {
+    "sha256": "5c6bfc68421d6fa9b9d13da49e46993885b38c987f3654b46d249929c0e80ea5",
+    "track": "A_asc"
+   },
+   "ref_rects_A_des_400.txt": {
+    "sha256": "201d8c8987a79604a697c6fdf62badc3e647e06c5d18f8f4eaa6b18e3fffd4a1",
+    "track": "A_des"
+   }
+  },
+  "source_rects_dir": "/home/projects/morandi_analysis",
+  "source_size": 400,
+  "window_size": 80,
+  "window_sizes": {
+   "200x400 (clipped, excluded)": 4,
+   "268x400 (clipped, excluded)": 1,
+   "400x400": 234
+  }
+ },
+ "mask_columns": [
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "gamma2_mask",
+  "coherence_masked_pixels",
+  "mask_bbox_area",
+  "mask_row_span",
+  "mask_col_span",
+  "mask_centroid_row",
+  "mask_centroid_col",
+  "mask_peak_row",
+  "mask_peak_col",
+  "mask_n_components",
+  "mask_largest_component",
+  "mask_fragmentation"
+ ],
+ "mask_crop": [
+  160,
+  240,
+  160,
+  240
+ ],
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "mask_window": "80x80",
+ "n_P_set": 232,
+ "n_coherence_masked_pixels_compared": 232,
+ "n_coherence_masked_pixels_differing": 232,
+ "n_coherence_masked_pixels_matched": 0,
+ "n_columns": 59,
+ "n_echo_masks": 232,
+ "n_post_collapse": 11,
+ "n_pre_collapse": 221,
+ "n_rows": 232,
+ "n_rows_without_echo_mask": 0,
+ "ocv": [
+  "gamma2",
+  "P",
+  "D"
+ ],
+ "out_csv": "morandi_ocv_channels.csv",
+ "site": "Ponte Morandi (Polcevera), Genova",
+ "state_definition": "pre-collapse (healthy) = day < 2018-08-14 <= post-collapse",
+ "states": [
+  "pre-collapse (healthy)",
+  "post-collapse"
+ ],
+ "summary_by_state": {
+  "post": {
+   "A": {
+    "mean": 13.636363636363637,
+    "median": 13.0,
+    "n": 11,
+    "p25": 6.5,
+    "p5": 3.5,
+    "p75": 15.5,
+    "p95": 29.0,
+    "std": 10.404544461654508
+   },
+   "D": {
+    "mean": 0.23058403871883162,
+    "median": 0.005158730158730159,
+    "n": 11,
+    "p25": 0.004028166822284469,
+    "p5": 0.002368551587301587,
+    "p75": 0.33699186991869917,
+    "p95": 0.9166666666666667,
+    "std": 0.39423589712135476
+   },
+   "F": {
+    "mean": 6.545454545454546,
+    "median": 7.0,
+    "n": 11,
+    "p25": 2.0,
+    "p5": 1.0,
+    "p75": 8.0,
+    "p95": 15.0,
+    "std": 5.354692080103885
+   },
+   "P": {
+    "mean": 0.0757611029614196,
+    "median": 0.0725574712643678,
+    "n": 11,
+    "p25": 0.034473006709315024,
+    "p5": 0.028280067283431458,
+    "p75": 0.1135057471264368,
+    "p95": 0.1381078691423519,
+    "std": 0.04492778199484498
+   },
+   "S": {
+    "mean": 15.924598787649762,
+    "median": 13.776630776628789,
+    "n": 11,
+    "p25": 4.297528604412718,
+    "p5": 0.4736067977499815,
+    "p75": 21.756932596175112,
+    "p95": 38.81723766105354,
+    "std": 15.36012103716968
+   },
+   "gamma2": {
+    "mean": 0.33122708821382885,
+    "median": 0.10160021619386672,
+    "n": 11,
+    "p25": 0.07703488419592462,
+    "p5": 0.008909721670012714,
+    "p75": 0.6245994800521861,
+    "p95": 0.9433062750790564,
+    "std": 0.37511170024316826
+   }
+  },
+  "pre": {
+   "A": {
+    "mean": 12.628959276018099,
+    "median": 11.0,
+    "n": 221,
+    "p25": 7.0,
+    "p5": 3.0,
+    "p75": 16.0,
+    "p95": 26.0,
+    "std": 7.729981377324823
+   },
+   "D": {
+    "mean": 0.12131750882624356,
+    "median": 0.006521739130434782,
+    "n": 221,
+    "p25": 0.003424657534246575,
+    "p5": 0.0015,
+    "p75": 0.025793650793650792,
+    "p95": 0.75,
+    "std": 0.25744813714991993
+   },
+   "F": {
+    "mean": 5.420814479638009,
+    "median": 4.0,
+    "n": 221,
+    "p25": 3.0,
+    "p5": 1.0,
+    "p75": 7.0,
+    "p95": 12.0,
+    "std": 3.741574931759513
+   },
+   "P": {
+    "mean": 0.08704476825680135,
+    "median": 0.07974137931034482,
+    "n": 221,
+    "p25": 0.04310344827586207,
+    "p5": 0.02370689655172414,
+    "p75": 0.12147335423197493,
+    "p95": 0.18534482758620688,
+    "std": 0.05375395953986955
+   },
+   "S": {
+    "mean": 14.371322720510237,
+    "median": 8.52085314223904,
+    "n": 221,
+    "p25": 3.1943828249997024,
+    "p5": 0.721110255092801,
+    "p75": 21.952290568970014,
+    "p95": 44.0698662828338,
+    "std": 14.466515064479323
+   },
+   "gamma2": {
+    "mean": 0.1816701842325795,
+    "median": 0.08596441818519561,
+    "n": 221,
+    "p25": 0.034071373327710826,
+    "p5": 0.006554175007737102,
+    "p75": 0.1909027005903733,
+    "p95": 0.8563584062444091,
+    "std": 0.24758393975390874
+   }
+  }
+ },
+ "tracks": {}
+}

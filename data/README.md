@@ -1,6 +1,6 @@
 # `data/` — one subfolder per site: input tables and reference results
 
-`lumo/`, `bautzen/`, `kdlo/` and `carola/`. Everything in here is either a **copy**
+`lumo/`, `bautzen/`, `kdlo/`, `carola/`, `morandi/`, `cts/`, `ywf/` and `espoo/`. Everything in here is either a **copy**
 of a committed artifact of the site's analysis project or a file **generated** by
 a script in `../code/<site>/`; nothing is edited by hand. Every script reads and
 writes only inside its own `data/<site>/`, so the sites can never overwrite each
@@ -152,4 +152,217 @@ The CSV and the meta JSON are both committed: they are the whole input of the
 figure pipeline, so the figures and the pin block can be regenerated offline from
 a fresh clone. `carola_ocv_masks.py --extract` (needs the 182 MB payload file) is
 the only step that must not be part of a normal run.
+
+
+## `data/morandi/` — Ponte Morandi / Polcevera (Genova), collapsed on 2018-08-14
+
+The collapsed viaduct. Like Carola, this site cannot be rebuilt from a small
+table: the site project's per-date **400 x 400 rect payloads** (in
+`/home/projects/morandi_analysis`, not committed) hold the complex chip of every
+acquisition, which is why the mask layer is carried as a **committed
+window-payload cache** — `morandi_windows_mask_cache.txt`: the echo mask (pixel
+coordinates) of every chip plus the sufficient statistics the 6D vector needs.
+The payloads are cropped to the central `[160:240, 160:240]` 80 x 80 window
+before the rule is applied. Where Carola has per-girder chips, this site has the
+two **Sentinel-1 tracks** of the deck (`A_asc` ASC rel-15 IW1 VV, `A_des` DESC
+rel-66 IW1 VV, `morandi_tracks.txt`) and two mask layers (the echo mask of the
+whole chip and the same rule on the track's own chip).
+
+The record is tiny after the event: **232** rows, **221** pre / **11** post.
+
+### Inputs (committed copies)
+
+| file | what it is | read by |
+| --- | --- | --- |
+| `morandi_windows_mask_cache.txt` | the committed mask cache: one line per chip (`mid`, track, date, orbit, `w h`, `peak`, `median`, the mask statistics and the masked-pixel coordinates), written once by `morandi_ocv_masks.py --extract` from the site's 400 x 400 rects and re-verified by `--check` | `code/morandi/morandi_ocv_masks.py` (`load_cache`), `code/morandi/morandi_ocv_channels_csv.py` |
+| `morandi_windows_mask_cache.manifest.json` | provenance of that extraction: the two source rect files + sha256 and track, the `400` source size, the `[160,240,160,240]` crop, the window sizes (234 `400x400`, 5 clipped/odd `200x400`/`268x400` excluded), the mask rule and the per-track counts (119 / 113) | the figure's mask pins and `morandi_ocv_masks.py --check` |
+| `morandi_weather_table.csv` | the committed measurement + weather extract, one pipe-delimited line per acquisition (`track`, `orbit`, `date`, `platform`, the wind/temperature/precipitation/humidity radiation columns, `intensity`, `gamma2`, the phases, `coh_masked`, `is_master`, …) | `code/morandi/morandi_ocv_masks.py` (`extract`), `code/morandi/morandi_ocv_channels_csv.py`, `code/morandi/morandi_ocv_core.py` (`load_measurements`) |
+| `morandi_tracks.txt` | the track table: `track -> {label, orbit, rel_orbit, platform, rect/npz file, first, last, master, n_dates, n_pre, n_post, n_masked_pixels}` — `A_asc` 119 dates, `A_des` 115, shipped `n_masked_pixels` 640 | `code/morandi/morandi_ocv_core.py` (`load_tracks`) |
+| `morandi_deck_channels.csv` | the site's own per-track deck channels: a **fixed 640-px (10 %) quantile mask**, *not* the echo mask this package recomputes | the figure's deck-mask pins and the export cross-check |
+| `reference/morandi_registration.json` | committed registration/coregistration result: master dates, coregistration and the `n_masked_pixels = 640` deck mask | `code/morandi/fig_morandi_ocv_paper.py` (`pin_block`), pinned structurally |
+| `reference/morandi_deck_channels.json` | committed deck-channel result: the fixed 640-px mask table | same |
+| `reference/morandi_geometry.json` | committed viaduct geometry (Ponte Morandi / Polcevera, Genova) | same, **pinned structurally** (a geometry extract, not rederivable) |
+
+The `coh_masked` / registration `n_masked_pixels` column is **not** the mask of
+these chips: it is a *fixed 640-px (10 %) quantile mask* while the committed
+cache holds the recomputed echo mask, so it coincides with the recomputed `A` on
+**0 of 232** rows. The generator keeps it as provenance and reports the
+difference (panel E).
+
+### Generated files
+
+| file | written by | content |
+| --- | --- | --- |
+| `morandi_ocv_channels.csv` | `code/morandi/morandi_ocv_channels_csv.py` | one row per chip (**232 rows, 59 columns**): the source columns, the derived columns (`segment`, `track_index`, `state`, `pre_collapse`, `day`, `month`, `year`, `season`, `echo_mode`) and the mask columns of the 6D vector (`A, D, F, S, P, gamma2_mask`, the bbox/centroid/peak geometry, `n_components`, the largest component, the fragmentation) |
+| `morandi_ocv_channels_meta.json` | same | provenance: the cache, the manifest, the weather table and the tracks file + sha256, the mask rule and window, the track counts, the state definition, `n_echo_masks`, `n_rows_without_echo_mask`, the `coherence_masked_pixels` cross-check (232 compared, 0 matched) and the per-state summary of every channel |
+| `fig_morandi_ocv_paper.json` | `code/morandi/fig_morandi_ocv_paper.py` | the complete result of figures A–E in machine-readable form (channel and track descriptives/effect sizes, the strata, the weather controls, the LDA grid and OOF scores, the state summaries) plus the pin summary and the seeds of the run |
+| `fig_morandi_ocv_months.json` | `code/morandi/fig_morandi_ocv_months.py` | the companion's per-window blocks of the four one-month windows (counts, medians, Cliff's deltas) and the 6D fingerprint |
+
+The CSV and the meta JSON are both committed: they are the whole input of the
+figure pipeline, so the figures and the pin block can be regenerated offline from
+a fresh clone. `morandi_ocv_masks.py --extract` (needs the site's 400 x 400 rect
+files) is the only step that must not be part of a normal run.
+
+## `data/cts/` — Champlain Towers South (Surfside), collapsed on 2021-06-24
+
+The collapsed condominium. The record is a **four-footprint chip export of one
+orbit**: per acquisition the analysis project stored one 80 x 80 complex chip per
+Sentinel-1 footprint of the *same* geometry (ASC rel-48 IW3) — the tower
+(`cts`), two standing control towers (`ctn`, 165 m N; `cte`, ~90 m N) and the
+beach (`beach`) — see `cts_tracks.txt`. The payloads (the site project's
+`cts_windows_*.npz` cubes, not committed) are carried as a **committed window
+cache** — `cts_windows_mask_cache.txt`: the echo mask (pixel coordinates) of
+every chip plus the sufficient statistics the 6D vector needs. Where Morandi has
+two tracks, this site has four, and two mask layers (the echo mask of the whole
+chip and the same rule on the track's own chip).
+
+The four footprints share **identical strata, dates and counts**, so this is the
+one site that can do a **difference-in-differences** (DiD): the collapsed tower
+against a control tower whose common atmosphere cancels. The record is **711**
+rows, **543** pre / **168** post (one `cte` date has no echo).
+
+### Inputs (committed copies)
+
+| file | what it is | read by |
+| --- | --- | --- |
+| `cts_windows_mask_cache.txt` | the committed mask cache: one line per chip (`mid`, track, segment, date, orbit, `w h`, `peak`, `median`, the mask statistics and the masked-pixel coordinates), written once by `cts_ocv_masks.py --extract` from the `cts_windows_*.npz` cubes and re-verified by `--check` | `code/cts/cts_ocv_masks.py` (`load_cache`), `code/cts/cts_ocv_channels_csv.py` |
+| `cts_windows_mask_cache.manifest.json` | provenance of that extraction: the four source npz files + sha256 and track, the `80` window, the mask rule, the per-track counts (178/178/177/178), the one row without echo and the site's `quantile_mask_pixels` (640) | `cts_ocv_masks.py --check`, the channel meta | 
+| `cts_measurements_full.txt` | the committed measurement extract, one pipe-delimited line per acquisition per track (712 rows, 28 columns: `asset_id`…`track`, `intensity`, `coherence_gamma2`, `coherence`, `phase_coherence`, `coherence_masked_pixels`, `phase_scatterer_count`, `brightness_ratio`, `phase_snr_db`, `displacement_los_m`, the weather columns, the registration shifts) | `code/cts/cts_ocv_core.py` (`load_measurements`), `cts_ocv_channels_csv.py`, `cts_ocv_did.py` |
+| `cts_tracks.txt` | the track table: `track -> {label, role, orbit_direction, rel_orbit, subswath, platform, npz_file, first, last, n_dates, n_pre, n_post, n_masked_pixels}` (178 dates each, role `target` / `control_ctn` / `control_cte` / `reference_beach`) | `code/cts/cts_ocv_core.py` (`load_tracks`) |
+| `cts_segments.txt` | provenance only: a "segment" is a track here, so `SEGMENTS_PATH` aliases `cts_tracks.txt` | `code/cts/cts_ocv_core.py` (`load_segments`) |
+| `cts_asset.json`, `cts_events.json`, `cts_coherence_states.json`, `cts_acquisition_census.{json,md}`, `cts_phase0_audit.{json,md}` | the site's Phase 0 provenance chain (asset, the collapse/demolition events, the coherence-state histogram, the acquisition census and the Step-0 audit) | `code/cts/cts_ocv_core.py` (`load_reference`), the reports |
+| `reference/cts_reference_did_ctn.json` (`.md`) | committed DiD reference: `target` vs `control_ctn` | `code/cts/cts_ocv_did.py` (`--verify`), **pinned series + markdown** |
+| `reference/cts_reference_did_cte.json` (`.md`) | committed DiD reference: `target` vs `control_cte` | same |
+| `reference/cts_reference_did_placebo_ctn_vs_cte.json` (`.md`) | committed DiD reference (placebo): `control_ctn` vs `control_cte` | same |
+
+The site's own `coherence_masked_pixels` column is **not** the mask of these
+chips: it is a *fixed 640-px (10 %) quantile mask* while the committed cache
+holds the recomputed echo mask. The generator keeps it as provenance, and in the
+DiD it is the **degenerate** channel (constant per row, so its OLS interaction is
+pure floating-point noise `-5.07e-14`, pinned structurally only).
+
+### Generated files
+
+| file | written by | content |
+| --- | --- | --- |
+| `cts_ocv_channels.csv` | `code/cts/cts_ocv_channels_csv.py` | one row per chip (**711 rows**; the header has 54 entries — `coherence_masked_pixels` is carried once in the source block and once in the mask block, 53 distinct names): the source columns, the derived columns (`segment`, `track_index`, `state`, `pre_collapse`, `day`, `month`, `year`, `season`, `echo_mode`) and the mask columns of the 6D vector (`A, D, F, S, P, gamma2_mask`, the bbox/centroid/peak geometry, `n_components`, the largest component, the fragmentation) |
+| `cts_ocv_channels_meta.json` | same | provenance: the cache, the manifest, the measurements and the tracks file + sha256, the mask rule and window, the track/role counts, the state definition, `n_echo_masks`, `n_rows_without_echo_mask`, the `coherence_masked_pixels` cross-check and the per-state summary of every channel |
+| `fig_cts_ocv_paper.json` | `code/cts/fig_cts_ocv_paper.py` | the OCV-paper figure result: the pooled and per-track Cliff's-delta blocks, the fitted 2-class LDA models, the pinned ASCENDING `did_asc` rows of the three contrasts and the pin verdict (the figure script re-derives the three committed references and exits non-zero on any deviation) |
+| `fig_cts_ocv_months.json` | `code/cts/fig_cts_ocv_months.py` | the companion's per-window blocks (the five windows `F0` + `M-3..M+1` with counts, medians and dates; the Cliff's deltas and bootstrap CIs of `M+1` vs. `F0` and vs. `M-1`, plus every dimension vs. the pooled pre windows; the 6D fingerprint relative to the `F0` first-images baseline) |
+
+The CSV and the meta JSON are both committed: they are the whole input of the
+DiD layer, so the three reference contrasts can be regenerated offline from a
+fresh clone. `cts_ocv_masks.py --extract` (needs the site's `cts_windows_*.npz`
+cubes) is the only step that must not be part of a normal run.
+
+## `data/ywf/` — Yeongdeok Wind Farm, Unit 21 (Samgye-ri), collapsed on 2026-02-02
+
+The steel monopole tower (100 m, 4.6 m base diameter) that collapsed onto a public
+road. The record is a **7 x 7 complex window** per acquisition per *mast-section
+request* — and it is **small** (57 windows x 49 complex samples = 38 kB), so unlike
+the bridge sites the payload is **committed in full** and the mask layer is
+recomputed from it directly. It is also **not segment-resolved**: 24 of the 57
+windows are byte-identical duplicates that differ only in the requested section
+(2 vs. 3) on one date, so both requests decoded the same chip at the asset point
+— the package therefore carries **one** mask layer (the echo mask of the whole
+window; a per-mast-section layer would be an artefact) and only mast section 3
+appears in the record at all.
+
+The record holds **33 unique chips** on **32 dates**; **17** of them carry an echo
+(**16** of 27 pre-event chips, **1** of 6 post-event chips). The site's collapsed
+tower therefore supports an **echo-coverage** statement with a power caveat
+rather than a contrast. The same coverage is also stated per **orbit direction**
+(ascending / descending, the record's only second cross-cut beside the state):
+**10 of 20** ascending chips carry an echo against **7 of 13** descending ones
+(Fisher exact p = 1.0000), the one post-event echo is an ascending pass, and the
+block is pinned as a *description* — both orbits straddle the collapse date.
+
+Two facts the export does not carry are committed as references resolved from
+public catalogues (`reference/ywf_bursts.json`, `reference/ywf_osm_road.json` and
+`reference/ywf_geometry.json`, each with its own offline `--check`): the record's
+33 chips are **two sub-swaths** — ascending `IW3` / relative orbit `54` at 09:2x UT
+(20 chips) and descending `IW2` / relative orbit `61` at 21:2x UT (13 chips), with
+**VV and VH interleaved in both** — and the collapsed tower stood **on** OSM way
+`577440814` (`highway=tertiary`, `surface=asphalt`). The road is an anchor only:
+a ~7 m carriageway is 2.0 px across range but 0.5 px across azimuth, and the
+window is 7 x 7 px with no pixel-spacing spec of its own, so this record supports
+no edge/band layer (see `code/ywf/README.md`, "the four structural blockers").
+
+### Inputs (committed copies)
+
+| file | what it is | read by |
+| --- | --- | --- |
+| `ywf_windows_full.txt` | the committed window payload: one line per window, `mid\|w\|h\|[[re, im], …]` (57 lines, 38 kB) | `code/ywf/ywf_ocv_masks.py`, `ywf_ocv_core.py` (`chip_table`), `ywf_ocv_channels_csv.py` |
+| `ywf_windows_index.txt` | the window index: `mid\|asset_id\|asset_name\|segment_index\|acquisition_ts\|burst_id\|w\|h` — the 6th field is the **CDSE burst id** of the SLC burst the window was cut from (**not** the measurement extract's own `request_id`, a different column with a different value); the index labels a window's mast section and is the time base of the state rule | same |
+| `ywf_segments.txt` | the five mast sections of the asset with their FEM fundamental: `asset_id\|asset_name\|segment_index\|label\|fundamental_hz\|…` | `ywf_ocv_core.py` (`load_segments`) |
+| `ywf_measurements_full.txt` | the committed measurement extract: one pipe-delimited line per measurement (58 lines, ~50 columns: `intensity`, `displacement_los_m`, `brightness_ratio`, the weather columns, `coherence`, `coherence_gamma2`, `coherence_masked_pixels`, `structural_frequency_hz`, …) | `ywf_ocv_core.py` (`load_measurements`), `ywf_ocv_channels_csv.py`, the figure script |
+| `ywf_windows_mask_cache.txt` | the committed mask cache — **only the 17 windows that carry an echo** (one line per chip: `mid`, asset, segment, date, orbit, `w h`, `peak`, `median`, the mask statistics and the masked-pixel coordinates), written by `ywf_ocv_masks.py --extract` and re-verified by `--check` | `ywf_ocv_masks.py` (`load_cache`), `ywf_ocv_core.py`, the figure script |
+| `ywf_windows_mask_cache.manifest.json` | provenance of that extraction: the three source files + sha256, the mask rule, the guard counts (`n_rows` 17, `n_without_echo` 16, `n_deduplicated_same_payload` 24, `segment_resolved` false, the section groups), written by the same run | `ywf_ocv_masks.py --check`, `ywf_ocv_core.py`, the channel meta |
+| `reference/ywf_ocv_findings.json` | the committed **analysis-layer reference** — the only reference of the repository that has *no* upstream project behind it: it is **defined** by `fig_ywf_ocv_paper.py --write-reference` and re-derived field by field (1179 checks) on every later run | `code/ywf/fig_ywf_ocv_paper.py` (`pin_all`), `fig_ywf_ocv_weeks.py` |
+| `reference/ywf_bursts.json` | the **resolved pass geometry** of the record (49 kB): all 33 burst ids of the window index queried against the public CDSE OData burst catalogue — sub-swath, relative orbit, polarisation, azimuth time, parent product, footprint, S3 path, plus the sha256 of the index it was resolved from. A **mutable external input**, so it is re-verified *structurally* offline (`code/ywf/ywf_bursts_resolve.py --check`, the default) and pinned by sha256 in the figures | `ywf_bursts_resolve.py`, `code/ywf/ywf_ocv_core.py` (`burst_provenance`) |
+| `reference/ywf_osm_road.json` | the committed **OSM map extract** of the road the collapsed tower fell on (91 kB, way `577440814`, `highway=tertiary`, © OpenStreetMap contributors, ODbL 1.0) | `code/ywf/ywf_osm_anchor.py` |
+| `reference/ywf_geometry.json` | the derived **anchor** (its `status` is `anchor reference — no edge layer claimed`): the nearest point of that way (36.85 m from the asset point), the carriageway centreline and bearing, the **estimated burst grid** (`chip_grid`: 3.35 / 3.45 m per pixel across range, 15.3 / 14.4 across azimuth), `road_vs_pixel_grid` — a 7 m carriageway is 2.0-2.1 px across range but 0.46-0.49 px across azimuth — and `road_vs_window`, the **containment proof**: the near carriageway edge is 8.10-9.33 px across range from the window centre while a 7 x 7 frame reaches 6 px, so no committed pixel crosses the road (containment would need 19-21 px per side, 27-29 px with Bautzen's ±4-row ROI) | `code/ywf/ywf_osm_anchor.py` (`--check`, the default) |
+
+### Generated files
+
+| file | written by | content |
+| --- | --- | --- |
+| `ywf_ocv_channels.csv` | `code/ywf/ywf_ocv_channels_csv.py` | one row per **unique chip** (**33 rows**, 81 columns): the 34 source columns of the measurement extract, the derived columns (`segment`, `section_index`, `state`, `pre_collapse`, `day`, `month`, `year`, `season`, `echo_mode`, `echo_mask_present`, `payload_group_size`, `payload_shared_with_segments`) and the recomputed mask columns (`A, D, F, S, P, gamma2_mask`, the bbox/centroid/peak geometry, `n_components`, the largest component, the fragmentation). `echo_mask_present` marks the 17 echo-bearing rows; the mask columns are empty on the other 16 |
+| `ywf_ocv_channels_meta.json` | same | provenance: the payload, index, segments, measurements, cache and manifest + sha256, the mask rule and window, the guard counts (`n_windows` 57, `n_unique_chips` 33, `n_duplicate_windows` 24, `n_echo_masks` 17, `n_rows_without_echo_mask` 16, `n_by_orbit` ASC 20 / DESC 13), the echo-coverage table with its Fisher test, **the same coverage split by orbit direction** (`coverage_by_orbit`: per-orbit chips / echoes / pre-post cross-tab, the ASC-vs-DESC Fisher test and the two within-orbit pre/post tests), the echo-mode cuts (cut on this site's 49-px window), the `coherence_masked_pixels` cross-check and the per-state summary of every channel |
+| `fig_ywf_ocv_paper.json` | `code/ywf/fig_ywf_ocv_paper.py` | the OCV-paper figure result: the coverage/power block, the per-orbit coverage block, the pooled Cliff's-delta blocks of the mask channels and of the co-variate controls, the echo-mode mix, the month/section composition, the 32-row timeline, the payload-digest groups and the pin verdict |
+
+Neither the CSV nor the meta JSON contains anything that is not derivable from
+the committed payload, so the figures and the pin block run offline from a fresh
+clone; `ywf_ocv_masks.py --extract` is the only step that rewrites the cache (and
+it is deterministic, byte for byte).
+
+## `data/espoo/` — Espoo Kurttila mast (Espoo, Finland), event-free
+
+The communications mast at Kurttila, whose record is the family's **event-free
+control**. It is the only site in this repository with **no damage axis at all**:
+the committed export behind it (`espoo_channels.csv`) carries 150 acquisitions between
+`2024-09-05` and `2026-09-07` (25 months at exactly 6 each) and `damage_label`,
+`structural_state` and `condition_label` are empty on **every** row — the upstream
+verdict says so itself ("This site has no ground-truth state label"). There is no
+event to anchor a window on and no severity to regress against, so the only contrast
+the record supports is the one between its two **orbit geometries** (`ASCENDING` /
+afternoon pass n = 70, `DESCENDING` / morning pass n = 80).
+
+The export also has **no mask raster**: `peak_intensity`, `sub_aperture_brightness`,
+`scatterers`, `amplitude`, `phase_rad`, `mast_peak_row/col` and every other geometry
+column are empty on all 150 rows (56 of the 78 columns). The observability core
+vector of the site is therefore `OCV = [gamma2, A]` with `A` =
+`coherence_masked_pixels`, the mask *size* the pipeline delivered: `D`, `F`, `S` and
+`P` are deliberately absent, and `A` is **copied and proved**, never recomputed. The
+phase ladder (`phase_coherence`, `phase_rms_rad`) exists for 80 of 150 acquisitions
+(53.3 %, nothing after 2025-10) and `phase_snr_db` for 0, so it is stored and
+reported as *availability* only.
+
+### Inputs (committed copies)
+
+| file | what it is | read by |
+| --- | --- | --- |
+| `espoo_channels.csv` | the committed Espoo mast export as the site's own generator wrote it: one row per acquisition (**150 rows, 78 columns** — `acquisition_ts`, `pass_label`, `orbit_direction`, `coherence_gamma2`, `coherence_masked_pixels` (= `A`), the phase-ladder columns, `wind_speed_ms`, `temperature_c`, `ndvi`, `status` and the empty geometry columns) | `code/espoo/espoo_ocv_channels_csv.py`, `espoo_ocv_core.py` | 
+| `reference/espoo_mast_observability.json` | the committed **analysis-layer reference** of the site: `per_pass`, `per_orbit`, `orbit_test` (Welch / Mann-Whitney), `verdict.classes` ("no ground-truth state label"), `constants`, the LUMO reference scale and the provenance / catalogue blocks | `code/espoo/espoo_ocv_channels_csv.py`, `fig_espoo_ocv_paper.py` (`pin_all`) |
+| `reference/espoo_phase_stationarity.json` | the committed **stationarity table**: all 14 phase-coherence series (`1-3 / 3-8 / 8-18 Hz` x `full_burst / strip400_annotation / strip400_pipeline` x ASCENDING / DESCENDING) with median, IQR, Theil-Sen slope + moving-block bootstrap CI, Mann-Kendall, lag-1, runs test, Ljung-Box, half-split shift, annual harmonic, the 25 monthly means, the flags and the verdict — plus every number the file's own prose quotes | `code/espoo/fig_espoo_ocv_paper.py`, `fig_espoo_ocv_months.py` |
+| `reference/fig_espoo_channels.json` | the committed **channel statistics**: the 15 pooled / per-orbit `{n, median}` blocks, the 25-month composition and the LUMO reference scale | `code/espoo/espoo_ocv_channels_csv.py`, `fig_espoo_ocv_paper.py` |
+| `reference/espoo_ocv_findings.json` | this package's **own derivation lock** — *defined* by `code/espoo/fig_espoo_ocv_paper.py --write-reference` once (there is no upstream file behind it) and re-derived field by field on every later run | `code/espoo/fig_espoo_ocv_paper.py` (`pin_all`) |
+
+The first four files are the *reference* of this package: the whole point of the
+generator and the figure scripts is to recompute their numbers and to fail loudly if
+any of them does not come out identically.
+
+### Generated files
+
+| file | written by | content |
+| --- | --- | --- |
+| `espoo_ocv_channels.csv` | `code/espoo/espoo_ocv_channels_csv.py` | `espoo_channels.csv` plus the derived bookkeeping columns (state = the orbit geometry, month, season, the acquisition order). **`A` is copied, not recomputed**: the generator proves the copy against the committed column *and* against the committed reference statistics row by row (4050 copied fields, 235 reference channel statistics, `A_equals_committed_masked_pixels`, 0 rows left empty, 25 months) |
+| `espoo_ocv_channels_meta.json` | same | provenance: source and output sha256, `mask_definition` (why there is no mask layer), `derived_checks`, `filled_columns`, `new_columns`, `n_by_orbit` (ASC 70 / DESC 80), `date_range` and the `monthly` 25-month composition |
+| `fig_espoo_ocv_paper.json` | `code/espoo/fig_espoo_ocv_paper.py` | the OCV-paper figure result: the pooled / per-orbit channel blocks, `effects`, `models` (LDA + shrinkage grid + permutation null), `oof`, `oot`, the four `controls` blocks (stationarity, season, wind strata, phase ladder), `headline`, `shrinkage` and the pin verdict |
+| `fig_espoo_ocv_months.json` | `code/espoo/fig_espoo_ocv_months.py` | the month companion's result: the 25 `months` / `per_month` composition, `deltas` (the per-month Cliff's delta + CI), `pooled`, `primary` (the two `3-8 Hz · strip400_pipeline` series), `availability`, `signs`, `standing` and its own pin verdict |
+
+Neither the channel table nor the meta JSON contains anything that is not derivable
+from the committed `espoo_channels.csv` and the committed reference JSONs, so the
+figures and every pin block run offline from a fresh clone. Two runs of the
+generator produce the same CSV and the same meta JSON, byte for byte.
 

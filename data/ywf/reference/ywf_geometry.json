@@ -1,0 +1,132 @@
+{
+ "asset_id": "af683c7e-416a-4395-86cc-094ee83d9497",
+ "asset_name": "Yeongdeok Wind Turbine (Samgye-ri)",
+ "asset_point": {
+  "lat": 36.42356,
+  "lon": 129.42031
+ },
+ "chip_grid": {
+  "ASCENDING": {
+   "azimuth_m_per_px": 15.3,
+   "lines_per_burst": [
+    1510,
+    1511,
+    1512
+   ],
+   "n_bursts": 20,
+   "range_axis_bearing_deg": 80.08,
+   "range_m_per_px": 3.353,
+   "samples_per_burst": [
+    23715,
+    23850,
+    23863,
+    23920,
+    23922,
+    24066,
+    24067
+   ],
+   "sub_swath": [
+    "IW3"
+   ]
+  },
+  "DESCENDING": {
+   "azimuth_m_per_px": 14.378,
+   "lines_per_burst": [
+    1505,
+    1517
+   ],
+   "n_bursts": 13,
+   "range_axis_bearing_deg": 100.39,
+   "range_m_per_px": 3.448,
+   "samples_per_burst": [
+    24577,
+    26338
+   ],
+   "sub_swath": [
+    "IW2"
+   ]
+  }
+ },
+ "chip_grid_axes_note": "the two ground axes of a burst are perpendicular: the range axis is reported as a line (mod 180\u00b0), the azimuth axis is that line rotated by 90\u00b0, and which of the two perpendicular senses is the flight direction follows from the orbit direction reported per chip in ywf_bursts.json",
+ "note": "this anchor supports a statement about *where the tower stood and which road it fell on*, not a band/edge layer: such a layer needs a resolvable ground extent per pixel along the band axis, and ``road_vs_pixel_grid`` is the number that says how far this record is from that",
+ "road": {
+  "anchor": "carriageway centreline of the OSM way \u2014 never an area/polygon (the Bergs\u00f8ysund analysis measured a \u221281..+7 m shape error, rms 56 m, for a polygon anchor)",
+  "carriageway_width_m": 7.0,
+  "carriageway_width_source": "assumption, not a survey: the way carries no width tag; a two-lane carriageway is taken as 7.0 m",
+  "centreline_bearing_deg": 205.28,
+  "centreline_length_km": 4.298,
+  "distance_from_asset_point_m": 36.85,
+  "n_nodes": 346,
+  "nearest_point": {
+   "lat": 36.4234168,
+   "lon": 129.4206815
+  },
+  "nearest_segment_node_index": 17,
+  "osm_way": 577440814,
+  "tags": {
+   "highway": "tertiary",
+   "surface": "asphalt"
+  },
+  "timestamp": "2026-02-08T03:00:49Z",
+  "version": 8
+ },
+ "road_vs_pixel_grid": {
+  "ASCENDING": {
+   "carriageway_width_azimuth_px": 0.46,
+   "carriageway_width_range_px": 2.09
+  },
+  "DESCENDING": {
+   "carriageway_width_azimuth_px": 0.49,
+   "carriageway_width_range_px": 2.03
+  }
+ },
+ "road_vs_window": {
+  "anchor_offset_bearing_deg": 115.59,
+  "anchor_offset_m": 36.85,
+  "near_edge_offset_m": 33.35,
+  "note": "the road lies outside the frame: the near carriageway edge is 8.10-9.33 px across range from the window centre, while a 7x7 frame reaches 6 px at most (3 px from its centre), so no committed pixel crosses the carriageway - and a frame that did contain it would still have to resolve the 7.0 m cross-section (1.71-1.96 px across range, 0.13-0.26 px across azimuth). Containment needs 19-21 px per side (27-29 px with Bautzen's +/-4-row ROI): a frame of 19 px per side is 361 samples (7.4x the committed 49 px) and 29 px per side 841 (17.2x) \u2014 the cost of containment is quadratic in the side, and this is the containment half of blocker 4 of code/ywf/README.md",
+  "per_orbit": {
+   "ASCENDING": {
+    "contained": false,
+    "cross_section_azimuth_px": 0.26,
+    "cross_section_range_px": 1.71,
+    "near_edge_azimuth_px": 1.27,
+    "near_edge_range_px": 8.1,
+    "outside_by_px": 2.1,
+    "road_offset_azimuth_px": 1.4,
+    "road_offset_range_px": 8.95,
+    "side_px_to_contain": 19,
+    "side_px_with_roi": 27
+   },
+   "DESCENDING": {
+    "contained": false,
+    "cross_section_azimuth_px": 0.13,
+    "cross_section_range_px": 1.96,
+    "near_edge_azimuth_px": 0.61,
+    "near_edge_range_px": 9.33,
+    "outside_by_px": 3.33,
+    "road_offset_azimuth_px": 0.67,
+    "road_offset_range_px": 10.31,
+    "side_px_to_contain": 21,
+    "side_px_with_roi": 29
+   }
+  },
+  "roi_half_px": 4,
+  "window_half_extent_px": 3.0,
+  "window_px": 49,
+  "window_reach_px": 6.0,
+  "window_side_px": 7
+ },
+ "site": "Yeongdeok Wind Farm (Samgye-ri)",
+ "sources": {
+  "bursts": "data/ywf/reference/ywf_bursts.json",
+  "license": "\u00a9 OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+  "osm_extract": "data/ywf/reference/ywf_osm_road.json",
+  "osm_way": "https://api.openstreetmap.org/api/0.6/way/577440814/full.json"
+ },
+ "status": "anchor reference \u2014 no edge layer is claimed: a 7x7 window per acquisition, no rect/pixel-spacing spec and no per-section coordinates (see code/ywf/README.md)",
+ "window": {
+  "note": "one 7x7 complex window per acquisition at the asset point; the export committed no per-section coordinates (its segment_latitude / segment_longitude columns are empty for all five mast sections), so this package has no second anchor and no rect spec",
+  "px": 49
+ }
+}

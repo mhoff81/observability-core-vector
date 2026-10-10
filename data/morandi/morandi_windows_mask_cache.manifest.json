@@ -1,0 +1,42 @@
+{
+ "crop": [
+  160,
+  240,
+  160,
+  240
+ ],
+ "generator": "code/morandi/morandi_ocv_masks.py --extract",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_clipped_or_odd_shape": 5,
+ "n_deduplicated_same_key": 0,
+ "n_per_track": {
+  "A_asc": 119,
+  "A_des": 113
+ },
+ "n_rows": 232,
+ "n_without_echo": 2,
+ "out_cache": "morandi_windows_mask_cache.txt",
+ "source_rect_files": {
+  "ref_rects_A_asc_400.txt": {
+   "sha256": "5c6bfc68421d6fa9b9d13da49e46993885b38c987f3654b46d249929c0e80ea5",
+   "track": "A_asc"
+  },
+  "ref_rects_A_des_400.txt": {
+   "sha256": "201d8c8987a79604a697c6fdf62badc3e647e06c5d18f8f4eaa6b18e3fffd4a1",
+   "track": "A_des"
+  }
+ },
+ "source_rects_dir": "/home/projects/morandi_analysis",
+ "source_size": 400,
+ "window_size": 80,
+ "window_sizes": {
+  "200x400 (clipped, excluded)": 4,
+  "268x400 (clipped, excluded)": 1,
+  "400x400": 234
+ }
+}

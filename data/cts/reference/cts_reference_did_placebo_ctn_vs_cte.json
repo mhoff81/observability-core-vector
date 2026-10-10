@@ -1,0 +1,312 @@
+{
+  "asset": {
+    "key": "cts",
+    "label": "Champlain Towers South",
+    "data_dir": "/home/projects/cts_analysis",
+    "out_dir": "/home/projects/cts_analysis",
+    "meas": "cts_measurements_full.txt",
+    "windows": "cts_windows_full.txt",
+    "segments": "cts_segments.txt",
+    "event_date": "2021-06-24",
+    "event_kind": "documented_event",
+    "control_for": null,
+    "per_girder": false,
+    "asset_id": null,
+    "notes": [
+      "Three physical states in the archive, each with a tight bracket: intact (last pass 2021-06-21T23:28:23Z, 53.89 h before the collapse), standing remnant (exactly one pass 2021-07-03T23:28:24Z, 26.53 h before the demolition), cleared lot (from 2021-07-15).",
+      "The demolition-bracketing pair is a DELIBERATE change: it calibrates the channel, it is not a precursor.",
+      "Precursor question (NIST: two garage-column/pool-deck connection failures in early June 2021, ~3 weeks of load redistribution): the binding limit is SAMPLING, not SNR - 2 acquisitions in the last 21 days, 3 in 30, 5 in 60. A step/trend model has no power; the only legitimate probe is a pair-rank test of 2021-06-09 -> 2021-06-21 against the intact-era 12-day pairs. One pair => a null result is NOT informative.",
+      "The NIST initiation DAY stays to_pin: the report was not reachable during this run, so the window is not counted rather than filled with a plausible date.",
+      "Resolution: at IW SLC (~2.3 m x 14 m) the 42.5 m tower is a few pixels; at ~39 deg incidence the east facade smears ~52 m in ground range, so roof and ground mix. Attribution therefore rests on a data-driven mask from the INTACT state (Phase 0 convention) and on the temporal series (176 dates), not on spatial averaging.",
+      "ASC only: DESC has 5+1 acquisitions in six years (EQS-9 non-suitability justified with these numbers, not asserted). Platform independence (EQS-10) is NOT establishable before the event - S1A only.",
+      "Controls: Champlain Towers North (165 m N) and East (~90 m N) share identical strata, dates and counts with CTS; they must never be pooled, only compared per stratum (difference-in-differences).",
+      "Published claim to qualify, not to use: ERS InSAR of the 1990s reported ~2 mm/yr at this site (Wdowinski et al. 2020) - stale, regional, and not the identified mechanism; that magnitude lies below this machinery's floor.",
+      "Post state is BARE SAND: its intensity is moisture-driven (Open-Meteo precipitation is attached before any model is fitted), so a change in W5 is not evidence about the collapse."
+    ],
+    "placebo": false
+  },
+  "event": "2021-06-24",
+  "roles_present": [
+    "control_cte",
+    "control_ctn",
+    "reference_beach",
+    "target"
+  ],
+  "target_role": "control_ctn",
+  "reference_role": "control_cte",
+  "method": "y ~ 1 + T + P + T:P over the pooled target/reference rows; the T:P coefficient is the difference of differences. Reported with the pre-period comparability, the reference's own step and both pre-trends, because a DiD without them is not interpretable.",
+  "rows": {
+    "rows_raw": 712,
+    "rows_dedup": 712
+  },
+  "coverage": {
+    "n": 712,
+    "days": 178,
+    "first_day": "2015-09-21",
+    "last_day": "2022-12-25",
+    "months": 80
+  },
+  "series": {
+    "ASCENDING": {
+      "phase_coherence": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": -0.0010594045956628141,
+        "did_t": -0.5437694136312932,
+        "did_p": 0.5869443862016941,
+        "r2": 0.032075964345321006,
+        "target_delta": -0.002953397114999999,
+        "ref_delta": -0.00335078594,
+        "pre_comparable_p": 0.8275900392760893,
+        "reference_steps_p": 0.07287749209589842,
+        "pre_trend_target_rho": -0.06805495920996135,
+        "pre_trend_target_p": 0.4311425260109575,
+        "pre_trend_reference_rho": -0.04766948141787128,
+        "pre_trend_reference_p": 0.5815657510729421
+      },
+      "phase_snr_db": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "phase_scatterer_count": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": 7.190476190476282,
+        "did_t": 0.5206197581564787,
+        "did_p": 0.6029589986031567,
+        "r2": 0.006003308421064779,
+        "target_delta": -16.0,
+        "ref_delta": -29.0,
+        "pre_comparable_p": 1.0,
+        "reference_steps_p": 0.16714558493974188,
+        "pre_trend_target_rho": -0.049265114805726734,
+        "pre_trend_target_p": 0.5689707207087262,
+        "pre_trend_reference_rho": -0.09292056540085955,
+        "pre_trend_reference_p": 0.2819459207054157
+      },
+      "displacement_los_m": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "coherence_gamma2": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": -5.30382044653522e-05,
+        "did_t": -0.710940863447094,
+        "did_p": 0.4775916885843318,
+        "r2": 0.018063900233108554,
+        "target_delta": -4.7899986399999993e-05,
+        "ref_delta": -2.8360664150000003e-05,
+        "pre_comparable_p": 0.3520165678595528,
+        "reference_steps_p": 0.3940017006332727,
+        "pre_trend_target_rho": -0.00444158198559229,
+        "pre_trend_target_p": 0.9590709707250905,
+        "pre_trend_reference_rho": -0.0026239206144745,
+        "pre_trend_reference_p": 0.9758138283660228
+      },
+      "coherence": {
+        "n": 350,
+        "cells": {
+          "target_pre": 135,
+          "ref_pre": 135,
+          "target_post": 40,
+          "ref_post": 40
+        },
+        "did": 0.012939263049462258,
+        "did_t": 0.3822168283791387,
+        "did_p": 0.7025351968245697,
+        "r2": 0.016433952623652104,
+        "target_delta": -0.004948925229999998,
+        "ref_delta": -0.009867191309999995,
+        "pre_comparable_p": 0.5911794873712565,
+        "reference_steps_p": 0.029199707433090163,
+        "pre_trend_target_rho": -0.00325821871036972,
+        "pre_trend_target_p": 0.9700822363370024,
+        "pre_trend_reference_rho": 0.09223490391181349,
+        "pre_trend_reference_p": 0.2873390244186697
+      },
+      "coherence_masked_pixels": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": -5.0696018986511114e-14,
+        "did_t": -0.22655854329108577,
+        "did_p": 0.8208985389785816,
+        "r2": 0.0,
+        "target_delta": 0.0,
+        "ref_delta": 0.0,
+        "pre_comparable_p": null,
+        "reference_steps_p": null,
+        "pre_trend_target_rho": null,
+        "pre_trend_target_p": null,
+        "pre_trend_reference_rho": null,
+        "pre_trend_reference_p": null
+      },
+      "intensity": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": 2711.852779156169,
+        "did_t": 1.840076325324402,
+        "did_p": 0.0665987815451173,
+        "r2": 0.2285410428378385,
+        "target_delta": 3498.5722599999935,
+        "ref_delta": 145.17382499999803,
+        "pre_comparable_p": 5.981872287078654e-14,
+        "reference_steps_p": 0.4691485251245921,
+        "pre_trend_target_rho": 0.07462907304040836,
+        "pre_trend_target_p": 0.3878687950530706,
+        "pre_trend_reference_rho": -0.12843375793139641,
+        "pre_trend_reference_p": 0.13618852931825107
+      },
+      "brightness_ratio": {
+        "n": 356,
+        "cells": {
+          "target_pre": 136,
+          "ref_pre": 136,
+          "target_post": 42,
+          "ref_post": 42
+        },
+        "did": 0.057255670388340556,
+        "did_t": 1.6636414515241746,
+        "did_p": 0.09707408169515933,
+        "r2": 0.03151059963026226,
+        "target_delta": 0.07694753905000007,
+        "ref_delta": 0.003615318000000034,
+        "pre_comparable_p": 0.8664625734208903,
+        "reference_steps_p": 0.4691485240358698,
+        "pre_trend_target_rho": 0.07462907304040836,
+        "pre_trend_target_p": 0.3878687950530706,
+        "pre_trend_reference_rho": -0.12843375793139641,
+        "pre_trend_reference_p": 0.13618852931825107
+      }
+    },
+    "DESCENDING": {
+      "phase_coherence": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "phase_snr_db": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "phase_scatterer_count": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "displacement_los_m": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "coherence_gamma2": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "coherence": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "coherence_masked_pixels": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "intensity": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "brightness_ratio": {
+        "n": 0,
+        "note": "eine der vier Zellen hat < 5 Werte",
+        "cells": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

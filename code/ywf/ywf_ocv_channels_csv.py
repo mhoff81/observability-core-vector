@@ -43,6 +43,15 @@ masked pixels, ``A >= 2``), and every row of the committed cache must match a
 unique chip of the window file in ``A``, the peak, the median, the mask pixels
 and the component counts.
 
+The coverage of that mask is summarised twice: per state (the site's headline)
+and per **orbit direction** (ascending / descending). The orbit block is the
+record's only second cross-cut — every unique chip is the same mast section,
+``segment_resolved=False`` — and it is descriptive: both orbits straddle the
+collapse date and the single post-event echo is an ascending pass. The build
+cross-checks both summaries against the chip table, so a row whose
+``orbit_direction`` disagrees with its measurement or whose
+``echo_mask_present`` disagrees with the per-orbit count is a hard failure.
+
 A note on ``coherence_masked_pixels`` and on the duplicated segments
 --------------------------------------------------------------------
 The measurement extract carries the pipeline's own mask column
@@ -258,6 +267,10 @@ def build(args):
           f"({len(windows) - len(unique)} duplicated segments de-duplicated)")
     print(f"  echo mask: {rep['n_chips_with_echo']} of {len(unique)} unique "
           f"chips, all re-verified against the committed cache")
+    bo = core.coverage_by_orbit(unique)["per_orbit"]
+    print("  orbit split: " + ", ".join(
+        f"{core.ORBIT_SHORT[o]} {bo[o]['n_with_echo']}/{bo[o]['n_chips']} with "
+        f"an echo" for o in core.ORBITS))
     print(f"  coherence_masked_pixels is a different-generation column: "
           f"{n_export_cmp - n_export_mismatch}/{n_export_cmp} agree by chance "
           f"(it was computed on the asset-point chip, not on this window)")
@@ -320,7 +333,11 @@ def build_meta(rows, manifest, args, windows, unique, cache_rep):
         "cache_cross_check": {k: v for k, v in cache_rep.items()
                               if k != "problems"},
         "mask_cache_manifest": manifest,
+        "orbits": list(core.ORBITS),
+        "n_by_orbit": {core.ORBIT_SHORT[o]: sum(
+            1 for r in rows if core.orbit_of(r) == o) for o in core.ORBITS},
         "coverage": core.coverage_block(unique),
+        "coverage_by_orbit": core.coverage_by_orbit(unique),
         "summary_by_state": core.summary_by_state(rows),
         "date_range": [min(r["day"] for r in rows), max(r["day"] for r in rows)],
     }
@@ -393,6 +410,12 @@ def verify(args):
             problems.append(f"{r['id']}.state != state_of(day)")
         if bool(r.get("pre_collapse")) != (r["state"] == core.PRE):
             problems.append(f"{r['id']}.pre_collapse != state == pre")
+        if core.orbit_of(r) != core.orbit_of(rec):
+            problems.append(f"{r['id']}.orbit_direction {core.orbit_of(r)!r} != "
+                            f"measurement {core.orbit_of(rec)!r}")
+        if core.orbit_of(r) not in core.ORBITS:
+            warnings.append(f"{r['id']}: orbit_direction {core.orbit_of(r)!r} "
+                            f"is not one of {core.ORBITS}")
         if bool(r.get("echo_mask_present")) != (v is not None):
             problems.append(f"{r['id']}.echo_mask_present != (A is not None)")
         if r["segment"] != rec["segment"]:
@@ -432,6 +455,32 @@ def verify(args):
         if not recs:
             warnings.append(f"state {s} is empty")
 
+    # the orbit cross-cut: the CSV's own echo flag per orbit must reproduce the
+    # chip table's mask, and the summary must be the committed one
+    by_orbit = {o: [r for r in rows if core.orbit_of(r) == o]
+                for o in core.ORBITS}
+    cov_orbit = core.coverage_by_orbit(unique)
+    n_orbit_rows = sum(len(v) for v in by_orbit.values())
+    if n_orbit_rows != len(rows):
+        problems.append(f"CSV rows with a known orbit {n_orbit_rows} != CSV "
+                        f"rows {len(rows)}")
+    if n_orbit_rows != len(unique):
+        problems.append(f"CSV rows with a known orbit {n_orbit_rows} != unique "
+                        f"chips {len(unique)}")
+    for o in core.ORBITS:
+        want = cov_orbit["per_orbit"][o]
+        n_echo = sum(1 for r in by_orbit[o] if r.get("A") is not None)
+        if not by_orbit[o]:
+            warnings.append(f"orbit {o} is empty")
+        if len(by_orbit[o]) != want["n_chips"]:
+            problems.append(f"{o}: CSV rows {len(by_orbit[o])} != chip table "
+                            f"{want['n_chips']}")
+        if n_echo != want["n_with_echo"]:
+            problems.append(f"{o}: CSV rows with an echo {n_echo} != chip table "
+                            f"{want['n_with_echo']}")
+    if meta.get("coverage_by_orbit") != cov_orbit:
+        problems.append("coverage_by_orbit recomputed != meta.coverage_by_orbit")
+
     if n_cells < 5 * len(rows):
         warnings.append(f"only {n_cells} cells compared")
 
@@ -445,6 +494,9 @@ def verify(args):
         "n_P_set": n_p_set,
         "n_pre_collapse": len(by_state[core.PRE]),
         "n_post_collapse": len(by_state[core.POST]),
+        "n_by_orbit": {core.ORBIT_SHORT[o]: len(by_orbit[o])
+                       for o in core.ORBITS},
+        "coverage_by_orbit": cov_orbit,
         "sections_counts": meta.get("sections_counts"),
         "mask_rule": meta.get("mask_rule"),
         "n_cache_rows": rep["n_cache_rows"],

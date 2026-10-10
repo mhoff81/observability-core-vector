@@ -320,7 +320,15 @@ def read_index(path=INDEX_PATH):
     The committed index has **no header line**: every line is
 
         measurement_id|asset_id|asset_name|segment_index|acquisition_ts|
-        request_id|window_width|window_height
+        burst_id|window_width|window_height
+
+    The 6th field is the **CDSE burst id** of the window — the column the
+    database stores as ``onboarder.insar_window_samples.burst_id`` — and *not*
+    the pipeline's ``request_id``, which is a different column of the measurement
+    extract with a different value (one single distinct value in this record).
+    ``code/ywf/ywf_bursts_resolve.py`` resolves the 33 ids against the public
+    CDSE catalogue and pins what they identify (sub-swath, polarisation, relative
+    orbit, azimuth time, parent product).
     """
     out = {}
     if not os.path.isfile(path):
@@ -330,7 +338,7 @@ def read_index(path=INDEX_PATH):
         if len(p) < 8:
             continue
         out[p[0]] = {"asset_id": p[1], "asset": p[2], "segment": p[3],
-                     "ts": p[4], "date": p[4][:10], "request_id": p[5],
+                     "ts": p[4], "date": p[4][:10], "burst_id": p[5],
                      "w": int(p[6]), "h": int(p[7])}
     return out
 
@@ -398,7 +406,7 @@ def extract(windows_path=DEFAULT_WINDOWS, out_path=CACHE_PATH,
                         "segment": meta["segment"], "date": meta["date"],
                         "orbit": m.get("orbit_direction"),
                         "pass_label": m.get("pass_label"),
-                        "request_id": meta["request_id"]})
+                        "burst_id": meta["burst_id"]})
             rows.append(res)
         seen[key] = mid
     add_persistence(rows)

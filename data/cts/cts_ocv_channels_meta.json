@@ -1,0 +1,340 @@
+{
+ "date_range": [
+  "2015-09-21",
+  "2022-12-25"
+ ],
+ "event": "2021-06-24",
+ "features": [
+  "gamma2",
+  "P",
+  "D",
+  "A",
+  "F",
+  "S"
+ ],
+ "generator": "code/cts/cts_ocv_channels_csv.py",
+ "girders": [
+  "cts_asc_48_iw3",
+  "ctn_asc_48_iw3",
+  "cte_asc_48_iw3",
+  "beach_asc_48_iw3"
+ ],
+ "girders_counts": {
+  "beach_asc_48_iw3": 178,
+  "cte_asc_48_iw3": 177,
+  "ctn_asc_48_iw3": 178,
+  "cts_asc_48_iw3": 178
+ },
+ "inputs": {
+  "mask_cache": {
+   "file": "cts_windows_mask_cache.txt",
+   "sha256": "bf0f926152494565c96a0b4021f7fcedaed874db3b6b4e829dcf1cf8590b3dbe"
+  },
+  "mask_cache_manifest": {
+   "file": "cts_windows_mask_cache.manifest.json",
+   "sha256": "884d335bba30c931726c22965062435db4b333ab268e245bde8612517069b190"
+  },
+  "measurements": {
+   "file": "cts_measurements_full.txt",
+   "sha256": "78453c7f64ab5910f1612cac116462dc2359b5345e2742f76ef015aa19671218"
+  },
+  "tracks": {
+   "file": "cts_tracks.txt",
+   "sha256": "4a8acdd345ee0bdeffaec0bb391ca0634437f797b256f8383ec91925d0bbfe60"
+  }
+ },
+ "mask_cache_manifest": {
+  "generator": "code/cts/cts_ocv_masks.py --extract",
+  "mask_rule": {
+   "median_kind": "np.median",
+   "median_mult": 5.0,
+   "min_n_masked": 2,
+   "peak_frac": 0.3
+  },
+  "n_per_track": {
+   "beach_asc_48_iw3": 178,
+   "cte_asc_48_iw3": 177,
+   "ctn_asc_48_iw3": 178,
+   "cts_asc_48_iw3": 178
+  },
+  "n_rows": 711,
+  "n_without_echo": 1,
+  "out_cache": "cts_windows_mask_cache.txt",
+  "quantile_mask_pixels": {
+   "beach_asc_48_iw3": 640,
+   "cte_asc_48_iw3": 640,
+   "ctn_asc_48_iw3": 640,
+   "cts_asc_48_iw3": 640
+  },
+  "source_npz_dir": "/home/projects/cts_analysis",
+  "source_npz_files": {
+   "cts_windows_beach_asc_48_iw3.npz": {
+    "sha256": "b5103f4d8fe2914f7ef7e7a3f99e124c8dd1c5ad52ba971d63dfad1ca3d80a6d",
+    "track": "beach_asc_48_iw3"
+   },
+   "cts_windows_cte_asc_48_iw3.npz": {
+    "sha256": "121450fc34affd6f2a3c9e721f4c386eab69e85e2123b8ad636393efdc325b44",
+    "track": "cte_asc_48_iw3"
+   },
+   "cts_windows_ctn_asc_48_iw3.npz": {
+    "sha256": "a1f72266c37d3651249992711278412b35686c848d616f9365a97bcd0fef1ef3",
+    "track": "ctn_asc_48_iw3"
+   },
+   "cts_windows_cts_asc_48_iw3.npz": {
+    "sha256": "560a58741b2a31961c4d7c095974de2868e8566f74f439363ad52326bc5def3d",
+    "track": "cts_asc_48_iw3"
+   }
+  },
+  "window_size": 80,
+  "window_sizes": {
+   "80x80": 712
+  }
+ },
+ "mask_columns": [
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "gamma2_mask",
+  "coherence_masked_pixels",
+  "mask_bbox_area",
+  "mask_row_span",
+  "mask_col_span",
+  "mask_centroid_row",
+  "mask_centroid_col",
+  "mask_peak_row",
+  "mask_peak_col",
+  "mask_n_components",
+  "mask_largest_component",
+  "mask_fragmentation"
+ ],
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "mask_window": "80x80",
+ "n_P_set": 711,
+ "n_coherence_masked_pixels_compared": 711,
+ "n_coherence_masked_pixels_differing": 711,
+ "n_coherence_masked_pixels_matched": 0,
+ "n_columns": 54,
+ "n_echo_masks": 711,
+ "n_post_collapse": 168,
+ "n_pre_collapse": 543,
+ "n_rows": 711,
+ "n_rows_without_echo_mask": 0,
+ "ocv": [
+  "gamma2",
+  "P",
+  "D"
+ ],
+ "out_csv": "cts_ocv_channels.csv",
+ "quantile_mask_export": "fixed 640-px (10 %) quantile mask (the site's coherence_masked_pixels, provenance only \u2014 not this echo mask)",
+ "roles": [
+  "target",
+  "control_ctn",
+  "control_cte",
+  "reference_beach"
+ ],
+ "site": "Champlain Towers South, Surfside (FL)",
+ "state_definition": "pre-collapse (healthy) = day < 2021-06-24 <= post-collapse",
+ "states": [
+  "pre-collapse (healthy)",
+  "post-collapse"
+ ],
+ "summary_by_state": {
+  "post": {
+   "A": {
+    "mean": 29.321428571428573,
+    "median": 30.0,
+    "n": 168,
+    "p25": 6.0,
+    "p5": 3.0,
+    "p75": 45.0,
+    "p95": 61.650000000000006,
+    "std": 19.77881326658373
+   },
+   "D": {
+    "mean": 0.2037779596922199,
+    "median": 0.012752525252525253,
+    "n": 168,
+    "p25": 0.008814519391942662,
+    "p5": 0.004086991403167873,
+    "p75": 0.02300233368781756,
+    "p95": 1.0,
+    "std": 0.3658637232684402
+   },
+   "F": {
+    "mean": 12.613095238095237,
+    "median": 13.5,
+    "n": 168,
+    "p25": 3.0,
+    "p5": 1.0,
+    "p75": 19.0,
+    "p95": 25.650000000000006,
+    "std": 8.291779057775912
+   },
+   "P": {
+    "mean": 0.027819499865354893,
+    "median": 0.024313766402373996,
+    "n": 168,
+    "p25": 0.016410002138871067,
+    "p5": 0.010366268627978237,
+    "p75": 0.0326349483486105,
+    "p95": 0.06374824191279889,
+    "std": 0.016415740160231663
+   },
+   "S": {
+    "mean": 17.004604096260124,
+    "median": 18.941759861034868,
+    "n": 168,
+    "p25": 8.223024253818295,
+    "p5": 0.47140452079103173,
+    "p75": 23.644892527565062,
+    "p95": 34.32332407608101,
+    "std": 11.785030083272675
+   },
+   "gamma2": {
+    "mean": 0.10844539797475827,
+    "median": 0.041293119922267696,
+    "n": 168,
+    "p25": 0.021706186510534273,
+    "p5": 0.002668640565904008,
+    "p75": 0.08710047892764643,
+    "p95": 0.707221414090926,
+    "std": 0.1995573245429502
+   }
+  },
+  "pre": {
+   "A": {
+    "mean": 23.403314917127073,
+    "median": 21.0,
+    "n": 543,
+    "p25": 10.0,
+    "p5": 4.0,
+    "p75": 34.0,
+    "p95": 51.89999999999998,
+    "std": 16.309092048792746
+   },
+   "D": {
+    "mean": 0.11452282794646032,
+    "median": 0.009316770186335404,
+    "n": 543,
+    "p25": 0.005945496495581385,
+    "p5": 0.0021169590643274855,
+    "p75": 0.014729783464898255,
+    "p95": 1.0,
+    "std": 0.28424439171450133
+   },
+   "F": {
+    "mean": 10.497237569060774,
+    "median": 10.0,
+    "n": 543,
+    "p25": 4.0,
+    "p5": 1.0,
+    "p75": 16.0,
+    "p95": 22.0,
+    "std": 7.0903169062398534
+   },
+   "P": {
+    "mean": 0.029975543401837355,
+    "median": 0.02812939521800281,
+    "n": 543,
+    "p25": 0.020958270572348992,
+    "p5": 0.011565509033863466,
+    "p75": 0.03587800177111007,
+    "p95": 0.05485232067510548,
+    "std": 0.013899582643671086
+   },
+   "S": {
+    "mean": 19.68816277013865,
+    "median": 19.85461155500152,
+    "n": 543,
+    "p25": 13.865099021480535,
+    "p5": 0.5,
+    "p75": 25.90559667499946,
+    "p95": 39.69267872346505,
+    "std": 11.36599032475083
+   },
+   "gamma2": {
+    "mean": 0.1061908932244576,
+    "median": 0.053450044818424636,
+    "n": 543,
+    "p25": 0.02219666520574282,
+    "p5": 0.004492303638302409,
+    "p75": 0.11750714763555273,
+    "p95": 0.36299814046273454,
+    "std": 0.16257088109028153
+   }
+  }
+ },
+ "tracks": {
+  "beach_asc_48_iw3": {
+   "first": "2015-09-21",
+   "label": "beach east of the site \u2014 moisture reference",
+   "last": "2022-12-25",
+   "n_dates": "178",
+   "n_masked_pixels": "640",
+   "n_post": "42",
+   "n_pre": "136",
+   "npz_file": "cts_windows_beach_asc_48_iw3.npz",
+   "orbit_direction": "ASCENDING",
+   "platform": "S1A/S1B",
+   "rel_orbit": "48",
+   "role": "reference_beach",
+   "subswath": "IW3",
+   "track": "beach_asc_48_iw3"
+  },
+  "cte_asc_48_iw3": {
+   "first": "2015-09-21",
+   "label": "Champlain Towers East (~90 m N) \u2014 control",
+   "last": "2022-12-25",
+   "n_dates": "178",
+   "n_masked_pixels": "640",
+   "n_post": "42",
+   "n_pre": "136",
+   "npz_file": "cts_windows_cte_asc_48_iw3.npz",
+   "orbit_direction": "ASCENDING",
+   "platform": "S1A/S1B",
+   "rel_orbit": "48",
+   "role": "control_cte",
+   "subswath": "IW3",
+   "track": "cte_asc_48_iw3"
+  },
+  "ctn_asc_48_iw3": {
+   "first": "2015-09-21",
+   "label": "Champlain Towers North (165 m N) \u2014 control",
+   "last": "2022-12-25",
+   "n_dates": "178",
+   "n_masked_pixels": "640",
+   "n_post": "42",
+   "n_pre": "136",
+   "npz_file": "cts_windows_ctn_asc_48_iw3.npz",
+   "orbit_direction": "ASCENDING",
+   "platform": "S1A/S1B",
+   "rel_orbit": "48",
+   "role": "control_ctn",
+   "subswath": "IW3",
+   "track": "ctn_asc_48_iw3"
+  },
+  "cts_asc_48_iw3": {
+   "first": "2015-09-21",
+   "label": "Champlain Towers South \u2014 target, ASC rel 48 IW3",
+   "last": "2022-12-25",
+   "n_dates": "178",
+   "n_masked_pixels": "640",
+   "n_post": "42",
+   "n_pre": "136",
+   "npz_file": "cts_windows_cts_asc_48_iw3.npz",
+   "orbit_direction": "ASCENDING",
+   "platform": "S1A/S1B",
+   "rel_orbit": "48",
+   "role": "target",
+   "subswath": "IW3",
+   "track": "cts_asc_48_iw3"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "analysed_field_collapsed": false,
+ "balanced_cantilever_m": 172,
+ "closing_girder_m": 36,
+ "collapsed_span_desc": "one of the three balanced systems (~210-250 m)",
+ "collapsed_system": 1,
+ "deck_height_above_ground_m": 45,
+ "deck_type": "continuous pre-stressed box girder, six longitudinal ribs",
+ "deck_width_m": 18,
+ "lat": 44.4243,
+ "lon": 8.8906,
+ "n_systems": 3,
+ "site": "Ponte Morandi (Viadotto Polcevera), Genova",
+ "source": "morandi_analysis/morandi_geometry.md (AEM report, ASI draft V.06, 10.10.2018)",
+ "status": "assumption grid \u2014 this repository stores no migration geometry for Morandi (see morandi_geometry.md)",
+ "system_span_m": 208,
+ "tower_height_above_ground_m": 90
+}

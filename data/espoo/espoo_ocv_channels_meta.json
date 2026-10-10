@@ -1,0 +1,147 @@
+{
+ "committed_acquisitions_json": "data/espoo/reference/espoo_mast_observability.json",
+ "committed_channels_json": "data/espoo/reference/fig_espoo_channels.json",
+ "date_range": [
+  "2024-09-05",
+  "2026-09-07"
+ ],
+ "derived_checks": {
+  "A_equals_committed_masked_pixels": true,
+  "channel_stats_verified": 235,
+  "coherence_rows": 150,
+  "columns_appended": 3,
+  "columns_filled_in_place": 2,
+  "copied_fields_verified_against_committed_json": 4050,
+  "loaded_by_core": 150,
+  "n_months": 25,
+  "rows_left_empty": 0,
+  "rows_read": 150
+ },
+ "filled_columns": [
+  "month",
+  "acquisition_date"
+ ],
+ "generator": "code/espoo/espoo_ocv_channels_csv.py",
+ "mask_definition": {
+  "A": "coherence_masked_pixels \u2014 copied from the committed record, not recomputed: the export carries no mask raster, so A is the pipeline's own mask size and there is no D/F/S/P of this site.",
+  "acquisition_date": "YYYY-MM-DD of acquisition_ts (column was empty)",
+  "doy": "day of year of acquisition_ts",
+  "month": "YYYY-MM of acquisition_ts (column was empty)",
+  "phase_available": "1 where phase_coherence is present, else 0"
+ },
+ "monthly": {
+  "2024-09": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2024-10": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2024-11": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2024-12": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-01": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-02": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-03": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-04": {
+   "ASCENDING": 2,
+   "DESCENDING": 4
+  },
+  "2025-05": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-06": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-07": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-08": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-09": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-10": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-11": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2025-12": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2026-01": {
+   "ASCENDING": 2,
+   "DESCENDING": 4
+  },
+  "2026-02": {
+   "ASCENDING": 2,
+   "DESCENDING": 4
+  },
+  "2026-03": {
+   "ASCENDING": 2,
+   "DESCENDING": 4
+  },
+  "2026-04": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2026-05": {
+   "ASCENDING": 2,
+   "DESCENDING": 4
+  },
+  "2026-06": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2026-07": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2026-08": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  },
+  "2026-09": {
+   "ASCENDING": 3,
+   "DESCENDING": 3
+  }
+ },
+ "n_by_orbit": {
+  "ASC": 70,
+  "DESC": 80
+ },
+ "new_columns": [
+  "A",
+  "doy",
+  "phase_available"
+ ],
+ "output_csv": "data/espoo/espoo_ocv_channels.csv",
+ "output_sha256": "0f167c108f7db8f5b7ee3179ec35bdcb65ba146d7d39064fbc15342d350ace53",
+ "source_csv": "data/espoo/espoo_channels.csv",
+ "source_sha256": "d2533a5e107918c05f85e9799f1bf12ed99d37c3628ad3d8c7a5045ffd15ba14"
+}

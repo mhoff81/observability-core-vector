@@ -4,7 +4,7 @@ Five Python modules, no package, no dependencies beyond the standard library plu
 numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Carola Brücke
 (Dresden) half of the repository; the LUMO tower lives in `../lumo/`, Bautzen in
-`../bautzen/` and KDLO in `../kdlo/`.
+`../bautzen/`, KDLO in `../kdlo/` and Morandi in `../morandi/`.
 
 The site is the collapsed **Carolabrücke** (bridge `way` B 170, Wikidata
 Q1044279). Its record is a **per-girder chip export**: per acquisition the
@@ -203,4 +203,4 @@ rather than reproducing it.
 The module and site names keep their `carola_` prefix although the folder already
 says `carola/`: the import statements (`import carola_ocv_core as core`), the
 reference file names and every command line in the reports stay parallel to the
-other three sites, which is what makes the four packages readable as one diff.
+other seven packages, which is what makes the eight packages readable as one diff.

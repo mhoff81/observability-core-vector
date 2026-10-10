@@ -423,6 +423,82 @@
    "post_chips_needed_at_zero_echo_for_fisher_p_lt_alpha": 4
   }
  },
+ "echo_coverage_by_orbit": {
+  "fisher": {
+   "p_two_sided": 1.0,
+   "table": [
+    [
+     10,
+     10
+    ],
+    [
+     7,
+     6
+    ]
+   ],
+   "table_cols": [
+    "echo",
+    "no_echo"
+   ],
+   "table_rows": [
+    "ASCENDING",
+    "DESCENDING"
+   ]
+  },
+  "fisher_by_state": {
+   "ASCENDING": 0.5820433436532508,
+   "DESCENDING": 0.1923076923076923
+  },
+  "n_orbits": 2,
+  "n_unique_chips": 33,
+  "note": "both orbits straddle the collapse date and the only post-event echo chip is an ascending pass: this block describes where the echoes sit over the two pass geometries, it is not an orbit contrast of the states",
+  "orbits": [
+   "ASCENDING",
+   "DESCENDING"
+  ],
+  "per_orbit": {
+   "ASCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.25,
+      "n_chips": 4,
+      "n_with_echo": 1,
+      "n_without_echo": 3
+     },
+     "pre": {
+      "echo_rate": 0.5625,
+      "n_chips": 16,
+      "n_with_echo": 9,
+      "n_without_echo": 7
+     }
+    },
+    "echo_rate": 0.5,
+    "n_chips": 20,
+    "n_with_echo": 10,
+    "n_without_echo": 10
+   },
+   "DESCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.0,
+      "n_chips": 2,
+      "n_with_echo": 0,
+      "n_without_echo": 2
+     },
+     "pre": {
+      "echo_rate": 0.6363636363636364,
+      "n_chips": 11,
+      "n_with_echo": 7,
+      "n_without_echo": 4
+     }
+    },
+    "echo_rate": 0.5384615384615384,
+    "n_chips": 13,
+    "n_with_echo": 7,
+    "n_without_echo": 6
+   }
+  }
+ },
  "echo_mask_by_state": {
   "post": {
    "A": {
@@ -1105,6 +1181,10 @@
  },
  "site": "Yeongdeok Wind Farm (Samgye-ri)",
  "sources": {
+  "burst_geometry": {
+   "path": "data/ywf/reference/ywf_bursts.json",
+   "sha256": "29e48c491585c4e7127e088d4000c051577f28abad137e900ae8b4b30be9500a"
+  },
   "channels_csv": {
    "path": "data/ywf/ywf_ocv_channels.csv",
    "sha256": "b5b17240246f613357814068ec3df62fceedead11b8426e01e3ebd6b006c5f33"
@@ -1120,6 +1200,14 @@
   "measurements": {
    "path": "data/ywf/ywf_measurements_full.txt",
    "sha256": "652a6c1d57766c319b09fa23f73865b9fed034bd6b58b3dd104497a571e34950"
+  },
+  "osm_anchor": {
+   "path": "data/ywf/reference/ywf_geometry.json",
+   "sha256": "57ac7a9815857df20ad55e010e0111b537ceabaa11c671cbf1d08316c47237f7"
+  },
+  "osm_road_extract": {
+   "path": "data/ywf/reference/ywf_osm_road.json",
+   "sha256": "f88c4d6f2cd58c85bc932d3016e5455b3e1cb46339fda039005a46c045dd1699"
   },
   "segments": {
    "path": "data/ywf/ywf_segments.txt",

@@ -43,6 +43,84 @@
   },
   "window_px": 49
  },
+ "coverage_by_orbit": {
+  "event": "2026-02-02",
+  "fisher": {
+   "p_two_sided": 1.0,
+   "table": [
+    [
+     10,
+     10
+    ],
+    [
+     7,
+     6
+    ]
+   ],
+   "table_cols": [
+    "echo",
+    "no_echo"
+   ],
+   "table_rows": [
+    "ASCENDING",
+    "DESCENDING"
+   ]
+  },
+  "fisher_by_state": {
+   "ASCENDING": 0.5820433436532508,
+   "DESCENDING": 0.1923076923076923
+  },
+  "n_orbits": 2,
+  "n_unique_chips": 33,
+  "note": "both orbits straddle the collapse date and the only post-event echo chip is an ascending pass: this block describes where the echoes sit over the two pass geometries, it is not an orbit contrast of the states",
+  "orbits": [
+   "ASCENDING",
+   "DESCENDING"
+  ],
+  "per_orbit": {
+   "ASCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.25,
+      "n_chips": 4,
+      "n_with_echo": 1,
+      "n_without_echo": 3
+     },
+     "pre": {
+      "echo_rate": 0.5625,
+      "n_chips": 16,
+      "n_with_echo": 9,
+      "n_without_echo": 7
+     }
+    },
+    "echo_rate": 0.5,
+    "n_chips": 20,
+    "n_with_echo": 10,
+    "n_without_echo": 10
+   },
+   "DESCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.0,
+      "n_chips": 2,
+      "n_with_echo": 0,
+      "n_without_echo": 2
+     },
+     "pre": {
+      "echo_rate": 0.6363636363636364,
+      "n_chips": 11,
+      "n_with_echo": 7,
+      "n_without_echo": 4
+     }
+    },
+    "echo_rate": 0.5384615384615384,
+    "n_chips": 13,
+    "n_with_echo": 7,
+    "n_without_echo": 6
+   }
+  },
+  "window_px": 49
+ },
  "date_range": [
   "2025-08-06",
   "2026-04-27"
@@ -139,6 +217,10 @@
  },
  "mask_window": "7x7",
  "n_P_set": 17,
+ "n_by_orbit": {
+  "ASC": 20,
+  "DESC": 13
+ },
  "n_coherence_masked_pixels_compared": 17,
  "n_coherence_masked_pixels_differing": 17,
  "n_coherence_masked_pixels_matched": 0,
@@ -155,6 +237,10 @@
   "gamma2",
   "P",
   "D"
+ ],
+ "orbits": [
+  "ASCENDING",
+  "DESCENDING"
  ],
  "out_csv": "ywf_ocv_channels.csv",
  "row_unit": "one row per unique chip (asset, day, md5(payload)) of the committed window file; the 17 chips that carry an echo are the rows of the committed mask cache",

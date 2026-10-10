@@ -1,0 +1,9 @@
+# cts tracks — the four Sentinel-1 observation footprints of the same orbit (ASC rel-48 IW3)
+# generated from cts_analysis/cts_tracks.json + cts_phase0_audit.json (pinned: reproduction)
+# the four towers/ground windows share identical strata, dates and counts; the
+# target must never be pooled with a control, only contrasted per stratum (DiD)
+track|label|role|orbit_direction|rel_orbit|subswath|platform|npz_file|first|last|n_dates|n_pre|n_post|n_masked_pixels
+cts_asc_48_iw3|Champlain Towers South — target, ASC rel 48 IW3|target|ASCENDING|48|IW3|S1A/S1B|cts_windows_cts_asc_48_iw3.npz|2015-09-21|2022-12-25|178|136|42|640
+ctn_asc_48_iw3|Champlain Towers North (165 m N) — control|control_ctn|ASCENDING|48|IW3|S1A/S1B|cts_windows_ctn_asc_48_iw3.npz|2015-09-21|2022-12-25|178|136|42|640
+cte_asc_48_iw3|Champlain Towers East (~90 m N) — control|control_cte|ASCENDING|48|IW3|S1A/S1B|cts_windows_cte_asc_48_iw3.npz|2015-09-21|2022-12-25|178|136|42|640
+beach_asc_48_iw3|beach east of the site — moisture reference|reference_beach|ASCENDING|48|IW3|S1A/S1B|cts_windows_beach_asc_48_iw3.npz|2015-09-21|2022-12-25|178|136|42|640

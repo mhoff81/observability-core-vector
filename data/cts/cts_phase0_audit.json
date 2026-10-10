@@ -1,0 +1,68 @@
+{
+  "asset": "cts",
+  "label": "Champlain Towers South",
+  "events": [
+    {
+      "label": "kollaps",
+      "date": "2021-06-24",
+      "kind": "documented_event",
+      "source": "partial collapse of the south wing at 01:22 EDT = 05:22 UTC (public record)"
+    },
+    {
+      "label": "abriss",
+      "date": "2021-07-05",
+      "kind": "documented_event",
+      "source": "controlled demolition of the standing remnant ~22:00 EDT on 2021-07-04 = 02:00 UTC on 2021-07-05 (hour to pin)"
+    }
+  ],
+  "generated_utc": "2026-09-21T16:50:29+00:00",
+  "tracks": [
+    {
+      "tag": "cte_asc_48_iw3",
+      "label": "Champlain Towers East (~90 m N) \u2014 control",
+      "role": "control_cte",
+      "rects_file": "/home/projects/cts_analysis/cts_cte_rects_asc_48_iw3.txt",
+      "orbit_direction": "ASCENDING",
+      "relative_orbit": 48,
+      "subswath": "IW3",
+      "n_dates": 178,
+      "first": "2015-09-21",
+      "last": "2022-12-25",
+      "clipped_rects": {},
+      "unparsed_lines": 0,
+      "shift_median": [
+        -0.015,
+        -0.0325
+      ],
+      "shift_max_abs": 4.602,
+      "platforms": [
+        "S1A",
+        "S1B"
+      ],
+      "windows": [
+        "UNKNOWN",
+        "W2_prae",
+        "W4_kollaps_bis_abriss",
+        "W5_geraeumt"
+      ],
+      "pairs_used": 175,
+      "pairs_skipped": [
+        {
+          "from": "2021-06-21",
+          "to": "2021-07-03",
+          "reason": "straddles a documented state change"
+        },
+        {
+          "from": "2021-07-03",
+          "to": "2021-07-15",
+          "reason": "straddles a documented state change"
+        }
+      ],
+      "pair_platform_mix": {
+        "S1A->S1A": 171,
+        "S1A->S1B": 2,
+        "S1B->S1A": 2
+      }
+    }
+  ]
+}
