@@ -1,0 +1,4672 @@
+{
+ "availability": {
+  "era": {
+   "n_acquisition_days": 162,
+   "n_bursts": 324,
+   "n_products": 197,
+   "orbits": {
+    "ASCENDING|136": 197
+   },
+   "platforms": {
+    "S1A": 52,
+    "S1B": 145
+   },
+   "polarisations": [
+    "VH",
+    "VV"
+   ],
+   "swaths": [
+    "IW2"
+   ],
+   "window": {
+    "end": "2021-12-19",
+    "start": "2015-01-01"
+   }
+  },
+  "per_year": {
+   "2015": {
+    "n": 8,
+    "orbits": {
+     "ASCENDING|136": 8
+    },
+    "platforms": {
+     "S1A": 8
+    },
+    "utc_hours": {
+     "00": 8
+    }
+   },
+   "2016": {
+    "n": 19,
+    "orbits": {
+     "ASCENDING|136": 19
+    },
+    "platforms": {
+     "S1A": 11,
+     "S1B": 8
+    },
+    "utc_hours": {
+     "00": 19
+    }
+   },
+   "2017": {
+    "n": 45,
+    "orbits": {
+     "ASCENDING|136": 45
+    },
+    "platforms": {
+     "S1A": 19,
+     "S1B": 26
+    },
+    "utc_hours": {
+     "00": 45
+    }
+   },
+   "2018": {
+    "n": 40,
+    "orbits": {
+     "ASCENDING|136": 40
+    },
+    "platforms": {
+     "S1A": 12,
+     "S1B": 28
+    },
+    "utc_hours": {
+     "00": 40
+    }
+   },
+   "2019": {
+    "n": 29,
+    "orbits": {
+     "ASCENDING|136": 29
+    },
+    "platforms": {
+     "S1B": 29
+    },
+    "utc_hours": {
+     "00": 29
+    }
+   },
+   "2020": {
+    "n": 28,
+    "orbits": {
+     "ASCENDING|136": 28
+    },
+    "platforms": {
+     "S1A": 2,
+     "S1B": 26
+    },
+    "utc_hours": {
+     "00": 28
+    }
+   },
+   "2021": {
+    "n": 28,
+    "orbits": {
+     "ASCENDING|136": 28
+    },
+    "platforms": {
+     "S1B": 28
+    },
+    "utc_hours": {
+     "00": 28
+    }
+   },
+   "2022": {
+    "n": 26,
+    "orbits": {
+     "DESCENDING|12": 26
+    },
+    "platforms": {
+     "S1A": 26
+    },
+    "utc_hours": {
+     "12": 26
+    }
+   },
+   "2023": {
+    "n": 30,
+    "orbits": {
+     "DESCENDING|12": 30
+    },
+    "platforms": {
+     "S1A": 30
+    },
+    "utc_hours": {
+     "12": 30
+    }
+   },
+   "2024": {
+    "n": 30,
+    "orbits": {
+     "DESCENDING|12": 30
+    },
+    "platforms": {
+     "S1A": 30
+    },
+    "utc_hours": {
+     "12": 30
+    }
+   },
+   "2025": {
+    "n": 48,
+    "orbits": {
+     "ASCENDING|136": 17,
+     "DESCENDING|12": 31
+    },
+    "platforms": {
+     "S1A": 31,
+     "S1C": 17
+    },
+    "utc_hours": {
+     "00": 17,
+     "12": 31
+    }
+   },
+   "2026": {
+    "n": 23,
+    "orbits": {
+     "ASCENDING|136": 15,
+     "DESCENDING|12": 8
+    },
+    "platforms": {
+     "S1A": 8,
+     "S1C": 13,
+     "S1D": 2
+    },
+    "utc_hours": {
+     "00": 15,
+     "12": 8
+    }
+   }
+  },
+  "record": {
+   "n_acquisition_days": 17,
+   "n_products": 17,
+   "orbits": {
+    "DESCENDING|12": 17
+   },
+   "platforms": {
+    "S1A": 17
+   },
+   "polarisations": [
+    "VH",
+    "VV"
+   ],
+   "swaths": [
+    "IW1"
+   ],
+   "window": {
+    "end": "2022-12-23",
+    "start": "2022-06-01"
+   }
+  }
+ },
+ "axis": {
+  "end": "2022-12-11",
+  "first_collapsed_day": "2022-12-23",
+  "note": "one dated axis; the collapse cut is 2022-12-11 and the first collapsed acquisition (2022-12-23) is drawn hollow at the right edge",
+  "start": "2015-03-20"
+ },
+ "checks": {
+  "collapse_pair.A": {
+   "expected": [
+    60.0,
+    63.0
+   ],
+   "got": [
+    60.0,
+    63.0
+   ],
+   "ok": true
+  },
+  "collapse_pair.days": {
+   "expected": [
+    "2022-12-11",
+    "2022-12-23"
+   ],
+   "got": [
+    "2022-12-11",
+    "2022-12-23"
+   ],
+   "ok": true
+  },
+  "collapse_pair.gamma2": {
+   "expected": [
+    0.019928279168188158,
+    0.0013393056912106268
+   ],
+   "got": [
+    0.019928279168188158,
+    0.0013393056912106268
+   ],
+   "ok": true
+  },
+  "era.anomaly_days": {
+   "expected": [
+    "2020-08-13"
+   ],
+   "got": [
+    "2020-08-13"
+   ],
+   "ok": true
+  },
+  "era.baseline_frequency_hz_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.break.blind_gap_catalogue_days": {
+   "expected": 69,
+   "got": 69,
+   "ok": true
+  },
+  "era.break.blind_gap_days": {
+   "expected": 69,
+   "got": 69,
+   "ok": true
+  },
+  "era.break.blind_gap_drawn_span": {
+   "expected": 68,
+   "got": 68,
+   "ok": true
+  },
+  "era.break.blind_gap_reference_counts": {
+   "expected": 69,
+   "got": 69,
+   "ok": true
+  },
+  "era.break.crosses_era": {
+   "expected": "2021-12-19",
+   "got": "2021-12-19",
+   "ok": true
+  },
+  "era.break.no_ascending_inside_gap": {
+   "expected": [],
+   "got": [],
+   "ok": true
+  },
+  "era.directions": {
+   "expected": [
+    "ASCENDING"
+   ],
+   "got": [
+    "ASCENDING"
+   ],
+   "ok": true
+  },
+  "era.displacement_los_m_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.distinct_days": {
+   "expected": 162,
+   "got": 162,
+   "ok": true
+  },
+  "era.first_last": {
+   "expected": [
+    "2015-03-20",
+    "2021-12-19"
+   ],
+   "got": [
+    "2015-03-20",
+    "2021-12-19"
+   ],
+   "ok": true
+  },
+  "era.hour_anomaly_off_nominal": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "era.measured_frequency_hz_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.ndvi_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.nonnull_columns": {
+   "expected": [
+    "acquisition_ts",
+    "coherence_gamma2",
+    "coherence_masked_pixels",
+    "id",
+    "orbit_direction",
+    "pass_label",
+    "status",
+    "temperature_c",
+    "traffic_load_label",
+    "wind_speed_ms"
+   ],
+   "got": [
+    "acquisition_ts",
+    "coherence_gamma2",
+    "coherence_masked_pixels",
+    "id",
+    "orbit_direction",
+    "pass_label",
+    "status",
+    "temperature_c",
+    "traffic_load_label",
+    "wind_speed_ms"
+   ],
+   "ok": true
+  },
+  "era.orbit": {
+   "expected": [
+    "ASCENDING|136"
+   ],
+   "got": [
+    "ASCENDING|136"
+   ],
+   "ok": true
+  },
+  "era.pass_slots": {
+   "expected": [
+    "afternoon",
+    "morning"
+   ],
+   "got": [
+    "afternoon",
+    "morning"
+   ],
+   "ok": true
+  },
+  "era.per_year_days": {
+   "expected": {
+    "2015": 6,
+    "2016": 19,
+    "2017": 26,
+    "2018": 28,
+    "2019": 29,
+    "2020": 26,
+    "2021": 28
+   },
+   "got": {
+    "2015": 6,
+    "2016": 19,
+    "2017": 26,
+    "2018": 28,
+    "2019": 29,
+    "2020": 26,
+    "2021": 28
+   },
+   "ok": true
+  },
+  "era.per_year_total": {
+   "expected": 162,
+   "got": 162,
+   "ok": true
+  },
+  "era.phase_coherence_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.phase_detected_frequency_hz_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.phase_rms_rad_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.reference_days_total": {
+   "expected": 162,
+   "got": 162,
+   "ok": true
+  },
+  "era.reference_hour_blocks": {
+   "expected": [
+    "00"
+   ],
+   "got": [
+    "00"
+   ],
+   "ok": true
+  },
+  "era.reference_products_total": {
+   "expected": 197,
+   "got": 197,
+   "ok": true
+  },
+  "era.reference_years": {
+   "expected": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021"
+   ],
+   "got": [
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021"
+   ],
+   "ok": true
+  },
+  "era.rows": {
+   "expected": 162,
+   "got": 162,
+   "ok": true
+  },
+  "era.rows_in_axis": {
+   "expected": [
+    "2015-03-20",
+    "2015-06-12",
+    "2015-06-24",
+    "2015-08-11",
+    "2015-09-04",
+    "2015-09-16",
+    "2016-01-26",
+    "2016-03-26",
+    "2016-05-13",
+    "2016-06-06",
+    "2016-06-30",
+    "2016-07-24",
+    "2016-08-05",
+    "2016-08-17",
+    "2016-08-29",
+    "2016-09-10",
+    "2016-09-22",
+    "2016-09-28",
+    "2016-10-10",
+    "2016-10-22",
+    "2016-11-03",
+    "2016-11-15",
+    "2016-11-27",
+    "2016-12-09",
+    "2016-12-21",
+    "2017-01-02",
+    "2017-01-14",
+    "2017-01-26",
+    "2017-02-07",
+    "2017-02-19",
+    "2017-03-03",
+    "2017-03-15",
+    "2017-03-27",
+    "2017-04-08",
+    "2017-04-20",
+    "2017-05-02",
+    "2017-05-14",
+    "2017-05-26",
+    "2017-06-07",
+    "2017-07-01",
+    "2017-08-06",
+    "2017-08-18",
+    "2017-09-11",
+    "2017-10-05",
+    "2017-10-17",
+    "2017-10-29",
+    "2017-11-10",
+    "2017-11-22",
+    "2017-12-04",
+    "2017-12-16",
+    "2017-12-28",
+    "2018-01-09",
+    "2018-02-14",
+    "2018-02-26",
+    "2018-03-10",
+    "2018-03-22",
+    "2018-04-03",
+    "2018-04-15",
+    "2018-04-27",
+    "2018-05-09",
+    "2018-05-21",
+    "2018-06-02",
+    "2018-06-14",
+    "2018-06-26",
+    "2018-07-08",
+    "2018-07-20",
+    "2018-08-01",
+    "2018-08-13",
+    "2018-08-25",
+    "2018-09-06",
+    "2018-09-18",
+    "2018-09-30",
+    "2018-10-12",
+    "2018-10-24",
+    "2018-11-05",
+    "2018-11-17",
+    "2018-11-29",
+    "2018-12-11",
+    "2018-12-23",
+    "2019-01-04",
+    "2019-01-16",
+    "2019-01-28",
+    "2019-02-09",
+    "2019-02-21",
+    "2019-03-05",
+    "2019-03-17",
+    "2019-04-10",
+    "2019-04-22",
+    "2019-05-04",
+    "2019-05-16",
+    "2019-05-28",
+    "2019-06-09",
+    "2019-06-21",
+    "2019-07-03",
+    "2019-07-15",
+    "2019-07-27",
+    "2019-08-08",
+    "2019-08-20",
+    "2019-09-01",
+    "2019-09-13",
+    "2019-09-25",
+    "2019-10-07",
+    "2019-10-19",
+    "2019-10-31",
+    "2019-11-24",
+    "2019-12-06",
+    "2019-12-18",
+    "2019-12-30",
+    "2020-01-11",
+    "2020-01-23",
+    "2020-02-04",
+    "2020-02-16",
+    "2020-03-11",
+    "2020-04-04",
+    "2020-04-16",
+    "2020-04-28",
+    "2020-05-10",
+    "2020-06-03",
+    "2020-06-15",
+    "2020-06-27",
+    "2020-07-09",
+    "2020-07-21",
+    "2020-08-02",
+    "2020-08-13",
+    "2020-08-26",
+    "2020-09-07",
+    "2020-10-01",
+    "2020-10-13",
+    "2020-10-25",
+    "2020-11-06",
+    "2020-11-18",
+    "2020-11-30",
+    "2020-12-12",
+    "2020-12-24",
+    "2021-01-05",
+    "2021-01-17",
+    "2021-01-29",
+    "2021-02-10",
+    "2021-02-22",
+    "2021-03-06",
+    "2021-03-18",
+    "2021-03-30",
+    "2021-04-11",
+    "2021-04-23",
+    "2021-05-05",
+    "2021-05-17",
+    "2021-05-29",
+    "2021-06-10",
+    "2021-06-22",
+    "2021-07-16",
+    "2021-08-09",
+    "2021-08-21",
+    "2021-09-02",
+    "2021-09-14",
+    "2021-09-26",
+    "2021-10-08",
+    "2021-10-20",
+    "2021-11-01",
+    "2021-11-13",
+    "2021-11-25",
+    "2021-12-07",
+    "2021-12-19"
+   ],
+   "got": [
+    "2015-03-20",
+    "2015-06-12",
+    "2015-06-24",
+    "2015-08-11",
+    "2015-09-04",
+    "2015-09-16",
+    "2016-01-26",
+    "2016-03-26",
+    "2016-05-13",
+    "2016-06-06",
+    "2016-06-30",
+    "2016-07-24",
+    "2016-08-05",
+    "2016-08-17",
+    "2016-08-29",
+    "2016-09-10",
+    "2016-09-22",
+    "2016-09-28",
+    "2016-10-10",
+    "2016-10-22",
+    "2016-11-03",
+    "2016-11-15",
+    "2016-11-27",
+    "2016-12-09",
+    "2016-12-21",
+    "2017-01-02",
+    "2017-01-14",
+    "2017-01-26",
+    "2017-02-07",
+    "2017-02-19",
+    "2017-03-03",
+    "2017-03-15",
+    "2017-03-27",
+    "2017-04-08",
+    "2017-04-20",
+    "2017-05-02",
+    "2017-05-14",
+    "2017-05-26",
+    "2017-06-07",
+    "2017-07-01",
+    "2017-08-06",
+    "2017-08-18",
+    "2017-09-11",
+    "2017-10-05",
+    "2017-10-17",
+    "2017-10-29",
+    "2017-11-10",
+    "2017-11-22",
+    "2017-12-04",
+    "2017-12-16",
+    "2017-12-28",
+    "2018-01-09",
+    "2018-02-14",
+    "2018-02-26",
+    "2018-03-10",
+    "2018-03-22",
+    "2018-04-03",
+    "2018-04-15",
+    "2018-04-27",
+    "2018-05-09",
+    "2018-05-21",
+    "2018-06-02",
+    "2018-06-14",
+    "2018-06-26",
+    "2018-07-08",
+    "2018-07-20",
+    "2018-08-01",
+    "2018-08-13",
+    "2018-08-25",
+    "2018-09-06",
+    "2018-09-18",
+    "2018-09-30",
+    "2018-10-12",
+    "2018-10-24",
+    "2018-11-05",
+    "2018-11-17",
+    "2018-11-29",
+    "2018-12-11",
+    "2018-12-23",
+    "2019-01-04",
+    "2019-01-16",
+    "2019-01-28",
+    "2019-02-09",
+    "2019-02-21",
+    "2019-03-05",
+    "2019-03-17",
+    "2019-04-10",
+    "2019-04-22",
+    "2019-05-04",
+    "2019-05-16",
+    "2019-05-28",
+    "2019-06-09",
+    "2019-06-21",
+    "2019-07-03",
+    "2019-07-15",
+    "2019-07-27",
+    "2019-08-08",
+    "2019-08-20",
+    "2019-09-01",
+    "2019-09-13",
+    "2019-09-25",
+    "2019-10-07",
+    "2019-10-19",
+    "2019-10-31",
+    "2019-11-24",
+    "2019-12-06",
+    "2019-12-18",
+    "2019-12-30",
+    "2020-01-11",
+    "2020-01-23",
+    "2020-02-04",
+    "2020-02-16",
+    "2020-03-11",
+    "2020-04-04",
+    "2020-04-16",
+    "2020-04-28",
+    "2020-05-10",
+    "2020-06-03",
+    "2020-06-15",
+    "2020-06-27",
+    "2020-07-09",
+    "2020-07-21",
+    "2020-08-02",
+    "2020-08-13",
+    "2020-08-26",
+    "2020-09-07",
+    "2020-10-01",
+    "2020-10-13",
+    "2020-10-25",
+    "2020-11-06",
+    "2020-11-18",
+    "2020-11-30",
+    "2020-12-12",
+    "2020-12-24",
+    "2021-01-05",
+    "2021-01-17",
+    "2021-01-29",
+    "2021-02-10",
+    "2021-02-22",
+    "2021-03-06",
+    "2021-03-18",
+    "2021-03-30",
+    "2021-04-11",
+    "2021-04-23",
+    "2021-05-05",
+    "2021-05-17",
+    "2021-05-29",
+    "2021-06-10",
+    "2021-06-22",
+    "2021-07-16",
+    "2021-08-09",
+    "2021-08-21",
+    "2021-09-02",
+    "2021-09-14",
+    "2021-09-26",
+    "2021-10-08",
+    "2021-10-20",
+    "2021-11-01",
+    "2021-11-13",
+    "2021-11-25",
+    "2021-12-07",
+    "2021-12-19"
+   ],
+   "ok": true
+  },
+  "era.slot_hours_drawn": {
+   "expected": [
+    "05",
+    "16"
+   ],
+   "got": [
+    "05",
+    "16"
+   ],
+   "ok": true
+  },
+  "era.slot_hours_nominal": {
+   "expected": [
+    "05"
+   ],
+   "got": [
+    "05"
+   ],
+   "ok": true
+  },
+  "era.sub_aperture_modulation_never_measured": {
+   "expected": [
+    null
+   ],
+   "got": [
+    null
+   ],
+   "ok": true
+  },
+  "era.swath": {
+   "expected": [
+    "IW2"
+   ],
+   "got": [
+    "IW2"
+   ],
+   "ok": true
+  },
+  "era.window_inside_reference": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "median.era.A": {
+   "expected": 91.5,
+   "got": 91.5,
+   "ok": true
+  },
+  "median.era.gamma2": {
+   "expected": 0.009950190145008874,
+   "got": 0.009950190145008874,
+   "ok": true
+  },
+  "median.first_month.A": {
+   "expected": 30.5,
+   "got": 30.5,
+   "ok": true
+  },
+  "median.first_month.n": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "median.record.A": {
+   "expected": 120.5,
+   "got": 120.5,
+   "ok": true
+  },
+  "median.record.D": {
+   "expected": 0.03253511058783955,
+   "got": 0.03253511058783955,
+   "ok": true
+  },
+  "median.record.F": {
+   "expected": 73.0,
+   "got": 73.0,
+   "ok": true
+  },
+  "median.record.P": {
+   "expected": 0.05351307189542484,
+   "got": 0.05351307189542484,
+   "ok": true
+  },
+  "median.record.S": {
+   "expected": 93.0971570874728,
+   "got": 93.0971570874728,
+   "ok": true
+  },
+  "median.record.gamma2": {
+   "expected": 0.0036978587433671717,
+   "got": 0.0036978587433671717,
+   "ok": true
+  },
+  "per_year.2015.A_median": {
+   "expected": 152.5,
+   "got": 152.5,
+   "ok": true
+  },
+  "per_year.2015.gamma2_median": {
+   "expected": 0.010548238979428675,
+   "got": 0.010548238979428675,
+   "ok": true
+  },
+  "per_year.2016.A_median": {
+   "expected": 58.0,
+   "got": 58.0,
+   "ok": true
+  },
+  "per_year.2016.gamma2_median": {
+   "expected": 0.014392439035992292,
+   "got": 0.014392439035992292,
+   "ok": true
+  },
+  "per_year.2017.A_median": {
+   "expected": 86.5,
+   "got": 86.5,
+   "ok": true
+  },
+  "per_year.2017.gamma2_median": {
+   "expected": 0.015796949954375247,
+   "got": 0.015796949954375247,
+   "ok": true
+  },
+  "per_year.2018.A_median": {
+   "expected": 161.5,
+   "got": 161.5,
+   "ok": true
+  },
+  "per_year.2018.gamma2_median": {
+   "expected": 0.005835913448009605,
+   "got": 0.005835913448009605,
+   "ok": true
+  },
+  "per_year.2019.A_median": {
+   "expected": 131.0,
+   "got": 131.0,
+   "ok": true
+  },
+  "per_year.2019.gamma2_median": {
+   "expected": 0.006205625871112506,
+   "got": 0.006205625871112506,
+   "ok": true
+  },
+  "per_year.2020.A_median": {
+   "expected": 60.5,
+   "got": 60.5,
+   "ok": true
+  },
+  "per_year.2020.gamma2_median": {
+   "expected": 0.021602642907589432,
+   "got": 0.021602642907589432,
+   "ok": true
+  },
+  "per_year.2021.A_median": {
+   "expected": 61.0,
+   "got": 61.0,
+   "ok": true
+  },
+  "per_year.2021.gamma2_median": {
+   "expected": 0.015308208006393724,
+   "got": 0.015308208006393724,
+   "ok": true
+  },
+  "ratio.era.identity": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "ratio.era.median_is_one": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "ratio.record.identity": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "ratio.record.median_is_one": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  },
+  "record.after_cut_count": {
+   "expected": 44,
+   "got": 44,
+   "ok": true
+  },
+  "record.after_cut_first": {
+   "expected": "2022-12-23",
+   "got": "2022-12-23",
+   "ok": true
+  },
+  "record.after_cut_inside_axis": {
+   "expected": [],
+   "got": [],
+   "ok": true
+  },
+  "record.after_cut_last": {
+   "expected": "2024-09-19",
+   "got": "2024-09-19",
+   "ok": true
+  },
+  "record.after_cut_outside_singleton": {
+   "expected": [
+    "2022-12-23"
+   ],
+   "got": [
+    "2022-12-23"
+   ],
+   "ok": true
+  },
+  "record.all_six_dims_complete": {
+   "expected": [],
+   "got": [],
+   "ok": true
+  },
+  "record.days_in_axis": {
+   "expected": 16,
+   "got": 16,
+   "ok": true
+  },
+  "record.directions": {
+   "expected": [
+    "DESCENDING"
+   ],
+   "got": [
+    "DESCENDING"
+   ],
+   "ok": true
+  },
+  "record.first_last": {
+   "expected": [
+    "2022-06-02",
+    "2022-12-11"
+   ],
+   "got": [
+    "2022-06-02",
+    "2022-12-11"
+   ],
+   "ok": true
+  },
+  "record.orbit_is_descending": {
+   "expected": [
+    "DESCENDING"
+   ],
+   "got": [
+    "DESCENDING"
+   ],
+   "ok": true
+  },
+  "record.orbit_one": {
+   "expected": 1,
+   "got": 1,
+   "ok": true
+  },
+  "record.rows_drawn": {
+   "expected": [
+    "2022-06-02",
+    "2022-06-14",
+    "2022-07-08",
+    "2022-07-20",
+    "2022-08-01",
+    "2022-08-13",
+    "2022-08-25",
+    "2022-09-06",
+    "2022-09-18",
+    "2022-09-30",
+    "2022-10-12",
+    "2022-10-24",
+    "2022-11-05",
+    "2022-11-17",
+    "2022-11-29",
+    "2022-12-11"
+   ],
+   "got": [
+    "2022-06-02",
+    "2022-06-14",
+    "2022-07-08",
+    "2022-07-20",
+    "2022-08-01",
+    "2022-08-13",
+    "2022-08-25",
+    "2022-09-06",
+    "2022-09-18",
+    "2022-09-30",
+    "2022-10-12",
+    "2022-10-24",
+    "2022-11-05",
+    "2022-11-17",
+    "2022-11-29",
+    "2022-12-11"
+   ],
+   "ok": true
+  },
+  "record.swath_one": {
+   "expected": 1,
+   "got": 1,
+   "ok": true
+  },
+  "segments.dims_per_stretch": {
+   "expected": [
+    2,
+    0,
+    0,
+    6
+   ],
+   "got": [
+    2,
+    0,
+    0,
+    6
+   ],
+   "ok": true
+  },
+  "segments.filled_days": {
+   "expected": [
+    162,
+    0,
+    0,
+    16
+   ],
+   "got": [
+    162,
+    0,
+    0,
+    16
+   ],
+   "ok": true
+  },
+  "segments.keys": {
+   "expected": [
+    "blind_gap",
+    "catalogue_only",
+    "era",
+    "record"
+   ],
+   "got": [
+    "blind_gap",
+    "catalogue_only",
+    "era",
+    "record"
+   ],
+   "ok": true
+  },
+  "segments.no_gap_no_overlap": {
+   "expected": 2824,
+   "got": 2824,
+   "ok": true
+  },
+  "segments.tile": {
+   "expected": [
+    [
+     "2015-03-20",
+     "2021-12-19"
+    ],
+    [
+     "2021-12-20",
+     "2022-02-25"
+    ],
+    [
+     "2022-02-26",
+     "2022-06-01"
+    ],
+    [
+     "2022-06-02",
+     "2022-12-11"
+    ]
+   ],
+   "got": [
+    [
+     "2015-03-20",
+     "2021-12-19"
+    ],
+    [
+     "2021-12-20",
+     "2022-02-25"
+    ],
+    [
+     "2022-02-26",
+     "2022-06-01"
+    ],
+    [
+     "2022-06-02",
+     "2022-12-11"
+    ]
+   ],
+   "ok": true
+  },
+  "singleton.below_record_median_gamma2": {
+   "expected": true,
+   "got": true,
+   "ok": true
+  }
+ },
+ "counts": {
+  "era_rows": 162,
+  "record_days_after_cut": 44,
+  "record_rows": 16,
+  "rows": 178
+ },
+ "dims": {
+  "long": [
+   "gamma2",
+   "A"
+  ],
+  "order": [
+   "gamma2",
+   "P",
+   "D",
+   "A",
+   "F",
+   "S"
+  ],
+  "record_only": [
+   "P",
+   "D",
+   "F",
+   "S"
+  ]
+ },
+ "era_channel": {
+  "A": "coherence_masked_pixels",
+  "gamma2": "coherence_gamma2"
+ },
+ "era_rows": [
+  {
+   "channels": {
+    "A": 170.0,
+    "gamma2": 0.006410317216152302
+   },
+   "day": "2015-03-20",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.8579234972677596,
+    "gamma2": 0.6442406750757209
+   },
+   "stretch": "era",
+   "temperature_c": 1.1,
+   "wind_speed_ms": 3.42
+  },
+  {
+   "channels": {
+    "A": 37.0,
+    "gamma2": 0.0005787319348071987
+   },
+   "day": "2015-06-12",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.40437158469945356,
+    "gamma2": 0.058162902052429334
+   },
+   "stretch": "era",
+   "temperature_c": 14.0,
+   "wind_speed_ms": 1.92
+  },
+  {
+   "channels": {
+    "A": 171.0,
+    "gamma2": 0.0075529191326974155
+   },
+   "day": "2015-06-24",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.8688524590163935,
+    "gamma2": 0.7590728440989687
+   },
+   "stretch": "era",
+   "temperature_c": 17.5,
+   "wind_speed_ms": 2.26
+  },
+  {
+   "channels": {
+    "A": 121.0,
+    "gamma2": 0.050449446219964195
+   },
+   "day": "2015-08-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.3224043715846994,
+    "gamma2": 5.070199210742741
+   },
+   "stretch": "era",
+   "temperature_c": 20.1,
+   "wind_speed_ms": 1.4
+  },
+  {
+   "channels": {
+    "A": 166.0,
+    "gamma2": 0.025830728856546043
+   },
+   "day": "2015-09-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.814207650273224,
+    "gamma2": 2.596003541651214
+   },
+   "stretch": "era",
+   "temperature_c": 24.7,
+   "wind_speed_ms": 5.16
+  },
+  {
+   "channels": {
+    "A": 139.0,
+    "gamma2": 0.013543558826159935
+   },
+   "day": "2015-09-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.5191256830601092,
+    "gamma2": 1.3611356796988985
+   },
+   "stretch": "era",
+   "temperature_c": 25.4,
+   "wind_speed_ms": 7.72
+  },
+  {
+   "channels": {
+    "A": 16.0,
+    "gamma2": 0.026649079760085098
+   },
+   "day": "2016-01-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.17486338797814208,
+    "gamma2": 2.678248291913554
+   },
+   "stretch": "era",
+   "temperature_c": -6.2,
+   "wind_speed_ms": 6.67
+  },
+  {
+   "channels": {
+    "A": 4.0,
+    "gamma2": 0.23066176996393875
+   },
+   "day": "2016-03-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.04371584699453552,
+    "gamma2": 23.18164443115102
+   },
+   "stretch": "era",
+   "temperature_c": 0.1,
+   "wind_speed_ms": 5.96
+  },
+  {
+   "channels": {
+    "A": 73.0,
+    "gamma2": 0.00932848905406246
+   },
+   "day": "2016-05-13",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7978142076502732,
+    "gamma2": 0.9375186723182103
+   },
+   "stretch": "era",
+   "temperature_c": 6.8,
+   "wind_speed_ms": 2.26
+  },
+  {
+   "channels": {
+    "A": 153.0,
+    "gamma2": 0.021025284501081813
+   },
+   "day": "2016-06-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6721311475409837,
+    "gamma2": 2.113053539145514
+   },
+   "stretch": "era",
+   "temperature_c": 15.7,
+   "wind_speed_ms": 3.54
+  },
+  {
+   "channels": {
+    "A": 2.0,
+    "gamma2": 0.3194107516527472
+   },
+   "day": "2016-06-30",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.02185792349726776,
+    "gamma2": 32.10096962950674
+   },
+   "stretch": "era",
+   "temperature_c": 20.6,
+   "wind_speed_ms": 1.92
+  },
+  {
+   "channels": {
+    "A": 157.0,
+    "gamma2": 0.0010837879058582735
+   },
+   "day": "2016-07-24",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.715846994535519,
+    "gamma2": 0.10892132613183413
+   },
+   "stretch": "era",
+   "temperature_c": 24.6,
+   "wind_speed_ms": 6.27
+  },
+  {
+   "channels": {
+    "A": 241.0,
+    "gamma2": 0.014392439035992292
+   },
+   "day": "2016-08-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.633879781420765,
+    "gamma2": 1.4464486433168013
+   },
+   "stretch": "era",
+   "temperature_c": 18.7,
+   "wind_speed_ms": 2.64
+  },
+  {
+   "channels": {
+    "A": 8.0,
+    "gamma2": 0.04582391165945863
+   },
+   "day": "2016-08-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.08743169398907104,
+    "gamma2": 4.605330249135431
+   },
+   "stretch": "era",
+   "temperature_c": 19.0,
+   "wind_speed_ms": 2.15
+  },
+  {
+   "channels": {
+    "A": 181.0,
+    "gamma2": 0.017821372684359404
+   },
+   "day": "2016-08-29",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.9781420765027322,
+    "gamma2": 1.791058504876794
+   },
+   "stretch": "era",
+   "temperature_c": 23.4,
+   "wind_speed_ms": 7.71
+  },
+  {
+   "channels": {
+    "A": 58.0,
+    "gamma2": 0.014668960801586193
+   },
+   "day": "2016-09-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6338797814207651,
+    "gamma2": 1.4742392444574848
+   },
+   "stretch": "era",
+   "temperature_c": 13.4,
+   "wind_speed_ms": 6.58
+  },
+  {
+   "channels": {
+    "A": 185.0,
+    "gamma2": 0.0005201308424635841
+   },
+   "day": "2016-09-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.021857923497268,
+    "gamma2": 0.052273457580555634
+   },
+   "stretch": "era",
+   "temperature_c": 14.4,
+   "wind_speed_ms": 7.19
+  },
+  {
+   "channels": {
+    "A": 31.0,
+    "gamma2": 0.002414204032447187
+   },
+   "day": "2016-09-28",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.33879781420765026,
+    "gamma2": 0.24262893444887368
+   },
+   "stretch": "era",
+   "temperature_c": 10.2,
+   "wind_speed_ms": 4.03
+  },
+  {
+   "channels": {
+    "A": 90.0,
+    "gamma2": 0.0036737061374177388
+   },
+   "day": "2016-10-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9836065573770492,
+    "gamma2": 0.3692096416127797
+   },
+   "stretch": "era",
+   "temperature_c": 14.5,
+   "wind_speed_ms": 8.41
+  },
+  {
+   "channels": {
+    "A": 20.0,
+    "gamma2": 0.0350574576471982
+   },
+   "day": "2016-10-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.2185792349726776,
+    "gamma2": 3.5232952472554917
+   },
+   "stretch": "era",
+   "temperature_c": 8.0,
+   "wind_speed_ms": 2.69
+  },
+  {
+   "channels": {
+    "A": 35.0,
+    "gamma2": 0.0044114300333213145
+   },
+   "day": "2016-11-03",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.3825136612021858,
+    "gamma2": 0.4433513298772624
+   },
+   "stretch": "era",
+   "temperature_c": 8.0,
+   "wind_speed_ms": 2.53
+  },
+  {
+   "channels": {
+    "A": 9.0,
+    "gamma2": 0.0155234873207389
+   },
+   "day": "2016-11-15",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.09836065573770492,
+    "gamma2": 1.560119665504649
+   },
+   "stretch": "era",
+   "temperature_c": 6.1,
+   "wind_speed_ms": 4.24
+  },
+  {
+   "channels": {
+    "A": 121.0,
+    "gamma2": 0.0028363287336316844
+   },
+   "day": "2016-11-27",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.3224043715846994,
+    "gamma2": 0.2850527168120921
+   },
+   "stretch": "era",
+   "temperature_c": -1.5,
+   "wind_speed_ms": 2.69
+  },
+  {
+   "channels": {
+    "A": 85.0,
+    "gamma2": 0.0047962931272789505
+   },
+   "day": "2016-12-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9289617486338798,
+    "gamma2": 0.4820302986556317
+   },
+   "stretch": "era",
+   "temperature_c": -15.3,
+   "wind_speed_ms": 3.88
+  },
+  {
+   "channels": {
+    "A": 9.0,
+    "gamma2": 0.005062179234978449
+   },
+   "day": "2016-12-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.09836065573770492,
+    "gamma2": 0.5087520098817101
+   },
+   "stretch": "era",
+   "temperature_c": -7.0,
+   "wind_speed_ms": 4.35
+  },
+  {
+   "channels": {
+    "A": 14.0,
+    "gamma2": 0.1021357750294787
+   },
+   "day": "2017-01-02",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.15300546448087432,
+    "gamma2": 10.264705853959097
+   },
+   "stretch": "era",
+   "temperature_c": -5.1,
+   "wind_speed_ms": 6.21
+  },
+  {
+   "channels": {
+    "A": 15.0,
+    "gamma2": 0.12497410129057868
+   },
+   "day": "2017-01-14",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.16393442622950818,
+    "gamma2": 12.559971163291495
+   },
+   "stretch": "era",
+   "temperature_c": -12.9,
+   "wind_speed_ms": 5.28
+  },
+  {
+   "channels": {
+    "A": 6.0,
+    "gamma2": 0.06035896775301645
+   },
+   "day": "2017-01-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.06557377049180328,
+    "gamma2": 6.066111991165633
+   },
+   "stretch": "era",
+   "temperature_c": -6.9,
+   "wind_speed_ms": 6.38
+  },
+  {
+   "channels": {
+    "A": 153.0,
+    "gamma2": 0.0008389551440362268
+   },
+   "day": "2017-02-07",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6721311475409837,
+    "gamma2": 0.0843154886298385
+   },
+   "stretch": "era",
+   "temperature_c": -8.3,
+   "wind_speed_ms": 4.66
+  },
+  {
+   "channels": {
+    "A": 184.0,
+    "gamma2": 0.00037145173406721795
+   },
+   "day": "2017-02-19",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.010928961748634,
+    "gamma2": 0.03733111916997307
+   },
+   "stretch": "era",
+   "temperature_c": 4.7,
+   "wind_speed_ms": 4.62
+  },
+  {
+   "channels": {
+    "A": 9.0,
+    "gamma2": 0.12497928019836327
+   },
+   "day": "2017-03-03",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.09836065573770492,
+    "gamma2": 12.560491646589716
+   },
+   "stretch": "era",
+   "temperature_c": -9.2,
+   "wind_speed_ms": 1.9
+  },
+  {
+   "channels": {
+    "A": 10.0,
+    "gamma2": 0.018430173561234036
+   },
+   "day": "2017-03-15",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.1092896174863388,
+    "gamma2": 1.8522433534075544
+   },
+   "stretch": "era",
+   "temperature_c": -12.0,
+   "wind_speed_ms": 3.09
+  },
+  {
+   "channels": {
+    "A": 84.0,
+    "gamma2": 0.015936908322209006
+   },
+   "day": "2017-03-27",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9180327868852459,
+    "gamma2": 1.601668720894056
+   },
+   "stretch": "era",
+   "temperature_c": 0.0,
+   "wind_speed_ms": 2.52
+  },
+  {
+   "channels": {
+    "A": 68.0,
+    "gamma2": 0.017986765902632738
+   },
+   "day": "2017-04-08",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7431693989071039,
+    "gamma2": 1.8076806212246204
+   },
+   "stretch": "era",
+   "temperature_c": 12.4,
+   "wind_speed_ms": 7.5
+  },
+  {
+   "channels": {
+    "A": 67.0,
+    "gamma2": 0.00902044479982704
+   },
+   "day": "2017-04-20",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.73224043715847,
+    "gamma2": 0.9065600424080132
+   },
+   "stretch": "era",
+   "temperature_c": 5.6,
+   "wind_speed_ms": 3.1
+  },
+  {
+   "channels": {
+    "A": 23.0,
+    "gamma2": 0.0186822526382911
+   },
+   "day": "2017-05-02",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.25136612021857924,
+    "gamma2": 1.8775774498804252
+   },
+   "stretch": "era",
+   "temperature_c": 6.4,
+   "wind_speed_ms": 3.08
+  },
+  {
+   "channels": {
+    "A": 31.0,
+    "gamma2": 0.010907639674414934
+   },
+   "day": "2017-05-14",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.33879781420765026,
+    "gamma2": 1.0962242445071593
+   },
+   "stretch": "era",
+   "temperature_c": 17.6,
+   "wind_speed_ms": 5.47
+  },
+  {
+   "channels": {
+    "A": 11.0,
+    "gamma2": 0.0031760473795502987
+   },
+   "day": "2017-05-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.12021857923497267,
+    "gamma2": 0.31919464183741647
+   },
+   "stretch": "era",
+   "temperature_c": 13.1,
+   "wind_speed_ms": 2.63
+  },
+  {
+   "channels": {
+    "A": 89.0,
+    "gamma2": 0.028705842315124408
+   },
+   "day": "2017-06-07",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9726775956284153,
+    "gamma2": 2.8849541462806694
+   },
+   "stretch": "era",
+   "temperature_c": 21.6,
+   "wind_speed_ms": 2.6
+  },
+  {
+   "channels": {
+    "A": 73.0,
+    "gamma2": 0.0063553340290873365
+   },
+   "day": "2017-07-01",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7978142076502732,
+    "gamma2": 0.6387148322261201
+   },
+   "stretch": "era",
+   "temperature_c": 15.2,
+   "wind_speed_ms": 3.45
+  },
+  {
+   "channels": {
+    "A": 221.0,
+    "gamma2": 0.0033867495995974503
+   },
+   "day": "2017-08-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.4153005464480874,
+    "gamma2": 0.3403703396860493
+   },
+   "stretch": "era",
+   "temperature_c": 16.4,
+   "wind_speed_ms": 2.19
+  },
+  {
+   "channels": {
+    "A": 168.0,
+    "gamma2": 0.01510966172297667
+   },
+   "day": "2017-08-18",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.8360655737704918,
+    "gamma2": 1.518529947948366
+   },
+   "stretch": "era",
+   "temperature_c": 17.7,
+   "wind_speed_ms": 2.86
+  },
+  {
+   "channels": {
+    "A": 233.0,
+    "gamma2": 0.03615597476259814
+   },
+   "day": "2017-09-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.546448087431694,
+    "gamma2": 3.633696867665828
+   },
+   "stretch": "era",
+   "temperature_c": 20.7,
+   "wind_speed_ms": 4.6
+  },
+  {
+   "channels": {
+    "A": 118.0,
+    "gamma2": 0.02349475897657779
+   },
+   "day": "2017-10-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.289617486338798,
+    "gamma2": 2.3612371858404155
+   },
+   "stretch": "era",
+   "temperature_c": 12.1,
+   "wind_speed_ms": 2.73
+  },
+  {
+   "channels": {
+    "A": 131.0,
+    "gamma2": 0.03911230379244787
+   },
+   "day": "2017-10-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4316939890710383,
+    "gamma2": 3.930809685286973
+   },
+   "stretch": "era",
+   "temperature_c": 10.6,
+   "wind_speed_ms": 3.24
+  },
+  {
+   "channels": {
+    "A": 49.0,
+    "gamma2": 0.0697576648169245
+   },
+   "day": "2017-10-29",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5355191256830601,
+    "gamma2": 7.010686610035862
+   },
+   "stretch": "era",
+   "temperature_c": 3.6,
+   "wind_speed_ms": 3.74
+  },
+  {
+   "channels": {
+    "A": 112.0,
+    "gamma2": 0.0028667133015292797
+   },
+   "day": "2017-11-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.2240437158469946,
+    "gamma2": 0.28810638387320214
+   },
+   "stretch": "era",
+   "temperature_c": -9.6,
+   "wind_speed_ms": 4.0
+  },
+  {
+   "channels": {
+    "A": 219.0,
+    "gamma2": 0.015656991586541488
+   },
+   "day": "2017-11-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.3934426229508197,
+    "gamma2": 1.573536923251181
+   },
+   "stretch": "era",
+   "temperature_c": -8.7,
+   "wind_speed_ms": 2.43
+  },
+  {
+   "channels": {
+    "A": 149.0,
+    "gamma2": 0.009964273188246414
+   },
+   "day": "2017-12-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6284153005464481,
+    "gamma2": 1.0014153541824127
+   },
+   "stretch": "era",
+   "temperature_c": 7.7,
+   "wind_speed_ms": 5.12
+  },
+  {
+   "channels": {
+    "A": 195.0,
+    "gamma2": 0.0036079860140843865
+   },
+   "day": "2017-12-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.1311475409836067,
+    "gamma2": 0.3626047303120325
+   },
+   "stretch": "era",
+   "temperature_c": 0.7,
+   "wind_speed_ms": 3.55
+  },
+  {
+   "channels": {
+    "A": 102.0,
+    "gamma2": 0.0028736133587220526
+   },
+   "day": "2017-12-28",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.1147540983606556,
+    "gamma2": 0.2887998437058501
+   },
+   "stretch": "era",
+   "temperature_c": -14.0,
+   "wind_speed_ms": 7.3
+  },
+  {
+   "channels": {
+    "A": 166.0,
+    "gamma2": 0.004843434141687634
+   },
+   "day": "2018-01-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.814207650273224,
+    "gamma2": 0.4867679985107776
+   },
+   "stretch": "era",
+   "temperature_c": -0.7,
+   "wind_speed_ms": 3.28
+  },
+  {
+   "channels": {
+    "A": 225.0,
+    "gamma2": 0.003405808694229747
+   },
+   "day": "2018-02-14",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.459016393442623,
+    "gamma2": 0.34228578997941445
+   },
+   "stretch": "era",
+   "temperature_c": -5.7,
+   "wind_speed_ms": 5.23
+  },
+  {
+   "channels": {
+    "A": 195.0,
+    "gamma2": 0.006551615704693363
+   },
+   "day": "2018-02-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.1311475409836067,
+    "gamma2": 0.658441256821582
+   },
+   "stretch": "era",
+   "temperature_c": -7.2,
+   "wind_speed_ms": 4.72
+  },
+  {
+   "channels": {
+    "A": 160.0,
+    "gamma2": 0.0007525383859025941
+   },
+   "day": "2018-03-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.7486338797814207,
+    "gamma2": 0.07563055327943413
+   },
+   "stretch": "era",
+   "temperature_c": -4.1,
+   "wind_speed_ms": 4.84
+  },
+  {
+   "channels": {
+    "A": 192.0,
+    "gamma2": 0.002937723355759417
+   },
+   "day": "2018-03-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.098360655737705,
+    "gamma2": 0.2952429363606696
+   },
+   "stretch": "era",
+   "temperature_c": -2.0,
+   "wind_speed_ms": 2.48
+  },
+  {
+   "channels": {
+    "A": 163.0,
+    "gamma2": 0.0033854639090880505
+   },
+   "day": "2018-04-03",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.7814207650273224,
+    "gamma2": 0.34024112702873693
+   },
+   "stretch": "era",
+   "temperature_c": -4.0,
+   "wind_speed_ms": 4.69
+  },
+  {
+   "channels": {
+    "A": 211.0,
+    "gamma2": 0.005377868718166291
+   },
+   "day": "2018-04-15",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.3060109289617485,
+    "gamma2": 0.5404789898275351
+   },
+   "stretch": "era",
+   "temperature_c": -6.0,
+   "wind_speed_ms": 6.01
+  },
+  {
+   "channels": {
+    "A": 92.0,
+    "gamma2": 0.005556904196960652
+   },
+   "day": "2018-04-27",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.005464480874317,
+    "gamma2": 0.5584721614338252
+   },
+   "stretch": "era",
+   "temperature_c": 4.7,
+   "wind_speed_ms": 3.05
+  },
+  {
+   "channels": {
+    "A": 160.0,
+    "gamma2": 0.006909991514530104
+   },
+   "day": "2018-05-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.7486338797814207,
+    "gamma2": 0.694458237865558
+   },
+   "stretch": "era",
+   "temperature_c": 12.6,
+   "wind_speed_ms": 3.64
+  },
+  {
+   "channels": {
+    "A": 22.0,
+    "gamma2": 0.06185187177478721
+   },
+   "day": "2018-05-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.24043715846994534,
+    "gamma2": 6.21614972913988
+   },
+   "stretch": "era",
+   "temperature_c": 13.3,
+   "wind_speed_ms": 2.91
+  },
+  {
+   "channels": {
+    "A": 91.0,
+    "gamma2": 0.0035534498201740326
+   },
+   "day": "2018-06-02",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.994535519125683,
+    "gamma2": 0.35712381053908626
+   },
+   "stretch": "era",
+   "temperature_c": 20.0,
+   "wind_speed_ms": 3.83
+  },
+  {
+   "channels": {
+    "A": 18.0,
+    "gamma2": 0.018957418910435033
+   },
+   "day": "2018-06-14",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.19672131147540983,
+    "gamma2": 1.9052318231269465
+   },
+   "stretch": "era",
+   "temperature_c": 17.1,
+   "wind_speed_ms": 5.5
+  },
+  {
+   "channels": {
+    "A": 238.0,
+    "gamma2": 0.002617545861812229
+   },
+   "day": "2018-06-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.601092896174863,
+    "gamma2": 0.26306490867666676
+   },
+   "stretch": "era",
+   "temperature_c": 17.7,
+   "wind_speed_ms": 2.92
+  },
+  {
+   "channels": {
+    "A": 97.0,
+    "gamma2": 0.011920100745633062
+   },
+   "day": "2018-07-08",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.0601092896174864,
+    "gamma2": 1.1979771815327889
+   },
+   "stretch": "era",
+   "temperature_c": 25.4,
+   "wind_speed_ms": 7.51
+  },
+  {
+   "channels": {
+    "A": 205.0,
+    "gamma2": 0.0013058026851567376
+   },
+   "day": "2018-07-20",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.240437158469945,
+    "gamma2": 0.13123394288216117
+   },
+   "stretch": "era",
+   "temperature_c": 17.7,
+   "wind_speed_ms": 4.06
+  },
+  {
+   "channels": {
+    "A": 66.0,
+    "gamma2": 0.0030093482242833135
+   },
+   "day": "2018-08-01",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7213114754098361,
+    "gamma2": 0.30244127804862464
+   },
+   "stretch": "era",
+   "temperature_c": 22.0,
+   "wind_speed_ms": 5.39
+  },
+  {
+   "channels": {
+    "A": 265.0,
+    "gamma2": 0.009398662736578208
+   },
+   "day": "2018-08-13",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.8961748633879782,
+    "gamma2": 0.9445711689532569
+   },
+   "stretch": "era",
+   "temperature_c": 24.2,
+   "wind_speed_ms": 5.72
+  },
+  {
+   "channels": {
+    "A": 132.0,
+    "gamma2": 0.00804977136639607
+   },
+   "day": "2018-08-25",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4426229508196722,
+    "gamma2": 0.8090067877179137
+   },
+   "stretch": "era",
+   "temperature_c": 19.1,
+   "wind_speed_ms": 0.5
+  },
+  {
+   "channels": {
+    "A": 113.0,
+    "gamma2": 0.004558327290205607
+   },
+   "day": "2018-09-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.2349726775956285,
+    "gamma2": 0.4581145911560408
+   },
+   "stretch": "era",
+   "temperature_c": 13.5,
+   "wind_speed_ms": 1.92
+  },
+  {
+   "channels": {
+    "A": 207.0,
+    "gamma2": 0.0061149226990585585
+   },
+   "day": "2018-09-18",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.262295081967213,
+    "gamma2": 0.6145533512367974
+   },
+   "stretch": "era",
+   "temperature_c": 14.2,
+   "wind_speed_ms": 3.35
+  },
+  {
+   "channels": {
+    "A": 211.0,
+    "gamma2": 0.011629176392331252
+   },
+   "day": "2018-09-30",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.3060109289617485,
+    "gamma2": 1.168739111801253
+   },
+   "stretch": "era",
+   "temperature_c": 7.2,
+   "wind_speed_ms": 0.61
+  },
+  {
+   "channels": {
+    "A": 173.0,
+    "gamma2": 0.00933139913849764
+   },
+   "day": "2018-10-12",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.8907103825136613,
+    "gamma2": 0.9378111375266907
+   },
+   "stretch": "era",
+   "temperature_c": -1.8,
+   "wind_speed_ms": 1.92
+  },
+  {
+   "channels": {
+    "A": 79.0,
+    "gamma2": 0.011944380405095184
+   },
+   "day": "2018-10-24",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.8633879781420765,
+    "gamma2": 1.2004173016820807
+   },
+   "stretch": "era",
+   "temperature_c": 2.8,
+   "wind_speed_ms": 4.46
+  },
+  {
+   "channels": {
+    "A": 177.0,
+    "gamma2": 0.0008706764596426898
+   },
+   "day": "2018-11-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.9344262295081966,
+    "gamma2": 0.08750349962703284
+   },
+   "stretch": "era",
+   "temperature_c": 3.1,
+   "wind_speed_ms": 2.6
+  },
+  {
+   "channels": {
+    "A": 130.0,
+    "gamma2": 0.004726894332622375
+   },
+   "day": "2018-11-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4207650273224044,
+    "gamma2": 0.4750556787091589
+   },
+   "stretch": "era",
+   "temperature_c": -7.4,
+   "wind_speed_ms": 7.8
+  },
+  {
+   "channels": {
+    "A": 7.0,
+    "gamma2": 0.5705729510190597
+   },
+   "day": "2018-11-29",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.07650273224043716,
+    "gamma2": 57.34291935167344
+   },
+   "stretch": "era",
+   "temperature_c": -2.9,
+   "wind_speed_ms": 3.36
+  },
+  {
+   "channels": {
+    "A": 172.0,
+    "gamma2": 0.013099605835583375
+   },
+   "day": "2018-12-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.8797814207650274,
+    "gamma2": 1.316518141329619
+   },
+   "stretch": "era",
+   "temperature_c": -3.6,
+   "wind_speed_ms": 2.33
+  },
+  {
+   "channels": {
+    "A": 86.0,
+    "gamma2": 0.05171096488023707
+   },
+   "day": "2018-12-23",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9398907103825137,
+    "gamma2": 5.196982582908314
+   },
+   "stretch": "era",
+   "temperature_c": -2.6,
+   "wind_speed_ms": 4.51
+  },
+  {
+   "channels": {
+    "A": 118.0,
+    "gamma2": 0.006466194128922939
+   },
+   "day": "2019-01-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.289617486338798,
+    "gamma2": 0.6498563378878195
+   },
+   "stretch": "era",
+   "temperature_c": 0.6,
+   "wind_speed_ms": 6.0
+  },
+  {
+   "channels": {
+    "A": 131.0,
+    "gamma2": 0.014768472426737737
+   },
+   "day": "2019-01-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4316939890710383,
+    "gamma2": 1.4842402216952373
+   },
+   "stretch": "era",
+   "temperature_c": -11.5,
+   "wind_speed_ms": 4.92
+  },
+  {
+   "channels": {
+    "A": 17.0,
+    "gamma2": 0.07418303428472801
+   },
+   "day": "2019-01-28",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.18579234972677597,
+    "gamma2": 7.4554388613306095
+   },
+   "stretch": "era",
+   "temperature_c": -0.9,
+   "wind_speed_ms": 14.1
+  },
+  {
+   "channels": {
+    "A": 34.0,
+    "gamma2": 0.01918005976060397
+   },
+   "day": "2019-02-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.37158469945355194,
+    "gamma2": 1.9276073603703847
+   },
+   "stretch": "era",
+   "temperature_c": -25.4,
+   "wind_speed_ms": 5.83
+  },
+  {
+   "channels": {
+    "A": 15.0,
+    "gamma2": 0.01914670417702469
+   },
+   "day": "2019-02-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.16393442622950818,
+    "gamma2": 1.9242551044744496
+   },
+   "stretch": "era",
+   "temperature_c": -13.4,
+   "wind_speed_ms": 7.33
+  },
+  {
+   "channels": {
+    "A": 37.0,
+    "gamma2": 0.04531854417570457
+   },
+   "day": "2019-03-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.40437158469945356,
+    "gamma2": 4.554540517844964
+   },
+   "stretch": "era",
+   "temperature_c": -15.6,
+   "wind_speed_ms": 9.9
+  },
+  {
+   "channels": {
+    "A": 73.0,
+    "gamma2": 0.017157385319071048
+   },
+   "day": "2019-03-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7978142076502732,
+    "gamma2": 1.72432738159053
+   },
+   "stretch": "era",
+   "temperature_c": -4.8,
+   "wind_speed_ms": 5.85
+  },
+  {
+   "channels": {
+    "A": 56.0,
+    "gamma2": 0.0006950977750767793
+   },
+   "day": "2019-04-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6120218579234973,
+    "gamma2": 0.06985773788709436
+   },
+   "stretch": "era",
+   "temperature_c": -0.2,
+   "wind_speed_ms": 5.8
+  },
+  {
+   "channels": {
+    "A": 25.0,
+    "gamma2": 0.013155127031682595
+   },
+   "day": "2019-04-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.273224043715847,
+    "gamma2": 1.322098054405659
+   },
+   "stretch": "era",
+   "temperature_c": 7.6,
+   "wind_speed_ms": 8.32
+  },
+  {
+   "channels": {
+    "A": 118.0,
+    "gamma2": 0.0016807946566198939
+   },
+   "day": "2019-05-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.289617486338798,
+    "gamma2": 0.168920858006216
+   },
+   "stretch": "era",
+   "temperature_c": 5.4,
+   "wind_speed_ms": 2.95
+  },
+  {
+   "channels": {
+    "A": 30.0,
+    "gamma2": 0.005242329667183398
+   },
+   "day": "2019-05-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.32786885245901637,
+    "gamma2": 0.526857234965807
+   },
+   "stretch": "era",
+   "temperature_c": 19.5,
+   "wind_speed_ms": 6.84
+  },
+  {
+   "channels": {
+    "A": 58.0,
+    "gamma2": 0.026336110269427424
+   },
+   "day": "2019-05-28",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6338797814207651,
+    "gamma2": 2.646794672827223
+   },
+   "stretch": "era",
+   "temperature_c": 11.1,
+   "wind_speed_ms": 2.77
+  },
+  {
+   "channels": {
+    "A": 32.0,
+    "gamma2": 1.0853411946288795e-05
+   },
+   "day": "2019-06-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.34972677595628415,
+    "gamma2": 0.0010907743257281357
+   },
+   "stretch": "era",
+   "temperature_c": 12.4,
+   "wind_speed_ms": 7.99
+  },
+  {
+   "channels": {
+    "A": 211.0,
+    "gamma2": 0.0036819015856501447
+   },
+   "day": "2019-06-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.3060109289617485,
+    "gamma2": 0.370033289011771
+   },
+   "stretch": "era",
+   "temperature_c": 14.1,
+   "wind_speed_ms": 0.63
+  },
+  {
+   "channels": {
+    "A": 210.0,
+    "gamma2": 0.00771517540745211
+   },
+   "day": "2019-07-03",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.2950819672131146,
+    "gamma2": 0.7753796957661284
+   },
+   "stretch": "era",
+   "temperature_c": 19.5,
+   "wind_speed_ms": 2.13
+  },
+  {
+   "channels": {
+    "A": 283.0,
+    "gamma2": 0.0002503740305383583
+   },
+   "day": "2019-07-15",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 3.092896174863388,
+    "gamma2": 0.025162738288368156
+   },
+   "stretch": "era",
+   "temperature_c": 25.0,
+   "wind_speed_ms": 4.8
+  },
+  {
+   "channels": {
+    "A": 48.0,
+    "gamma2": 0.001205431877682558
+   },
+   "day": "2019-07-27",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5245901639344263,
+    "gamma2": 0.12114661731235518
+   },
+   "stretch": "era",
+   "temperature_c": 20.3,
+   "wind_speed_ms": 2.43
+  },
+  {
+   "channels": {
+    "A": 137.0,
+    "gamma2": 0.0004944108906373845
+   },
+   "day": "2019-08-08",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4972677595628416,
+    "gamma2": 0.049688587196033286
+   },
+   "stretch": "era",
+   "temperature_c": 17.2,
+   "wind_speed_ms": 3.93
+  },
+  {
+   "channels": {
+    "A": 237.0,
+    "gamma2": 0.0019535139030710776
+   },
+   "day": "2019-08-20",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.5901639344262297,
+    "gamma2": 0.1963293037219979
+   },
+   "stretch": "era",
+   "temperature_c": 21.1,
+   "wind_speed_ms": 5.57
+  },
+  {
+   "channels": {
+    "A": 224.0,
+    "gamma2": 0.009936107101771334
+   },
+   "day": "2019-09-01",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.448087431693989,
+    "gamma2": 0.9985846458175873
+   },
+   "stretch": "era",
+   "temperature_c": 15.6,
+   "wind_speed_ms": 4.03
+  },
+  {
+   "channels": {
+    "A": 253.0,
+    "gamma2": 0.004984083075591691
+   },
+   "day": "2019-09-13",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.7650273224043715,
+    "gamma2": 0.5009032996310893
+   },
+   "stretch": "era",
+   "temperature_c": 11.2,
+   "wind_speed_ms": 7.7
+  },
+  {
+   "channels": {
+    "A": 122.0,
+    "gamma2": 0.03312583654236505
+   },
+   "day": "2019-09-25",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.3333333333333333,
+    "gamma2": 3.329166182716753
+   },
+   "stretch": "era",
+   "temperature_c": 16.0,
+   "wind_speed_ms": 4.99
+  },
+  {
+   "channels": {
+    "A": 147.0,
+    "gamma2": 0.0033662457557250293
+   },
+   "day": "2019-10-07",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6065573770491803,
+    "gamma2": 0.3383096912387725
+   },
+   "stretch": "era",
+   "temperature_c": 9.4,
+   "wind_speed_ms": 4.24
+  },
+  {
+   "channels": {
+    "A": 144.0,
+    "gamma2": 0.0008775142556004708
+   },
+   "day": "2019-10-19",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.5737704918032787,
+    "gamma2": 0.08819070216870596
+   },
+   "stretch": "era",
+   "temperature_c": 9.3,
+   "wind_speed_ms": 4.61
+  },
+  {
+   "channels": {
+    "A": 289.0,
+    "gamma2": 0.008016946527324176
+   },
+   "day": "2019-10-31",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 3.158469945355191,
+    "gamma2": 0.805707871959167
+   },
+   "stretch": "era",
+   "temperature_c": -5.3,
+   "wind_speed_ms": 1.97
+  },
+  {
+   "channels": {
+    "A": 263.0,
+    "gamma2": 0.0037151860946401803
+   },
+   "day": "2019-11-24",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.8743169398907105,
+    "gamma2": 0.3733784018694114
+   },
+   "stretch": "era",
+   "temperature_c": 3.0,
+   "wind_speed_ms": 5.82
+  },
+  {
+   "channels": {
+    "A": 266.0,
+    "gamma2": 0.007241803840098934
+   },
+   "day": "2019-12-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.907103825136612,
+    "gamma2": 0.7278055730152557
+   },
+   "stretch": "era",
+   "temperature_c": -7.3,
+   "wind_speed_ms": 5.08
+  },
+  {
+   "channels": {
+    "A": 146.0,
+    "gamma2": 0.006205625871112506
+   },
+   "day": "2019-12-18",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.5956284153005464,
+    "gamma2": 0.6236690737237134
+   },
+   "stretch": "era",
+   "temperature_c": -16.5,
+   "wind_speed_ms": 2.25
+  },
+  {
+   "channels": {
+    "A": 313.0,
+    "gamma2": 0.00022787901183828538
+   },
+   "day": "2019-12-30",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 3.420765027322404,
+    "gamma2": 0.022901975592154088
+   },
+   "stretch": "era",
+   "temperature_c": -6.9,
+   "wind_speed_ms": 14.51
+  },
+  {
+   "channels": {
+    "A": 59.0,
+    "gamma2": 0.023310818730616346
+   },
+   "day": "2020-01-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.644808743169399,
+    "gamma2": 2.342751082230254
+   },
+   "stretch": "era",
+   "temperature_c": -23.4,
+   "wind_speed_ms": 3.32
+  },
+  {
+   "channels": {
+    "A": 46.0,
+    "gamma2": 0.030516223713069283
+   },
+   "day": "2020-01-23",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5027322404371585,
+    "gamma2": 3.0668985485042777
+   },
+   "stretch": "era",
+   "temperature_c": -4.4,
+   "wind_speed_ms": 4.79
+  },
+  {
+   "channels": {
+    "A": 5.0,
+    "gamma2": 0.3654647127219252
+   },
+   "day": "2020-02-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.0546448087431694,
+    "gamma2": 36.729419980506236
+   },
+   "stretch": "era",
+   "temperature_c": -11.5,
+   "wind_speed_ms": 5.18
+  },
+  {
+   "channels": {
+    "A": 11.0,
+    "gamma2": 0.05214086659341896
+   },
+   "day": "2020-02-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.12021857923497267,
+    "gamma2": 5.240187959581195
+   },
+   "stretch": "era",
+   "temperature_c": -8.0,
+   "wind_speed_ms": 3.96
+  },
+  {
+   "channels": {
+    "A": 238.0,
+    "gamma2": 0.006267171373715406
+   },
+   "day": "2020-03-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.601092896174863,
+    "gamma2": 0.6298544331697107
+   },
+   "stretch": "era",
+   "temperature_c": -4.5,
+   "wind_speed_ms": 2.6
+  },
+  {
+   "channels": {
+    "A": 62.0,
+    "gamma2": 0.0017478652313691566
+   },
+   "day": "2020-04-04",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6775956284153005,
+    "gamma2": 0.17566149047371776
+   },
+   "stretch": "era",
+   "temperature_c": -8.0,
+   "wind_speed_ms": 1.22
+  },
+  {
+   "channels": {
+    "A": 8.0,
+    "gamma2": 0.011023717863622284
+   },
+   "day": "2020-04-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.08743169398907104,
+    "gamma2": 1.107890171239783
+   },
+   "stretch": "era",
+   "temperature_c": -2.6,
+   "wind_speed_ms": 0.71
+  },
+  {
+   "channels": {
+    "A": 17.0,
+    "gamma2": 0.029821261300327428
+   },
+   "day": "2020-04-28",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.18579234972677597,
+    "gamma2": 2.997054414611976
+   },
+   "stretch": "era",
+   "temperature_c": 13.3,
+   "wind_speed_ms": 6.2
+  },
+  {
+   "channels": {
+    "A": 208.0,
+    "gamma2": 0.00293533013634782
+   },
+   "day": "2020-05-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.273224043715847,
+    "gamma2": 0.2950024163930389
+   },
+   "stretch": "era",
+   "temperature_c": 2.3,
+   "wind_speed_ms": 7.46
+  },
+  {
+   "channels": {
+    "A": 41.0,
+    "gamma2": 0.0020447039086926495
+   },
+   "day": "2020-06-03",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.44808743169398907,
+    "gamma2": 0.20549395327066144
+   },
+   "stretch": "era",
+   "temperature_c": 17.9,
+   "wind_speed_ms": 2.55
+  },
+  {
+   "channels": {
+    "A": 55.0,
+    "gamma2": 0.011937940918328298
+   },
+   "day": "2020-06-15",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6010928961748634,
+    "gamma2": 1.1997701294498881
+   },
+   "stretch": "era",
+   "temperature_c": 26.0,
+   "wind_speed_ms": 10.32
+  },
+  {
+   "channels": {
+    "A": 80.0,
+    "gamma2": 0.004910777294052836
+   },
+   "day": "2020-06-27",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.8743169398907104,
+    "gamma2": 0.49353602519004486
+   },
+   "stretch": "era",
+   "temperature_c": 18.5,
+   "wind_speed_ms": 2.28
+  },
+  {
+   "channels": {
+    "A": 158.0,
+    "gamma2": 0.03365448344308157
+   },
+   "day": "2020-07-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.726775956284153,
+    "gamma2": 3.382295509193162
+   },
+   "stretch": "era",
+   "temperature_c": 22.9,
+   "wind_speed_ms": 3.44
+  },
+  {
+   "channels": {
+    "A": 158.0,
+    "gamma2": 0.02242161274290123
+   },
+   "day": "2020-07-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.726775956284153,
+    "gamma2": 2.2533853540626216
+   },
+   "stretch": "era",
+   "temperature_c": 19.6,
+   "wind_speed_ms": 3.7
+  },
+  {
+   "channels": {
+    "A": 151.0,
+    "gamma2": 0.020783673072277634
+   },
+   "day": "2020-08-02",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.650273224043716,
+    "gamma2": 2.0887714475188153
+   },
+   "stretch": "era",
+   "temperature_c": 18.0,
+   "wind_speed_ms": 3.42
+  },
+  {
+   "channels": {
+    "A": 29.0,
+    "gamma2": 0.1434846962526366
+   },
+   "day": "2020-08-13",
+   "hour": "16",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.31693989071038253,
+    "gamma2": 14.420296915090624
+   },
+   "stretch": "era",
+   "temperature_c": 26.6,
+   "wind_speed_ms": 7.96
+  },
+  {
+   "channels": {
+    "A": 124.0,
+    "gamma2": 0.036815225870330016
+   },
+   "day": "2020-08-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.355191256830601,
+    "gamma2": 3.6999519942638424
+   },
+   "stretch": "era",
+   "temperature_c": 27.9,
+   "wind_speed_ms": 6.6
+  },
+  {
+   "channels": {
+    "A": 174.0,
+    "gamma2": 0.03541036756355774
+   },
+   "day": "2020-09-07",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.901639344262295,
+    "gamma2": 3.5587629027692476
+   },
+   "stretch": "era",
+   "temperature_c": 16.0,
+   "wind_speed_ms": 5.48
+  },
+  {
+   "channels": {
+    "A": 65.0,
+    "gamma2": 0.024358109393867053
+   },
+   "day": "2020-10-01",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7103825136612022,
+    "gamma2": 2.448004413873975
+   },
+   "stretch": "era",
+   "temperature_c": 8.5,
+   "wind_speed_ms": 8.08
+  },
+  {
+   "channels": {
+    "A": 87.0,
+    "gamma2": 0.049020205817491135
+   },
+   "day": "2020-10-13",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.9508196721311475,
+    "gamma2": 4.926559704196228
+   },
+   "stretch": "era",
+   "temperature_c": 12.9,
+   "wind_speed_ms": 5.81
+  },
+  {
+   "channels": {
+    "A": 218.0,
+    "gamma2": 0.00025273789084639205
+   },
+   "day": "2020-10-25",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.3825136612021858,
+    "gamma2": 0.02540030764871043
+   },
+   "stretch": "era",
+   "temperature_c": -5.5,
+   "wind_speed_ms": 3.48
+  },
+  {
+   "channels": {
+    "A": 51.0,
+    "gamma2": 0.014958861233544883
+   },
+   "day": "2020-11-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5573770491803278,
+    "gamma2": 1.5033744094878845
+   },
+   "stretch": "era",
+   "temperature_c": 15.2,
+   "wind_speed_ms": 7.12
+  },
+  {
+   "channels": {
+    "A": 68.0,
+    "gamma2": 0.0007359132754509238
+   },
+   "day": "2020-11-18",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7431693989071039,
+    "gamma2": 0.0739597198371195
+   },
+   "stretch": "era",
+   "temperature_c": 2.6,
+   "wind_speed_ms": 5.94
+  },
+  {
+   "channels": {
+    "A": 56.0,
+    "gamma2": 0.002006544835171642
+   },
+   "day": "2020-11-30",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6120218579234973,
+    "gamma2": 0.20165894379195834
+   },
+   "stretch": "era",
+   "temperature_c": -5.0,
+   "wind_speed_ms": 2.86
+  },
+  {
+   "channels": {
+    "A": 53.0,
+    "gamma2": 0.054220725583746056
+   },
+   "day": "2020-12-12",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5792349726775956,
+    "gamma2": 5.449215019367622
+   },
+   "stretch": "era",
+   "temperature_c": -4.4,
+   "wind_speed_ms": 4.76
+  },
+  {
+   "channels": {
+    "A": 56.0,
+    "gamma2": 0.007307160152196472
+   },
+   "day": "2020-12-24",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6120218579234973,
+    "gamma2": 0.7343739210714304
+   },
+   "stretch": "era",
+   "temperature_c": -17.0,
+   "wind_speed_ms": 8.17
+  },
+  {
+   "channels": {
+    "A": 28.0,
+    "gamma2": 0.07798551266325891
+   },
+   "day": "2021-01-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.30601092896174864,
+    "gamma2": 7.837590189407316
+   },
+   "stretch": "era",
+   "temperature_c": -7.1,
+   "wind_speed_ms": 3.61
+  },
+  {
+   "channels": {
+    "A": 148.0,
+    "gamma2": 2.7252490770536416e-05
+   },
+   "day": "2021-01-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6174863387978142,
+    "gamma2": 0.0027388914556780173
+   },
+   "stretch": "era",
+   "temperature_c": -3.2,
+   "wind_speed_ms": 4.99
+  },
+  {
+   "channels": {
+    "A": 61.0,
+    "gamma2": 0.048642157439286175
+   },
+   "day": "2021-01-29",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6666666666666666,
+    "gamma2": 4.888565618385255
+   },
+   "stretch": "era",
+   "temperature_c": -8.7,
+   "wind_speed_ms": 3.2
+  },
+  {
+   "channels": {
+    "A": 51.0,
+    "gamma2": 0.004565484084618678
+   },
+   "day": "2021-02-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5573770491803278,
+    "gamma2": 0.458833853231315
+   },
+   "stretch": "era",
+   "temperature_c": -17.4,
+   "wind_speed_ms": 3.22
+  },
+  {
+   "channels": {
+    "A": 8.0,
+    "gamma2": 0.4322356925044827
+   },
+   "day": "2021-02-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.08743169398907104,
+    "gamma2": 43.439942976496475
+   },
+   "stretch": "era",
+   "temperature_c": -2.1,
+   "wind_speed_ms": 4.33
+  },
+  {
+   "channels": {
+    "A": 153.0,
+    "gamma2": 0.0020184526391708413
+   },
+   "day": "2021-03-06",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.6721311475409837,
+    "gamma2": 0.20285568514319494
+   },
+   "stretch": "era",
+   "temperature_c": -0.4,
+   "wind_speed_ms": 2.85
+  },
+  {
+   "channels": {
+    "A": 7.0,
+    "gamma2": 0.10355708254205988
+   },
+   "day": "2021-03-18",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.07650273224043716,
+    "gamma2": 10.407548100375275
+   },
+   "stretch": "era",
+   "temperature_c": -1.9,
+   "wind_speed_ms": 3.16
+  },
+  {
+   "channels": {
+    "A": 40.0,
+    "gamma2": 0.022060811880561096
+   },
+   "day": "2021-03-30",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.4371584699453552,
+    "gamma2": 2.2171246538064446
+   },
+   "stretch": "era",
+   "temperature_c": 2.6,
+   "wind_speed_ms": 10.97
+  },
+  {
+   "channels": {
+    "A": 121.0,
+    "gamma2": 0.001198408650226278
+   },
+   "day": "2021-04-11",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.3224043715846994,
+    "gamma2": 0.12044077879530905
+   },
+   "stretch": "era",
+   "temperature_c": 2.3,
+   "wind_speed_ms": 2.28
+  },
+  {
+   "channels": {
+    "A": 60.0,
+    "gamma2": 0.010053293961259296
+   },
+   "day": "2021-04-23",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6557377049180327,
+    "gamma2": 1.010361994569736
+   },
+   "stretch": "era",
+   "temperature_c": 4.7,
+   "wind_speed_ms": 6.07
+  },
+  {
+   "channels": {
+    "A": 46.0,
+    "gamma2": 0.07873748257066802
+   },
+   "day": "2021-05-05",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5027322404371585,
+    "gamma2": 7.913163610261621
+   },
+   "stretch": "era",
+   "temperature_c": 5.1,
+   "wind_speed_ms": 3.9
+  },
+  {
+   "channels": {
+    "A": 25.0,
+    "gamma2": 0.02150934658570555
+   },
+   "day": "2021-05-17",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.273224043715847,
+    "gamma2": 2.1617020652107715
+   },
+   "stretch": "era",
+   "temperature_c": 13.0,
+   "wind_speed_ms": 2.91
+  },
+  {
+   "channels": {
+    "A": 4.0,
+    "gamma2": 0.28662923885279906
+   },
+   "day": "2021-05-29",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.04371584699453552,
+    "gamma2": 28.806408186739574
+   },
+   "stretch": "era",
+   "temperature_c": 7.5,
+   "wind_speed_ms": 4.52
+  },
+  {
+   "channels": {
+    "A": 25.0,
+    "gamma2": 0.016591717152815138
+   },
+   "day": "2021-06-10",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.273224043715847,
+    "gamma2": 1.6674773960111433
+   },
+   "stretch": "era",
+   "temperature_c": 25.7,
+   "wind_speed_ms": 4.01
+  },
+  {
+   "channels": {
+    "A": 254.0,
+    "gamma2": 0.0006945977421875186
+   },
+   "day": "2021-06-22",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.7759562841530054,
+    "gamma2": 0.0698074842857085
+   },
+   "stretch": "era",
+   "temperature_c": 12.1,
+   "wind_speed_ms": 2.71
+  },
+  {
+   "channels": {
+    "A": 241.0,
+    "gamma2": 0.004991721799888655
+   },
+   "day": "2021-07-16",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.633879781420765,
+    "gamma2": 0.5016709959449929
+   },
+   "stretch": "era",
+   "temperature_c": 19.0,
+   "wind_speed_ms": 3.18
+  },
+  {
+   "channels": {
+    "A": 258.0,
+    "gamma2": 0.003996422197410867
+   },
+   "day": "2021-08-09",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.819672131147541,
+    "gamma2": 0.4016427966872087
+   },
+   "stretch": "era",
+   "temperature_c": 20.3,
+   "wind_speed_ms": 2.86
+  },
+  {
+   "channels": {
+    "A": 167.0,
+    "gamma2": 0.0027123284416641974
+   },
+   "day": "2021-08-21",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.825136612021858,
+    "gamma2": 0.27259061406225804
+   },
+   "stretch": "era",
+   "temperature_c": 18.3,
+   "wind_speed_ms": 4.49
+  },
+  {
+   "channels": {
+    "A": 145.0,
+    "gamma2": 0.015037258290825951
+   },
+   "day": "2021-09-02",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.5846994535519126,
+    "gamma2": 1.5112533601550124
+   },
+   "stretch": "era",
+   "temperature_c": 19.6,
+   "wind_speed_ms": 5.81
+  },
+  {
+   "channels": {
+    "A": 225.0,
+    "gamma2": 3.8618678008129e-05
+   },
+   "day": "2021-09-14",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.459016393442623,
+    "gamma2": 0.003881200001740726
+   },
+   "stretch": "era",
+   "temperature_c": 13.8,
+   "wind_speed_ms": 4.11
+  },
+  {
+   "channels": {
+    "A": 135.0,
+    "gamma2": 0.03696332753774373
+   },
+   "day": "2021-09-26",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.4754098360655739,
+    "gamma2": 3.7148362995138284
+   },
+   "stretch": "era",
+   "temperature_c": 14.6,
+   "wind_speed_ms": 2.72
+  },
+  {
+   "channels": {
+    "A": 196.0,
+    "gamma2": 0.00401163612430878
+   },
+   "day": "2021-10-08",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 2.1420765027322406,
+    "gamma2": 0.4031718053469623
+   },
+   "stretch": "era",
+   "temperature_c": 17.3,
+   "wind_speed_ms": 4.8
+  },
+  {
+   "channels": {
+    "A": 70.0,
+    "gamma2": 0.015579157721961497
+   },
+   "day": "2021-10-20",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.7650273224043715,
+    "gamma2": 1.5657145737839167
+   },
+   "stretch": "era",
+   "temperature_c": 8.6,
+   "wind_speed_ms": 6.36
+  },
+  {
+   "channels": {
+    "A": 61.0,
+    "gamma2": 0.006974259703650495
+   },
+   "day": "2021-11-01",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6666666666666666,
+    "gamma2": 0.70091722891837
+   },
+   "stretch": "era",
+   "temperature_c": 0.4,
+   "wind_speed_ms": 3.72
+  },
+  {
+   "channels": {
+    "A": 58.0,
+    "gamma2": 0.018854544806032526
+   },
+   "day": "2021-11-13",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.6338797814207651,
+    "gamma2": 1.8948929147339135
+   },
+   "stretch": "era",
+   "temperature_c": -3.4,
+   "wind_speed_ms": 5.69
+  },
+  {
+   "channels": {
+    "A": 54.0,
+    "gamma2": 0.02697054343342767
+   },
+   "day": "2021-11-25",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.5901639344262295,
+    "gamma2": 2.7105555813882
+   },
+   "stretch": "era",
+   "temperature_c": -7.8,
+   "wind_speed_ms": 6.71
+  },
+  {
+   "channels": {
+    "A": 32.0,
+    "gamma2": 0.026138148285993017
+   },
+   "day": "2021-12-07",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.34972677595628415,
+    "gamma2": 2.6268993763002815
+   },
+   "stretch": "era",
+   "temperature_c": -9.2,
+   "wind_speed_ms": 3.09
+  },
+  {
+   "channels": {
+    "A": 82.0,
+    "gamma2": 0.010058847539951305
+   },
+   "day": "2021-12-19",
+   "hour": "05",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 0.8961748633879781,
+    "gamma2": 1.0109201325159534
+   },
+   "stretch": "era",
+   "temperature_c": -11.2,
+   "wind_speed_ms": 4.9
+  }
+ ],
+ "figure": "fig_kdlo_ocv_series",
+ "geometry_break": {
+  "ascending_days_inside_gap": [],
+  "blind_gap_days": 69,
+  "first_descending_day_of_stretch": "2022-02-26",
+  "last_ascending_day_before": "2021-12-19"
+ },
+ "later_days": [
+  "2022-12-23",
+  "2023-05-04",
+  "2023-05-16",
+  "2023-05-28",
+  "2023-06-09",
+  "2023-06-21",
+  "2023-07-03",
+  "2023-07-15",
+  "2023-07-27",
+  "2023-08-08",
+  "2023-08-20",
+  "2023-09-01",
+  "2023-09-13",
+  "2023-09-25",
+  "2023-10-07",
+  "2023-10-19",
+  "2023-10-31",
+  "2023-11-12",
+  "2023-11-24",
+  "2023-12-06",
+  "2023-12-18",
+  "2023-12-30",
+  "2024-01-11",
+  "2024-01-23",
+  "2024-02-04",
+  "2024-02-16",
+  "2024-02-28",
+  "2024-03-11",
+  "2024-03-23",
+  "2024-04-04",
+  "2024-04-16",
+  "2024-04-28",
+  "2024-05-10",
+  "2024-05-22",
+  "2024-06-03",
+  "2024-06-15",
+  "2024-06-27",
+  "2024-07-09",
+  "2024-07-21",
+  "2024-08-02",
+  "2024-08-14",
+  "2024-08-26",
+  "2024-09-07",
+  "2024-09-19"
+ ],
+ "medians": {
+  "era": {
+   "A": 91.5,
+   "gamma2": 0.009950190145008874
+  },
+  "record": {
+   "A": 120.5,
+   "D": 0.03253511058783955,
+   "F": 73.0,
+   "P": 0.05351307189542484,
+   "S": 93.0971570874728,
+   "gamma2": 0.0036978587433671717
+  },
+  "record_first_month": {
+   "A": 30.5,
+   "D": 0.029877425944841676,
+   "F": 14.5,
+   "P": 0.14408482142857143,
+   "S": 35.86304061389703,
+   "gamma2": 0.016612083973254126
+  }
+ },
+ "n_checks": 84,
+ "normalisation": {
+  "era": "median of the 162 era days (2015-03-20..2021-12-19)",
+  "no_pooling": "the era (ASCENDING, IW2, relative orbit 136, catalogue hour 00) and the record (DESCENDING, IW1, relative orbit 12) are two geometries read off the availability reference; no number of this figure is computed over both, and the 69-day blind gap is never bridged",
+  "record": "median of the 16 record days inside the axis (2022-06-02..2022-12-11)",
+  "rule": "each stretch divided by its own median"
+ },
+ "per_year": {
+  "2015": {
+   "channels": {
+    "A": {
+     "mean": 134.0,
+     "median": 152.5,
+     "n": 6,
+     "p25": 125.5,
+     "p5": 58.0,
+     "p75": 169.0,
+     "p95": 170.75,
+     "std": 51.55967416499061
+    },
+    "gamma2": {
+     "mean": 0.01739428369772118,
+     "median": 0.010548238979428675,
+     "n": 6,
+     "p25": 0.006695967695288581,
+     "p5": 0.0020366282551434745,
+     "p75": 0.022758936348949516,
+     "p95": 0.04429476687910966,
+     "std": 0.01832434563954409
+    }
+   },
+   "first_day": "2015-03-20",
+   "last_day": "2015-09-16",
+   "n": 6
+  },
+  "2016": {
+   "channels": {
+    "A": {
+     "mean": 77.78947368421052,
+     "median": 58.0,
+     "n": 19,
+     "p25": 12.5,
+     "p5": 3.8,
+     "p75": 137.0,
+     "p95": 190.59999999999988,
+     "std": 74.49800813695805
+    },
+    "gamma2": {
+     "mean": 0.04079795074361295,
+     "median": 0.014392439035992292,
+     "n": 19,
+     "p25": 0.004042568085369526,
+     "p5": 0.0010274221995188045,
+     "p75": 0.023837182130583456,
+     "p95": 0.2395366681328194,
+     "std": 0.08473783633918795
+    }
+   },
+   "first_day": "2016-01-26",
+   "last_day": "2016-12-21",
+   "n": 19
+  },
+  "2017": {
+   "channels": {
+    "A": {
+     "mean": 97.46153846153847,
+     "median": 86.5,
+     "n": 26,
+     "p25": 25.0,
+     "p5": 9.25,
+     "p75": 152.0,
+     "p95": 220.5,
+     "std": 74.28067353988156
+    },
+    "gamma2": {
+     "mean": 0.029417178111236824,
+     "median": 0.015796949954375247,
+     "n": 26,
+     "p25": 0.004294823017835124,
+     "p5": 0.00134589468340949,
+     "p75": 0.03429344165072971,
+     "p95": 0.11926451972530368,
+     "std": 0.036891403077483315
+    }
+   },
+   "first_day": "2017-01-02",
+   "last_day": "2017-12-28",
+   "n": 26
+  },
+  "2018": {
+   "channels": {
+    "A": {
+     "mean": 144.75,
+     "median": 161.5,
+     "n": 28,
+     "p25": 91.75,
+     "p5": 19.4,
+     "p75": 197.5,
+     "p95": 233.45,
+     "std": 68.82378195771402
+    },
+    "gamma2": {
+     "mean": 0.0301765935428074,
+     "median": 0.005835913448009605,
+     "n": 28,
+     "p25": 0.0034007224979443226,
+     "p5": 0.0010229706385726065,
+     "p75": 0.011701907480656705,
+     "p95": 0.058302554361694646,
+     "std": 0.10681664934143582
+    }
+   },
+   "first_day": "2018-01-09",
+   "last_day": "2018-12-23",
+   "n": 28
+  },
+  "2019": {
+   "channels": {
+    "A": {
+     "mean": 139.20689655172413,
+     "median": 131.0,
+     "n": 29,
+     "p25": 48.0,
+     "p5": 20.200000000000003,
+     "p75": 224.0,
+     "p95": 286.59999999999997,
+     "std": 96.46330883159108
+    },
+    "gamma2": {
+     "mean": 0.011597887684683745,
+     "median": 0.006205625871112506,
+     "n": 29,
+     "p25": 0.0016807946566198939,
+     "p5": 0.00023687701931831456,
+     "p75": 0.014768472426737737,
+     "p95": 0.04044146112236874,
+     "std": 0.01617207139633129
+    }
+   },
+   "first_day": "2019-01-04",
+   "last_day": "2019-12-30",
+   "n": 29
+  },
+  "2020": {
+   "channels": {
+    "A": {
+     "mean": 87.61538461538461,
+     "median": 60.5,
+     "n": 26,
+     "p25": 47.25,
+     "p5": 8.75,
+     "p75": 144.25,
+     "p95": 215.5,
+     "std": 68.17980752280073
+    },
+    "gamma2": {
+     "mean": 0.03798275795817634,
+     "median": 0.021602642907589432,
+     "n": 26,
+     "p25": 0.005249875813968479,
+     "p5": 0.000988901264430482,
+     "p75": 0.0349713965334387,
+     "p95": 0.12116870358541396,
+     "std": 0.07292813409375955
+    }
+   },
+   "first_day": "2020-01-11",
+   "last_day": "2020-12-24",
+   "n": 26
+  },
+  "2021": {
+   "channels": {
+    "A": {
+     "mean": 98.39285714285714,
+     "median": 61.0,
+     "n": 28,
+     "p25": 38.0,
+     "p5": 7.35,
+     "p75": 149.25,
+     "p95": 249.45,
+     "std": 79.97052201614287
+    },
+    "gamma2": {
+     "mean": 0.04567261951145487,
+     "median": 0.015308208006393724,
+     "n": 28,
+     "p25": 0.004007832642584302,
+     "p5": 0.0002682113504709154,
+     "p75": 0.029468739459506683,
+     "p95": 0.2225539841440401,
+     "std": 0.09449979673465972
+    }
+   },
+   "first_day": "2021-01-05",
+   "last_day": "2021-12-19",
+   "n": 28
+  }
+ },
+ "record_rows": [
+  {
+   "channels": {
+    "A": 5.0,
+    "D": 0.045454545454545456,
+    "F": 2.0,
+    "P": 0.23125,
+    "S": 4.951767361255983,
+    "gamma2": 0.02936431747713154
+   },
+   "day": "2022-06-02",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.04149377593360996,
+    "D": 1.3970920840064618,
+    "F": 0.0273972602739726,
+    "P": 4.321374045801527,
+    "S": 0.0531892435405237,
+    "gamma2": 7.940897561271682
+   },
+   "stretch": "pre",
+   "temperature_c": 17.6,
+   "wind_speed_ms": 5.22
+  },
+  {
+   "channels": {
+    "A": 56.0,
+    "D": 0.014300306435137897,
+    "F": 27.0,
+    "P": 0.056919642857142856,
+    "S": 66.77431386653807,
+    "gamma2": 0.0038598504693767126
+   },
+   "day": "2022-06-14",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.46473029045643155,
+    "D": 0.43953458822675207,
+    "F": 0.3698630136986301,
+    "P": 1.0636586695747,
+    "S": 0.7172540596894688,
+    "gamma2": 1.0438068994117486
+   },
+   "stretch": "pre",
+   "temperature_c": 23.1,
+   "wind_speed_ms": 3.35
+  },
+  {
+   "channels": {
+    "A": 176.0,
+    "D": 0.04020100502512563,
+    "F": 108.0,
+    "P": 0.04918323863636364,
+    "S": 105.5286838050687,
+    "gamma2": 0.0006528571049538485
+   },
+   "day": "2022-07-08",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.4605809128630705,
+    "D": 1.2356191295735541,
+    "F": 1.4794520547945205,
+    "P": 0.9190883067314365,
+    "S": 1.1335328285687114,
+    "gamma2": 0.17655003889071605
+   },
+   "stretch": "pre",
+   "temperature_c": 24.6,
+   "wind_speed_ms": 3.32
+  },
+  {
+   "channels": {
+    "A": 196.0,
+    "D": 0.044657097288676235,
+    "F": 94.0,
+    "P": 0.04974489795918367,
+    "S": 17.453911613510723,
+    "gamma2": 0.0011888680383232704
+   },
+   "day": "2022-07-20",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.6265560165975104,
+    "D": 1.372581696567752,
+    "F": 1.2876712328767124,
+    "P": 0.9295840473594017,
+    "S": 0.18748060799656074,
+    "gamma2": 0.321501744882964
+   },
+   "stretch": "pre",
+   "temperature_c": 24.8,
+   "wind_speed_ms": 5.73
+  },
+  {
+   "channels": {
+    "A": 180.0,
+    "D": 0.04153207198892478,
+    "F": 114.0,
+    "P": 0.040190972222222225,
+    "S": 168.1004165100854,
+    "gamma2": 0.004080921070010203
+   },
+   "day": "2022-08-01",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.4937759336099585,
+    "D": 1.276530838178493,
+    "F": 1.5616438356164384,
+    "P": 0.7510496183206107,
+    "S": 1.8056450032318452,
+    "gamma2": 1.1035903081290295
+   },
+   "stretch": "pre",
+   "temperature_c": 21.7,
+   "wind_speed_ms": 1.14
+  },
+  {
+   "channels": {
+    "A": 236.0,
+    "D": 0.05529522024367385,
+    "F": 112.0,
+    "P": 0.0413135593220339,
+    "S": 179.5830779638761,
+    "gamma2": 0.0008671183370591147
+   },
+   "day": "2022-08-13",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.95850622406639,
+    "D": 1.6995553186882733,
+    "F": 1.5342465753424657,
+    "P": 0.7720274291628929,
+    "S": 1.9289856272962485,
+    "gamma2": 0.23449201206359221
+   },
+   "stretch": "pre",
+   "temperature_c": 22.7,
+   "wind_speed_ms": 4.16
+  },
+  {
+   "channels": {
+    "A": 212.0,
+    "D": 0.04818181818181818,
+    "F": 105.0,
+    "P": 0.03876768867924528,
+    "S": 3.0448505982296283,
+    "gamma2": 0.003327897464276924
+   },
+   "day": "2022-08-25",
+   "pass_label": "morning",
+   "ratio": {
+    "A": 1.7593360995850622,
+    "D": 1.4809176090468494,
+    "F": 1.4383561643835616,
+    "P": 0.7244526861587209,
+    "S": 0.03270616089134418,
+    "gamma2": 0.899952565858865
+   },
+   "stretch": "pre",
+   "temperature_c": 18.4,
+   "wind_speed_ms": 3.49
+  },
+  {
+   "channels": {
+    "A": 122.0,
+    "D": 0.029497098646034815,
+    "F": 74.0,
+    "P": 0.0390625,
+    "S": 115.53944147758561,
+    "gamma2": 0.003535867017357631
+   },
+   "day": "2022-09-06",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.012448132780083,
+    "D": 0.9066235864297252,
+    "F": 1.0136986301369864,
+    "P": 0.7299618320610687,
+    "S": 1.241063047382063,
+    "gamma2": 0.9561931005882514
+   },
+   "stretch": "pre",
+   "temperature_c": 24.1,
+   "wind_speed_ms": 0.41
+  },
+  {
+   "channels": {
+    "A": 237.0,
+    "D": 0.054962894248608535,
+    "F": 115.0,
+    "P": 0.0401503164556962,
+    "S": 146.27902298204583,
+    "gamma2": 0.009326808644587284
+   },
+   "day": "2022-09-18",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.966804979253112,
+    "D": 1.689340938313936,
+    "F": 1.5753424657534247,
+    "P": 0.7502898830804908,
+    "S": 1.5712512342842446,
+    "gamma2": 2.5222187465426384
+   },
+   "stretch": "pre",
+   "temperature_c": 17.9,
+   "wind_speed_ms": 2.92
+  },
+  {
+   "channels": {
+    "A": 153.0,
+    "D": 0.03557312252964427,
+    "F": 72.0,
+    "P": 0.051879084967320264,
+    "S": 137.60314489837873,
+    "gamma2": 0.0011258961238700064
+   },
+   "day": "2022-09-30",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 1.2697095435684647,
+    "D": 1.0933764135702746,
+    "F": 0.9863013698630136,
+    "P": 0.9694656488549618,
+    "S": 1.4780595799406497,
+    "gamma2": 0.30447245338657675
+   },
+   "stretch": "pre",
+   "temperature_c": 18.5,
+   "wind_speed_ms": 6.96
+  },
+  {
+   "channels": {
+    "A": 97.0,
+    "D": 0.022904368358913813,
+    "F": 52.0,
+    "P": 0.05605670103092784,
+    "S": 143.08833366027335,
+    "gamma2": 0.004979592447859195
+   },
+   "day": "2022-10-12",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.8049792531120332,
+    "D": 0.7039892579149444,
+    "F": 0.7123287671232876,
+    "P": 1.0475328559061934,
+    "S": 1.53697855162032,
+    "gamma2": 1.3466151071322185
+   },
+   "stretch": "pre",
+   "temperature_c": 7.4,
+   "wind_speed_ms": 7.22
+  },
+  {
+   "channels": {
+    "A": 77.0,
+    "D": 0.018469656992084433,
+    "F": 45.0,
+    "P": 0.06757305194805195,
+    "S": 25.16938736602815,
+    "gamma2": 0.0009811181659263337
+   },
+   "day": "2022-10-24",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.6390041493775933,
+    "D": 0.5676838547150267,
+    "F": 0.6164383561643836,
+    "P": 1.2627391692277188,
+    "S": 0.2703561328127275,
+    "gamma2": 0.26532061769156534
+   },
+   "stretch": "pre",
+   "temperature_c": 6.8,
+   "wind_speed_ms": 10.29
+  },
+  {
+   "channels": {
+    "A": 55.0,
+    "D": 0.013297872340425532,
+    "F": 39.0,
+    "P": 0.07528409090909091,
+    "S": 53.53221321073574,
+    "gamma2": 0.017527372121074074
+   },
+   "day": "2022-11-05",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.45643153526970953,
+    "D": 0.40872374798061384,
+    "F": 0.5342465753424658,
+    "P": 1.4068355308813323,
+    "S": 0.575014478266373,
+    "gamma2": 4.739870648794474
+   },
+   "stretch": "pre",
+   "temperature_c": 1.3,
+   "wind_speed_ms": 3.0
+  },
+  {
+   "channels": {
+    "A": 20.0,
+    "D": 0.004734848484848485,
+    "F": 14.0,
+    "P": 0.10078125,
+    "S": 101.74423816609959,
+    "gamma2": 0.006837209388926593
+   },
+   "day": "2022-11-17",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.16597510373443983,
+    "D": 0.1455304254173398,
+    "F": 0.1917808219178082,
+    "P": 1.8833015267175572,
+    "S": 1.092882332276829,
+    "gamma2": 1.848964458469501
+   },
+   "stretch": "pre",
+   "temperature_c": -6.9,
+   "wind_speed_ms": 8.66
+  },
+  {
+   "channels": {
+    "A": 119.0,
+    "D": 0.02802637776731041,
+    "F": 77.0,
+    "P": 0.05514705882352941,
+    "S": 84.450076008846,
+    "gamma2": 0.00047299709250516505
+   },
+   "day": "2022-11-29",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.9875518672199171,
+    "D": 0.8614194714858496,
+    "F": 1.0547945205479452,
+    "P": 1.030534351145038,
+    "S": 0.9071176677231709,
+    "gamma2": 0.12791107647191155
+   },
+   "stretch": "pre",
+   "temperature_c": -7.3,
+   "wind_speed_ms": 7.58
+  },
+  {
+   "channels": {
+    "A": 60.0,
+    "D": 0.013774104683195593,
+    "F": 42.0,
+    "P": 0.05546875,
+    "S": 46.804759966861866,
+    "gamma2": 0.019928279168188158
+   },
+   "day": "2022-12-11",
+   "pass_label": "afternoon",
+   "ratio": {
+    "A": 0.4979253112033195,
+    "D": 0.4233612375777157,
+    "F": 0.5753424657534246,
+    "P": 1.0365458015267175,
+    "S": 0.502751764190659,
+    "gamma2": 5.38914018928749
+   },
+   "stretch": "pre",
+   "temperature_c": -3.2,
+   "wind_speed_ms": 5.6
+  }
+ ],
+ "role": "companion \u2014 the A-E record (60 descending acquisitions, 2022-06-02..2023-05-\u2026, released 2025-11-24) drawn inside the seven and a half years of catalogue coverage that precede it",
+ "script": "code/kdlo/fig_kdlo_ocv_series.py",
+ "segments": [
+  {
+   "dims": [
+    "gamma2",
+    "A"
+   ],
+   "end": "2021-12-19",
+   "filled_days": 162,
+   "geometry": "ASCENDING|136 \u00b7 IW2 \u00b7 catalogue hour 00",
+   "key": "era",
+   "label": "the ascending IW2 era",
+   "note": "162 measured days, gamma2 and the mask size only (the four mask-geometry dimensions are not recomputable: no full-dwell strips in data/kdlo/strips/ for this geometry)",
+   "span_days": 2467,
+   "start": "2015-03-20"
+  },
+  {
+   "catalogue_gap_days": 69,
+   "dims": [],
+   "end": "2022-02-25",
+   "filled_days": 0,
+   "geometry": "\u2014",
+   "key": "blind_gap",
+   "label": "the blind gap",
+   "note": "no scene of either track; the reference's 69-day blind gap counts through 2022-02-26, the first descending day, so the empty stretch drawn here is the day before it",
+   "span_days": 68,
+   "start": "2021-12-20"
+  },
+  {
+   "dims": [],
+   "end": "2022-06-01",
+   "filled_days": 0,
+   "geometry": "DESCENDING|12 \u00b7 IW1 (catalogue)",
+   "key": "catalogue_only",
+   "label": "in the catalogue, not in the record",
+   "note": "the first descending stretch of the track that carries the collapse; the record's committed rows start 2022-06-02",
+   "span_days": 96,
+   "start": "2022-02-26"
+  },
+  {
+   "dims": [
+    "gamma2",
+    "P",
+    "D",
+    "A",
+    "F",
+    "S"
+   ],
+   "end": "2022-12-11",
+   "filled_days": 16,
+   "geometry": "DESCENDING|12 \u00b7 IW1 \u00b7 one per day",
+   "key": "record",
+   "label": "the record's pre-collapse stretch",
+   "note": "all six dimensions, one acquisition per day, cut at the collapse 2022-12-11",
+   "span_days": 193,
+   "start": "2022-06-02"
+  }
+ ],
+ "singleton": {
+  "channels": {
+   "A": 63.0,
+   "D": 0.01812428078250863,
+   "F": 23.0,
+   "P": 0.05555555555555555,
+   "S": 36.68683565401714,
+   "gamma2": 0.0013393056912106268
+  },
+  "day": "2022-12-23",
+  "ratio": {
+   "A": 0.5228215767634855,
+   "D": 0.5570683626101715,
+   "F": 0.3150684931506849,
+   "P": 1.0381679389312977,
+   "S": 0.3940704184935174,
+   "gamma2": 0.3621841136070792
+  },
+  "temperature_c": -24.6,
+  "wind_speed_ms": 13.72
+ },
+ "site": "KDLO media tower (Garden City SD)",
+ "sources": {
+  "availability_reference": {
+   "path": "data/kdlo/reference/kdlo_s1_availability.json",
+   "sha256": "8d56dd42b79d7efc5d373bace9905e24c876a2b5764b36e3d82d89d8fcc483d9"
+  },
+  "channel_table": {
+   "path": "data/kdlo/kdlo_ocv_channels.csv",
+   "sha256": "21dfe5b649c535ad0ca10b5414c55e08a445462b8d8755d39813c8a045415d78"
+  },
+  "era_export": {
+   "path": "data/kdlo/fig_kdlo_0_raw.json",
+   "pinned_by": "availability.pipeline.figure_0_raw_export.sha256",
+   "rows": 162,
+   "sha256": "76ab24669cce671db53a574498e23dff526b3c7e95ee2789d39d589e4af51f7b"
+  }
+ },
+ "stats": {
+  "era": {
+   "A": {
+    "mean": 110.73456790123457,
+    "median": 91.5,
+    "n": 162,
+    "p25": 40.25,
+    "p5": 8.0,
+    "p75": 169.5,
+    "p95": 252.39999999999986,
+    "std": 80.02218583748913
+   },
+   "gamma2": {
+    "mean": 0.03143235686725239,
+    "median": 0.009950190145008874,
+    "n": 162,
+    "p25": 0.003442718975715818,
+    "p5": 0.0005230608970807648,
+    "p75": 0.025462573990876296,
+    "p95": 0.1239032503531525,
+    "std": 0.07374706808506794
+   }
+  },
+  "record": {
+   "A": {
+    "mean": 125.0625,
+    "median": 120.5,
+    "n": 16,
+    "p25": 59.0,
+    "p5": 16.25,
+    "p75": 184.0,
+    "p95": 236.25,
+    "std": 75.86344640207166
+   },
+   "D": {
+    "mean": 0.031928900541810495,
+    "median": 0.03253511058783955,
+    "n": 16,
+    "p25": 0.0174273193528478,
+    "p5": 0.01115711637653127,
+    "p75": 0.04485645933014354,
+    "p95": 0.05504597574737487,
+    "std": 0.016063039375830007
+   },
+   "F": {
+    "mean": 68.25,
+    "median": 73.0,
+    "n": 16,
+    "p25": 41.25,
+    "p5": 11.0,
+    "p75": 105.75,
+    "p95": 114.25,
+    "std": 37.67669483027052
+   },
+   "P": {
+    "mean": 0.06554830023817551,
+    "median": 0.05351307189542484,
+    "n": 16,
+    "p25": 0.04103291254708098,
+    "p5": 0.03898879716981132,
+    "p75": 0.05958299512987013,
+    "p95": 0.13339843750000002,
+    "std": 0.04702489407700163
+   },
+   "S": {
+    "mean": 87.4779774659637,
+    "median": 93.0971570874728,
+    "n": 16,
+    "p25": 41.39591681665344,
+    "p5": 4.475038170499394,
+    "p75": 138.97444208885238,
+    "p95": 170.97108187353308,
+    "std": 58.49924678901812
+   },
+   "gamma2": {
+    "mean": 0.006753560633214128,
+    "median": 0.0036978587433671717,
+    "n": 16,
+    "p25": 0.0010897016343840882,
+    "p5": 0.0006078921018416776,
+    "p75": 0.007459609202841765,
+    "p95": 0.022287288745424003,
+    "std": 0.00838867157758696
+   }
+  }
+ },
+ "title": "KDLO OCV-Paper: the echo-mask vector from the first IW2 scene to the collapse"
+}

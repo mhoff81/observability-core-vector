@@ -21,7 +21,7 @@ read off".
 | --- | --- | --- | --- | --- |
 | LUMO lattice tower (Hannover) | `code/lumo/`, `data/lumo/`, `figures/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | [`figures/lumo/fig_lumo_ocv_paper.md`](figures/lumo/fig_lumo_ocv_paper.md) |
 | Bautzen OpenLabs bridge | `code/bautzen/`, `data/bautzen/`, `figures/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | [`figures/bautzen/fig_bautzen_ocv_paper.md`](figures/bautzen/fig_bautzen_ocv_paper.md), [`…fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md) |
-| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md), [`…fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md) |
+| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md), [`…fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md), [`…fig_kdlo_ocv_series.md`](figures/kdlo/fig_kdlo_ocv_series.md) |
 | Carolabrücke (Dresden) | `code/carola/`, `data/carola/`, `figures/carola/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-girder deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/carola/fig_carola_ocv_paper.md`](figures/carola/fig_carola_ocv_paper.md), [`…fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md) |
 | Ponte Morandi / Polcevera (Genova) | `code/morandi/`, `data/morandi/`, `figures/morandi/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/morandi/fig_morandi_ocv_paper.md`](figures/morandi/fig_morandi_ocv_paper.md), [`…fig_morandi_ocv_months.md`](figures/morandi/fig_morandi_ocv_months.md) |
 | Champlain Towers South (Surfside) | `code/cts/`, `data/cts/`, `figures/cts/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-cache (`0.30 x peak`, `5 x np.median`) — plus a first-class **difference-in-differences** layer (target vs. two control towers) | [`figures/cts/fig_cts_ocv_paper.md`](figures/cts/fig_cts_ocv_paper.md), [`…fig_cts_ocv_months.md`](figures/cts/fig_cts_ocv_months.md); DiD: [`data/cts/reference/cts_reference_did_ctn.md`](data/cts/reference/cts_reference_did_ctn.md), [`…did_placebo_ctn_vs_cte.md`](data/cts/reference/cts_reference_did_placebo_ctn_vs_cte.md) |
@@ -158,9 +158,10 @@ spends its length on why that is *not* automatically damage:
   ~00:2x UTC) is a *different* geometry and is **not** in this record: with no
   full-dwell strips for it, `P`/`D`/`F`/`S` cannot be recomputed, so it is kept as
   catalogue facts plus a committed, sha-pinned export of its decoded rows
-  (`data/kdlo/fig_kdlo_0_raw.json`, evidence — never pooled into the 60 rows), and
-  the 69-day blind gap into the descending track (2021-12-19 → 2022-02-26) is
-  drawn, never interpolated;
+  (`data/kdlo/fig_kdlo_0_raw.json`, evidence — never pooled into the 60 rows and
+  read only by the era-to-collapse series companion, which re-verifies its pinned
+  sha256), and the 69-day blind gap into the descending track (2021-12-19 →
+  2022-02-26) is drawn, never interpolated;
 * with the echo-mask dimensions in the model the per-acquisition classifier does
   clear the label permutation (p = 0.023), but the 1D `gamma2` baseline alone
   scores *higher* (0.686 vs. 0.643), so the mask dimensions move the permutation
@@ -186,6 +187,32 @@ mixed collapse bucket 2, and **1** of six dimensions clears the bootstrap CI
 against the last month before the collapse — the record is read as its own
 co-variation, never as damage. The companion adds no number to the A–E pin
 contract.
+
+## What the KDLO era-to-collapse figure shows
+
+A second companion,
+[`figures/kdlo/fig_kdlo_ocv_series.md`](figures/kdlo/fig_kdlo_ocv_series.md),
+puts the record back into the seven years that precede it: one dated axis,
+`2015-03-20 … 2022-12-11`, read in **four stretches** (all four taken from the
+committed availability reference, not typed). The ascending IW2 era
+(`2015-03-20 … 2021-12-19`, 162 acquisition days, relative orbit 136, catalogue
+hour 00) is the only stretch whose geometry differs from the record's
+(`2022-06-02 … 2022-12-11`, descending IW1, relative orbit 12); between
+them sit the 69-day blind gap and a stretch that exists in the CDSE catalogue but
+has no committed row here. The figure is 3 x 2: `gamma2` and the echo-mask size `A`
+— the only two dimensions whose columns exist on both sides — are drawn as the era's
+dots and per-year medians beside the record's dots and line, each **divided by its
+own stretch median** (log y); `P`, `D`, `F` and `S`, which are recomputed from the
+committed full-dwell strips of the record only, are drawn over the record alone and
+the era region is hatched **not measurable here**, with the reason written inside it
+rather than interpolated. Because the two stretches are imaged on different tracks,
+swaths and times of day, their levels are not comparable by construction — what each
+stretch *does* is — and the report states that no statistic of this figure is
+computed across the break. The era export is read **only** here (sha-verified against
+the availability reference before a single value is used) and enters no row of the
+channel table; the singleton `2022-12-23` is drawn hollow at the right edge, outside
+the axis; and 84 self-checks recompute every drawn number from the three committed
+inputs, aborting before any write.
 
 ## What the Carola figure shows
 
@@ -501,7 +528,8 @@ observability-core-vector/
 │   ├── bautzen/   the four rect files, the generated channel table, the two
 │   │              committed reference JSONs and the hourly weather series
 │   ├── kdlo/      the two committed raw API dumps of the record plus the
-│   │              2015-2021 era export (committed evidence, never read as rows),
+│   │              2015-2021 era export (committed evidence, read only by the
+│   │              era-to-collapse series figure, never a row of the table),
 │   │              the vendored nine-column DB extraction, the generated channel
 │   │              table, the four committed reference JSONs and the committed
 │   │              strip cache (64 full-dwell SLC strips + manifest)
@@ -565,6 +593,7 @@ bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh        # ~2 s (amplitude/phase
 bash figures/kdlo/fig_kdlo_ocv_paper.sh                  # ~1 min
 bash figures/kdlo/fig_kdlo_ocv_paper.sh --quick          # ~35 s (no permutation null)
 bash figures/kdlo/fig_kdlo_ocv_months.sh                 # ~11 s (calendar-month companion)
+bash figures/kdlo/fig_kdlo_ocv_series.sh                 # <1 s (2015-03-20..2022-12-11 series)
 
 # Carola: the same for the collapsed bridge (per-girder chip export, echo mask and
 # deck mask recomputed from a committed window-payload cache)
@@ -613,7 +642,8 @@ PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
 
 # rebuild the channel tables (LUMO needs the local burst cache, Bautzen only
 # the committed rect files, KDLO the two committed raw record files — the era
-# export is committed evidence and is not read — plus the committed strip cache,
+# export is committed evidence and is not read by the generator (only by the
+# era-to-collapse series figure) — plus the committed strip cache,
 # Carola the committed mask cache of the chip export)
 python3 code/lumo/lumo_ocv_channels_csv.py
 python3 code/bautzen/bautzen_ocv_channels_csv.py

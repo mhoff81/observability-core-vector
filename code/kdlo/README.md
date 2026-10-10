@@ -1,6 +1,6 @@
 # `code/kdlo/` — KDLO site package: analysis and plotting scripts
 
-Seven Python modules, no package, no dependencies beyond the standard library plus
+Eight Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values of the control
 tests; without it the scripts still run, just with fewer p-values). This is the
 KDLO half of the repository; the LUMO tower site lives in `../lumo/` and Bautzen
@@ -101,10 +101,14 @@ The **2015-2021 ascending IW2 era** (`part0`: 162 acquisition days, rel. orbit 1
 recomputed from full-dwell strips and `data/kdlo/strips/` holds only the 60
 acquisitions of parts 1/2, so an era row would carry no `P`/`D`/`F`/`S`. Its
 decoded rows are exported instead (`kdlo_export_raw.py --part 0` in the KDLO
-project) to `data/kdlo/fig_kdlo_0_raw.json` — a file this package deliberately
-never reads: it is committed *evidence*, and the availability reference pins its
-sha256. The era is therefore present as catalogue facts (`figure_0`, the 162 days,
-the 69-day blind gap) and as backend accounting — never as pooled rows.
+project) to `data/kdlo/fig_kdlo_0_raw.json` — committed *evidence*, whose sha256
+the availability reference pins. The **generator never reads it** (an era row
+cannot enter the table: it would carry no `P`/`D`/`F`/`S`), and the era-to-collapse
+series companion `fig_kdlo_ocv_series.py` is its only reader: it re-verifies that
+sha256 before using a single value and draws only the two era columns that exist
+(`gamma2`, `A`). The era is therefore present as catalogue facts (`figure_0`, the
+162 days, the 69-day blind gap), as backend accounting and as the series figure's
+era stretch — never as pooled rows.
 
 ```bash
 python3 code/kdlo/kdlo_ocv_channels_csv.py                 # build + verify
@@ -128,8 +132,8 @@ reproducible from the record.
 
 The main script. `compute()` recalculates every number of the five figures from
 `data/kdlo/kdlo_ocv_channels.csv`; `pin_all()` then compares each number with the
-four committed reference JSONs in `data/kdlo/reference/`, row by row (2985 checks
-in a full run, 2975 in `--quick`; 128 + 67 of them are the structural mirrors of
+four committed reference JSONs in `data/kdlo/reference/`, row by row (3045 checks
+in a full run, 3035 in `--quick`; 188 + 67 of them are the structural mirrors of
 the two pin-only files), verifies the echo-mask layer (the `strip_cache` block of
 the metadata, every committed strip's sha256 through the manifest sha256, and per
 row `A == coherence_masked_pixels`, `abs(gamma2_mask - coherence_gamma2) <= 1e-12`,
@@ -204,6 +208,55 @@ three per month), the collapse month 2, so every interval is very wide and the
 month axis is read as the record's own co-variation over two disjoint windows —
 the reconstruction, the season, the acquisition geometry and the pre/post mix move
 with the collapse date as well — **never** as damage.
+
+### `fig_kdlo_ocv_series.py` — the acquisition series, from the first scene to the collapse
+
+The **second standalone companion**, and the only script of the package that reads
+more than the record's own stretch. It puts the record back into the seven years
+that precede it and draws the echo-mask vector on **one dated axis**,
+`2015-03-20 … 2022-12-11` (the collapse cut). Its three committed inputs are the
+era export `data/kdlo/fig_kdlo_0_raw.json` (committed evidence; its sha256 is
+re-verified against the availability reference before a single value is used), the
+record's `kdlo_ocv_channels.csv` and
+`reference/kdlo_s1_availability.json`, from which the four stretches of the axis
+are **read, not typed**: the ascending IW2 era (162 days), the blind gap, the
+catalogue-only descending stretch and the record's 16 pre-collapse days.
+
+Only **two** dimensions exist on both sides of the break: `gamma2` and the mask
+size `A` — the same columns by name (`coherence_gamma2`, `coherence_masked_pixels`).
+`P`, `D`, `F` and `S` are recomputed from the committed full-dwell strips, which
+exist for the record only, so panels (c)-(f) draw the era as a hatched **not
+measurable here** region with the reason written inside it — never interpolated,
+never extrapolated, never pooled. Each stretch is drawn in units of **its own**
+median (1.0 drawn, log where a dimension spans decades), because the two stretches
+sit on different tracks, swaths and times of day: what each stretch *does* is the
+comparable quantity, not the level it sits at. No statistic is computed across the
+break.
+
+The figure is 3 x 2 (183 mm wide): (a) `gamma2` and (b) `A`, era dots (blue) vs.
+record dots + line (orange) on a log y axis, with the era's per-year medians as
+bars; (c)-(f) `P`, `D`, `F`, `S`, record only. Every panel carries the blind gap,
+the catalogue-only stretch, the collapse cut and the first collapsed acquisition
+(`2022-12-23`) drawn hollow and labelled as outside the axis. `main()` writes the
+PNG to `figures/kdlo/fig_kdlo_ocv_series.png`, the JSON to
+`data/kdlo/fig_kdlo_ocv_series.json` and the report to
+`figures/kdlo/fig_kdlo_ocv_series.md`:
+
+```bash
+python3 code/kdlo/fig_kdlo_ocv_series.py            # <1 s
+bash figures/kdlo/fig_kdlo_ocv_series.sh            # the same, via the wrapper
+python3 code/kdlo/fig_kdlo_ocv_series.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
+```
+
+The era's own clock is **re-derived rather than asserted**: the reference's
+per-year table labels the hour block `00`, the export times its rows on the
+pipeline's `05:00Z` `morning` slot, and the one metadata-anomaly day (`2020-08-13`)
+sits on the `afternoon` slot at `16:00Z` because its catalogue burst name carries
+the wrong hour. All of that is self-checked and none of it enters a drawn value.
+The figure carries **84 self-checks** that recompute every drawn number from the
+three committed inputs and abort before any file is written on drift. Like the
+months companion it adds **no** number to the A–E pin contract and touches none of
+it, and it is byte-deterministic (no timestamps, fixed inputs).
 
 
 The module and site names keep their `kdlo_` prefix although the folder already

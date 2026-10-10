@@ -6,8 +6,10 @@ figures/
 ├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
 │              and the companion fig_bautzen_ocv_amp_phase.sh|.md|.png
 ├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].png
-│              and the companion fig_kdlo_ocv_months.sh|.md|.png (calendar months
+│              and the companions fig_kdlo_ocv_months.sh|.md|.png (calendar months
 │              over the whole record, two disjoint epochs, no 24-month pre stretch)
+│              and fig_kdlo_ocv_series.sh|.md|.png (one dated axis from the first
+│              ascending IW2 scene 2015-03-20 to the collapse cut 2022-12-11)
 ├── carola/    Carolabrücke, Dresden — fig_carola_ocv_paper.sh|.md|[A-E].png
 │              and the companion fig_carola_ocv_months.sh|.md|.png
 ├── morandi/   Ponte Morandi, Genova — fig_morandi_ocv_paper.sh|.md|[A-E].png
@@ -60,6 +62,7 @@ bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min, permutation tests c
 bash figures/bautzen/fig_bautzen_ocv_paper.sh      # ~6 min, deck-edge mask
 bash figures/kdlo/fig_kdlo_ocv_paper.sh            # ~1 min, epoch contrast
 bash figures/kdlo/fig_kdlo_ocv_months.sh           # ~11 s, calendar-month companion
+bash figures/kdlo/fig_kdlo_ocv_series.sh           # <1 s, era-to-collapse series
 bash figures/carola/fig_carola_ocv_paper.sh        # ~21 min, bridge collapse
 bash figures/carola/fig_carola_ocv_paper.sh --quick # ~6 min, no permutation null
 bash figures/carola/fig_carola_ocv_months.sh       # ~36 s, 24-month companion
@@ -184,7 +187,7 @@ with 2022-12-23 belonging to neither), so the report and the figures carry the
 month-matched control and the weather competitor everywhere, state the
 non-significance of the per-acquisition classifier, and separate the four
 reference files into two that are recomputed exactly and two that are only pinned
-structurally. 2884 checks in a full run, 2875 in `--quick`; exit code != 0 on any
+structurally. 3045 checks in a full run, 3035 in `--quick`; exit code != 0 on any
 failure.
 
 ## `kdlo/fig_kdlo_ocv_months.sh` → `../code/kdlo/fig_kdlo_ocv_months.py`
@@ -226,6 +229,50 @@ damage.
 ```bash
 bash figures/kdlo/fig_kdlo_ocv_months.sh            # ~11 s
 PYTHON=/usr/bin/python3 bash figures/kdlo/fig_kdlo_ocv_months.sh
+```
+
+## `kdlo/fig_kdlo_ocv_series.sh` → `../code/kdlo/fig_kdlo_ocv_series.py`
+
+The **era-to-collapse companion**: the same echo-mask vector on **one dated axis**,
+from the first ascending IW2 scene over the tower (`2015-03-20`) to the collapse
+cut (`2022-12-11`), plus the English report
+[`kdlo/fig_kdlo_ocv_series.md`](kdlo/fig_kdlo_ocv_series.md) and
+[`../data/kdlo/fig_kdlo_ocv_series.json`](../data/kdlo/fig_kdlo_ocv_series.json).
+The axis has four stretches, and all four are read from the committed availability
+reference rather than typed:
+
+| stretch | range | days | dimensions that exist here |
+| --- | --- | --- | --- |
+| ascending IW2 era | 2015-03-20 … 2021-12-19 | 162 | gamma^2, A |
+| blind gap | 2021-12-20 … 2022-02-25 | 0 | – |
+| in the catalogue, not in the record | 2022-02-26 … 2022-06-01 | 0 | – |
+| the record's pre-collapse stretch | 2022-06-02 … 2022-12-11 | 16 | the 6D vector |
+
+| file | panel content |
+| --- | --- |
+| `kdlo/fig_kdlo_ocv_series.png` | 3 x 2, 183 mm wide: (a) `gamma^2` and (b) the echo-mask size `A` on a log y axis — era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn; (c)-(f) `P`, `D`, `F`, `S` — record only, the era hatched *not measurable here* with the reason written inside the region |
+
+Only `gamma^2` and `A` exist on both sides of the break (the era's backend rows
+carry `coherence_gamma2` / `coherence_masked_pixels` — the same columns by name);
+`P`, `D`, `F` and `S` are recomputed from the committed full-dwell strips, which
+exist for the record only, so the era region of those four panels is hatched rather
+than interpolated. This is also the **only** reader of the committed era export
+`../data/kdlo/fig_kdlo_0_raw.json`: it re-verifies the sha256 the availability
+reference pins for it before using a value, and the era enters no row of the
+channel table. Both the era's clock and the geometry break are self-checked (the
+reference labels the era's hour block `00`, the export times its rows on the
+pipeline's `05:00Z` slot, and the one anomaly day `2020-08-13` sits on the
+`afternoon` slot at `16:00Z` — the catalogue burst name carries the wrong hour);
+none of it enters a drawn value. The figure carries **84 self-checks** that
+recompute every drawn number from the three committed inputs and abort before any
+file is written, adds **no** number to the A–E pin contract, touches none of it and
+never reads `../data/kdlo/reference/` beyond that one availability file. It is
+byte-deterministic across runs.
+
+```bash
+bash figures/kdlo/fig_kdlo_ocv_series.sh            # <1 s
+PYTHON=/usr/bin/python3 bash figures/kdlo/fig_kdlo_ocv_series.sh
+python3 code/kdlo/fig_kdlo_ocv_series.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
 ```
 
 ## `carola/fig_carola_ocv_paper.sh` → `../code/carola/fig_carola_ocv_paper.py`
