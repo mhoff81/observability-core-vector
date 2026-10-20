@@ -2,7 +2,8 @@
 
 The bridge counterpart of [`../lumo/`](../lumo/README.md): same file names
 (`…_stats.py`, `…_masks.py`, `…_core.py`, `…_channels_csv.py`,
-`fig_…_ocv_paper.py`, plus the companion `fig_…_ocv_amp_phase.py`), same
+`fig_…_ocv_paper.py`, plus the companions `fig_…_ocv_amp_phase.py` and
+`fig_…_ocv_orbits.py`), same
 JSON/Markdown/CSV shape, same determinism rules —
 **only the mask layer is swapped**. The site is the bridge of the Bautzen
 OpenLabs test field; the intervention is a retrofitted structural health
@@ -162,9 +163,46 @@ python3 code/bautzen/fig_bautzen_ocv_amp_phase.py            # ~2 s
 bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh            # the same, via the wrapper
 ```
 
+### `fig_bautzen_ocv_orbits.py` — OCV time series per dimension and orbit
+
+A second **standalone companion** to the paper figure: one panel per OCV
+dimension and orbit, i.e. a **6 x 2 grid** — rows in the formal OCV order
+`gamma2`, `P`, `D`, `F`, `A`, `S`; columns ASC (IW2, ~18:51 local) and DESC
+(IW3, ~07:08 local). Each panel is
+a time series over the **actual local overpass instant** (`core.acq_dt`), not
+midnight, because both state cuts fall in the middle of a day; a date-only axis
+would put the boundary-day overpasses in the wrong state. The three state
+windows RS / DS1 / DS2 are background bands in different colours, the two cuts
+are dashed lines, the line connects the bridge values in acquisition order and
+the overpasses are drawn as state-coloured markers (`o` RS, `s` DS1, `^` DS2).
+The bridge series are complete (all six channels on all 36 ASC and 35 DESC
+overpasses); the plotting path would leave a missing value as a gap, and nothing
+is interpolated.
+
+The figure is **bridge only** (ASC/DESC `Brücke`). The control rectangle is the
+counter-check of figures A–E, but its ASC `gamma2` range (-0.94 .. +0.93) is much
+wider than the bridge range (-0.14 .. +0.24); a shared panel would compress the
+bridge signal this figure is meant to show.
+
+It recomputes every point from `data/bautzen/bautzen_ocv_channels.csv` and pins
+it against the committed metadata — 142 rows, the state rule
+(`core.state_of(date, orbit) == state`), per-series date/state counts and date
+lists, unique dates, `A == n_masked`, channel presence on both orbits, and the
+sha256 of every rect file — **41 checks, 0 failures**, exit code != 0 on any
+failure. Outputs are the 630 dpi JPEG figure
+`figures/bautzen/fig_bautzen_ocv_orbits.jpg`, the result JSON
+`data/bautzen/fig_bautzen_ocv_orbits.json` and the report
+`figures/bautzen/fig_bautzen_ocv_orbits.md`:
+
+```bash
+python3 code/bautzen/fig_bautzen_ocv_orbits.py            # ~3 s
+PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
+```
+
 Status of the mirror: `bautzen_ocv_stats.py`, `bautzen_ocv_masks.py`,
-`bautzen_ocv_core.py`, `bautzen_ocv_channels_csv.py`, `fig_bautzen_ocv_paper.py`
-and `fig_bautzen_ocv_amp_phase.py` are complete. The generator verifies **every**
+`bautzen_ocv_core.py`, `bautzen_ocv_channels_csv.py`, `fig_bautzen_ocv_paper.py`,
+`fig_bautzen_ocv_amp_phase.py` and `fig_bautzen_ocv_orbits.py` are complete. The
+generator verifies **every**
 committed per-date mask/state value and all effect sizes of the two reference
 JSONs (`VERIFICATION OK`, zero problems, two independent traversals
 cross-checked); the figure script reproduces the two reference JSONs pin by pin

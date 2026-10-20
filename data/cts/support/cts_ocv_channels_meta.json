@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(39, 145)": 178
+ },
+ "asset_name_note": "the committed table's asset_name column carries this label and is copied verbatim, not repaired; the dates, orbit and sub-swath identify the site's own target",
+ "chip": {
+  "cols": 145,
+  "guard_cells": 420,
+  "ring_cells": 5010,
+  "ring_complete": true,
+  "rows": 39,
+  "support_cells": 225
+ },
+ "committed_asset_name": "Havelbr\u00fccke Werder (A 10)",
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/cts/cts_ocv_channels.csv",
+   "sha256": "af092c43bb942e8f406b56544ce3d86756f96c64264eaae5a7af878282e7a3b7"
+  },
+  "manifest": {
+   "path": "data/cts/support/cts_rects_support.txt.manifest.json",
+   "sha256": "2477e14520aff7ad9109d0ccbaf722026e88809af1db3b8d3a398a4e1af134ff"
+  },
+  "rects": {
+   "path": "data/cts/support/cts_rects_support.txt",
+   "sha256": "29cce464acf4a5bc9d2502708433925ee5eae37d4bbceeb24f5544f9c5ecdfde"
+  }
+ },
+ "label": "Champlain Towers South (target footprint)",
+ "n_rects": 178,
+ "n_refused": 0,
+ "n_rows": 178,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "cts",
+ "spacing": {
+  "azimuth_sample_m": 13.9411,
+  "incidence_deg": 43.921333,
+  "range_ground_m": 3.3583
+ },
+ "support_band": [
+  "lines",
+  "bins"
+ ],
+ "without_partner": []
+}

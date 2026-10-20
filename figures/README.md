@@ -3,8 +3,11 @@
 ```
 figures/
 ├── lumo/      LUMO lattice tower  — fig_lumo_ocv_paper.sh|.md|[A-E].png
+│              and the companion fig_lumo_ocv_orbits.sh|.md|.jpg (6 x 2 OCV
+│              time series over actual local overpass time)
 ├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
-│              and the companion fig_bautzen_ocv_amp_phase.sh|.md|.png
+│              and the companions fig_bautzen_ocv_amp_phase.sh|.md|.png and
+│              fig_bautzen_ocv_orbits.sh|.md|.jpg (6 x 2 OCV time series)
 ├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].png
 │              and the companions fig_kdlo_ocv_months.sh|.md|.png (calendar months
 │              over the whole record, two disjoint epochs, no 24-month pre stretch)
@@ -22,7 +25,8 @@ figures/
 │              the smallest record of the family (one mask layer, echo coverage
 │              instead of a contrast) and the one site whose reference JSON is
 │              defined by its own figure script (--write-reference)
-│              plus the companion fig_ywf_ocv_weeks.md|.png (no wrapper)
+│              plus the companions fig_ywf_ocv_weeks.md|.png (no wrapper) and
+│              fig_ywf_ocv_series.sh|.md|.png (the whole record on one dated axis)
 ├── espoo/     Espoo Kurttila mast — fig_espoo_ocv_paper.sh|.md|[A-E].png
 │              the **event-free control**: no damage label on any of the 150
 │              acquisitions, no mask raster either, so the only contrast is the
@@ -59,7 +63,9 @@ of the upstream project field by field *and* defines its own
 ```bash
 bash figures/lumo/fig_lumo_ocv_paper.sh            # full run, ~5 min
 bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min, permutation tests copied
+bash figures/lumo/fig_lumo_ocv_orbits.sh           # ~3 s, 6 x 2 time series + pins
 bash figures/bautzen/fig_bautzen_ocv_paper.sh      # ~6 min, deck-edge mask
+bash figures/bautzen/fig_bautzen_ocv_orbits.sh     # ~3 s, OCV time series 6 x 2
 bash figures/kdlo/fig_kdlo_ocv_paper.sh            # ~1 min, epoch contrast
 bash figures/kdlo/fig_kdlo_ocv_months.sh           # ~11 s, calendar-month companion
 bash figures/kdlo/fig_kdlo_ocv_series.sh           # <1 s, era-to-collapse series
@@ -74,12 +80,14 @@ bash figures/cts/fig_cts_ocv_paper.sh --quick      # ~50 s, no permutation null
 bash figures/cts/fig_cts_ocv_months.sh             # ~19 s, months companion (F0 + M-24..M+1)
 bash figures/ywf/fig_ywf_ocv_paper.sh              # ~8 s, echo coverage + pins
 python3 code/ywf/fig_ywf_ocv_weeks.py              # ~10 s, pre-window companion (no wrapper)
+bash figures/ywf/fig_ywf_ocv_series.sh             # ~2 s, whole-record series + pins
 bash figures/espoo/fig_espoo_ocv_paper.sh          # ~4.5 min, event-free control + pins
 bash figures/espoo/fig_espoo_ocv_paper.sh --quick  # ~1.5 min, no permutation nulls
 bash figures/espoo/fig_espoo_ocv_months.sh         # ~4 s, month-by-month companion
 
 # if the python3 of PATH lacks numpy/matplotlib, name the interpreter:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
+PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/morandi/fig_morandi_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_paper.sh
@@ -114,6 +122,37 @@ in any annotation, so two runs produce byte-identical files.
 `lumo/fig_lumo_ocv_paper.md` is the same content in prose: question and design,
 data and mask definition, the results per figure as tables, the pin verdict
 against the committed references, the exact commands and the caveats.
+
+## `lumo/fig_lumo_ocv_orbits.sh` → `../code/lumo/fig_lumo_ocv_orbits.py`
+
+The **standalone time-series companion** of the LUMO paper figure: the same six
+channels, but on the actual local overpass clock and split by pass geometry —
+six rows in the formal OCV order (`gamma2`, `P`, `D`, `F`, `A`, `S`) and two
+columns (ASC / DESC), twelve panels. It reads only
+`../data/lumo/lumo_ocv_channels.csv` plus the committed metadata, paper JSON and
+tower reference, adds **no** number to the A–E pin contract, and writes
+[`lumo/fig_lumo_ocv_orbits.md`](lumo/fig_lumo_ocv_orbits.md),
+[`../data/lumo/fig_lumo_ocv_orbits.json`](../data/lumo/fig_lumo_ocv_orbits.json)
+and one JPEG:
+
+| file | panel content |
+| --- | --- |
+| `lumo/fig_lumo_ocv_orbits.jpg` | 6 x 2, 183 mm wide, 630 dpi: (a)-(l) `gamma2`, `P`, `D`, `F`, `A`, `S` for ASC (left) and DESC (right). Coherence rows have no timestamp, so the local instant is joined from the 482 `record_class="acquisition"` rows by `burst_id` and converted UTC → `Europe/Berlin` (DST-aware). Bands follow the **13 consecutive `damage_label` runs** (36, 8, 6, 8, 54, 17, 7, 8, 4, 8, 5, 8, 9 points), the twelve dashed lines the run transitions; markers are per-overpass, shape and colour by state, the line is acquisition order. `P`, `D`, `F` and `A` use log axes; the one missing `P` (2021-07-14 ASC) is a gap, never interpolated |
+
+Its own **144 self-checks** recompute every drawn number from the committed table
+and compare it with `lumo_ocv_channels_meta.json`, `fig_lumo_ocv_paper.json` and
+`reference/lumo_tower_coherence_states.json`: row/date counts, the 482-row
+acquisition join, run sequence and lengths, sub-swath provenance, per-state and
+per-orbit counts, row-by-row `burst_id` / date / orbit / label / `gamma2` /
+`n_masked` parity, `A == n_masked`, channel completeness, strict positivity on
+the log axes, the local-time ranges / UTC offsets and every committed sha256.
+Any deviation exits non-zero before the artifact is accepted.
+
+```bash
+bash figures/lumo/fig_lumo_ocv_orbits.sh            # ~3 s
+PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
+python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures
+```
 
 ## `bautzen/fig_bautzen_ocv_paper.sh` → `../code/bautzen/fig_bautzen_ocv_paper.py`
 
@@ -165,6 +204,29 @@ and does **not** touch the committed reference JSONs or the figures A–E pin bl
 ```bash
 bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh            # ~2 s
 PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh
+```
+
+## `bautzen/fig_bautzen_ocv_orbits.sh` → `../code/bautzen/fig_bautzen_ocv_orbits.py`
+
+The second standalone companion of the Bautzen paper figure: one panel per OCV
+dimension and orbit — six rows (`gamma2`, `P`, `D`, `F`, `A`, `S`) x two columns
+(ASC IW2, DESC IW3) — as time series over the **actual local overpass instant**,
+with the RS / DS1 / DS2 windows as coloured background bands and the two cuts as
+dashed lines. It is **bridge-only** (the control's ASC `gamma2` range would
+flatten the bridge signal) and pins 142 rows against the committed metadata
+(**41 checks, 0 failures**, exit code != 0 on any failure). The image is a
+630 dpi JPEG. The report is
+[`bautzen/fig_bautzen_ocv_orbits.md`](bautzen/fig_bautzen_ocv_orbits.md), the
+result JSON
+[`../data/bautzen/fig_bautzen_ocv_orbits.json`](../data/bautzen/fig_bautzen_ocv_orbits.json):
+
+| file | panel content |
+| --- | --- |
+| `bautzen/fig_bautzen_ocv_orbits.jpg` | 6 x 2 panels: per-overpass markers (RS circle, DS1 square, DS2 triangle) in acquisition order, one row per OCV dimension with a shared ASC/DESC y axis, state windows as bands, cuts as dashed lines |
+
+```bash
+bash figures/bautzen/fig_bautzen_ocv_orbits.sh              # ~3 s
+PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
 ```
 
 ## `kdlo/fig_kdlo_ocv_paper.sh` → `../code/kdlo/fig_kdlo_ocv_paper.py`
@@ -243,28 +305,36 @@ reference rather than typed:
 
 | stretch | range | days | dimensions that exist here |
 | --- | --- | --- | --- |
-| ascending IW2 era | 2015-03-20 … 2021-12-19 | 162 | gamma^2, A |
+| ascending IW2 era | 2015-03-20 … 2021-12-19 | 162 | the 6D vector |
 | blind gap | 2021-12-20 … 2022-02-25 | 0 | – |
 | in the catalogue, not in the record | 2022-02-26 … 2022-06-01 | 0 | – |
 | the record's pre-collapse stretch | 2022-06-02 … 2022-12-11 | 16 | the 6D vector |
 
 | file | panel content |
 | --- | --- |
-| `kdlo/fig_kdlo_ocv_series.png` | 3 x 2, 183 mm wide: (a) `gamma^2` and (b) the echo-mask size `A` on a log y axis — era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn; (c)-(f) `P`, `D`, `F`, `S` — record only, the era hatched *not measurable here* with the reason written inside the region |
+| `kdlo/fig_kdlo_ocv_series.png` | 3 x 2, 183 mm wide: all six panels — (a) `gamma^2`, (b) the echo-mask size `A`, (c) `P`, (d) `D`, (e) `F`, (f) `S` — on a log y axis, era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn |
 
-Only `gamma^2` and `A` exist on both sides of the break (the era's backend rows
-carry `coherence_gamma2` / `coherence_masked_pixels` — the same columns by name);
-`P`, `D`, `F` and `S` are recomputed from the committed full-dwell strips, which
-exist for the record only, so the era region of those four panels is hatched rather
-than interpolated. This is also the **only** reader of the committed era export
+All six dimensions exist on both sides of the break. `gamma^2` and `A` are the same
+backend columns by name (`coherence_gamma2` / `coherence_masked_pixels`, which the
+era's own export carries); `P`, `D`, `F` and `S` are recomputed from a committed
+full-dwell strip cache with the pipeline's own mask rule — the channel table's 64
+strips for the record, and a **second** cache `../data/kdlo/strips_era/` for the
+era (162 strips, one per era acquisition day). The era cache is not taken on trust:
+the mask rule recomputed on those strips has to reproduce the export's `A` exactly
+and its `gamma2` to `1e-12` on every era day before a value is drawn. `P` is a mask
+*frequency*, so it is only defined against the set it is counted over — the era's
+over its own 162 strips (a mixed-polarisation set: that track carries both VV and
+VH, one burst per day), the record's over the channel table's; the two maps are
+never added, averaged or used to rescale one another. This is also the **only**
+reader of the committed era export
 `../data/kdlo/fig_kdlo_0_raw.json`: it re-verifies the sha256 the availability
 reference pins for it before using a value, and the era enters no row of the
 channel table. Both the era's clock and the geometry break are self-checked (the
 reference labels the era's hour block `00`, the export times its rows on the
 pipeline's `05:00Z` slot, and the one anomaly day `2020-08-13` sits on the
 `afternoon` slot at `16:00Z` — the catalogue burst name carries the wrong hour);
-none of it enters a drawn value. The figure carries **84 self-checks** that
-recompute every drawn number from the three committed inputs and abort before any
+none of it enters a drawn value. The figure carries **125 self-checks** that
+recompute every drawn number from the four committed inputs and abort before any
 file is written, adds **no** number to the A–E pin contract, touches none of it and
 never reads `../data/kdlo/reference/` beyond that one availability file. It is
 byte-deterministic across runs.
@@ -548,7 +618,11 @@ the round trip), and every later run re-derives it field by field — 1179 check
 against the reference, the channel metadata, the committed mask cache, the sha256
 digests of the committed inputs and the digests of the two references resolved
 from public catalogues (`ywf_bursts.json`, `ywf_osm_road.json`, `ywf_geometry.json`)
-— exiting non-zero on the first deviation.
+— exiting non-zero on the first deviation. Two companions extend the record
+without adding a number to the A-E pin contract: `fig_ywf_ocv_weeks.py` opens the
+pre window (27 chips on 26 acquisition days) and
+`figures/ywf/fig_ywf_ocv_series.sh` draws the whole record — both stretches, every
+hole and the cut inside the 12-day step that holds it — on one dated axis.
 
 The report's four blockers are backed by the committed anchor file: its
 `road_vs_window` block proves the carriageway lies **outside** the 7 x 7 frame
@@ -599,6 +673,50 @@ draws of it; the report says so.
 ```bash
 python3 code/ywf/fig_ywf_ocv_weeks.py              # ~10 s, figure + JSON + report
 python3 code/ywf/fig_ywf_ocv_weeks.py --no-figures # cross-checks only
+```
+
+## `ywf/fig_ywf_ocv_series.sh` → `../code/ywf/fig_ywf_ocv_series.py`
+
+The whole record on one dated axis: **33 unique 7 x 7 chips on 32 acquisition
+days** (57 committed windows, 24 of them byte-identical duplicates of another
+request for the same chip), from 2025-08-06 to 2026-04-27, with the collapse of
+2026-02-02 drawn **inside** the axis. No chip sits on the event day — the event
+falls in the 12-day step `2026-01-27 -> 2026-02-08` — so the pre and the post
+stretch meet at a band and never at a point, and the nearest chips are 6 days
+either side. Six panels, one per dimension of the echo-mask vector
+`x = [gamma2, A, P, D, F, S]`, `y` = the value over that dimension's **own**
+pre-window median (the same 16 pre-event echo chips the paper figure's pre
+summary is computed on), so every drawn ordinate of the pre side is a pinned
+number:
+
+| panel | content |
+| --- | --- |
+| a | `gamma2`, the masked coherence (log) |
+| b | `A`, the masked pixels of 49 (log) |
+| c | `P`, the mask persistence — the only linear panel (a bounded frequency) |
+| d | `D`, the mask density `A` / bbox (log) |
+| e | `F`, the 8-connected components (log) |
+| f | `S`, the centroid-to-peak shift in px (log) |
+
+The record's step is 6 days (the ascending and the descending pass alternate) and
+**9** of its 31 steps are longer (7 x 12 days, 2 x 24 days): each of them is drawn
+as a grey band and **no line crosses it**. Dots are coloured by pass geometry, the
+single post-event echo (`2026-03-16`, ascending, `A` = 5 px) is drawn hollow and
+the 16 echo-free chips are ticks on the panel floor: on the post side 1 of the 6
+chips carries an echo, which is a coverage fact and not a level. The figure
+covers the same record as the paper figure, so it re-derives and pins the 32-day
+timeline, the coverage per state and per pass geometry, the payload groups, the
+mask rule and the pin verdict of the paper JSON field by field against five
+committed layers (the channel table's metadata, the mask-cache manifest, the
+committed mask cache, the paper result JSON and the analysis reference), and pins
+the sha256 of all nine committed inputs — 2637 checks in all, and no artifact is
+written before they agree. It writes `../data/ywf/fig_ywf_ocv_series.json`,
+`ywf/fig_ywf_ocv_series.md` and `ywf/fig_ywf_ocv_series.png`.
+
+```bash
+bash figures/ywf/fig_ywf_ocv_series.sh              # ~2 s, figure + JSON + report
+bash figures/ywf/fig_ywf_ocv_series.sh --no-figures # cross-checks only
+PYTHON=/usr/bin/python3 bash figures/ywf/fig_ywf_ocv_series.sh
 ```
 
 ## `espoo/fig_espoo_ocv_paper.sh` → `../code/espoo/fig_espoo_ocv_paper.py`

@@ -19,9 +19,9 @@ read off".
 
 | site | folders | states | mask layer | results |
 | --- | --- | --- | --- | --- |
-| LUMO lattice tower (Hannover) | `code/lumo/`, `data/lumo/`, `figures/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | [`figures/lumo/fig_lumo_ocv_paper.md`](figures/lumo/fig_lumo_ocv_paper.md) |
-| Bautzen OpenLabs bridge | `code/bautzen/`, `data/bautzen/`, `figures/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | [`figures/bautzen/fig_bautzen_ocv_paper.md`](figures/bautzen/fig_bautzen_ocv_paper.md), [`…fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md) |
-| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`) | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md), [`…fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md), [`…fig_kdlo_ocv_series.md`](figures/kdlo/fig_kdlo_ocv_series.md) |
+| LUMO lattice tower (Hannover) | `code/lumo/`, `data/lumo/`, `figures/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | [`figures/lumo/fig_lumo_ocv_paper.md`](figures/lumo/fig_lumo_ocv_paper.md), [`…fig_lumo_ocv_orbits.md`](figures/lumo/fig_lumo_ocv_orbits.md) |
+| Bautzen OpenLabs bridge | `code/bautzen/`, `data/bautzen/`, `figures/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | [`figures/bautzen/fig_bautzen_ocv_paper.md`](figures/bautzen/fig_bautzen_ocv_paper.md), [`…fig_bautzen_ocv_amp_phase.md`](figures/bautzen/fig_bautzen_ocv_amp_phase.md), [`…fig_bautzen_ocv_orbits.md`](figures/bautzen/fig_bautzen_ocv_orbits.md) |
+| KDLO media tower (Garden City SD) | `code/kdlo/`, `data/kdlo/`, `figures/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache (`0.30 x peak`, `5 x upper median`), plus a second committed strip cache for the 2015–2021 era (162 strips) used only by the era-to-collapse series figure | [`figures/kdlo/fig_kdlo_ocv_paper.md`](figures/kdlo/fig_kdlo_ocv_paper.md), [`…fig_kdlo_ocv_months.md`](figures/kdlo/fig_kdlo_ocv_months.md), [`…fig_kdlo_ocv_series.md`](figures/kdlo/fig_kdlo_ocv_series.md) |
 | Carolabrücke (Dresden) | `code/carola/`, `data/carola/`, `figures/carola/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-girder deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/carola/fig_carola_ocv_paper.md`](figures/carola/fig_carola_ocv_paper.md), [`…fig_carola_ocv_months.md`](figures/carola/fig_carola_ocv_months.md) |
 | Ponte Morandi / Polcevera (Genova) | `code/morandi/`, `data/morandi/`, `figures/morandi/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-payload cache (`0.30 x peak`, `5 x np.median`) | [`figures/morandi/fig_morandi_ocv_paper.md`](figures/morandi/fig_morandi_ocv_paper.md), [`…fig_morandi_ocv_months.md`](figures/morandi/fig_morandi_ocv_months.md) |
 | Champlain Towers South (Surfside) | `code/cts/`, `data/cts/`, `figures/cts/` | pre-collapse (healthy), post-collapse | **two layers**: the echo mask of every 80 x 80 chip and the per-track deck mask, both recomputed from a committed window-cache (`0.30 x peak`, `5 x np.median`) — plus a first-class **difference-in-differences** layer (target vs. two control towers) | [`figures/cts/fig_cts_ocv_paper.md`](figures/cts/fig_cts_ocv_paper.md), [`…fig_cts_ocv_months.md`](figures/cts/fig_cts_ocv_months.md); DiD: [`data/cts/reference/cts_reference_did_ctn.md`](data/cts/reference/cts_reference_did_ctn.md), [`…did_placebo_ctn_vs_cte.md`](data/cts/reference/cts_reference_did_placebo_ctn_vs_cte.md) |
@@ -199,19 +199,21 @@ committed availability reference, not typed). The ascending IW2 era
 hour 00) is the only stretch whose geometry differs from the record's
 (`2022-06-02 … 2022-12-11`, descending IW1, relative orbit 12); between
 them sit the 69-day blind gap and a stretch that exists in the CDSE catalogue but
-has no committed row here. The figure is 3 x 2: `gamma2` and the echo-mask size `A`
-— the only two dimensions whose columns exist on both sides — are drawn as the era's
-dots and per-year medians beside the record's dots and line, each **divided by its
-own stretch median** (log y); `P`, `D`, `F` and `S`, which are recomputed from the
-committed full-dwell strips of the record only, are drawn over the record alone and
-the era region is hatched **not measurable here**, with the reason written inside it
-rather than interpolated. Because the two stretches are imaged on different tracks,
+has no committed row here. The figure is 3 x 2 and draws **all six** dimensions on
+**both** dated stretches: `gamma2` and the echo-mask size `A` (the two backend
+columns whose values both sides carry), and `P`, `D`, `F` and `S` recomputed with
+the pipeline's own mask rule from a committed full-dwell strip cache — the
+channel table's 64 strips for the record, a **second** cache for the era
+(`data/kdlo/strips_era/`, 162 strips, one per era day, held to the era export's
+`A` and `gamma2` before a value is drawn). Every panel draws the era's dots and
+per-year medians beside the record's dots and line, each **divided by its own
+stretch median** (log y). Because the two stretches are imaged on different tracks,
 swaths and times of day, their levels are not comparable by construction — what each
 stretch *does* is — and the report states that no statistic of this figure is
 computed across the break. The era export is read **only** here (sha-verified against
 the availability reference before a single value is used) and enters no row of the
 channel table; the singleton `2022-12-23` is drawn hollow at the right edge, outside
-the axis; and 84 self-checks recompute every drawn number from the three committed
+the axis; and 125 self-checks recompute every drawn number from the four committed
 inputs, aborting before any write.
 
 ## What the Carola figure shows
@@ -323,6 +325,17 @@ The same report closes with the **state-to-state** shift
 `dphi` and the absolute `phi` per series, each with a seeded bootstrap interval —
 and states plainly that none of those twelve deltas is resolvable at these sample
 sizes.
+
+A second companion,
+[`figures/bautzen/fig_bautzen_ocv_orbits.md`](figures/bautzen/fig_bautzen_ocv_orbits.md),
+keeps one panel per **OCV dimension and orbit** — a 6 x 2 grid in the formal
+OCV order `gamma2`, `P`, `D`, `F`, `A`, `S` for ASC and DESC — as time series
+over the **actual local overpass instant**, with the RS / DS1 / DS2 windows as
+coloured background bands.
+It is bridge-only (the control's ASC `gamma2` range would flatten the bridge
+signal); the bridge series themselves are complete on all 36 ASC and 35 DESC
+overpasses, and missing control values are not drawn. It pins 142 rows against
+the committed metadata (41 checks, 0 failures).
 
 ## What the CTS figure shows
 
@@ -439,6 +452,20 @@ azimuth. The mask rule is itself only ever studied **offline**
 Read [`figures/ywf/fig_ywf_ocv_paper.md`](figures/ywf/fig_ywf_ocv_paper.md) for the
 full verdict and [`code/ywf/README.md`](code/ywf/README.md) for the module list.
 
+Two companions put the record back on a time axis without adding a number to the
+A–E pin contract. [`figures/ywf/fig_ywf_ocv_weeks.md`](figures/ywf/fig_ywf_ocv_weeks.md)
+opens the **pre-collapse window** itself (27 chips on 26 acquisition days, 16 of
+them echo-bearing) — the coordinate is not stationary there (temperature falls
+from 33.2 C to 0.6 C) while the channels show no monotone drift. And
+[`figures/ywf/fig_ywf_ocv_series.md`](figures/ywf/fig_ywf_ocv_series.md) draws the
+**whole record** — both stretches, all 33 chips on 32 acquisition days — on one
+dated axis, six panels for `x = [gamma2, A, P, D, F, S]`, each divided by its own
+pre-window median. It is the site's only figure that shows *where* the collapse
+falls: no chip sits on 2026-02-02, the event lies inside the 12-day step
+`2026-01-27 -> 2026-02-08`, the 9 steps longer than the 6-day cadence are drawn as
+bands and never interpolated over, and the post side is drawn as what it is —
+one echo among six chips, on the panel floor for the other five.
+
 ## What the Espoo figure shows
 
 Espoo is the **event-free** site, so its five panels are read as the *baseline*
@@ -531,8 +558,10 @@ observability-core-vector/
 │   │              2015-2021 era export (committed evidence, read only by the
 │   │              era-to-collapse series figure, never a row of the table),
 │   │              the vendored nine-column DB extraction, the generated channel
-│   │              table, the four committed reference JSONs and the committed
-│   │              strip cache (64 full-dwell SLC strips + manifest)
+│   │              table, the four committed reference JSONs, the committed
+│   │              strip cache (64 full-dwell SLC strips + manifest) and the
+│   │              era's own second cache (162 era strips + manifest/requests,
+│   │              read only by the series figure)
 │   ├── carola/    the committed mask cache of the chip export (1717 echo masks in
 │   │              mask coordinates), the committed measurement extract and
 │   │              segments/index files, the generated channel table and the
@@ -558,13 +587,16 @@ observability-core-vector/
 │   │              channel statistics and this package's own findings lock)
 │   └── README.md
 ├── figures/
-│   ├── lumo/      the .sh wrapper, the .md report and the .png figures
+│   ├── lumo/      the .sh wrappers, the .md reports, the .png figures and the
+│   │              6 x 2 time-series companion (fig_lumo_ocv_orbits.md|.jpg)
 │   ├── bautzen/   the same for the bridge site
 │   ├── kdlo/      the same for the KDLO tower
 │   ├── carola/    the same for the collapsed Carola bridge
 │   ├── morandi/   the same for the collapsed Morandi viaduct
 │   ├── cts/       the same for the collapsed CTS condominium (the DiD site)
-│   ├── ywf/       the same for the collapsed Yeongdeok tower (echo coverage)
+│   ├── ywf/       the same for the collapsed Yeongdeok tower (echo coverage):
+│   │              the paper wrapper plus the whole-record series wrapper and the
+│   │              wrapper-less weeks companion
 │   ├── espoo/     the same for the event-free control (orbits, not damage labels)
 │   └── README.md
 ├── .gitignore
@@ -582,11 +614,13 @@ cd research/observability-core-vector
 # LUMO: figures + report + JSON, verified against the five committed references
 bash figures/lumo/fig_lumo_ocv_paper.sh            # ~5 min (two permutation tests)
 bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min (permutation tests copied)
+bash figures/lumo/fig_lumo_ocv_orbits.sh           # ~3 s (6 x 2 OCV time series + pins)
 
 # Bautzen: the same for the bridge (deck-edge mask instead of the echo mask)
 bash figures/bautzen/fig_bautzen_ocv_paper.sh            # ~6 min
 bash figures/bautzen/fig_bautzen_ocv_paper.sh --quick    # ~1 min (placebos copied)
 bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh        # ~2 s (amplitude/phase/differential)
+bash figures/bautzen/fig_bautzen_ocv_orbits.sh           # ~3 s (OCV time series, 6 x 2)
 
 # KDLO: the same for the tower record (epoch contrast, mask recomputed from a
 # committed strip cache)
@@ -625,6 +659,7 @@ python3 code/ywf/ywf_bursts_resolve.py                   # --check the pass geom
 python3 code/ywf/ywf_osm_anchor.py                       # --check the road anchor + grid (default)
 python3 code/ywf/ywf_mask_sensitivity.py                 # the offline mask-rule sensitivity (writes nothing)
 bash figures/ywf/fig_ywf_ocv_paper.sh                    # ~8 s (figures + pins)
+bash figures/ywf/fig_ywf_ocv_series.sh                   # ~2 s (whole-record series + pins)
 bash figures/ywf/fig_ywf_ocv_paper.sh --write-reference  # re-define the reference file
 
 # Espoo: the event-free control (no damage label on any row; the only contrast the
@@ -639,6 +674,7 @@ bash figures/espoo/fig_espoo_ocv_months.sh               # ~4 s (month-by-month 
 
 # if `python3` of the PATH is a virtualenv without numpy/matplotlib:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
+PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 
 # rebuild the channel tables (LUMO needs the local burst cache, Bautzen only
 # the committed rect files, KDLO the two committed raw record files — the era

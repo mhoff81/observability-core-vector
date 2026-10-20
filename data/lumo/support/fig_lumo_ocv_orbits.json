@@ -1,0 +1,4731 @@
+{
+ "cross_checks": [
+  {
+   "check": "join.n_acquisition_rows",
+   "ok": true
+  },
+  {
+   "check": "join.n_unique_acq_bursts",
+   "ok": true
+  },
+  {
+   "check": "join.n_duplicate_acq_bursts",
+   "ok": true
+  },
+  {
+   "check": "join.n_coherence_rows",
+   "ok": true
+  },
+  {
+   "check": "join.n_coherence_missing_acq",
+   "ok": true
+  },
+  {
+   "check": "join.n_one_to_one",
+   "ok": true
+  },
+  {
+   "check": "join.n_acq_unused",
+   "ok": true
+  },
+  {
+   "check": "join.n_acq_ts_empty",
+   "ok": true
+  },
+  {
+   "check": "join.n_coherence_acq_ts_present",
+   "ok": true
+  },
+  {
+   "check": "join.n_date_mismatch",
+   "ok": true
+  },
+  {
+   "check": "join.n_orbit_mismatch",
+   "ok": true
+  },
+  {
+   "check": "join.n_label_mismatch",
+   "ok": true
+  },
+  {
+   "check": "join.n_subswath_empty",
+   "ok": true
+  },
+  {
+   "check": "data.n_rows",
+   "ok": true
+  },
+  {
+   "check": "data.n_dates",
+   "ok": true
+  },
+  {
+   "check": "data.n_unique_bursts",
+   "ok": true
+  },
+  {
+   "check": "data.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "data.n_by_orbit",
+   "ok": true
+  },
+  {
+   "check": "data.n_by_state_orbit",
+   "ok": true
+  },
+  {
+   "check": "data.n_by_subswath",
+   "ok": true
+  },
+  {
+   "check": "data.subswath_total",
+   "ok": true
+  },
+  {
+   "check": "A_equals_n_masked",
+   "ok": true
+  },
+  {
+   "check": "n_masked_positive",
+   "ok": true
+  },
+  {
+   "check": "meta.n_overpasses",
+   "ok": true
+  },
+  {
+   "check": "meta.created_rows",
+   "ok": true
+  },
+  {
+   "check": "meta.n_cache_dirs_matched",
+   "ok": true
+  },
+  {
+   "check": "meta.n_cache_skipped",
+   "ok": true
+  },
+  {
+   "check": "meta.n_rows_filled_by_burst_id",
+   "ok": true
+  },
+  {
+   "check": "meta.n_rows_filled_by_date_orbit",
+   "ok": true
+  },
+  {
+   "check": "meta.n_rows_unmatched",
+   "ok": true
+  },
+  {
+   "check": "meta.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "meta.dimensions.keys",
+   "ok": true
+  },
+  {
+   "check": "meta.generator",
+   "ok": true
+  },
+  {
+   "check": "meta.cross_check_n_masked",
+   "ok": true
+  },
+  {
+   "check": "meta.mask_definition.rule",
+   "ok": true
+  },
+  {
+   "check": "meta.mask_definition.reference",
+   "ok": true
+  },
+  {
+   "check": "meta.persistence.groups_total",
+   "ok": true
+  },
+  {
+   "check": "meta.persistence.groups",
+   "ok": true
+  },
+  {
+   "check": "paper.csv",
+   "ok": true
+  },
+  {
+   "check": "paper.csv_sha256",
+   "ok": true
+  },
+  {
+   "check": "paper.n_overpasses",
+   "ok": true
+  },
+  {
+   "check": "paper.n_P_present",
+   "ok": true
+  },
+  {
+   "check": "paper.n_complete_6d",
+   "ok": true
+  },
+  {
+   "check": "paper.n_excluded_incomplete",
+   "ok": true
+  },
+  {
+   "check": "paper.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "paper.pins.n_failed",
+   "ok": true
+  },
+  {
+   "check": "reference.n_bursts_total",
+   "ok": true
+  },
+  {
+   "check": "reference.n_bursts_cached",
+   "ok": true
+  },
+  {
+   "check": "reference.n_skipped",
+   "ok": true
+  },
+  {
+   "check": "reference.params",
+   "ok": true
+  },
+  {
+   "check": "reference.n_rows",
+   "ok": true
+  },
+  {
+   "check": "reference.burst_id",
+   "ok": true
+  },
+  {
+   "check": "reference.date",
+   "ok": true
+  },
+  {
+   "check": "reference.orbit",
+   "ok": true
+  },
+  {
+   "check": "reference.damage_label",
+   "ok": true
+  },
+  {
+   "check": "reference.per_state.n",
+   "ok": true
+  },
+  {
+   "check": "reference.per_orbit.n",
+   "ok": true
+  },
+  {
+   "check": "reference.per_state.date_range",
+   "ok": true
+  },
+  {
+   "check": "local.ASC",
+   "ok": true
+  },
+  {
+   "check": "local.DESC",
+   "ok": true
+  },
+  {
+   "check": "local.timezone",
+   "ok": true
+  },
+  {
+   "check": "local.n_offsets.ASC",
+   "ok": true
+  },
+  {
+   "check": "local.n_offsets.DESC",
+   "ok": true
+  },
+  {
+   "check": "subswath.ASC.iw1_bursts",
+   "ok": true
+  },
+  {
+   "check": "runs.n",
+   "ok": true
+  },
+  {
+   "check": "runs.states",
+   "ok": true
+  },
+  {
+   "check": "runs.lengths",
+   "ok": true
+  },
+  {
+   "check": "runs.total",
+   "ok": true
+  },
+  {
+   "check": "runs.transitions",
+   "ok": true
+  },
+  {
+   "check": "runs.each_has_both_orbits",
+   "ok": true
+  },
+  {
+   "check": "runs.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "runs.band_order",
+   "ok": true
+  },
+  {
+   "check": "runs.band_contiguous",
+   "ok": true
+  },
+  {
+   "check": "runs.cover_window",
+   "ok": true
+  },
+  {
+   "check": "series.ASC.n_dates",
+   "ok": true
+  },
+  {
+   "check": "series.DESC.n_dates",
+   "ok": true
+  },
+  {
+   "check": "series.ASC.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "series.ASC.dates_unique",
+   "ok": true
+  },
+  {
+   "check": "series.ASC.acq_unique",
+   "ok": true
+  },
+  {
+   "check": "series.DESC.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "series.DESC.dates_unique",
+   "ok": true
+  },
+  {
+   "check": "series.DESC.acq_unique",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.ASC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.ASC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.ASC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.ASC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.DESC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.DESC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.DESC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.P.DESC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.ASC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.ASC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.ASC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.ASC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.DESC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.DESC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.DESC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.D.DESC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.ASC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.ASC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.ASC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.ASC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.DESC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.DESC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.DESC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.F.DESC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.ASC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.ASC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.ASC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.ASC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.DESC.healthy",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.DESC.DAM3",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.DESC.DAM4",
+   "ok": true
+  },
+  {
+   "check": "log_positive.A.DESC.DAM6",
+   "ok": true
+  },
+  {
+   "check": "data.csv_sha256_differs_from_committed",
+   "ok": true
+  },
+  {
+   "check": "data.source_csv_sha256",
+   "ok": true
+  },
+  {
+   "check": "data.n_rows",
+   "ok": true
+  },
+  {
+   "check": "ring.superseded_present",
+   "ok": true
+  },
+  {
+   "check": "ring.reference",
+   "ok": true
+  },
+  {
+   "check": "ring.n_rows",
+   "ok": true
+  },
+  {
+   "check": "ring.n_missing_P",
+   "ok": true
+  },
+  {
+   "check": "ring.A_le_chip",
+   "ok": true
+  },
+  {
+   "check": "ring.gamma2_differs_everywhere",
+   "ok": true
+  }
+ ],
+ "data": {
+  "P_missing": [],
+  "channels": [
+   "gamma2",
+   "P",
+   "D",
+   "F",
+   "A",
+   "S"
+  ],
+  "complete_6d": 178,
+  "complete_6d_by_state": {
+   "DAM3": 25,
+   "DAM4": 16,
+   "DAM6": 16,
+   "healthy": 121
+  },
+  "csv": "data/lumo/support/lumo_ocv_channels.csv",
+  "csv_meta": "data/lumo/support/lumo_ocv_channels_meta.json",
+  "csv_meta_sha256": "233dbab127bfb7cf9e979286fff0fb01808ebd0f68bb5632eadd1aa36f9d9017",
+  "csv_sha256": "4874a2c8c938bc1e06d820cf01720dd15d8d7ab283ac44185c059b4d4d3445c6",
+  "definition": "gamma2 = whole-tower coherence; P = mean echo-mask pixel frequency; D = n_masked / bbox_area; F = number of 8-connected mask components; A = n_masked; S = centroid-to-peak distance. x = actual Sentinel-1 acquisition instant, UTC converted to Europe/Berlin local time.",
+  "finite": {
+   "A": 178,
+   "D": 178,
+   "F": 178,
+   "P": 178,
+   "S": 178,
+   "gamma2": 178
+  },
+  "local": {
+   "ASC": {
+    "clock_max": "2021-07-20T19:09:04+02:00",
+    "clock_min": "2020-12-04T17:09:00+01:00",
+    "utc_offsets": {
+     "+01:00": 23,
+     "+02:00": 34
+    }
+   },
+   "DESC": {
+    "clock_max": "2021-07-22T07:42:12+02:00",
+    "clock_min": "2020-08-15T05:33:56+02:00",
+    "utc_offsets": {
+     "+01:00": 52,
+     "+02:00": 69
+    }
+   }
+  },
+  "log_channels": [
+   "P",
+   "D",
+   "F",
+   "A"
+  ],
+  "n_acq_unused": 304,
+  "n_acquisition_rows": 482,
+  "n_by_orbit": {
+   "ASC": 57,
+   "DESC": 121
+  },
+  "n_by_state": {
+   "DAM3": 25,
+   "DAM4": 16,
+   "DAM6": 16,
+   "healthy": 121
+  },
+  "n_by_state_orbit": {
+   "ASC": {
+    "DAM3": 8,
+    "DAM4": 5,
+    "DAM6": 4,
+    "healthy": 40
+   },
+   "DESC": {
+    "DAM3": 17,
+    "DAM4": 11,
+    "DAM6": 12,
+    "healthy": 81
+   }
+  },
+  "n_by_subswath": {
+   "ASC": {
+    "iw1": 1,
+    "iw2": 56
+   },
+   "DESC": {
+    "iw1": 108,
+    "iw2": 13
+   }
+  },
+  "n_coherence_raw_rows": 178,
+  "n_dates": 178,
+  "n_nonfinite": {
+   "A": 0,
+   "D": 0,
+   "F": 0,
+   "P": 0,
+   "S": 0,
+   "gamma2": 0
+  },
+  "n_rows": 178,
+  "n_rows_with_missing": 0,
+  "n_unique_bursts": 178,
+  "paper_json": "data/lumo/fig_lumo_ocv_paper.json",
+  "paper_json_sha256": "4c137101df8265646f48f8230dabc046524f58d67a3069173ceed07821904c3b",
+  "plot_window": {
+   "end_local": "2021-08-08T07:34:01",
+   "pad_days": 10,
+   "start_local": "2020-07-23T07:41:22"
+  },
+  "reference_json": "data/lumo/reference/lumo_tower_coherence_states.json",
+  "reference_json_sha256": "a9b132dd721d9e153319cd12af73055df9cb027593cf52a74d016cfa3a8376fe",
+  "runs": [
+   {
+    "band_end_local": "2020-10-12T13:24:52",
+    "band_start_local": "2020-07-23T07:41:22",
+    "first_local": "2020-08-02T07:41:22+02:00",
+    "first_utc": "2020-08-02T05:41:22Z",
+    "last_local": "2020-10-11T19:08:19+02:00",
+    "last_utc": "2020-10-11T17:08:19Z",
+    "median": {
+     "A": 5.0,
+     "D": 0.0063025210084033615,
+     "F": 2.0,
+     "P": 0.16717171717171717,
+     "S": 29.265582068900727,
+     "gamma2": 0.4185476022211761
+    },
+    "n": 36,
+    "n_by_orbit": {
+     "ASC": 12,
+     "DESC": 24
+    },
+    "n_by_subswath": {
+     "iw1": 21,
+     "iw2": 15
+    },
+    "run": 1,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2020-10-28T00:21:30",
+    "band_start_local": "2020-10-12T13:24:52",
+    "first_local": "2020-10-13T07:41:25+02:00",
+    "first_utc": "2020-10-13T05:41:25Z",
+    "last_local": "2020-10-26T06:33:59+01:00",
+    "last_utc": "2020-10-26T05:33:59Z",
+    "median": {
+     "A": 4.0,
+     "D": 0.008613445378151261,
+     "F": 2.0,
+     "P": 0.1825311942959002,
+     "S": 21.873966913756636,
+     "gamma2": 0.4288271898661953
+    },
+    "n": 8,
+    "n_by_orbit": {
+     "ASC": 2,
+     "DESC": 6
+    },
+    "n_by_subswath": {
+     "iw1": 5,
+     "iw2": 3
+    },
+    "run": 2,
+    "state": "DAM6",
+    "state_label": "DAM 6"
+   },
+   {
+    "band_end_local": "2020-11-09T00:21:30",
+    "band_start_local": "2020-10-28T00:21:30",
+    "first_local": "2020-10-29T18:09:01+01:00",
+    "first_utc": "2020-10-29T17:09:01Z",
+    "last_local": "2020-11-07T06:33:58+01:00",
+    "last_utc": "2020-11-07T05:33:58Z",
+    "median": {
+     "A": 4.5,
+     "D": 0.012189327485380118,
+     "F": 2.0,
+     "P": 0.20267379679144387,
+     "S": 28.68275402871722,
+     "gamma2": 0.5508921748113154
+    },
+    "n": 6,
+    "n_by_orbit": {
+     "ASC": 2,
+     "DESC": 4
+    },
+    "n_by_subswath": {
+     "iw1": 4,
+     "iw2": 2
+    },
+    "run": 3,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2020-11-24T18:37:42",
+    "band_start_local": "2020-11-09T00:21:30",
+    "first_local": "2020-11-10T18:09:01+01:00",
+    "first_utc": "2020-11-10T17:09:01Z",
+    "last_local": "2020-11-24T06:42:09+01:00",
+    "last_utc": "2020-11-24T05:42:09Z",
+    "median": {
+     "A": 4.5,
+     "D": 0.37883435582822084,
+     "F": 1.5,
+     "P": 0.1734553325462416,
+     "S": 32.45417643750624,
+     "gamma2": 0.5318240416264317
+    },
+    "n": 8,
+    "n_by_orbit": {
+     "ASC": 3,
+     "DESC": 5
+    },
+    "n_by_subswath": {
+     "iw1": 5,
+     "iw2": 3
+    },
+    "run": 4,
+    "state": "DAM4",
+    "state_label": "DAM 4"
+   },
+   {
+    "band_end_local": "2021-03-15T18:37:18",
+    "band_start_local": "2020-11-24T18:37:42",
+    "first_local": "2020-11-25T06:33:16+01:00",
+    "first_utc": "2020-11-25T05:33:16Z",
+    "last_local": "2021-03-13T06:33:13+01:00",
+    "last_utc": "2021-03-13T05:33:13Z",
+    "median": {
+     "A": 4.0,
+     "D": 0.008286647992530346,
+     "F": 2.0,
+     "P": 0.17234848484848486,
+     "S": 29.0269271539376,
+     "gamma2": 0.631017109223744
+    },
+    "n": 54,
+    "n_by_orbit": {
+     "ASC": 17,
+     "DESC": 37
+    },
+    "n_by_subswath": {
+     "iw1": 35,
+     "iw2": 19
+    },
+    "run": 5,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2021-04-20T01:20:45",
+    "band_start_local": "2021-03-15T18:37:18",
+    "first_local": "2021-03-18T06:41:23+01:00",
+    "first_utc": "2021-03-18T05:41:23Z",
+    "last_local": "2021-04-18T07:33:14+02:00",
+    "last_utc": "2021-04-18T05:33:14Z",
+    "median": {
+     "A": 5.0,
+     "D": 0.005128205128205128,
+     "F": 2.0,
+     "P": 0.09324009324009322,
+     "S": 38.68964834279175,
+     "gamma2": 0.21172317730596513
+    },
+    "n": 17,
+    "n_by_orbit": {
+     "ASC": 5,
+     "DESC": 12
+    },
+    "n_by_subswath": {
+     "iw1": 10,
+     "iw2": 7
+    },
+    "run": 6,
+    "state": "DAM3",
+    "state_label": "DAM 3"
+   },
+   {
+    "band_end_local": "2021-05-04T13:24:51",
+    "band_start_local": "2021-04-20T01:20:45",
+    "first_local": "2021-04-21T19:08:17+02:00",
+    "first_utc": "2021-04-21T17:08:17Z",
+    "last_local": "2021-05-03T19:08:17+02:00",
+    "last_utc": "2021-05-03T17:08:17Z",
+    "median": {
+     "A": 9.0,
+     "D": 0.0067226890756302525,
+     "F": 4.0,
+     "P": 0.11515151515151516,
+     "S": 44.04929372620835,
+     "gamma2": 0.12072218611955439
+    },
+    "n": 7,
+    "n_by_orbit": {
+     "ASC": 3,
+     "DESC": 4
+    },
+    "n_by_subswath": {
+     "iw1": 3,
+     "iw2": 4
+    },
+    "run": 7,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2021-05-20T01:21:28",
+    "band_start_local": "2021-05-04T13:24:51",
+    "first_local": "2021-05-05T07:41:25+02:00",
+    "first_utc": "2021-05-05T05:41:25Z",
+    "last_local": "2021-05-18T07:33:57+02:00",
+    "last_utc": "2021-05-18T05:33:57Z",
+    "median": {
+     "A": 4.5,
+     "D": 0.007072829131652661,
+     "F": 2.0,
+     "P": 0.12431372549019609,
+     "S": 28.446338370061575,
+     "gamma2": 0.4555632990874599
+    },
+    "n": 8,
+    "n_by_orbit": {
+     "ASC": 2,
+     "DESC": 6
+    },
+    "n_by_subswath": {
+     "iw1": 5,
+     "iw2": 3
+    },
+    "run": 8,
+    "state": "DAM6",
+    "state_label": "DAM 6"
+   },
+   {
+    "band_end_local": "2021-05-28T13:24:53",
+    "band_start_local": "2021-05-20T01:21:28",
+    "first_local": "2021-05-21T19:09:00+02:00",
+    "first_utc": "2021-05-21T17:09:00Z",
+    "last_local": "2021-05-27T19:08:19+02:00",
+    "last_utc": "2021-05-27T17:08:19Z",
+    "median": {
+     "A": 4.0,
+     "D": 0.5035087719298246,
+     "F": 1.5,
+     "P": 0.11773618538324421,
+     "S": 14.039769083764268,
+     "gamma2": 0.568092417276663
+    },
+    "n": 4,
+    "n_by_orbit": {
+     "ASC": 2,
+     "DESC": 2
+    },
+    "n_by_subswath": {
+     "iw1": 2,
+     "iw2": 2
+    },
+    "run": 9,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2021-06-15T13:25:34",
+    "band_start_local": "2021-05-28T13:24:53",
+    "first_local": "2021-05-29T07:41:27+02:00",
+    "first_utc": "2021-05-29T05:41:27Z",
+    "last_local": "2021-06-14T19:09:02+02:00",
+    "last_utc": "2021-06-14T17:09:02Z",
+    "median": {
+     "A": 4.0,
+     "D": 0.38117283950617287,
+     "F": 1.5,
+     "P": 0.1411764705882353,
+     "S": 11.319409490323938,
+     "gamma2": 0.618982080040875
+    },
+    "n": 8,
+    "n_by_orbit": {
+     "ASC": 2,
+     "DESC": 6
+    },
+    "n_by_subswath": {
+     "iw1": 5,
+     "iw2": 3
+    },
+    "run": 10,
+    "state": "DAM4",
+    "state_label": "DAM 4"
+   },
+   {
+    "band_end_local": "2021-06-25T01:21:31",
+    "band_start_local": "2021-06-15T13:25:34",
+    "first_local": "2021-06-16T07:42:07+02:00",
+    "first_utc": "2021-06-16T05:42:07Z",
+    "last_local": "2021-06-23T07:33:59+02:00",
+    "last_utc": "2021-06-23T05:33:59Z",
+    "median": {
+     "A": 4.0,
+     "D": 0.009202453987730062,
+     "F": 2.0,
+     "P": 0.1470588235294118,
+     "S": 1.6770509831248424,
+     "gamma2": 0.4841448080579455
+    },
+    "n": 5,
+    "n_by_orbit": {
+     "ASC": 1,
+     "DESC": 4
+    },
+    "n_by_subswath": {
+     "iw1": 4,
+     "iw2": 1
+    },
+    "run": 11,
+    "state": "healthy",
+    "state_label": "healthy"
+   },
+   {
+    "band_end_local": "2021-07-13T01:20:50",
+    "band_start_local": "2021-06-25T01:21:31",
+    "first_local": "2021-06-26T19:09:02+02:00",
+    "first_utc": "2021-06-26T17:09:02Z",
+    "last_local": "2021-07-11T07:33:18+02:00",
+    "last_utc": "2021-07-11T05:33:18Z",
+    "median": {
+     "A": 5.0,
+     "D": 0.010631256054246044,
+     "F": 2.0,
+     "P": 0.13221288515406163,
+     "S": 29.090224144363454,
+     "gamma2": 0.5339303310415369
+    },
+    "n": 8,
+    "n_by_orbit": {
+     "ASC": 3,
+     "DESC": 5
+    },
+    "n_by_subswath": {
+     "iw1": 4,
+     "iw2": 4
+    },
+    "run": 12,
+    "state": "DAM3",
+    "state_label": "DAM 3"
+   },
+   {
+    "band_end_local": "2021-08-08T07:34:01",
+    "band_start_local": "2021-07-13T01:20:50",
+    "first_local": "2021-07-14T19:08:21+02:00",
+    "first_utc": "2021-07-14T17:08:21Z",
+    "last_local": "2021-07-29T07:34:01+02:00",
+    "last_utc": "2021-07-29T05:34:01Z",
+    "median": {
+     "A": 5.0,
+     "D": 0.0067226890756302525,
+     "F": 2.0,
+     "P": 0.12941176470588237,
+     "S": 39.535146107960415,
+     "gamma2": 0.38290226884474277
+    },
+    "n": 9,
+    "n_by_orbit": {
+     "ASC": 3,
+     "DESC": 6
+    },
+    "n_by_subswath": {
+     "iw1": 6,
+     "iw2": 3
+    },
+    "run": 13,
+    "state": "healthy",
+    "state_label": "healthy"
+   }
+  ],
+  "site": "LUMO",
+  "source_csv": "lumo_ocv_channels.csv",
+  "source_csv_sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb",
+  "state_rule": "four states; the plot bands follow the 13 consecutive damage_label runs of the time-sorted cohort, not fixed windows; dashed lines at the 12 midpoints between consecutive runs"
+ },
+ "n_cross_checks": 123,
+ "n_cross_checks_failed": 0,
+ "n_superseded": 24,
+ "series": {
+  "ASC": {
+   "n_by_state": {
+    "DAM3": 8,
+    "DAM4": 5,
+    "DAM6": 4,
+    "healthy": 40
+   },
+   "n_by_subswath": {
+    "iw1": 1,
+    "iw2": 56
+   },
+   "n_dates": 57,
+   "points": [
+    {
+     "acq_local": "2020-08-06T19:08:59+02:00",
+     "acq_utc": "2020-08-06T17:08:59Z",
+     "burst_id": "1fba8c00-c66e-45a0-b3c8-979e0e977110",
+     "date": "2020-08-06",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 10.0,
+      "D": 0.004001600640256103,
+      "F": 4.0,
+      "P": 0.16666666666666669,
+      "S": 179.73808722694253,
+      "gamma2": 0.03550748548152263
+     }
+    },
+    {
+     "acq_local": "2020-08-12T19:08:17+02:00",
+     "acq_utc": "2020-08-12T17:08:17Z",
+     "burst_id": "1eb4f46d-7f4b-494c-af22-b23c9caf0983",
+     "date": "2020-08-12",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 14.0,
+      "D": 0.00417910447761194,
+      "F": 8.0,
+      "P": 0.06638655462184874,
+      "S": 65.82541070040924,
+      "gamma2": 0.2468136367440821
+     }
+    },
+    {
+     "acq_local": "2020-08-18T19:08:59+02:00",
+     "acq_utc": "2020-08-18T17:08:59Z",
+     "burst_id": "5ce11ebe-7c38-4f30-a749-2063e1c987b9",
+     "date": "2020-08-18",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.00530035335689046,
+      "F": 4.0,
+      "P": 0.16767676767676765,
+      "S": 149.46815342703906,
+      "gamma2": 0.09162579077555079
+     }
+    },
+    {
+     "acq_local": "2020-08-24T19:08:18+02:00",
+     "acq_utc": "2020-08-24T17:08:18Z",
+     "burst_id": "81fec4d7-77a4-4aa4-bb0c-0fe0bbab9d20",
+     "date": "2020-08-24",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 10.0,
+      "D": 0.0034965034965034965,
+      "F": 3.0,
+      "P": 0.09764705882352942,
+      "S": 81.60300239574521,
+      "gamma2": 0.01264106807403012
+     }
+    },
+    {
+     "acq_local": "2020-08-30T19:09:00+02:00",
+     "acq_utc": "2020-08-30T17:09:00Z",
+     "burst_id": "c901fef2-7eba-4f1e-868d-538af03c1bb8",
+     "date": "2020-08-30",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.00530035335689046,
+      "F": 4.0,
+      "P": 0.1737373737373737,
+      "S": 111.27771065621761,
+      "gamma2": 0.07948399724909169
+     }
+    },
+    {
+     "acq_local": "2020-09-05T19:08:19+02:00",
+     "acq_utc": "2020-09-05T17:08:19Z",
+     "burst_id": "f851753a-9b33-442d-a569-011b634b6fb6",
+     "date": "2020-09-05",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.10588235294117646,
+      "S": 0.7071067811865476,
+      "gamma2": 0.5536156271490014
+     }
+    },
+    {
+     "acq_local": "2020-09-11T19:09:01+02:00",
+     "acq_utc": "2020-09-11T17:09:01Z",
+     "burst_id": "887ff85b-6eb9-47b1-81e7-cc687c49e5a8",
+     "date": "2020-09-11",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 9.0,
+      "D": 0.0028911018310311598,
+      "F": 5.0,
+      "P": 0.17845117845117844,
+      "S": 110.56649862089307,
+      "gamma2": 0.12884764177767238
+     }
+    },
+    {
+     "acq_local": "2020-09-17T19:08:19+02:00",
+     "acq_utc": "2020-09-17T17:08:19Z",
+     "burst_id": "6e92e785-d26c-4166-8390-1be658cfc826",
+     "date": "2020-09-17",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 14.0,
+      "D": 0.0048951048951048955,
+      "F": 4.0,
+      "P": 0.08487394957983195,
+      "S": 24.789419237296553,
+      "gamma2": 0.18751092999783903
+     }
+    },
+    {
+     "acq_local": "2020-09-23T19:09:01+02:00",
+     "acq_utc": "2020-09-23T17:09:01Z",
+     "burst_id": "6334a3a2-82a2-4b90-b5d1-0561c3175f7a",
+     "date": "2020-09-23",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.0031923383878691143,
+      "F": 3.0,
+      "P": 0.18181818181818182,
+      "S": 159.76251907127653,
+      "gamma2": 0.3950224002272286
+     }
+    },
+    {
+     "acq_local": "2020-09-29T19:08:19+02:00",
+     "acq_utc": "2020-09-29T17:08:19Z",
+     "burst_id": "51028cc5-1a76-435f-b2ec-98543700656c",
+     "date": "2020-09-29",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 5.0,
+      "D": 0.0020064205457463883,
+      "F": 2.0,
+      "P": 0.06588235294117648,
+      "S": 142.20900112158864,
+      "gamma2": 0.5664061308199306
+     }
+    },
+    {
+     "acq_local": "2020-10-05T19:09:01+02:00",
+     "acq_utc": "2020-10-05T17:09:01Z",
+     "burst_id": "132fc259-73be-4288-93cc-57370dc6e10d",
+     "date": "2020-10-05",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.0031923383878691143,
+      "F": 2.0,
+      "P": 0.20454545454545453,
+      "S": 177.76270172620576,
+      "gamma2": 0.12950812378483662
+     }
+    },
+    {
+     "acq_local": "2020-10-11T19:08:19+02:00",
+     "acq_utc": "2020-10-11T17:08:19Z",
+     "burst_id": "9b6c6316-525f-4b9b-9e9d-214a71aa1941",
+     "date": "2020-10-11",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.004852798447104497,
+      "F": 4.0,
+      "P": 0.059607843137254896,
+      "S": 98.54787894442195,
+      "gamma2": 0.109210051206722
+     }
+    },
+    {
+     "acq_local": "2020-10-17T19:09:01+02:00",
+     "acq_utc": "2020-10-17T17:09:01Z",
+     "burst_id": "1f58a51e-7f53-4892-92db-e14836ee5827",
+     "date": "2020-10-17",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 7.0,
+      "D": 0.002793296089385475,
+      "F": 2.0,
+      "P": 0.21212121212121213,
+      "S": 203.01452647331342,
+      "gamma2": 0.5156756907746942
+     }
+    },
+    {
+     "acq_local": "2020-10-23T19:08:19+02:00",
+     "acq_utc": "2020-10-23T17:08:19Z",
+     "burst_id": "761eefb7-c7ec-46c7-8dcc-9fcd21bc7baa",
+     "date": "2020-10-23",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 3.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.09411764705882353,
+      "S": 0.0,
+      "gamma2": 0.23183919426437644
+     }
+    },
+    {
+     "acq_local": "2020-10-29T18:09:01+01:00",
+     "acq_utc": "2020-10-29T17:09:01Z",
+     "burst_id": "58a15dcd-91a3-4504-8e99-78e859616a0b",
+     "date": "2020-10-29",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.0028469750889679717,
+      "F": 4.0,
+      "P": 0.18181818181818182,
+      "S": 91.77460501140825,
+      "gamma2": 0.07858812299199114
+     }
+    },
+    {
+     "acq_local": "2020-11-04T18:08:19+01:00",
+     "acq_utc": "2020-11-04T17:08:19Z",
+     "burst_id": "48df7fa7-b928-457f-b87b-f986183b999c",
+     "date": "2020-11-04",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.0038461538461538464,
+      "F": 3.0,
+      "P": 0.07914438502673796,
+      "S": 122.53226932034431,
+      "gamma2": 0.23302967916909548
+     }
+    },
+    {
+     "acq_local": "2020-11-10T18:09:01+01:00",
+     "acq_utc": "2020-11-10T17:09:01Z",
+     "burst_id": "dbf33df8-201e-4a68-8239-726b2d5a27be",
+     "date": "2020-11-10",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 14.0,
+      "D": 0.004964539007092199,
+      "F": 4.0,
+      "P": 0.19264069264069258,
+      "S": 105.10466115219803,
+      "gamma2": 0.004241146817945706
+     }
+    },
+    {
+     "acq_local": "2020-11-16T18:08:19+01:00",
+     "acq_utc": "2020-11-16T17:08:19Z",
+     "burst_id": "93cf7160-049e-4307-b465-547d1d332b9d",
+     "date": "2020-11-16",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.0038461538461538464,
+      "F": 3.0,
+      "P": 0.07914438502673794,
+      "S": 122.8148172609599,
+      "gamma2": 0.2055857166485132
+     }
+    },
+    {
+     "acq_local": "2020-11-22T18:09:01+01:00",
+     "acq_utc": "2020-11-22T17:09:01Z",
+     "burst_id": "c776c5a6-7412-44b2-8f3b-1dd51ee3a840",
+     "date": "2020-11-22",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.003900709219858156,
+      "F": 4.0,
+      "P": 0.1542699724517906,
+      "S": 108.20763633858505,
+      "gamma2": 0.03132793341629082
+     }
+    },
+    {
+     "acq_local": "2020-11-28T18:08:19+01:00",
+     "acq_utc": "2020-11-28T17:08:19Z",
+     "burst_id": "59e1678a-77f2-458c-99e4-caf3b3339347",
+     "date": "2020-11-28",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.0029850746268656717,
+      "F": 2.0,
+      "P": 0.09411764705882353,
+      "S": 166.25469918170734,
+      "gamma2": 0.03612571824206689
+     }
+    },
+    {
+     "acq_local": "2020-12-04T17:09:00+01:00",
+     "acq_utc": "2020-12-04T16:09:00Z",
+     "burst_id": "fe681d2c-63dc-4617-bd56-8b519defa1de",
+     "date": "2020-12-04",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.0038869257950530037,
+      "F": 5.0,
+      "P": 0.2066115702479339,
+      "S": 72.90444328873014,
+      "gamma2": 0.011794923039277027
+     }
+    },
+    {
+     "acq_local": "2020-12-10T18:08:18+01:00",
+     "acq_utc": "2020-12-10T17:08:18Z",
+     "burst_id": "9a38eb7b-0b88-4da6-9d48-aea804988148",
+     "date": "2020-12-10",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.6666666666666666,
+      "F": 1.0,
+      "P": 0.1,
+      "S": 0.25,
+      "gamma2": 0.351152594722872
+     }
+    },
+    {
+     "acq_local": "2020-12-16T18:09:00+01:00",
+     "acq_utc": "2020-12-16T17:09:00Z",
+     "burst_id": "a38973bf-3625-4a56-a49a-6528c2c3f57e",
+     "date": "2020-12-16",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.004655493482309125,
+      "F": 5.0,
+      "P": 0.16767676767676765,
+      "S": 222.6089845446495,
+      "gamma2": 0.00017165676800742275
+     }
+    },
+    {
+     "acq_local": "2020-12-22T18:08:18+01:00",
+     "acq_utc": "2020-12-22T17:08:18Z",
+     "burst_id": "d5014868-9f72-421e-b62c-63a13ba6b8ca",
+     "date": "2020-12-22",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 7.0,
+      "D": 0.0052238805970149255,
+      "F": 2.0,
+      "P": 0.10084033613445378,
+      "S": 95.14811225298233,
+      "gamma2": 0.1115141314184796
+     }
+    },
+    {
+     "acq_local": "2020-12-28T18:08:59+01:00",
+     "acq_utc": "2020-12-28T17:08:59Z",
+     "burst_id": "5dcb1fc1-2d02-421a-9858-211eddba0135",
+     "date": "2020-12-28",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 14.0,
+      "D": 0.004345127250155183,
+      "F": 3.0,
+      "P": 0.18398268398268394,
+      "S": 246.0722682963072,
+      "gamma2": 0.04725324222254917
+     }
+    },
+    {
+     "acq_local": "2021-01-03T18:08:17+01:00",
+     "acq_utc": "2021-01-03T17:08:17Z",
+     "burst_id": "72eb14f7-265d-446c-bf84-ef8dece1c228",
+     "date": "2021-01-03",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.003088803088803089,
+      "F": 3.0,
+      "P": 0.08088235294117646,
+      "S": 147.03321265958925,
+      "gamma2": 0.17665179060391992
+     }
+    },
+    {
+     "acq_local": "2021-01-09T18:08:59+01:00",
+     "acq_utc": "2021-01-09T17:08:59Z",
+     "burst_id": "291652f8-898c-4c50-83d4-30f03ddfb1fc",
+     "date": "2021-01-09",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.00487012987012987,
+      "F": 4.0,
+      "P": 0.03215686274509804,
+      "S": 39.32457529614558,
+      "gamma2": 0.022268814060424785
+     }
+    },
+    {
+     "acq_local": "2021-01-15T18:08:17+01:00",
+     "acq_utc": "2021-01-15T17:08:17Z",
+     "burst_id": "41b72cc4-e876-480a-aa1f-7bc0ba5ae7fd",
+     "date": "2021-01-15",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.005952380952380952,
+      "F": 2.0,
+      "P": 0.06176470588235294,
+      "S": 166.50469212607794,
+      "gamma2": 0.3454373639090914
+     }
+    },
+    {
+     "acq_local": "2021-01-21T18:08:58+01:00",
+     "acq_utc": "2021-01-21T17:08:58Z",
+     "burst_id": "5eaa959c-fc6c-4478-b9e8-8f271c24edb2",
+     "date": "2021-01-21",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.004132231404958678,
+      "F": 5.0,
+      "P": 0.03167420814479637,
+      "S": 71.96008920137484,
+      "gamma2": 0.03766308240882375
+     }
+    },
+    {
+     "acq_local": "2021-01-27T18:08:16+01:00",
+     "acq_utc": "2021-01-27T17:08:16Z",
+     "burst_id": "5b1bcf9f-18a7-4965-843e-a20bc49c1be5",
+     "date": "2021-01-27",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 5.0,
+      "D": 0.01282051282051282,
+      "F": 2.0,
+      "P": 0.10823529411764705,
+      "S": 14.801351289662723,
+      "gamma2": 0.23764553445330766
+     }
+    },
+    {
+     "acq_local": "2021-02-02T18:08:58+01:00",
+     "acq_utc": "2021-02-02T17:08:58Z",
+     "burst_id": "2acaeb60-2f78-4662-8726-eee35989d685",
+     "date": "2021-02-02",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 10.0,
+      "D": 0.003861003861003861,
+      "F": 3.0,
+      "P": 0.04,
+      "S": 143.23142113377216,
+      "gamma2": 0.12743149375547302
+     }
+    },
+    {
+     "acq_local": "2021-02-08T18:08:16+01:00",
+     "acq_utc": "2021-02-08T17:08:16Z",
+     "burst_id": "173d796c-11a1-4f25-bfef-76a3a1858cb4",
+     "date": "2021-02-08",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.004303599374021909,
+      "F": 8.0,
+      "P": 0.026737967914438502,
+      "S": 209.7514073672975,
+      "gamma2": 0.1528104584194251
+     }
+    },
+    {
+     "acq_local": "2021-02-14T18:08:58+01:00",
+     "acq_utc": "2021-02-14T17:08:58Z",
+     "burst_id": "1a8722cf-4cbe-4dbe-af88-c26740d5cfbd",
+     "date": "2021-02-14",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 14.0,
+      "D": 0.004191616766467066,
+      "F": 6.0,
+      "P": 0.11038961038961038,
+      "S": 33.25143851422531,
+      "gamma2": 0.08944735010446253
+     }
+    },
+    {
+     "acq_local": "2021-02-20T18:08:16+01:00",
+     "acq_utc": "2021-02-20T17:08:16Z",
+     "burst_id": "af9b5560-9514-41c3-84cb-96ebbc4c3013",
+     "date": "2021-02-20",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.004563004563004563,
+      "F": 3.0,
+      "P": 0.02895927601809955,
+      "S": 72.1637273863806,
+      "gamma2": 0.16280417765398034
+     }
+    },
+    {
+     "acq_local": "2021-03-04T18:08:15+01:00",
+     "acq_utc": "2021-03-04T17:08:15Z",
+     "burst_id": "06be1b5f-7ec3-4ce5-b9b6-66911acc1374",
+     "date": "2021-03-04",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 16.0,
+      "D": 0.005194805194805195,
+      "F": 6.0,
+      "P": 0.03455882352941177,
+      "S": 38.58538623948191,
+      "gamma2": 0.021898682523442847
+     }
+    },
+    {
+     "acq_local": "2021-03-10T18:08:57+01:00",
+     "acq_utc": "2021-03-10T17:08:57Z",
+     "burst_id": "d2aa09c9-74ef-4459-8b86-efe086e1264f",
+     "date": "2021-03-10",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 12.0,
+      "D": 0.004195804195804196,
+      "F": 4.0,
+      "P": 0.08333333333333333,
+      "S": 69.99216225962574,
+      "gamma2": 0.32696471758195506
+     }
+    },
+    {
+     "acq_local": "2021-03-22T18:08:58+01:00",
+     "acq_utc": "2021-03-22T17:08:58Z",
+     "burst_id": "eb75551d-88fc-456f-9442-bab6a07b29ca",
+     "date": "2021-03-22",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 9.0,
+      "D": 0.003159003159003159,
+      "F": 3.0,
+      "P": 0.08758169934640522,
+      "S": 68.59525232824286,
+      "gamma2": 0.2977066572067652
+     }
+    },
+    {
+     "acq_local": "2021-03-28T19:08:16+02:00",
+     "acq_utc": "2021-03-28T17:08:16Z",
+     "burst_id": "4c900c3a-2bd2-4a81-bb9c-0c31b76c68be",
+     "date": "2021-03-28",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.005019305019305019,
+      "F": 3.0,
+      "P": 0.09324009324009322,
+      "S": 103.7147316543324,
+      "gamma2": 0.21172317730596513
+     }
+    },
+    {
+     "acq_local": "2021-04-03T19:08:58+02:00",
+     "acq_utc": "2021-04-03T17:08:58Z",
+     "burst_id": "b8ad92f0-8e13-465d-8ac3-346e7402cf4b",
+     "date": "2021-04-03",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.004230769230769231,
+      "F": 3.0,
+      "P": 0.0588235294117647,
+      "S": 128.72740112987947,
+      "gamma2": 0.06103856591826146
+     }
+    },
+    {
+     "acq_local": "2021-04-09T19:08:16+02:00",
+     "acq_utc": "2021-04-09T17:08:16Z",
+     "burst_id": "9980849c-32b9-47ef-a9a8-91cada70d3da",
+     "date": "2021-04-09",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 12.0,
+      "D": 0.005128205128205128,
+      "F": 3.0,
+      "P": 0.06565656565656565,
+      "S": 167.97257133896062,
+      "gamma2": 0.0015586598335813084
+     }
+    },
+    {
+     "acq_local": "2021-04-15T19:08:58+02:00",
+     "acq_utc": "2021-04-15T17:08:58Z",
+     "burst_id": "83bfdd50-c42e-4d30-bba2-707bd13ed97c",
+     "date": "2021-04-15",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.003319713993871297,
+      "F": 5.0,
+      "P": 0.07511312217194571,
+      "S": 200.15479216946662,
+      "gamma2": 0.08703828669310064
+     }
+    },
+    {
+     "acq_local": "2021-04-21T19:08:17+02:00",
+     "acq_utc": "2021-04-21T17:08:17Z",
+     "burst_id": "ac71fe73-145f-496d-a7e7-82343b8649ec",
+     "date": "2021-04-21",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 10.0,
+      "D": 0.003121098626716604,
+      "F": 4.0,
+      "P": 0.11515151515151516,
+      "S": 183.80097932274464,
+      "gamma2": 0.05284748047813409
+     }
+    },
+    {
+     "acq_local": "2021-04-27T19:08:59+02:00",
+     "acq_utc": "2021-04-27T17:08:59Z",
+     "burst_id": "e349d1a1-8c0c-492d-b891-70064a2ff169",
+     "date": "2021-04-27",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 10.0,
+      "D": 0.0034965034965034965,
+      "F": 5.0,
+      "P": 0.09294117647058824,
+      "S": 101.97847812161153,
+      "gamma2": 0.12072218611955439
+     }
+    },
+    {
+     "acq_local": "2021-05-03T19:08:17+02:00",
+     "acq_utc": "2021-05-03T17:08:17Z",
+     "burst_id": "437f6fce-9e22-46c2-af2f-403936502496",
+     "date": "2021-05-03",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 9.0,
+      "D": 0.0022982635342185904,
+      "F": 5.0,
+      "P": 0.07407407407407408,
+      "S": 141.5629249782409,
+      "gamma2": 0.08962750621542473
+     }
+    },
+    {
+     "acq_local": "2021-05-09T19:08:59+02:00",
+     "acq_utc": "2021-05-09T17:08:59Z",
+     "burst_id": "415aa9ea-85ca-4688-8553-0ab34618fb76",
+     "date": "2021-05-09",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 11.0,
+      "D": 0.0038461538461538464,
+      "F": 3.0,
+      "P": 0.08983957219251336,
+      "S": 145.46593705392067,
+      "gamma2": 0.09528063582522737
+     }
+    },
+    {
+     "acq_local": "2021-05-15T19:08:18+02:00",
+     "acq_utc": "2021-05-15T17:08:18Z",
+     "burst_id": "92dda895-c9aa-4327-9365-f7fdf86e893f",
+     "date": "2021-05-15",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.10606060606060606,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6558787364477665
+     }
+    },
+    {
+     "acq_local": "2021-05-21T19:09:00+02:00",
+     "acq_utc": "2021-05-21T17:09:00Z",
+     "burst_id": "42237a73-e83f-4e41-9b11-0c843ff523a4",
+     "date": "2021-05-21",
+     "run": 9,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.003651685393258427,
+      "F": 9.0,
+      "P": 0.049773755656108594,
+      "S": 111.39747057139195,
+      "gamma2": 0.099368362309298
+     }
+    },
+    {
+     "acq_local": "2021-05-27T19:08:19+02:00",
+     "acq_utc": "2021-05-27T17:08:19Z",
+     "burst_id": "616ab173-d300-467b-b1f7-567278e76897",
+     "date": "2021-05-27",
+     "run": 9,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.10606060606060606,
+      "S": 0.7071067811865476,
+      "gamma2": 0.689153606179778
+     }
+    },
+    {
+     "acq_local": "2021-06-02T19:09:01+02:00",
+     "acq_utc": "2021-06-02T17:09:01Z",
+     "burst_id": "613da2d2-8dd1-4116-b11c-e6dc2dca0015",
+     "date": "2021-06-02",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.006622516556291391,
+      "F": 2.0,
+      "P": 0.06764705882352941,
+      "S": 37.00084458495508,
+      "gamma2": 0.38600891738887155
+     }
+    },
+    {
+     "acq_local": "2021-06-14T19:09:02+02:00",
+     "acq_utc": "2021-06-14T17:09:02Z",
+     "burst_id": "e0dd3d31-4e54-4134-a2b3-e9e94b556018",
+     "date": "2021-06-14",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 16.0,
+      "D": 0.00557297109021247,
+      "F": 4.0,
+      "P": 0.07794117647058824,
+      "S": 155.53040548796238,
+      "gamma2": 0.06827276707085779
+     }
+    },
+    {
+     "acq_local": "2021-06-20T19:08:20+02:00",
+     "acq_utc": "2021-06-20T17:08:20Z",
+     "burst_id": "968a97a2-1f27-474d-a83c-1502185fb96e",
+     "date": "2021-06-20",
+     "run": 11,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.0049586776859504135,
+      "F": 4.0,
+      "P": 0.07921568627450978,
+      "S": 122.01511746045607,
+      "gamma2": 0.29827667292500587
+     }
+    },
+    {
+     "acq_local": "2021-06-26T19:09:02+02:00",
+     "acq_utc": "2021-06-26T17:09:02Z",
+     "burst_id": "550a2403-19f1-47fe-b322-4be170ff6ec0",
+     "date": "2021-06-26",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 15.0,
+      "D": 0.004694835680751174,
+      "F": 8.0,
+      "P": 0.05019607843137255,
+      "S": 148.6860376019812,
+      "gamma2": 0.16150984239423538
+     }
+    },
+    {
+     "acq_local": "2021-07-02T19:08:21+02:00",
+     "acq_utc": "2021-07-02T17:08:21Z",
+     "burst_id": "4c817ed1-f784-4200-b34d-54cd9b91ccfd",
+     "date": "2021-07-02",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 13.0,
+      "D": 0.003651685393258427,
+      "F": 7.0,
+      "P": 0.04796380090497738,
+      "S": 162.31427256074272,
+      "gamma2": 0.09627162793404212
+     }
+    },
+    {
+     "acq_local": "2021-07-08T19:09:03+02:00",
+     "acq_utc": "2021-07-08T17:09:03Z",
+     "burst_id": "a77f5aba-e31b-444c-b378-be6a05ac6f1c",
+     "date": "2021-07-08",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.005333333333333333,
+      "F": 3.0,
+      "P": 0.029411764705882353,
+      "S": 40.038262949333856,
+      "gamma2": 0.42759541662549
+     }
+    },
+    {
+     "acq_local": "2021-07-14T19:08:21+02:00",
+     "acq_utc": "2021-07-14T17:08:21Z",
+     "burst_id": "3801dfa4-5872-44fe-8538-84c178cac83f",
+     "date": "2021-07-14",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0014044943820224719,
+      "F": 2.0,
+      "P": 0.15151515151515152,
+      "S": 89.00877765703785,
+      "gamma2": 0.5370744714576645
+     }
+    },
+    {
+     "acq_local": "2021-07-20T19:09:04+02:00",
+     "acq_utc": "2021-07-20T17:09:04Z",
+     "burst_id": "6d22510a-7c1d-4a43-a77e-4c83b3fcd231",
+     "date": "2021-07-20",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 9.0,
+      "D": 0.0034615384615384616,
+      "F": 4.0,
+      "P": 0.050980392156862744,
+      "S": 138.76082985206799,
+      "gamma2": 0.0005036620253111906
+     }
+    },
+    {
+     "acq_local": "2021-07-26T19:08:22+02:00",
+     "acq_utc": "2021-07-26T17:08:22Z",
+     "burst_id": "531a000b-c67c-4e09-9601-105619b92dfd",
+     "date": "2021-07-26",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 17.0,
+      "D": 0.0047752808988764045,
+      "F": 9.0,
+      "P": 0.0873440285204991,
+      "S": 129.75230595120067,
+      "gamma2": 0.20781866153409825
+     }
+    }
+   ]
+  },
+  "DESC": {
+   "n_by_state": {
+    "DAM3": 17,
+    "DAM4": 11,
+    "DAM6": 12,
+    "healthy": 81
+   },
+   "n_by_subswath": {
+    "iw1": 108,
+    "iw2": 13
+   },
+   "n_dates": 121,
+   "points": [
+    {
+     "acq_local": "2020-08-02T07:41:22+02:00",
+     "acq_utc": "2020-08-02T05:41:22Z",
+     "burst_id": "05e4c390-f0f7-4e4d-8f0c-9e3f428e696b",
+     "date": "2020-08-02",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.004340277777777778,
+      "F": 2.0,
+      "P": 0.25666666666666665,
+      "S": 57.468252104966595,
+      "gamma2": 0.8624535129217228
+     }
+    },
+    {
+     "acq_local": "2020-08-03T07:33:56+02:00",
+     "acq_utc": "2020-08-03T05:33:56Z",
+     "burst_id": "1b7cfc8c-fc07-4871-8165-cf337d53ebbb",
+     "date": "2020-08-03",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 10.0,
+      "D": 0.015337423312883436,
+      "F": 2.0,
+      "P": 0.09882352941176473,
+      "S": 96.80253095864799,
+      "gamma2": 0.31696055541415974
+     }
+    },
+    {
+     "acq_local": "2020-08-08T07:42:04+02:00",
+     "acq_utc": "2020-08-08T05:42:04Z",
+     "burst_id": "1bab486d-1bcc-48bf-99ea-d6cfc1831972",
+     "date": "2020-08-08",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.004166666666666667,
+      "F": 2.0,
+      "P": 0.24444444444444444,
+      "S": 48.01851494765095,
+      "gamma2": 0.6028042672738755
+     }
+    },
+    {
+     "acq_local": "2020-08-09T07:33:14+02:00",
+     "acq_utc": "2020-08-09T05:33:14Z",
+     "burst_id": "5ef02455-7b67-47cc-ad26-b41f390ab1f2",
+     "date": "2020-08-09",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.11470588235294117,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6038617322742125
+     }
+    },
+    {
+     "acq_local": "2020-08-14T05:41:23+02:00",
+     "acq_utc": "2020-08-14T03:41:23Z",
+     "burst_id": "25891b67-3cd2-4870-be09-459c6be2dac5",
+     "date": "2020-08-14",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4666666666666667,
+      "S": 0.5,
+      "gamma2": 0.8631426045383399
+     }
+    },
+    {
+     "acq_local": "2020-08-15T05:33:56+02:00",
+     "acq_utc": "2020-08-15T03:33:56Z",
+     "burst_id": "ce5608d1-c8d7-48b6-8d5f-d0f6fc5bb795",
+     "date": "2020-08-15",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.0823529411764706,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6913288658242199
+     }
+    },
+    {
+     "acq_local": "2020-08-20T07:42:07+02:00",
+     "acq_utc": "2020-08-20T05:42:07Z",
+     "burst_id": "7f97f4b6-0be8-4a6f-a9bf-f38ca77fa613",
+     "date": "2020-08-20",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.005357142857142857,
+      "F": 2.0,
+      "P": 0.2611111111111111,
+      "S": 17.919573407620835,
+      "gamma2": 0.7194124932523008
+     }
+    },
+    {
+     "acq_local": "2020-08-21T07:33:15+02:00",
+     "acq_utc": "2020-08-21T05:33:15Z",
+     "burst_id": "3fdf35a7-c218-41b0-8413-262cac5d1239",
+     "date": "2020-08-21",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.12941176470588234,
+      "S": 0.5,
+      "gamma2": 0.6345860024046182
+     }
+    },
+    {
+     "acq_local": "2020-08-26T07:41:23+02:00",
+     "acq_utc": "2020-08-26T05:41:23Z",
+     "burst_id": "b7796371-8fd6-4b0f-9515-4f72b4bae47b",
+     "date": "2020-08-26",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 7.0,
+      "D": 0.002256608639587363,
+      "F": 4.0,
+      "P": 0.19523809523809527,
+      "S": 32.722706339850326,
+      "gamma2": 0.03359059243964613
+     }
+    },
+    {
+     "acq_local": "2020-08-27T07:33:57+02:00",
+     "acq_utc": "2020-08-27T05:33:57Z",
+     "burst_id": "8c6eee0a-26f8-4568-89da-7094ccd630c7",
+     "date": "2020-08-27",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 12.0,
+      "D": 0.010084033613445379,
+      "F": 4.0,
+      "P": 0.0411764705882353,
+      "S": 47.96121117922043,
+      "gamma2": 0.08635592077605832
+     }
+    },
+    {
+     "acq_local": "2020-09-01T07:42:05+02:00",
+     "acq_utc": "2020-09-01T05:42:05Z",
+     "burst_id": "665c139d-3fc1-42c6-b265-e926f6d6832e",
+     "date": "2020-09-01",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 25.0,
+      "D": 0.0074272133095662505,
+      "F": 14.0,
+      "P": 0.028000000000000004,
+      "S": 33.45573792341157,
+      "gamma2": 0.017605460483876872
+     }
+    },
+    {
+     "acq_local": "2020-09-02T07:33:16+02:00",
+     "acq_utc": "2020-09-02T05:33:16Z",
+     "burst_id": "e5a6bcf9-2c09-4121-84ae-b3b79158f7b5",
+     "date": "2020-09-02",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.07941176470588235,
+      "S": 29.0269271539376,
+      "gamma2": 0.25849401127366367
+     }
+    },
+    {
+     "acq_local": "2020-09-07T07:41:27+02:00",
+     "acq_utc": "2020-09-07T05:41:27Z",
+     "burst_id": "1adff613-4577-46d5-b7df-2c61b9276aaa",
+     "date": "2020-09-07",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4666666666666667,
+      "S": 0.5,
+      "gamma2": 0.8388068665605408
+     }
+    },
+    {
+     "acq_local": "2020-09-08T07:33:58+02:00",
+     "acq_utc": "2020-09-08T05:33:58Z",
+     "burst_id": "90cf54de-649c-4d4d-a76c-e04604122384",
+     "date": "2020-09-08",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 7.0,
+      "D": 0.0058823529411764705,
+      "F": 4.0,
+      "P": 0.1277310924369748,
+      "S": 23.799331151637574,
+      "gamma2": 0.3670890753664414
+     }
+    },
+    {
+     "acq_local": "2020-09-13T07:42:06+02:00",
+     "acq_utc": "2020-09-13T05:42:06Z",
+     "burst_id": "1a9d65f9-8a18-4cdd-ad86-44193085cb3a",
+     "date": "2020-09-13",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.35,
+      "S": 0.5,
+      "gamma2": 0.9375001278026388
+     }
+    },
+    {
+     "acq_local": "2020-09-14T07:33:16+02:00",
+     "acq_utc": "2020-09-14T05:33:16Z",
+     "burst_id": "60f0f0cf-b827-494e-90e0-4be034745c4d",
+     "date": "2020-09-14",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.12941176470588234,
+      "S": 0.5,
+      "gamma2": 0.6508905022667124
+     }
+    },
+    {
+     "acq_local": "2020-09-19T07:41:24+02:00",
+     "acq_utc": "2020-09-19T05:41:24Z",
+     "burst_id": "b8137539-44b0-4b27-bb30-73e87d9b6813",
+     "date": "2020-09-19",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.005263157894736842,
+      "F": 2.0,
+      "P": 0.3444444444444445,
+      "S": 18.24828759089466,
+      "gamma2": 0.20185580618341523
+     }
+    },
+    {
+     "acq_local": "2020-09-20T07:33:58+02:00",
+     "acq_utc": "2020-09-20T05:33:58Z",
+     "burst_id": "72ccc03a-b8e4-4339-a8f8-fe452f41f6ce",
+     "date": "2020-09-20",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.1970588235294118,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6709644544703316
+     }
+    },
+    {
+     "acq_local": "2020-09-25T07:42:09+02:00",
+     "acq_utc": "2020-09-25T05:42:09Z",
+     "burst_id": "248a0ba7-a5d6-4bbf-af5f-671075108dfa",
+     "date": "2020-09-25",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.005208333333333333,
+      "F": 2.0,
+      "P": 0.2388888888888889,
+      "S": 47.01063709417264,
+      "gamma2": 0.44207280421512357
+     }
+    },
+    {
+     "acq_local": "2020-09-26T07:33:16+02:00",
+     "acq_utc": "2020-09-26T05:33:16Z",
+     "burst_id": "04463a20-d521-40c0-b592-ca269e5ab30d",
+     "date": "2020-09-26",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.0980392156862745,
+      "S": 0.47140452079101997,
+      "gamma2": 0.7027085110967536
+     }
+    },
+    {
+     "acq_local": "2020-10-01T07:41:27+02:00",
+     "acq_utc": "2020-10-01T05:41:27Z",
+     "burst_id": "2bc13eae-fc2e-4ac8-a67a-4e138a09a47f",
+     "date": "2020-10-01",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008771929824561403,
+      "F": 2.0,
+      "P": 0.25333333333333335,
+      "S": 22.095248357961502,
+      "gamma2": 0.5705148438286012
+     }
+    },
+    {
+     "acq_local": "2020-10-02T07:33:58+02:00",
+     "acq_utc": "2020-10-02T05:33:58Z",
+     "burst_id": "ff57d6e0-47db-4123-8c5b-30afcf7174a1",
+     "date": "2020-10-02",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008403361344537815,
+      "F": 2.0,
+      "P": 0.16941176470588237,
+      "S": 23.000869548780106,
+      "gamma2": 0.5641558920858369
+     }
+    },
+    {
+     "acq_local": "2020-10-07T07:42:07+02:00",
+     "acq_utc": "2020-10-07T05:42:07Z",
+     "burst_id": "7a7703b8-d39a-4b2b-8646-cce8a30db5a2",
+     "date": "2020-10-07",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.39166666666666666,
+      "S": 0.5,
+      "gamma2": 0.9041684971065903
+     }
+    },
+    {
+     "acq_local": "2020-10-08T07:33:17+02:00",
+     "acq_utc": "2020-10-08T05:33:17Z",
+     "burst_id": "f3889a87-b9bc-4694-9fa2-d68772e8fb2f",
+     "date": "2020-10-08",
+     "run": 1,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.006779661016949152,
+      "F": 2.0,
+      "P": 0.10588235294117648,
+      "S": 29.50423698386386,
+      "gamma2": 0.22956222097222534
+     }
+    },
+    {
+     "acq_local": "2020-10-13T07:41:25+02:00",
+     "acq_utc": "2020-10-13T05:41:25Z",
+     "burst_id": "751578ae-b768-4edf-a873-1a8aacda7673",
+     "date": "2020-10-13",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4666666666666667,
+      "S": 0.5,
+      "gamma2": 0.9352587278017817
+     }
+    },
+    {
+     "acq_local": "2020-10-14T07:33:59+02:00",
+     "acq_utc": "2020-10-14T05:33:59Z",
+     "burst_id": "b1c9ae90-86ee-4e56-9390-c776667bee80",
+     "date": "2020-10-14",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 8.0,
+      "D": 0.0067226890756302525,
+      "F": 4.0,
+      "P": 0.11764705882352942,
+      "S": 35.20520203038182,
+      "gamma2": 0.17892348726947502
+     }
+    },
+    {
+     "acq_local": "2020-10-19T07:42:09+02:00",
+     "acq_utc": "2020-10-19T05:42:09Z",
+     "burst_id": "5e3b1bc8-60a2-4d7f-b4f3-a0c53449a37f",
+     "date": "2020-10-19",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007142857142857143,
+      "F": 2.0,
+      "P": 0.25,
+      "S": 14.221462653327892,
+      "gamma2": 0.6520239972566766
+     }
+    },
+    {
+     "acq_local": "2020-10-20T07:33:16+02:00",
+     "acq_utc": "2020-10-20T05:33:16Z",
+     "burst_id": "edebbe82-d4d2-4643-aede-efae5b630d5f",
+     "date": "2020-10-20",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.006779661016949152,
+      "F": 2.0,
+      "P": 0.07941176470588235,
+      "S": 29.526471174185378,
+      "gamma2": 0.23954217360840266
+     }
+    },
+    {
+     "acq_local": "2020-10-25T06:41:27+01:00",
+     "acq_utc": "2020-10-25T05:41:27Z",
+     "burst_id": "4bfd4508-9880-4925-b898-3915d954d4fc",
+     "date": "2020-10-25",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.3166666666666667,
+      "S": 0.5,
+      "gamma2": 0.9159676976384109
+     }
+    },
+    {
+     "acq_local": "2020-10-26T06:33:59+01:00",
+     "acq_utc": "2020-10-26T05:33:59Z",
+     "burst_id": "b9e31196-3f35-4b6e-8c75-54d42c368234",
+     "date": "2020-10-26",
+     "run": 2,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.010084033613445379,
+      "F": 2.0,
+      "P": 0.15294117647058827,
+      "S": 38.50577157316088,
+      "gamma2": 0.34197868895769634
+     }
+    },
+    {
+     "acq_local": "2020-10-31T06:42:07+01:00",
+     "acq_utc": "2020-10-31T05:42:07Z",
+     "burst_id": "2f0da6d6-6042-468a-af9a-5d5fdfbc5008",
+     "date": "2020-10-31",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.017361111111111112,
+      "F": 2.0,
+      "P": 0.23666666666666666,
+      "S": 29.006206232459977,
+      "gamma2": 0.7525766936582439
+     }
+    },
+    {
+     "acq_local": "2020-11-01T06:33:17+01:00",
+     "acq_utc": "2020-11-01T05:33:17Z",
+     "burst_id": "c0eb272f-8530-4222-956b-672be137f02b",
+     "date": "2020-11-01",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.11470588235294117,
+      "S": 0.7071067811865476,
+      "gamma2": 0.71438858635618
+     }
+    },
+    {
+     "acq_local": "2020-11-06T06:41:25+01:00",
+     "acq_utc": "2020-11-06T05:41:25Z",
+     "burst_id": "a103d9d6-bbff-4f0e-9700-37426471bdf8",
+     "date": "2020-11-06",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007017543859649123,
+      "F": 2.0,
+      "P": 0.3041666666666667,
+      "S": 28.359301824974466,
+      "gamma2": 0.40695953675596497
+     }
+    },
+    {
+     "acq_local": "2020-11-07T06:33:58+01:00",
+     "acq_utc": "2020-11-07T05:33:58Z",
+     "burst_id": "0ab9e156-ae9b-4ca8-be9b-4db441237af9",
+     "date": "2020-11-07",
+     "run": 3,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.2235294117647059,
+      "S": 0.5,
+      "gamma2": 0.6948248128666658
+     }
+    },
+    {
+     "acq_local": "2020-11-12T06:42:09+01:00",
+     "acq_utc": "2020-11-12T05:42:09Z",
+     "burst_id": "3c874db5-b6c7-4476-8bbf-3df9de1776be",
+     "date": "2020-11-12",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.25833333333333336,
+      "S": 0.7071067811865476,
+      "gamma2": 0.9223456584663746
+     }
+    },
+    {
+     "acq_local": "2020-11-13T06:33:16+01:00",
+     "acq_utc": "2020-11-13T05:33:16Z",
+     "burst_id": "8476c894-ce61-4962-a8cc-9307c70069e9",
+     "date": "2020-11-13",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.12941176470588234,
+      "S": 0.5,
+      "gamma2": 0.7049207422313715
+     }
+    },
+    {
+     "acq_local": "2020-11-18T06:41:24+01:00",
+     "acq_utc": "2020-11-18T05:41:24Z",
+     "burst_id": "69344743-4f9d-4aa2-a88c-dcb2b2a352dd",
+     "date": "2020-11-18",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.4166666666666667,
+      "S": 0.47140452079104006,
+      "gamma2": 0.921576261092912
+     }
+    },
+    {
+     "acq_local": "2020-11-19T06:33:58+01:00",
+     "acq_utc": "2020-11-19T05:33:58Z",
+     "burst_id": "64e2540c-d023-4b7b-8b0c-3f6e2736da8d",
+     "date": "2020-11-19",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.007668711656441718,
+      "F": 2.0,
+      "P": 0.1458823529411765,
+      "S": 64.20124609382593,
+      "gamma2": 0.358727341021492
+     }
+    },
+    {
+     "acq_local": "2020-11-24T06:42:09+01:00",
+     "acq_utc": "2020-11-24T05:42:09Z",
+     "burst_id": "2b8f1cb6-112b-4127-a773-596df5a29de2",
+     "date": "2020-11-24",
+     "run": 4,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.33888888888888885,
+      "S": 0.0,
+      "gamma2": 0.8837277587875045
+     }
+    },
+    {
+     "acq_local": "2020-11-25T06:33:16+01:00",
+     "acq_utc": "2020-11-25T05:33:16Z",
+     "burst_id": "52ff6c6a-2895-4cc8-b76d-1fb08f83ae06",
+     "date": "2020-11-25",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.2222222222222222,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6675416826029578
+     }
+    },
+    {
+     "acq_local": "2020-11-30T06:41:27+01:00",
+     "acq_utc": "2020-11-30T05:41:27Z",
+     "burst_id": "25b3dc6f-e757-41e0-a24b-3ae8831e2136",
+     "date": "2020-11-30",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.005517241379310344,
+      "F": 2.0,
+      "P": 0.1666666666666667,
+      "S": 71.02816342831905,
+      "gamma2": 0.8574826302620505
+     }
+    },
+    {
+     "acq_local": "2020-12-01T06:33:58+01:00",
+     "acq_utc": "2020-12-01T05:33:58Z",
+     "burst_id": "43b203ee-c9bc-4415-bec7-2a60fa47834f",
+     "date": "2020-12-01",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.6666666666666666,
+      "F": 1.0,
+      "P": 0.12352941176470589,
+      "S": 0.25,
+      "gamma2": 0.6328681886766966
+     }
+    },
+    {
+     "acq_local": "2020-12-06T06:42:08+01:00",
+     "acq_utc": "2020-12-06T05:42:08Z",
+     "burst_id": "26549bf3-b9d3-419d-9467-c1794dbaaf15",
+     "date": "2020-12-06",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.012121212121212121,
+      "F": 2.0,
+      "P": 0.19166666666666668,
+      "S": 40.50077159758811,
+      "gamma2": 0.9061556696952
+     }
+    },
+    {
+     "acq_local": "2020-12-07T06:33:16+01:00",
+     "acq_utc": "2020-12-07T05:33:16Z",
+     "burst_id": "4f72fa77-f32c-4e51-a0b4-42badd370cfe",
+     "date": "2020-12-07",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.21212121212121213,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6925187399081445
+     }
+    },
+    {
+     "acq_local": "2020-12-12T06:41:26+01:00",
+     "acq_utc": "2020-12-12T05:41:26Z",
+     "burst_id": "015566ff-d794-4be9-87e8-a3289628ad94",
+     "date": "2020-12-12",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4291666666666667,
+      "S": 0.7071067811865476,
+      "gamma2": 0.8965743194746008
+     }
+    },
+    {
+     "acq_local": "2020-12-13T06:33:57+01:00",
+     "acq_utc": "2020-12-13T05:33:57Z",
+     "burst_id": "090654f8-649e-468e-9e5a-af288b99cea9",
+     "date": "2020-12-13",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.010224948875255624,
+      "F": 2.0,
+      "P": 0.16235294117647062,
+      "S": 31.810061301418468,
+      "gamma2": 0.638065304090705
+     }
+    },
+    {
+     "acq_local": "2020-12-18T06:42:08+01:00",
+     "acq_utc": "2020-12-18T05:42:08Z",
+     "burst_id": "45fa437f-d170-4b6a-a57e-d46b7d7de8ac",
+     "date": "2020-12-18",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.005517241379310344,
+      "F": 2.0,
+      "P": 0.2375,
+      "S": 35.522000225212544,
+      "gamma2": 0.6291660297707914
+     }
+    },
+    {
+     "acq_local": "2020-12-19T06:33:15+01:00",
+     "acq_utc": "2020-12-19T05:33:15Z",
+     "burst_id": "200c1df1-056a-4006-8f35-60453ca998ac",
+     "date": "2020-12-19",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.19696969696969696,
+      "S": 0.5,
+      "gamma2": 0.6453157940757898
+     }
+    },
+    {
+     "acq_local": "2020-12-24T06:41:23+01:00",
+     "acq_utc": "2020-12-24T05:41:23Z",
+     "burst_id": "0a1d6295-a05c-45d3-b9b6-314792a866d4",
+     "date": "2020-12-24",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.006734006734006734,
+      "F": 3.0,
+      "P": 0.17500000000000002,
+      "S": 17.89203733508289,
+      "gamma2": 0.3737658275777095
+     }
+    },
+    {
+     "acq_local": "2020-12-25T06:33:57+01:00",
+     "acq_utc": "2020-12-25T05:33:57Z",
+     "burst_id": "9cb7e893-3a5b-4d18-b556-6340587d5ff9",
+     "date": "2020-12-25",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.21764705882352942,
+      "S": 0.5,
+      "gamma2": 0.7361235514028575
+     }
+    },
+    {
+     "acq_local": "2020-12-30T06:42:05+01:00",
+     "acq_utc": "2020-12-30T05:42:05Z",
+     "burst_id": "07356bd7-56b1-485b-b8c3-07e8a3096352",
+     "date": "2020-12-30",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.35,
+      "S": 0.5,
+      "gamma2": 0.9042259859638562
+     }
+    },
+    {
+     "acq_local": "2020-12-31T06:33:15+01:00",
+     "acq_utc": "2020-12-31T05:33:15Z",
+     "burst_id": "daddc491-90ba-4ec6-b124-1d2eaaaebe68",
+     "date": "2020-12-31",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.18939393939393942,
+      "S": 29.0269271539376,
+      "gamma2": 0.7497899964890696
+     }
+    },
+    {
+     "acq_local": "2021-01-05T06:41:25+01:00",
+     "acq_utc": "2021-01-05T05:41:25Z",
+     "burst_id": "15498772-9d7a-4a9a-8c7b-a7dee26afba7",
+     "date": "2021-01-05",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.3166666666666667,
+      "S": 0.5,
+      "gamma2": 0.9509714947089128
+     }
+    },
+    {
+     "acq_local": "2021-01-06T06:33:56+01:00",
+     "acq_utc": "2021-01-06T05:33:56Z",
+     "burst_id": "e80ec1f3-e634-4c6c-9003-85b581ef2a66",
+     "date": "2021-01-06",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.01,
+      "F": 2.0,
+      "P": 0.10196078431372547,
+      "S": 58.6953055098011,
+      "gamma2": 0.39371208940573565
+     }
+    },
+    {
+     "acq_local": "2021-01-11T06:42:04+01:00",
+     "acq_utc": "2021-01-11T05:42:04Z",
+     "burst_id": "56e20964-0a4e-4a09-a289-7024aa1acadb",
+     "date": "2021-01-11",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.6666666666666666,
+      "F": 1.0,
+      "P": 0.23333333333333334,
+      "S": 0.25,
+      "gamma2": 0.8776037537775598
+     }
+    },
+    {
+     "acq_local": "2021-01-12T06:33:14+01:00",
+     "acq_utc": "2021-01-12T05:33:14Z",
+     "burst_id": "0e97cba0-0277-4d0d-a689-8810f382dfe1",
+     "date": "2021-01-12",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.21212121212121213,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6855735053806605
+     }
+    },
+    {
+     "acq_local": "2021-01-17T06:41:22+01:00",
+     "acq_utc": "2021-01-17T05:41:22Z",
+     "burst_id": "7b9cbe10-55c5-46ca-9010-cbe8ecadfde7",
+     "date": "2021-01-17",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007142857142857143,
+      "F": 2.0,
+      "P": 0.29583333333333334,
+      "S": 27.865749586185547,
+      "gamma2": 0.2885399094768971
+     }
+    },
+    {
+     "acq_local": "2021-01-18T06:33:56+01:00",
+     "acq_utc": "2021-01-18T05:33:56Z",
+     "burst_id": "5db4e29f-4733-407c-ba5a-733266f04b88",
+     "date": "2021-01-18",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.1911764705882353,
+      "S": 29.0269271539376,
+      "gamma2": 0.7927299518126182
+     }
+    },
+    {
+     "acq_local": "2021-01-23T06:42:03+01:00",
+     "acq_utc": "2021-01-23T05:42:03Z",
+     "burst_id": "75ac6dda-64df-41c7-9b8f-ac27116a0c36",
+     "date": "2021-01-23",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007142857142857143,
+      "F": 2.0,
+      "P": 0.25,
+      "S": 14.221462653327892,
+      "gamma2": 0.8938034034382575
+     }
+    },
+    {
+     "acq_local": "2021-01-24T06:33:14+01:00",
+     "acq_utc": "2021-01-24T05:33:14Z",
+     "burst_id": "2a6f1722-debd-43de-bc51-ac71480671e5",
+     "date": "2021-01-24",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.21212121212121213,
+      "S": 0.47140452079101997,
+      "gamma2": 0.7436218723155748
+     }
+    },
+    {
+     "acq_local": "2021-01-29T06:41:21+01:00",
+     "acq_utc": "2021-01-29T05:41:21Z",
+     "burst_id": "4cdfda10-20ab-4414-aba1-e9470a31de36",
+     "date": "2021-01-29",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4666666666666667,
+      "S": 0.5,
+      "gamma2": 0.9159921719944911
+     }
+    },
+    {
+     "acq_local": "2021-01-30T06:33:55+01:00",
+     "acq_utc": "2021-01-30T05:33:55Z",
+     "burst_id": "6d3f4be7-2c9b-4443-9a40-f8da45af9ef1",
+     "date": "2021-01-30",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.006134969325153374,
+      "F": 2.0,
+      "P": 0.12549019607843137,
+      "S": 53.33749983725231,
+      "gamma2": 0.37253908098555993
+     }
+    },
+    {
+     "acq_local": "2021-02-04T06:42:06+01:00",
+     "acq_utc": "2021-02-04T05:42:06Z",
+     "burst_id": "15916284-7cb2-4efe-96ca-fdbab3dfb4eb",
+     "date": "2021-02-04",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 7.0,
+      "D": 0.008484848484848486,
+      "F": 3.0,
+      "P": 0.12619047619047621,
+      "S": 111.01112281098278,
+      "gamma2": 0.15144992943973143
+     }
+    },
+    {
+     "acq_local": "2021-02-05T06:33:13+01:00",
+     "acq_utc": "2021-02-05T05:33:13Z",
+     "burst_id": "bbf44564-c4b0-41d8-835a-1539d2118dbc",
+     "date": "2021-02-05",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 9.0,
+      "D": 0.008403361344537815,
+      "F": 3.0,
+      "P": 0.03398692810457517,
+      "S": 56.81701188470027,
+      "gamma2": 0.06897560179472692
+     }
+    },
+    {
+     "acq_local": "2021-02-10T06:41:21+01:00",
+     "acq_utc": "2021-02-10T05:41:21Z",
+     "burst_id": "0245ccbc-d084-47ff-99a2-964daee4f2c2",
+     "date": "2021-02-10",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4666666666666667,
+      "S": 0.5,
+      "gamma2": 0.9335350927020225
+     }
+    },
+    {
+     "acq_local": "2021-02-11T06:33:55+01:00",
+     "acq_utc": "2021-02-11T05:33:55Z",
+     "burst_id": "3b197c2a-05bc-4f34-ba9e-44811de68bae",
+     "date": "2021-02-11",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.1970588235294118,
+      "S": 0.7071067811865476,
+      "gamma2": 0.7024954764118811
+     }
+    },
+    {
+     "acq_local": "2021-02-16T06:42:05+01:00",
+     "acq_utc": "2021-02-16T05:42:05Z",
+     "burst_id": "3d1aa3f5-c5e2-412f-9bc1-5bd480117e77",
+     "date": "2021-02-16",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.00545950864422202,
+      "F": 2.0,
+      "P": 0.1277777777777778,
+      "S": 103.89805366586783,
+      "gamma2": 0.8872870717718158
+     }
+    },
+    {
+     "acq_local": "2021-02-17T06:33:13+01:00",
+     "acq_utc": "2021-02-17T05:33:13Z",
+     "burst_id": "f274b9e6-5f7d-48a5-8191-18d53d012b27",
+     "date": "2021-02-17",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008403361344537815,
+      "F": 2.0,
+      "P": 0.16969696969696968,
+      "S": 47.234309564129326,
+      "gamma2": 0.3364601492033963
+     }
+    },
+    {
+     "acq_local": "2021-02-22T06:41:24+01:00",
+     "acq_utc": "2021-02-22T05:41:24Z",
+     "burst_id": "0bfaf6db-5e79-402b-a197-73689511be4e",
+     "date": "2021-02-22",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 7.0,
+      "D": 0.005785123966942148,
+      "F": 3.0,
+      "P": 0.19285714285714287,
+      "S": 2.4660966430903004,
+      "gamma2": 0.07061420850086746
+     }
+    },
+    {
+     "acq_local": "2021-02-23T06:33:55+01:00",
+     "acq_utc": "2021-02-23T05:33:55Z",
+     "burst_id": "951aa3fc-757e-47ea-8b48-e2d41bcf7d3b",
+     "date": "2021-02-23",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.21568627450980393,
+      "S": 0.47140452079104006,
+      "gamma2": 0.8440166361606898
+     }
+    },
+    {
+     "acq_local": "2021-02-28T06:42:05+01:00",
+     "acq_utc": "2021-02-28T05:42:05Z",
+     "burst_id": "0ac0a5fd-d452-4409-8cec-a2061b245901",
+     "date": "2021-02-28",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008169934640522876,
+      "F": 2.0,
+      "P": 0.24666666666666667,
+      "S": 60.00299992500375,
+      "gamma2": 0.06706961214703061
+     }
+    },
+    {
+     "acq_local": "2021-03-01T06:33:13+01:00",
+     "acq_utc": "2021-03-01T05:33:13Z",
+     "burst_id": "22752f50-6203-4cef-96d2-2577ee33701b",
+     "date": "2021-03-01",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.061764705882352944,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6690770168321618
+     }
+    },
+    {
+     "acq_local": "2021-03-06T06:41:21+01:00",
+     "acq_utc": "2021-03-06T05:41:21Z",
+     "burst_id": "5a1f3c73-3c98-444c-9c25-fdea5c673797",
+     "date": "2021-03-06",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.005357142857142857,
+      "F": 2.0,
+      "P": 0.37222222222222223,
+      "S": 18.906201216649663,
+      "gamma2": 0.9070007351720539
+     }
+    },
+    {
+     "acq_local": "2021-03-07T06:33:55+01:00",
+     "acq_utc": "2021-03-07T05:33:55Z",
+     "burst_id": "8c1a96bb-d92c-4085-ae49-973461f51cf8",
+     "date": "2021-03-07",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.19411764705882356,
+      "S": 0.7071067811865476,
+      "gamma2": 0.7314497839430877
+     }
+    },
+    {
+     "acq_local": "2021-03-12T06:42:03+01:00",
+     "acq_utc": "2021-03-12T05:42:03Z",
+     "burst_id": "7e5bac0c-aea6-4df9-9d9b-ca50cac1906e",
+     "date": "2021-03-12",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.025,
+      "S": 0.7071067811865476,
+      "gamma2": 0.8568120548148572
+     }
+    },
+    {
+     "acq_local": "2021-03-13T06:33:13+01:00",
+     "acq_utc": "2021-03-13T05:33:13Z",
+     "burst_id": "06443dbb-b363-40ff-a858-2985f1507318",
+     "date": "2021-03-13",
+     "run": 5,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.12941176470588237,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6631604043303241
+     }
+    },
+    {
+     "acq_local": "2021-03-18T06:41:23+01:00",
+     "acq_utc": "2021-03-18T05:41:23Z",
+     "burst_id": "5acefd94-aa24-48c1-9996-6c5db80a6958",
+     "date": "2021-03-18",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 8.0,
+      "D": 0.012759170653907496,
+      "F": 2.0,
+      "P": 0.2729166666666667,
+      "S": 27.459060435491963,
+      "gamma2": 0.06670528939719268
+     }
+    },
+    {
+     "acq_local": "2021-03-19T06:33:55+01:00",
+     "acq_utc": "2021-03-19T05:33:55Z",
+     "burst_id": "8dad5355-2dfe-4d52-a9d2-ceb4d3d82a9c",
+     "date": "2021-03-19",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.005042016806722689,
+      "F": 2.0,
+      "P": 0.18039215686274512,
+      "S": 38.68964834279175,
+      "gamma2": 0.5768266021828643
+     }
+    },
+    {
+     "acq_local": "2021-03-24T06:42:06+01:00",
+     "acq_utc": "2021-03-24T05:42:06Z",
+     "burst_id": "4e55cbb1-d886-462f-9deb-3b3c61bbb097",
+     "date": "2021-03-24",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.27777777777777773,
+      "S": 0.47140452079104006,
+      "gamma2": 0.9215699548394404
+     }
+    },
+    {
+     "acq_local": "2021-03-25T06:33:13+01:00",
+     "acq_utc": "2021-03-25T05:33:13Z",
+     "burst_id": "1d955b37-e9e0-4c2e-95e4-0332646f0d1b",
+     "date": "2021-03-25",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.10588235294117647,
+      "S": 0.5,
+      "gamma2": 0.6420264848333029
+     }
+    },
+    {
+     "acq_local": "2021-03-30T07:41:24+02:00",
+     "acq_utc": "2021-03-30T05:41:24Z",
+     "burst_id": "012f817a-145b-403d-9c21-eeeaf1146156",
+     "date": "2021-03-30",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.006611570247933884,
+      "F": 2.0,
+      "P": 0.2416666666666667,
+      "S": 13.287682265918312,
+      "gamma2": 0.8769031961862749
+     }
+    },
+    {
+     "acq_local": "2021-03-31T07:33:55+02:00",
+     "acq_utc": "2021-03-31T05:33:55Z",
+     "burst_id": "3d936241-f6de-41c2-a07e-5e8c404af807",
+     "date": "2021-03-31",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.0081799591002045,
+      "F": 2.0,
+      "P": 0.026470588235294117,
+      "S": 80.00624975587844,
+      "gamma2": 0.1989199084284474
+     }
+    },
+    {
+     "acq_local": "2021-04-05T07:42:06+02:00",
+     "acq_utc": "2021-04-05T05:42:06Z",
+     "burst_id": "50c3f9a5-552a-4983-bd38-04366db8a57e",
+     "date": "2021-04-05",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.0026607538802660754,
+      "F": 3.0,
+      "P": 0.024999999999999998,
+      "S": 34.35921354681382,
+      "gamma2": 0.24183081082892866
+     }
+    },
+    {
+     "acq_local": "2021-04-06T07:33:13+02:00",
+     "acq_utc": "2021-04-06T05:33:13Z",
+     "burst_id": "63d2a90e-6780-4bbd-859e-439d212ec997",
+     "date": "2021-04-06",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.002471576866040534,
+      "F": 3.0,
+      "P": 0.07272727272727272,
+      "S": 104.83739790742615,
+      "gamma2": 0.09844797403559187
+     }
+    },
+    {
+     "acq_local": "2021-04-11T07:41:24+02:00",
+     "acq_utc": "2021-04-11T05:41:24Z",
+     "burst_id": "5cff721e-b8a3-4aae-92a2-003bdc3cf78f",
+     "date": "2021-04-11",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 8.0,
+      "D": 0.0025789813023855577,
+      "F": 4.0,
+      "P": 0.12708333333333335,
+      "S": 5.981743057002699,
+      "gamma2": 0.0952714536247694
+     }
+    },
+    {
+     "acq_local": "2021-04-12T07:33:55+02:00",
+     "acq_utc": "2021-04-12T05:33:55Z",
+     "burst_id": "a86eeea1-e7f6-42d9-a833-23682104c773",
+     "date": "2021-04-12",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.14705882352941177,
+      "S": 59.033888572581766,
+      "gamma2": 0.2078421927467008
+     }
+    },
+    {
+     "acq_local": "2021-04-17T07:42:06+02:00",
+     "acq_utc": "2021-04-17T05:42:06Z",
+     "burst_id": "17da33b0-2822-4992-a6af-71200b8f1c97",
+     "date": "2021-04-17",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.09166666666666667,
+      "S": 0.5,
+      "gamma2": 0.9123524396647893
+     }
+    },
+    {
+     "acq_local": "2021-04-18T07:33:14+02:00",
+     "acq_utc": "2021-04-18T05:33:14Z",
+     "burst_id": "af1025a1-4311-4e8a-bcf4-b10f43570c58",
+     "date": "2021-04-18",
+     "run": 6,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.12878787878787878,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6086290556154895
+     }
+    },
+    {
+     "acq_local": "2021-04-23T07:41:25+02:00",
+     "acq_utc": "2021-04-23T05:41:25Z",
+     "burst_id": "3959a74c-4635-4a95-9f4b-f83ac03e61c9",
+     "date": "2021-04-23",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 24.0,
+      "D": 0.007820136852394917,
+      "F": 9.0,
+      "P": 0.04583333333333334,
+      "S": 44.04929372620835,
+      "gamma2": 0.002917746326679473
+     }
+    },
+    {
+     "acq_local": "2021-04-24T07:33:56+02:00",
+     "acq_utc": "2021-04-24T05:33:56Z",
+     "burst_id": "86e42fd5-5f6c-45c3-95e0-376334326f1f",
+     "date": "2021-04-24",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 6.0,
+      "D": 0.010084033613445379,
+      "F": 2.0,
+      "P": 0.15686274509803924,
+      "S": 39.50562547846122,
+      "gamma2": 0.29769704631876326
+     }
+    },
+    {
+     "acq_local": "2021-04-29T07:42:04+02:00",
+     "acq_utc": "2021-04-29T05:42:04Z",
+     "burst_id": "5ca9a53b-359d-41db-bf1f-8999efa41878",
+     "date": "2021-04-29",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.125,
+      "S": 0.5,
+      "gamma2": 0.9265359282120266
+     }
+    },
+    {
+     "acq_local": "2021-04-30T07:33:14+02:00",
+     "acq_utc": "2021-04-30T05:33:14Z",
+     "burst_id": "61e0022d-0605-40b3-9ea1-fc43444cdea8",
+     "date": "2021-04-30",
+     "run": 7,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.18939393939393942,
+      "S": 29.0269271539376,
+      "gamma2": 0.286498000018278
+     }
+    },
+    {
+     "acq_local": "2021-05-05T07:41:25+02:00",
+     "acq_utc": "2021-05-05T05:41:25Z",
+     "burst_id": "28c6549c-037a-41ff-92a3-6e3e7d58df01",
+     "date": "2021-05-05",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.002775850104094379,
+      "F": 3.0,
+      "P": 0.26666666666666666,
+      "S": 22.31731390647181,
+      "gamma2": 0.3958499226883045
+     }
+    },
+    {
+     "acq_local": "2021-05-06T07:33:56+02:00",
+     "acq_utc": "2021-05-06T05:33:56Z",
+     "burst_id": "63980cb7-cc5d-4813-ae7f-721f918cf1ff",
+     "date": "2021-05-06",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.09411764705882353,
+      "S": 29.0269271539376,
+      "gamma2": 0.7676271975814764
+     }
+    },
+    {
+     "acq_local": "2021-05-11T07:42:05+02:00",
+     "acq_utc": "2021-05-11T05:42:05Z",
+     "burst_id": "40c0ae5d-68c4-40ad-b3cf-248d37651cdf",
+     "date": "2021-05-11",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007142857142857143,
+      "F": 2.0,
+      "P": 0.22083333333333333,
+      "S": 27.865749586185547,
+      "gamma2": 0.5612397903078227
+     }
+    },
+    {
+     "acq_local": "2021-05-12T07:33:15+02:00",
+     "acq_utc": "2021-05-12T05:33:15Z",
+     "burst_id": "8a1fe38e-3e85-4033-bf3d-5cf9417a50ec",
+     "date": "2021-05-12",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.0070028011204481795,
+      "F": 2.0,
+      "P": 0.13333333333333336,
+      "S": 47.220758147238584,
+      "gamma2": 0.27555441466502584
+     }
+    },
+    {
+     "acq_local": "2021-05-17T07:41:23+02:00",
+     "acq_utc": "2021-05-17T05:41:23Z",
+     "burst_id": "6b305eeb-d567-43e0-8ee4-fc9a66cdb5ba",
+     "date": "2021-05-17",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008928571428571428,
+      "F": 2.0,
+      "P": 0.3,
+      "S": 22.325769863545577,
+      "gamma2": 0.40862937846539704
+     }
+    },
+    {
+     "acq_local": "2021-05-18T07:33:57+02:00",
+     "acq_utc": "2021-05-18T05:33:57Z",
+     "burst_id": "d73fc579-bf06-4512-81bb-8eea967fd192",
+     "date": "2021-05-18",
+     "run": 8,
+     "state": "DAM6",
+     "state_label": "DAM 6",
+     "subswath": "iw2",
+     "values": {
+      "A": 5.0,
+      "D": 0.007668711656441718,
+      "F": 2.0,
+      "P": 0.11529411764705884,
+      "S": 64.20124609382593,
+      "gamma2": 0.5024972197095228
+     }
+    },
+    {
+     "acq_local": "2021-05-23T07:42:08+02:00",
+     "acq_utc": "2021-05-23T05:42:08Z",
+     "burst_id": "d0a95371-3b05-4fa7-900e-32937134edbf",
+     "date": "2021-05-23",
+     "run": 9,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.007017543859649123,
+      "F": 2.0,
+      "P": 0.3041666666666667,
+      "S": 27.37243138634199,
+      "gamma2": 0.510962450837504
+     }
+    },
+    {
+     "acq_local": "2021-05-24T07:33:15+02:00",
+     "acq_utc": "2021-05-24T05:33:15Z",
+     "burst_id": "bfcd94ec-3033-4ef7-b55d-179e328c1863",
+     "date": "2021-05-24",
+     "run": 9,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.12941176470588234,
+      "S": 0.5,
+      "gamma2": 0.625222383715822
+     }
+    },
+    {
+     "acq_local": "2021-05-29T07:41:27+02:00",
+     "acq_utc": "2021-05-29T05:41:27Z",
+     "burst_id": "8b079a1b-95c0-4ebd-a495-9998375ed55f",
+     "date": "2021-05-29",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008771929824561403,
+      "F": 2.0,
+      "P": 0.24000000000000005,
+      "S": 21.93171219946133,
+      "gamma2": 0.29071743936501204
+     }
+    },
+    {
+     "acq_local": "2021-05-30T07:33:58+02:00",
+     "acq_utc": "2021-05-30T05:33:58Z",
+     "burst_id": "de12aeb5-007a-4da2-9bb4-928c287c46eb",
+     "date": "2021-05-30",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.16470588235294117,
+      "S": 0.471404520791035,
+      "gamma2": 0.7065507953045427
+     }
+    },
+    {
+     "acq_local": "2021-06-04T07:42:06+02:00",
+     "acq_utc": "2021-06-04T05:42:06Z",
+     "burst_id": "04ed393e-a69e-4967-85ef-d68a4472073a",
+     "date": "2021-06-04",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 2.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.35,
+      "S": 0.5,
+      "gamma2": 0.9397743120510513
+     }
+    },
+    {
+     "acq_local": "2021-06-05T07:33:16+02:00",
+     "acq_utc": "2021-06-05T05:33:16Z",
+     "burst_id": "e9113bae-0654-4f07-ada6-4b29ac6eeef6",
+     "date": "2021-06-05",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.11764705882352941,
+      "S": 0.7071067811865476,
+      "gamma2": 0.636060755740926
+     }
+    },
+    {
+     "acq_local": "2021-06-10T07:41:27+02:00",
+     "acq_utc": "2021-06-10T05:41:27Z",
+     "burst_id": "206a38e8-7c42-473a-a948-978618403a59",
+     "date": "2021-06-10",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.24583333333333335,
+      "S": 0.7071067811865476,
+      "gamma2": 0.8602508232936955
+     }
+    },
+    {
+     "acq_local": "2021-06-11T07:33:58+02:00",
+     "acq_utc": "2021-06-11T05:33:58Z",
+     "burst_id": "596f781f-b9df-445b-ab87-25d8ab5670d1",
+     "date": "2021-06-11",
+     "run": 10,
+     "state": "DAM4",
+     "state_label": "DAM 4",
+     "subswath": "iw1",
+     "values": {
+      "A": 8.0,
+      "D": 0.012345679012345678,
+      "F": 2.0,
+      "P": 0.07205882352941176,
+      "S": 80.50155278005512,
+      "gamma2": 0.6019034043408239
+     }
+    },
+    {
+     "acq_local": "2021-06-16T07:42:07+02:00",
+     "acq_utc": "2021-06-16T05:42:07Z",
+     "burst_id": "1a848370-3259-43ec-aa7f-5b08bd1871da",
+     "date": "2021-06-16",
+     "run": 11,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.22083333333333333,
+      "S": 0.7071067811865476,
+      "gamma2": 0.8988788453635755
+     }
+    },
+    {
+     "acq_local": "2021-06-17T07:33:17+02:00",
+     "acq_utc": "2021-06-17T05:33:17Z",
+     "burst_id": "4766a775-e0ed-4b76-9aac-a3acf9326e81",
+     "date": "2021-06-17",
+     "run": 11,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.11764705882352941,
+      "S": 0.7071067811865476,
+      "gamma2": 0.6334553132309533
+     }
+    },
+    {
+     "acq_local": "2021-06-22T07:41:28+02:00",
+     "acq_utc": "2021-06-22T05:41:28Z",
+     "burst_id": "640412ce-6e1e-412d-b22a-89282422bf17",
+     "date": "2021-06-22",
+     "run": 11,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 0.003336113427856547,
+      "F": 3.0,
+      "P": 0.1666666666666667,
+      "S": 1.6770509831248424,
+      "gamma2": 0.07966207361387213
+     }
+    },
+    {
+     "acq_local": "2021-06-23T07:33:59+02:00",
+     "acq_utc": "2021-06-23T05:33:59Z",
+     "burst_id": "e70334d5-9974-4259-85da-2ff464358317",
+     "date": "2021-06-23",
+     "run": 11,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.009202453987730062,
+      "F": 2.0,
+      "P": 0.1470588235294118,
+      "S": 54.34585745226791,
+      "gamma2": 0.4841448080579455
+     }
+    },
+    {
+     "acq_local": "2021-06-28T07:42:08+02:00",
+     "acq_utc": "2021-06-28T05:42:08Z",
+     "burst_id": "ba0b2f79-a469-4e21-9104-50985d122df9",
+     "date": "2021-06-28",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.2388888888888889,
+      "S": 0.47140452079104006,
+      "gamma2": 0.930945979390342
+     }
+    },
+    {
+     "acq_local": "2021-06-29T07:33:18+02:00",
+     "acq_utc": "2021-06-29T05:33:18Z",
+     "burst_id": "82e7f32c-1033-4c7b-a808-9c48ad26ca1e",
+     "date": "2021-06-29",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.13333333333333333,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6402652454575837
+     }
+    },
+    {
+     "acq_local": "2021-07-05T07:34:00+02:00",
+     "acq_utc": "2021-07-05T05:34:00Z",
+     "burst_id": "27cc7ef8-0c0d-44de-959c-07a6f9f4e1a2",
+     "date": "2021-07-05",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw2",
+     "values": {
+      "A": 7.0,
+      "D": 0.010736196319018405,
+      "F": 2.0,
+      "P": 0.13109243697478992,
+      "S": 68.57202380694032,
+      "gamma2": 0.0770261573624982
+     }
+    },
+    {
+     "acq_local": "2021-07-10T07:42:08+02:00",
+     "acq_utc": "2021-07-10T05:42:08Z",
+     "burst_id": "33a7cf2f-74c5-48ad-a7d2-26a3a26bc51e",
+     "date": "2021-07-10",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.010526315789473684,
+      "F": 2.0,
+      "P": 0.2027777777777778,
+      "S": 18.142185339393052,
+      "gamma2": 0.6738215534024259
+     }
+    },
+    {
+     "acq_local": "2021-07-11T07:33:18+02:00",
+     "acq_utc": "2021-07-11T05:33:18Z",
+     "burst_id": "b103ab8a-5063-40d5-8497-29938e94ba53",
+     "date": "2021-07-11",
+     "run": 12,
+     "state": "DAM3",
+     "state_label": "DAM 3",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.13333333333333333,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6697155457539009
+     }
+    },
+    {
+     "acq_local": "2021-07-16T07:41:27+02:00",
+     "acq_utc": "2021-07-16T05:41:27Z",
+     "burst_id": "2f63bf52-a935-4b70-858a-dc5d8d96669c",
+     "date": "2021-07-16",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 18.0,
+      "D": 0.0067064083457526085,
+      "F": 9.0,
+      "P": 0.07685185185185185,
+      "S": 118.79279605709146,
+      "gamma2": 0.03327998528668508
+     }
+    },
+    {
+     "acq_local": "2021-07-17T07:34:01+02:00",
+     "acq_utc": "2021-07-17T05:34:01Z",
+     "burst_id": "e6b799aa-c780-49e9-959e-e04f788b4fac",
+     "date": "2021-07-17",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw2",
+     "values": {
+      "A": 4.0,
+      "D": 0.0067226890756302525,
+      "F": 2.0,
+      "P": 0.09411764705882353,
+      "S": 29.0269271539376,
+      "gamma2": 0.525010245838814
+     }
+    },
+    {
+     "acq_local": "2021-07-22T07:42:12+02:00",
+     "acq_utc": "2021-07-22T05:42:12Z",
+     "burst_id": "36a62a74-5ddd-4eb7-80be-160be443290d",
+     "date": "2021-07-22",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 5.0,
+      "D": 0.008116883116883116,
+      "F": 2.0,
+      "P": 0.3633333333333334,
+      "S": 11.48564321228899,
+      "gamma2": 0.38290226884474277
+     }
+    },
+    {
+     "acq_local": "2021-07-23T07:33:19+02:00",
+     "acq_utc": "2021-07-23T05:33:19Z",
+     "burst_id": "ff7370ce-6eba-4412-ab8d-075086ddc431",
+     "date": "2021-07-23",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 3.0,
+      "D": 0.75,
+      "F": 1.0,
+      "P": 0.12941176470588237,
+      "S": 0.47140452079101997,
+      "gamma2": 0.6966285014844007
+     }
+    },
+    {
+     "acq_local": "2021-07-28T07:41:30+02:00",
+     "acq_utc": "2021-07-28T05:41:30Z",
+     "burst_id": "026f2b0e-0526-44d6-9e92-da094e37907b",
+     "date": "2021-07-28",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 4.0,
+      "D": 1.0,
+      "F": 1.0,
+      "P": 0.4291666666666667,
+      "S": 0.7071067811865476,
+      "gamma2": 0.851651147538997
+     }
+    },
+    {
+     "acq_local": "2021-07-29T07:34:01+02:00",
+     "acq_utc": "2021-07-29T05:34:01Z",
+     "burst_id": "83dca676-365c-493b-a514-12167dea424f",
+     "date": "2021-07-29",
+     "run": 13,
+     "state": "healthy",
+     "state_label": "healthy",
+     "subswath": "iw1",
+     "values": {
+      "A": 6.0,
+      "D": 0.010084033613445379,
+      "F": 2.0,
+      "P": 0.15294117647058827,
+      "S": 39.535146107960415,
+      "gamma2": 0.32252116528686237
+     }
+    }
+   ]
+  }
+ },
+ "site": "LUMO",
+ "summary": {
+  "ASC": {
+   "A": {
+    "DAM3": {
+     "max": 15.0,
+     "mean": 11.25,
+     "median": 12.5,
+     "min": 4.0,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 16.0,
+     "mean": 11.2,
+     "median": 11.0,
+     "min": 4.0,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 11.0,
+     "mean": 6.25,
+     "median": 5.5,
+     "min": 3.0,
+     "n": 4
+    },
+    "healthy": {
+     "max": 17.0,
+     "mean": 10.425,
+     "median": 10.0,
+     "min": 4.0,
+     "n": 40
+    }
+   },
+   "D": {
+    "DAM3": {
+     "max": 0.005333333333333333,
+     "mean": 0.004317106367312097,
+     "median": 0.004462802455760202,
+     "min": 0.003159003159003159,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 0.006622516556291391,
+     "mean": 0.004981377943921612,
+     "median": 0.004964539007092199,
+     "min": 0.0038461538461538464,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 1.0,
+     "mean": 0.5016598624838848,
+     "median": 0.5019230769230769,
+     "min": 0.002793296089385475,
+     "n": 4
+    },
+    "healthy": {
+     "max": 1.0,
+     "mean": 0.07055264374367602,
+     "median": 0.004185360622039502,
+     "min": 0.0014044943820224719,
+     "n": 40
+    }
+   },
+   "F": {
+    "DAM3": {
+     "max": 8.0,
+     "mean": 4.375,
+     "median": 3.0,
+     "min": 3.0,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 4.0,
+     "mean": 3.4,
+     "median": 4.0,
+     "min": 2.0,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 3.0,
+     "mean": 1.75,
+     "median": 1.5,
+     "min": 1.0,
+     "n": 4
+    },
+    "healthy": {
+     "max": 9.0,
+     "mean": 3.95,
+     "median": 4.0,
+     "min": 1.0,
+     "n": 40
+    }
+   },
+   "P": {
+    "DAM3": {
+     "max": 0.09324009324009322,
+     "mean": 0.06349833173362585,
+     "median": 0.06224004753416518,
+     "min": 0.029411764705882353,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 0.19264069264069258,
+     "mean": 0.11432865708266778,
+     "median": 0.07914438502673794,
+     "min": 0.06764705882352941,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 0.21212121212121213,
+     "mean": 0.12553475935828878,
+     "median": 0.1000891265597148,
+     "min": 0.08983957219251336,
+     "n": 4
+    },
+    "healthy": {
+     "max": 0.2066115702479339,
+     "mean": 0.10282790319454756,
+     "median": 0.09352941176470589,
+     "min": 0.026737967914438502,
+     "n": 40
+    }
+   },
+   "S": {
+    "DAM3": {
+     "max": 200.15479216946662,
+     "mean": 127.52541521661746,
+     "median": 138.70671936593033,
+     "min": 40.038262949333856,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 155.53040548796238,
+     "mean": 105.73167296493209,
+     "median": 108.20763633858505,
+     "min": 37.00084458495508,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 203.01452647331342,
+     "mean": 87.29689257710515,
+     "median": 73.08652191755361,
+     "min": 0.0,
+     "n": 4
+    },
+    "healthy": {
+     "max": 246.0722682963072,
+     "mean": 108.63465814937308,
+     "median": 110.92210463855534,
+     "min": 0.25,
+     "n": 40
+    }
+   },
+   "gamma2": {
+    "DAM3": {
+     "max": 0.42759541662549,
+     "mean": 0.16805527923893016,
+     "median": 0.12889073516413874,
+     "min": 0.0015586598335813084,
+     "n": 8
+    },
+    "DAM4": {
+     "max": 0.38600891738887155,
+     "mean": 0.13908729626849584,
+     "median": 0.06827276707085779,
+     "min": 0.004241146817945706,
+     "n": 5
+    },
+    "DAM6": {
+     "max": 0.6558787364477665,
+     "mean": 0.37466856432801615,
+     "median": 0.37375744251953535,
+     "min": 0.09528063582522737,
+     "n": 4
+    },
+    "healthy": {
+     "max": 0.689153606179778,
+     "mean": 0.18005597566451056,
+     "median": 0.1240768399375137,
+     "min": 0.00017165676800742275,
+     "n": 40
+    }
+   }
+  },
+  "DESC": {
+   "A": {
+    "DAM3": {
+     "max": 8.0,
+     "mean": 4.411764705882353,
+     "median": 4.0,
+     "min": 2.0,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 8.0,
+     "mean": 3.909090909090909,
+     "median": 4.0,
+     "min": 2.0,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 8.0,
+     "mean": 4.416666666666667,
+     "median": 4.0,
+     "min": 2.0,
+     "n": 12
+    },
+    "healthy": {
+     "max": 25.0,
+     "mean": 4.7407407407407405,
+     "median": 4.0,
+     "min": 2.0,
+     "n": 81
+    }
+   },
+   "D": {
+    "DAM3": {
+     "max": 1.0,
+     "mean": 0.35695819000244605,
+     "median": 0.010736196319018405,
+     "min": 0.002471576866040534,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 1.0,
+     "mean": 0.6844351200448499,
+     "median": 1.0,
+     "min": 0.007668711656441718,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 1.0,
+     "mean": 0.17258089344807712,
+     "median": 0.007142857142857143,
+     "min": 0.002775850104094379,
+     "n": 12
+    },
+    "healthy": {
+     "max": 1.0,
+     "mean": 0.42794530640017875,
+     "median": 0.010224948875255624,
+     "min": 0.002256608639587363,
+     "n": 81
+    }
+   },
+   "F": {
+    "DAM3": {
+     "max": 4.0,
+     "mean": 1.8235294117647058,
+     "median": 2.0,
+     "min": 1.0,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 2.0,
+     "mean": 1.2727272727272727,
+     "median": 1.0,
+     "min": 1.0,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 4.0,
+     "mean": 2.0833333333333335,
+     "median": 2.0,
+     "min": 1.0,
+     "n": 12
+    },
+    "healthy": {
+     "max": 14.0,
+     "mean": 2.0,
+     "median": 2.0,
+     "min": 1.0,
+     "n": 81
+    }
+   },
+   "P": {
+    "DAM3": {
+     "max": 0.27777777777777773,
+     "mean": 0.14922682085311842,
+     "median": 0.13333333333333333,
+     "min": 0.024999999999999998,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 0.4166666666666667,
+     "mean": 0.22540255496137848,
+     "median": 0.24000000000000005,
+     "min": 0.07205882352941176,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 0.4666666666666667,
+     "mean": 0.20946486928104577,
+     "median": 0.1868872549019608,
+     "min": 0.07941176470588235,
+     "n": 12
+    },
+    "healthy": {
+     "max": 0.4666666666666667,
+     "mean": 0.2029261749842723,
+     "median": 0.19166666666666668,
+     "min": 0.025,
+     "n": 81
+    }
+   },
+   "S": {
+    "DAM3": {
+     "max": 104.83739790742615,
+     "mean": 26.703636346740524,
+     "median": 13.287682265918312,
+     "min": 0.47140452079101997,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 80.50155278005512,
+     "mean": 15.518058223498558,
+     "median": 0.7071067811865476,
+     "min": 0.0,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 64.20124609382593,
+     "mean": 27.61805601518842,
+     "median": 28.446338370061575,
+     "min": 0.5,
+     "n": 12
+    },
+    "healthy": {
+     "max": 118.79279605709146,
+     "mean": 22.330080130181795,
+     "median": 14.221462653327892,
+     "min": 0.25,
+     "n": 81
+    }
+   },
+   "gamma2": {
+    "DAM3": {
+     "max": 0.930945979390342,
+     "mean": 0.49641763786767895,
+     "median": 0.6086290556154895,
+     "min": 0.06670528939719268,
+     "n": 17
+    },
+    "DAM4": {
+     "max": 0.9397743120510513,
+     "mean": 0.7115050265177915,
+     "median": 0.7065507953045427,
+     "min": 0.29071743936501204,
+     "n": 11
+    },
+    "DAM6": {
+     "max": 0.9352587278017817,
+     "mean": 0.5145910579958326,
+     "median": 0.4555632990874599,
+     "min": 0.17892348726947502,
+     "n": 12
+    },
+    "healthy": {
+     "max": 0.9509714947089128,
+     "mean": 0.580638122061188,
+     "median": 0.6508905022667124,
+     "min": 0.002917746326679473,
+     "n": 81
+    }
+   }
+  }
+ },
+ "superseded": [
+  {
+   "check": "channels.finite",
+   "committed": "{'gamma2': 178, 'P': 177, 'D': 178, 'F': 178, 'A': 178, 'S': 178}",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "{'gamma2': 178, 'P': 178, 'D': 178, 'F': 178, 'A': 178, 'S': 178}"
+  },
+  {
+   "check": "channels.n_rows_with_missing",
+   "committed": "1",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "0"
+  },
+  {
+   "check": "channels.missing_dims",
+   "committed": "['P']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "channels.complete_6d",
+   "committed": "177",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "178"
+  },
+  {
+   "check": "channels.complete_6d_by_state",
+   "committed": "{'DAM3': 25, 'DAM4': 16, 'DAM6': 16, 'healthy': 120}",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "{'healthy': 121, 'DAM3': 25, 'DAM4': 16, 'DAM6': 16}"
+  },
+  {
+   "check": "P.missing.n",
+   "committed": "1",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "0"
+  },
+  {
+   "check": "P.missing.burst_id",
+   "committed": "['3801dfa4-5872-44fe-8538-84c178cac83f']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "P.missing.date",
+   "committed": "['2021-07-14']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "P.missing.orbit",
+   "committed": "['ASCENDING']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "P.missing.label",
+   "committed": "['healthy']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "P.missing.subswath",
+   "committed": "['iw1']",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[]"
+  },
+  {
+   "check": "paper.n_by_state_complete_6d",
+   "committed": "{'healthy': 121, 'DAM3': 25, 'DAM4': 16, 'DAM6': 16}",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "{'DAM3': 25, 'DAM4': 16, 'DAM6': 16, 'healthy': 120}"
+  },
+  {
+   "check": "paper.n_masked_values.healthy",
+   "committed": "[2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 13, 13, 14, 14, 15, 15, 15, 16, 16, 16, 16, 16, 16, 17, 18, 18, 18, 18, 19, 20, 20, 21, 21, 22, 24, 25, 25, 25, 28, 28, ",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10,"
+  },
+  {
+   "check": "paper.n_masked_median.healthy",
+   "committed": "15.0",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "4.0"
+  },
+  {
+   "check": "paper.n_masked_values.DAM3",
+   "committed": "[2, 4, 5, 5, 7, 7, 9, 9, 10, 10, 12, 12, 13, 13, 14, 14, 14, 16, 17, 17, 27, 36, 54, 61, 133]",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 6, 6, 7, 8, 8, 9, 11, 12, 13, 13, 13, 15]"
+  },
+  {
+   "check": "paper.n_masked_median.DAM3",
+   "committed": "13.0",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "5.0"
+  },
+  {
+   "check": "paper.n_masked_values.DAM4",
+   "committed": "[2, 5, 5, 6, 8, 10, 10, 13, 15, 16, 20, 23, 28, 46, 81, 193]",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 8, 11, 11, 14, 16]"
+  },
+  {
+   "check": "paper.n_masked_median.DAM4",
+   "committed": "14.0",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "4.0"
+  },
+  {
+   "check": "paper.n_masked_values.DAM6",
+   "committed": "[4, 4, 5, 7, 8, 11, 12, 12, 12, 12, 15, 19, 21, 117, 124, 218]",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[2, 2, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 7, 8, 11]"
+  },
+  {
+   "check": "paper.n_masked_median.DAM6",
+   "committed": "12.0",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "4.0"
+  },
+  {
+   "check": "reference.gamma2",
+   "committed": "[0.8624535129217228, 0.31696055541415974, 0.03550748548152263, 0.6028042672738755, 0.6038617322742125, 0.2468136367440821, 0.8631426045383399, 0.6913288658242199, 0.09162579077555079, 0.7194124932523008, 0.6345860024046182, 0.01264106807403012, 0.03359059243964613, 0.08635592077605832, 0.07948399724",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[0.43104165509818504, 0.0016436554898093363, 0.04282334886686867, 0.011730188657586765, 0.5442041729299196, 0.024331062414809857, 0.7064420045153401, 0.0003591180061768298, 0.010882393324805773, 0.022054420930842075, 0.0014245014245014248, 0.250040293719602, 0.04029275914825556, 0.01724137931034483,"
+  },
+  {
+   "check": "reference.n_masked",
+   "committed": "[5, 10, 10, 3, 4, 14, 2, 4, 15, 3, 2, 10, 7, 12, 15, 25, 4, 4, 2, 7, 9, 2, 2, 14, 3, 4, 8, 3, 3, 5, 5, 5, 8, 2, 4, 15, 2, 8, 7, 4, 4, 3, 2, 6, 8, 5, 4, 11, 4, 2, 14, 4, 2, 11, 3, 5, 11, 3, 3, 4, 4, 4, 11, 4, 3, 4, 4, 5, 15, 4, 2, 7, 4, 2, 14, 2, 4, 8, 2, 6, 15, 4, 3, 8, 4, 4, 13, 4, 3, 5, 2, 3, 10, ",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "[7, 78, 15, 9, 19, 20, 3, 117, 16, 35, 117, 9, 11, 10, 10, 2, 149, 18, 16, 13, 5, 50, 16, 21, 36, 3, 15, 24, 21, 38, 146, 42, 5, 198, 275, 7, 12, 21, 15, 218, 12, 5, 124, 117, 11, 115, 16, 17, 5, 41, 5, 16, 20, 8, 193, 81, 10, 13, 11, 8, 18, 101, 12, 12, 5, 8, 5, 49, 18, 202, 9, 7, 232, 124, 25, 3, "
+  },
+  {
+   "check": "reference.per_state.n_masked.median",
+   "committed": "{'DAM0(healthy)': 15.0, 'DAM3': 13.0, 'DAM4': 14.0, 'DAM6': 12.0}",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "{'DAM0(healthy)': 4.0, 'DAM3': 5.0, 'DAM4': 4.0, 'DAM6': 4.0}"
+  },
+  {
+   "check": "data.n_nonfinite",
+   "committed": "{'gamma2': 0, 'P': 1, 'D': 0, 'F': 0, 'A': 0, 'S': 0}",
+   "reason": "describes the committed median reference and its 400 x 11 chip; not applicable here",
+   "recomputed": "{'gamma2': 0, 'P': 0, 'D': 0, 'F': 0, 'A': 0, 'S': 0}"
+  }
+ ]
+}

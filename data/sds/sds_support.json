@@ -1,0 +1,5882 @@
+{
+ "generated_by": "code/sds/sds_support.py",
+ "levels": {
+  "per_channel_max_pairwise": "compact summary, always with its winning pair",
+  "per_channel_per_state": "primary analysis",
+  "per_channel_pooled_damage": "healthy versus all damage states, per channel",
+  "pooled_all_damage": "compatibility pin and context only"
+ },
+ "metric": {
+  "bands": [
+   [
+    2.0,
+    "very weak"
+   ],
+   [
+    4.0,
+    "weak"
+   ],
+   [
+    6.0,
+    "moderate"
+   ],
+   [
+    8.0,
+    "strong"
+   ],
+   [
+    null,
+    "very strong"
+   ]
+  ],
+  "ci": {
+   "level": 0.95,
+   "method": "percentile bootstrap, both groups resampled independently",
+   "n_boot": 10000,
+   "scope": "one interval per comparison; a maximum over comparisons has no interval of its own",
+   "seed": 7
+  },
+  "definition": "SDS = 10 * |Cliff's delta|; delta = (#{y>x} - #{y<x}) / (n1*n2), ties count for neither side",
+  "library": "code/lumo/lumo_ocv_stats.py (cliffs_delta)",
+  "scale": 10.0
+ },
+ "primary_analysis": "per_channel_per_state - the observation channel is the orbit, and ASC/DESC are never pooled into the primary number",
+ "schema": "ocv-sds-support-v2",
+ "sites": {
+  "bautzen": {
+   "label": "Bautzen OpenLabs bridge",
+   "levels": {
+    "committed": {
+     "per_channel_max_pairwise": {
+      "ASC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2329192546583851,
+         "level": 0.95,
+         "low": -0.41770186335403725,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.09627329192546584,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 11.0,
+        "median_healthy": 9.5,
+        "n_damaged": 46,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.2976190476190476,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 0.9627329192546584,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.16666666666666666,
+         "level": 0.95,
+         "low": -0.6923076923076923,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.30128205128205127,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.5,
+        "median_healthy": 0.6666666666666666,
+        "n_damaged": 12,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.650887573964497,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 3.0128205128205128,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6428571428571429,
+         "level": 0.95,
+         "low": -0.16071428571428573,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.25,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 1.0,
+        "n_damaged": 12,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.2422360248447204,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.5,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5700197238658777,
+         "level": 0.95,
+         "low": -0.1952662721893491,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.19723865877712032,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.6859903381642511,
+        "median_healthy": 0.5747863247863247,
+        "n_damaged": 39,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.1282051282051282,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 1.9723865877712032,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "S": {
+        "band": "weak",
+        "ci": {
+         "high": 0.7435897435897436,
+         "level": 0.95,
+         "low": -0.16666666666666666,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.3076923076923077,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.889762729106411,
+        "median_healthy": 1.943650631615098,
+        "n_damaged": 12,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 1.0256410256410255,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 3.076923076923077,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2821678321678305,
+         "level": 0.95,
+         "low": -0.5384615384615384,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.1282051282051282,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.02192095563311151,
+        "median_healthy": 0.06721052943950075,
+        "n_damaged": 33,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.641025641025641,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 1.282051282051282,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       }
+      },
+      "DESC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.38571428571428573,
+         "level": 0.95,
+         "low": -0.5428571428571428,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.08571428571428572,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 9.5,
+        "median_healthy": 9.0,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.6521739130434783,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 0.8571428571428572,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.07142857142857142,
+         "level": 0.95,
+         "low": -0.7785714285714286,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.37857142857142856,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.3935185185185185,
+        "median_healthy": 0.5185185185185185,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 2.391304347826087,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 3.7857142857142856,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6857142857142857,
+         "level": 0.95,
+         "low": -0.02857142857142857,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.35,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 2.0,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.5683229813664594,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 3.5,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "P": {
+        "band": "weak",
+        "ci": {
+         "high": 0.04503105590062112,
+         "level": 0.95,
+         "low": -0.6211180124223602,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.3027950310559006,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.3642857142857143,
+        "median_healthy": 0.37448979591836734,
+        "n_damaged": 46,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 3.0,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 3.027950310559006,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "S": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6857142857142857,
+         "level": 0.95,
+         "low": -0.21428571428571427,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.2642857142857143,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.3910380989264746,
+        "median_healthy": 1.8262937550497034,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.7391304347826086,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.642857142857143,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5285714285714286,
+         "level": 0.95,
+         "low": -0.44285714285714284,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.05714285714285714,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": -0.055761924880741276,
+        "median_healthy": -0.05142366563082043,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.34161490683229817,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 0.5714285714285714,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       }
+      }
+     },
+     "per_channel_per_state": {
+      "ASC": {
+       "A": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2329192546583851,
+          "level": 0.95,
+          "low": -0.41770186335403725,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.09627329192546584,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 11.0,
+         "median_healthy": 9.5,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.9627329192546584,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.47619047619047616,
+          "level": 0.95,
+          "low": -0.4226190476190476,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.02976190476190476,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 8.5,
+         "median_healthy": 9.5,
+         "n_damaged": 12,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.2976190476190476,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.42214003944773104,
+          "level": 0.95,
+          "low": -0.3037475345167653,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.0650887573964497,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.7037037037037037,
+         "median_healthy": 0.6666666666666666,
+         "n_damaged": 39,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.650887573964497,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.16666666666666666,
+          "level": 0.95,
+          "low": -0.6923076923076923,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.30128205128205127,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.5,
+         "median_healthy": 0.6666666666666666,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 3.0128205128205128,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.18633540372670807,
+          "level": 0.95,
+          "low": -0.4301242236024845,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.12422360248447205,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.0,
+         "median_healthy": 1.0,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.2422360248447204,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6428571428571429,
+          "level": 0.95,
+          "low": -0.16071428571428573,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.25,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 1.0,
+         "n_damaged": 12,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.5,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5700197238658777,
+          "level": 0.95,
+          "low": -0.1952662721893491,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.19723865877712032,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.6859903381642511,
+         "median_healthy": 0.5747863247863247,
+         "n_damaged": 39,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.9723865877712032,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.47435897435897434,
+          "level": 0.95,
+          "low": -0.46153846153846156,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.01282051282051282,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.41736111111111107,
+         "median_healthy": 0.5747863247863247,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.1282051282051282,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.23076923076923078,
+          "level": 0.95,
+          "low": -0.4358974358974359,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.10256410256410256,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.5811388300841898,
+         "median_healthy": 1.943650631615098,
+         "n_damaged": 39,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.0256410256410255,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.7435897435897436,
+          "level": 0.95,
+          "low": -0.16666666666666666,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.3076923076923077,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.889762729106411,
+         "median_healthy": 1.943650631615098,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 3.076923076923077,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2821678321678305,
+          "level": 0.95,
+          "low": -0.5384615384615384,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.1282051282051282,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.02192095563311151,
+         "median_healthy": 0.06721052943950075,
+         "n_damaged": 33,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.282051282051282,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3974358974358974,
+          "level": 0.95,
+          "low": -0.5128205128205128,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.0641025641025641,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.07884099921800404,
+         "median_healthy": 0.06721052943950075,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.641025641025641,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      },
+      "DESC": {
+       "A": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3027950310559006,
+          "level": 0.95,
+          "low": -0.4254658385093168,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.06521739130434782,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 9.0,
+         "median_healthy": 9.0,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.6521739130434783,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.38571428571428573,
+          "level": 0.95,
+          "low": -0.5428571428571428,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.08571428571428572,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 9.5,
+         "median_healthy": 9.0,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.8571428571428572,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DS1": {
+         "band": "weak",
+         "ci": {
+          "high": 0.11801242236024845,
+          "level": 0.95,
+          "low": -0.5791925465838509,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.2391304347826087,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.4037037037037037,
+         "median_healthy": 0.5185185185185185,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.391304347826087,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.07142857142857142,
+          "level": 0.95,
+          "low": -0.7785714285714286,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.37857142857142856,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.3935185185185185,
+         "median_healthy": 0.5185185185185185,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 3.7857142857142856,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4410326086956516,
+          "level": 0.95,
+          "low": -0.13509316770186336,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.15683229813664595,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.5683229813664594,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6857142857142857,
+          "level": 0.95,
+          "low": -0.02857142857142857,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.35,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 3.5,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DS1": {
+         "band": "weak",
+         "ci": {
+          "high": 0.04503105590062112,
+          "level": 0.95,
+          "low": -0.6211180124223602,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.3027950310559006,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.3642857142857143,
+         "median_healthy": 0.37448979591836734,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 3.027950310559006,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.17142857142857143,
+          "level": 0.95,
+          "low": -0.7428571428571429,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.3,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.3658730158730159,
+         "median_healthy": 0.37448979591836734,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 3.0,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5248835403726703,
+          "level": 0.95,
+          "low": -0.17395186335403723,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.17391304347826086,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.166666666666666,
+         "median_healthy": 1.8262937550497034,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.7391304347826086,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6857142857142857,
+          "level": 0.95,
+          "low": -0.21428571428571427,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.2642857142857143,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.3910380989264746,
+         "median_healthy": 1.8262937550497034,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.642857142857143,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.39448757763975045,
+          "level": 0.95,
+          "low": -0.33229813664596275,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.034161490683229816,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": -0.033894815588944235,
+         "median_healthy": -0.05142366563082043,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.34161490683229817,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5285714285714286,
+          "level": 0.95,
+          "low": -0.44285714285714284,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.05714285714285714,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": -0.055761924880741276,
+         "median_healthy": -0.05142366563082043,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.5714285714285714,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      }
+     },
+     "per_channel_pooled_damage": {
+      "ASC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.23645320197044334,
+         "level": 0.95,
+         "low": -0.3793103448275862,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.07019704433497537,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 10.5,
+        "median_healthy": 9.5,
+        "n_damaged": 58,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.7019704433497537,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.33182503770739064,
+         "level": 0.95,
+         "low": -0.3770739064856712,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.021116138763197588,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.6666666666666666,
+        "median_healthy": 0.6666666666666666,
+        "n_damaged": 51,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 0.2111613876319759,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2561576354679803,
+         "level": 0.95,
+         "low": -0.3670258620689655,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.046798029556650245,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.0,
+        "median_healthy": 1.0,
+        "n_damaged": 58,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.46798029556650245,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.526395173453997,
+         "level": 0.95,
+         "low": -0.22171945701357465,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.15384615384615385,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.6819444444444444,
+        "median_healthy": 0.5747863247863247,
+        "n_damaged": 51,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 1.5384615384615385,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.30015082956259426,
+         "level": 0.95,
+         "low": -0.3152337858220211,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.006033182503770739,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.702764893936818,
+        "median_healthy": 1.943650631615098,
+        "n_damaged": 51,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 0.06033182503770739,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.28547008547008546,
+         "level": 0.95,
+         "low": -0.5042735042735043,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.1111111111111111,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.030433537745789465,
+        "median_healthy": 0.06721052943950075,
+        "n_damaged": 45,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 1.1111111111111112,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      },
+      "DESC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.29850127551020367,
+         "level": 0.95,
+         "low": -0.43112244897959184,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.06887755102040816,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 9.0,
+        "median_healthy": 9.0,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.6887755102040816,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.07653061224489796,
+         "level": 0.95,
+         "low": -0.5956951530612244,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.26403061224489793,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.4037037037037037,
+        "median_healthy": 0.5185185185185185,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 2.640306122448979,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.4642857142857143,
+         "level": 0.95,
+         "low": -0.08804209183673467,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.1913265306122449,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 2.0,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.913265306122449,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "weak",
+        "ci": {
+         "high": 0.03829719387755056,
+         "level": 0.95,
+         "low": -0.6122448979591837,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.3022959183673469,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.3642857142857143,
+        "median_healthy": 0.37448979591836734,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 3.0229591836734695,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5280612244897959,
+         "level": 0.95,
+         "low": -0.16071428571428573,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.19005102040816327,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.1748268169104743,
+        "median_healthy": 1.8262937550497034,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.9005102040816326,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3699617346938766,
+         "level": 0.95,
+         "low": -0.3086734693877551,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.03826530612244898,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": -0.036935101868464146,
+        "median_healthy": -0.05142366563082043,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.38265306122448983,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      }
+     },
+     "pooled_all_damage": {
+      "A": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.18452380952380953,
+        "level": 0.95,
+        "low": -0.2769501879699248,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.046679197994987466,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 9.0,
+       "median_healthy": 9.5,
+       "n_damaged": 114,
+       "n_healthy": 28,
+       "reason": null,
+       "sds": 0.46679197994987465,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "D": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.09865005192107996,
+        "level": 0.95,
+        "low": -0.36967808930425755,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.14018691588785046,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.48148148148148145,
+       "median_healthy": 0.5333333333333333,
+       "n_damaged": 107,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 1.4018691588785046,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "F": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.25220081453634074,
+        "level": 0.95,
+        "low": -0.18358395989974938,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": 0.039473684210526314,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 2.0,
+       "median_healthy": 1.5,
+       "n_damaged": 114,
+       "n_healthy": 28,
+       "reason": null,
+       "sds": 0.39473684210526316,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "P": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.21634648667358936,
+        "level": 0.95,
+        "low": -0.2814122533748702,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.032191069574247146,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.3650793650793651,
+       "median_healthy": 0.37755102040816324,
+       "n_damaged": 107,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.32191069574247144,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "S": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.3146503980616129,
+        "level": 0.95,
+        "low": -0.14746452059536172,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": 0.0844582900657667,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 2.1104695289563087,
+       "median_healthy": 1.943650631615098,
+       "n_damaged": 107,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.8445829006576671,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "gamma2": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.23799046571323798,
+        "level": 0.95,
+        "low": -0.27686101943527686,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.0165016501650165,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": -0.019506557403898308,
+       "median_healthy": -0.029678907450284377,
+       "n_damaged": 101,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.16501650165016502,
+       "small_n": false,
+       "straddles_zero": true
+      }
+     }
+    },
+    "support": {
+     "per_channel_max_pairwise": {
+      "ASC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2251552795031056,
+         "level": 0.95,
+         "low": -0.44565217391304346,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.11335403726708075,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 11.5,
+        "median_healthy": 11.5,
+        "n_damaged": 46,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.7142857142857142,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 1.1335403726708075,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3525641025641026,
+         "level": 0.95,
+         "low": -0.5641025641025641,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.12179487179487179,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.7592592592592593,
+        "median_healthy": 0.7407407407407407,
+        "n_damaged": 12,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.057692307692307696,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 1.2179487179487178,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.10248447204968944,
+         "level": 0.95,
+         "low": -0.4968944099378882,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.20186335403726707,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.0,
+        "median_healthy": 1.0,
+        "n_damaged": 46,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.7142857142857142,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 2.0186335403726705,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.48846153846153845,
+         "level": 0.95,
+         "low": -0.19423076923076923,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.1519230769230769,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.7720458553791887,
+        "median_healthy": 0.7119883040935674,
+        "n_damaged": 40,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.641025641025641,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 1.5192307692307692,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5769230769230769,
+         "level": 0.95,
+         "low": -0.3525641025641026,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.12179487179487179,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.1172309635153788,
+        "median_healthy": 1.812544774497115,
+        "n_damaged": 12,
+        "n_healthy": 13,
+        "runner_up": {
+         "sds": 0.576923076923077,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 1.2179487179487178,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2916666666666667,
+         "level": 0.95,
+         "low": -0.4635416666666667,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.08854166666666667,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.030799558909195345,
+        "median_healthy": 0.09114030256160967,
+        "n_damaged": 32,
+        "n_healthy": 12,
+        "runner_up": {
+         "sds": 0.4545454545454546,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 0.8854166666666667,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       }
+      },
+      "DESC": {
+       "A": {
+        "band": "weak",
+        "ci": {
+         "high": 0.7571428571428571,
+         "level": 0.95,
+         "low": -0.1,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.35714285714285715,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 12.5,
+        "median_healthy": 9.5,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.5217391304347827,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 3.5714285714285716,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6714285714285714,
+         "level": 0.95,
+         "low": -0.2571428571428571,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.21428571428571427,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.5185185185185185,
+        "median_healthy": 0.37962962962962965,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.2267080745341614,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.142857142857143,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6142857142857143,
+         "level": 0.95,
+         "low": -0.22857142857142856,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.21428571428571427,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 2.0,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.43478260869565216,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.142857142857143,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "P": {
+        "band": "weak",
+        "ci": {
+         "high": 0.24285714285714285,
+         "level": 0.95,
+         "low": -0.6571428571428571,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.22857142857142856,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.4082251082251082,
+        "median_healthy": 0.4157142857142857,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.4906832298136647,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.2857142857142856,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "S": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6285714285714286,
+         "level": 0.95,
+         "low": -0.27178571428571396,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.2,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.3985348379361224,
+        "median_healthy": 1.9545730399121812,
+        "n_damaged": 10,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 1.6770186335403727,
+         "state": "DS1",
+         "winning_pair": "RS \u2013 DS1"
+        },
+        "sds": 2.0,
+        "small_n": false,
+        "state": "DS2",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS2"
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3416149068322981,
+         "level": 0.95,
+         "low": -0.40062111801242234,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.031055900621118012,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": -0.03420911667344018,
+        "median_healthy": -0.052925191999595195,
+        "n_damaged": 46,
+        "n_healthy": 14,
+        "runner_up": {
+         "sds": 0.14285714285714285,
+         "state": "DS2",
+         "winning_pair": "RS \u2013 DS2"
+        },
+        "sds": 0.3105590062111801,
+        "small_n": false,
+        "state": "DS1",
+        "straddles_zero": true,
+        "winning_pair": "RS \u2013 DS1"
+       }
+      }
+     },
+     "per_channel_per_state": {
+      "ASC": {
+       "A": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2251552795031056,
+          "level": 0.95,
+          "low": -0.44565217391304346,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.11335403726708075,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 11.5,
+         "median_healthy": 11.5,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.1335403726708075,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5178571428571429,
+          "level": 0.95,
+          "low": -0.39285714285714285,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.07142857142857142,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 11.5,
+         "median_healthy": 11.5,
+         "n_damaged": 12,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.7142857142857142,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.36153846153846153,
+          "level": 0.95,
+          "low": -0.3404326923076923,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.0057692307692307696,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.7407407407407407,
+         "median_healthy": 0.7407407407407407,
+         "n_damaged": 40,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.057692307692307696,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3525641025641026,
+          "level": 0.95,
+          "low": -0.5641025641025641,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.12179487179487179,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.7592592592592593,
+         "median_healthy": 0.7407407407407407,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.2179487179487178,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DS1": {
+         "band": "weak",
+         "ci": {
+          "high": 0.10248447204968944,
+          "level": 0.95,
+          "low": -0.4968944099378882,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.20186335403726707,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.0,
+         "median_healthy": 1.0,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.0186335403726705,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.47023809523809523,
+          "level": 0.95,
+          "low": -0.30952380952380953,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.07142857142857142,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 1.0,
+         "median_healthy": 1.0,
+         "n_damaged": 12,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.7142857142857142,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.48846153846153845,
+          "level": 0.95,
+          "low": -0.19423076923076923,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.1519230769230769,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.7720458553791887,
+         "median_healthy": 0.7119883040935674,
+         "n_damaged": 40,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.5192307692307692,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3974358974358974,
+          "level": 0.95,
+          "low": -0.5128205128205128,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.0641025641025641,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.4427083333333333,
+         "median_healthy": 0.7119883040935674,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.641025641025641,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2826923076923077,
+          "level": 0.95,
+          "low": -0.38658653846153845,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.057692307692307696,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.605098121755761,
+         "median_healthy": 1.812544774497115,
+         "n_damaged": 40,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 0.576923076923077,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5769230769230769,
+          "level": 0.95,
+          "low": -0.3525641025641026,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.12179487179487179,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.1172309635153788,
+         "median_healthy": 1.812544774497115,
+         "n_damaged": 12,
+         "n_healthy": 13,
+         "reason": null,
+         "sds": 1.2179487179487178,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2916666666666667,
+          "level": 0.95,
+          "low": -0.4635416666666667,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.08854166666666667,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.030799558909195345,
+         "median_healthy": 0.09114030256160967,
+         "n_damaged": 32,
+         "n_healthy": 12,
+         "reason": null,
+         "sds": 0.8854166666666667,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.45454545454545453,
+          "level": 0.95,
+          "low": -0.5303030303030303,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.045454545454545456,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.09743489941717842,
+         "median_healthy": 0.09114030256160967,
+         "n_damaged": 11,
+         "n_healthy": 12,
+         "reason": null,
+         "sds": 0.4545454545454546,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      },
+      "DESC": {
+       "A": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4953804347826081,
+          "level": 0.95,
+          "low": -0.20652173913043478,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.15217391304347827,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 11.0,
+         "median_healthy": 9.5,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.5217391304347827,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.7571428571428571,
+          "level": 0.95,
+          "low": -0.1,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.35714285714285715,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 12.5,
+         "median_healthy": 9.5,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 3.5714285714285716,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4720496894409938,
+          "level": 0.95,
+          "low": -0.2484472049689441,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.12267080745341614,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.4444444444444444,
+         "median_healthy": 0.37962962962962965,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.2267080745341614,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6714285714285714,
+          "level": 0.95,
+          "low": -0.2571428571428571,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.21428571428571427,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.5185185185185185,
+         "median_healthy": 0.37962962962962965,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.142857142857143,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.36335403726708076,
+          "level": 0.95,
+          "low": -0.2795031055900621,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.043478260869565216,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.43478260869565216,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6142857142857143,
+          "level": 0.95,
+          "low": -0.22857142857142856,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.21428571428571427,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.142857142857143,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2251552795031056,
+          "level": 0.95,
+          "low": -0.5093555900621117,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.14906832298136646,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.4022893772893773,
+         "median_healthy": 0.4157142857142857,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.4906832298136647,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.24285714285714285,
+          "level": 0.95,
+          "low": -0.6571428571428571,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.22857142857142856,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.4082251082251082,
+         "median_healthy": 0.4157142857142857,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.2857142857142856,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.509394409937887,
+          "level": 0.95,
+          "low": -0.17088509316770178,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": 0.16770186335403728,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.3082226600582683,
+         "median_healthy": 1.9545730399121812,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 1.6770186335403727,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6285714285714286,
+          "level": 0.95,
+          "low": -0.27178571428571396,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": 0.2,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.3985348379361224,
+         "median_healthy": 1.9545730399121812,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 2.0,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DS1": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3416149068322981,
+          "level": 0.95,
+          "low": -0.40062111801242234,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS1",
+         "delta": -0.031055900621118012,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": -0.03420911667344018,
+         "median_healthy": -0.052925191999595195,
+         "n_damaged": 46,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.3105590062111801,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DS2": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.45714285714285713,
+          "level": 0.95,
+          "low": -0.4714285714285714,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "RS \u2013 DS2",
+         "delta": -0.014285714285714285,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": -0.05098868347127624,
+         "median_healthy": -0.052925191999595195,
+         "n_damaged": 10,
+         "n_healthy": 14,
+         "reason": null,
+         "sds": 0.14285714285714285,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      }
+     },
+     "per_channel_pooled_damage": {
+      "ASC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2413793103448276,
+         "level": 0.95,
+         "low": -0.39285714285714285,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.07512315270935961,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 11.5,
+        "median_healthy": 11.5,
+        "n_damaged": 58,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.7512315270935961,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3165680473372781,
+         "level": 0.95,
+         "low": -0.3609467455621302,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.023668639053254437,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.7407407407407407,
+        "median_healthy": 0.7407407407407407,
+        "n_damaged": 52,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 0.23668639053254437,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.15270935960591134,
+         "level": 0.95,
+         "low": -0.43968596059113296,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.14532019704433496,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.0,
+        "median_healthy": 1.0,
+        "n_damaged": 58,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.4532019704433496,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.43051035502958523,
+         "level": 0.95,
+         "low": -0.23520710059171598,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.10207100591715976,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.7533895502645502,
+        "median_healthy": 0.7119883040935674,
+        "n_damaged": 52,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 1.0207100591715976,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2988165680473373,
+         "level": 0.95,
+         "low": -0.3431952662721893,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.016272189349112426,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.619056308447404,
+        "median_healthy": 1.812544774497115,
+        "n_damaged": 52,
+        "n_healthy": 13,
+        "reason": null,
+        "sds": 0.16272189349112426,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3023255813953488,
+         "level": 0.95,
+         "low": -0.45348837209302323,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.07751937984496124,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.0490047277223887,
+        "median_healthy": 0.09114030256160967,
+        "n_damaged": 43,
+        "n_healthy": 12,
+        "reason": null,
+        "sds": 0.7751937984496124,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      },
+      "DESC": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5268176020408158,
+         "level": 0.95,
+         "low": -0.16329719387755098,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.18877551020408162,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 11.0,
+        "median_healthy": 9.5,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.887755102040816,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.4885204081632653,
+         "level": 0.95,
+         "low": -0.2193877551020408,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.13903061224489796,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.4444444444444444,
+        "median_healthy": 0.37962962962962965,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.3903061224489797,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3763073979591832,
+         "level": 0.95,
+         "low": -0.2308673469387755,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.07397959183673469,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 2.0,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.7397959183673469,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.20153061224489796,
+         "level": 0.95,
+         "low": -0.5076849489795918,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.16326530612244897,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.4022893772893773,
+        "median_healthy": 0.4157142857142857,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.6326530612244896,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5076530612244898,
+         "level": 0.95,
+         "low": -0.17091836734693877,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": 0.17346938775510204,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.314341208103394,
+        "median_healthy": 1.9545730399121812,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 1.7346938775510203,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.33163265306122447,
+         "level": 0.95,
+         "low": -0.3979591836734694,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "RS vs all damaged",
+        "delta": -0.02806122448979592,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": -0.04463798033916247,
+        "median_healthy": -0.052925191999595195,
+        "n_damaged": 56,
+        "n_healthy": 14,
+        "reason": null,
+        "sds": 0.28061224489795916,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      }
+     },
+     "pooled_all_damage": {
+      "A": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.26221804511278196,
+        "level": 0.95,
+        "low": -0.21116071428571428,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": 0.02474937343358396,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 11.0,
+       "median_healthy": 9.5,
+       "n_damaged": 114,
+       "n_healthy": 28,
+       "reason": null,
+       "sds": 0.2474937343358396,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "D": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.2980195473251027,
+        "level": 0.95,
+        "low": -0.20988511659807954,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": 0.043209876543209874,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 0.587962962962963,
+       "median_healthy": 0.5416666666666666,
+       "n_damaged": 108,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.43209876543209874,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "F": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.16697994987468673,
+        "level": 0.95,
+        "low": -0.27976190476190477,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.05451127819548872,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 2.0,
+       "median_healthy": 2.0,
+       "n_damaged": 114,
+       "n_healthy": 28,
+       "reason": null,
+       "sds": 0.5451127819548872,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "P": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.2222307956104251,
+        "level": 0.95,
+        "low": -0.2421210562414266,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.010631001371742112,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.4107142857142857,
+       "median_healthy": 0.4257142857142857,
+       "n_damaged": 108,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.10631001371742112,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "S": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.31824417009602196,
+        "level": 0.95,
+        "low": -0.15432098765432098,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": 0.08264746227709191,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 2.079722019254727,
+       "median_healthy": 1.812544774497115,
+       "n_damaged": 108,
+       "n_healthy": 27,
+       "reason": null,
+       "sds": 0.8264746227709191,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "gamma2": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.1919191919191919,
+        "level": 0.95,
+        "low": -0.31934731934731936,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "RS vs all damaged",
+       "delta": -0.0675990675990676,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": -0.010814387004427273,
+       "median_healthy": -0.005263361667527473,
+       "n_damaged": 99,
+       "n_healthy": 26,
+       "reason": null,
+       "sds": 0.675990675990676,
+       "small_n": false,
+       "straddles_zero": true
+      }
+     }
+    }
+   },
+   "pin": {
+    "available": false,
+    "reason": "the registry names no reference for this site"
+   },
+   "primary_analysis": "per_channel_per_state",
+   "site": "bautzen",
+   "tables": {
+    "committed": {
+     "counts_by_channel": {
+      "ASC": {
+       "DS1": 46,
+       "DS2": 12,
+       "RS": 14
+      },
+      "DESC": {
+       "DS1": 46,
+       "DS2": 10,
+       "RS": 14
+      }
+     },
+     "n_rows": 142,
+     "path": "data/bautzen/bautzen_ocv_channels.csv",
+     "sha256": "32b2180cc28551ae85056c8b5994d6dedf02cc724353b2d130880230078c37fa"
+    },
+    "support": {
+     "counts_by_channel": {
+      "ASC": {
+       "DS1": 46,
+       "DS2": 12,
+       "RS": 14
+      },
+      "DESC": {
+       "DS1": 46,
+       "DS2": 10,
+       "RS": 14
+      }
+     },
+     "n_rows": 142,
+     "path": "data/bautzen/support/bautzen_ocv_channels.csv",
+     "sha256": "5e7fd543a5b2d7dca70e164972116d2efdeeb137c588562b75edde9ac6bd5398"
+    }
+   }
+  },
+  "lumo": {
+   "label": "LUMO lattice tower (Hannover)",
+   "levels": {
+    "committed": {
+     "per_channel_max_pairwise": {
+      "ASCENDING": {
+       "A": {
+        "band": "weak",
+        "ci": {
+         "high": 0.596875,
+         "level": 0.95,
+         "low": -0.12507812499999993,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.25,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 15.5,
+        "median_healthy": 12.5,
+        "n_damaged": 8,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 0.75,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 2.5,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.13,
+         "level": 0.95,
+         "low": -0.77,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.34,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.003865979381443299,
+        "median_healthy": 0.005548373195432019,
+        "n_damaged": 5,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 2.5,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 3.4000000000000004,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "F": {
+        "band": "moderate",
+        "ci": {
+         "high": 0.784375,
+         "level": 0.95,
+         "low": 0.078125,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.4625,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 9.0,
+        "median_healthy": 5.5,
+        "n_damaged": 8,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 0.5625,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 4.625,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "P": {
+        "band": "strong",
+        "ci": {
+         "high": -0.4358974358974359,
+         "level": 0.95,
+         "low": -0.9230769230769231,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.7115384615384616,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.012994350282485877,
+        "median_healthy": 0.015536723163841807,
+        "n_damaged": 4,
+        "n_healthy": 39,
+        "runner_up": {
+         "sds": 4.512820512820513,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 7.115384615384616,
+        "small_n": true,
+        "state": "DAM 6",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 6"
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.66,
+         "level": 0.95,
+         "low": -0.4102499999999997,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.14,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 77.85282589604567,
+        "median_healthy": 50.07465191724614,
+        "n_damaged": 5,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 0.9375,
+         "state": "DAM 3",
+         "winning_pair": "healthy \u2013 DAM 3"
+        },
+        "sds": 1.4000000000000001,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.225,
+         "level": 0.95,
+         "low": -0.53125,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.1625,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.062081637069764495,
+        "median_healthy": 0.06726429385645386,
+        "n_damaged": 8,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.625,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 1.625,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "band": "weak",
+        "ci": {
+         "high": 0.029066811909948902,
+         "level": 0.95,
+         "low": -0.4873093681917211,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.2374727668845316,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 10.0,
+        "median_healthy": 16.0,
+        "n_damaged": 17,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 0.6893004115226338,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 2.374727668845316,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.24694163860830484,
+         "level": 0.95,
+         "low": -0.566806958473625,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.17620650953984288,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.010769230769230769,
+        "median_healthy": 0.0275,
+        "n_damaged": 11,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 1.4161220043572984,
+         "state": "DAM 3",
+         "winning_pair": "healthy \u2013 DAM 3"
+        },
+        "sds": 1.7620650953984287,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.042846768336964415,
+         "level": 0.95,
+         "low": -0.5076252723311547,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.2440087145969499,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 5.0,
+        "median_healthy": 7.0,
+        "n_damaged": 17,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 1.0774410774410774,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 2.440087145969499,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "P": {
+        "band": "weak",
+        "ci": {
+         "high": 0.654320987654321,
+         "level": 0.95,
+         "low": -0.047325102880658436,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.3148148148148148,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.016982781813290288,
+        "median_healthy": 0.01480225988700565,
+        "n_damaged": 12,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 0.26143790849673204,
+         "state": "DAM 3",
+         "winning_pair": "healthy \u2013 DAM 3"
+        },
+        "sds": 3.1481481481481484,
+        "small_n": false,
+        "state": "DAM 6",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 6"
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2694262890341322,
+         "level": 0.95,
+         "low": -0.39869281045751637,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.06608569353667393,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 28.228531665674723,
+        "median_healthy": 33.79202311857463,
+        "n_damaged": 17,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 0.32921810699588483,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 0.6608569353667393,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "gamma2": {
+        "band": "weak",
+        "ci": {
+         "high": 0.5119825708061002,
+         "level": 0.95,
+         "low": 0.0196078431372549,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.2766884531590414,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.043895211483897884,
+        "median_healthy": 0.03396212390106548,
+        "n_damaged": 17,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 0.9053497942386832,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 2.766884531590414,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 3"
+       }
+      }
+     },
+     "per_channel_per_state": {
+      "ASCENDING": {
+       "A": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.596875,
+          "level": 0.95,
+          "low": -0.12507812499999993,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.25,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 15.5,
+         "median_healthy": 12.5,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 2.5,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.43,
+          "level": 0.95,
+          "low": -0.555,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.075,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 10.0,
+         "median_healthy": 12.5,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.75,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.45,
+          "level": 0.95,
+          "low": -0.5689062499999998,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.04375,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 13.0,
+         "median_healthy": 12.5,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.4375,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4375,
+          "level": 0.95,
+          "low": -0.3375,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.05,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.005865764316037986,
+         "median_healthy": 0.005548373195432019,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.5,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": 0.13,
+          "level": 0.95,
+          "low": -0.77,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.34,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.003865979381443299,
+         "median_healthy": 0.005548373195432019,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 3.4000000000000004,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.675,
+          "level": 0.95,
+          "low": -0.175,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.25,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.006429310854776693,
+         "median_healthy": 0.005548373195432019,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 2.5,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DAM 3": {
+         "band": "moderate",
+         "ci": {
+          "high": 0.784375,
+          "level": 0.95,
+          "low": 0.078125,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.4625,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 9.0,
+         "median_healthy": 5.5,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 4.625,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.43012499999999815,
+          "level": 0.95,
+          "low": -0.52,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.055,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 5.0,
+         "median_healthy": 5.5,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.55,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.5125,
+          "level": 0.95,
+          "low": -0.45625,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.05625,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 7.0,
+         "median_healthy": 5.5,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.5625,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DAM 3": {
+         "band": "moderate",
+         "ci": {
+          "high": -0.02564102564102564,
+          "level": 0.95,
+          "low": -0.7724358974358975,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.4198717948717949,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.013627615322530578,
+         "median_healthy": 0.015536723163841807,
+         "n_damaged": 8,
+         "n_healthy": 39,
+         "reason": null,
+         "sds": 4.198717948717949,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 4": {
+         "band": "moderate",
+         "ci": {
+          "high": 0.2512820512820513,
+          "level": 0.95,
+          "low": -0.9282051282051282,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.4512820512820513,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.013018914271677723,
+         "median_healthy": 0.015536723163841807,
+         "n_damaged": 5,
+         "n_healthy": 39,
+         "reason": null,
+         "sds": 4.512820512820513,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "strong",
+         "ci": {
+          "high": -0.4358974358974359,
+          "level": 0.95,
+          "low": -0.9230769230769231,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.7115384615384616,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.012994350282485877,
+         "median_healthy": 0.015536723163841807,
+         "n_damaged": 4,
+         "n_healthy": 39,
+         "reason": null,
+         "sds": 7.115384615384616,
+         "small_n": true,
+         "straddles_zero": false
+        }
+       },
+       "S": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.29375,
+          "level": 0.95,
+          "low": -0.46875,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.09375,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 67.55564245228443,
+         "median_healthy": 50.07465191724614,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.9375,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.66,
+          "level": 0.95,
+          "low": -0.4102499999999997,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.14,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 77.85282589604567,
+         "median_healthy": 50.07465191724614,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.4000000000000001,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.425,
+          "level": 0.95,
+          "low": -0.6,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.075,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 57.77790407166889,
+         "median_healthy": 50.07465191724614,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.75,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.225,
+          "level": 0.95,
+          "low": -0.53125,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.1625,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.062081637069764495,
+         "median_healthy": 0.06726429385645386,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.625,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.32,
+          "level": 0.95,
+          "low": -0.46,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.07,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.06728835733032755,
+         "median_healthy": 0.06726429385645386,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.7000000000000001,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.475,
+          "level": 0.95,
+          "low": -0.725,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.1625,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.046742144625769075,
+         "median_healthy": 0.06726429385645386,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.625,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.029066811909948902,
+          "level": 0.95,
+          "low": -0.4873093681917211,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.2374727668845316,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 10.0,
+         "median_healthy": 16.0,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.374727668845316,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.26374859708193044,
+          "level": 0.95,
+          "low": -0.4118967452300786,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.06846240179573512,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 16.0,
+         "median_healthy": 16.0,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.6846240179573513,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2747170781893,
+          "level": 0.95,
+          "low": -0.40843621399176955,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.06893004115226338,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 12.0,
+         "median_healthy": 16.0,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.6893004115226338,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.18447712418300627,
+          "level": 0.95,
+          "low": -0.45824255628177196,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.14161220043572983,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.014921248963802156,
+         "median_healthy": 0.0275,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.4161220043572984,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.24694163860830484,
+          "level": 0.95,
+          "low": -0.566806958473625,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.17620650953984288,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.010769230769230769,
+         "median_healthy": 0.0275,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.7620650953984287,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.38065843621399176,
+          "level": 0.95,
+          "low": -0.41154835390946504,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.00720164609053498,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.029657220379058585,
+         "median_healthy": 0.0275,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.0720164609053498,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.042846768336964415,
+          "level": 0.95,
+          "low": -0.5076252723311547,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.2440087145969499,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 5.0,
+         "median_healthy": 7.0,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.440087145969499,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.21885521885521886,
+          "level": 0.95,
+          "low": -0.43437149270482606,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.10774410774410774,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 7.0,
+         "median_healthy": 7.0,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.0774410774410774,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.29012345679012347,
+          "level": 0.95,
+          "low": -0.4382716049382716,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.07613168724279835,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 6.0,
+         "median_healthy": 7.0,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.7613168724279835,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2984749455337691,
+          "level": 0.95,
+          "low": -0.34713144517066086,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.026143790849673203,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.014018096087676818,
+         "median_healthy": 0.01480225988700565,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.26143790849673204,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3367003367003367,
+          "level": 0.95,
+          "low": -0.36475869809203143,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.015712682379349047,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.0149840334070253,
+         "median_healthy": 0.01480225988700565,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.15712682379349047,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.654320987654321,
+          "level": 0.95,
+          "low": -0.047325102880658436,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.3148148148148148,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.016982781813290288,
+         "median_healthy": 0.01480225988700565,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 3.1481481481481484,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.2694262890341322,
+          "level": 0.95,
+          "low": -0.39869281045751637,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.06608569353667393,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 28.228531665674723,
+         "median_healthy": 33.79202311857463,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.6608569353667393,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3726430976430973,
+          "level": 0.95,
+          "low": -0.3479236812570146,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.02244668911335578,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 41.433842612162685,
+         "median_healthy": 33.79202311857463,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.22446689113355778,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4053497942386831,
+          "level": 0.95,
+          "low": -0.3333333333333333,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.03292181069958848,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 42.922738599833025,
+         "median_healthy": 33.79202311857463,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.32921810699588483,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.5119825708061002,
+          "level": 0.95,
+          "low": 0.0196078431372549,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.2766884531590414,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.043895211483897884,
+         "median_healthy": 0.03396212390106548,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.766884531590414,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.32435465768799104,
+          "level": 0.95,
+          "low": -0.35353535353535354,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.019079685746352413,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.027878901382342197,
+         "median_healthy": 0.03396212390106548,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.19079685746352412,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.23868312757201646,
+          "level": 0.95,
+          "low": -0.4176954732510288,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.09053497942386832,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.026732035203513877,
+         "median_healthy": 0.03396212390106548,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.9053497942386832,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      }
+     },
+     "per_channel_pooled_damage": {
+      "ASCENDING": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.39558823529411763,
+         "level": 0.95,
+         "low": -0.2323529411764706,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.08529411764705883,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 14.0,
+        "median_healthy": 12.5,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.8529411764705883,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3,
+         "level": 0.95,
+         "low": -0.3323529411764706,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.01764705882352941,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.005865102639296188,
+        "median_healthy": 0.005548373195432019,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.1764705882352941,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": 0.5117647058823529,
+         "level": 0.95,
+         "low": -0.10147058823529412,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.21470588235294116,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 7.0,
+        "median_healthy": 5.5,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 2.1470588235294117,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "moderate",
+        "ci": {
+         "high": -0.19155354449472098,
+         "level": 0.95,
+         "low": -0.7677224736048266,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.497737556561086,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.013018914271677723,
+        "median_healthy": 0.015536723163841807,
+        "n_damaged": 17,
+        "n_healthy": 39,
+        "reason": null,
+        "sds": 4.97737556561086,
+        "small_n": false,
+        "straddles_zero": false
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3029411764705882,
+         "level": 0.95,
+         "low": -0.3323529411764706,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.020588235294117647,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 69.29357834604878,
+        "median_healthy": 50.07465191724614,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.20588235294117646,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.17647058823529413,
+         "level": 0.95,
+         "low": -0.43529411764705883,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.13529411764705881,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.057043673704619255,
+        "median_healthy": 0.06726429385645386,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 1.352941176470588,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.07037808641975297,
+         "level": 0.95,
+         "low": -0.3475462962962963,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.1404320987654321,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 12.0,
+        "median_healthy": 16.0,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 1.4043209876543212,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.12099537037037025,
+         "level": 0.95,
+         "low": -0.33827160493827163,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.11080246913580247,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.015663959608313127,
+        "median_healthy": 0.0275,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 1.1080246913580247,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.059876543209876544,
+         "level": 0.95,
+         "low": -0.36666666666666664,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.15617283950617283,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 6.0,
+        "median_healthy": 7.0,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 1.5617283950617282,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.30247685185185175,
+         "level": 0.95,
+         "low": -0.14753086419753086,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.07901234567901234,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.014554163596168018,
+        "median_healthy": 0.01480225988700565,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.7901234567901234,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.21421296296296274,
+         "level": 0.95,
+         "low": -0.24135802469135803,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.012037037037037037,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 41.67790523389881,
+        "median_healthy": 33.79202311857463,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.12037037037037038,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.2938271604938272,
+         "level": 0.95,
+         "low": -0.12283950617283951,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.08518518518518518,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.039310640100304675,
+        "median_healthy": 0.03396212390106548,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.8518518518518519,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      }
+     },
+     "pooled_all_damage": {
+      "A": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.09004277221980567,
+        "level": 0.95,
+        "low": -0.25489705669131507,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.08104973176743512,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 12.0,
+       "median_healthy": 15.0,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.8104973176743512,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "D": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.09772727272727268,
+        "level": 0.95,
+        "low": -0.27185732927359724,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.08583442076265042,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.008771929824561403,
+       "median_healthy": 0.012768130745658836,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.8583442076265042,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "F": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.10744164129331589,
+        "level": 0.95,
+        "low": -0.2435914165579237,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.0665506742061766,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 6.0,
+       "median_healthy": 6.0,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.665506742061766,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "P": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.0894773391812865,
+        "level": 0.95,
+        "low": -0.29195906432748536,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.1054093567251462,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.014018096087676818,
+       "median_healthy": 0.014872881355932203,
+       "n_damaged": 57,
+       "n_healthy": 120,
+       "reason": null,
+       "sds": 1.054093567251462,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "S": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.17211106278091914,
+        "level": 0.95,
+        "low": -0.19559953603015803,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.009569377990430622,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 46.26222979728901,
+       "median_healthy": 38.140468173581716,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.09569377990430622,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "gamma2": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.18545019573727697,
+        "level": 0.95,
+        "low": -0.1645715528490648,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": 0.010294330868493549,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 0.043895211483897884,
+       "median_healthy": 0.04528475310247574,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.10294330868493548,
+       "small_n": false,
+       "straddles_zero": true
+      }
+     }
+    },
+    "support": {
+     "per_channel_max_pairwise": {
+      "ASCENDING": {
+       "A": {
+        "band": "moderate",
+        "ci": {
+         "high": -0.1,
+         "level": 0.95,
+         "low": -0.9625,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.59375,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 5.5,
+        "median_healthy": 10.0,
+        "n_damaged": 4,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.6,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 5.9375,
+        "small_n": true,
+        "state": "DAM 6",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 6"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.76,
+         "level": 0.95,
+         "low": -0.13512499999999988,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.335,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.004964539007092199,
+        "median_healthy": 0.004185360622039502,
+        "n_damaged": 5,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.9375,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 3.35,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "F": {
+        "band": "strong",
+        "ci": {
+         "high": -0.40625,
+         "level": 0.95,
+         "low": -0.95,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.7125,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.5,
+        "median_healthy": 4.0,
+        "n_damaged": 4,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.25,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 7.125,
+        "small_n": true,
+        "state": "DAM 6",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 6"
+       },
+       "P": {
+        "band": "moderate",
+        "ci": {
+         "high": -0.15,
+         "level": 0.95,
+         "low": -0.74375,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.46875,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.06224004753416518,
+        "median_healthy": 0.09352941176470589,
+        "n_damaged": 8,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 3.125,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 4.6875,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "S": {
+        "band": "weak",
+        "ci": {
+         "high": 0.60625,
+         "level": 0.95,
+         "low": -0.21875,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.20625,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 138.70671936593033,
+        "median_healthy": 110.92210463855534,
+        "n_damaged": 8,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.5,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 2.0625,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "gamma2": {
+        "band": "moderate",
+        "ci": {
+         "high": 0.9,
+         "level": 0.95,
+         "low": -0.0125,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.4875,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.37375744251953535,
+        "median_healthy": 0.1240768399375137,
+        "n_damaged": 4,
+        "n_healthy": 40,
+        "runner_up": {
+         "sds": 1.9,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 4.875,
+        "small_n": true,
+        "state": "DAM 6",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 6"
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.4609053497942387,
+         "level": 0.95,
+         "low": -0.16769547325102882,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.15637860082304528,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 4.0,
+        "median_healthy": 4.0,
+        "n_damaged": 12,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 0.7856341189674523,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 1.5637860082304527,
+        "small_n": false,
+        "state": "DAM 6",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 6"
+       },
+       "D": {
+        "band": "weak",
+        "ci": {
+         "high": 0.6015993265993262,
+         "level": 0.95,
+         "low": 0.10437710437710437,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.3658810325476992,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 1.0,
+        "median_healthy": 0.010224948875255624,
+        "n_damaged": 11,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 2.4897119341563787,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 3.658810325476992,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "F": {
+        "band": "weak",
+        "ci": {
+         "high": -0.04264870931537598,
+         "level": 0.95,
+         "low": -0.5432098765432098,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.3075196408529742,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 1.0,
+        "median_healthy": 2.0,
+        "n_damaged": 11,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 2.6337448559670786,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 3.0751964085297416,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": false,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "P": {
+        "band": "weak",
+        "ci": {
+         "high": 0.03994190268700073,
+         "level": 0.95,
+         "low": -0.5206971677559913,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.24981844589687727,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.13333333333333333,
+        "median_healthy": 0.19166666666666668,
+        "n_damaged": 17,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 1.3355780022446688,
+         "state": "DAM 4",
+         "winning_pair": "healthy \u2013 DAM 4"
+        },
+        "sds": 2.4981844589687725,
+        "small_n": false,
+        "state": "DAM 3",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 3"
+       },
+       "S": {
+        "band": "weak",
+        "ci": {
+         "high": 0.1593995510662173,
+         "level": 0.95,
+         "low": -0.5858585858585859,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": -0.22671156004489337,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.7071067811865476,
+        "median_healthy": 14.221462653327892,
+        "n_damaged": 11,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 2.253086419753086,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 2.2671156004489337,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       },
+       "gamma2": {
+        "band": "weak",
+        "ci": {
+         "high": 0.622895622895623,
+         "level": 0.95,
+         "low": -0.0707070707070707,
+         "n_boot": 10000,
+         "scope": "of the winning pair (this comparison only) - not of the maximum",
+         "seed": 7
+        },
+        "delta": 0.2884399551066218,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.7065507953045427,
+        "median_healthy": 0.6508905022667124,
+        "n_damaged": 11,
+        "n_healthy": 81,
+        "runner_up": {
+         "sds": 1.4814814814814814,
+         "state": "DAM 6",
+         "winning_pair": "healthy \u2013 DAM 6"
+        },
+        "sds": 2.8843995510662177,
+        "small_n": false,
+        "state": "DAM 4",
+        "straddles_zero": true,
+        "winning_pair": "healthy \u2013 DAM 4"
+       }
+      }
+     },
+     "per_channel_per_state": {
+      "ASCENDING": {
+       "A": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.49070312499999885,
+          "level": 0.95,
+          "low": -0.271875,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.115625,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 12.5,
+         "median_healthy": 10.0,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.15625,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.67,
+          "level": 0.95,
+          "low": -0.415,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.16,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 11.0,
+         "median_healthy": 10.0,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.6,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "moderate",
+         "ci": {
+          "high": -0.1,
+          "level": 0.95,
+          "low": -0.9625,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.59375,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 5.5,
+         "median_healthy": 10.0,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 5.9375,
+         "small_n": true,
+         "straddles_zero": false
+        }
+       },
+       "D": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4875,
+          "level": 0.95,
+          "low": -0.29695312499999993,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.103125,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.004462802455760202,
+         "median_healthy": 0.004185360622039502,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.03125,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": 0.76,
+          "level": 0.95,
+          "low": -0.13512499999999988,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.335,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.004964539007092199,
+         "median_healthy": 0.004185360622039502,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 3.35,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.975,
+          "level": 0.95,
+          "low": -0.6,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.19375,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.5019230769230769,
+         "median_healthy": 0.004185360622039502,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.9375,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.475,
+          "level": 0.95,
+          "low": -0.34382812499999993,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.071875,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 3.0,
+         "median_healthy": 4.0,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.71875,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.225,
+          "level": 0.95,
+          "low": -0.49,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.125,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 4.0,
+         "median_healthy": 4.0,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.25,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "strong",
+         "ci": {
+          "high": -0.40625,
+          "level": 0.95,
+          "low": -0.95,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.7125,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.5,
+         "median_healthy": 4.0,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 7.125,
+         "small_n": true,
+         "straddles_zero": false
+        }
+       },
+       "P": {
+        "DAM 3": {
+         "band": "moderate",
+         "ci": {
+          "high": -0.15,
+          "level": 0.95,
+          "low": -0.74375,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.46875,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.06224004753416518,
+         "median_healthy": 0.09352941176470589,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 4.6875,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.59,
+          "level": 0.95,
+          "low": -0.45,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.06,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.07914438502673794,
+         "median_healthy": 0.09352941176470589,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.6,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.775,
+          "level": 0.95,
+          "low": -0.1625,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.3125,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.1000891265597148,
+         "median_healthy": 0.09352941176470589,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 3.125,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.60625,
+          "level": 0.95,
+          "low": -0.21875,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.20625,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 138.70671936593033,
+         "median_healthy": 110.92210463855534,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 2.0625,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.42,
+          "level": 0.95,
+          "low": -0.44024999999999975,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.01,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 108.20763633858505,
+         "median_healthy": 110.92210463855534,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.1,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.7,
+          "level": 0.95,
+          "low": -0.96875,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.15,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 73.08652191755361,
+         "median_healthy": 110.92210463855534,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.5,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.41875,
+          "level": 0.95,
+          "low": -0.4125,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.00625,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.12889073516413874,
+         "median_healthy": 0.1240768399375137,
+         "n_damaged": 8,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 0.0625,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4,
+          "level": 0.95,
+          "low": -0.76,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.19,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.06827276707085779,
+         "median_healthy": 0.1240768399375137,
+         "n_damaged": 5,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 1.9,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "moderate",
+         "ci": {
+          "high": 0.9,
+          "level": 0.95,
+          "low": -0.0125,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.4875,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.37375744251953535,
+         "median_healthy": 0.1240768399375137,
+         "n_damaged": 4,
+         "n_healthy": 40,
+         "reason": null,
+         "sds": 4.875,
+         "small_n": true,
+         "straddles_zero": true
+        }
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.34350036310820625,
+          "level": 0.95,
+          "low": -0.2476397966594045,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.04720406681190995,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 4.0,
+         "median_healthy": 4.0,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.4720406681190995,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.25928731762065055,
+          "level": 0.95,
+          "low": -0.41978114478114475,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.07856341189674523,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 4.0,
+         "median_healthy": 4.0,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.7856341189674523,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.4609053497942387,
+          "level": 0.95,
+          "low": -0.16769547325102882,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.15637860082304528,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 4.0,
+         "median_healthy": 4.0,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.5637860082304527,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "D": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.1626724763979666,
+          "level": 0.95,
+          "low": -0.43209876543209874,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.13580246913580246,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.010736196319018405,
+         "median_healthy": 0.010224948875255624,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.3580246913580245,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": 0.6015993265993262,
+          "level": 0.95,
+          "low": 0.10437710437710437,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.3658810325476992,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 1.0,
+         "median_healthy": 0.010224948875255624,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 3.658810325476992,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.06378600823045268,
+          "level": 0.95,
+          "low": -0.5411522633744856,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.24897119341563786,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.007142857142857143,
+         "median_healthy": 0.010224948875255624,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.4897119341563787,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "F": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3260711692084241,
+          "level": 0.95,
+          "low": -0.21715686274509802,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.05374001452432825,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.5374001452432825,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": -0.04264870931537598,
+          "level": 0.95,
+          "low": -0.5432098765432098,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.3075196408529742,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 1.0,
+         "median_healthy": 2.0,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 3.0751964085297416,
+         "small_n": false,
+         "straddles_zero": false
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.5144290123456786,
+          "level": 0.95,
+          "low": -0.009259259259259259,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.26337448559670784,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 2.0,
+         "median_healthy": 2.0,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.6337448559670786,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "P": {
+        "DAM 3": {
+         "band": "weak",
+         "ci": {
+          "high": 0.03994190268700073,
+          "level": 0.95,
+          "low": -0.5206971677559913,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.24981844589687727,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.13333333333333333,
+         "median_healthy": 0.19166666666666668,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.4981844589687725,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.49270482603815935,
+          "level": 0.95,
+          "low": -0.2402076318742985,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.1335578002244669,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.24000000000000005,
+         "median_healthy": 0.19166666666666668,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.3355780022446688,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3991769547325103,
+          "level": 0.95,
+          "low": -0.3415895061728395,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.02880658436213992,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.1868872549019608,
+         "median_healthy": 0.19166666666666668,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.2880658436213992,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "S": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.3391430646332607,
+          "level": 0.95,
+          "low": -0.3159041394335512,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": 0.012345679012345678,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 13.287682265918312,
+         "median_healthy": 14.221462653327892,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 0.12345679012345678,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": 0.1593995510662173,
+          "level": 0.95,
+          "low": -0.5858585858585859,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": -0.22671156004489337,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.7071067811865476,
+         "median_healthy": 14.221462653327892,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.2671156004489337,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "weak",
+         "ci": {
+          "high": 0.4979681069958844,
+          "level": 0.95,
+          "low": -0.07204218106995883,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": 0.22530864197530864,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 28.446338370061575,
+         "median_healthy": 14.221462653327892,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.253086419753086,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       },
+       "gamma2": {
+        "DAM 3": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.1822803195352215,
+          "level": 0.95,
+          "low": -0.4538852578068264,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 3",
+         "delta": -0.14161220043572983,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.6086290556154895,
+         "median_healthy": 0.6508905022667124,
+         "n_damaged": 17,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.4161220043572984,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 4": {
+         "band": "weak",
+         "ci": {
+          "high": 0.622895622895623,
+          "level": 0.95,
+          "low": -0.0707070707070707,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 4",
+         "delta": 0.2884399551066218,
+         "delta_sign": "damaged > healthy",
+         "median_damaged": 0.7065507953045427,
+         "median_healthy": 0.6508905022667124,
+         "n_damaged": 11,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 2.8843995510662177,
+         "small_n": false,
+         "straddles_zero": true
+        },
+        "DAM 6": {
+         "band": "very weak",
+         "ci": {
+          "high": 0.21193415637860083,
+          "level": 0.95,
+          "low": -0.48559670781893005,
+          "n_boot": 10000,
+          "scope": "per comparison (this state pair only)",
+          "seed": 7
+         },
+         "comparison": "healthy \u2013 DAM 6",
+         "delta": -0.14814814814814814,
+         "delta_sign": "damaged < healthy",
+         "median_damaged": 0.4555632990874599,
+         "median_healthy": 0.6508905022667124,
+         "n_damaged": 12,
+         "n_healthy": 81,
+         "reason": null,
+         "sds": 1.4814814814814814,
+         "small_n": false,
+         "straddles_zero": true
+        }
+       }
+      }
+     },
+     "per_channel_pooled_damage": {
+      "ASCENDING": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.3,
+         "level": 0.95,
+         "low": -0.36323529411764705,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.03823529411764706,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 11.0,
+        "median_healthy": 10.0,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.3823529411764706,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.5117647058823529,
+         "level": 0.95,
+         "low": -0.14562499999999998,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.19264705882352942,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.004694835680751174,
+        "median_healthy": 0.004185360622039502,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 1.9264705882352942,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.139742647058823,
+         "level": 0.95,
+         "low": -0.4720955882352941,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.17058823529411765,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 3.0,
+        "median_healthy": 4.0,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 1.7058823529411766,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.18823529411764706,
+         "level": 0.95,
+         "low": -0.45294117647058824,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.12941176470588237,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.07914438502673794,
+        "median_healthy": 0.09352941176470589,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 1.2941176470588236,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.40294117647058825,
+         "level": 0.95,
+         "low": -0.27941176470588236,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.058823529411764705,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 122.8148172609599,
+        "median_healthy": 110.92210463855534,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.5882352941176471,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.4,
+         "level": 0.95,
+         "low": -0.27647058823529413,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.061764705882352944,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 0.16150984239423538,
+        "median_healthy": 0.1240768399375137,
+        "n_damaged": 17,
+        "n_healthy": 40,
+        "reason": null,
+        "sds": 0.6176470588235294,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      },
+      "DESCENDING": {
+       "A": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.25925925925925924,
+         "level": 0.95,
+         "low": -0.16266203703703702,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.04537037037037037,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 4.0,
+        "median_healthy": 4.0,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.4537037037037037,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "D": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.17993827160493828,
+         "level": 0.95,
+         "low": -0.24290123456790125,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.03179012345679012,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.010631256054246044,
+        "median_healthy": 0.010224948875255624,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.3179012345679012,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "F": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.21451388888888878,
+         "level": 0.95,
+         "low": -0.17808641975308642,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.01728395061728395,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 2.0,
+        "median_healthy": 2.0,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.1728395061728395,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "P": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.16914351851851842,
+         "level": 0.95,
+         "low": -0.2830324074074074,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.06080246913580247,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.15000000000000002,
+        "median_healthy": 0.19166666666666668,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.6080246913580247,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "S": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.23580246913580247,
+         "level": 0.95,
+         "low": -0.21203703703703702,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": 0.010493827160493827,
+        "delta_sign": "damaged > healthy",
+        "median_damaged": 16.18182399636047,
+        "median_healthy": 14.221462653327892,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.10493827160493827,
+        "small_n": false,
+        "straddles_zero": true
+       },
+       "gamma2": {
+        "band": "very weak",
+        "ci": {
+         "high": 0.1993827160493827,
+         "level": 0.95,
+         "low": -0.2524845679012346,
+         "n_boot": 10000,
+         "scope": "per comparison (this state pair only)",
+         "seed": 7
+        },
+        "comparison": "healthy vs all damaged",
+        "delta": -0.025308641975308643,
+        "delta_sign": "damaged < healthy",
+        "median_damaged": 0.6223449056782078,
+        "median_healthy": 0.6508905022667124,
+        "n_damaged": 40,
+        "n_healthy": 81,
+        "reason": null,
+        "sds": 0.25308641975308643,
+        "small_n": false,
+        "straddles_zero": true
+       }
+      }
+     },
+     "pooled_all_damage": {
+      "A": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.13803465274757135,
+        "level": 0.95,
+        "low": -0.21458605190662608,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.03972741771784834,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 4.0,
+       "median_healthy": 4.0,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.39727417717848335,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "D": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.19777076989995643,
+        "level": 0.95,
+        "low": -0.1586269392489488,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": 0.02015369001014934,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 0.007668711656441718,
+       "median_healthy": 0.007142857142857143,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.20153690010149342,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "F": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.11947223430477019,
+        "level": 0.95,
+        "low": -0.21879077859939103,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.0508916920400174,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 2.0,
+       "median_healthy": 2.0,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.508916920400174,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "P": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.12832028418152813,
+        "level": 0.95,
+        "low": -0.23749818761780483,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.05437146585471944,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 0.13109243697478992,
+       "median_healthy": 0.15686274509803924,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.5437146585471944,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "S": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.16181310714803532,
+        "level": 0.95,
+        "low": -0.20487530810497318,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": -0.022473539219950704,
+       "delta_sign": "damaged < healthy",
+       "median_damaged": 29.0269271539376,
+       "median_healthy": 29.0269271539376,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.22473539219950706,
+       "small_n": false,
+       "straddles_zero": true
+      },
+      "gamma2": {
+       "band": "very weak",
+       "ci": {
+        "high": 0.211845730027548,
+        "level": 0.95,
+        "low": -0.15702479338842976,
+        "n_boot": 10000,
+        "scope": "per comparison (this state pair only)",
+        "seed": 7
+       },
+       "comparison": "healthy vs all damaged",
+       "delta": 0.025953313034652748,
+       "delta_sign": "damaged > healthy",
+       "median_damaged": 0.40862937846539704,
+       "median_healthy": 0.40695953675596497,
+       "n_damaged": 57,
+       "n_healthy": 121,
+       "reason": null,
+       "sds": 0.2595331303465275,
+       "small_n": false,
+       "straddles_zero": true
+      }
+     }
+    }
+   },
+   "pin": {
+    "available": true,
+    "checks": [
+     {
+      "dimension": "A",
+      "ok": true,
+      "recomputed": 0.8104973176743512,
+      "reference": 0.8104973176743512
+     },
+     {
+      "dimension": "D",
+      "ok": true,
+      "recomputed": 0.8583442076265042,
+      "reference": 0.8583442076265042
+     },
+     {
+      "dimension": "F",
+      "ok": true,
+      "recomputed": 0.665506742061766,
+      "reference": 0.665506742061766
+     },
+     {
+      "dimension": "S",
+      "ok": true,
+      "recomputed": 0.09569377990430622,
+      "reference": 0.09569377990430622
+     },
+     {
+      "dimension": "P",
+      "ok": true,
+      "recomputed": 1.054093567251462,
+      "reference": 1.054093567251462
+     }
+    ],
+    "ok": true,
+    "path": "data/lumo/reference/lumo_echo_mask_vector.json"
+   },
+   "primary_analysis": "per_channel_per_state",
+   "site": "lumo",
+   "tables": {
+    "committed": {
+     "counts_by_channel": {
+      "ASCENDING": {
+       "DAM 3": 8,
+       "DAM 4": 5,
+       "DAM 6": 4,
+       "healthy": 40
+      },
+      "DESCENDING": {
+       "DAM 3": 17,
+       "DAM 4": 11,
+       "DAM 6": 12,
+       "healthy": 81
+      }
+     },
+     "n_rows": 178,
+     "path": "data/lumo/lumo_ocv_channels.csv",
+     "sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb"
+    },
+    "support": {
+     "counts_by_channel": {
+      "ASCENDING": {
+       "DAM 3": 8,
+       "DAM 4": 5,
+       "DAM 6": 4,
+       "healthy": 40
+      },
+      "DESCENDING": {
+       "DAM 3": 17,
+       "DAM 4": 11,
+       "DAM 6": 12,
+       "healthy": 81
+      }
+     },
+     "n_rows": 178,
+     "path": "data/lumo/support/lumo_ocv_channels.csv",
+     "sha256": "4874a2c8c938bc1e06d820cf01720dd15d8d7ab283ac44185c059b4d4d3445c6"
+    }
+   }
+  }
+ }
+}

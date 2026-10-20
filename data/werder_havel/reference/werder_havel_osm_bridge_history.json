@@ -1,0 +1,161 @@
+{
+ "_license": "\u00a9 OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+ "_source": "https://api.openstreetmap.org/api/0.6/way/413381418/history.json",
+ "attribution": "http://www.openstreetmap.org/copyright",
+ "copyright": "OpenStreetMap and contributors",
+ "elements": [
+  {
+   "changeset": 38861229,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke"
+   },
+   "timestamp": "2016-04-25T16:34:52Z",
+   "type": "way",
+   "uid": 1879543,
+   "user": "glibbertorsten",
+   "version": 1
+  },
+  {
+   "changeset": 65387794,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke",
+    "wikidata": "Q19963809",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2018-12-11T20:03:10Z",
+   "type": "way",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 108902198,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "bridge:structure": "beam",
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke",
+    "wikidata": "Q19963809",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2021-07-30T16:59:13Z",
+   "type": "way",
+   "uid": 5059901,
+   "user": "0penluce",
+   "version": 3
+  },
+  {
+   "changeset": 177896293,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    30388854,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "beam",
+    "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;eubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+    "layer": "1",
+    "length": "704",
+    "man_made": "bridge",
+    "material": "steel",
+    "name": "Havelbr\u00fccke",
+    "start_date": "1995;2004",
+    "wikidata": "Q19963809",
+    "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2026-01-30T15:56:19Z",
+   "type": "way",
+   "uid": 12830739,
+   "user": "Waldamsel",
+   "version": 4
+  },
+  {
+   "changeset": 178106321,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    30388854,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "beam",
+    "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;Neubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+    "layer": "1",
+    "length": "704",
+    "man_made": "bridge",
+    "material": "steel",
+    "name": "Havelbr\u00fccke",
+    "start_date": "1995;2004",
+    "wikidata": "Q19963809",
+    "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2026-02-04T18:11:39Z",
+   "type": "way",
+   "uid": 12830739,
+   "user": "Waldamsel",
+   "version": 5
+  }
+ ],
+ "generator": "openstreetmap-cgimap 2.1.0 (3964668 spike-06.openstreetmap.org)",
+ "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+ "version": "0.6"
+}

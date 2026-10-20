@@ -1,0 +1,294 @@
+{
+ "anchor_point": "control 500 m east",
+ "anchors": [
+  {
+   "date": "2025-04-02",
+   "line": 11978,
+   "nearest_node_m": 2006.4030928434645,
+   "pixel": 17164,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-04-08",
+   "line": 8953,
+   "nearest_node_m": 2286.2195934287597,
+   "pixel": 16891,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-04-14",
+   "line": 11976,
+   "nearest_node_m": 2144.0455967751827,
+   "pixel": 17118,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-04-20",
+   "line": 8951,
+   "nearest_node_m": 2316.731104797666,
+   "pixel": 16885,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-04-26",
+   "line": 1394,
+   "nearest_node_m": 1522.578116282523,
+   "pixel": 17119,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-05-02",
+   "line": 8952,
+   "nearest_node_m": 2370.664561415488,
+   "pixel": 16863,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-05-08",
+   "line": 11977,
+   "nearest_node_m": 2106.5924935797498,
+   "pixel": 17130,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-05-14",
+   "line": 8952,
+   "nearest_node_m": 2468.57027830711,
+   "pixel": 16829,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-05-20",
+   "line": 11976,
+   "nearest_node_m": 2120.6020279523805,
+   "pixel": 17126,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-05-26",
+   "line": 8953,
+   "nearest_node_m": 2527.1514568356793,
+   "pixel": 16806,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-06-01",
+   "line": 11972,
+   "nearest_node_m": 1909.829743439237,
+   "pixel": 17221,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-06-07",
+   "line": 8955,
+   "nearest_node_m": 2518.213032225246,
+   "pixel": 16805,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-06-13",
+   "line": 11975,
+   "nearest_node_m": 1966.6236326980281,
+   "pixel": 17188,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-06-19",
+   "line": 8953,
+   "nearest_node_m": 2503.034667504591,
+   "pixel": 16814,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-06-25",
+   "line": 11977,
+   "nearest_node_m": 1930.8093201502063,
+   "pixel": 17197,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-07-01",
+   "line": 8953,
+   "nearest_node_m": 2478.2564118086184,
+   "pixel": 16822,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-07-07",
+   "line": 11977,
+   "nearest_node_m": 1893.7100234659374,
+   "pixel": 17212,
+   "residual_m": 1.5868044983511432e-09
+  },
+  {
+   "date": "2025-07-13",
+   "line": 8952,
+   "nearest_node_m": 2540.6411085496425,
+   "pixel": 16805,
+   "residual_m": 8.006363688338299e-10
+  },
+  {
+   "date": "2025-07-19",
+   "line": 11973,
+   "nearest_node_m": 1896.6453906537517,
+   "pixel": 17223,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-07-25",
+   "line": 8953,
+   "nearest_node_m": 2531.593130740107,
+   "pixel": 16806,
+   "residual_m": 8.006363688338299e-10
+  },
+  {
+   "date": "2025-07-31",
+   "line": 11972,
+   "nearest_node_m": 1958.6393033472652,
+   "pixel": 17201,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-08-06",
+   "line": 8950,
+   "nearest_node_m": 2425.4393724609586,
+   "pixel": 16849,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-08-12",
+   "line": 11971,
+   "nearest_node_m": 1955.7890924237017,
+   "pixel": 17206,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-08-18",
+   "line": 8951,
+   "nearest_node_m": 2321.9609084069016,
+   "pixel": 16883,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-08-24",
+   "line": 11970,
+   "nearest_node_m": 1991.1533039717058,
+   "pixel": 17195,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-08-30",
+   "line": 8953,
+   "nearest_node_m": 2243.98555153979,
+   "pixel": 16907,
+   "residual_m": 8.006363688338299e-10
+  },
+  {
+   "date": "2025-09-05",
+   "line": 11973,
+   "nearest_node_m": 1962.8433443001852,
+   "pixel": 17196,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-09-11",
+   "line": 8952,
+   "nearest_node_m": 2196.7139242228063,
+   "pixel": 16927,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-09-17",
+   "line": 11970,
+   "nearest_node_m": 1923.7593543370526,
+   "pixel": 17222,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-09-23",
+   "line": 8954,
+   "nearest_node_m": 2270.8010443378216,
+   "pixel": 16893,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-09-29",
+   "line": 11968,
+   "nearest_node_m": 1914.5712838538088,
+   "pixel": 17235,
+   "residual_m": 1.5868044983511432e-09
+  },
+  {
+   "date": "2025-10-05",
+   "line": 8949,
+   "nearest_node_m": 2280.2182156236045,
+   "pixel": 16905,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-10-11",
+   "line": 11965,
+   "nearest_node_m": 1942.368970189286,
+   "pixel": 17237,
+   "residual_m": 8.006363688338299e-10
+  },
+  {
+   "date": "2025-10-17",
+   "line": 8949,
+   "nearest_node_m": 2234.2445920164896,
+   "pixel": 16922,
+   "residual_m": 1.2399712955045709e-10
+  },
+  {
+   "date": "2025-10-23",
+   "line": 11967,
+   "nearest_node_m": 2001.6927199833972,
+   "pixel": 17202,
+   "residual_m": 8.006363688338299e-10
+  },
+  {
+   "date": "2025-10-29",
+   "line": 8949,
+   "nearest_node_m": 2205.5913179480526,
+   "pixel": 16934,
+   "residual_m": 1.2399712955045709e-10
+  }
+ ],
+ "chip": {
+  "band": {
+   "bins": 9,
+   "lines": 3
+  },
+  "chip_cells": 3927,
+  "cols": 119,
+  "guard_cells": 216,
+  "guard_m": 30.0,
+  "half_bins": 59,
+  "half_lines": 16,
+  "ring_cells": 3684,
+  "ring_complete": true,
+  "ring_m": 200.0,
+  "rows": 33,
+  "spacing": {
+   "azimuth_sample_m": 13.89673,
+   "incidence_deg": 39.03252933808751,
+   "note": "ground range = dr_slant / sin(theta)",
+   "range_ground_m": 3.6991177842616323,
+   "range_sample_m": 2.329562,
+   "source": "burst annotation"
+  },
+  "support_cells": 27
+ },
+ "direction": "ASCENDING",
+ "n_dates": 36,
+ "n_refused": 0,
+ "point": [
+  51.16654688,
+  14.43668098
+ ],
+ "polarization": "VV",
+ "problems": [],
+ "producer": "erlking_mvp/tools/bautzen_rects_s3.py",
+ "series": "asc_ctrl",
+ "subswath": "IW2"
+}

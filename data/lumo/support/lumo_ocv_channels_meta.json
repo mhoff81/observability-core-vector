@@ -1,0 +1,68 @@
+{
+ "created_rows": 178,
+ "cross_check_n_masked_vs_committed": {
+  "n_checked": 178,
+  "n_mismatch": 178
+ },
+ "dimensions": {
+  "A": "cells inside the support passing both thresholds",
+  "D": "A / bounding-box area of the mask",
+  "F": "8-connected components of the mask",
+  "P": "mean pixel frequency inside the own mask, one map per chip shape",
+  "S": "distance mask centroid <-> support peak (px)"
+ },
+ "generator": "erlking_mvp/tools/lumo_table.py",
+ "mask_definition": {
+  "guard_m": 30.0,
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3,
+  "reference": "ring",
+  "ring_m": 200.0,
+  "support": "dwell strip 11 x 400"
+ },
+ "n_by_state": {
+  "DAM 3": 25,
+  "DAM 4": 16,
+  "DAM 6": 16,
+  "healthy": 121
+ },
+ "n_cache_dirs_matched": 482,
+ "n_cache_skipped": 0,
+ "n_migrated": 178,
+ "n_overpasses": 178,
+ "n_rows": 1029,
+ "n_rows_filled_by_burst_id": 178,
+ "n_rows_filled_by_date_orbit": 0,
+ "n_rows_unmatched": 0,
+ "out_csv": "lumo_ocv_channels.csv",
+ "persistence": {
+  "groups": {
+   "(431, 107)": 60,
+   "(431, 119)": 33,
+   "(431, 121)": 85
+  },
+  "rule": "a frequency map assumes one pixel grid, so each chip shape (IW1 431 x 107, IW2 431 x 119/121) gets its own",
+  "shapes": [
+   "(431, 107)",
+   "(431, 119)",
+   "(431, 121)"
+  ]
+ },
+ "persistence_groups": {
+  "(431, 107)": 60,
+  "(431, 119)": 33,
+  "(431, 121)": 85
+ },
+ "rects": "lumo_rects_ring.txt",
+ "reference": "ring",
+ "reference_annulus_m": [
+  30.0,
+  200.0
+ ],
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring)",
+ "site": "lumo",
+ "source_csv": "lumo_ocv_channels.csv",
+ "source_csv_sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb",
+ "support": "the 11 x 400 dwell strip"
+}

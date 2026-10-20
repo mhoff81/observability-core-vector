@@ -1,0 +1,149 @@
+{
+ "_license": "\u00a9 OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+ "_source": "https://api.openstreetmap.org/api/0.6/way/413381418/full.json",
+ "attribution": "http://www.openstreetmap.org/copyright",
+ "copyright": "OpenStreetMap and contributors",
+ "elements": [
+  {
+   "changeset": 65387794,
+   "id": 24557098,
+   "lat": 52.4193487,
+   "lon": 12.919535,
+   "timestamp": "2018-12-11T20:03:09Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 6
+  },
+  {
+   "changeset": 65387794,
+   "id": 24557099,
+   "lat": 52.4161419,
+   "lon": 12.9105756,
+   "timestamp": "2018-12-11T20:03:09Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 7
+  },
+  {
+   "changeset": 65387794,
+   "id": 27240990,
+   "lat": 52.4192597,
+   "lon": 12.9196206,
+   "timestamp": "2018-12-11T20:03:09Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 6
+  },
+  {
+   "changeset": 65387794,
+   "id": 27240996,
+   "lat": 52.4160529,
+   "lon": 12.9106612,
+   "tags": {
+    "source": "photo",
+    "traffic_sign": "DE:274-100"
+   },
+   "timestamp": "2018-12-11T20:03:09Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 11
+  },
+  {
+   "changeset": 177896293,
+   "id": 30388854,
+   "lat": 52.4161464,
+   "lon": 12.9112827,
+   "timestamp": "2026-01-30T15:56:19Z",
+   "type": "node",
+   "uid": 12830739,
+   "user": "Waldamsel",
+   "version": 3
+  },
+  {
+   "changeset": 65387794,
+   "id": 4147156904,
+   "lat": 52.415957,
+   "lon": 12.9107535,
+   "timestamp": "2018-12-11T20:03:09Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 65387794,
+   "id": 4147156906,
+   "lat": 52.4162368,
+   "lon": 12.9104842,
+   "timestamp": "2018-12-11T20:03:10Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 65387794,
+   "id": 4147156910,
+   "lat": 52.4191638,
+   "lon": 12.9197129,
+   "timestamp": "2018-12-11T20:03:10Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 65387794,
+   "id": 4147156911,
+   "lat": 52.4194436,
+   "lon": 12.9194436,
+   "timestamp": "2018-12-11T20:03:10Z",
+   "type": "node",
+   "uid": 52797,
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 178106321,
+   "id": 413381418,
+   "nodes": [
+    27240990,
+    4147156910,
+    30388854,
+    4147156904,
+    27240996,
+    24557099,
+    4147156906,
+    4147156911,
+    24557098,
+    27240990
+   ],
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "beam",
+    "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;Neubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+    "layer": "1",
+    "length": "704",
+    "man_made": "bridge",
+    "material": "steel",
+    "name": "Havelbr\u00fccke",
+    "start_date": "1995;2004",
+    "wikidata": "Q19963809",
+    "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2026-02-04T18:11:39Z",
+   "type": "way",
+   "uid": 12830739,
+   "user": "Waldamsel",
+   "version": 5
+  }
+ ],
+ "generator": "openstreetmap-cgimap 2.1.0 (3964113 spike-06.openstreetmap.org)",
+ "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+ "version": "0.6"
+}

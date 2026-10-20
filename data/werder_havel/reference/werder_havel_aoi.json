@@ -1,0 +1,360 @@
+{
+ "anchor": {
+  "area_ha": 2.53,
+  "area_m2": 25295.7,
+  "changeset": 178106321,
+  "closed": true,
+  "edge_lengths_m": [
+   12.315,
+   662.458,
+   41.585,
+   12.315,
+   11.426,
+   12.188,
+   704.043,
+   12.188,
+   11.426
+  ],
+  "end_edge_indexes": [
+   0,
+   3,
+   4,
+   5,
+   7,
+   8
+  ],
+  "end_edges_m": [
+   12.315,
+   12.315,
+   11.426,
+   12.188,
+   12.188,
+   11.426
+  ],
+  "end_edges_sum_m": 71.859,
+  "kind": "structure_outline",
+  "length_tag": {
+   "added_in_version": 4,
+   "note": "the way's own integer ``length`` tag is the only external check this anchor allows, and it was typed by hand in the same 2026-01-30 changeset as a ``description`` that had to be corrected five days later (v4 '1997;eubau \u2026' -> v5 '1997;Neubau \u2026'): it carries the *scale* of the outline, it is not a survey, and the residual against each metric is committed rather than smoothed away.",
+   "span_flat_minus_tagged_m": 0.043,
+   "span_wgs84_minus_tagged_m": 2.33,
+   "tagged_m": 704.0
+  },
+  "n_distinct_nodes": 9,
+  "n_node_refs": 10,
+  "node_ids": [
+   27240990,
+   4147156910,
+   30388854,
+   4147156904,
+   27240996,
+   24557099,
+   4147156906,
+   4147156911,
+   24557098,
+   27240990
+  ],
+  "osm_way": 413381418,
+  "rectangle_fit": {
+   "end_edges_sum_minus_2width_m": 0.0,
+   "note": "from the shoelace area and the ring perimeter alone \u2014 no node decomposition \u2014 the rectangle with those two invariants is 704.04 x 35.93 m, i.e. the longest-edge reading to under 0.01 m; and the two side chains, split by direction and separated by their offset from the span edge's line, are each the span while the end edges sum to twice the width. That is what makes the outline a rectangle for the purposes of this anchor, and both readings are re-derived here rather than asserted.",
+   "side_chain_minus_span_m": 0.0,
+   "span_from_area_perimeter_m": 704.043,
+   "span_minus_area_over_span_m": 0.0,
+   "width_from_area_perimeter_m": 35.929,
+   "width_minus_area_over_span_m": -0.0
+  },
+  "ring_perimeter_m": 1479.944,
+  "side_chain_lengths_m": [
+   704.043,
+   704.043
+  ],
+  "side_chain_offsets_m": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    35.929,
+    35.929
+   ]
+  ],
+  "side_edge_indexes": [
+   [
+    6
+   ],
+   [
+    1,
+    2
+   ]
+  ],
+  "span_bearing_deg": 59.59,
+  "span_edge_index": 6,
+  "span_edge_nodes": [
+   4147156906,
+   4147156911
+  ],
+  "span_m": 704.043,
+  "tags": {
+   "bridge": "yes",
+   "bridge:structure": "beam",
+   "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;Neubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+   "layer": "1",
+   "length": "704",
+   "man_made": "bridge",
+   "material": "steel",
+   "name": "Havelbr\u00fccke",
+   "start_date": "1995;2004",
+   "wikidata": "Q19963809",
+   "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+   "wikipedia": "de:Havelbr\u00fccke Werder"
+  },
+  "timestamp": "2026-02-04T18:11:39Z",
+  "user": "Waldamsel",
+  "version": 5,
+  "why": "the record's own asset_name names the bridge and the record carries no coordinate, so the structure itself is the anchor. The family measured -81..+7 m (rms 56 m) of shape error for a polygon anchor (Bergs\u00f8ysund), which is why the derived file claims containment and axis only: 7 m of shape error is 19 % of the 35.929 m width, 81 m of it 11 % of the 704.043 m run",
+  "width_is": "area / span \u2014 the mean width of the whole outline, i.e. both carriageways and the median between them, not one deck",
+  "width_m": 35.929
+ },
+ "aoi": {
+  "bbox": {
+   "east": 12.9197129,
+   "north": 52.4194436,
+   "south": 52.415957,
+   "west": 12.9104842
+  },
+  "bbox_extent_m": {
+   "ew": 626.6,
+   "ns": 385.4
+  },
+  "bbox_note": "the bbox is the ring's own extent, not a buffered box: the query AOI is the structure itself, and the resolver reports which bursts cover it rather than guessing a margin",
+  "crs": "EPSG:4326",
+  "polygon_lonlat": [
+   [
+    12.9196206,
+    52.4192597
+   ],
+   [
+    12.9197129,
+    52.4191638
+   ],
+   [
+    12.9112827,
+    52.4161464
+   ],
+   [
+    12.9107535,
+    52.415957
+   ],
+   [
+    12.9106612,
+    52.4160529
+   ],
+   [
+    12.9105756,
+    52.4161419
+   ],
+   [
+    12.9104842,
+    52.4162368
+   ],
+   [
+    12.9194436,
+    52.4194436
+   ],
+   [
+    12.919535,
+    52.4193487
+   ],
+   [
+    12.9196206,
+    52.4192597
+   ]
+  ],
+  "polygon_role": "the /Intersects() polygon of the CDSE OData burst query in werder_havel_bursts_resolve.py \u2014 the committed extract's own node ring, in node order and closed, lon/lat (GeoJSON axis order)"
+ },
+ "asset": "werder",
+ "asset_id": "40f420c6-c38e-5eab-8f2b-ac00d66707d0",
+ "asset_name": "Havelbr\u00fccke Werder (A 10)",
+ "asset_type": "bridge",
+ "event": {
+  "end": "2025-09-05",
+  "from_map": false,
+  "kind": "documented change (Autobahn GmbH, A 10 renewal)",
+  "map_note": "none of the way's five versions names the 2024/2025 renewal: v4/v5 (2026) add the structural tags, and the ``description`` names the *construction* of the two superstructures (1997 / 2004 \u2014 the 'Richtungsfahrbahn Nauen' and 'Richtungsfahrbahn Werder' decks). The event is the external chain's, corroborated by the record's own strata only (W3_sanierung / W4_post are cut on exactly these two dates)",
+  "source": "Autobahn GmbH via havel_werder_analysis/havel_werder_asset_hierarchy.md (Step-0 A0 document) and havel_werder_asset.json",
+  "start": "2024-07-01"
+ },
+ "metrics": {
+  "flat": {
+   "cos_lat0": 0.609903,
+   "m_per_deg_lat": 110540.0,
+   "m_per_deg_lon": 111320.0
+  },
+  "flat_area_m2": 25295.7,
+  "flat_span_m": 704.043,
+  "note": "flat = the family's equirectangular constants (ywf_osm_anchor.py), used for every '*_m' / '*_m2' field because the burst footprints that the pixel-grid audit divides by are converted with them; wgs84 = the same quantity against the local WGS84 degree lengths (111275.2 m/deg meridional, 68037.2 m/deg parallel at the anchor). The family's constants are 0.66 % / 0.21 % low, i.e. 2.29 m (0.325 %) on this span.",
+  "wgs84_area_m2": 25075.8,
+  "wgs84_deg_lengths_m": {
+   "meridional": 111275.2,
+   "parallel": 68037.2
+  },
+  "wgs84_minus_flat_span_m": 2.29,
+  "wgs84_minus_flat_span_pct": 0.325,
+  "wgs84_span_m": 706.33
+ },
+ "notes": [
+  "the anchor is a polygon and a mapper's: containment and axis only, per the docstring \u2014 the record itself carries no coordinate to check it against",
+  "coherence_masked_pixels = 640 in all 991 rows is 10 % of the 6400-sample window by definition, not a mask over this area (werder_havel_ocv_masks.py, WINDOW_NOTE)",
+  "the pixel grid is not in this file: an 80 x 80 window carries no pixel spacing spec, so the metres-per-pixel audit is data/werder_havel/reference/werder_havel_geometry.json after werder_havel_bursts_resolve.py commits the covering burst footprints",
+  "the extract is mutable external input (ODbL): if way 413381418 is edited upstream, --check fails on OSM_EXPECTED and on the derived file rather than re-basing the anchor of a committed record"
+ ],
+ "record": {
+  "columns": 28,
+  "first_date": "2022-07-02",
+  "last_date": "2025-12-04",
+  "masked_pixels": 640,
+  "masked_pixels_frac_of_window": 0.1,
+  "measurements": "data/werder_havel/werder_havel_measurements_full.txt",
+  "measurements_sha256": "b1f9fcc02e4645e3416e4acc5e695ef8faff9ce7d78199249337240b99b25d98",
+  "n_dates": 491,
+  "n_tracks": 8,
+  "roles": {
+   "reference": 250,
+   "reference_outside": 250,
+   "target": 491
+  },
+  "rows": 991,
+  "state_window_ranges": {
+   "W2_bestand": {
+    "first_date": "2022-07-02",
+    "last_date": "2024-06-29",
+    "n_dates": 241
+   },
+   "W3_sanierung": {
+    "first_date": "2024-07-03",
+    "last_date": "2025-09-04",
+    "n_dates": 189
+   },
+   "W4_post": {
+    "first_date": "2025-09-05",
+    "last_date": "2025-12-04",
+    "n_dates": 61
+   }
+  },
+  "state_windows": {
+   "W2_bestand": 241,
+   "W3_sanierung": 189,
+   "W4_post": 61
+  },
+  "tracks": {
+   "asc_146_iw1": 126,
+   "asc_44_iw3": 118,
+   "desc_168_iw1": 124,
+   "desc_95_iw3": 123,
+   "ref_asc_146_iw1": 126,
+   "ref_desc_168_iw1": 124,
+   "refout_asc_146_iw1": 126,
+   "refout_desc_168_iw1": 124
+  },
+  "window_px": 6400,
+  "window_size": 80
+ },
+ "site_point": {
+  "lat": 52.4175279,
+  "lon": 12.9146744
+ },
+ "site_point_area_centroid": {
+  "lat": 52.4177003,
+  "lon": 12.9150985
+ },
+ "site_point_kind": "arithmetic mean of the outline's 9 distinct nodes",
+ "site_point_note": "from the map extract, not from the record: the export carries no latitude and no longitude, so there is no exported point to measure against (Haltern's ``distance_from_asset_point_m`` has no counterpart here). The *node* mean is the anchor because the mapped vertices are what the extract actually commits and the mean is hand-checkable; the ring's area centroid is committed beside it with the distance between them, because the nodes are not evenly spaced along the sides and a reader should see that the choice is worth a few metres rather than take it on trust. Neither point is a surveyed point of the record.",
+ "site_point_vs_area_centroid_m": 34.535,
+ "status": "anchor reference \u2014 no pixel layer is claimed; containment and axis only (the record carries no coordinate of its own)",
+ "versions": [
+  {
+   "changeset": 38861229,
+   "n_node_refs": 9,
+   "tags": {
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke"
+   },
+   "timestamp": "2016-04-25T16:34:52Z",
+   "user": "glibbertorsten",
+   "version": 1
+  },
+  {
+   "changeset": 65387794,
+   "n_node_refs": 9,
+   "tags": {
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke",
+    "wikidata": "Q19963809",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2018-12-11T20:03:10Z",
+   "user": "hofoen",
+   "version": 2
+  },
+  {
+   "changeset": 108902198,
+   "n_node_refs": 9,
+   "tags": {
+    "bridge:structure": "beam",
+    "layer": "1",
+    "man_made": "bridge",
+    "name": "Havelbr\u00fccke",
+    "wikidata": "Q19963809",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2021-07-30T16:59:13Z",
+   "user": "0penluce",
+   "version": 3
+  },
+  {
+   "changeset": 177896293,
+   "n_node_refs": 10,
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "beam",
+    "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;eubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+    "layer": "1",
+    "length": "704",
+    "man_made": "bridge",
+    "material": "steel",
+    "name": "Havelbr\u00fccke",
+    "start_date": "1995;2004",
+    "wikidata": "Q19963809",
+    "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2026-01-30T15:56:19Z",
+   "user": "Waldamsel",
+   "version": 4
+  },
+  {
+   "changeset": 178106321,
+   "n_node_refs": 10,
+   "tags": {
+    "bridge": "yes",
+    "bridge:structure": "beam",
+    "description": "Neubau \u00dcberbau der Richtungsfahrbahn Nauen 1997;Neubau \u00dcberbau der Richtungsfahrbahn Werder 2004",
+    "layer": "1",
+    "length": "704",
+    "man_made": "bridge",
+    "material": "steel",
+    "name": "Havelbr\u00fccke",
+    "start_date": "1995;2004",
+    "wikidata": "Q19963809",
+    "wikimedia_commons": "Category:Havelbr\u00fccke Werder",
+    "wikipedia": "de:Havelbr\u00fccke Werder"
+   },
+   "timestamp": "2026-02-04T18:11:39Z",
+   "user": "Waldamsel",
+   "version": 5
+  }
+ ]
+}

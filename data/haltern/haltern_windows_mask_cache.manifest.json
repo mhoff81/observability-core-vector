@@ -1,0 +1,27 @@
+{
+ "asset_date_groups": 120,
+ "asset_date_groups_with_differing_payloads": 0,
+ "asset_date_groups_with_repeated_segment": 0,
+ "asset_date_groups_with_several_segments": 48,
+ "asset_date_groups_with_several_segments_with_differing_payloads": 0,
+ "generator": "code/haltern/haltern_ocv_masks.py --extract",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "n_deduplicated_same_payload": 48,
+ "n_rows": 66,
+ "n_without_echo": 54,
+ "n_without_index": 0,
+ "segment_resolved": false,
+ "source_index": "haltern_windows_index.txt",
+ "source_segments": "haltern_segments.txt",
+ "source_windows": "haltern_windows_full.txt",
+ "source_windows_sha256": "e837309d7e7545b04829aad62d28c60cfd49bdbdb45a01aa196d85cd32a31dcd",
+ "window_size": 7,
+ "window_sizes": {
+  "7x7": 120
+ }
+}

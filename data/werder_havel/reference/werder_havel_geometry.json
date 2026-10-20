@@ -1,0 +1,404 @@
+{
+ "area_corrections": {
+  "complex_sample_not_two_numbers": {
+   "deck_frac_if_decile_were_1280": {
+    "asc_146_iw1": 0.3388,
+    "asc_44_iw3": 0.414,
+    "desc_168_iw1": 0.3409,
+    "desc_95_iw3": 0.418
+   },
+   "note": "the record's window is 6400 *complex samples*, i.e. 6400 pixels; the stored payload writes two numbers per sample (I and Q - 12 800 numbers, the ~250 MB of werder_havel_ocv_masks.WINDOW_NOTE), so counting the payload's numbers as pixels would double the window and its decile. 'px' in this file always means one complex sample."
+  },
+  "flat_constants_not_wgs84": {
+   "deck_frac_if_wgs84_area": {
+    "asc_146_iw1": 0.6718,
+    "asc_44_iw3": 0.8207,
+    "desc_168_iw1": 0.6758,
+    "desc_95_iw3": 0.8287
+   },
+   "note": "the anchor commits both readings of the deck's area - 25295.7 m2 on the family's flat constants and 25075.8 m2 on the local WGS84 degree lengths, 0.87 % apart - and the burst footprints are converted with the flat ones (M_PER_DEG_* above), so the flat ratio is the committed one; the WGS84 ratio is carried beside it."
+  },
+  "ground_range_not_slant": {
+   "deck_frac_if_slant_range": {
+    "asc_146_iw1": 1.0979,
+    "asc_44_iw3": 1.1092,
+    "desc_168_iw1": 1.1022,
+    "desc_95_iw3": 1.1152
+   },
+   "note": "the derived metres per pixel are *ground* values off the footprint polygons; the SLC's own range sample spacing is 2.3296 m of *slant* range, and slant x azimuth is not a ground area at all. Pricing the deck on it would put the ratio above 1 - the mistake points the other way and is several times the claim's own residual."
+  }
+ },
+ "area_corrections_note": "three definitions a reader of a fill ratio can get wrong, each priced on every geometry of the record: the pixel count of one complex sample, the ground-vs-slant range spacing, and the flat-vs-WGS84 reading of the deck's own area. None of the three changes the committed ratio (the flat, ground, sample reading is the one committed); they are committed so that a reader can see how big each mistake would be rather than having to guess",
+ "asset_id": "40f420c6-c38e-5eab-8f2b-ac00d66707d0",
+ "asset_name": "Havelbr\u00fccke Werder (A 10)",
+ "chip_grid": {
+  "asc_146_iw1": {
+   "azimuth_m_per_px": 15.4534,
+   "azimuth_m_per_px_spread": [
+    15.4534,
+    15.505
+   ],
+   "burst_ids": [
+    311760
+   ],
+   "footprint_azimuth_extent_m": 23211.0,
+   "footprint_range_extent_m": 86659.0,
+   "lines_per_burst": [
+    1497,
+    1498,
+    1500,
+    1502
+   ],
+   "n_frames": 126,
+   "platforms": [
+    "A",
+    "C"
+   ],
+   "px_area_m2": 58.324,
+   "range_axis_bearing_deg": 78.51,
+   "range_axis_bearing_spread_deg": [
+    78.51,
+    78.51
+   ],
+   "range_m_per_px": 3.7742,
+   "range_m_per_px_spread": [
+    3.7221,
+    3.9576
+   ],
+   "samples_per_burst": [
+    21897,
+    22761,
+    22960,
+    22961,
+    23281,
+    23282
+   ],
+   "sub_swath": [
+    "IW1"
+   ]
+  },
+  "asc_44_iw3": {
+   "azimuth_m_per_px": 15.2956,
+   "azimuth_m_per_px_spread": [
+    15.2933,
+    15.3057
+   ],
+   "burst_ids": [
+    92669,
+    92670
+   ],
+   "footprint_azimuth_extent_m": 23201.7,
+   "footprint_range_extent_m": 80148.3,
+   "lines_per_burst": [
+    1516,
+    1517
+   ],
+   "n_frames": 236,
+   "platforms": [
+    "A",
+    "C"
+   ],
+   "px_area_m2": 47.739,
+   "range_axis_bearing_deg": 80.44,
+   "range_axis_bearing_spread_deg": [
+    80.42,
+    80.45
+   ],
+   "range_m_per_px": 3.1211,
+   "range_m_per_px_spread": [
+    3.0824,
+    3.1327
+   ],
+   "samples_per_burst": [
+    25632,
+    25954
+   ],
+   "sub_swath": [
+    "IW3"
+   ]
+  },
+  "desc_168_iw1": {
+   "azimuth_m_per_px": 15.3925,
+   "azimuth_m_per_px_spread": [
+    15.3925,
+    15.4437
+   ],
+   "burst_ids": [
+    359466
+   ],
+   "footprint_azimuth_extent_m": 23211.9,
+   "footprint_range_extent_m": 86592.8,
+   "lines_per_burst": [
+    1503,
+    1504,
+    1507,
+    1508
+   ],
+   "n_frames": 124,
+   "platforms": [
+    "A",
+    "C"
+   ],
+   "px_area_m2": 57.977,
+   "range_axis_bearing_deg": 101.49,
+   "range_axis_bearing_spread_deg": [
+    101.49,
+    101.49
+   ],
+   "range_m_per_px": 3.7665,
+   "range_m_per_px_spread": [
+    3.7312,
+    4.0375
+   ],
+   "samples_per_burst": [
+    21447,
+    21542,
+    22774,
+    22849,
+    22850,
+    22990,
+    23208
+   ],
+   "sub_swath": [
+    "IW1"
+   ]
+  },
+  "desc_95_iw3": {
+   "azimuth_m_per_px": 15.214,
+   "azimuth_m_per_px_spread": [
+    15.214,
+    15.2339
+   ],
+   "burst_ids": [
+    202668
+   ],
+   "footprint_azimuth_extent_m": 23201.3,
+   "footprint_range_extent_m": 80029.4,
+   "lines_per_burst": [
+    1523,
+    1524,
+    1525
+   ],
+   "n_frames": 123,
+   "platforms": [
+    "A",
+    "C"
+   ],
+   "px_area_m2": 47.279,
+   "range_axis_bearing_deg": 99.57,
+   "range_axis_bearing_spread_deg": [
+    99.57,
+    99.57
+   ],
+   "range_m_per_px": 3.1076,
+   "range_m_per_px_spread": [
+    3.0901,
+    3.1379
+   ],
+   "samples_per_burst": [
+    25504,
+    25521,
+    25522,
+    25639,
+    25640,
+    25753,
+    25754,
+    25898,
+    25899
+   ],
+   "sub_swath": [
+    "IW3"
+   ]
+  }
+ },
+ "chip_grid_note": "range_m_per_px_spread / azimuth_m_per_px_spread are over the frames of the track: the same BurstId comes back with a slightly different footprint on different dates (the orbit tube), and that variation - not the catalogue coordinate rounding - is the precision of these metres per pixel the two ground axes of a burst are perpendicular: the range axis is reported as a line (mod 180 deg), the azimuth axis is that line rotated by 90 deg, and which perpendicular sense is the flight direction follows from the orbit direction of the burst's own record in werder_havel_bursts.json",
+ "deck": {
+  "area_m2": 25295.7,
+  "area_source": "the anchor's shoelace area of the committed outline ring; the rectangle with the ring's own area and perimeter is 704.043 x 35.929 m (rectangle_fit), which is the rectangle used here",
+  "area_wgs84_m2": 25075.8,
+  "bearing_note": "the span axis of the ring (its own span_edge_index 6 and the two nodes of that edge), as werder_havel_aoi.py derived it: the deck enters this file as a bearing and two extents, never as a raster",
+  "source": "data/werder_havel/reference/werder_havel_aoi.json",
+  "span_bearing_deg": 59.59,
+  "span_m": 704.043,
+  "width_m": 35.929
+ },
+ "deck_vs_pixel_grid": {
+  "asc_146_iw1": {
+   "deck_area_px": 433.7,
+   "deck_frac_of_masked_decile": 0.6777,
+   "deck_frac_of_masked_decile_wgs84_area": 0.6718,
+   "deck_frac_of_window": 0.0678,
+   "deck_vs_range_axis_deg": -18.92,
+   "span_along_azimuth_m": 262.3,
+   "span_along_range_m": 677.7,
+   "span_azimuth_px": 17.0,
+   "span_range_px": 179.5
+  },
+  "asc_44_iw3": {
+   "deck_area_px": 529.9,
+   "deck_frac_of_masked_decile": 0.8279,
+   "deck_frac_of_masked_decile_wgs84_area": 0.8207,
+   "deck_frac_of_window": 0.0828,
+   "deck_vs_range_axis_deg": -20.85,
+   "span_along_azimuth_m": 284.2,
+   "span_along_range_m": 670.7,
+   "span_azimuth_px": 18.6,
+   "span_range_px": 214.9
+  },
+  "desc_168_iw1": {
+   "deck_area_px": 436.3,
+   "deck_frac_of_masked_decile": 0.6817,
+   "deck_frac_of_masked_decile_wgs84_area": 0.6758,
+   "deck_frac_of_window": 0.0682,
+   "deck_vs_range_axis_deg": -41.9,
+   "span_along_azimuth_m": 496.9,
+   "span_along_range_m": 548.0,
+   "span_azimuth_px": 32.3,
+   "span_range_px": 145.5
+  },
+  "desc_95_iw3": {
+   "deck_area_px": 535.0,
+   "deck_frac_of_masked_decile": 0.836,
+   "deck_frac_of_masked_decile_wgs84_area": 0.8287,
+   "deck_frac_of_window": 0.0836,
+   "deck_vs_range_axis_deg": -39.98,
+   "span_along_azimuth_m": 479.9,
+   "span_along_range_m": 562.6,
+   "span_azimuth_px": 31.5,
+   "span_range_px": 181.0
+  }
+ },
+ "deck_vs_pixel_grid_note": "deck_area_px = area_m2 / (range_m_per_px * azimuth_m_per_px) is exact on these grids: the two axes are perpendicular (AXIS_NOTE) and in the same plane, so the pixel lattice is orthonormal and the number of pixels a ground area covers does not depend on its bearing. The *extents* do, which is why they are projected with the deck's angle off the range axis rather than divided",
+ "deck_vs_window": {
+  "asc_146_iw1": {
+   "deck_contained": false,
+   "deck_span_over_window_azimuth": 0.212,
+   "deck_span_over_window_range": 2.245,
+   "side_px_to_contain_azimuth": 19,
+   "side_px_to_contain_range": 181,
+   "square_side_px_to_contain": 181,
+   "window_area_m2": 373273.6,
+   "window_azimuth_m": 1236.3,
+   "window_range_m": 301.9
+  },
+  "asc_44_iw3": {
+   "deck_contained": false,
+   "deck_span_over_window_azimuth": 0.232,
+   "deck_span_over_window_range": 2.686,
+   "side_px_to_contain_azimuth": 21,
+   "side_px_to_contain_range": 217,
+   "square_side_px_to_contain": 217,
+   "window_area_m2": 305529.6,
+   "window_azimuth_m": 1223.6,
+   "window_range_m": 249.7
+  },
+  "desc_168_iw1": {
+   "deck_contained": false,
+   "deck_span_over_window_azimuth": 0.404,
+   "deck_span_over_window_range": 1.819,
+   "side_px_to_contain_azimuth": 35,
+   "side_px_to_contain_range": 147,
+   "square_side_px_to_contain": 147,
+   "window_area_m2": 371052.8,
+   "window_azimuth_m": 1231.4,
+   "window_range_m": 301.3
+  },
+  "desc_95_iw3": {
+   "deck_contained": false,
+   "deck_span_over_window_azimuth": 0.394,
+   "deck_span_over_window_range": 2.263,
+   "side_px_to_contain_azimuth": 33,
+   "side_px_to_contain_range": 183,
+   "square_side_px_to_contain": 183,
+   "window_area_m2": 302585.6,
+   "window_azimuth_m": 1217.1,
+   "window_range_m": 248.6
+  }
+ },
+ "deck_vs_window_note": "an 80 x 80 window of this record is 249-302 m of ground across range and 1217-1236 m along azimuth; the deck needs 1.82-2.69 of that range span and 0.21-0.40 of that azimuth span, so not one of the four pass geometries contains the structure - a square frame of 147-217 px per side at the same spacing would. Every mask, amplitude and coherence number of this record is therefore measured over the *middle* of the deck; that is what 'containment' means in this package, and it is why it is committed as geometry here instead of being left to a figure or to a reader's assumption",
+ "fill_ratio_claim": {
+  "claim": 0.86,
+  "implied_grid_note": "what pixel area the claim needs: 550.4 px for a 25 295.7 m2 deck, i.e. the derived IW3 range spacing with 14.73 m azimuth / 3.00 m range (and 14.79 m azimuth / 3.02 m range on the other IW3 geometry) - the footprint grid of the record is what the claim is priced against, not a quoted product spacing",
+  "implied_px_area_m2": 45.959,
+  "per_track": {
+   "asc_146_iw1": {
+    "deck_frac_of_masked_decile": 0.6777,
+    "deck_px": 433.7,
+    "derived_minus_claim": -0.1823,
+    "derived_minus_claim_pct": -21.2,
+    "implied_azimuth_m_per_px": 12.1771,
+    "implied_px_area_over_derived_pct": -21.2,
+    "implied_range_m_per_px": 2.974,
+    "sub_swath": [
+     "IW1"
+    ]
+   },
+   "asc_44_iw3": {
+    "deck_frac_of_masked_decile": 0.8279,
+    "deck_px": 529.9,
+    "derived_minus_claim": -0.0321,
+    "derived_minus_claim_pct": -3.73,
+    "implied_azimuth_m_per_px": 14.7252,
+    "implied_px_area_over_derived_pct": -3.73,
+    "implied_range_m_per_px": 3.0047,
+    "sub_swath": [
+     "IW3"
+    ]
+   },
+   "desc_168_iw1": {
+    "deck_frac_of_masked_decile": 0.6817,
+    "deck_px": 436.3,
+    "derived_minus_claim": -0.1783,
+    "derived_minus_claim_pct": -20.73,
+    "implied_azimuth_m_per_px": 12.202,
+    "implied_px_area_over_derived_pct": -20.73,
+    "implied_range_m_per_px": 2.9858,
+    "sub_swath": [
+     "IW1"
+    ]
+   },
+   "desc_95_iw3": {
+    "deck_frac_of_masked_decile": 0.836,
+    "deck_px": 535.0,
+    "derived_minus_claim": -0.024,
+    "derived_minus_claim_pct": -2.79,
+    "implied_azimuth_m_per_px": 14.7891,
+    "implied_px_area_over_derived_pct": -2.79,
+    "implied_range_m_per_px": 3.0208,
+    "sub_swath": [
+     "IW3"
+    ]
+   }
+  },
+  "quote": "window 80x80 px, mask = brightest decile of the pre-event mean amplitude (geometric object fill ratio 0.86 for a 704 m x ~40 m deck)",
+  "reading": "the deck's ground area in pixels over the exported 640-pixel decile: deck_px = area_m2 / (range_m_per_px x azimuth_m_per_px). The decile is 10 % of the window by definition and the deck is 6.8-8.4 % of the window, so the three numbers of the quote close only at one grid",
+  "source": "/home/projects/havel_werder_analysis/corrected2/fixtures/werder_h1_coherence_asc.json (the external chain's ASCENDING coherence fixture, 2026-09-21) - outside this repository, mutable external input: the quote is committed here, the file is not",
+  "verdict": "an IW3 reading: the derived ratio is -3.73 and -2.79 % below the claim on the two IW3 geometries and -21.20 and -20.73 % below it on the two IW1 ones. The claim's own grid (45.959 m2/px, -3.7--2.8 % finer than the IW3 footprints give) is recorded nowhere - not in this repository and not in the external chain's committed output - so the residual is committed rather than resolved, and both readings stand"
+ },
+ "notes": [
+  "the deck is divided by the *covering* burst layer, not by the pipeline's own frames: the export committed no burst id (werder_havel_bursts_resolve.py), and this file prices that distinction instead of hiding it",
+  "the grid is the catalogue's own ground geometry divided by the frame's committed LinesPerBurst / SamplesPerBurst - no SLC is read and no product spacing constant is assumed",
+  "the 0.86 fill ratio is the external chain's claim, quoted verbatim with its path; that file is a mutable external input outside this repository, and only the quote and its pricing are committed here",
+  "the anchor's flat constants are the ones the footprints are converted with, so the flat reading of every area is the committed one and the WGS84 reading is carried beside it (area_corrections)"
+ ],
+ "reference_tracks_note": "the record's four reference chains repeat these 491 dates on the same relative orbits (ref_asc_146_iw1, ref_desc_168_iw1, refout_asc_146_iw1, refout_desc_168_iw1 - werder_havel_ocv_masks.RECORD_EXPECTED) but measure other windows. The export carries no coordinate for any row and the queried ring does not cover them, so their own metres per pixel is not derivable here: the grid above is the covering layer's, at the site",
+ "site": "Havelbruecke Werder (A 10, Brandenburg) - the bridge outline as the anchor",
+ "sources": {
+  "anchor": "data/werder_havel/reference/werder_havel_aoi.json",
+  "bursts": "data/werder_havel/reference/werder_havel_bursts.json",
+  "record": "data/werder_havel/werder_havel_measurements_full.txt"
+ },
+ "status": "derived metres per pixel - no pixel layer is claimed; the grid of the committed burst footprints, the deck's extent in pixels and the containment statement only",
+ "window": {
+  "decile_note": "masked_px is the export's own coherence_masked_pixels column, 640 in all 991 rows: the brightest decile of the window by definition, not a mask over this area and not the echo mask of werder_havel_ocv_masks.py (the peak/median rule). Everything in this file that compares the deck to 640 compares it to this definition",
+  "masked_frac_of_window": 0.1,
+  "masked_px": 640,
+  "note": "one 80x80 complex window per acquisition at the site point; the export committed no latitude/longitude, no segment_index and no burst id (the anchor is the OSM bridge outline, see werder_havel_aoi.py), and a window carries no pixel-spacing spec",
+  "px": 6400,
+  "side_px": 80,
+  "site_point": {
+   "lat": 52.4175279,
+   "lon": 12.9146744
+  }
+ }
+}

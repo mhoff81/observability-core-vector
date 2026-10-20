@@ -41,8 +41,10 @@ Format: ``u32 width, u32 height`` then ``2*width*height`` little-endian f64
 The masks themselves are *not* committed: they are a deterministic function of
 the strips, so ``kdlo_ocv_channels_csv.py`` recomputes them on every build and
 verifies ``A == coherence_masked_pixels`` against the committed DB extraction.
-``python3 code/kdlo/kdlo_ocv_masks.py --check`` runs that acceptance test
-standalone against ``strips/manifest.json`` (no database needed).
+``python3 code/kdlo/kdlo_ocv_masks.py`` runs that acceptance test
+standalone against ``strips/manifest.json`` (no database needed); point it at
+another cache with ``--strips-dir``/``--manifest`` (as
+``fig_kdlo_ocv_series.py``'s report does for ``strips_era/``).
 
 Derivation (identical to LUMO, see ``lumo_ocv_masks.py``):
   A = n_masked

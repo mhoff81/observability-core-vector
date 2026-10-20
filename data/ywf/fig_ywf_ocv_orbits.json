@@ -1,0 +1,2372 @@
+{
+ "alternation": {
+  "days_two_orbits": [
+   "2025-08-12"
+  ],
+  "gap_lengths_days": [
+   12,
+   24
+  ],
+  "n_days": 32,
+  "n_days_single_orbit": 31,
+  "n_days_two_orbits": 1,
+  "n_gap_steps": 9,
+  "note": "the two orbits alternate along the record, so the orbit contrast is a trailing-window difference and not a paired test",
+  "rule": "one orbit per 6-day acquisition day, so no acquisition day carries both a usable ascending and a usable descending echo and a per-day orbit difference does not exist",
+  "two_orbit_days_echo_free": true
+ },
+ "asset_id": "af683c7e-416a-4395-86cc-094ee83d9497",
+ "asset_name": "Yeongdeok Wind Turbine (Samgye-ri)",
+ "axis": {
+  "bands": [
+   {
+    "after": "2025-08-06",
+    "before": "2025-08-12"
+   },
+   {
+    "after": "2025-09-05",
+    "before": "2025-09-11"
+   },
+   {
+    "after": "2025-09-11",
+    "before": "2025-09-17"
+   },
+   {
+    "after": "2025-09-17",
+    "before": "2025-09-23"
+   },
+   {
+    "after": "2025-09-23",
+    "before": "2025-09-29"
+   },
+   {
+    "after": "2025-09-29",
+    "before": "2025-10-05"
+   },
+   {
+    "after": "2025-10-05",
+    "before": "2025-10-11"
+   },
+   {
+    "after": "2025-10-11",
+    "before": "2025-10-17"
+   },
+   {
+    "after": "2025-10-17",
+    "before": "2025-10-23"
+   },
+   {
+    "after": "2025-10-23",
+    "before": "2025-10-29"
+   },
+   {
+    "after": "2025-10-29",
+    "before": "2025-11-04"
+   },
+   {
+    "after": "2025-11-04",
+    "before": "2025-11-10"
+   },
+   {
+    "after": "2025-11-10",
+    "before": "2025-11-16"
+   },
+   {
+    "after": "2025-11-16",
+    "before": "2025-11-22"
+   },
+   {
+    "after": "2025-11-22",
+    "before": "2025-11-28"
+   },
+   {
+    "after": "2025-11-28",
+    "before": "2025-12-04"
+   },
+   {
+    "after": "2025-12-04",
+    "before": "2025-12-10"
+   },
+   {
+    "after": "2025-12-10",
+    "before": "2025-12-16"
+   },
+   {
+    "after": "2025-12-16",
+    "before": "2025-12-22"
+   },
+   {
+    "after": "2025-12-22",
+    "before": "2025-12-28"
+   },
+   {
+    "after": "2025-12-28",
+    "before": "2026-01-03"
+   },
+   {
+    "after": "2026-04-09",
+    "before": "2026-04-15"
+   }
+  ],
+  "cadence_days": 6,
+  "collapse_step": {
+   "after": "2026-01-27",
+   "before": "2026-02-08",
+   "days": 12
+  },
+  "definition": "the acquisition day, one dot per echo-bearing chip; the two orbits of a day are separated by a sub-day offset of 0.18 d",
+  "end": "2026-04-27",
+  "event": "2026-02-02",
+  "event_weekday": "Monday",
+  "gap_steps": [
+   {
+    "after": "2025-08-12",
+    "before": "2025-08-24",
+    "crosses_event": false,
+    "days": 12
+   },
+   {
+    "after": "2025-08-24",
+    "before": "2025-09-05",
+    "crosses_event": false,
+    "days": 12
+   },
+   {
+    "after": "2026-01-03",
+    "before": "2026-01-15",
+    "crosses_event": false,
+    "days": 12
+   },
+   {
+    "after": "2026-01-15",
+    "before": "2026-01-27",
+    "crosses_event": false,
+    "days": 12
+   },
+   {
+    "after": "2026-01-27",
+    "before": "2026-02-08",
+    "crosses_event": true,
+    "days": 12
+   },
+   {
+    "after": "2026-02-08",
+    "before": "2026-02-20",
+    "crosses_event": false,
+    "days": 12
+   },
+   {
+    "after": "2026-02-20",
+    "before": "2026-03-16",
+    "crosses_event": false,
+    "days": 24
+   },
+   {
+    "after": "2026-03-16",
+    "before": "2026-04-09",
+    "crosses_event": false,
+    "days": 24
+   },
+   {
+    "after": "2026-04-15",
+    "before": "2026-04-27",
+    "crosses_event": false,
+    "days": 12
+   }
+  ],
+  "n_bands": 22,
+  "name": "acquisition_day",
+  "note": "the event falls inside a drawn 12-day step, so the two stretches meet at a band and not at a point",
+  "span_days": 265,
+  "start": "2025-08-06",
+  "steps": [
+   {
+    "after": "2025-08-06",
+    "before": "2025-08-12",
+    "days": 6
+   },
+   {
+    "after": "2025-08-12",
+    "before": "2025-08-24",
+    "days": 12
+   },
+   {
+    "after": "2025-08-24",
+    "before": "2025-09-05",
+    "days": 12
+   },
+   {
+    "after": "2025-09-05",
+    "before": "2025-09-11",
+    "days": 6
+   },
+   {
+    "after": "2025-09-11",
+    "before": "2025-09-17",
+    "days": 6
+   },
+   {
+    "after": "2025-09-17",
+    "before": "2025-09-23",
+    "days": 6
+   },
+   {
+    "after": "2025-09-23",
+    "before": "2025-09-29",
+    "days": 6
+   },
+   {
+    "after": "2025-09-29",
+    "before": "2025-10-05",
+    "days": 6
+   },
+   {
+    "after": "2025-10-05",
+    "before": "2025-10-11",
+    "days": 6
+   },
+   {
+    "after": "2025-10-11",
+    "before": "2025-10-17",
+    "days": 6
+   },
+   {
+    "after": "2025-10-17",
+    "before": "2025-10-23",
+    "days": 6
+   },
+   {
+    "after": "2025-10-23",
+    "before": "2025-10-29",
+    "days": 6
+   },
+   {
+    "after": "2025-10-29",
+    "before": "2025-11-04",
+    "days": 6
+   },
+   {
+    "after": "2025-11-04",
+    "before": "2025-11-10",
+    "days": 6
+   },
+   {
+    "after": "2025-11-10",
+    "before": "2025-11-16",
+    "days": 6
+   },
+   {
+    "after": "2025-11-16",
+    "before": "2025-11-22",
+    "days": 6
+   },
+   {
+    "after": "2025-11-22",
+    "before": "2025-11-28",
+    "days": 6
+   },
+   {
+    "after": "2025-11-28",
+    "before": "2025-12-04",
+    "days": 6
+   },
+   {
+    "after": "2025-12-04",
+    "before": "2025-12-10",
+    "days": 6
+   },
+   {
+    "after": "2025-12-10",
+    "before": "2025-12-16",
+    "days": 6
+   },
+   {
+    "after": "2025-12-16",
+    "before": "2025-12-22",
+    "days": 6
+   },
+   {
+    "after": "2025-12-22",
+    "before": "2025-12-28",
+    "days": 6
+   },
+   {
+    "after": "2025-12-28",
+    "before": "2026-01-03",
+    "days": 6
+   },
+   {
+    "after": "2026-01-03",
+    "before": "2026-01-15",
+    "days": 12
+   },
+   {
+    "after": "2026-01-15",
+    "before": "2026-01-27",
+    "days": 12
+   },
+   {
+    "after": "2026-01-27",
+    "before": "2026-02-08",
+    "days": 12
+   },
+   {
+    "after": "2026-02-08",
+    "before": "2026-02-20",
+    "days": 12
+   },
+   {
+    "after": "2026-02-20",
+    "before": "2026-03-16",
+    "days": 24
+   },
+   {
+    "after": "2026-03-16",
+    "before": "2026-04-09",
+    "days": 24
+   },
+   {
+    "after": "2026-04-09",
+    "before": "2026-04-15",
+    "days": 6
+   },
+   {
+    "after": "2026-04-15",
+    "before": "2026-04-27",
+    "days": 12
+   }
+  ]
+ },
+ "cache": {
+  "P_reference_chips": [
+   17
+  ],
+  "guard": {
+   "n_cache_rows": 17,
+   "n_chips_with_echo": 17
+  },
+  "n_P_set": 17,
+  "n_rows": 17
+ },
+ "composition": {
+  "echo_by_state_orbit": {
+   "post": {
+    "ASCENDING": 1,
+    "DESCENDING": 0
+   },
+   "pre": {
+    "ASCENDING": 9,
+    "DESCENDING": 7
+   }
+  },
+  "months": {
+   "01": 3,
+   "02": 2,
+   "03": 1,
+   "04": 3,
+   "08": 4,
+   "09": 5,
+   "10": 5,
+   "11": 5,
+   "12": 5
+  },
+  "n_orbit_in_state": {
+   "post": {
+    "ASCENDING": 4,
+    "DESCENDING": 2
+   },
+   "pre": {
+    "ASCENDING": 16,
+    "DESCENDING": 11
+   }
+  },
+  "orbit_state": {
+   "ASCENDING": {
+    "post": 4,
+    "pre": 16
+   },
+   "DESCENDING": {
+    "post": 2,
+    "pre": 11
+   }
+  },
+  "orbit_state_echo": {
+   "ASCENDING": {
+    "post": 1,
+    "pre": 9
+   },
+   "DESCENDING": {
+    "post": 0,
+    "pre": 7
+   }
+  },
+  "sections": {
+   "turbine-mast-section-3": 33
+  }
+ },
+ "counts": {
+  "n_chips": 33,
+  "n_days": 32,
+  "n_duplicated_windows": 24,
+  "n_echo": 17,
+  "n_echo_by_orbit": {
+   "ASCENDING": 10,
+   "DESCENDING": 7
+  },
+  "n_echo_by_state": {
+   "post": 1,
+   "pre": 16
+  },
+  "n_echo_orbit_state": {
+   "ASCENDING": {
+    "post": 1,
+    "pre": 9
+   },
+   "DESCENDING": {
+    "post": 0,
+    "pre": 7
+   }
+  },
+  "n_no_echo": 16,
+  "n_post_chips": 6,
+  "n_post_days": 6,
+  "n_post_echo": 1,
+  "n_pre_chips": 27,
+  "n_pre_days": 26,
+  "n_pre_echo": 16,
+  "n_windows": 57,
+  "post_echo_orbits": {
+   "ASCENDING": 1
+  },
+  "pre_echo_orbits": {
+   "ASCENDING": 9,
+   "DESCENDING": 7
+  }
+ },
+ "covariates": {
+  "by_orbit_all": {
+   "ASCENDING": {
+    "coherence_gamma2": 0.01096513525,
+    "intensity": 6585.013262490607,
+    "precipitation_mm": 0.0,
+    "temperature_c": 14.8,
+    "wind_gust_ms": 8.7,
+    "wind_speed_ms": 3.73
+   },
+   "DESCENDING": {
+    "coherence_gamma2": 0.017830235864,
+    "intensity": 1321.508761603479,
+    "precipitation_mm": 0.0,
+    "temperature_c": 10.6,
+    "wind_gust_ms": 5.0,
+    "wind_speed_ms": 2.38
+   },
+   "delta": {
+    "coherence_gamma2": 0.006865100613999999,
+    "intensity": -5263.504500887128,
+    "precipitation_mm": 0.0,
+    "temperature_c": -4.200000000000001,
+    "wind_gust_ms": -3.6999999999999993,
+    "wind_speed_ms": -1.35
+   }
+  },
+  "by_orbit_all_from_the_extract": {
+   "ASCENDING": {
+    "coherence_gamma2": 0.01096513525,
+    "intensity": 6585.013262490607,
+    "precipitation_mm": 0.0,
+    "temperature_c": 14.8,
+    "wind_gust_ms": 8.7,
+    "wind_speed_ms": 3.73
+   },
+   "DESCENDING": {
+    "coherence_gamma2": 0.017830235864,
+    "intensity": 1321.508761603479,
+    "precipitation_mm": 0.0,
+    "temperature_c": 10.6,
+    "wind_gust_ms": 5.0,
+    "wind_speed_ms": 2.38
+   }
+  },
+  "by_orbit_echo": {
+   "ASCENDING": {
+    "coherence_gamma2": 0.010870854698,
+    "intensity": 5233.029174914983,
+    "precipitation_mm": 0.0,
+    "temperature_c": 14.75,
+    "wind_gust_ms": 9.6,
+    "wind_speed_ms": 3.58
+   },
+   "DESCENDING": {
+    "coherence_gamma2": 0.017830235864,
+    "intensity": 1301.816010189314,
+    "precipitation_mm": 0.0,
+    "temperature_c": 6.4,
+    "wind_gust_ms": 5.9,
+    "wind_speed_ms": 2.89
+   },
+   "delta": {
+    "coherence_gamma2": 0.006959381165999999,
+    "intensity": -3931.213164725669,
+    "precipitation_mm": 0.0,
+    "temperature_c": -8.35,
+    "wind_gust_ms": -3.6999999999999993,
+    "wind_speed_ms": -0.69
+   }
+  },
+  "by_orbit_echo_from_the_extract": {
+   "ASCENDING": {
+    "coherence_gamma2": 0.010870854698,
+    "intensity": 5233.029174914983,
+    "precipitation_mm": 0.0,
+    "temperature_c": 14.75,
+    "wind_gust_ms": 9.6,
+    "wind_speed_ms": 3.58
+   },
+   "DESCENDING": {
+    "coherence_gamma2": 0.017830235864,
+    "intensity": 1301.816010189314,
+    "precipitation_mm": 0.0,
+    "temperature_c": 6.4,
+    "wind_gust_ms": 5.9,
+    "wind_speed_ms": 2.89
+   }
+  },
+  "controls": [
+   "temperature_c",
+   "wind_speed_ms",
+   "wind_gust_ms",
+   "intensity",
+   "coherence_gamma2",
+   "precipitation_mm"
+  ],
+  "note": "what else moves with the pass geometry: the per-orbit medians of the export's co-variates. Ascending passes are the 09:2x UT ones, descending the 21:2x UT ones, so temperature and intensity move with the orbit by construction \u2014 they would have to be held fixed before an orbit split of the mask channels meant anything physical"
+ },
+ "days": [
+  {
+   "day": "2025-08-06",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-08-12",
+   "n_duplicated": 0,
+   "n_unique_chips": 2,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 2,
+   "orbits": [
+    "ASCENDING",
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-08-24",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-09-05",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-09-11",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-09-17",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-09-23",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-09-29",
+   "n_duplicated": 0,
+   "n_unique_chips": 1,
+   "n_windows": 1,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-10-05",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-10-11",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-10-17",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-10-23",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-10-29",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-11-04",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-11-10",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-11-16",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-11-22",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-11-28",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-12-04",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-12-10",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-12-16",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-12-22",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2025-12-28",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2026-01-03",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2026-01-15",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2026-01-27",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "pre"
+  },
+  {
+   "day": "2026-02-08",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "post"
+  },
+  {
+   "day": "2026-02-20",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "post"
+  },
+  {
+   "day": "2026-03-16",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 1,
+   "n_without_echo": 0,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "post"
+  },
+  {
+   "day": "2026-04-09",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "ASCENDING"
+   ],
+   "state": "post"
+  },
+  {
+   "day": "2026-04-15",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "post"
+  },
+  {
+   "day": "2026-04-27",
+   "n_duplicated": 1,
+   "n_unique_chips": 1,
+   "n_windows": 2,
+   "n_with_echo": 0,
+   "n_without_echo": 1,
+   "orbits": [
+    "DESCENDING"
+   ],
+   "state": "post"
+  }
+ ],
+ "difference": {
+  "bootstrap": {
+   "alpha": 0.05,
+   "n_boot": 10000,
+   "note": "the paper result's own n_boot and rng_seed, re-derived here so every CI of this figure is reproducible",
+   "seed": 7,
+   "statistic": "median(DESC) - median(ASC), each orbit resampled independently"
+  },
+  "ci_excludes_zero": [
+   "gamma2",
+   "P"
+  ],
+  "confound": "the record's only post-event echo chip is an ascending pass, so the pooled difference and the before-the-collapse difference are two different contrasts: the pre-only column drops that chip and shows how much of the pooled number is state rather than orbit",
+  "definition": "delta_orbit = median(DESC) - median(ASC) over the echo-bearing chips",
+  "mask_geometry_is_orbit_invariant_pooled": true,
+  "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+  "paired": false,
+  "pooled": {
+   "A": {
+    "asc_mean": 3.4,
+    "asc_median": 3.0,
+    "ci_excludes_zero": false,
+    "cliffs_delta": -0.11428571428571428,
+    "delta_ci95": [
+     -2.0,
+     1.0
+    ],
+    "delta_mean": 0.02857142857142847,
+    "delta_median": 0.0,
+    "desc_mean": 3.4285714285714284,
+    "desc_median": 3.0,
+    "dim": "A",
+    "label": "A",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   },
+   "D": {
+    "asc_mean": 0.28884920634920636,
+    "asc_median": 0.26666666666666666,
+    "ci_excludes_zero": false,
+    "cliffs_delta": 0.02857142857142857,
+    "delta_ci95": [
+     -0.2333333333333333,
+     0.5666666666666667
+    ],
+    "delta_mean": 0.06466553287981858,
+    "delta_median": -0.04444444444444445,
+    "desc_mean": 0.35351473922902493,
+    "desc_median": 0.2222222222222222,
+    "dim": "D",
+    "label": "D",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   },
+   "F": {
+    "asc_mean": 2.0,
+    "asc_median": 2.0,
+    "ci_excludes_zero": false,
+    "cliffs_delta": -0.12857142857142856,
+    "delta_ci95": [
+     -1.0,
+     0.0
+    ],
+    "delta_mean": -0.1428571428571428,
+    "delta_median": 0.0,
+    "desc_mean": 1.8571428571428572,
+    "desc_median": 2.0,
+    "dim": "F",
+    "label": "F",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   },
+   "P": {
+    "asc_mean": 0.12098039215686276,
+    "asc_median": 0.11764705882352942,
+    "ci_excludes_zero": true,
+    "cliffs_delta": 0.7428571428571429,
+    "delta_ci95": [
+     0.01470588235294118,
+     0.14117647058823526
+    ],
+    "delta_mean": 0.07249699879951976,
+    "delta_median": 0.08823529411764704,
+    "desc_mean": 0.19347739095638253,
+    "desc_median": 0.20588235294117646,
+    "dim": "P",
+    "label": "P",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   },
+   "S": {
+    "asc_mean": 1.5607888230420444,
+    "asc_median": 1.540440114519881,
+    "ci_excludes_zero": false,
+    "cliffs_delta": 0.05714285714285714,
+    "delta_ci95": [
+     -1.0574196452320646,
+     1.1678932188134525
+    ],
+    "delta_mean": 0.3164857932152676,
+    "delta_median": -0.02184785555778812,
+    "desc_mean": 1.877274616257312,
+    "desc_median": 1.5185922589620928,
+    "dim": "S",
+    "label": "S",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   },
+   "gamma2": {
+    "asc_mean": 0.3585279389095787,
+    "asc_median": 0.22712655694773817,
+    "ci_excludes_zero": true,
+    "cliffs_delta": 0.5428571428571428,
+    "delta_ci95": [
+     0.019893827004483944,
+     0.7301179127813429
+    ],
+    "delta_mean": 0.3381776885823867,
+    "delta_median": 0.5877724149396483,
+    "desc_mean": 0.6967056274919654,
+    "desc_median": 0.8148989718873865,
+    "dim": "gamma2",
+    "label": "gamma2",
+    "n_asc": 10,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "all"
+   }
+  },
+  "post_echo_orbits": {
+   "ASCENDING": 1
+  },
+  "post_only": {
+   "A": {
+    "asc_mean": 5.0,
+    "asc_median": 5.0,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "A",
+    "label": "A",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   },
+   "D": {
+    "asc_mean": 0.11904761904761904,
+    "asc_median": 0.11904761904761904,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "D",
+    "label": "D",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   },
+   "F": {
+    "asc_mean": 3.0,
+    "asc_median": 3.0,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "F",
+    "label": "F",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   },
+   "P": {
+    "asc_mean": 0.16470588235294117,
+    "asc_median": 0.16470588235294117,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "P",
+    "label": "P",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   },
+   "S": {
+    "asc_mean": 1.4142135623730951,
+    "asc_median": 1.4142135623730951,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "S",
+    "label": "S",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   },
+   "gamma2": {
+    "asc_mean": 0.18862670295834316,
+    "asc_median": 0.18862670295834316,
+    "ci_excludes_zero": null,
+    "cliffs_delta": null,
+    "delta_ci95": null,
+    "delta_mean": null,
+    "delta_median": null,
+    "desc_mean": null,
+    "desc_median": null,
+    "dim": "gamma2",
+    "label": "gamma2",
+    "n_asc": 1,
+    "n_boot": 10000,
+    "n_desc": 0,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "post"
+   }
+  },
+  "pre_only": {
+   "A": {
+    "asc_mean": 3.2222222222222223,
+    "asc_median": 3.0,
+    "ci_excludes_zero": false,
+    "cliffs_delta": -0.047619047619047616,
+    "delta_ci95": [
+     -1.0,
+     1.0
+    ],
+    "delta_mean": 0.20634920634920606,
+    "delta_median": 0.0,
+    "desc_mean": 3.4285714285714284,
+    "desc_median": 3.0,
+    "dim": "A",
+    "label": "A",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   },
+   "D": {
+    "asc_mean": 0.307716049382716,
+    "asc_median": 0.3333333333333333,
+    "ci_excludes_zero": false,
+    "cliffs_delta": -0.015873015873015872,
+    "delta_ci95": [
+     -0.2476190476190476,
+     0.55
+    ],
+    "delta_mean": 0.045798689846308915,
+    "delta_median": -0.1111111111111111,
+    "desc_mean": 0.35351473922902493,
+    "desc_median": 0.2222222222222222,
+    "dim": "D",
+    "label": "D",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   },
+   "F": {
+    "asc_mean": 1.8888888888888888,
+    "asc_median": 2.0,
+    "ci_excludes_zero": false,
+    "cliffs_delta": -0.047619047619047616,
+    "delta_ci95": [
+     -1.0,
+     0.0
+    ],
+    "delta_mean": -0.03174603174603163,
+    "delta_median": 0.0,
+    "desc_mean": 1.8571428571428572,
+    "desc_median": 2.0,
+    "dim": "F",
+    "label": "F",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   },
+   "P": {
+    "asc_mean": 0.11612200435729848,
+    "asc_median": 0.11764705882352942,
+    "ci_excludes_zero": true,
+    "cliffs_delta": 0.7777777777777778,
+    "delta_ci95": [
+     0.023529411764705868,
+     0.14117647058823526
+    ],
+    "delta_mean": 0.07735538659908404,
+    "delta_median": 0.08823529411764704,
+    "desc_mean": 0.19347739095638253,
+    "desc_median": 0.20588235294117646,
+    "dim": "P",
+    "label": "P",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   },
+   "S": {
+    "asc_mean": 1.5770749631163719,
+    "asc_median": 1.666666666666667,
+    "ci_excludes_zero": false,
+    "cliffs_delta": 0.047619047619047616,
+    "delta_ci95": [
+     -1.0574196452320646,
+     1.25
+    ],
+    "delta_mean": 0.3001996531409401,
+    "delta_median": -0.14807440770457414,
+    "desc_mean": 1.877274616257312,
+    "desc_median": 1.5185922589620928,
+    "dim": "S",
+    "label": "S",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   },
+   "gamma2": {
+    "asc_mean": 0.3774058540152715,
+    "asc_median": 0.2656264109371332,
+    "ci_excludes_zero": false,
+    "cliffs_delta": 0.5238095238095238,
+    "delta_ci95": [
+     -0.021603570541477546,
+     0.7507163197019066
+    ],
+    "delta_mean": 0.3192997734766939,
+    "delta_median": 0.5492725609502533,
+    "desc_mean": 0.6967056274919654,
+    "desc_median": 0.8148989718873865,
+    "dim": "gamma2",
+    "label": "gamma2",
+    "n_asc": 9,
+    "n_boot": 10000,
+    "n_desc": 7,
+    "note": "median(DESC) - median(ASC) over the echo-bearing chips: a descriptive pass-geometry difference, never a damage or orbit verdict. The two orbits are disjoint sets of acquisition days, so the chips are not paired and no causal reading is available",
+    "seed": 7,
+    "state": "pre"
+   }
+  },
+  "sign": "positive means the descending passes read higher on that channel; Cliff's delta is called with the ascending chips as reference, which gives the identical sign"
+ },
+ "features": [
+  "gamma2",
+  "P",
+  "D",
+  "A",
+  "F",
+  "S"
+ ],
+ "figure": "fig_ywf_ocv_orbits",
+ "figures": [
+  "figures/ywf/fig_ywf_ocv_orbits.png"
+ ],
+ "generated_by": "code/ywf/fig_ywf_ocv_orbits.py",
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "mask_window": "7x7",
+ "ocv": [
+  "gamma2",
+  "P",
+  "D"
+ ],
+ "orbits": {
+  "chain": {
+   "missing_in_extract": [],
+   "n_chips": 33,
+   "n_in_extract": 33,
+   "n_missing_in_extract": 0,
+   "n_orbit_mismatches_bursts": 0,
+   "n_orbit_mismatches_extract": 0,
+   "n_pass_label_mismatches_extract": 0,
+   "n_resolved_bursts": 33,
+   "note": "the export's own orbit_direction and pass_label agree with the measurement extract and with the resolved bursts on every chip; the cross-layer pins carry the three disagreement counts, all 0",
+   "pass_labels": {
+    "ASCENDING": [
+     "morning"
+    ],
+    "DESCENDING": [
+     "afternoon"
+    ]
+   }
+  },
+  "export_labels": {
+   "ASCENDING": [
+    "morning"
+   ],
+   "DESCENDING": [
+    "afternoon"
+   ]
+  },
+  "fisher": {
+   "p_two_sided": 1.0,
+   "table": [
+    [
+     10,
+     10
+    ],
+    [
+     7,
+     6
+    ]
+   ],
+   "table_cols": [
+    "echo",
+    "no_echo"
+   ],
+   "table_rows": [
+    "ASCENDING",
+    "DESCENDING"
+   ]
+  },
+  "fisher_by_state": {
+   "ASCENDING": 0.5820433436532508,
+   "DESCENDING": 0.1923076923076923
+  },
+  "geometry": {
+   "ASCENDING": {
+    "n_chips": 20,
+    "orbit_direction_agrees": true,
+    "polarisations": {
+     "VH": 9,
+     "VV": 11
+    },
+    "relative_orbits": [
+     54.0
+    ],
+    "swaths": [
+     "IW3"
+    ],
+    "utc_hh": [
+     "09:2x"
+    ],
+    "utc_hours": [
+     "09"
+    ]
+   },
+   "DESCENDING": {
+    "n_chips": 13,
+    "orbit_direction_agrees": true,
+    "polarisations": {
+     "VH": 10,
+     "VV": 3
+    },
+    "relative_orbits": [
+     61.0
+    ],
+    "swaths": [
+     "IW2"
+    ],
+    "utc_hh": [
+     "21:2x"
+    ],
+    "utc_hours": [
+     "21"
+    ]
+   }
+  },
+  "geometry_sentence": "the record's passes are ASC is IW3 on relative orbit 54 (09:2x UT, VV x 11 + VH x 9); DESC is IW2 on relative orbit 61 (21:2x UT, VH x 10 + VV x 3)",
+  "labels": {
+   "ASCENDING": "ASC",
+   "DESCENDING": "DESC"
+  },
+  "n_orbits": 2,
+  "note": "both orbits straddle the collapse date and the only post-event echo chip is an ascending pass: this block describes where the echoes sit over the two pass geometries, it is not an orbit contrast of the states",
+  "orbits": [
+   "ASCENDING",
+   "DESCENDING"
+  ],
+  "p_pooled": 1.0,
+  "per_orbit": {
+   "ASCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.25,
+      "n_chips": 4,
+      "n_with_echo": 1,
+      "n_without_echo": 3
+     },
+     "pre": {
+      "echo_rate": 0.5625,
+      "n_chips": 16,
+      "n_with_echo": 9,
+      "n_without_echo": 7
+     }
+    },
+    "echo_rate": 0.5,
+    "n_chips": 20,
+    "n_with_echo": 10,
+    "n_without_echo": 10
+   },
+   "DESCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.0,
+      "n_chips": 2,
+      "n_with_echo": 0,
+      "n_without_echo": 2
+     },
+     "pre": {
+      "echo_rate": 0.6363636363636364,
+      "n_chips": 11,
+      "n_with_echo": 7,
+      "n_without_echo": 4
+     }
+    },
+    "echo_rate": 0.5384615384615384,
+    "n_chips": 13,
+    "n_with_echo": 7,
+    "n_without_echo": 6
+   }
+  }
+ },
+ "panels": {
+  "channels": {
+   "A": {
+    "axis": "A  (echo pixels n_masked)",
+    "label": "A",
+    "letter": "f",
+    "pooled_delta": 0.0
+   },
+   "D": {
+    "axis": "D  (mask density A / bbox)",
+    "label": "D",
+    "letter": "c",
+    "pooled_delta": -0.04444444444444445
+   },
+   "F": {
+    "axis": "F  (8-connected components)",
+    "label": "F",
+    "letter": "d",
+    "pooled_delta": 0.0
+   },
+   "P": {
+    "axis": "P  (mask persistence)",
+    "label": "P",
+    "letter": "b",
+    "pooled_delta": 0.08823529411764704
+   },
+   "S": {
+    "axis": "S  (||centroid - peak||, px)",
+    "label": "S",
+    "letter": "e",
+    "pooled_delta": -0.02184785555778812
+   },
+   "gamma2": {
+    "axis": "gamma^2  (masked coherence)",
+    "label": "gamma2",
+    "letter": "a",
+    "pooled_delta": 0.5877724149396483
+   }
+  },
+  "dot_colour": "pass geometry (ascending circles, descending squares)",
+  "floor_ticks": "the 16 echo-free chips: no ordinate on any channel, drawn on the panel floor",
+  "g": "the pooled difference beside the pre-only one, each with its seeded 95% CI, a star for a CI that excludes zero",
+  "grid": [
+   2,
+   4
+  ],
+  "h": "the 33 chips per orbit and state, split into their echo-bearing and echo-free parts, with both Fisher tests printed",
+  "letters": "abcdef",
+  "order": [
+   "gamma2",
+   "P",
+   "D",
+   "F",
+   "S",
+   "A"
+  ]
+ },
+ "pins": {
+  "failures": [],
+  "float_tolerance": 1e-12,
+  "max_abs_deviation": 4.7619047616187515e-07,
+  "n_checks": 1341,
+  "n_exact": 1283,
+  "n_failed": 0,
+  "n_within_tolerance": 58,
+  "round_tolerance": 1e-06
+ },
+ "provenance": {
+  "inputs": {
+   "burst_geometry": {
+    "path": "data/ywf/reference/ywf_bursts.json",
+    "sha256": "29e48c491585c4e7127e088d4000c051577f28abad137e900ae8b4b30be9500a"
+   },
+   "channels_csv": {
+    "path": "data/ywf/ywf_ocv_channels.csv",
+    "sha256": "b5b17240246f613357814068ec3df62fceedead11b8426e01e3ebd6b006c5f33"
+   },
+   "mask_cache": {
+    "path": "data/ywf/ywf_windows_mask_cache.txt",
+    "sha256": "0c29524d8569cd2861bbae187501d3ac270c49ad94dbde2d597109f5e70bfa6b"
+   },
+   "mask_cache_manifest": {
+    "path": "data/ywf/ywf_windows_mask_cache.manifest.json",
+    "sha256": "a14a32d23620c01bf2d051c2e912d9e8d8d0be9cfb49245a4b4fc4e8afb6d0c8"
+   },
+   "measurements": {
+    "path": "data/ywf/ywf_measurements_full.txt",
+    "sha256": "652a6c1d57766c319b09fa23f73865b9fed034bd6b58b3dd104497a571e34950"
+   },
+   "osm_anchor": {
+    "path": "data/ywf/reference/ywf_geometry.json",
+    "sha256": "57ac7a9815857df20ad55e010e0111b537ceabaa11c671cbf1d08316c47237f7"
+   },
+   "osm_road_extract": {
+    "path": "data/ywf/reference/ywf_osm_road.json",
+    "sha256": "f88c4d6f2cd58c85bc932d3016e5455b3e1cb46339fda039005a46c045dd1699"
+   },
+   "segments": {
+    "path": "data/ywf/ywf_segments.txt",
+    "sha256": "5d48b2b1118d952edb1c3a212136e34047c8d6be7e2100204c3b0efd37682f09"
+   },
+   "windows": {
+    "path": "data/ywf/ywf_windows_full.txt",
+    "sha256": "41b8838e80aebb2184a5da8bf9941ff55afc0a280a24742cfa620caa053b21bf"
+   }
+  },
+  "note": "the nine committed inputs, by content; the same digests the analysis reference names, re-read here and pinned",
+  "paper_n_boot": 10000,
+  "paper_rng_seed": 7
+ },
+ "role": "companion: delta_orbit = median(DESC) - median(ASC) per channel, pooled and as a trailing-window series, with the pass geometry, the coverage of the two orbits and the co-variate controls; it adds no number to the A-E pin contract of fig_ywf_ocv_paper.py",
+ "script": "code/ywf/fig_ywf_ocv_orbits.py",
+ "series": {
+  "days": [
+   "2025-10-17",
+   "2025-10-23",
+   "2025-10-29",
+   "2025-11-10",
+   "2025-12-04",
+   "2025-12-10",
+   "2025-12-16",
+   "2026-01-03",
+   "2026-01-15",
+   "2026-01-27"
+  ],
+  "join_rule": "a line is drawn only between two consecutive points one cadence step (6 d) apart; every longer step of the series is left open",
+  "min_per_orbit": 2,
+  "n_points": 60,
+  "n_points_per_dim": 10,
+  "n_post_event_points": 0,
+  "no_interpolation": "a day whose window holds fewer than 2 chips of either orbit keeps no point, and no value is interpolated across a hole",
+  "note": "every kept day is pre-event: the record's single post-event echo chip has no descending chip in its own window",
+  "per_dim": {
+   "A": {
+    "dim": "A",
+    "first_day": "2025-10-17",
+    "label": "A",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 1.0,
+    "max_delta": 0.0,
+    "min_delta": -1.0,
+    "min_per_orbit": 2,
+    "n_distinct": 3,
+    "n_nonzero": 4,
+    "n_points": 10,
+    "n_sign_changes": 0,
+    "points": [
+     {
+      "asc_median": 3.0,
+      "day": "2025-10-17",
+      "delta": -0.5,
+      "desc_median": 2.5,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.5,
+      "day": "2025-10-23",
+      "delta": -1.0,
+      "desc_median": 2.5,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.5,
+      "day": "2025-10-29",
+      "delta": -0.5,
+      "desc_median": 3.0,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 4.0,
+      "day": "2025-11-10",
+      "delta": -1.0,
+      "desc_median": 3.0,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2025-12-04",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2025-12-10",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2025-12-16",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2026-01-03",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2026-01-15",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 3.0,
+      "day": "2026-01-27",
+      "delta": 0.0,
+      "desc_median": 3.0,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   },
+   "D": {
+    "dim": "D",
+    "first_day": "2025-10-17",
+    "label": "D",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 0.4083333333333333,
+    "max_delta": 0.4083333333333333,
+    "min_delta": -0.20833333333333334,
+    "min_per_orbit": 2,
+    "n_distinct": 10,
+    "n_nonzero": 10,
+    "n_points": 10,
+    "n_sign_changes": 3,
+    "points": [
+     {
+      "asc_median": 0.16666666666666666,
+      "day": "2025-10-17",
+      "delta": 0.4083333333333333,
+      "desc_median": 0.575,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.25,
+      "day": "2025-10-23",
+      "delta": 0.32499999999999996,
+      "desc_median": 0.575,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.25,
+      "day": "2025-10-29",
+      "delta": 0.15000000000000002,
+      "desc_median": 0.4,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.3333333333333333,
+      "day": "2025-11-10",
+      "delta": -0.1111111111111111,
+      "desc_median": 0.2222222222222222,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.25,
+      "day": "2025-12-04",
+      "delta": 0.2361111111111111,
+      "desc_median": 0.4861111111111111,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.26666666666666666,
+      "day": "2025-12-10",
+      "delta": 0.21944444444444444,
+      "desc_median": 0.4861111111111111,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.26666666666666666,
+      "day": "2025-12-16",
+      "delta": -0.10555555555555557,
+      "desc_median": 0.1611111111111111,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.3222222222222222,
+      "day": "2026-01-03",
+      "delta": -0.18888888888888886,
+      "desc_median": 0.13333333333333333,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.375,
+      "day": "2026-01-15",
+      "delta": -0.20833333333333334,
+      "desc_median": 0.16666666666666666,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.2875,
+      "day": "2026-01-27",
+      "delta": -0.12083333333333332,
+      "desc_median": 0.16666666666666666,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   },
+   "F": {
+    "dim": "F",
+    "first_day": "2025-10-17",
+    "label": "F",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 0.5,
+    "max_delta": 0.5,
+    "min_delta": -0.5,
+    "min_per_orbit": 2,
+    "n_distinct": 3,
+    "n_nonzero": 5,
+    "n_points": 10,
+    "n_sign_changes": 1,
+    "points": [
+     {
+      "asc_median": 2.0,
+      "day": "2025-10-17",
+      "delta": -0.5,
+      "desc_median": 1.5,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-10-23",
+      "delta": -0.5,
+      "desc_median": 1.5,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-10-29",
+      "delta": 0.0,
+      "desc_median": 2.0,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-11-10",
+      "delta": 0.0,
+      "desc_median": 2.0,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-12-04",
+      "delta": -0.5,
+      "desc_median": 1.5,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-12-10",
+      "delta": -0.5,
+      "desc_median": 1.5,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2025-12-16",
+      "delta": 0.0,
+      "desc_median": 2.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.5,
+      "day": "2026-01-03",
+      "delta": 0.5,
+      "desc_median": 2.0,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2026-01-15",
+      "delta": 0.0,
+      "desc_median": 2.0,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 2.0,
+      "day": "2026-01-27",
+      "delta": 0.0,
+      "desc_median": 2.0,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   },
+   "P": {
+    "dim": "P",
+    "first_day": "2025-10-17",
+    "label": "P",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 0.14117647058823526,
+    "max_delta": 0.14117647058823526,
+    "min_delta": 0.06512605042016809,
+    "min_per_orbit": 2,
+    "n_distinct": 9,
+    "n_nonzero": 10,
+    "n_points": 10,
+    "n_sign_changes": 0,
+    "points": [
+     {
+      "asc_median": 0.09411764705882353,
+      "day": "2025-10-17",
+      "delta": 0.1264705882352941,
+      "desc_median": 0.22058823529411764,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.10588235294117648,
+      "day": "2025-10-23",
+      "delta": 0.11470588235294116,
+      "desc_median": 0.22058823529411764,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.10588235294117648,
+      "day": "2025-10-29",
+      "delta": 0.1294117647058823,
+      "desc_median": 0.2352941176470588,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.09411764705882353,
+      "day": "2025-11-10",
+      "delta": 0.14117647058823526,
+      "desc_median": 0.2352941176470588,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.11029411764705882,
+      "day": "2025-12-04",
+      "delta": 0.11519607843137253,
+      "desc_median": 0.22549019607843135,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.11029411764705882,
+      "day": "2025-12-10",
+      "delta": 0.11519607843137253,
+      "desc_median": 0.22549019607843135,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.11029411764705882,
+      "day": "2025-12-16",
+      "delta": 0.07107843137254902,
+      "desc_median": 0.18137254901960784,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.08088235294117646,
+      "day": "2026-01-03",
+      "delta": 0.07668067226890757,
+      "desc_median": 0.15756302521008403,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.08823529411764705,
+      "day": "2026-01-15",
+      "delta": 0.07983193277310927,
+      "desc_median": 0.16806722689075632,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.10294117647058823,
+      "day": "2026-01-27",
+      "delta": 0.06512605042016809,
+      "desc_median": 0.16806722689075632,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   },
+   "S": {
+    "dim": "S",
+    "first_day": "2025-10-17",
+    "label": "S",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 0.6457209709553522,
+    "max_delta": 0.6035197230766312,
+    "min_delta": -0.6457209709553522,
+    "min_per_orbit": 2,
+    "n_distinct": 10,
+    "n_nonzero": 10,
+    "n_points": 10,
+    "n_sign_changes": 4,
+    "points": [
+     {
+      "asc_median": 1.8027756377319946,
+      "day": "2025-10-17",
+      "delta": -0.5670733773364789,
+      "desc_median": 1.2357022603955157,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.5263878188659974,
+      "day": "2025-10-23",
+      "delta": -0.2906855584704817,
+      "desc_median": 1.2357022603955157,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.5263878188659974,
+      "day": "2025-10-29",
+      "delta": -0.25163294046780127,
+      "desc_median": 1.2747548783981961,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.25,
+      "day": "2025-11-10",
+      "delta": 0.024754878398196123,
+      "desc_median": 1.2747548783981961,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.5263878188659974,
+      "day": "2025-12-04",
+      "delta": -0.5163323834169344,
+      "desc_median": 1.010055435449063,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.6557764064044151,
+      "day": "2025-12-10",
+      "delta": -0.6457209709553522,
+      "desc_median": 1.010055435449063,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.6557764064044151,
+      "day": "2025-12-16",
+      "delta": 0.23160103279468292,
+      "desc_median": 1.887377439199098,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.4057764064044151,
+      "day": "2026-01-03",
+      "delta": 0.6035197230766312,
+      "desc_median": 2.0092961294810463,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.3743685418725533,
+      "day": "2026-01-15",
+      "delta": 0.14422371708953952,
+      "desc_median": 1.5185922589620928,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 1.7179606773406917,
+      "day": "2026-01-27",
+      "delta": -0.19936841837859887,
+      "desc_median": 1.5185922589620928,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   },
+   "gamma2": {
+    "dim": "gamma2",
+    "first_day": "2025-10-17",
+    "label": "gamma2",
+    "last_day": "2026-01-27",
+    "max_abs_delta": 0.6295717122374225,
+    "max_delta": 0.6295717122374225,
+    "min_delta": -0.0034115342277050154,
+    "min_per_orbit": 2,
+    "n_distinct": 9,
+    "n_nonzero": 10,
+    "n_points": 10,
+    "n_sign_changes": 2,
+    "points": [
+     {
+      "asc_median": 0.4012609826147545,
+      "day": "2025-10-17",
+      "delta": 0.13322699339406985,
+      "desc_median": 0.5344879760088244,
+      "n_asc": 3,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.4245663438469435,
+      "day": "2025-10-23",
+      "delta": 0.10992163216188089,
+      "desc_median": 0.5344879760088244,
+      "n_asc": 4,
+      "n_desc": 2,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.4245663438469435,
+      "day": "2025-10-29",
+      "delta": -0.0034115342277050154,
+      "desc_median": 0.42115480961923846,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.4478717050791324,
+      "day": "2025-11-10",
+      "delta": 0.4268683823948764,
+      "desc_median": 0.8747400874740088,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.7168269297748698,
+      "day": "2025-12-04",
+      "delta": 0.07118805625677138,
+      "desc_median": 0.7880149860316412,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.5853825801049417,
+      "day": "2025-12-10",
+      "delta": 0.2026324059266995,
+      "desc_median": 0.7880149860316412,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.5853825801049417,
+      "day": "2025-12-16",
+      "delta": 0.2026324059266995,
+      "desc_median": 0.7880149860316412,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.41504067460194555,
+      "day": "2026-01-03",
+      "delta": 0.4297788550787521,
+      "desc_median": 0.8448195296806976,
+      "n_asc": 2,
+      "n_desc": 4,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.18532725964996405,
+      "day": "2026-01-15",
+      "delta": 0.6295717122374225,
+      "desc_median": 0.8148989718873865,
+      "n_asc": 3,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     },
+     {
+      "asc_median": 0.22547683529354862,
+      "day": "2026-01-27",
+      "delta": 0.5894221365938379,
+      "desc_median": 0.8148989718873865,
+      "n_asc": 4,
+      "n_desc": 3,
+      "span_days": 56,
+      "state": "pre"
+     }
+    ],
+    "window_days": 56,
+    "window_weeks": 8.0
+   }
+  },
+  "post_window": {
+   "asc_median": 0.22712655694773817,
+   "day": "2026-03-16",
+   "desc_median": null,
+   "dim": "gamma2",
+   "kept": false,
+   "n_asc": 2,
+   "n_desc": 0,
+   "span_days": 56
+  },
+  "statistic": "delta_orbit(t) at every echo-bearing day",
+  "window_days": 56,
+  "window_weeks": 8.0
+ },
+ "site": "Yeongdeok Wind Farm (Samgye-ri)",
+ "site_short": "YWF",
+ "title": "YWF \u2014 the orbit split of the echo-mask vector: the two pass geometries alternate, so the split is a trailing-window difference"
+}

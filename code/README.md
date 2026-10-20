@@ -30,6 +30,38 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 | [`ywf/`](ywf/README.md) | Yeongdeok Wind Farm, Unit 21, Samgye-ri (collapsed 2026-02-02) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest; its second cross-cut (the pass geometry, ASCENDING / DESCENDING) is reported as a pinned, explicitly descriptive echo-coverage split; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the OSM road anchor) and committed beside it | `ywf/README.md` |
 | [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed | `espoo/README.md` |
 
+### `sds/` — the cross-site SDS report (the one script that reads two sites)
+
+`[sds/sds_support.py](sds/sds_support.py)` asks the question the new chip has to
+answer: **do the OCV dimensions still separate the labelled states, and for which
+state pair?** It is a cross-site analysis, not a site package — it reads
+`data/lumo/` and `data/bautzen/` (committed table and support-sized table each)
+and writes `data/sds/`.
+
+The metric is the project's own: `cliffs_delta` and `bootstrap_delta_ci` are
+imported from [`lumo/lumo_ocv_stats.py`](lumo/lumo_ocv_stats.py), so
+`SDS = 10 * |delta|` and the percentile bootstrap (10 000 resamples, seed 7) are
+the definitions the committed LUMO reference was built with. Before it reports
+anything it **pins** `data/lumo/reference/lumo_echo_mask_vector.json`: the five
+`sds_pooled_all_damaged` values must come out identically or the run exits 1.
+
+| level | role |
+| --- | --- |
+| `per_channel_per_state` | **primary analysis** — one SDS per observation channel (ASC / DESC), dimension and state pair. ASC and DESC are never pooled into a primary number |
+| `per_channel_max_pairwise` | the compact summary; every entry carries its `winning_pair`, that pair's signed delta, **that pair's** interval and `n1 / n2` |
+| `per_channel_pooled_damage` | healthy versus all damage states, one channel at a time |
+| `pooled_all_damage` | both channels pooled — the **compatibility pin and context**, never the primary evidence |
+
+Two rules are enforced in code rather than trusted to a reader: the writer
+refuses to emit the phrase "CI of max" (an interval belongs to one comparison,
+not to a selection over comparisons), and a maximum without its winning pair,
+delta, interval or counts raises instead of leaving a blank cell.
+
+```sh
+python3 code/sds/sds_support.py            # both sites, 10 000 resamples
+python3 code/sds/sds_support.py --selftest # 25 offline checks
+```
+
 The scripts are started from the **repository root** (each wrapper in
 `../figures/<site>/` does that), so that their defaults resolve to
 `data/<site>/…` in and `data/<site>/…`, `figures/<site>/…` out. No package:
@@ -74,7 +106,12 @@ with the same coverage split by pass geometry (10 of 20 ascending vs. 7 of 13
 descending chips, p = 1.0000 — pinned, but read as a description of where the
 echoes sit), and
 *defines* `data/ywf/reference/ywf_ocv_findings.json` with `--write-reference`
-before pinning it on every later run.
+before pinning it on every later run. Two companions read the same record on a
+time axis without touching that pin contract: `code/ywf/fig_ywf_ocv_weeks.py`
+opens the pre-collapse window, and `code/ywf/fig_ywf_ocv_series.py` (run by
+`figures/ywf/fig_ywf_ocv_series.sh`) draws the whole record — all 33 chips on 32
+acquisition days, the 9 steps longer than the 6-day cadence as bands and the
+collapse inside the 12-day step that holds it.
 
 Two further references are not *defined* but *resolved* against public catalogues
 and committed beside it — `reference/ywf_bursts.json` (the CDSE pass of all 33

@@ -1,0 +1,44 @@
+{
+ "chips": [
+  [
+   431,
+   107
+  ],
+  [
+   431,
+   119
+  ],
+  [
+   431,
+   121
+  ]
+ ],
+ "definitions": {
+  "reference": "30..200 m annulus outside the support",
+  "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring)",
+  "support": "the 11 x 400 dwell strip (the vibration smear is the measurement)"
+ },
+ "guard_m": 30.0,
+ "n_dates": 178,
+ "n_refused": 0,
+ "point": [
+  52.38,
+  9.71999
+ ],
+ "producer": "erlking_mvp/tools/lumo_rects_s3.py",
+ "ring_cells": [
+  35128,
+  39486,
+  40348
+ ],
+ "ring_m": 200.0,
+ "site": "lumo",
+ "subswaths": [
+  "IW1",
+  "IW2"
+ ],
+ "support": "dwell",
+ "support_cells": [
+  4411
+ ]
+}

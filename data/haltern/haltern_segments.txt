@@ -1,0 +1,6 @@
+asset_id|asset_name|segment_index|label|fundamental_hz|reference_intensity|segment_latitude|segment_longitude
+2eadf4d5-5e53-4e8b-a311-fac0ed9872bb|Haltern AV9 Wind Turbine (Nordex N149/4.5)|0|turbine-mast-section-0|3.320709652853|3341.607105||
+2eadf4d5-5e53-4e8b-a311-fac0ed9872bb|Haltern AV9 Wind Turbine (Nordex N149/4.5)|1|turbine-mast-section-1|2.594823949744|3341.607105||
+2eadf4d5-5e53-4e8b-a311-fac0ed9872bb|Haltern AV9 Wind Turbine (Nordex N149/4.5)|2|turbine-mast-section-2|3.531232560395|3341.607105||
+2eadf4d5-5e53-4e8b-a311-fac0ed9872bb|Haltern AV9 Wind Turbine (Nordex N149/4.5)|3|turbine-mast-section-3|2.889049216656|3341.607105||
+2eadf4d5-5e53-4e8b-a311-fac0ed9872bb|Haltern AV9 Wind Turbine (Nordex N149/4.5)|4|turbine-mast-section-4|3.273548798502|3341.607105||

@@ -38,6 +38,7 @@ One documented deviation from the LUMO vector definition (and only one):
 from __future__ import annotations
 
 import json
+import math
 from collections import Counter
 
 import numpy as np
@@ -58,7 +59,90 @@ K_LOCAL = 1.5              # local threshold relative to the neighbour azimuth
 MIN_N_MASKED = 2           # house gate (as in the LUMO site)
 CONTRAST_DETECT = 1.5      # band/neighbour from here on = deck edge visible
 
-# ── gamma^2 channel (feature 5 of the origin) ───────────────────────────────
+# ── Reference annulus (the v2 rule) ─────────────────────────────────────────
+# The committed rule takes its local threshold reference from the *neighbouring
+# azimuth rows* inside a 9 x 9 ROI. That reference sits right beside the deck:
+# measured on the committed chips it is 23 % (ASC) / 7 % (DESC) *brighter* than
+# the surrounding land, so it raises the threshold and hides deck edges. The ring
+# below takes the reference from an annulus around the support instead, and is
+# therefore rule-independent in the same sense as the OCV's background rim.
+#
+# The chip must carry the whole annulus. The committed 80 x 80 chip cannot (a
+# 200 m ring needs 119 x 33 at 3.70 m/bin and 129 x 33 at 3.38 m/bin), which is
+# why `reference_mask` reports `complete=False` for it instead of clipping.
+RING_GUARD_M = 30.0      # the annulus starts here, outside the deck edge
+RING_M = 200.0           # and ends here
+REFERENCE_MODES = ("neighbour", "ring")
+
+RING_CONFIG = {
+    "reference": "ring",
+    "guard_m": RING_GUARD_M,
+    "ring_m": RING_M,
+    "band_lines": 2 * BAND_HALF + 1,
+    "band_bins": 2 * COL_HALF + 1,
+}
+
+
+def anchor_of(shape):
+    """``(row, col)`` of the deck anchor inside a chip: ``rows // 2``, ``cols // 2``.
+
+    This is the committed convention *and* the new one. The published 80 x 80
+    chips were cut as ``[line_c - 40, line_c + 40)``, so the geodetic anchor sits
+    at index 40 of 0..79 — which is ``80 // 2``. An odd chip of 33 x 119 puts it
+    at 16 x 59 — which is also ``n // 2``. One rule, two chip shapes.
+    """
+    return int(shape[0]) // 2, int(shape[1]) // 2
+
+
+def _block(shape, row0, row1, col0, col1):
+    """A boolean block, clipped to the chip (clipping is *reported*, not hidden)."""
+    mask = np.zeros(shape, dtype=bool)
+    mask[max(row0, 0):max(row1 + 1, 0), max(col0, 0):max(col1 + 1, 0)] = True
+    return mask
+
+
+def reference_mask(shape, spacing, guard_m=RING_GUARD_M, ring_m=RING_M):
+    """The support band, its guard and the reference annulus of one chip.
+
+    ``spacing`` is ``(ground range, azimuth)`` metres per sample — the channel's
+    own, so the annulus is metric in both axes. Returns the three masks, their
+    cell counts, the chip size the annulus *needs*, and ``complete``: a chip too
+    small for the annulus is refused rather than measured against a truncated
+    reference.
+    """
+    rows, cols = int(shape[0]), int(shape[1])
+    line_c, col_c = anchor_of(shape)
+    half_l, half_b = BAND_HALF, COL_HALF
+    across_m, along_m = float(spacing[0]), float(spacing[1])
+    guard_b = int(math.ceil(guard_m / across_m))
+    guard_l = int(math.ceil(guard_m / along_m))
+    ring_b = int(math.ceil(ring_m / across_m))
+    ring_l = int(math.ceil(ring_m / along_m))
+
+    support = _block(shape, line_c - half_l, line_c + half_l,
+                     col_c - half_b, col_c + half_b)
+    inner = _block(shape, line_c - half_l - guard_l, line_c + half_l + guard_l,
+                   col_c - half_b - guard_b, col_c + half_b + guard_b)
+    outer = _block(shape, line_c - half_l - ring_l, line_c + half_l + ring_l,
+                   col_c - half_b - ring_b, col_c + half_b + ring_b)
+    needed = (2 * (half_l + ring_l) + 1, 2 * (half_b + ring_b) + 1)
+    return {
+        "support": support,
+        "guard": inner & ~support,
+        "ring": outer & ~inner,
+        "counts": {"support": int(support.sum()),
+                   "guard": int((inner & ~support).sum()),
+                   "ring": int((outer & ~inner).sum()),
+                   "chip": int(rows * cols)},
+        "needed": {"lines": needed[0], "bins": needed[1]},
+        "shape": (rows, cols),
+        "spacing": (across_m, along_m),
+        "guard_m": float(guard_m), "ring_m": float(ring_m),
+        # A chip smaller than `needed` clips the annulus at its border: the
+        # reference would then be a strip, not an annulus. Refuse it.
+        "complete": bool(needed[0] <= rows and needed[1] <= cols),
+    }
+
 GAMMA2_PEAK_FRAC = 0.30
 GAMMA2_MEDIAN_MULT = 5.0
 GAMMA2_MIN_MASKED = 2
@@ -176,19 +260,30 @@ def house_mask(inten):
     return m if int(m.sum()) >= GAMMA2_MIN_MASKED else np.zeros(inten.shape, dtype=bool)
 
 
-def date_mask(inten):
+def date_mask(inten, ref_mask=None):
     """Deck-edge mask of one date: anchor row, band, local threshold, vector.
 
     The mask itself is a verbatim port (same thresholds, same order of
-    operations) of ``analyze_bautzen_deck_edge_mask.date_mask``. The returned
-    ``info`` additionally carries the OCV vector of the mask (``A``, ``D``,
-    ``F``, ``S``) and the deck-local peak behind ``S``.
+    operations) of ``analyze_bautzen_deck_edge_mask.date_mask``, generalised in
+    exactly two places:
+
+    * the anchor is the chip's own centre (``anchor_of``), which is 40 x 40 for
+      the committed 80 x 80 chips and 16 x 59 for the new 33 x 119 ones — the
+      committed numbers are therefore reproduced bit for bit;
+    * ``ref_mask`` selects the **reference cells**. ``None`` keeps the committed
+      neighbour rows (the v1 rule); a ring mask gives the background annulus of
+      ``reference_mask``. Everything the rule then computes is identical.
+
+    The returned ``info`` carries the OCV vector of the mask (``A``, ``D``,
+    ``F``, ``S``), the deck-local peak behind ``S``, and the provenance of the
+    reference (``ref_source``, ``ref_cells``, ``ref_median``).
 
     Returns ``(info, full)`` with the full-chip bool mask.
     """
     rows, cols = inten.shape
-    c_lo, c_hi = CENTER_COL - COL_HALF, CENTER_COL + COL_HALF
-    anchor = CENTER_ROW
+    anchor_row, anchor_col = anchor_of(inten.shape)
+    c_lo, c_hi = anchor_col - COL_HALF, anchor_col + COL_HALF
+    anchor = anchor_row
     r_lo0, r_hi0 = anchor - ANCHOR_HALF, anchor + ANCHOR_HALF
     roi = inten[r_lo0:r_hi0 + 1, c_lo:c_hi + 1]
     band = np.zeros_like(roi, dtype=bool)
@@ -196,7 +291,19 @@ def date_mask(inten):
     # Diagnostic: row of the row-profile maximum (report only, NOT the anchor).
     prof = roi.mean(axis=1)
     peak_row = r_lo0 + int(np.argmax(prof))
-    ref = float(np.median(roi[~band])) or 1.0
+    if ref_mask is None:
+        ref = float(np.median(roi[~band])) or 1.0
+        ref_source = "neighbour_rows"
+        ref_cells = int((~band).sum())
+    else:
+        ref_mask = np.asarray(ref_mask, dtype=bool)
+        if ref_mask.shape != inten.shape:
+            raise ValueError(
+                f"the reference mask is {ref_mask.shape}, the chip is "
+                f"{inten.shape} -- they must be the same chip")
+        ref = float(np.median(inten[ref_mask])) or 1.0
+        ref_source = "ring"
+        ref_cells = int(ref_mask.sum())
     mask_roi = band & (roi >= K_LOCAL * ref)
     n_masked = int(mask_roi.sum())
     # Reference filter inside the band (house definition, cross-check only)
@@ -210,10 +317,14 @@ def date_mask(inten):
     n_comp, largest = largest_component(mask_roi)
     info = {
         "anchor_row": int(anchor),
+        "anchor_col": int(anchor_col),
         "peak_row": int(peak_row),
-        "peak_row_offset": int(peak_row - CENTER_ROW),
+        "peak_row_offset": int(peak_row - anchor),
         "n_masked": n_masked,
         "band_contrast": band_contrast,
+        "ref_source": ref_source,
+        "ref_cells": ref_cells,
+        "ref_median": float(ref),
         "n_masked_house": int(house.sum()),
         "n_components": n_comp,
         "largest_component": largest,
@@ -251,11 +362,16 @@ def date_mask(inten):
     return info, full
 
 
-def analyse_series(recs):
-    """One mask per date + series summary + union map (verbatim port)."""
+def analyse_series(recs, ref_mask=None):
+    """One mask per date + series summary + union map (verbatim port).
+
+    ``ref_mask`` is forwarded to :func:`date_mask`: ``None`` is the committed
+    neighbour-row reference, a ring mask is the v2 reference. The masks, and
+    therefore every summary number, follow from it.
+    """
     per_date, counts = [], None
     for date, inten in recs:
-        info, full = date_mask(inten)
+        info, full = date_mask(inten, ref_mask=ref_mask)
         info["date"] = date
         per_date.append(info)
         counts = full.astype(int) if counts is None else counts + full.astype(int)

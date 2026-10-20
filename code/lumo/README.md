@@ -1,14 +1,15 @@
 # `code/lumo/` — LUMO site package: analysis and plotting scripts
 
-Five Python modules, no package, no dependencies beyond the standard library plus
+Six Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values of the control
 tests; without it the scripts still run, just with fewer p-values). This is the
 LUMO half of the repository; the Bautzen bridge site lives in `../bautzen/` and
 mirrors it module for module — only the mask layer is swapped.
 
 All paths below are relative to the **repository root** and the scripts are
-always started from there (the wrapper `../../figures/lumo/fig_lumo_ocv_paper.sh`
-does that): inputs and outputs in `data/lumo/`, figures in `figures/lumo/`.
+always started from there (the wrappers `../../figures/lumo/fig_lumo_ocv_paper.sh`
+and `../../figures/lumo/fig_lumo_ocv_orbits.sh` do that): inputs and outputs in
+`data/lumo/`, figures in `figures/lumo/`.
 
 ### `lumo_ocv_stats.py` — statistics layer (verbatim port)
 
@@ -74,6 +75,37 @@ python3 code/lumo/fig_lumo_ocv_paper.py --figdir /tmp/x --json /tmp/y.json --md 
 Wall-clock times are only printed to stdout, never written into an artifact: with
 the fixed seeds (`RNG_SEED = 11`, 2000 bootstrap draws, 1000 / 500 permutation
 draws) two runs produce identical JSON, Markdown and PNG files.
+
+### `fig_lumo_ocv_orbits.py` — 6 x 2 time-series companion
+
+The paper figure summarises the six channels per state; this companion asks the
+same channels as a **time series** and separates the two pass geometries. It
+draws six rows in the formal OCV order (`gamma2`, `P`, `D`, `F`, `A`, `S`) and
+two columns (ASC / DESC): twelve panels on `figures/lumo/fig_lumo_ocv_orbits.jpg`
+(183 mm wide, 630 dpi JPEG). The x axis is the **actual local overpass instant**:
+the coherence rows carry no timestamp, so `compute()` joins the
+`record_class="acquisition"` rows by `burst_id`, converts UTC to
+`Europe/Berlin` with `zoneinfo`, sorts by acquisition instant and cuts the
+**13 consecutive `damage_label` runs** (36, 8, 6, 8, 54, 17, 7, 8, 4, 8, 5, 8,
+9 points). Bands follow those runs, not fixed windows; twelve dashed lines mark
+the transitions. `P`, `D`, `F` and `A` use log axes; the one missing `P`
+(2021-07-14 ASC) is drawn as a gap and never interpolated.
+
+The run writes `data/lumo/fig_lumo_ocv_orbits.json` and
+`figures/lumo/fig_lumo_ocv_orbits.md` as well. It carries **144 cross-checks**
+against `lumo_ocv_channels_meta.json`, `fig_lumo_ocv_paper.json` and
+`reference/lumo_tower_coherence_states.json`: row and date counts, the 482-row
+acquisition join, the 13-run sequence and lengths, sub-swath counts,
+per-state/per-orbit counts, row-by-row `burst_id` / date / orbit / label /
+`gamma2` / `n_masked` parity, `A == n_masked`, channel completeness, strict
+positivity on the log axes, local-time ranges / UTC offsets and every committed
+sha256. Any failed check exits non-zero. No output carries a timestamp, so
+repeated runs are byte-identical.
+
+```bash
+python3 code/lumo/fig_lumo_ocv_orbits.py              # figure + JSON + report
+python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures # checks only
+```
 
 Note that the module and site names keep their `lumo_` prefix although the folder
 already says `lumo/`: the import statements (`import lumo_ocv_core as core`),

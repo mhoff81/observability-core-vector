@@ -8,31 +8,51 @@ record is 60 acquisitions on one descending track (from ``2022-06-02``); this
 companion puts that record back into the seven years that precede it and draws
 both on **one dated axis**.
 
-What that axis can and cannot carry
------------------------------------
-The six dimensions are ``[gamma2, P, D, A, F, S]``, and only **two** of them
-exist on both sides of the geometry break:
+What that axis carries, and from where
+--------------------------------------
+The six dimensions are ``[gamma2, P, D, A, F, S]``, and now **all six exist on
+both sides** of the geometry break — but not from one source:
 
-  * ``gamma2`` — the era's backend rows carry ``coherence_gamma2`` (162/162) and
-    the record's carry ``coherence_gamma2``: the same column by name;
-  * the mask size ``A`` — the era carries ``coherence_masked_pixels``, the
-    pipeline's own masked-pixel count, which is the row the record's ``A`` is
-    recomputed from and verified against (``kdlo_ocv_channels_csv.py --verify``);
-  * the controls ``wind_speed_ms`` / ``temperature_c`` — also on both sides.
+  * ``gamma2`` and the mask size ``A`` are read from the **backend columns** the
+    pipeline itself wrote: the era's rows carry ``coherence_gamma2`` and
+    ``coherence_masked_pixels`` (162/162), the record's carry the same two
+    columns by name (its channel table re-derives them from the strips and
+    verifies them, ``kdlo_ocv_channels_csv.py --verify``);
+  * ``P``, ``D``, ``F`` and ``S`` are **recomputed from a committed full-dwell
+    strip cache with the pipeline's own mask rule** (``kdlo_ocv_masks.py``), and
+    there are now two such caches: ``data/kdlo/strips/`` for the record (64
+    strips, of which the record's channel table uses 60) and
+    ``data/kdlo/strips_era/`` for the era (**162 strips, one per era
+    acquisition day**, captured through the very same
+    ``decode_slc_rect_at_location(annotation, measurement, lat, lon, 11, 400)``
+    window from the burst Id each era row records — the ascending track is
+    measured on both VV and VH bursts, so the set carries both, one burst per
+    day);
+  * the controls ``wind_speed_ms`` / ``temperature_c`` — on both sides.
 
-``P``, ``D``, ``F`` and ``S`` are **recomputed from the committed full-dwell
-strips**, and ``data/kdlo/strips/`` holds only the 60 acquisitions of the record:
-the era has no mask geometry here, and its backend rows carry no phase or
-frequency layer either. Those four dimensions are therefore drawn **only where
-they exist** — the 16 pre-collapse acquisitions — and the era is hatched in their
-panels as *not measurable*: never interpolated, never extrapolated, never pooled.
+The era strip cache is not taken on trust: before a single era value of ``P``,
+``D``, ``F`` or ``S`` is drawn, this figure **recomputes the mask rule on all 162
+era strips and requires the recomputed ``A`` to equal the era export's
+``coherence_masked_pixels`` exactly and the recomputed coherence to equal its
+``coherence_gamma2`` to ``1e-12``** — i.e. the strips are required to be the
+strips the pipeline decoded, the same acceptance the record's channel table runs
+(``kdlo_ocv_masks.py``, here pointed at ``strips_era/``). The era's
+``P`` has its own basis — the frequency map of the 162 era strips — as the
+record's ``P`` has the channel table's 64-strip map: ``P`` is a *frequency of
+the mask*, so it is only defined relative to the strip set it is counted over,
+and this figure never mixes the two maps (it draws each stretch in units of its
+own median, and the basis is constant inside a stretch). The era's set is not one
+polarisation — the track is measured on both VV and VH bursts — so what its
+frequency map measures is the frequency of the mask across that mixed set; every
+other drawn era value is per day, from that day's own burst alone.
 
 The axis has four stretches, and the figure draws all four instead of blurring
 them into one series (every date below is read from the committed availability
 reference, not asserted from this prose):
 
   era             2015-03-20 .. 2021-12-19   162 days, ASCENDING IW2, relative
-                  orbit 136, catalogue hour 00 — ``gamma2`` and the mask size only
+                  orbit 136, catalogue hour 00 — all six dimensions (two from the
+                  export's own columns, four recomputed from the era's own strips)
   blind gap       2021-12-20 .. 2022-02-25    69 days, no scene of either track
   catalogue only  2022-02-26 .. 2022-06-01   the descending stretch exists in the
                   CDSE catalogue but has no committed row in this record
@@ -45,7 +65,8 @@ stretches sit on different tracks and swaths and are imaged at different times o
 day, so their levels are not comparable by construction; dividing each by its own
 median shows what each stretch *does* without asserting that the era "was" a level
 the record "changed from". No statistic of this figure is computed across the
-break — that is the point of the empty era region in the four record-only panels.
+break — which is why the blind gap and the catalogue-only stretch stay hatched in
+all six panels instead of being crossed by a line.
 
 The era's own clock is re-derived here rather than asserted: the reference's
 per-year table labels the era's hour block ``00``, while the export times its rows
@@ -58,21 +79,32 @@ The era export is committed **evidence**, never rows of the record: no number of
 the A-E pin contract depends on it and it is not pooled into the channel table.
 This figure is its only reader, and it re-verifies the sha256 that the
 availability reference pins for it before using a single value (aborting on any
-drift), and hard-checks that the era really is ``P``/``D``/``F``/``S``-free. The
-three committed inputs are:
+drift). Its rows still carry no phase and no frequency layer — their non-null
+columns are exactly the ten of a backend row — so ``P``/``D``/``F``/``S`` can
+never come from the export: they come from the era's own strips, and the export's
+two columns are what those strips are held to. The four committed inputs are:
 
   data/kdlo/fig_kdlo_0_raw.json                  the era's decoded backend rows
+  data/kdlo/strips_era/manifest.json             the era strip cache: 162 strips,
+                                                 one per era day, with the
+                                                 Rust-side A / gamma2 cross-check
   data/kdlo/kdlo_ocv_channels.csv                the record's 60 acquisitions
   data/kdlo/reference/kdlo_s1_availability.json  the era's window/days/geometry
                                                  and the export's pinned sha256
 
-Figure (3 x 2, 183 mm wide), one dated axis 2015-03-20 .. 2022-12-11:
-  a  ``gamma2``       log y — era dots (blue) vs. record dots + line (orange)
-  b  ``A`` (mask size) log y — same treatment
-  c  ``P``            record only — the era region is hatched "not measurable"
-  d  ``D``            record only
-  e  ``F``            record only
-  f  ``S``            record only
+The 162 strip payloads and ``capture_requests.json`` are read through that
+manifest (every strip is hashed into the artifact), and the strip set is required
+to cover exactly the era export's days.
+
+Figure (3 x 2, 183 mm wide), one dated axis 2015-03-20 .. 2022-12-11, **all six**
+dimensions drawn over both stretches:
+  a  ``gamma2``        log y — era dots (blue) vs. record dots + line (orange),
+  b  ``A`` (mask size) log y — each divided by its own stretch median (1.0 drawn);
+                              the era's per-year medians are the bars
+  c  ``P``             linear y — the record's P comes from the channel table, the
+  d  ``D``             log y — era's from the 162 era strips (its own frequency
+  e  ``F``             log y — map, stated: P is a mask frequency, so it is only
+  f  ``S``             log y — defined against the strip set it is counted over)
 Every panel carries the blind gap, the catalogue-only stretch, the collapse cut
 (2022-12-11) and, hollow at the right edge, the first collapsed acquisition
 (2022-12-23), which lies outside this axis (labelled in panel a).
@@ -100,12 +132,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import kdlo_ocv_core as core   # noqa: E402
+import kdlo_ocv_masks as masks  # noqa: E402
 import kdlo_ocv_stats as st    # noqa: E402
 
 FIGDIR = core.FIGDIR
-# The three committed inputs: the era's decoded backend rows (evidence, pinned by
-# the availability reference), the record's channel table, and that reference.
+# The four committed inputs: the era's decoded backend rows (evidence, pinned by
+# the availability reference), the era's own full-dwell strip cache (what the era's
+# P/D/F/S are recomputed from), the record's channel table, and that reference.
 ERA_EXPORT = os.path.join(core.DATA, "fig_kdlo_0_raw.json")
+ERA_STRIPS = os.path.join(core.DATA, "strips_era")
+ERA_MANIFEST = os.path.join(ERA_STRIPS, "manifest.json")
+ERA_REQUESTS = os.path.join(ERA_STRIPS, "capture_requests.json")
 CHANNEL_CSV = core.CSV_PATH
 AVAILABILITY_REF = os.path.join(core.DATA, "reference",
                                 core.REFERENCE_FILES["s1_availability"])
@@ -149,19 +186,27 @@ ERA_END = core.GEOMETRY_BREAK["last_ascending_day_before"]           # 2021-12-1
 DESCENT_START = core.GEOMETRY_BREAK["first_descending_day_of_stretch"]  # 2022-02-26
 BLIND_GAP_DAYS = core.GEOMETRY_BREAK["blind_gap_days"]               # 69
 RECORD_START = core.STATE_WINDOWS[PRE][0]        # 2022-06-02
-# The two dimensions whose era column is the same column by name: the mask size
-# the era's backend reports is the ``coherence_masked_pixels`` the record's ``A``
-# is recomputed from.
+# The two dimensions whose era value is a column of the era export — the same two
+# column names the record carries, so they are the era's two *backend* dimensions
+# (and the reason the era's strips can be held to the pipeline's own numbers).
 ERA_CHANNEL = {"gamma2": "coherence_gamma2", "A": "coherence_masked_pixels"}
-LONG_DIMS = ["gamma2", "A"]
-RECORD_ONLY_DIMS = [k for k in core.FEATURES if k not in LONG_DIMS]   # P, D, F, S
-PANELS = LONG_DIMS + RECORD_ONLY_DIMS
+BACKEND_DIMS = ["gamma2", "A"]
+# The four the era export does not carry, recomputed from the era's own committed
+# full-dwell strips — the same four the record's channel table recomputes from its
+# strips, with the same mask rule (``kdlo_ocv_masks.load_vectors``).
+STRIP_DIMS = ["P", "D", "F", "S"]
+# Panel order (a..f): the backend two first, then the mask geometry, so the panel
+# letters keep the meaning they had while the era side of (c)-(f) was empty.
+PANELS = BACKEND_DIMS + STRIP_DIMS
 # gamma2 and A span decades on both sides; P is a fraction; D, F and S span one to
-# two decades inside the record only.
+# two decades inside the record — and two to three inside the era (D reaches 1.0 on
+# a one-row mask, F 132, S 208), so the same four axes carry both sides.
 PANEL_SCALE = {"gamma2": "log", "A": "log", "P": "linear",
                "D": "log", "F": "log", "S": "log"}
-# The era export's ten non-null columns, verbatim. Asserting this set is what makes
-# "the era has no P/D/F/S, no phase and no displacement" a measurement.
+# The era export's ten non-null columns, verbatim, and the phase/frequency columns
+# it never fills. Asserting both is what makes "the era export carries no P/D/F/S"
+# a measurement — i.e. why those four have to come from the strips and not from the
+# export; it says nothing about what the strips can carry.
 ERA_NONNULL_COLUMNS = ["acquisition_ts", "coherence_gamma2",
                        "coherence_masked_pixels", "id", "orbit_direction",
                        "pass_label", "status", "temperature_c",
@@ -169,7 +214,9 @@ ERA_NONNULL_COLUMNS = ["acquisition_ts", "coherence_gamma2",
 COLOUR = {"era": "#4C72B0", "era_med": "#1F4E79", "record": "#DD8452",
           "record_med": "#B2601F", "cut": "#888888", "singleton": "#C44E52",
           "band": "#B0B0B0"}
-ERA_TINT = 0.10
+# The era's band tint: all six panels now carry the era as a measured stretch, so
+# the same faint wash sits behind its dots everywhere.
+ERA_TINT = 0.055
 
 
 def _fail(msg):
@@ -246,15 +293,120 @@ def geometry_break(av):
     return gb
 
 
-def era_rows(av):
-    """The era's decoded backend rows, verified against the pinned reference.
+def era_strip_rows(days):
+    """The era's own strips, decoded to the four mask-geometry channels.
 
-    The checks run in the order in which they can fail: the file is the one the
-    reference pins (by sha256), it holds the measured days of ``figure_0``, its
+    One strip per era acquisition day (the cache was captured from the burst Id each
+    era row records, through the pipeline's own
+    ``decode_slc_rect_at_location(annotation, measurement, lat, lon, 11, 400)``
+    window), so the day set must be the era export's day set exactly: no extra day,
+    no missing day, one strip each. ``kdlo_ocv_masks.load_vectors`` recomputes the
+    pipeline's mask rule on every strip in process; the two columns the export does
+    carry are then held against it in ``era_rows``, which is what ties this cache to
+    the pipeline rather than to itself.
+
+    ``P`` is the frequency of the mask over *this* strip set — a basis of 162 strips,
+    never mixed with the record's strip set: ``P`` is a mask *frequency*, so it is
+    only defined against the set it is counted over. Both bases are named wherever a
+    ``P`` panel is read.
+
+    The set is not one polarisation: this track is measured on both VV and VH bursts
+    over the years, and which burst each day took is what the request file records
+    (the manifest must agree with it entry by entry). Every drawn value except ``P``
+    is per day and comes from that day's own strip, so a day is internally one
+    polarisation; only ``P``'s frequency map is counted across the mixed set, and
+    that is said with the panel rather than smuggled into it.
+    """
+    if not os.path.exists(ERA_MANIFEST):
+        _fail(f"no era strip manifest at {_rel(ERA_MANIFEST)}: the era's P/D/F/S "
+              "cannot be recomputed (capture it with the kdlo_strip_capture "
+              "binary and data/kdlo/strips_era/capture_requests.json)")
+    with open(ERA_MANIFEST) as fh:
+        man = json.load(fh)
+    entries = man.get("entries") or []
+    if not entries or man.get("n_entries") != len(entries):
+        _fail("the era strip manifest's n_entries disagrees with its own list")
+    strip_days = [str(e.get("date"))[:10] for e in entries]
+    if len(strip_days) != len(set(strip_days)):
+        _fail("the era strip manifest holds more than one strip for a day")
+    if sorted(strip_days) != sorted(days):
+        extra = sorted(set(strip_days) - set(days))
+        missing = sorted(set(days) - set(strip_days))
+        _fail(f"the era strip set does not cover the era export: {len(strip_days)} "
+              f"strips vs {len(days)} export days (missing {missing[:3]}, extra "
+              f"{extra[:3]})")
+    if len({e["burst_id"] for e in entries}) != len(entries):
+        _fail("the era strip manifest holds more than one strip from one burst")
+    # The manifest is what the capture binary wrote; the request file is what it was
+    # asked for. They must agree entry by entry on the day, the burst and the
+    # polarisation — the era is *not* one polarisation (the ascending passes carry
+    # both), and which burst was measured is exactly what the request file records.
+    with open(ERA_REQUESTS) as fh:
+        req = json.load(fh)
+    asked = [(str(e["date"])[:10], e["burst_id"], str(e["polarisation"]))
+             for e in (req.get("entries") or [])]
+    got = [(str(e["date"])[:10], e["burst_id"], str(e["polarisation"]))
+           for e in entries]
+    if asked != got:
+        _fail("the era strip manifest does not match the capture requests it was "
+              "written from (date / burst_id / polarisation differ)")
+    # core.ERA_ORBIT is "<direction>|<relative orbit>"; the strips must sit on
+    # exactly that geometry, or the era's strips are not the era's track.
+    era_dir, era_rel = core.ERA_ORBIT.split("|")
+    geom = {(str(e["orbit_direction"]), str(e["subswath"]),
+             int(e["relative_orbit"])) for e in entries}
+    if geom != {(era_dir, core.ERA_SWATH, int(era_rel))}:
+        _fail(f"the era strips sit on {sorted(geom)}, expected the era's own "
+              f"{era_dir} {core.ERA_SWATH} relative orbit {era_rel}")
+    rows, meta = masks.load_vectors(ERA_STRIPS, ERA_MANIFEST)
+    by_day = {r["date"]: r for r in rows}
+    if sorted(by_day) != sorted(days):
+        _fail("the decoded era vectors are not one per era day")
+    for day, row in by_day.items():
+        if tuple(row["shape"]) != tuple(meta["majority_shape"]):
+            _fail(f"the era strip of {day} has shape {row['shape']}, the set's "
+                  f"majority shape is {meta['majority_shape']}")
+        if row.get("P") is None:
+            _fail(f"the era strip of {day} carries no P (no majority-shape mask)")
+    if meta.get("n_without_mask") or meta.get("dates_without_mask"):
+        _fail(f"era strips without a mask: {meta.get('dates_without_mask')!r}")
+    pols = {}
+    for e in entries:
+        pols[str(e["polarisation"])] = pols.get(str(e["polarisation"]), 0) + 1
+    meta["polarisations"] = pols
+    meta["n_requests"] = req.get("n_entries")
+    meta["manifest"] = _rel(ERA_MANIFEST)
+    meta["requests"] = _rel(ERA_REQUESTS)
+    meta["manifest_sha256"] = sha(ERA_MANIFEST)
+    meta["requests_sha256"] = sha(ERA_REQUESTS)
+    meta["strip_bytes_total"] = sum(
+        os.path.getsize(os.path.join(ERA_STRIPS, str(e["strip_file"])))
+        for e in entries)
+    meta["p_basis"] = (f"the frequency map of these {len(entries)} era strips "
+                       "(never mixed with the record's strip set; the set carries "
+                       "both polarisations, "
+                       + " and ".join(f"{n} {p}" for p, n in sorted(pols.items()))
+                       + " days, which is what its frequency map is counted over)")
+    return by_day, meta
+
+
+def era_rows(av):
+    """The era's six channels: two backend columns + four from its own strips.
+
+    The checks run in the order in which they can fail: the export file is the one
+    the reference pins (by sha256), it holds the measured days of ``figure_0``, its
     days are the era's own window, and its **non-null columns are exactly the ten
-    of a backend row without a phase or frequency layer** — which is what makes
-    "the era carries ``gamma2`` and the mask size and no P/D/F/S" a measurement
-    rather than a claim. The metadata-anomaly day is checked on its slot.
+    of a backend row without a phase or frequency layer** — which is why the four
+    mask-geometry dimensions cannot come from it. They come from the era's own
+    committed strip cache (``data/kdlo/strips_era/``), and ``era_strip_rows`` holds
+    that cache to the export day by day: the mask rule recomputed on each strip must
+    reproduce ``coherence_masked_pixels`` exactly and ``coherence_gamma2`` to
+    ``1e-12``.
+
+    The returned rows carry all six channels: ``gamma2`` and ``A`` are the export's
+    own values — so panels (a) and (b) are numerically unchanged by the strips'
+    arrival — and ``P``/``D``/``F``/``S`` are the per-day vectors from the strips.
+    The metadata-anomaly day is checked on its slot.
     """
     pin = (av.get("pipeline") or {}).get("figure_0_raw_export") or {}
     if pin.get("status") != "ok":
@@ -296,6 +448,7 @@ def era_rows(av):
            if str(r["acquisition_ts"])[:10] not in anom}
     if off != {"morning"}:
         _fail(f"the era carries non-nominal pass slots: {sorted(off)}")
+    strips, strip_meta = era_strip_rows(days)
     out = []
     for r in rows:
         day = str(r["acquisition_ts"])[:10]
@@ -303,21 +456,39 @@ def era_rows(av):
         if g is None or a is None:
             _fail(f"the era row {day} has no {ERA_CHANNEL['gamma2']} or no "
                   "mask size")
+        s = strips[day]
+        # The strips are held to the pipeline's own two numbers, day by day: the
+        # mask rule recomputed on the strip must reproduce both.
+        if s["A"] != int(a) or s["rust_masked_pixels"] != int(a):
+            _fail(f"the era strip of {day} recomputes A={s['A']} (manifest "
+                  f"{s['rust_masked_pixels']}), the pipeline recorded {int(a)}")
+        if (abs(s["gamma2"] - float(g)) > masks.TOL_GAMMA2
+                or abs(float(s["rust_gamma2"]) - float(g)) > masks.TOL_GAMMA2):
+            _fail(f"the era strip of {day} recomputes gamma2={s['gamma2']!r} "
+                  f"(manifest {s['rust_gamma2']!r}), the pipeline recorded "
+                  f"{float(g)!r}")
         out.append({"day": day, "stretch": "era", "gamma2": float(g),
-                    "A": float(a), "wind_speed_ms": r.get("wind_speed_ms"),
+                    "A": float(a), "P": s["P"], "D": s["D"], "F": s["F"],
+                    "S": s["S"], "mask_shape": list(s["shape"]),
+                    "polarisation": s["polarisation"],
+                    "strip_sha256": s["strip_sha256"],
+                    "wind_speed_ms": r.get("wind_speed_ms"),
                     "temperature_c": r.get("temperature_c"),
                     "pass_label": r.get("pass_label"),
                     "hour": str(r["acquisition_ts"])[11:13]})
     out.sort(key=lambda r: r["day"])
-    return out
+    strip_meta["days_held_to_the_export"] = len(out)
+    strip_meta["tol_gamma2"] = masks.TOL_GAMMA2
+    return out, strip_meta
 
 
 def record_rows(csv_rows):
     """The record's acquisitions inside the axis: the 16 pre-collapse days.
 
-    The four record-only dimensions must be complete on every one of them: the
-    panels (c)-(f) are empty on the era side by construction and may not be patchy
-    on the record side either.
+    All six dimensions must be complete on every one of them: while the era side of
+    panels (c)-(f) was empty a patchy row could be read as "the era and the record
+    both lack it", and that reading must not become possible now that both sides are
+    drawn.
     """
     rows = []
     for r in csv_rows:
@@ -381,10 +552,17 @@ def segments(av, era, record):
          "start": AXIS_START, "end": ERA_END,
          "span_days": span_days(AXIS_START, ERA_END), "filled_days": len(era),
          "geometry": era_geom,
-         "dims": list(LONG_DIMS),
-         "note": f"{len(era)} measured days, gamma2 and the mask size only (the "
-                 "four mask-geometry dimensions are not recomputable: no "
-                 "full-dwell strips in data/kdlo/strips/ for this geometry)"},
+         "dims": list(PANELS),
+         "strips": len(era),
+         "p_basis": f"the {len(era)} era strips of this figure "
+                    "(data/kdlo/strips_era/), both polarisations in the set",
+         "note": f"{len(era)} measured days and all six dimensions: gamma2 and the "
+                 "mask size are the era export's own columns, P/D/F/S are "
+                 "recomputed from the era's own committed full-dwell strips, each "
+                 "day held to those two columns before anything is drawn. The track "
+                 "is measured on both VV and VH bursts, so the set carries both "
+                 "polarisations; each day is one burst, and only P's frequency map "
+                 "is counted across the mixed set"},
         {"key": "blind_gap", "label": "the blind gap",
          "start": shift_day(ERA_END, 1), "end": shift_day(DESCENT_START, -1),
          "span_days": span_days(shift_day(ERA_END, 1), shift_day(DESCENT_START, -1)),
@@ -406,6 +584,9 @@ def segments(av, era, record):
          "span_days": span_days(RECORD_START, AXIS_END),
          "geometry": f"{rec_geom} · one per day",
          "dims": list(core.FEATURES),
+         "p_basis": "the strip set the channel table recomputes from "
+                    "(data/kdlo/strips/, its own provenance in "
+                    "kdlo_ocv_channels_meta.json)",
          "note": f"all six dimensions, one acquisition per day, cut at the "
                  f"collapse {COLLAPSE_DAY}"},
     ]
@@ -431,13 +612,16 @@ def compute():
     The medians are the 1.0 of the figure: **each stretch is divided by its own
     median** (the era's 162-day median for the era, the 16-day median of
     2022-06-02..2022-12-11 for the record), so no level is compared across the
-    geometry break. The record's first month (2022-06) is kept separately: it is
+    geometry break — and, for ``P``, no *basis* either: the era's ``P`` is the mask
+    frequency over the era's 162 strips, the record's over the strip set the channel
+    table recomputes from, and the two maps are never added, averaged or rescaled
+    into one another. The record's first month (2022-06) is kept separately: it is
     the baseline the months companion uses, and the cross-read of the two
     artifacts hangs on it.
     """
     t0 = time.time()
     av = load_availability()
-    era = era_rows(av)
+    era, era_strips_meta = era_rows(av)
     csv_rows = core.load_csv()
     record = record_rows(csv_rows)
     single = singleton_row(csv_rows)
@@ -447,7 +631,7 @@ def compute():
               "record": record,
               "record_first_month": [r for r in record
                                      if core.day_of(r)[:7] == RECORD_START[:7]]}
-    dims_of = {"era": LONG_DIMS, "record": list(core.FEATURES),
+    dims_of = {"era": list(PANELS), "record": list(core.FEATURES),
                "record_first_month": list(core.FEATURES)}
     med = {}
     for g, rows in groups.items():
@@ -455,15 +639,18 @@ def compute():
         for k in dims_of[g]:
             vals = [r[k] for r in rows]
             med[g][k] = st._stats(vals)["median"] if vals else None
-    stats = {"era": {k: _median(era, k) for k in LONG_DIMS},
+    stats = {"era": {k: _median(era, k) for k in PANELS},
              "record": {k: _median(record, k) for k in core.FEATURES}}
 
     era_out = [{"day": r["day"], "stretch": "era",
                 "pass_label": r["pass_label"], "hour": r["hour"],
                 "wind_speed_ms": r["wind_speed_ms"],
                 "temperature_c": r["temperature_c"],
-                "channels": {k: r[k] for k in LONG_DIMS},
-                "ratio": {k: r[k] / med["era"][k] for k in LONG_DIMS}}
+                "polarisation": r["polarisation"],
+                "strip_sha256": r["strip_sha256"],
+                "mask_shape": r["mask_shape"],
+                "channels": {k: r[k] for k in PANELS},
+                "ratio": {k: r[k] / med["era"][k] for k in PANELS}}
                for r in era]
     record_out = [{"day": core.day_of(r), "stretch": PRE,
                    "pass_label": r.get("pass_label"),
@@ -487,7 +674,7 @@ def compute():
     per_year = {y: {"n": len(rs), "first_day": rs[0]["day"],
                     "last_day": rs[-1]["day"],
                     "channels": {k: st._stats([x[k] for x in rs])
-                                 for k in LONG_DIMS}}
+                                 for k in PANELS}}
                 for y, rs in sorted(per_year.items())}
 
     sources = {
@@ -495,6 +682,20 @@ def compute():
                        "rows": len(era),
                        "pinned_by": "availability.pipeline."
                                     "figure_0_raw_export.sha256"},
+        "era_strips": {"path": _rel(ERA_MANIFEST),
+                       "sha256": sha(ERA_MANIFEST),
+                       "requests": _rel(ERA_REQUESTS),
+                       "requests_sha256": sha(ERA_REQUESTS),
+                       "strips": era_strips_meta["n_strips"],
+                       "bytes": era_strips_meta["strip_bytes_total"],
+                       "n_with_mask": era_strips_meta["n_with_mask"],
+                       "majority_shape": era_strips_meta["majority_shape"],
+                       "polarisations": era_strips_meta["polarisations"],
+                       "p_basis": era_strips_meta["p_basis"],
+                       "accepted_against": "era_export coherence_gamma2 / "
+                                           "coherence_masked_pixels "
+                                           f"({era_strips_meta['days_held_to_the_export']}"
+                                           f"/{era_strips_meta['n_strips']})"},
         "channel_table": {"path": _rel(CHANNEL_CSV), "sha256": sha(CHANNEL_CSV)},
         "availability_reference": {"path": _rel(AVAILABILITY_REF),
                                    "sha256": sha(AVAILABILITY_REF)},
@@ -521,6 +722,7 @@ def compute():
         "segments": segments(av, era, record),
         "geometry_break": av["epochs"]["geometry_break"],
         "availability": avail,
+        "era_strips": era_strips_meta,
         "sources": sources,
         "n_rows": len(era) + len(record),
         "runtime_s": time.time() - t0,
@@ -530,23 +732,19 @@ def compute():
 # ---------------------------------------------------------------------------
 # The figure
 # ---------------------------------------------------------------------------
-def draw_stretches(ax, hatch_era):
+def draw_stretches(ax):
     """The four stretches of the axis, drawn — never interpolated across.
 
-    ``hatch_era`` is set for the four record-only panels. There the era is not a
-    series with holes but a region where the dimension **does not exist**, so it
-    is hatched and labelled instead of being left blank or, worse, filled.
+    Every panel carries the same four stretches, because all six dimensions now
+    exist on the era: the era is the same faint tint in panels (a)-(f) and its days
+    are drawn by ``draw_dimension`` in each of them. The two hatches that remain are the
+    *empty* stretches of the catalogue — the blind gap and the descending stretch no
+    committed row covers — and they are empty in all six panels for the same reason.
     """
     ax.set_xlim(D(AXIS_START), D(FIRST_COLLAPSED_DAY))
-    # the era: tinted where the two shared dimensions live, hatched where the four
-    # record-only dimensions cannot be measured
-    if hatch_era:
-        ax.axvspan(D(AXIS_START), D(ERA_END), facecolor=COLOUR["era"],
-                   alpha=ERA_TINT, hatch="//////", edgecolor="#8FA8C8", lw=0.0,
-                   zorder=0.5)
-    else:
-        ax.axvspan(D(AXIS_START), D(ERA_END), facecolor=COLOUR["era"],
-                   alpha=0.055, lw=0.0, zorder=0.5)
+    # the era: tinted, and drawn with its own dots, in all six panels
+    ax.axvspan(D(AXIS_START), D(ERA_END), facecolor=COLOUR["era"],
+               alpha=ERA_TINT, lw=0.0, zorder=0.5)
     # the two stretches that fill the era and the record apart: no scene of either
     # track, and the descending stretch that the record does not carry
     for lo, hi, hatch, col in (
@@ -583,13 +781,15 @@ def panel_ylim(ax, values, scale):
     ax.set_ylabel("value / own-stretch median")
 
 
-def draw_long(ax, res, dim):
-    """A dimension that exists on **both** stretches: era dots and record line.
+def draw_dimension(ax, res, dim):
+    """Any one of the six dimensions: era dots + year bars, record line + dots.
 
     Both stretches are divided by their **own** median, so the two colours are two
-    levels, not one series. The era's year medians are drawn as bars over each
-    year's own day range: that is an aggregation *inside* the era (and the only one
-    here), never a bridge towards the record.
+    levels, not one series — and in panel (c) two ``P`` bases as well: the era's mask
+    frequency is counted over the era's 162 strips, the record's over the strip set
+    the channel table recomputes from, and the two maps never meet. The era's year
+    medians are drawn as bars over each year's own day range: that is an aggregation
+    *inside* the era (and the only one here), never a bridge towards the record.
     """
     era, rec = res["era_rows"], res["record_rows"]
     ex = [D(r["day"]) for r in era]
@@ -613,38 +813,19 @@ def draw_long(ax, res, dim):
                PANEL_SCALE[dim])
 
 
-def draw_record_only(ax, res, dim):
-    """One of the four dimensions the era cannot carry: the record, and a hatch.
-
-    No era value is drawn, none is derived: the hatched region says *not
-    measurable here*, and the reason is written into it.
-    """
-    rec = res["record_rows"]
-    rx = [D(r["day"]) for r in rec]
-    ry = [r["ratio"][dim] for r in rec]
-    ax.plot(rx, ry, "-", lw=0.9, color=COLOUR["record"], alpha=0.9, zorder=3,
-            label=f"record day ({res['n_record']})")
-    ax.plot(rx, ry, "o", ms=3.4, color=COLOUR["record"], zorder=4)
-    ax.plot([D(FIRST_COLLAPSED_DAY)], [res["singleton"]["ratio"][dim]], "o",
-            ms=4.4, mfc="none", mec=COLOUR["singleton"], mew=1.0, zorder=5)
-    panel_ylim(ax, ry + [res["singleton"]["ratio"][dim]], PANEL_SCALE[dim])
-    ax.text(0.30, 0.5, "not measurable in the era —\nIW2/ASC has no full-dwell "
-            "strips\n(P, D, F, S are never interpolated)",
-            transform=ax.transAxes, ha="center", va="center", fontsize=6.2,
-            color="#4F4F4F", zorder=6,
-            bbox=dict(fc="white", ec="none", alpha=0.85, pad=2.2))
-
-
 def fig_series(res, out_dir=None):
-    """The 3 x 2 companion: one dated axis, four stretches, six dimensions."""
+    """The 3 x 2 companion: one dated axis, four stretches, six dimensions.
+
+    All six panels get the identical treatment — ``draw_stretches`` +
+    ``draw_dimension`` — because both stretches now carry all six dimensions: the
+    only difference between panels is the y scale, and the only non-data region is
+    the two empty stretches of the catalogue, hatched the same way in all six.
+    """
     fig, axes = plt.subplots(3, 2, figsize=(COL_WIDTH, COL_WIDTH * 0.64))
     flat = list(np.ravel(axes))
     for letter, dim, ax in zip("abcdef", PANELS, flat):
-        draw_stretches(ax, hatch_era=(dim in RECORD_ONLY_DIMS))
-        if dim in LONG_DIMS:
-            draw_long(ax, res, dim)
-        else:
-            draw_record_only(ax, res, dim)
+        draw_stretches(ax)
+        draw_dimension(ax, res, dim)
         date_axis(ax)
         panel(ax, letter, core.CHANNEL_TITLE[dim])
     for ax in flat[:4]:
@@ -667,13 +848,19 @@ def fig_series(res, out_dir=None):
     flat[2].legend(loc="lower left", frameon=False, handletextpad=0.3,
                    borderaxespad=0.2)
     fig.suptitle("KDLO — the echo-mask vector from the first IW2 scene to the "
-                 "collapse", x=0.004, y=1.015, ha="left", fontsize=10.0)
-    fig.text(0.004, 0.995, "each stretch in units of its own median (log where a "
-             "dimension spans decades): 162 ascending-IW2 days, gamma^2 and the "
-             "mask size only, then the 16 descending-IW1 days of the record — "
-             "pooled across the break nowhere", ha="left", va="top",
-             fontsize=7.0, color="#444444")
-    fig.tight_layout(pad=0.5, h_pad=1.1, w_pad=1.3)
+                 "collapse", x=0.004, y=1.022, ha="left", fontsize=10.0)
+    # Two short lines rather than one long one: at 7 pt a single 250-character
+    # line is ~300 mm wide, and ``savefig.bbox = "tight"`` would then widen the
+    # canvas to fit it, leaving the 3 x 2 grid stranded in the left two thirds.
+    fig.text(0.004, 0.998,
+             "each stretch in units of its own median (log where a dimension "
+             f"spans decades): {res['n_era']} ascending-IW2 days,\n"
+             "their P/D/F/S from the era's own committed strips, then the "
+             f"{res['n_record']} descending-IW1 days of the record — pooled "
+             "across the break nowhere",
+             ha="left", va="top", fontsize=7.0, color="#444444",
+             linespacing=1.4)
+    fig.tight_layout(pad=0.5, h_pad=1.1, w_pad=1.3, rect=(0, 0, 1, 0.928))
     return save_fig(fig, "fig_kdlo_ocv_series", out_dir)
 
 
@@ -715,8 +902,18 @@ def build_json(res):
                     "collapsed acquisition (2022-12-23) is drawn hollow at the "
                     "right edge",
         },
-        "dims": {"long": LONG_DIMS, "record_only": RECORD_ONLY_DIMS,
-                 "order": list(core.FEATURES)},
+        "dims": {
+            "panel_order": list(PANELS),
+            "canonical_order": list(core.FEATURES),
+            "from_backend_columns": BACKEND_DIMS,
+            "from_era_strips": STRIP_DIMS,
+            "note": "all six dimensions are drawn on both stretches; gamma2 and A "
+                    "are the same two backend columns on either side, while "
+                    "P/D/F/S are recomputed from a committed full-dwell strip "
+                    "cache with the pipeline's own mask rule — the channel "
+                    "table's strip set for the record, the era's own 162-strip "
+                    "set (data/kdlo/strips_era/) for the era",
+        },
         "era_channel": dict(ERA_CHANNEL),
         "normalisation": {
             "rule": "each stretch divided by its own median",
@@ -729,10 +926,22 @@ def build_json(res):
                           "12) are two geometries read off the availability "
                           "reference; no number of this figure is computed over both, "
                           "and the 69-day blind gap is never bridged",
+            "p_basis": "P is a mask frequency, so it is only defined against the "
+                       "strip set it is counted over: the era's P over its own "
+                       f"{res['n_era']} strips, the record's over the strip set the "
+                       "channel table recomputes from. The two frequency maps are "
+                       "never added, averaged or used to rescale one another — each "
+                       "stretch is drawn as its own value/median, and one basis is "
+                       "constant inside one stretch. Within the era's basis the "
+                       "strips are not one polarisation (the track carries both VV "
+                       "and VH), so its frequency map is a mixed-set frequency; "
+                       "each era day's own four values come from that day's own "
+                       "burst alone",
         },
         "segments": res["segments"],
         "geometry_break": res["geometry_break"],
         "availability": res["availability"],
+        "era_strips": res["era_strips"],
         "sources": res["sources"],
         "counts": {"era_rows": res["n_era"], "record_rows": res["n_record"],
                    "rows": res["n_rows"],
@@ -776,13 +985,17 @@ def report(res):
               f"{span_days(shift_day(ERA_END, 1), shift_day(DESCENT_START, -1))} "
               f"days before it. The two agree on where the gap ends.")
     md.append("")
-    md.append("The six dimensions exist together on only **one** of those "
-              "stretches. `gamma2` and the mask size `A` exist on both — the era's "
-              "backend rows carry `coherence_gamma2` and "
-              "`coherence_masked_pixels`, the same columns the record carries. "
-              "`P`, `D`, `F` and `S` are recomputed from the committed full-dwell "
-              "strips, which exist only for the record: the era has no mask "
-              "geometry, and its rows have no phase or frequency layer either.")
+    md.append("All six dimensions exist on **both** dated stretches — the era's "
+              f"{res['n_era']} days and the record's {res['n_record']} — and no "
+              "panel is blank over a stretch that has data. `gamma2` and the mask "
+              "size `A` are the same two backend columns on either side "
+              "(`coherence_gamma2`, `coherence_masked_pixels`, which the era's own "
+              "export carries). `P`, `D`, `F` and `S` are recomputed from a "
+              "committed full-dwell strip cache with the pipeline's own mask rule: "
+              "from the strip set the channel table uses for the record, from the "
+              "era's own strips for the era, each era day held against the export's "
+              "`A` and `gamma2` before it is drawn. The two hatched stretches carry "
+              "no dimension at all: neither track has a scene there.")
     md.append("")
     md.append("## The four stretches of the axis")
     md.append("")
@@ -793,22 +1006,29 @@ def report(res):
     md.append("")
     md.append("## How the axis is read")
     md.append("")
-    md.append(f"Each stretch is divided by **its own** median: era `gamma2` "
-              f"{_fmt(med['era']['gamma2'])}, era `A` {_fmt(med['era']['A'])} over "
-              f"the {res['n_era']} era days; record `gamma2` "
-              f"{_fmt(med['record']['gamma2'])}, record `A` "
-              f"{_fmt(med['record']['A'])} over the {res['n_record']} record days "
-              f"of the axis. The 1.0 line is therefore **two different levels in "
-              f"one panel**, and the two colours of panels (a) and (b) are two "
-              f"series of self-ratios, not one series with a step in it. Levels "
-              f"are not comparable across the break by construction (different "
-              f"track, different swath, different pass); what each stretch *does* "
-              f"is.")
+    md.append(f"Each stretch is divided by **its own** median. Era "
+              f"({res['n_era']} days): "
+              + ", ".join(f"`{k}` {_fmt(med['era'][k])}" for k in PANELS)
+              + f". Record ({res['n_record']} days): "
+              + ", ".join(f"`{k}` {_fmt(med['record'][k])}" for k in core.FEATURES)
+              + ". The 1.0 line is therefore **two different levels in every "
+              "panel**, and the two colours are two series of self-ratios, not one "
+              "series with a step in it. Levels are not comparable across the break "
+              "by construction (different track, different swath, different pass); "
+              "what each stretch *does* is.")
     md.append("")
-    md.append(f"The record-only ratio for the four mask-geometry dimensions uses "
-              f"the same {res['n_record']}-day median of the record "
-              f"({RECORD_START}..{AXIS_END}). Log axes where a dimension spans "
-              f"decades, so a value below 1 stays visible.")
+    md.append("`P` needs one rule more, because it is not a per-day quantity: it is "
+              "the frequency of the mask over a *set* of strips, so it is only "
+              "defined against the set it is counted over. The era's `P` is counted "
+              f"over its own {res['n_era']} strips, the record's over the strip set "
+              "the channel table recomputes from — one basis per stretch, constant "
+              "inside it, and the two frequency maps are never added, averaged or "
+              "used to rescale one another. The era's basis is not a single "
+              "polarisation (that track carries both), so its map is a mixed-set "
+              "frequency; the JSON names it as such. `D`, `F` and `S` are per-day "
+              "and need no such rule. Log axes where a dimension spans decades, so a "
+              "value below "
+              "1 stays visible.")
     md.append("")
     md.append("## The record inside the axis, day by day")
     md.append("")
@@ -817,9 +1037,9 @@ def report(res):
         body.append([r["day"], _fmt(r["wind_speed_ms"], 3),
                      _fmt(r["temperature_c"], 4)]
                     + [_fmt(r["channels"][k]) for k in core.FEATURES]
-                    + [_fmt(r["ratio"][k], 3) for k in LONG_DIMS])
+                    + [_fmt(r["ratio"][k], 3) for k in PANELS])
     md += md_table(["day", "wind m/s", "T degC"] + core.FEATURES
-                   + [k + " /med" for k in LONG_DIMS], body)
+                   + [k + " /med" for k in PANELS], body)
     md.append("")
     md.append(f"The record's own window starts {RECORD_START}: the "
               f"{span_days(DESCENT_START, shift_day(RECORD_START, -1))} descending "
@@ -833,30 +1053,60 @@ def report(res):
     body = []
     for y, blk in res["per_year"].items():
         body.append([y, blk["n"], blk["first_day"] + " … " + blk["last_day"]]
-                    + [_fmt(blk["channels"][k]["median"]) for k in LONG_DIMS]
+                    + [_fmt(blk["channels"][k]["median"]) for k in PANELS]
                     + [_fmt(blk["channels"][k]["median"] / med["era"][k], 3)
-                       for k in LONG_DIMS])
-    md += md_table(["year", "days", "first … last"] + [k + " median" for k in LONG_DIMS]
-                   + [k + " /era med" for k in LONG_DIMS], body)
+                       for k in PANELS])
+    md += md_table(["year", "days", "first … last"] + [k + " median" for k in PANELS]
+                   + [k + " /era med" for k in PANELS], body)
     md.append("")
     md.append("These year medians are the only aggregation drawn over the era "
-              "(bars in panels a and b), and they stay **inside** the era: a year "
-              "is never compared with the record. They are era-track levels.")
+              "(bars in all six panels), and they stay **inside** the era: a year "
+              "is never compared with the record. They are era-track levels, and for "
+              "`P` they stay on the era's own strip basis.")
     md.append("")
-    md.append("## Why panels (c)-(f) are empty on the era side")
+    md.append("## Where the era's `P`, `D`, `F` and `S` come from")
     md.append("")
-    md.append("A line, a dashed interpolation or a greyed continuation over "
-              "2015-03-20..2021-12-19 in panels (c)-(f) would be an invention. "
-              "`P`, `D`, `F` and `S` are recomputed here from the committed "
-              "full-dwell strips, and `data/kdlo/strips/` holds the 60 "
-              "acquisitions of the **descending** record only; the era's backend "
-              "rows carry no phase or frequency layer at all (their non-null "
-              "columns are exactly the ten of the export, checked against the "
-              "pinned reference before anything is drawn). The era is therefore "
-              "drawn in those four panels as a hatched region read **not "
-              "measurable here** — with the reason written inside it — and the "
-              "figure carries no value of those four dimensions before "
-              f"{RECORD_START}.")
+    md.append("The era export carries none of them: its ten non-null columns are "
+              "`acquisition_ts`, `coherence_gamma2`, `coherence_masked_pixels`, "
+              "`id`, `orbit_direction`, `pass_label`, `status`, `temperature_c`, "
+              "`traffic_load_label`, `wind_speed_ms` — no phase layer and no "
+              "frequency layer — and that set is asserted against the pinned export "
+              "before a value is read from it. The four dimensions are recomputed "
+              "here from the era's **own** committed full-dwell strips "
+              "(`data/kdlo/strips_era/`, one strip per era acquisition, captured "
+              "from the burst Id the export itself records), with the same mask rule "
+              "the channel table applies to the record. Nothing is interpolated and "
+              "nothing is carried across the break: this is a second strip cache, "
+              "not the record's.")
+    md.append("")
+    md.append("The two columns the export *does* carry are what makes that cache "
+              "checkable rather than self-referential: the mask rule recomputed on "
+              f"the strips reproduces `coherence_masked_pixels` **exactly** and "
+              "`coherence_gamma2` to "
+              f"{res['era_strips']['tol_gamma2']:g} on all "
+              f"{res['era_strips']['days_held_to_the_export']} of "
+              f"{res['era_strips']['n_strips']} era days, so the era's `A` and "
+              "`gamma2` panels are the pipeline's own numbers and the four "
+              "recomputed dimensions are anchored to them day by day. Every era "
+              "strip is "
+              f"{res['era_strips']['majority_shape'][0]} x "
+              f"{res['era_strips']['majority_shape'][1]}, so the frequency map (`P`) "
+              "has one shape over the whole era.")
+    md.append("")
+    pols = res["era_strips"]["polarisations"]
+    md.append("One property of that set has to be read with it: the ascending track "
+              "is measured on **both polarisations**, and the era's "
+              f"{res['era_strips']['n_strips']} days carry "
+              + " and ".join(f"{n} {p}" for p, n in sorted(pols.items()))
+              + " bursts. Which burst a day took is what the capture request file "
+              f"(`{os.path.basename(ERA_REQUESTS)}`) records, and the manifest is "
+              "required to agree with it entry for entry. This is a per-day split, "
+              "not a per-pixel one: each day's `gamma2`, `A`, `P`, `D`, `F` and `S` "
+              "come from that day's own single burst, so a day is internally one "
+              "polarisation and no drawn value mixes the two. What is counted across "
+              "the mix is the era's **frequency map** — the per-pixel mask frequency "
+              "of the whole era set, which `P` reads — so `P` on the era is a "
+              "mixed-set frequency and is labelled as such in the JSON.")
     md.append("")
     md.append("## The collapse cut and the first collapsed acquisition")
     md.append("")
@@ -910,11 +1160,18 @@ def report(res):
               f"{res['geometry_break']['first_descending_day_of_stretch']}, "
               f"{res['geometry_break']['blind_gap_days']} days) is re-read from the "
               f"same reference and cross-checked against the packaged constants. "
+              f"The era strip manifest is hashed with its request file, every strip "
+              f"it names is read and its size totalled, and the exported `A`/`gamma2` "
+              f"of each era day is held against the mask rule recomputed on that "
+              f"day's strip — the era cache is never accepted on its own say-so. "
               f"The figure carries **{len(res['checks'])}** self-checks, all of "
               f"which abort before any file is written.")
     md.append("")
     md.append("```bash")
     md.append("python3 code/kdlo/kdlo_ocv_channels_csv.py --verify-only   # the table")
+    md.append("python3 code/kdlo/kdlo_ocv_masks.py \\")
+    md.append("  --strips-dir data/kdlo/strips_era \\")
+    md.append("  --manifest data/kdlo/strips_era/manifest.json  # the era's strips")
     md.append("python3 code/kdlo/fig_kdlo_ocv_series.py                   # this figure")
     md.append("```")
     return "\n".join(md) + "\n"
@@ -947,7 +1204,7 @@ def self_checks(res):
     av = load_availability()
     csv_rows = core.load_csv()
 
-    # --- the era: what it carries, and what it cannot carry -----------------
+    # --- the era: its export, and the strips that carry the other four -------
     eq("era.rows", len(raw), core.ERA_DAYS_EXPECTED)
     days = sorted({str(r["acquisition_ts"])[:10] for r in raw})
     eq("era.distinct_days", len(days), core.ERA_DAYS_EXPECTED)
@@ -1015,6 +1272,116 @@ def self_checks(res):
        core.ERA_DAYS_EXPECTED)
     eq("era.rows_in_axis", [r["day"] for r in res["era_rows"]], days)
 
+    # --- the era's own strips: the four recomputed dimensions -----------------
+    # Re-decoded here from the committed cache rather than read off the results: the
+    # day set, the mask rule, the four per-day vectors and the frequency map are all
+    # recomputed, the two columns the export carries are required to come out of that
+    # recomputation (and out of the manifest's own recorded rust_* pair), and the
+    # era's cache is required to be disjoint from the record's.
+    man = json.load(open(ERA_MANIFEST))
+    ent = {e["date"]: e for e in man["entries"]}
+    exp = {str(r["acquisition_ts"])[:10]: r for r in raw}
+    eq("era_strips.export_days", sorted(exp), days)
+    eq("era_strips.manifest_days", sorted(ent), days)
+    eq("era_strips.n_entries", man["n_entries"], len(ent))
+    eq("era_strips.requests_file",
+       os.path.basename(man["requests_file"]), os.path.basename(ERA_REQUESTS))
+    eq("era_strips.strip_geometry",
+       sorted({(e["rows"], e["cols"]) for e in ent.values()}), [(400, 11)])
+    era_dir, era_rel = core.ERA_ORBIT.split("|")
+    eq("era_strips.orbit_swath",
+       sorted({(str(e["orbit_direction"]), str(e["subswath"]),
+                int(e["relative_orbit"])) for e in ent.values()}),
+       [(era_dir, core.ERA_SWATH, int(era_rel))])
+    # The era is not one polarisation: this track carries both, and the request file
+    # is what says which burst each day took. The manifest is the capture binary's
+    # answer to those requests, so the two must agree entry for entry — that pairing,
+    # with the pair of values held to the export above, is what ties a strip to the
+    # row it stands under.
+    req = json.load(open(ERA_REQUESTS))
+    eq("era_strips.requests_match_manifest",
+       [(str(e["date"])[:10], e["burst_id"], str(e["polarisation"]))
+        for e in req["entries"]],
+       [(str(e["date"])[:10], e["burst_id"], str(e["polarisation"]))
+        for e in man["entries"]])
+    eq("era_strips.n_requests", req["n_entries"], man["n_entries"])
+    eq("era_strips.one_burst_per_day",
+       len({e["burst_id"] for e in ent.values()}), len(ent))
+    eq("era_strips.polarisations",
+       sorted({str(e["polarisation"]) for e in ent.values()}), ["VH", "VV"])
+    eq("era_strips.polarisation_counts",
+       res["era_strips"]["polarisations"],
+       {p: sum(1 for e in ent.values() if str(e["polarisation"]) == p)
+        for p in ("VV", "VH")})
+    eq("era_strips.sentinel_platforms",
+       sorted({str(e["burst_name"])[:3] for e in ent.values()}
+              - {"S1A", "S1B"}), [])
+    eq("era_strips.strip_bytes", res["era_strips"]["strip_bytes_total"],
+       sum(e["strip_bytes"] for e in ent.values()))
+    eq("era_strips.strip_sha256_per_file",
+       [e["strip_sha256"] for e in ent.values()],
+       [sha(os.path.join(ERA_STRIPS, e["strip_file"])) for e in ent.values()])
+    eq("era_strips.not_the_record_cache",
+       os.path.abspath(ERA_STRIPS) != os.path.abspath(masks.STRIPS_DIR), True)
+    eq("era_strips.disjoint_from_record_strips",
+       sorted(set(e["strip_sha256"] for e in ent.values())
+              & {e.get("strip_sha256") for e in
+                 masks.load_manifest()["entries"]}), [])
+    eq("era_strips.manifest_rust_A_is_export_A",
+       [ent[d]["rust_masked_pixels"] for d in days],
+       [int(exp[d]["coherence_masked_pixels"]) for d in days])
+    eq("era_strips.manifest_rust_gamma2_is_export_gamma2",
+       [ent[d]["rust_gamma2"] for d in days],
+       [float(exp[d]["coherence_gamma2"]) for d in days])
+    vec_rows, vec_meta = masks.load_vectors(ERA_STRIPS, ERA_MANIFEST)
+    vec = {r["date"]: r for r in vec_rows}
+    eq("era_strips.recomputed_A_is_export_A", [vec[d]["A"] for d in days],
+       [int(exp[d]["coherence_masked_pixels"]) for d in days])
+    eq("era_strips.recomputed_gamma2_is_export_gamma2",
+       all(abs(vec[d]["gamma2"] - float(exp[d]["coherence_gamma2"]))
+           <= masks.TOL_GAMMA2 for d in days), True)
+    eq("era_strips.majority_shape",
+       res["era_strips"]["majority_shape"], vec_meta["majority_shape"])
+    eq("era_strips.no_strip_without_a_mask",
+       [vec_meta["n_without_mask"], vec_meta["dates_without_mask"]], [0, []])
+    drawn = {r["day"]: r for r in res["era_rows"]}
+    eq("era_strips.drawn_days", sorted(drawn), days)
+    eq("era_strips.drawn_A_is_export_A",
+       [drawn[d]["channels"]["A"] for d in days],
+       [float(exp[d]["coherence_masked_pixels"]) for d in days])
+    eq("era_strips.drawn_gamma2_is_export_gamma2",
+       [drawn[d]["channels"]["gamma2"] for d in days],
+       [float(exp[d]["coherence_gamma2"]) for d in days])
+    eq("era_strips.drawn_P_is_the_recomputed_frequency",
+       [drawn[d]["channels"]["P"] for d in days],
+       [vec[d]["P"] for d in days])
+    eq("era_strips.drawn_D_F_S_are_the_recomputation",
+       [[drawn[d]["channels"][k] for k in ("D", "F", "S")] for d in days],
+       [[vec[d][k] for k in ("D", "F", "S")] for d in days])
+    eq("era_strips.six_channels_on_every_day",
+       sorted({k for d in days for k in PANELS
+               if drawn[d]["channels"][k] is None}), [])
+    eq("era_strips.mask_shape_uniform",
+       sorted({tuple(drawn[d]["mask_shape"]) for d in days}), [(400, 11)])
+    eq("era_strips.p_basis_is_the_era_set",
+       res["segments"][0]["strips"], len(days))
+    eq("era_strips.P_in_unit_interval",
+       all(0.0 <= drawn[d]["channels"]["P"] <= 1.0 for d in days), True)
+    eq("era_strips.D_in_unit_interval",
+       all(0.0 < drawn[d]["channels"]["D"] <= 1.0 for d in days), True)
+    eq("era_strips.F_at_least_one",
+       all(int(drawn[d]["channels"]["F"]) >= 1 for d in days), True)
+    eq("era_strips.S_finite_non_negative",
+       all(np.isfinite(drawn[d]["channels"]["S"])
+           and drawn[d]["channels"]["S"] >= 0.0 for d in days), True)
+    eq("era_strips.A_at_the_mask_minimum",
+       min(drawn[d]["channels"]["A"] for d in days) >= masks.MIN_N_MASKED, True)
+    eq("era_strips.drawn_polarisation_is_the_manifest",
+       [drawn[d]["polarisation"] for d in days],
+       [str(ent[d]["polarisation"]) for d in days])
+    eq("era_strips.days_held_to_the_export",
+       res["era_strips"]["days_held_to_the_export"], len(days))
+
     # --- the record: only complete days, and only inside the axis -----------
     inside = sorted([r for r in csv_rows if core.day_of(r) <= AXIS_END],
                     key=core.day_of)
@@ -1052,6 +1419,9 @@ def self_checks(res):
     eq("median.era.gamma2", res["medians"]["era"]["gamma2"],
        float(np.median(g_era)))
     eq("median.era.A", res["medians"]["era"]["A"], float(np.median(a_era)))
+    for k in STRIP_DIMS:
+        eq(f"median.era.{k}", res["medians"]["era"][k],
+           float(np.median([r["channels"][k] for r in res["era_rows"]])))
     for k in core.FEATURES:
         eq(f"median.record.{k}", res["medians"]["record"][k],
            float(np.median([r[k] for r in inside])))
@@ -1071,7 +1441,7 @@ def self_checks(res):
     eq("ratio.era.identity", all(
         abs(r["ratio"][k] * res["medians"]["era"][k] - r["channels"][k])
         <= 1e-9 * abs(r["channels"][k])
-        for r in res["era_rows"] for k in LONG_DIMS), True)
+        for r in res["era_rows"] for k in PANELS), True)
     eq("ratio.record.identity", all(
         abs(r["ratio"][k] * res["medians"]["record"][k] - r["channels"][k])
         <= 1e-9 * abs(r["channels"][k])
@@ -1093,7 +1463,7 @@ def self_checks(res):
        sum(s["span_days"] for s in res["segments"]),
        span_days(AXIS_START, AXIS_END))
     eq("segments.dims_per_stretch", [len(seg[k]["dims"]) for k in order],
-       [len(LONG_DIMS), 0, 0, len(core.FEATURES)])
+       [len(PANELS), 0, 0, len(core.FEATURES)])
     eq("segments.filled_days", [seg[k]["filled_days"] for k in order],
        [res["n_era"], 0, 0, res["n_record"]])
 
@@ -1136,7 +1506,10 @@ def main(argv=None):
           f"only, record {RECORD_START}..{AXIS_END}) …")
     res = compute()
     res["checks"] = self_checks(res)
-    print(f"  era {res['n_era']} rows ({', '.join(LONG_DIMS)}) · record "
+    print(f"  era {res['n_era']} rows ({', '.join(PANELS)} — gamma2/A from the "
+          f"export, P/D/F/S from the era's {res['era_strips']['n_strips']} strips, "
+          f"held to the export on all "
+          f"{res['era_strips']['days_held_to_the_export']}) · record "
           f"{res['n_record']} rows ({', '.join(core.FEATURES)}) · "
           f"{len(res['checks'])} self-checks, all passed · "
           f"{res['runtime_s']:.1f} s")

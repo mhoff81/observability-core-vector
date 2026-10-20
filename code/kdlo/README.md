@@ -214,28 +214,39 @@ with the collapse date as well — **never** as damage.
 The **second standalone companion**, and the only script of the package that reads
 more than the record's own stretch. It puts the record back into the seven years
 that precede it and draws the echo-mask vector on **one dated axis**,
-`2015-03-20 … 2022-12-11` (the collapse cut). Its three committed inputs are the
+`2015-03-20 … 2022-12-11` (the collapse cut). Its four committed inputs are the
 era export `data/kdlo/fig_kdlo_0_raw.json` (committed evidence; its sha256 is
 re-verified against the availability reference before a single value is used), the
-record's `kdlo_ocv_channels.csv` and
+era's **own** strip cache `data/kdlo/strips_era/` (manifest + capture requests,
+162 full-dwell strips, hashed and re-decoded here), the record's
+`kdlo_ocv_channels.csv` and
 `reference/kdlo_s1_availability.json`, from which the four stretches of the axis
 are **read, not typed**: the ascending IW2 era (162 days), the blind gap, the
 catalogue-only descending stretch and the record's 16 pre-collapse days.
 
-Only **two** dimensions exist on both sides of the break: `gamma2` and the mask
-size `A` — the same columns by name (`coherence_gamma2`, `coherence_masked_pixels`).
-`P`, `D`, `F` and `S` are recomputed from the committed full-dwell strips, which
-exist for the record only, so panels (c)-(f) draw the era as a hatched **not
-measurable here** region with the reason written inside it — never interpolated,
-never extrapolated, never pooled. Each stretch is drawn in units of **its own**
-median (1.0 drawn, log where a dimension spans decades), because the two stretches
-sit on different tracks, swaths and times of day: what each stretch *does* is the
-comparable quantity, not the level it sits at. No statistic is computed across the
-break.
+All **six** dimensions exist on both sides of the break. `gamma2` and the mask
+size `A` are the same columns by name (`coherence_gamma2`,
+`coherence_masked_pixels`, which the era's own export carries; the mask size comes
+out of the era strips exactly and the coherence to `1e-12`). `P`, `D`, `F` and `S`
+are recomputed from committed full-dwell strips with the pipeline's own mask rule:
+from the strip set the channel table uses for the record, and from a **second**
+cache `data/kdlo/strips_era/` for the era, one strip per era acquisition day. The
+era cache is never taken on its own say-so — the mask rule recomputed on those 162
+strips has to reproduce the export's two columns on every era day, the same
+acceptance `kdlo_ocv_masks.py` runs on the record's cache. `P` is a mask
+*frequency*, so it is only defined against the set it is counted over: the era's
+over its own 162 strips (a mixed-polarisation set — that track carries both VV and
+VH, one burst per day), the record's over the channel table's set. The two
+frequency maps are never added, averaged or used to rescale one another. Each
+stretch is drawn in units of **its own** median (1.0 drawn, log where a dimension
+spans decades), because the two stretches sit on different tracks, swaths and
+times of day: what each stretch *does* is the comparable quantity, not the level
+it sits at. No statistic is computed across the break.
 
 The figure is 3 x 2 (183 mm wide): (a) `gamma2` and (b) `A`, era dots (blue) vs.
 record dots + line (orange) on a log y axis, with the era's per-year medians as
-bars; (c)-(f) `P`, `D`, `F`, `S`, record only. Every panel carries the blind gap,
+bars in all six panels; (c)-(f) `P`, `D`, `F`, `S`, drawn the same way on both
+stretches. Every panel carries the blind gap,
 the catalogue-only stretch, the collapse cut and the first collapsed acquisition
 (`2022-12-23`) drawn hollow and labelled as outside the axis. `main()` writes the
 PNG to `figures/kdlo/fig_kdlo_ocv_series.png`, the JSON to
@@ -253,8 +264,9 @@ per-year table labels the hour block `00`, the export times its rows on the
 pipeline's `05:00Z` `morning` slot, and the one metadata-anomaly day (`2020-08-13`)
 sits on the `afternoon` slot at `16:00Z` because its catalogue burst name carries
 the wrong hour. All of that is self-checked and none of it enters a drawn value.
-The figure carries **84 self-checks** that recompute every drawn number from the
-three committed inputs and abort before any file is written on drift. Like the
+The figure carries **125 self-checks** that recompute every drawn number from the
+four committed inputs — the era strips among them, re-decoded and held to the
+export — and abort before any file is written on drift. Like the
 months companion it adds **no** number to the A–E pin contract and touches none of
 it, and it is byte-deterministic (no timestamps, fixed inputs).
 

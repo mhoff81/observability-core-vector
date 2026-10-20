@@ -24,6 +24,7 @@ python3 code/ywf/ywf_mask_sensitivity.py      # the offline mask-rule sensitivit
 python3 code/ywf/ywf_bursts_resolve.py --write   # re-resolve against the live CDSE catalogue
 python3 code/ywf/ywf_osm_anchor.py --fetch --write   # re-fetch the OSM way and re-derive the anchor
 bash    figures/ywf/fig_ywf_ocv_paper.sh      # figures A-E + report + pins (~8 s)
+bash    figures/ywf/fig_ywf_ocv_series.sh     # whole-record series figure + report + pins (~2 s)
 bash    figures/ywf/fig_ywf_ocv_paper.sh --write-reference   # (re)define the reference
 ```
 
@@ -303,12 +304,13 @@ by the 6 post-event chips.
 | `ywf_mask_sensitivity.py` | the **offline** sensitivity study of the mask rule: the coarse (`peak_frac` x `median_mult` x `min_n_masked`) grid, the knife-edge scan of every knob, the one neighbour-referenced variant of the rule and a `--json` dump — it re-derives the committed coverage first, writes no cache/CSV/reference, and never switches a rule version on |
 | `fig_ywf_ocv_paper.py` | panels A–E, the result JSON (`data/ywf/fig_ywf_ocv_paper.json`), the report (`figures/ywf/fig_ywf_ocv_paper.md`), the reference writer and the pin block |
 | `fig_ywf_ocv_weeks.py` | the pre-window companion figure: the same channels over the **27 pre-event chips / 23 ISO weeks**, pinned against this package's result JSON and reference (`figures/ywf/fig_ywf_ocv_weeks.md`) |
+| `fig_ywf_ocv_series.py` | the whole-record companion figure: the six channels of every chip of the record on one dated axis, the collapse drawn **inside** the axis (the event falls in the 12-day step `2026-01-27 -> 2026-02-08`), pinned against this package's result JSON, the mask-cache manifest, the committed metadata and the reference (`figures/ywf/fig_ywf_ocv_series.md`) |
 
 ## Pins
 
 Every run prints its pin summary and exits non-zero on any deviation (1179
 checks on the current record; 920 when `--write-reference` defines the reference
-itself, 422 in `fig_ywf_ocv_weeks.py`):
+itself, 422 in `fig_ywf_ocv_weeks.py`, 2637 in `fig_ywf_ocv_series.py`):
 
 | pinned against | what |
 | --- | --- |
@@ -316,7 +318,7 @@ itself, 422 in `fig_ywf_ocv_weeks.py`):
 | `data/ywf/ywf_ocv_channels_meta.json` | the table's own definition, guard counts, per-state summaries **and the per-orbit coverage block** against this package's recomputation (the generator itself refuses to write unless the per-orbit cross-check passes) |
 | `data/ywf/ywf_windows_mask_cache.txt` | each cached chip's `n_masked` / `n_components` against the channel table's `A` / `F` (17 rows) |
 | the committed inputs | their sha256 digests (payload, cache, manifest, measurements, segments) |
-| the two resolved references | the sha256 digests of `ywf_bursts.json`, `ywf_osm_road.json` and `ywf_geometry.json`, recorded in the `sources` block of `reference/ywf_ocv_findings.json` and re-derived from the files on every run — by `fig_ywf_ocv_paper.py` **and** by `fig_ywf_ocv_weeks.py` |
+| the two resolved references | the sha256 digests of `ywf_bursts.json`, `ywf_osm_road.json` and `ywf_geometry.json`, recorded in the `sources` block of `reference/ywf_ocv_findings.json` and re-derived from the files on every run — by `fig_ywf_ocv_paper.py`, `fig_ywf_ocv_weeks.py` **and** `fig_ywf_ocv_series.py` (which pins the digests of all nine committed inputs, the three resolved references included) |
 
 Two runs of `fig_ywf_ocv_paper.py` with the fixed seed are byte-identical — the
 result JSON, the report and all five PNGs (checked with `sha256sum`, including a

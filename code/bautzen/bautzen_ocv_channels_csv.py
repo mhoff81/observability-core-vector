@@ -91,24 +91,71 @@ def _pixels_str(mask):
     return ";".join(f"{int(r)}:{int(c)}" for r, c in zip(rr, cc))
 
 
+def _ring_for(path, recs):
+    """The reference annulus of one series, from the rect file's own manifest.
+
+    The spacing comes from ``<rect>.manifest.json`` — ``chip.spacing.range_ground_m``
+    and ``chip.spacing.azimuth_sample_m``, which the rect producer wrote from the
+    burst annotation. Nothing is assumed from the module constants: the ASC and
+    DESC chips need 119 and 129 bins for the same 200 m, and using one constant
+    for both would truncate one of them.
+    """
+    manifest_path = path + ".manifest.json"
+    if not os.path.exists(manifest_path):
+        raise SystemExit(
+            f"ERROR: {manifest_path} is missing — the ring reference needs the "
+            f"rect manifest's chip geometry and spacing")
+    manifest = json.load(open(manifest_path))
+    spacing = (manifest.get("chip") or {}).get("spacing") or {}
+    across = spacing.get("range_ground_m")
+    along = spacing.get("azimuth_sample_m")
+    if not across or not along:
+        raise SystemExit(
+            f"ERROR: {manifest_path} carries no chip.spacing.range_ground_m / "
+            f"azimuth_sample_m")
+    shape = recs[0][1].shape
+    reference = masks.reference_mask(shape, (across, along))
+    if not reference["complete"]:
+        raise SystemExit(
+            f"ERROR: {os.path.basename(path)}: a {shape[0]} x {shape[1]} chip "
+            f"cannot hold a {masks.RING_M:g} m ring — it needs "
+            f"{reference['needed']['lines']} x {reference['needed']['bins']}")
+    for date, z in recs:
+        if z.shape != shape:
+            raise SystemExit(
+                f"ERROR: {os.path.basename(path)}: {date} has chip {z.shape}, "
+                f"not {shape} — a per-series frequency map needs one shape")
+    reference["manifest"] = os.path.basename(manifest_path)
+    reference["anchor"] = [int(v) for v in masks.anchor_of(shape)]
+    return reference
+
+
 def build(args):
     """One mask per date of every series; writes the CSV and returns the meta."""
     rows, series_block, sources = [], {}, {}
     problems_guard = []   # cross-check channel path vs. analysis path (see below)
+    data_dir = getattr(args, "data_dir", None) or core.DATA
+    mode = getattr(args, "reference", "neighbour")
     for lab in core.SERIES_ORDER:
         fn = core.SERIES[lab]
-        path = os.path.join(core.DATA, fn)
+        path = os.path.join(data_dir, fn)
         if not os.path.exists(path):
             raise SystemExit(f"ERROR: rect file missing: {path}")
         sources[fn] = core.sha256(path)
         geom = core.geom_of(lab)
         recs = masks.load_complex(path)
+        reference = None
+        if mode == "ring":
+            reference = _ring_for(path, recs)
+            ref_mask = reference["ring"]
+        else:
+            ref_mask = None
 
         # Channel side: one enriched record per date (mask + vector + gamma^2).
         infos = []
         for date, z in recs:
             inten = np.abs(z) ** 2
-            info, full = masks.date_mask(inten)
+            info, full = masks.date_mask(inten, ref_mask=ref_mask)
             info["date"] = date
             info["series"] = lab
             info["state"] = core.state_of(date, geom)
@@ -144,7 +191,8 @@ def build(args):
         # complex chips (a complex median sorts lexicographically and would give a
         # different mask).
         recs_i = [(date, np.abs(z) ** 2) for date, z in recs]
-        per_date, summary, union50, union30, counts = masks.analyse_series(recs_i)
+        per_date, summary, union50, union30, counts = masks.analyse_series(
+            recs_i, ref_mask=ref_mask)
         # Cross-check: the mask of the analysis path must be the mask of the
         # channel path, date by date (two independent traversals, one result).
         side = {d["date"]: d for d in per_date}
@@ -159,6 +207,13 @@ def build(args):
                         f"!= analysis path {p[k]!r}")
         series_block[lab] = {
             "file": fn, "geom": geom, "n_dates": len(infos),
+            "reference": ({key: reference[key] for key in
+                           ("counts", "needed", "spacing", "guard_m", "ring_m",
+                            "complete", "manifest", "anchor")}
+                          if reference is not None
+                          else {"reference": "neighbour_rows",
+                                "note": "the committed rule: the 9 x 9 ROI minus "
+                                        "the band"}),
             "n_by_state": {s: sum(1 for d in infos if d["state"] == s)
                            for s in core.STATES},
             "dates_by_state": {s: [d["date"] for d in infos if d["state"] == s]
@@ -198,13 +253,18 @@ def build(args):
         },
         "rect_files": sorted(sources),
         "rect_file_sha256": sources,
+        "reference": mode,
         "mask_definition": {
             "layer": "deck_edge",
+            "reference": mode,
+            "anchor": "chip centre (rows // 2, cols // 2)",
             "center_row": masks.CENTER_ROW, "center_col": masks.CENTER_COL,
             "anchor_half": masks.ANCHOR_HALF, "col_half": masks.COL_HALF,
             "band_half": masks.BAND_HALF, "k_local": masks.K_LOCAL,
             "min_n_masked": masks.MIN_N_MASKED,
             "contrast_detect": masks.CONTRAST_DETECT,
+            "ring_guard_m": masks.RING_GUARD_M if mode == "ring" else None,
+            "ring_m": masks.RING_M if mode == "ring" else None,
             "house_peak_frac": masks.GAMMA2_PEAK_FRAC,
             "house_median_mult": masks.GAMMA2_MEDIAN_MULT,
             "house_min_masked": masks.GAMMA2_MIN_MASKED,
@@ -279,8 +339,12 @@ def verify(args, series_block, rows):
     """
     problems = list(series_block.get("_cross_check") or [])
     warnings = []
-    mask_ref = json.load(open(REF_MASK))
-    state_ref = json.load(open(REF_STATE))
+    mode = getattr(args, "reference", "neighbour")
+    # The two committed references encode the *neighbour-row* rule ("config" is
+    # masks.CONFIG, and every per-date number follows from it). They are the
+    # verification target of the v1 table and cannot apply to the ring table.
+    mask_ref = json.load(open(REF_MASK)) if mode != "ring" else None
+    state_ref = json.load(open(REF_STATE)) if mode != "ring" else None
 
     # ---- 1. the CSV ------------------------------------------------------
     with open(args.out, newline="") as fh:
@@ -305,6 +369,52 @@ def verify(args, series_block, rows):
         if r["P"] and not (0.0 <= float(r["P"]) <= 1.0):
             problems.append(f"P outside [0,1] at {r['series']} {r['acquisition_date']}")
             break
+
+    if mode == "ring":
+        # Structural verification of the ring table. The rule is *not* checked
+        # against the committed references: those describe the neighbour rule.
+        # What is checked is that every row was measured against the same
+        # complete annulus, that the ring is genuinely disjoint from the support
+        # and the guard, and that no series lost a date.
+        for lab in core.SERIES_ORDER:
+            blk = series_block[lab]
+            reference = blk.get("reference") or {}
+            if not reference.get("complete"):
+                problems.append(f"{lab}: the chip does not carry the ring")
+            counts = reference.get("counts") or {}
+            if not counts.get("ring"):
+                problems.append(f"{lab}: the reference has no ring cells")
+            support_expected = (2 * masks.BAND_HALF + 1) * (2 * masks.COL_HALF + 1)
+            if counts.get("support") != support_expected:
+                problems.append(f"{lab}: support is {counts.get('support')} "
+                                f"cells, expected {support_expected}")
+            if int(counts.get("support", 0)) + int(counts.get("guard", 0)) \
+                    + int(counts.get("ring", 0)) != int(counts.get("chip", -1)):
+                problems.append(f"{lab}: support + guard + ring != chip cells")
+            wrong = [d["date"] for d in blk["per_date"]
+                     if d.get("ref_source") != "ring"]
+            if wrong:
+                problems.append(f"{lab}: {len(wrong)} date(s) not measured against "
+                                f"the ring, e.g. {wrong[0]}")
+            empty = [d["date"] for d in blk["per_date"]
+                     if not d.get("ref_cells")]
+            if empty:
+                problems.append(f"{lab}: {len(empty)} date(s) with an empty "
+                                f"reference, e.g. {empty[0]}")
+        if not got:
+            warnings.append("the written table has no rows")
+        return {
+            "ok": not problems,
+            "mode": "ring",
+            "n_rows": len(got),
+            "n_series": len(core.SERIES_ORDER),
+            "n_dates": {lab: series_block[lab]["n_dates"]
+                        for lab in core.SERIES_ORDER},
+            "ring_cells": {lab: (series_block[lab]["reference"]["counts"]["ring"])
+                           for lab in core.SERIES_ORDER},
+            "problems": problems,
+            "warnings": warnings,
+        }
 
     # ---- 2. the mask reference ------------------------------------------
     if mask_ref["config"] != masks.CONFIG:
@@ -423,6 +533,14 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default=DEFAULT_CSV, help="target CSV (enumerated)")
     ap.add_argument("--meta", default=DEFAULT_META, help="provenance metadata (JSON)")
+    ap.add_argument("--data-dir", default=core.DATA,
+                    help="directory holding the rect series (default data/bautzen)")
+    ap.add_argument("--reference", default="neighbour",
+                    choices=("neighbour", "ring"),
+                    help="local threshold reference: the committed neighbour rows "
+                         "(default, reproduces the published table) or the 30-200 m "
+                         "annulus of the v2 rule (needs the ring chips and their "
+                         "manifests)")
     ap.add_argument("--verify-only", action="store_true",
                     help="only check (the files are rewritten with identical content)")
     args = ap.parse_args(argv)

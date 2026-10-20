@@ -1,0 +1,287 @@
+{
+ "anchor_point": "control 500 m east",
+ "anchors": [
+  {
+   "date": "2025-04-06",
+   "line": 5100,
+   "nearest_node_m": 6764.239785566259,
+   "pixel": 18506,
+   "residual_m": 1.2399713664797556e-10
+  },
+  {
+   "date": "2025-04-12",
+   "line": 11203,
+   "nearest_node_m": 6480.924361857912,
+   "pixel": 18212,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-04-18",
+   "line": 5102,
+   "nearest_node_m": 6795.078988635019,
+   "pixel": 18513,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-04-24",
+   "line": 11202,
+   "nearest_node_m": 6463.998839631497,
+   "pixel": 18193,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-04-30",
+   "line": 2062,
+   "nearest_node_m": 6889.84508878228,
+   "pixel": 18502,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-05-06",
+   "line": 11201,
+   "nearest_node_m": 6450.342349920834,
+   "pixel": 18176,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-05-12",
+   "line": 5109,
+   "nearest_node_m": 6645.888178765396,
+   "pixel": 18197,
+   "residual_m": 1.5868044989057622e-09
+  },
+  {
+   "date": "2025-05-18",
+   "line": 11202,
+   "nearest_node_m": 6460.133777693438,
+   "pixel": 18167,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-05-24",
+   "line": 8163,
+   "nearest_node_m": 6645.541555232145,
+   "pixel": 18423,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-05-30",
+   "line": 11204,
+   "nearest_node_m": 6470.868720356686,
+   "pixel": 18134,
+   "residual_m": 1.2399713664797556e-10
+  },
+  {
+   "date": "2025-06-05",
+   "line": 8160,
+   "nearest_node_m": 6623.11019934861,
+   "pixel": 18430,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-06-11",
+   "line": 11202,
+   "nearest_node_m": 6447.713091672243,
+   "pixel": 18112,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-06-17",
+   "line": 8163,
+   "nearest_node_m": 6652.0719049816435,
+   "pixel": 18436,
+   "residual_m": 8.289417751267302e-10
+  },
+  {
+   "date": "2025-06-23",
+   "line": 11200,
+   "nearest_node_m": 6424.508485530501,
+   "pixel": 18109,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-06-29",
+   "line": 8166,
+   "nearest_node_m": 6711.826790937145,
+   "pixel": 18460,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-07-05",
+   "line": 11201,
+   "nearest_node_m": 6442.814768696345,
+   "pixel": 18142,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-07-11",
+   "line": 8166,
+   "nearest_node_m": 6669.126789642026,
+   "pixel": 18403,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-07-17",
+   "line": 11205,
+   "nearest_node_m": 6490.393389649419,
+   "pixel": 18168,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-07-23",
+   "line": 8161,
+   "nearest_node_m": 6620.523622005241,
+   "pixel": 18413,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-07-29",
+   "line": 11203,
+   "nearest_node_m": 6471.451668868307,
+   "pixel": 18172,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-08-04",
+   "line": 8161,
+   "nearest_node_m": 6619.573640037004,
+   "pixel": 18414,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-08-10",
+   "line": 11199,
+   "nearest_node_m": 6415.458673822263,
+   "pixel": 18168,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-08-16",
+   "line": 8159,
+   "nearest_node_m": 6594.527764302536,
+   "pixel": 18420,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-08-22",
+   "line": 11203,
+   "nearest_node_m": 6488.394004936471,
+   "pixel": 18198,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-08-28",
+   "line": 8156,
+   "nearest_node_m": 6565.089611635455,
+   "pixel": 18426,
+   "residual_m": 8.289417751267302e-10
+  },
+  {
+   "date": "2025-09-03",
+   "line": 11207,
+   "nearest_node_m": 6550.706845426055,
+   "pixel": 18247,
+   "residual_m": 1.2399713664797556e-10
+  },
+  {
+   "date": "2025-09-09",
+   "line": 8158,
+   "nearest_node_m": 6589.341773739441,
+   "pixel": 18422,
+   "residual_m": 1.581952346896287e-09
+  },
+  {
+   "date": "2025-09-15",
+   "line": 11206,
+   "nearest_node_m": 6538.837771382545,
+   "pixel": 18252,
+   "residual_m": 1.5868044989057622e-09
+  },
+  {
+   "date": "2025-09-21",
+   "line": 8159,
+   "nearest_node_m": 6584.851565383535,
+   "pixel": 18411,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-09-27",
+   "line": 11207,
+   "nearest_node_m": 6551.022881905795,
+   "pixel": 18270,
+   "residual_m": 8.289417751267302e-10
+  },
+  {
+   "date": "2025-10-03",
+   "line": 8157,
+   "nearest_node_m": 6590.837690264514,
+   "pixel": 18460,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-10-09",
+   "line": 11208,
+   "nearest_node_m": 6546.311184772433,
+   "pixel": 18203,
+   "residual_m": 0.0
+  },
+  {
+   "date": "2025-10-15",
+   "line": 8156,
+   "nearest_node_m": 6590.175074481071,
+   "pixel": 18464,
+   "residual_m": 7.909761734481435e-10
+  },
+  {
+   "date": "2025-10-21",
+   "line": 11205,
+   "nearest_node_m": 6522.1580982393025,
+   "pixel": 18229,
+   "residual_m": 8.006363699330454e-10
+  },
+  {
+   "date": "2025-10-27",
+   "line": 8153,
+   "nearest_node_m": 6534.058677040264,
+   "pixel": 18428,
+   "residual_m": 8.006363699330454e-10
+  }
+ ],
+ "chip": {
+  "band": {
+   "bins": 9,
+   "lines": 3
+  },
+  "chip_cells": 4257,
+  "cols": 129,
+  "guard_cells": 216,
+  "guard_m": 30.0,
+  "half_bins": 64,
+  "half_lines": 16,
+  "ring_cells": 4014,
+  "ring_complete": true,
+  "ring_m": 200.0,
+  "rows": 33,
+  "spacing": {
+   "azimuth_sample_m": 13.86265,
+   "incidence_deg": 43.64243541508449,
+   "note": "ground range = dr_slant / sin(theta)",
+   "range_ground_m": 3.3754151245441553,
+   "range_sample_m": 2.329562,
+   "source": "burst annotation"
+  },
+  "support_cells": 27
+ },
+ "direction": "DESCENDING",
+ "n_dates": 35,
+ "n_refused": 0,
+ "point": [
+  51.16654424,
+  14.4367055
+ ],
+ "polarization": "VV",
+ "problems": [],
+ "producer": "erlking_mvp/tools/bautzen_rects_s3.py",
+ "series": "desc_ctrl",
+ "subswath": "IW3"
+}

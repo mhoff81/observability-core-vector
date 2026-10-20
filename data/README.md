@@ -30,6 +30,7 @@ does not come out identically.
 | `lumo_ocv_channels.csv` | `code/lumo/lumo_ocv_channels_csv.py` | `lumo_channels.csv` plus the mask-geometry columns `A, D, F, S, P` and their ingredients (`mask_rows, mask_cols, bbox_area, centroid_r/c, peak_r/c`) for the 178 coherence overpasses. Only input of the figure pipeline — the burst cache is not needed afterwards. |
 | `lumo_ocv_channels_meta.json` | `code/lumo/lumo_ocv_channels_csv.py` | provenance: source CSV + sha256, burst-cache path, number of cache directories matched / skipped, the mask thresholds, the resulting `n_masked` statistics and the cross-check against the committed values |
 | `fig_lumo_ocv_paper.json` | `code/lumo/fig_lumo_ocv_paper.py` | the complete result of figures A–E in machine-readable form (descriptives, effect sizes, CV grid, per-pair scores, control tests) plus the summary of the pin block and the versions/seeds of the run |
+| `fig_lumo_ocv_orbits.json` | `code/lumo/fig_lumo_ocv_orbits.py` | the 6 x 2 time-series companion: the 178 plotted points with their joined local acquisition instants, the 13 consecutive state runs with lengths/bands/medians, per-state summaries, the local clocks and UTC offsets, the single missing `P`, sub-swath provenance and the 144 cross-checks |
 
 To rebuild the extended table the burst cache must be present (the generator
 looks four levels above `code/lumo/`, i.e. `../../lumo_dam6_analysis/monthly_bursts/`,
@@ -77,11 +78,22 @@ strips the pipeline decoded (one per measurement of the asset, ~70 KB each,
 `A, D, F, S, P` plus the masked coherence are derived from them. That is what makes
 this package comparable to the LUMO one without inventing a mask.
 
+A **second** cache, `strips_era/`, holds the same kind of strip for the
+**2015-2021 ascending IW2 era** — 162 strips, one per era acquisition day, 400 x
+11, captured through the same window from the burst Id each era row records. It
+exists because the era export carries no phase or frequency layer, and it is what
+lets `fig_kdlo_ocv_series.py` draw `P`, `D`, `F` and `S` on the era as well. The
+ascending track is measured on both polarisations, so the set is mixed (79 VV and
+83 VH days; each day is a single burst of one polarisation). The era cache is
+accepted the same way the record's is: the mask rule recomputed on it has to
+reproduce the export's `coherence_masked_pixels` exactly and its `coherence_gamma2`
+to `1e-12` on every era day.
+
 ### Inputs (committed copies)
 
 | file | what it is | read by |
 | --- | --- | --- |
-| `fig_kdlo_0_raw.json` | the committed export of the **2015-2021 ascending IW2 era**'s decoded backend rows (`kdlo_export_raw.py --part 0` in the KDLO project): 162 acquisition days, one row each, with only `coherence_gamma2` and `coherence_masked_pixels` (plus the metadata columns) non-null — no phase and no frequency layer, so the era cannot carry `P`/`D`/`F`/`S` | `code/kdlo/fig_kdlo_ocv_series.py` **only** (the era-to-collapse companion; it re-verifies the sha256 the availability reference pins before using a value). The generator and the A–E figure deliberately never read it: it is committed *evidence*, never a row of the channel table |
+| `fig_kdlo_0_raw.json` | the committed export of the **2015-2021 ascending IW2 era**'s decoded backend rows (`kdlo_export_raw.py --part 0` in the KDLO project): 162 acquisition days, one row each, with only `coherence_gamma2` and `coherence_masked_pixels` (plus the metadata columns) non-null — no phase and no frequency layer, so the era's `P`/`D`/`F`/`S` have to come from the era's own strips (`strips_era/`) rather than from a column | `code/kdlo/fig_kdlo_ocv_series.py` **only** (the era-to-collapse companion; it re-verifies the sha256 the availability reference pins before using a value, and holds the era strips to this export's two columns). The generator and the A–E figure deliberately never read it: it is committed *evidence*, never a row of the channel table |
 | `fig_kdlo_1_raw.json`, `fig_kdlo_2_raw.json` | the two committed raw API dumps: "part 1" (window 2022-06-01..2022-12-23, 17 acquisitions) and "part 2" (2023-05-01..2024-09-30, 43 acquisitions), one row per acquisition with the 27 source columns and the request-id provenance | `code/kdlo/kdlo_ocv_channels_csv.py`, `code/kdlo/kdlo_ocv_core.py` (`load_raw_parts`, verified in `pin_all()`) |
 | `kdlo_db_extra.json` | **one-time, read-only** Postgres extraction of the nine columns the API rows do not carry (`phase_snr_db`, `phase_observable`, `phase_unobservable_reason`, `snow_depth_m`, `snowfall_cm`, `precipitation_mm`, `wind_gust_ms`, `intensity`, `incidence_angle_deg`) for the same 60 acquisitions, keyed by row id | same (`load_db_extra`) |
 | `reference/fig_kdlo_1_channels.json` | committed result (part 1): window, `n_measurements`, `passes`, `alternate_pass_days`, `orbits`, the `summ` blocks of `coherence_gamma2`, `coherence_masked_pixels`, `phase_coherence`, `phase_snr_db`, `phase_rms_rad` and the four weather columns, `phase_observable`, `echo_modes`, `collapse_pair`, `request_ids` | `code/kdlo/fig_kdlo_ocv_paper.py` (`pin_all`), recomputed exactly |
@@ -91,6 +103,9 @@ this package comparable to the LUMO one without inventing a mask.
 | `strips/capture_requests.json` | the resolved request list of the strip cache: site point, strip spec and per acquisition the CDSE burst Id, orbit direction, relative orbit, sub-swath, polarisation, product name and content start | `code/kdlo/kdlo_capture_requests.py` (writes it), `tower/backend/src/cli/analysis/kdlo_strip_capture.rs` (consumes it) |
 | `strips/strip_<date>.bin` | the 64 committed full-dwell strips: `u32 width, u32 height` then `2*w*h` little-endian f64 (re, im), row-major, decoded by `decode_slc_rect_at_location(annotation, measurement, lat, lon, 11, 400)` — the exact window the KDLO pipeline saw | `code/kdlo/kdlo_ocv_masks.py` (mask + geometry), `code/kdlo/kdlo_ocv_channels_csv.py` (attaches the columns) |
 | `strips/manifest.json` | provenance of the capture: per acquisition the burst/product ids, sub-swath, polarisation, rows/cols, byte count, sha256, mean intensity and the Rust-side `gamma2`/masked-pixel cross-check | the figure's mask pins and `kdlo_ocv_channels_csv.py --verify` |
+| `strips_era/capture_requests.json` | the resolved request list of the **era** strip cache (162 ascending IW2 bursts, 2015-03-20..2021-12-19, relative orbit 136): per acquisition the CDSE burst Id and burst name, product id/name, content start, orbit direction, relative orbit, sub-swath and polarisation (79 VV, 83 VH) | `tower/backend/src/cli/analysis/kdlo_strip_capture.rs` (consumes it), `code/kdlo/fig_kdlo_ocv_series.py` (requires the manifest to agree with it entry for entry) |
+| `strips_era/strip_<date>.bin` | the 162 committed era strips (one per era acquisition day, `400 x 11`, same layout as `strips/`), decoded through the same `decode_slc_rect_at_location(annotation, measurement, lat, lon, 11, 400)` window | `code/kdlo/fig_kdlo_ocv_series.py` (recomputed `P`/`D`/`F`/`S` for the era, held to the era export's two columns); `code/kdlo/kdlo_ocv_masks.py --strips-dir data/kdlo/strips_era --manifest data/kdlo/strips_era/manifest.json` checks them the same way the record's 64 are checked |
+| `strips_era/manifest.json` | provenance of the era capture: per day the burst/product ids, sub-swath, polarisation, rows/cols, byte count, sha256, mean intensity and the recorded Rust-side `gamma2`/masked-pixel pair (which is required to equal the era export's own columns) | same |
 
 The last two files are *not* rederivable from the record — one is a catalogue
 query, the other a solver output — so the package pins their internal structure
@@ -105,7 +120,7 @@ report instead of pretending to recompute them.
 | `kdlo_ocv_channels_meta.json` | same | provenance: the raw files + sha256, the DB-extra file + sha256, the reference files + sha256, the windows, the derived-column definitions, the mask columns, the `strip_cache` block (paths, manifest sha256, per-column mask rule, acceptance criteria) and `n_by_state` / `n_by_part` / `n_by_echo_mode` |
 | `fig_kdlo_ocv_paper.json` | `code/kdlo/fig_kdlo_ocv_paper.py` | the complete result of figures A–E in machine-readable form (descriptives, effect sizes, both epoch interpretations, the LOO grid, the permutation verdict, the controls, the rederived channel JSONs) plus the pin summary |
 | `fig_kdlo_ocv_months.json` | `code/kdlo/fig_kdlo_ocv_months.py` | the companion's **28 calendar-month buckets** of the whole 60-acquisition record (`blocks`: counts, dates and the six per-month channel blocks; the four empty 2023-01…2023-04 buckets kept), the `pre`/`rebuild`/`single` epoch composition, the per-month 6D `fingerprint` against the `2022-06` first-record-month `baseline`, and the `deltas` of the mixed collapse bucket `2022-12` against the previous month and the pooled `pre` months — no reference JSONs are read |
-| `fig_kdlo_ocv_series.json` | `code/kdlo/fig_kdlo_ocv_series.py` | the era-to-collapse companion's result: the four stretches of the axis with their days and the dimensions that exist there (`segments`), the era's 162 days and per-year medians of `gamma2`/`A`, the record's 16 in-axis days with all six dimensions and their `/median` ratios, the normalisation medians of each stretch, the collapse cut and the singleton `2022-12-23` drawn outside the axis, the `sources` block (the three committed inputs with their sha256, the era export's pin path and its 162 rows), the `checks` block (the `after_cut` and blind-gap reconciliations) and the top-level `n_checks` (84) — it re-verifies the era export's pinned sha256 and writes nothing if a check fails |
+| `fig_kdlo_ocv_series.json` | `code/kdlo/fig_kdlo_ocv_series.py` | the era-to-collapse companion's result: the four stretches of the axis with their days and the dimensions that exist there (`segments` — all six dimensions on both dated stretches), the era's 162 and the record's 16 rows with all six dimensions and their `/median` ratios (`era_rows`, `record_rows`), the era's per-year medians of all six (`per_year`, 2015..2021), both stretches' normalisation medians with the `p_basis` rule, the `era_strips` block (the 162-strip era cache: manifest/request sha256, the 162/162 days held to the export, the mixed `polarisations` counts, its own `p_basis`), the collapse cut, the singleton `2022-12-23` and the 44 post-cut rows, the `sources` block (the four committed inputs with their sha256) and the `checks` block with the top-level `n_checks` (125) — it re-verifies the era export's pinned sha256 and writes nothing if a check fails |
 
 The CSV and the meta JSON are both committed: together with the committed
 reference JSONs and the era export they are the whole input of the figure
@@ -317,6 +332,7 @@ no edge/band layer (see `code/ywf/README.md`, "the four structural blockers").
 | `ywf_ocv_channels.csv` | `code/ywf/ywf_ocv_channels_csv.py` | one row per **unique chip** (**33 rows**, 81 columns): the 34 source columns of the measurement extract, the derived columns (`segment`, `section_index`, `state`, `pre_collapse`, `day`, `month`, `year`, `season`, `echo_mode`, `echo_mask_present`, `payload_group_size`, `payload_shared_with_segments`) and the recomputed mask columns (`A, D, F, S, P, gamma2_mask`, the bbox/centroid/peak geometry, `n_components`, the largest component, the fragmentation). `echo_mask_present` marks the 17 echo-bearing rows; the mask columns are empty on the other 16 |
 | `ywf_ocv_channels_meta.json` | same | provenance: the payload, index, segments, measurements, cache and manifest + sha256, the mask rule and window, the guard counts (`n_windows` 57, `n_unique_chips` 33, `n_duplicate_windows` 24, `n_echo_masks` 17, `n_rows_without_echo_mask` 16, `n_by_orbit` ASC 20 / DESC 13), the echo-coverage table with its Fisher test, **the same coverage split by orbit direction** (`coverage_by_orbit`: per-orbit chips / echoes / pre-post cross-tab, the ASC-vs-DESC Fisher test and the two within-orbit pre/post tests), the echo-mode cuts (cut on this site's 49-px window), the `coherence_masked_pixels` cross-check and the per-state summary of every channel |
 | `fig_ywf_ocv_paper.json` | `code/ywf/fig_ywf_ocv_paper.py` | the OCV-paper figure result: the coverage/power block, the per-orbit coverage block, the pooled Cliff's-delta blocks of the mask channels and of the co-variate controls, the echo-mode mix, the month/section composition, the 32-row timeline, the payload-digest groups and the pin verdict |
+| `fig_ywf_ocv_series.json` | `code/ywf/fig_ywf_ocv_series.py` | the whole-record series figure result: the six panel definitions (scale, base, ratios, y window), the two stretches, the 32-row timeline, the 31 step lengths with the 9 holes and the 12-day step that holds the event, the coverage per state and per pass geometry with both Fisher tests, the power block, the echo-mode mix, the month/section composition, the payload groups, the co-variate controls by state and the pin verdict of all 2637 comparisons |
 
 Neither the CSV nor the meta JSON contains anything that is not derivable from
 the committed payload, so the figures and the pin block run offline from a fresh
@@ -373,3 +389,16 @@ from the committed `espoo_channels.csv` and the committed reference JSONs, so th
 figures and every pin block run offline from a fresh clone. Two runs of the
 generator produce the same CSV and the same meta JSON, byte for byte.
 
+## `data/sds/` — the cross-site SDS report (Bautzen + LUMO)
+
+Written by `code/sds/sds_support.py`, the one script that reads two sites.
+
+| file | content |
+| --- | --- |
+| `sds_support.json` | every site and both tables with the source sha256 and the per-channel class counts, then the four levels: `per_channel_per_state` (primary), `per_channel_max_pairwise` (each entry with `winning_pair`, signed delta, that pair's 95 % CI and `n1/n2`), `per_channel_pooled_damage` and `pooled_all_damage` (pin and context). Each comparison carries its own percentile-bootstrap interval (10 000 resamples, seed 7) and the `small_n` / `straddles_zero` flags |
+| `sds_support.md` | the same as a report: reading rules, the primary per-channel tables, the compact paper table (`asset | channel | dimension | max SDS | winning pair | delta | 95% CI (winning pair) | n1/n2`), the pooled **pin/context** block with the verdict on `lumo/reference/lumo_echo_mask_vector.json`, the committed→support change table, and what the numbers do not claim |
+
+Both files are deterministic: the bootstrap is seeded, so two runs are byte for
+byte identical. The `pooled_all_damage` block pins the committed LUMO EMV
+reference for the five dimensions of that file; a deviation makes the script
+exit 1.

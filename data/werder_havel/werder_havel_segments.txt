@@ -1,0 +1,2 @@
+asset_id|asset_name|segment_index|label|fundamental_hz|reference_intensity
+40f420c6-c38e-5eab-8f2b-ac00d66707d0|Havelbrücke Werder (A 10)|0|Überbau (11 Felder, 704.0 m)|20286.60742

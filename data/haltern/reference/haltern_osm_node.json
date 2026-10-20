@@ -1,0 +1,193 @@
+{
+ "_license": "\u00a9 OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright)",
+ "_node_id": 8268709968,
+ "_sources": [
+  "https://api.openstreetmap.org/api/0.6/node/8268709968/history.json",
+  "https://api.openstreetmap.org/api/0.6/node/8268709968.json"
+ ],
+ "current": {
+  "_source": "https://api.openstreetmap.org/api/0.6/node/8268709968.json",
+  "attribution": "http://www.openstreetmap.org/copyright",
+  "copyright": "OpenStreetMap and contributors",
+  "elements": [
+   {
+    "changeset": 130204703,
+    "id": 8268709968,
+    "lat": 51.7445808,
+    "lon": 7.0907269,
+    "tags": {
+     "damage:date": "2021-09-29",
+     "description": "Eingest\u00fcrzt 2021-09-29",
+     "destroyed": "yes",
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "model": "N149",
+     "operator": "RAG Montan Immobilien, Stadtwerke Haltern",
+     "power": "generator"
+    },
+    "timestamp": "2022-12-18T08:06:59Z",
+    "type": "node",
+    "uid": 66391,
+    "user": "geozeisig",
+    "version": 6
+   }
+  ],
+  "generator": "openstreetmap-cgimap 2.1.0 (3814958 spike-06.openstreetmap.org)",
+  "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+  "version": "0.6"
+ },
+ "history": {
+  "_source": "https://api.openstreetmap.org/api/0.6/node/8268709968/history.json",
+  "attribution": "http://www.openstreetmap.org/copyright",
+  "copyright": "OpenStreetMap and contributors",
+  "elements": [
+   {
+    "changeset": 96565839,
+    "id": 8268709968,
+    "lat": 51.7446264,
+    "lon": 7.0904049,
+    "tags": {
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "manufacturer:type": "N149",
+     "power": "generator"
+    },
+    "timestamp": "2020-12-29T01:58:46Z",
+    "type": "node",
+    "uid": 1733955,
+    "user": "windkraft-os",
+    "version": 1
+   },
+   {
+    "changeset": 104009595,
+    "id": 8268709968,
+    "lat": 51.7445825,
+    "lon": 7.0907007,
+    "tags": {
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "manufacturer:type": "N149",
+     "power": "generator"
+    },
+    "timestamp": "2021-05-02T19:20:14Z",
+    "type": "node",
+    "uid": 13223977,
+    "user": "DieWindradWerkstatt",
+    "version": 2
+   },
+   {
+    "changeset": 111912198,
+    "id": 8268709968,
+    "lat": 51.7445825,
+    "lon": 7.0907007,
+    "tags": {
+     "damage:date": "2021-09-29",
+     "destroyed": "yes",
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "manufacturer:type": "N149",
+     "power": "generator"
+    },
+    "timestamp": "2021-09-30T11:23:44Z",
+    "type": "node",
+    "uid": 5293457,
+    "user": "nochwirrererbuchstabensalat",
+    "version": 3
+   },
+   {
+    "changeset": 111967664,
+    "id": 8268709968,
+    "lat": 51.7445825,
+    "lon": 7.0907007,
+    "tags": {
+     "damage:date": "2021-09-29",
+     "description": "Eingest\u00fcrzt 2021-09-29",
+     "destroyed": "yes",
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "manufacturer:type": "N149",
+     "operator": "RAG Montan Immobilien, Stadtwerke Haltern",
+     "power": "generator"
+    },
+    "timestamp": "2021-10-01T14:47:56Z",
+    "type": "node",
+    "uid": 7670445,
+    "user": "SpaceyOSM",
+    "version": 4
+   },
+   {
+    "changeset": 113434004,
+    "id": 8268709968,
+    "lat": 51.7445808,
+    "lon": 7.0907269,
+    "tags": {
+     "damage:date": "2021-09-29",
+     "description": "Eingest\u00fcrzt 2021-09-29",
+     "destroyed": "yes",
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "manufacturer:type": "N149",
+     "operator": "RAG Montan Immobilien, Stadtwerke Haltern",
+     "power": "generator"
+    },
+    "timestamp": "2021-11-06T05:20:21Z",
+    "type": "node",
+    "uid": 61341,
+    "user": "RubenKelevra",
+    "version": 5
+   },
+   {
+    "changeset": 130204703,
+    "id": 8268709968,
+    "lat": 51.7445808,
+    "lon": 7.0907269,
+    "tags": {
+     "damage:date": "2021-09-29",
+     "description": "Eingest\u00fcrzt 2021-09-29",
+     "destroyed": "yes",
+     "generator:method": "wind_turbine",
+     "generator:output:electricity": "4.5 MW",
+     "generator:source": "wind",
+     "generator:type": "horizontal_axis",
+     "height": "164",
+     "manufacturer": "Nordex",
+     "model": "N149",
+     "operator": "RAG Montan Immobilien, Stadtwerke Haltern",
+     "power": "generator"
+    },
+    "timestamp": "2022-12-18T08:06:59Z",
+    "type": "node",
+    "uid": 66391,
+    "user": "geozeisig",
+    "version": 6
+   }
+  ],
+  "generator": "openstreetmap-cgimap 2.1.0 (3964037 spike-06.openstreetmap.org)",
+  "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+  "version": "0.6"
+ }
+}

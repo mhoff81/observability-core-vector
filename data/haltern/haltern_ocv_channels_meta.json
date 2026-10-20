@@ -1,0 +1,390 @@
+{
+ "cache_cross_check": {
+  "n_cache_rows": 66,
+  "n_chips_with_echo": 66
+ },
+ "coverage": {
+  "event": "2021-09-29",
+  "fisher": {
+   "p_two_sided": 0.13431478155476215,
+   "table": [
+    [
+     62,
+     46
+    ],
+    [
+     4,
+     8
+    ]
+   ],
+   "table_cols": [
+    "echo",
+    "no_echo"
+   ],
+   "table_rows": [
+    "pre",
+    "post"
+   ]
+  },
+  "n_windows": 120,
+  "per_state": {
+   "post": {
+    "echo_rate": 0.3333333333333333,
+    "n_chips": 12,
+    "n_with_echo": 4,
+    "n_without_echo": 8
+   },
+   "pre": {
+    "echo_rate": 0.5740740740740741,
+    "n_chips": 108,
+    "n_with_echo": 62,
+    "n_without_echo": 46
+   }
+  },
+  "window_px": 49
+ },
+ "coverage_by_orbit": {
+  "event": "2021-09-29",
+  "fisher": {
+   "p_two_sided": 0.7166050513098348,
+   "table": [
+    [
+     33,
+     29
+    ],
+    [
+     33,
+     25
+    ]
+   ],
+   "table_cols": [
+    "echo",
+    "no_echo"
+   ],
+   "table_rows": [
+    "ASCENDING",
+    "DESCENDING"
+   ]
+  },
+  "fisher_by_state": {
+   "ASCENDING": 0.4054488819993858,
+   "DESCENDING": 0.3866687973457825
+  },
+  "n_orbits": 2,
+  "n_unique_chips": 120,
+  "note": "both directions straddle the collapse date and the four post-event echo chips are two ascending and two descending passes: this block describes where the echoes sit over the four pass geometries, it is not an orbit contrast of the states",
+  "orbits": [
+   "ASCENDING",
+   "DESCENDING"
+  ],
+  "per_orbit": {
+   "ASCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.3333333333333333,
+      "n_chips": 6,
+      "n_with_echo": 2,
+      "n_without_echo": 4
+     },
+     "pre": {
+      "echo_rate": 0.5535714285714286,
+      "n_chips": 56,
+      "n_with_echo": 31,
+      "n_without_echo": 25
+     }
+    },
+    "echo_rate": 0.532258064516129,
+    "n_chips": 62,
+    "n_with_echo": 33,
+    "n_without_echo": 29
+   },
+   "DESCENDING": {
+    "by_state": {
+     "post": {
+      "echo_rate": 0.3333333333333333,
+      "n_chips": 6,
+      "n_with_echo": 2,
+      "n_without_echo": 4
+     },
+     "pre": {
+      "echo_rate": 0.5961538461538461,
+      "n_chips": 52,
+      "n_with_echo": 31,
+      "n_without_echo": 21
+     }
+    },
+    "echo_rate": 0.5689655172413793,
+    "n_chips": 58,
+    "n_with_echo": 33,
+    "n_without_echo": 25
+   }
+  },
+  "window_px": 49
+ },
+ "date_range": [
+  "2021-01-01",
+  "2021-10-17"
+ ],
+ "echo_mode_cuts": {
+  "compact": "A <= 2",
+  "distributed": "A >= 6",
+  "intermediate": "3 <= A <= 5",
+  "window_px": 49
+ },
+ "event": "2021-09-29",
+ "features": [
+  "gamma2",
+  "P",
+  "D",
+  "A",
+  "F",
+  "S"
+ ],
+ "generator": "code/haltern/haltern_ocv_channels_csv.py",
+ "inputs": {
+  "mask_cache": {
+   "file": "haltern_windows_mask_cache.txt",
+   "sha256": "70031d3fe516a5cf982cc968e5ef1a18a4399a6b496b7b6e5d6a795d25ad08da"
+  },
+  "mask_cache_manifest": {
+   "file": "haltern_windows_mask_cache.manifest.json",
+   "sha256": "1a679ead9ba43ab57074fcb88859f74310aec881425ff7e6f28f71a8cf78b2ba"
+  },
+  "measurements": {
+   "file": "haltern_measurements_full.txt",
+   "sha256": "d179ff230d42ff4db7bd9fe7493353108e048501d37dde923dc747da0ccb115f"
+  },
+  "segments": {
+   "file": "haltern_segments.txt",
+   "sha256": "9052f8abb8610c69ae4784673839ca39805f087354700e845acffe32355f275e"
+  },
+  "windows": {
+   "file": "haltern_windows_full.txt",
+   "sha256": "e837309d7e7545b04829aad62d28c60cfd49bdbdb45a01aa196d85cd32a31dcd"
+  }
+ },
+ "mask_cache_manifest": {
+  "asset_date_groups": 120,
+  "asset_date_groups_with_differing_payloads": 0,
+  "asset_date_groups_with_repeated_segment": 0,
+  "asset_date_groups_with_several_segments": 48,
+  "asset_date_groups_with_several_segments_with_differing_payloads": 0,
+  "generator": "code/haltern/haltern_ocv_masks.py --extract",
+  "mask_rule": {
+   "median_kind": "np.median",
+   "median_mult": 5.0,
+   "min_n_masked": 2,
+   "peak_frac": 0.3
+  },
+  "n_deduplicated_same_payload": 48,
+  "n_rows": 66,
+  "n_without_echo": 54,
+  "n_without_index": 0,
+  "segment_resolved": false,
+  "source_index": "haltern_windows_index.txt",
+  "source_segments": "haltern_segments.txt",
+  "source_windows": "haltern_windows_full.txt",
+  "source_windows_sha256": "e837309d7e7545b04829aad62d28c60cfd49bdbdb45a01aa196d85cd32a31dcd",
+  "window_size": 7,
+  "window_sizes": {
+   "7x7": 120
+  }
+ },
+ "mask_columns": [
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "gamma2_mask",
+  "gamma2_export",
+  "mask_bbox_area",
+  "mask_row_span",
+  "mask_col_span",
+  "mask_centroid_row",
+  "mask_centroid_col",
+  "mask_peak_row",
+  "mask_peak_col",
+  "mask_n_components",
+  "mask_largest_component",
+  "mask_fragmentation"
+ ],
+ "mask_rule": {
+  "median_kind": "np.median",
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3
+ },
+ "mask_window": "7x7",
+ "n_P_set": 66,
+ "n_by_orbit": {
+  "ASC": 62,
+  "DESC": 58
+ },
+ "n_coherence_masked_pixels_compared": 66,
+ "n_coherence_masked_pixels_differing": 60,
+ "n_coherence_masked_pixels_matched": 6,
+ "n_columns": 81,
+ "n_duplicate_windows": 48,
+ "n_echo_masks": 66,
+ "n_post_collapse": 12,
+ "n_pre_collapse": 108,
+ "n_rows": 120,
+ "n_rows_without_echo_mask": 54,
+ "n_unique_chips": 120,
+ "n_windows": 168,
+ "ocv": [
+  "gamma2",
+  "P",
+  "D"
+ ],
+ "orbits": [
+  "ASCENDING",
+  "DESCENDING"
+ ],
+ "out_csv": "haltern_ocv_channels.csv",
+ "row_unit": "one row per unique chip (asset, day, md5(payload)) of the committed window file; the 17 chips that carry an echo are the rows of the committed mask cache",
+ "sections": [
+  "turbine-mast-section-0",
+  "turbine-mast-section-1",
+  "turbine-mast-section-2",
+  "turbine-mast-section-3",
+  "turbine-mast-section-4"
+ ],
+ "sections_counts": {
+  "turbine-mast-section-0": 72,
+  "turbine-mast-section-1": 48
+ },
+ "site": "Haltern AV9 Wind Park (Kreis Recklinghausen, NRW)",
+ "state_definition": "pre-collapse (healthy) = day < 2021-09-29 <= post-collapse",
+ "states": [
+  "pre-collapse (healthy)",
+  "post-collapse"
+ ],
+ "summary_by_state": {
+  "post": {
+   "A": {
+    "mean": 4.0,
+    "median": 4.0,
+    "n": 4,
+    "p25": 2.0,
+    "p5": 2.0,
+    "p75": 6.0,
+    "p95": 6.0,
+    "std": 2.309401076758503
+   },
+   "D": {
+    "mean": 0.5064285714285715,
+    "median": 0.39285714285714285,
+    "n": 4,
+    "p25": 0.27428571428571424,
+    "p5": 0.24685714285714286,
+    "p75": 0.625,
+    "p95": 0.9249999999999998,
+    "std": 0.34801966478179064
+   },
+   "F": {
+    "mean": 2.25,
+    "median": 2.5,
+    "n": 4,
+    "p25": 1.75,
+    "p5": 1.15,
+    "p75": 3.0,
+    "p95": 3.0,
+    "std": 0.9574271077563381
+   },
+   "P": {
+    "mean": 0.0984848484848485,
+    "median": 0.09974747474747475,
+    "n": 4,
+    "p25": 0.09406565656565656,
+    "p5": 0.08345959595959597,
+    "p75": 0.10416666666666666,
+    "p95": 0.11174242424242424,
+    "std": 0.013520520542263473
+   },
+   "S": {
+    "mean": 1.6246553411808686,
+    "median": 1.6816949906249123,
+    "n": 4,
+    "p25": 1.25,
+    "p5": 0.65,
+    "p75": 2.0563503318057808,
+    "p95": 2.5194551731400754,
+    "std": 0.8866879864899057
+   },
+   "gamma2": {
+    "mean": 0.32250149073198386,
+    "median": 0.27948732124510745,
+    "n": 4,
+    "p25": 0.11712426999235548,
+    "p5": 0.10054895475561786,
+    "p75": 0.48486454198473583,
+    "p95": 0.6046738639899769,
+    "std": 0.2585700336174042
+   }
+  },
+  "pre": {
+   "A": {
+    "mean": 3.629032258064516,
+    "median": 3.0,
+    "n": 62,
+    "p25": 2.0,
+    "p5": 2.0,
+    "p75": 4.0,
+    "p95": 6.0,
+    "std": 1.7389828473002986
+   },
+   "D": {
+    "mean": 0.532096225587009,
+    "median": 0.475,
+    "n": 62,
+    "p25": 0.3,
+    "p5": 0.12589285714285714,
+    "p75": 0.8125,
+    "p95": 1.0,
+    "std": 0.3116265723634251
+   },
+   "F": {
+    "mean": 1.7258064516129032,
+    "median": 2.0,
+    "n": 62,
+    "p25": 1.0,
+    "p5": 1.0,
+    "p75": 2.0,
+    "p95": 3.0,
+    "std": 0.7281090451278837
+   },
+   "P": {
+    "mean": 0.08816118170956881,
+    "median": 0.09006734006734007,
+    "n": 62,
+    "p25": 0.07575757575757576,
+    "p5": 0.06060606060606061,
+    "p75": 0.09848484848484848,
+    "p95": 0.11723484848484846,
+    "std": 0.01897710851048549
+   },
+   "S": {
+    "mean": 1.1407876355252085,
+    "median": 0.8666892283120791,
+    "n": 62,
+    "p25": 0.5,
+    "p5": 0.414055714208676,
+    "p75": 1.4573089747475199,
+    "p95": 2.8244426226961354,
+    "std": 0.8112139855062307
+   },
+   "gamma2": {
+    "mean": 0.5291198950586227,
+    "median": 0.5031849051981342,
+    "n": 62,
+    "p25": 0.21063591720218575,
+    "p5": 0.019008067850719696,
+    "p75": 0.9092998080995616,
+    "p95": 0.9897533464353168,
+    "std": 0.3599955412898098
+   }
+  }
+ }
+}
