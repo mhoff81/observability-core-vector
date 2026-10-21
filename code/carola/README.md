@@ -1,6 +1,6 @@
 # `code/carola/` — Carola site package: analysis and plotting scripts
 
-Six Python modules, no package, no dependencies beyond the standard library plus
+Seven Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Carola Brücke
 (Dresden) half of the repository; the LUMO tower lives in `../lumo/`, Bautzen in
@@ -207,3 +207,59 @@ The module and site names keep their `carola_` prefix although the folder alread
 says `carola/`: the import statements (`import carola_ocv_core as core`), the
 reference file names and every command line in the reports stay parallel to the
 other seven packages, which is what makes the eight packages readable as one diff.
+
+### `carola_ocv_precollapse.py` — trend and late level on the pre-collapse record
+
+Look at the orbit figure and the deck seems to move before the collapse, and its
+ASC channel visibly alternates between two acquisition geometries. A look is not
+a test, so this module asks the two questions that look raises, and only those:
+
+1. **trend** — inside the pre-collapse observations, does `D`, `F` or `A` change
+   systematically with time? Theil-Sen slope (per year, and as percent of the
+   baseline median per year), a **moving-block bootstrap** CI (block 5 overpasses,
+   2000 resamples) and Mann-Kendall with tie correction;
+2. **late level** — is the last **three months** before the collapse different
+   from the older pre-collapse baseline? Mann-Whitney U, Cliff's delta (positive
+   = late-pre larger, so a sinking dimension is negative), moving-block CIs
+   (block 3, 5000 resamples) for delta **and** the median difference, and **Holm**
+   over the three dimensions per channel.
+
+It invents no statistic: `theil_sen`, `mann_kendall`, `block_bootstrap_slope`,
+`lag1_autocorr` and `runs_test` come from `../espoo/espoo_ocv_stats.py`,
+`cliffs_delta` and `welch_mw_test` from `../lumo/lumo_ocv_stats.py`. The two
+pieces the house did not have are `holm()` and the moving-block delta/median CI
+(the house `bootstrap_delta_ci` resamples independently and would understate the
+serial dependence).
+
+```bash
+python3 code/carola/carola_ocv_precollapse.py            # ~60 s, writes JSON + MD
+python3 code/carola/carola_ocv_precollapse.py --selftest  # offline checks
+python3 code/carola/carola_ocv_precollapse.py --verify    # recompute, compare
+```
+
+Outputs: `data/carola/support/carola_ocv_precollapse.json` and `.md` (event
+`2024-09-11`, cut `2024-06-11`). `--verify` recomputes 126 fields from the
+committed channel table and refuses a JSON whose `sha256` belongs to another
+table; `--selftest` checks Holm by hand, the bootstrap's determinism and block
+behaviour, that a planted trend/drop is found while noise is not, the calendar
+arithmetic, and — as a guard — that **no state word reaches the report**.
+
+What it finds, and what it does not:
+
+* **No trend clears the interval.** ASC (n = 124, 2022-09-03 … 2024-09-09,
+  revisit 5 d) gives Theil-Sen slopes of −0.0028 m/a, −8.8 Hz/a and
+  −27 counts/a with CIs spanning zero (Holm p 0.74); DESC (n = 60,
+  2022-09-12 … 2024-08-20) is positive and also spans zero (Holm p 0.68). The
+  ASC series is strongly serially dependent (lag-1 −0.54, runs p < 0.001), which
+  is exactly why the block interval, not the Mann-Kendall p, is the claim.
+* **No late level shift is detectable in `D`, `F`, `A`.** All six cells are null
+  (delta −0.04 … −0.09, CIs ±0.2 … 0.4, Holm p 1.00). A *large* sinking in these
+  three dimensions before the collapse is therefore excluded; a modest one
+  (|delta| < 0.2) is not, at 16 late ASC and 6 late DESC overpasses.
+* **The window does not rescue it.** The 2/3/4/6-month ladder with the event
+  moved ±12 d (24 cells) has no significant cell; the deltas lean negative
+  (worst −0.22 at 4 months ASC), so the direction is consistent but unresolved.
+* DESC has **no overpass in the last 22 d** before the collapse, so its late
+  window ends before the event does — the report prints that gap per channel
+  rather than letting a short window read as "unchanged until the end".
+

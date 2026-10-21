@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Pre-collapse diagnostics for the Carolabrücke deck — trend, and late level.
 
-The orbit figures draw a rolling median, and on this deck that line is **not**
-flat before the collapse: some dimensions move. A line is not a test, so this
-script asks the two questions the line raises, and only those:
+The orbit figure invites the question: on this deck the dimensions are not
+stationary before the collapse, and the ASC channel visibly alternates between
+two acquisition geometries. A look is not a test, so this script asks the two
+questions the look raises, and only those:
 
   1. **trend** — inside the pre-collapse observations, does ``D``, ``F`` or
      ``A`` change systematically with time?
@@ -349,8 +350,8 @@ def analyse_channel(channel, table=TABLE, cut=None, boot=BOOT_DELTA):
         "n_pre": len(rows),
         "first": times[0].isoformat(),
         "last": times[-1].isoformat(),
-        "median_gap_days": gaps[len(gaps) // 2] if gaps else None,
-        "gap_before_event_days": (EVENT - times[-1]).days,
+        "median_gap_days": float(np.median(gaps)) if gaps else None,
+        "gap_before_event_days": (EVENT.date() - times[-1].date()).days,
         "cut": cut.isoformat(),
         "trend": {}, "level": {},
     }
@@ -515,7 +516,7 @@ def to_markdown(report):
         add("")
         add(f"*n* = {block['n_pre']} pre-collapse overpasses, "
             f"{block['first'][:10]} … {block['last'][:10]}, median revisit "
-            f"{block['median_gap_days']} d. Last pre-collapse overpass "
+            f"{_num(block['median_gap_days'], 1)} d. Last pre-collapse overpass "
             f"**{block['gap_before_event_days']} d before the event**.")
         add("")
         add("### Trend inside the pre-collapse series")
@@ -593,10 +594,10 @@ def to_markdown(report):
     add("* a negative delta is a statement about the last three months before a "
         "date, with the `n` printed beside it — not a prediction and not a "
         "cause;")
-    add("* **no state is created here.** A rolling median and these tests can "
-        "both show a move without the deck entering a third state; this script "
-        "writes no state label at all, and the guard in `--selftest` checks "
-        "that none reaches the report;")
+    add("* **no state is created here.** A visible move and these tests can "
+        "coexist with only two states; this script writes no state label at "
+        "all, and the guard in `--selftest` checks that none reaches the "
+        "report;")
     add("* a result that exists at one window width only is a finding about the "
         "window — the ladder is the check, not a search for the significant "
         "cell;")

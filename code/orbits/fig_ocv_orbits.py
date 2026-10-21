@@ -249,30 +249,6 @@ def runs_of(points):
     return runs
 
 
-def rolling_median(points, window=5, minimum=3):
-    """A robust local summary: the median of the surrounding overpasses.
-
-    The window is in **overpass order**, not calendar time, so a gap in the
-    acquisitions does not blank the line. ``None`` values are skipped, never
-    counted as zero, and a window with fewer than ``minimum`` valid values yields
-    ``None`` — a line drawn from one point would be a claim, not a summary.
-    """
-    half = window // 2
-    out = []
-    for index, point in enumerate(points):
-        low = max(0, index - half)
-        high = min(len(points), index + half + 1)
-        block = sorted(p["v"] for p in points[low:high] if p["v"] is not None)
-        if len(block) < minimum:
-            out.append({"t": point["t"], "v": None, "n": len(block)})
-            continue
-        middle = len(block) // 2
-        value = (block[middle] if len(block) % 2
-                 else (block[middle - 1] + block[middle]) / 2.0)
-        out.append({"t": point["t"], "v": float(value), "n": len(block)})
-    return out
-
-
 def median(values):
     clean = sorted(v for v in values if v is not None)
     if not clean:
@@ -292,20 +268,18 @@ def compute(site, spec, repo):
     manifest_path = os.path.join(repo, spec["manifest"])
     manifest = json.load(open(manifest_path)) if os.path.exists(manifest_path) else {}
 
-    series, runs, summary, counts, rolling = {}, {}, {}, {}, {}
+    series, runs, summary, counts = {}, {}, {}, {}
     for channel in spec["channels"]:
         subset = [p for p in points if p["channel"] == channel]
         runs[channel] = runs_of(subset)
         series[channel] = {}
         summary[channel] = {}
-        rolling[channel] = {}
         counts[channel] = {state: len([p for p in subset if p["state"] == state])
                            for state in ("pre", "post")}
         for dim in CHANNELS:
             series[channel][dim] = [
                 {"t": p["t"].isoformat(), "v": p["values"][dim],
                  "state": p["state"]} for p in subset]
-            rolling[channel][dim] = rolling_median(series[channel][dim])
             block = {}
             for state in ("pre", "post"):
                 vals = [p["values"][dim] for p in subset if p["state"] == state]
@@ -336,10 +310,6 @@ def compute(site, spec, repo):
                      "n_refused": manifest.get("n_refused")},
         "skipped": skipped,
         "counts": counts, "runs": runs, "series": series, "summary": summary,
-        "rolling": rolling,
-        "rolling_rule": {"window": 5, "minimum_valid": 3,
-                         "order": "overpass order, centred",
-                         "missing": "skipped, never zero"},
     }
 
 
@@ -408,12 +378,6 @@ def make_figure(res, figdir):
                             f" {block['median']:.4g} (n={block['n']})",
                             fontsize=5.0, color=STATE_COLORS[state],
                             va="bottom", ha="left", zorder=4)
-                line = [(dt.datetime.fromisoformat(p["t"]), p["v"])
-                        for p in res["rolling"][channel][dim]
-                        if p["v"] is not None]
-                if len(line) > 1:
-                    ax.plot([t for t, _v in line], [v for _t, v in line],
-                            color="#1a202c", lw=0.9, zorder=2.5)
                 for point in series[channel][dim]:
                     if point["v"] is None:
                         continue
@@ -451,9 +415,7 @@ def make_figure(res, figdir):
                      label=res["states"][state]) for state in ("pre", "post")]
     handles.append(Line2D([], [], color="0.42", lw=0.9, label="overpass"))
     handles.append(Line2D([], [], color="0.42", lw=1.1, label="state median"))
-    handles.append(Line2D([], [], color="#1a202c", lw=0.9,
-                          label="rolling median (5 overpasses)"))
-    fig.legend(handles=handles, loc="lower center", ncol=5, frameon=False,
+    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False,
                fontsize=6.0, bbox_to_anchor=(0.5, 0.004))
     fig.suptitle(
         f"{res['label']} — OCV trajectories before and after "
@@ -490,12 +452,6 @@ def markdown(res):
         "support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order "
         "the LUMO and Bautzen figures use), ASC / DESC across the columns. "
         "`P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.")
-    add("")
-    add("The thin dark line in each panel is a **rolling median over 5 "
-        "consecutive overpasses** (centred, at least 3 valid values). It "
-        "summarises local evolution — a dip in it is a summary, not a state, and "
-        "whether it is a drift or a level shift is a question this figure does "
-        "not answer.")
     add("")
     add("## States")
     add("")
@@ -556,9 +512,6 @@ def markdown(res):
         "values are not the committed ones.")
     add("- A band with few overpasses is a handful of points, not a "
         "distribution; the median carries its n.")
-    add("- The rolling median is a summary over five overpasses, not a state and "
-        "not a trend test; it is drawn so that the local evolution is visible "
-        "beside the global pre/post difference.")
     add("- The state boundary is drawn between runs, not at an event date: the "
         "record labels the runs, and the band follows the labels.")
     add("")
@@ -579,13 +532,6 @@ def verify(res, repo):
         if [run["n"] for run in runs] != [run["n"] for run in res["runs"][channel]]:
             failures.append(f"{channel}: run lengths differ")
         for dim in CHANNELS:
-            want_line = res["rolling"][channel][dim]
-            have_line = rolling_median(res["series"][channel][dim])
-            if ([round(p["v"], 12) if p["v"] is not None else None
-                 for p in want_line]
-                    != [round(p["v"], 12) if p["v"] is not None else None
-                        for p in have_line]):
-                failures.append(f"{channel}/{dim}: rolling median differs")
             for state in ("pre", "post"):
                 vals = [p["values"][dim] for p in subset if p["state"] == state]
                 want = res["summary"][channel][dim][state]
