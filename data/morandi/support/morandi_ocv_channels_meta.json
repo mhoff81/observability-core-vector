@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(51, 137)": 207
+ },
+ "asset_name_note": null,
+ "chip": {
+  "cols": 137,
+  "guard_cells": 678,
+  "ring_cells": 5448,
+  "ring_complete": true,
+  "rows": 51,
+  "support_cells": 861
+ },
+ "committed_asset_name": null,
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/morandi/morandi_ocv_channels.csv",
+   "sha256": "a08dc4e3665b0d0ac859d02cffaa78806305f66ebf271f272a24d0bf932ef3b1"
+  },
+  "manifest": {
+   "path": "data/morandi/support/morandi_rects_support.txt.manifest.json",
+   "sha256": "a4a3b797d1084899440df6d05c79f3eb77a1f66734d2468f8f66a4f9002456a3"
+  },
+  "rects": {
+   "path": "data/morandi/support/morandi_rects_support.txt",
+   "sha256": "3d3d785bc42d29ca4dbb8308c9215c7243226bece7b22166280d4f13cc7bcb1c"
+  }
+ },
+ "label": "Ponte Morandi deck",
+ "n_rects": 207,
+ "n_refused": 0,
+ "n_rows": 207,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "morandi",
+ "spacing": {
+  "azimuth_sample_m": 13.9444,
+  "incidence_deg": 33.784549,
+  "range_ground_m": 4.1893
+ },
+ "support_band": [
+  21,
+  41
+ ],
+ "without_partner": []
+}

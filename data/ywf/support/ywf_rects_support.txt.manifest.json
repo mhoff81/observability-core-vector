@@ -1,0 +1,620 @@
+{
+ "guard_m": 30.0,
+ "height_m": 100.0,
+ "label": "Yeongdeok Unit 21",
+ "n_dates": 14,
+ "n_refused": 19,
+ "point": [
+  36.42356000000001,
+  129.42031
+ ],
+ "polarization": "VV",
+ "problems": [
+  {
+   "date": "2025-08-12",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2025-08-24",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-09-05",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-09-17",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-09-29",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-10-11",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-10-23",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15117, past the raster's 15100 rows"
+  },
+  {
+   "date": "2025-11-04",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-11-16",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2025-11-28",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2025-12-10",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2025-12-22",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2026-01-03",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2026-01-15",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2026-01-27",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2026-02-08",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  },
+  {
+   "date": "2026-02-20",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2026-03-16",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows"
+  },
+  {
+   "date": "2026-04-09",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 15127, past the raster's 15110 rows"
+  }
+ ],
+ "producer": "erlking_mvp/tools/ocv_migrate.py",
+ "rect": "/home/projects/research/observability-core-vector/data/ywf/support/ywf_rects_support.txt",
+ "ring_m": 200.0,
+ "rows": [
+  {
+   "A": 588,
+   "anchor": {
+    "incidence_deg": 41.757744681626576,
+    "line": 7349,
+    "nearest_node_m": 2749.6197331526196,
+    "pixel": 895,
+    "raster": [
+     13599,
+     23863
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 801,
+     "first_row": 7332,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "10f11dbc-f6e3-473d-891b-d837c9211f89",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-08-06",
+   "gamma2": 0.000765,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 606,
+   "anchor": {
+    "incidence_deg": 39.935521902817776,
+    "line": 251,
+    "nearest_node_m": 3247.8029543482967,
+    "pixel": 15735,
+    "raster": [
+     15050,
+     24577
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 15641,
+     "first_row": 234,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "1ce78b10-190a-4c21-8248-94ab6e8887e4",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-08-12",
+   "gamma2": 0.010663,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 579,
+   "anchor": {
+    "incidence_deg": 39.93966518873818,
+    "line": 6315,
+    "nearest_node_m": 3063.0847063149704,
+    "pixel": 15761,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 15667,
+     "first_row": 6298,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "ed6f08a9-1e4d-4f58-86e4-93760c534253",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-09-11",
+   "gamma2": 0.002147,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 656,
+   "anchor": {
+    "incidence_deg": 39.94414700004116,
+    "line": 6313,
+    "nearest_node_m": 3032.4244265156826,
+    "pixel": 15776,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 15682,
+     "first_row": 6296,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "260823ab-0f83-4ebf-8b86-a31f17c5dbe0",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-09-23",
+   "gamma2": 0.002104,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 673,
+   "anchor": {
+    "incidence_deg": 39.94007147605775,
+    "line": 6316,
+    "nearest_node_m": 3064.0234452116524,
+    "pixel": 15770,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 15676,
+     "first_row": 6299,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "f090ed96-71a9-4529-8404-649e8eba2290",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-10-05",
+   "gamma2": 0.005552,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 662,
+   "anchor": {
+    "incidence_deg": 39.94008715676819,
+    "line": 6312,
+    "nearest_node_m": 3024.9540974899,
+    "pixel": 15771,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.665880570749823e-09,
+    "window": {
+     "first_col": 15677,
+     "first_row": 6295,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "a6ba082c-f5e7-4169-9d82-e3d804458da1",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-10-17",
+   "gamma2": 0.001169,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 604,
+   "anchor": {
+    "incidence_deg": 39.942826461755956,
+    "line": 6315,
+    "nearest_node_m": 3050.9038126438813,
+    "pixel": 15792,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 15698,
+     "first_row": 6298,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "b79ba89b-4c59-4f1f-be68-f06f5fa55c8d",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-10-29",
+   "gamma2": 0.013398,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 640,
+   "anchor": {
+    "incidence_deg": 39.93883465728272,
+    "line": 6313,
+    "nearest_node_m": 3038.6405383463734,
+    "pixel": 15775,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 15681,
+     "first_row": 6296,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "81f4fd3d-ae26-4738-915f-d3ad4ceb0c67",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-11-10",
+   "gamma2": 0.003112,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 612,
+   "anchor": {
+    "incidence_deg": 39.93675713451709,
+    "line": 6315,
+    "nearest_node_m": 3047.9106849831946,
+    "pixel": 15772,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 15678,
+     "first_row": 6298,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "f2e841af-bb85-410e-9912-518b10cf96cd",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-11-22",
+   "gamma2": 0.003448,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 690,
+   "anchor": {
+    "incidence_deg": 39.93580783622055,
+    "line": 6320,
+    "nearest_node_m": 3110.146004960634,
+    "pixel": 15765,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.665880570749823e-09,
+    "window": {
+     "first_col": 15671,
+     "first_row": 6303,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "aefbaf8b-1428-418a-a85f-0c964178271e",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-12-04",
+   "gamma2": 0.002386,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 638,
+   "anchor": {
+    "incidence_deg": 39.93581190897564,
+    "line": 6315,
+    "nearest_node_m": 3049.093365780717,
+    "pixel": 15766,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.665880570749823e-09,
+    "window": {
+     "first_col": 15672,
+     "first_row": 6298,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "9fb230ff-57fa-402e-9577-7d3152024a4e",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-12-16",
+   "gamma2": 0.005943,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 684,
+   "anchor": {
+    "incidence_deg": 39.94443055403853,
+    "line": 6318,
+    "nearest_node_m": 3088.4646408632675,
+    "pixel": 15799,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 15705,
+     "first_row": 6301,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "49b8dc41-03fa-4174-80be-277508248db8",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2025-12-28",
+   "gamma2": 0.000225,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 687,
+   "anchor": {
+    "incidence_deg": 39.941234023299764,
+    "line": 6314,
+    "nearest_node_m": 3047.981261354911,
+    "pixel": 15754,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 2.5458350124347675e-09,
+    "window": {
+     "first_col": 15660,
+     "first_row": 6297,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "c68bb9f7-436d-42a5-ad4e-9fe836d1a8bb",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2026-04-15",
+   "gamma2": 0.0125,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  },
+  {
+   "A": 654,
+   "anchor": {
+    "incidence_deg": 39.94258598066172,
+    "line": 6315,
+    "nearest_node_m": 3052.2525094090374,
+    "pixel": 15773,
+    "raster": [
+     15170,
+     26338
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 15679,
+     "first_row": 6298,
+     "n_cols": 189,
+     "n_rows": 35
+    }
+   },
+   "burst": "80ad07b6-6eb7-4b41-940e-28653719aaa4",
+   "chip": [
+    35,
+    189
+   ],
+   "date": "2026-04-27",
+   "gamma2": 0.00755,
+   "orbit": "DESCENDING",
+   "subswath": "IW2"
+  }
+ ],
+ "site": "ywf",
+ "support": {
+  "assumptions": [
+   "height projection: 100.0 m x cos(43.829 deg) / 2.3296 m = 30.97 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+   "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+  ],
+  "band": [
+   5,
+   69
+  ],
+  "chip": [
+   35,
+   189
+  ],
+  "guard_cells": 612,
+  "height_projected": true,
+  "height_shift_bins": 30.967556928663512,
+  "hull_m": [
+   109.43986209470728,
+   5.949241136426384
+  ],
+  "margin": {
+   "bins": 1,
+   "bins_m": 3.3639406961404648,
+   "lines": 1,
+   "lines_m": 13.90726,
+   "min_margin": 1,
+   "rule": "max(min_margin, ceil(metres/ground_spacing + model_bins)) per axis"
+  },
+  "record": {
+   "N_bins": 69,
+   "N_lines": 5,
+   "anchor_bin": 895,
+   "anchor_line": 7349,
+   "assumptions": [
+    "height projection: 100.0 m x cos(43.829 deg) / 2.3296 m = 30.97 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+    "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+   ],
+   "azimuth_sample_m": 13.9073,
+   "budget": {
+    "azimuth_bins": 0.0,
+    "azimuth_m": 1.0,
+    "height_uncertainty_bins": 0.0,
+    "height_uncertainty_m": 0.0,
+    "model_azimuth_m": 0.0,
+    "notes": [
+     "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+    ],
+    "placement_note": "systematic geolocation error moves the echo and the support together, so it is recorded, not margined",
+    "placement_uncertainty_m": 0.0,
+    "range_bins": 0.0,
+    "range_m": 1.0,
+    "registration_m": 1.0,
+    "registration_source": "default (no measured registration error for this group)"
+   },
+   "chip": [
+    7347,
+    7351,
+    861,
+    929
+   ],
+   "chip_cells": 345,
+   "chip_m": [
+    69.5,
+    232.1
+   ],
+   "geometry_notes": [
+    "ground range = dr_slant / sin(theta)"
+   ],
+   "group": null,
+   "height_m": 100.0,
+   "height_projected": true,
+   "height_shift_bins": 30.9676,
+   "incidence_deg": 43.82911351300935,
+   "incidence_source": "burst annotation",
+   "margin_bins": 1,
+   "margin_lines": 1,
+   "margin_m": [
+    13.907,
+    3.364
+   ],
+   "model": "hull",
+   "range_ground_m": 3.3639,
+   "range_sample_m": 2.329562,
+   "sample_source": {
+    "azimuth_sample_m": "burst annotation",
+    "range_sample_m": "burst annotation"
+   },
+   "schema": "ocv-observation-support-v1",
+   "shape": "polygon"
+  },
+  "ring_cells": 5658,
+  "ring_complete": true,
+  "support_cells": 345,
+  "support_m": [
+   232.11190803369206,
+   69.53630000000001
+  ]
+ },
+ "support_shape": "polygon"
+}

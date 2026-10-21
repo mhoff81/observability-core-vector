@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(69, 125)": 436
+ },
+ "asset_name_note": "the committed table's asset_name column carries this label and is copied verbatim, not repaired; the dates, orbit and sub-swath identify the site's own target",
+ "chip": {
+  "cols": 125,
+  "guard_cells": 900,
+  "ring_cells": 7140,
+  "ring_complete": true,
+  "rows": 69,
+  "support_cells": 585
+ },
+ "committed_asset_name": "Carola RPT A-full 9f0d8bc0-21c8-4d8f-8ce7-2a41f3f239d4",
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/carola/carola_ocv_channels.csv",
+   "sha256": "a36552ae1eaf9e08312fc2809bfaf28c2fed45bf37306e49f5bb5a06f0b3f55f"
+  },
+  "manifest": {
+   "path": "data/carola/support/carola_rects_support.txt.manifest.json",
+   "sha256": "8bf6bd148b20faaf9785e4550426c8cbc0e23d8c84b96cbf6798d0c6a4287822"
+  },
+  "rects": {
+   "path": "data/carola/support/carola_rects_support.txt",
+   "sha256": "b21365219df35cad7a8cb9bdc37e849728c311be56f9bb9febfa6bc2ce729621"
+  }
+ },
+ "label": "Carolabr\u00fccke deck",
+ "n_rects": 436,
+ "n_refused": 0,
+ "n_rows": 436,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "carola",
+ "spacing": {
+  "azimuth_sample_m": 13.896,
+  "incidence_deg": 39.057213,
+  "range_ground_m": 3.6972
+ },
+ "support_band": [
+  39,
+  15
+ ],
+ "without_partner": []
+}

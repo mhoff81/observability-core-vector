@@ -1,0 +1,3175 @@
+{
+ "guard_m": 30.0,
+ "label": "Haltern AV9 wind turbine",
+ "n_dates": 107,
+ "n_refused": 13,
+ "polarization": "VV",
+ "problems": [
+  {
+   "date": "2021-01-07",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13643, past the raster's 13626 rows"
+  },
+  {
+   "date": "2021-02-12",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13643, past the raster's 13626 rows"
+  },
+  {
+   "date": "2021-03-08",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-04-01",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-04-13",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-05-07",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-06-12",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-07-06",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-07-18",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-08-11",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-09-04",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-09-16",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  },
+  {
+   "date": "2021-10-10",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13661, past the raster's 13644 rows"
+  }
+ ],
+ "producer": "erlking_mvp/tools/ocv_migrate.py",
+ "rect": "/home/projects/research/observability-core-vector/data/haltern/support/haltern_rects_support.txt",
+ "ring_m": 200.0,
+ "rows": [
+  {
+   "A": 407,
+   "anchor": {
+    "incidence_deg": 43.76620374619852,
+    "line": 3976,
+    "nearest_node_m": 7010.152326856257,
+    "pixel": 13595,
+    "raster": [
+     13626,
+     25135
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13481,
+     "first_row": 3959,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-01",
+   "gamma2": 0.021459,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 344,
+   "anchor": {
+    "incidence_deg": 35.55328542426413,
+    "line": 11793,
+    "nearest_node_m": 2383.165070746162,
+    "pixel": 18698,
+    "raster": [
+     13482,
+     21953
+    ],
+    "residual_m": 8.003962042952874e-10,
+    "window": {
+     "first_col": 18584,
+     "first_row": 11776,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-02",
+   "gamma2": 0.006173,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 306,
+   "anchor": {
+    "incidence_deg": 35.55142703207464,
+    "line": 4317,
+    "nearest_node_m": 3012.6775858988203,
+    "pixel": 19059,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18945,
+     "first_row": 4300,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-08",
+   "gamma2": 0.024809,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 282,
+   "anchor": {
+    "incidence_deg": 43.76457083359114,
+    "line": 3979,
+    "nearest_node_m": 6970.005711879263,
+    "pixel": 13585,
+    "raster": [
+     13626,
+     25134
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13471,
+     "first_row": 3962,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-13",
+   "gamma2": 0.008964,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 354,
+   "anchor": {
+    "incidence_deg": 35.55043004223773,
+    "line": 11798,
+    "nearest_node_m": 2321.9548487961183,
+    "pixel": 18684,
+    "raster": [
+     13482,
+     21953
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 18570,
+     "first_row": 11781,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-14",
+   "gamma2": 0.001875,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 341,
+   "anchor": {
+    "incidence_deg": 35.556198358010086,
+    "line": 4316,
+    "nearest_node_m": 2981.920758716949,
+    "pixel": 19076,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 18962,
+     "first_row": 4299,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-01",
+   "gamma2": 0.004431,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 366,
+   "anchor": {
+    "incidence_deg": 43.76754185571119,
+    "line": 3977,
+    "nearest_node_m": 6995.483159075996,
+    "pixel": 13599,
+    "raster": [
+     13626,
+     25134
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13485,
+     "first_row": 3960,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-06",
+   "gamma2": 0.002866,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 336,
+   "anchor": {
+    "incidence_deg": 35.55249117556381,
+    "line": 11797,
+    "nearest_node_m": 2334.8112996373598,
+    "pixel": 18690,
+    "raster": [
+     13482,
+     21953
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 18576,
+     "first_row": 11780,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-07",
+   "gamma2": 0.000428,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 385,
+   "anchor": {
+    "incidence_deg": 43.771026340723395,
+    "line": 3977,
+    "nearest_node_m": 6991.973354578317,
+    "pixel": 13618,
+    "raster": [
+     13626,
+     25134
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13504,
+     "first_row": 3960,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-18",
+   "gamma2": 0.003804,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 327,
+   "anchor": {
+    "incidence_deg": 35.55619310135932,
+    "line": 11791,
+    "nearest_node_m": 2407.302905111257,
+    "pixel": 18703,
+    "raster": [
+     13482,
+     21953
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18589,
+     "first_row": 11774,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-19",
+   "gamma2": 0.003667,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 399,
+   "anchor": {
+    "incidence_deg": 43.7700507565431,
+    "line": 3976,
+    "nearest_node_m": 7003.244667614121,
+    "pixel": 13609,
+    "raster": [
+     13626,
+     25135
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 13495,
+     "first_row": 3959,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-02",
+   "gamma2": 0.000484,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 315,
+   "anchor": {
+    "incidence_deg": 35.556221105884106,
+    "line": 11799,
+    "nearest_node_m": 2305.339777023743,
+    "pixel": 18699,
+    "raster": [
+     13482,
+     21953
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18585,
+     "first_row": 11782,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-03",
+   "gamma2": 0.004167,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 280,
+   "anchor": {
+    "incidence_deg": 35.55363421433997,
+    "line": 4322,
+    "nearest_node_m": 2973.209791352093,
+    "pixel": 19058,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18944,
+     "first_row": 4305,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-09",
+   "gamma2": 0.004482,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 333,
+   "anchor": {
+    "incidence_deg": 43.767122771090925,
+    "line": 3990,
+    "nearest_node_m": 7096.080159968041,
+    "pixel": 13591,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 13477,
+     "first_row": 3973,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-14",
+   "gamma2": 3.6e-05,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 338,
+   "anchor": {
+    "incidence_deg": 35.55286059435669,
+    "line": 11801,
+    "nearest_node_m": 2289.06767481296,
+    "pixel": 18681,
+    "raster": [
+     13482,
+     21954
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18567,
+     "first_row": 11784,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-15",
+   "gamma2": 0.005899,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 365,
+   "anchor": {
+    "incidence_deg": 35.555974585400946,
+    "line": 4322,
+    "nearest_node_m": 2985.2075410708494,
+    "pixel": 19054,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18940,
+     "first_row": 4305,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-02",
+   "gamma2": 0.00024,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 372,
+   "anchor": {
+    "incidence_deg": 43.769854171837935,
+    "line": 3989,
+    "nearest_node_m": 7101.032353314641,
+    "pixel": 13589,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 13475,
+     "first_row": 3972,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-07",
+   "gamma2": 0.004901,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 359,
+   "anchor": {
+    "incidence_deg": 35.55959986904023,
+    "line": 11824,
+    "nearest_node_m": 3039.2260624119594,
+    "pixel": 18680,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18566,
+     "first_row": 11807,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-08",
+   "gamma2": 0.00205,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 328,
+   "anchor": {
+    "incidence_deg": 35.55448774473675,
+    "line": 4323,
+    "nearest_node_m": 3021.1120737517085,
+    "pixel": 19035,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18921,
+     "first_row": 4306,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-14",
+   "gamma2": 0.00649,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 397,
+   "anchor": {
+    "incidence_deg": 43.76821909844543,
+    "line": 3988,
+    "nearest_node_m": 7132.609153649781,
+    "pixel": 13569,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13455,
+     "first_row": 3971,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-01",
+   "gamma2": 0.006714,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 349,
+   "anchor": {
+    "incidence_deg": 35.552662298692475,
+    "line": 11826,
+    "nearest_node_m": 3080.9910758990954,
+    "pixel": 18655,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 1.2243682815082945e-10,
+    "window": {
+     "first_col": 18541,
+     "first_row": 11809,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-02",
+   "gamma2": 0.005905,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 335,
+   "anchor": {
+    "incidence_deg": 35.55715348447821,
+    "line": 4318,
+    "nearest_node_m": 3051.2251062639475,
+    "pixel": 19041,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 18927,
+     "first_row": 4301,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-08",
+   "gamma2": 0.006687,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 436,
+   "anchor": {
+    "incidence_deg": 43.77025336141915,
+    "line": 3989,
+    "nearest_node_m": 7102.519834463171,
+    "pixel": 13582,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13468,
+     "first_row": 3972,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-13",
+   "gamma2": 0.000252,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 367,
+   "anchor": {
+    "incidence_deg": 35.553417188151386,
+    "line": 11828,
+    "nearest_node_m": 3054.761736221812,
+    "pixel": 18659,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18545,
+     "first_row": 11811,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-14",
+   "gamma2": 0.004086,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 384,
+   "anchor": {
+    "incidence_deg": 35.55812349894671,
+    "line": 4322,
+    "nearest_node_m": 3000.094712260919,
+    "pixel": 19047,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 1.2243682815082945e-10,
+    "window": {
+     "first_col": 18933,
+     "first_row": 4305,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-01",
+   "gamma2": 0.004661,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 441,
+   "anchor": {
+    "incidence_deg": 43.77356196440656,
+    "line": 3987,
+    "nearest_node_m": 7127.770089087948,
+    "pixel": 13598,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 13484,
+     "first_row": 3970,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-06",
+   "gamma2": 0.01163,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 300,
+   "anchor": {
+    "incidence_deg": 35.55598492030761,
+    "line": 11825,
+    "nearest_node_m": 3060.210776653917,
+    "pixel": 18668,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18554,
+     "first_row": 11808,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-07",
+   "gamma2": 0.03778,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 351,
+   "anchor": {
+    "incidence_deg": 35.556615830869966,
+    "line": 4322,
+    "nearest_node_m": 2998.6019824175396,
+    "pixel": 19048,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18934,
+     "first_row": 4305,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-13",
+   "gamma2": 0.000517,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 177,
+   "anchor": {
+    "incidence_deg": 43.77345791746876,
+    "line": 3987,
+    "nearest_node_m": 7106.353229117564,
+    "pixel": 13606,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13492,
+     "first_row": 3970,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-18",
+   "gamma2": 0.008312,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 378,
+   "anchor": {
+    "incidence_deg": 35.55901471112208,
+    "line": 11830,
+    "nearest_node_m": 2963.6821911263296,
+    "pixel": 18687,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18573,
+     "first_row": 11813,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-19",
+   "gamma2": 0.004971,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 392,
+   "anchor": {
+    "incidence_deg": 35.55821674904199,
+    "line": 11831,
+    "nearest_node_m": 2980.4925403880234,
+    "pixel": 18675,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18561,
+     "first_row": 11814,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-01",
+   "gamma2": 0.008116,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 321,
+   "anchor": {
+    "incidence_deg": 35.54863564323736,
+    "line": 4320,
+    "nearest_node_m": 3111.6226106040685,
+    "pixel": 19012,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18898,
+     "first_row": 4303,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-07",
+   "gamma2": 0.023883,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 112,
+   "anchor": {
+    "incidence_deg": 43.76659706890361,
+    "line": 3987,
+    "nearest_node_m": 7149.178179501773,
+    "pixel": 13564,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 13450,
+     "first_row": 3970,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-12",
+   "gamma2": 0.040124,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 398,
+   "anchor": {
+    "incidence_deg": 35.5550649165667,
+    "line": 11830,
+    "nearest_node_m": 3013.9396541814194,
+    "pixel": 18668,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18554,
+     "first_row": 11813,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-13",
+   "gamma2": 0.001981,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 326,
+   "anchor": {
+    "incidence_deg": 35.55810512778901,
+    "line": 4321,
+    "nearest_node_m": 2997.1851764756407,
+    "pixel": 19053,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18939,
+     "first_row": 4304,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-19",
+   "gamma2": 0.00517,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 423,
+   "anchor": {
+    "incidence_deg": 43.766858438643986,
+    "line": 3986,
+    "nearest_node_m": 7165.13037523861,
+    "pixel": 13560,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13446,
+     "first_row": 3969,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-05",
+   "gamma2": 0.003479,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 365,
+   "anchor": {
+    "incidence_deg": 35.55309869356684,
+    "line": 11826,
+    "nearest_node_m": 3086.672871485726,
+    "pixel": 18655,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18541,
+     "first_row": 11809,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-06",
+   "gamma2": 0.002995,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 359,
+   "anchor": {
+    "incidence_deg": 35.54997887600719,
+    "line": 4319,
+    "nearest_node_m": 3118.110955372939,
+    "pixel": 19012,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18898,
+     "first_row": 4302,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-12",
+   "gamma2": 0.0001,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 455,
+   "anchor": {
+    "incidence_deg": 43.77024651989705,
+    "line": 3985,
+    "nearest_node_m": 7160.086489144246,
+    "pixel": 13580,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13466,
+     "first_row": 3968,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-17",
+   "gamma2": 0.004951,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 366,
+   "anchor": {
+    "incidence_deg": 35.55525735550129,
+    "line": 11822,
+    "nearest_node_m": 3091.7947557178313,
+    "pixel": 18666,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18552,
+     "first_row": 11805,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-18",
+   "gamma2": 0.000842,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 371,
+   "anchor": {
+    "incidence_deg": 35.55528283245327,
+    "line": 4317,
+    "nearest_node_m": 3055.3522022637044,
+    "pixel": 19042,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18928,
+     "first_row": 4300,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-05",
+   "gamma2": 0.000517,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 463,
+   "anchor": {
+    "incidence_deg": 43.76891018582964,
+    "line": 3982,
+    "nearest_node_m": 7198.515491340714,
+    "pixel": 13571,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13457,
+     "first_row": 3965,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-10",
+   "gamma2": 0.001063,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 367,
+   "anchor": {
+    "incidence_deg": 35.557879553890984,
+    "line": 11822,
+    "nearest_node_m": 3072.3318969976413,
+    "pixel": 18673,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 18559,
+     "first_row": 11805,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-11",
+   "gamma2": 0.00374,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 355,
+   "anchor": {
+    "incidence_deg": 35.5563258160801,
+    "line": 4315,
+    "nearest_node_m": 3071.844655228244,
+    "pixel": 19044,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18930,
+     "first_row": 4298,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-17",
+   "gamma2": 0.004405,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 343,
+   "anchor": {
+    "incidence_deg": 43.771295512391355,
+    "line": 3979,
+    "nearest_node_m": 7223.628457256778,
+    "pixel": 13592,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 13478,
+     "first_row": 3962,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-04",
+   "gamma2": 0.013241,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 351,
+   "anchor": {
+    "incidence_deg": 35.55024204150842,
+    "line": 11821,
+    "nearest_node_m": 3112.5440894331578,
+    "pixel": 18661,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 18547,
+     "first_row": 11804,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-05",
+   "gamma2": 0.00244,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 295,
+   "anchor": {
+    "incidence_deg": 35.56011351176846,
+    "line": 4313,
+    "nearest_node_m": 3026.148097977513,
+    "pixel": 19071,
+    "raster": [
+     13500,
+     22999
+    ],
+    "residual_m": 1.58313641928691e-09,
+    "window": {
+     "first_col": 18957,
+     "first_row": 4296,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-11",
+   "gamma2": 0.001313,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 432,
+   "anchor": {
+    "incidence_deg": 43.771011398941724,
+    "line": 3979,
+    "nearest_node_m": 7206.821054059527,
+    "pixel": 13607,
+    "raster": [
+     13644,
+     25668
+    ],
+    "residual_m": 8.003962042952874e-10,
+    "window": {
+     "first_col": 13493,
+     "first_row": 3962,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-16",
+   "gamma2": 0.001325,
+   "orbit": "ASCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 348,
+   "anchor": {
+    "incidence_deg": 35.55452880367108,
+    "line": 11820,
+    "nearest_node_m": 3067.0098119744616,
+    "pixel": 18684,
+    "raster": [
+     13509,
+     22551
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 18570,
+     "first_row": 11803,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-17",
+   "gamma2": 0.002926,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 355,
+   "anchor": {
+    "incidence_deg": 33.32035220949284,
+    "line": 5548,
+    "nearest_node_m": 6025.187350073528,
+    "pixel": 10412,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 8.003962042952874e-10,
+    "window": {
+     "first_col": 10298,
+     "first_row": 5531,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-04",
+   "gamma2": 0.000422,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 309,
+   "anchor": {
+    "incidence_deg": 41.902589926284385,
+    "line": 9119,
+    "nearest_node_m": 564.0002492641145,
+    "pixel": 3770,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 3656,
+     "first_row": 9102,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-05",
+   "gamma2": 0.007188,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 381,
+   "anchor": {
+    "incidence_deg": 33.3191136404521,
+    "line": 10075,
+    "nearest_node_m": 6216.087844065559,
+    "pixel": 10891,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10777,
+     "first_row": 10058,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-10",
+   "gamma2": 0.003012,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 552,
+   "anchor": {
+    "incidence_deg": 41.89673258683972,
+    "line": 4539,
+    "nearest_node_m": 1676.0467864923755,
+    "pixel": 3362,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 3248,
+     "first_row": 4522,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-11",
+   "gamma2": 0.008511,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 370,
+   "anchor": {
+    "incidence_deg": 33.31662497660867,
+    "line": 5549,
+    "nearest_node_m": 6001.651123265268,
+    "pixel": 10398,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 10284,
+     "first_row": 5532,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-16",
+   "gamma2": 0.030508,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 603,
+   "anchor": {
+    "incidence_deg": 41.89852081402108,
+    "line": 9115,
+    "nearest_node_m": 645.7521395299046,
+    "pixel": 3751,
+    "raster": [
+     13725,
+     25935
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 3637,
+     "first_row": 9098,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-01-17",
+   "gamma2": 0.001659,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 382,
+   "anchor": {
+    "incidence_deg": 33.32328484014766,
+    "line": 10075,
+    "nearest_node_m": 6237.064124373773,
+    "pixel": 10906,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10792,
+     "first_row": 10058,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-03",
+   "gamma2": 0.002065,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 370,
+   "anchor": {
+    "incidence_deg": 41.90116075014136,
+    "line": 4537,
+    "nearest_node_m": 1609.9768274241646,
+    "pixel": 3384,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 3270,
+     "first_row": 4520,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-04",
+   "gamma2": 0.014098,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 320,
+   "anchor": {
+    "incidence_deg": 33.31353792138685,
+    "line": 5551,
+    "nearest_node_m": 5983.493575516321,
+    "pixel": 10384,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10270,
+     "first_row": 5534,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-09",
+   "gamma2": 0.00029,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 646,
+   "anchor": {
+    "incidence_deg": 41.89195894622791,
+    "line": 9114,
+    "nearest_node_m": 731.5450537325976,
+    "pixel": 3722,
+    "raster": [
+     13725,
+     25935
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3608,
+     "first_row": 9097,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-10",
+   "gamma2": 0.000559,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 376,
+   "anchor": {
+    "incidence_deg": 33.31557569022056,
+    "line": 10073,
+    "nearest_node_m": 6211.706469927453,
+    "pixel": 10874,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 1.58313641928691e-09,
+    "window": {
+     "first_col": 10760,
+     "first_row": 10056,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-15",
+   "gamma2": 0.005219,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 127,
+   "anchor": {
+    "incidence_deg": 41.89966794619124,
+    "line": 4533,
+    "nearest_node_m": 1673.8945717709792,
+    "pixel": 3369,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 1.58313641928691e-09,
+    "window": {
+     "first_col": 3255,
+     "first_row": 4516,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-02-16",
+   "gamma2": 0.022336,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 493,
+   "anchor": {
+    "incidence_deg": 33.328035634329424,
+    "line": 5549,
+    "nearest_node_m": 6023.061073672502,
+    "pixel": 10420,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10306,
+     "first_row": 5532,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-05",
+   "gamma2": 0.000286,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 476,
+   "anchor": {
+    "incidence_deg": 41.90646224090334,
+    "line": 9115,
+    "nearest_node_m": 593.7336580467728,
+    "pixel": 3772,
+    "raster": [
+     13725,
+     25935
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3658,
+     "first_row": 9098,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-06",
+   "gamma2": 0.00175,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 372,
+   "anchor": {
+    "incidence_deg": 33.31714286208738,
+    "line": 10070,
+    "nearest_node_m": 6242.346957773437,
+    "pixel": 10862,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10748,
+     "first_row": 10053,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-11",
+   "gamma2": 0.00502,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 721,
+   "anchor": {
+    "incidence_deg": 41.896929089970925,
+    "line": 4532,
+    "nearest_node_m": 1787.5043014150774,
+    "pixel": 3336,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3222,
+     "first_row": 4515,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-12",
+   "gamma2": 0.002809,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 348,
+   "anchor": {
+    "incidence_deg": 33.32497752559886,
+    "line": 5550,
+    "nearest_node_m": 5996.351094316272,
+    "pixel": 10396,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 10282,
+     "first_row": 5533,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-17",
+   "gamma2": 0.001534,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 209,
+   "anchor": {
+    "incidence_deg": 41.90637388575223,
+    "line": 9116,
+    "nearest_node_m": 619.1820707513317,
+    "pixel": 3760,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 3646,
+     "first_row": 9099,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-03-18",
+   "gamma2": 0.00801,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 493,
+   "anchor": {
+    "incidence_deg": 33.32753995986988,
+    "line": 10071,
+    "nearest_node_m": 6249.778752035655,
+    "pixel": 10882,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10768,
+     "first_row": 10054,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-04",
+   "gamma2": 0.008946,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 633,
+   "anchor": {
+    "incidence_deg": 41.905594847543824,
+    "line": 4531,
+    "nearest_node_m": 1703.2893902530427,
+    "pixel": 3361,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 3247,
+     "first_row": 4514,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-05",
+   "gamma2": 0.003555,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 445,
+   "anchor": {
+    "incidence_deg": 33.319187562277655,
+    "line": 5542,
+    "nearest_node_m": 6093.946344308829,
+    "pixel": 10372,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 10258,
+     "first_row": 5525,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-10",
+   "gamma2": 0.013425,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 752,
+   "anchor": {
+    "incidence_deg": 41.89929390924913,
+    "line": 9115,
+    "nearest_node_m": 721.5592856382999,
+    "pixel": 3723,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 3609,
+     "first_row": 9098,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-11",
+   "gamma2": 0.001245,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 451,
+   "anchor": {
+    "incidence_deg": 33.3260723558004,
+    "line": 10075,
+    "nearest_node_m": 6197.412316009174,
+    "pixel": 10882,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10768,
+     "first_row": 10058,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-16",
+   "gamma2": 0.012456,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 370,
+   "anchor": {
+    "incidence_deg": 41.9052062138656,
+    "line": 4533,
+    "nearest_node_m": 1681.0654295224824,
+    "pixel": 3367,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 3253,
+     "first_row": 4516,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-04-17",
+   "gamma2": 0.003591,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 412,
+   "anchor": {
+    "incidence_deg": 33.32482768405902,
+    "line": 5547,
+    "nearest_node_m": 6028.404101243739,
+    "pixel": 10389,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10275,
+     "first_row": 5530,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-04",
+   "gamma2": 0.004815,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 210,
+   "anchor": {
+    "incidence_deg": 41.90194243229053,
+    "line": 9119,
+    "nearest_node_m": 674.1621664838434,
+    "pixel": 3731,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 1.58313641928691e-09,
+    "window": {
+     "first_col": 3617,
+     "first_row": 9102,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-05",
+   "gamma2": 0.02457,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 411,
+   "anchor": {
+    "incidence_deg": 33.314305342201685,
+    "line": 10074,
+    "nearest_node_m": 6177.041599551009,
+    "pixel": 10844,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 2.376085128852004e-09,
+    "window": {
+     "first_col": 10730,
+     "first_row": 10057,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-10",
+   "gamma2": 0.000271,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 460,
+   "anchor": {
+    "incidence_deg": 41.89612202980066,
+    "line": 4535,
+    "nearest_node_m": 1817.8232981209972,
+    "pixel": 3324,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 3210,
+     "first_row": 4518,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-11",
+   "gamma2": 0.00324,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 331,
+   "anchor": {
+    "incidence_deg": 33.321820723039025,
+    "line": 5547,
+    "nearest_node_m": 6030.954206317177,
+    "pixel": 10380,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10266,
+     "first_row": 5530,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-16",
+   "gamma2": 0.008625,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 608,
+   "anchor": {
+    "incidence_deg": 41.90041444125083,
+    "line": 9118,
+    "nearest_node_m": 694.5560080484499,
+    "pixel": 3727,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3613,
+     "first_row": 9101,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-05-17",
+   "gamma2": 0.00211,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 691,
+   "anchor": {
+    "incidence_deg": 41.904890250828544,
+    "line": 4535,
+    "nearest_node_m": 1646.4983931632923,
+    "pixel": 3374,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3260,
+     "first_row": 4518,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-04",
+   "gamma2": 0.000554,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 569,
+   "anchor": {
+    "incidence_deg": 33.31742366938401,
+    "line": 5545,
+    "nearest_node_m": 6052.872376762104,
+    "pixel": 10373,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 10259,
+     "first_row": 5528,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-09",
+   "gamma2": 0.001851,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 405,
+   "anchor": {
+    "incidence_deg": 41.89640922670632,
+    "line": 9117,
+    "nearest_node_m": 732.7230021733956,
+    "pixel": 3715,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 3601,
+     "first_row": 9100,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-10",
+   "gamma2": 0.007489,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 187,
+   "anchor": {
+    "incidence_deg": 33.32178542306359,
+    "line": 10073,
+    "nearest_node_m": 6212.154179170516,
+    "pixel": 10867,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10753,
+     "first_row": 10056,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-15",
+   "gamma2": 0.000138,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 904,
+   "anchor": {
+    "incidence_deg": 41.90197334974705,
+    "line": 4533,
+    "nearest_node_m": 1730.1854116408297,
+    "pixel": 3352,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3238,
+     "first_row": 4516,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-06-16",
+   "gamma2": 0.001398,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 499,
+   "anchor": {
+    "incidence_deg": 33.322292682619675,
+    "line": 5546,
+    "nearest_node_m": 6040.902578272363,
+    "pixel": 10385,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 10271,
+     "first_row": 5529,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-03",
+   "gamma2": 0.001767,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 567,
+   "anchor": {
+    "incidence_deg": 33.319751004405006,
+    "line": 10073,
+    "nearest_node_m": 6197.391529324755,
+    "pixel": 10862,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10748,
+     "first_row": 10056,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-09",
+   "gamma2": 0.000851,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 796,
+   "anchor": {
+    "incidence_deg": 41.89752579335359,
+    "line": 4539,
+    "nearest_node_m": 1789.9140996963145,
+    "pixel": 3328,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 3214,
+     "first_row": 4522,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-10",
+   "gamma2": 0.002353,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 536,
+   "anchor": {
+    "incidence_deg": 33.3223209143105,
+    "line": 5547,
+    "nearest_node_m": 6027.075987953189,
+    "pixel": 10378,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10264,
+     "first_row": 5530,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-15",
+   "gamma2": 0.005343,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 151,
+   "anchor": {
+    "incidence_deg": 41.90469542964902,
+    "line": 9119,
+    "nearest_node_m": 646.3044117920514,
+    "pixel": 3741,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 3627,
+     "first_row": 9102,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-07-16",
+   "gamma2": 0.003071,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 491,
+   "anchor": {
+    "incidence_deg": 33.323022636661605,
+    "line": 10073,
+    "nearest_node_m": 6212.931505159683,
+    "pixel": 10874,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10760,
+     "first_row": 10056,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-02",
+   "gamma2": 0.001756,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 242,
+   "anchor": {
+    "incidence_deg": 41.90062995599669,
+    "line": 4536,
+    "nearest_node_m": 1728.0273560729315,
+    "pixel": 3350,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 3236,
+     "first_row": 4519,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-03",
+   "gamma2": 0.003311,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 366,
+   "anchor": {
+    "incidence_deg": 33.31736723264852,
+    "line": 5544,
+    "nearest_node_m": 6067.1796996437615,
+    "pixel": 10368,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10254,
+     "first_row": 5527,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-08",
+   "gamma2": 0.043962,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 220,
+   "anchor": {
+    "incidence_deg": 41.89947576435165,
+    "line": 9115,
+    "nearest_node_m": 720.527854501718,
+    "pixel": 3725,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3611,
+     "first_row": 9098,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-09",
+   "gamma2": 0.004195,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 545,
+   "anchor": {
+    "incidence_deg": 33.32149472068222,
+    "line": 10073,
+    "nearest_node_m": 6211.057884187272,
+    "pixel": 10869,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 10755,
+     "first_row": 10056,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-14",
+   "gamma2": 0.000258,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 1015,
+   "anchor": {
+    "incidence_deg": 41.90170164542518,
+    "line": 4531,
+    "nearest_node_m": 1728.6880379146628,
+    "pixel": 3354,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 1.58313641928691e-09,
+    "window": {
+     "first_col": 3240,
+     "first_row": 4514,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-08-15",
+   "gamma2": 0.004929,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 489,
+   "anchor": {
+    "incidence_deg": 33.32718449831188,
+    "line": 5545,
+    "nearest_node_m": 6062.006464674824,
+    "pixel": 10404,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10290,
+     "first_row": 5528,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-01",
+   "gamma2": 0.005181,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 476,
+   "anchor": {
+    "incidence_deg": 41.904717164668384,
+    "line": 9111,
+    "nearest_node_m": 677.8179649465245,
+    "pixel": 3752,
+    "raster": [
+     13725,
+     25934
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 3638,
+     "first_row": 9094,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-02",
+   "gamma2": 0.006727,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 376,
+   "anchor": {
+    "incidence_deg": 33.32165155394064,
+    "line": 10068,
+    "nearest_node_m": 6273.5449470388,
+    "pixel": 10870,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 7.933416673694737e-10,
+    "window": {
+     "first_col": 10756,
+     "first_row": 10051,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-07",
+   "gamma2": 0.012557,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 986,
+   "anchor": {
+    "incidence_deg": 41.90176189840899,
+    "line": 4532,
+    "nearest_node_m": 1726.5232499502813,
+    "pixel": 3354,
+    "raster": [
+     13716,
+     25541
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3240,
+     "first_row": 4515,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-08",
+   "gamma2": 0.002625,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 505,
+   "anchor": {
+    "incidence_deg": 33.323671059876254,
+    "line": 5538,
+    "nearest_node_m": 6142.130548817126,
+    "pixel": 10398,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10284,
+     "first_row": 5521,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-13",
+   "gamma2": 0.005986,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 806,
+   "anchor": {
+    "incidence_deg": 41.90399480085049,
+    "line": 9111,
+    "nearest_node_m": 679.466726605953,
+    "pixel": 3754,
+    "raster": [
+     13725,
+     25935
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3640,
+     "first_row": 9094,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-09-14",
+   "gamma2": 0.000195,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 471,
+   "anchor": {
+    "incidence_deg": 33.32219942252273,
+    "line": 10068,
+    "nearest_node_m": 6301.0479265603835,
+    "pixel": 10888,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 1.5866833347389474e-09,
+    "window": {
+     "first_col": 10774,
+     "first_row": 10051,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-01",
+   "gamma2": 0.000568,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 795,
+   "anchor": {
+    "incidence_deg": 41.89992964061389,
+    "line": 4532,
+    "nearest_node_m": 1695.3375471740044,
+    "pixel": 3363,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3249,
+     "first_row": 4515,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-02",
+   "gamma2": 0.010638,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 285,
+   "anchor": {
+    "incidence_deg": 33.31749878682633,
+    "line": 5544,
+    "nearest_node_m": 6063.974667366617,
+    "pixel": 10389,
+    "raster": [
+     13572,
+     22849
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10275,
+     "first_row": 5527,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-07",
+   "gamma2": 0.016225,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 810,
+   "anchor": {
+    "incidence_deg": 41.89876619612338,
+    "line": 9112,
+    "nearest_node_m": 692.17739112171,
+    "pixel": 3744,
+    "raster": [
+     13725,
+     25935
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 3630,
+     "first_row": 9095,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-08",
+   "gamma2": 0.002584,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  },
+  {
+   "A": 577,
+   "anchor": {
+    "incidence_deg": 33.32375478671955,
+    "line": 10071,
+    "nearest_node_m": 6266.289925273284,
+    "pixel": 10897,
+    "raster": [
+     13572,
+     23281
+    ],
+    "residual_m": 6.121841407541473e-11,
+    "window": {
+     "first_col": 10783,
+     "first_row": 10054,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-13",
+   "gamma2": 0.007111,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 810,
+   "anchor": {
+    "incidence_deg": 41.902965726352434,
+    "line": 4532,
+    "nearest_node_m": 1631.8465179899624,
+    "pixel": 3382,
+    "raster": [
+     13716,
+     25540
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 3268,
+     "first_row": 4515,
+     "n_cols": 229,
+     "n_rows": 35
+    }
+   },
+   "chip": [
+    35,
+    229
+   ],
+   "date": "2021-10-14",
+   "gamma2": 0.004738,
+   "orbit": "DESCENDING",
+   "subswath": "IW3"
+  }
+ ],
+ "site": "haltern",
+ "support": {
+  "assumptions": [
+   "height projection: 164.0 m x cos(43.590 deg) / 2.3296 m = 50.99 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+   "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+  ],
+  "band": [
+   5,
+   109
+  ],
+  "chip": [
+   35,
+   229
+  ],
+  "guard_cells": 852,
+  "height_projected": true,
+  "height_shift_bins": 50.99018746830101,
+  "hull_m": [
+   182.5809998558683,
+   11.599794077673254
+  ],
+  "margin": {
+   "bins": 1,
+   "bins_m": 3.3786863319763065,
+   "lines": 1,
+   "lines_m": 13.85897,
+   "min_margin": 1,
+   "rule": "max(min_margin, ceil(metres/ground_spacing + model_bins)) per axis"
+  },
+  "record": {
+   "N_bins": 109,
+   "N_lines": 5,
+   "anchor_bin": 13595,
+   "anchor_line": 3976,
+   "assumptions": [
+    "height projection: 164.0 m x cos(43.590 deg) / 2.3296 m = 50.99 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+    "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+   ],
+   "azimuth_sample_m": 13.859,
+   "budget": {
+    "azimuth_bins": 0.0,
+    "azimuth_m": 1.0,
+    "height_uncertainty_bins": 0.0,
+    "height_uncertainty_m": 0.0,
+    "model_azimuth_m": 0.0,
+    "notes": [
+     "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+    ],
+    "placement_note": "systematic geolocation error moves the echo and the support together, so it is recorded, not margined",
+    "placement_uncertainty_m": 0.0,
+    "range_bins": 0.0,
+    "range_m": 1.0,
+    "registration_m": 1.0,
+    "registration_source": "default (no measured registration error for this group)"
+   },
+   "chip": [
+    3974,
+    3978,
+    13541,
+    13649
+   ],
+   "chip_cells": 545,
+   "chip_m": [
+    69.3,
+    368.3
+   ],
+   "geometry_notes": [
+    "ground range = dr_slant / sin(theta)"
+   ],
+   "group": null,
+   "height_m": 164.0,
+   "height_projected": true,
+   "height_shift_bins": 50.9902,
+   "incidence_deg": 43.58955391357855,
+   "incidence_source": "burst annotation",
+   "margin_bins": 1,
+   "margin_lines": 1,
+   "margin_m": [
+    13.859,
+    3.379
+   ],
+   "model": "hull",
+   "range_ground_m": 3.3787,
+   "range_sample_m": 2.329562,
+   "sample_source": {
+    "azimuth_sample_m": "burst annotation",
+    "range_sample_m": "burst annotation"
+   },
+   "schema": "ocv-observation-support-v1",
+   "shape": "polygon"
+  },
+  "ring_cells": 6618,
+  "ring_complete": true,
+  "support_cells": 545,
+  "support_m": [
+   368.2768101854174,
+   69.29485
+  ]
+ },
+ "support_shape": "polygon"
+}

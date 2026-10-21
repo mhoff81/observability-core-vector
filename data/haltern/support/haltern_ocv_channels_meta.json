@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(35, 229)": 107
+ },
+ "asset_name_note": "the committed table's asset_name column carries this label and is copied verbatim, not repaired; the dates, orbit and sub-swath identify the site's own target",
+ "chip": {
+  "cols": 229,
+  "guard_cells": 852,
+  "ring_cells": 6618,
+  "ring_complete": true,
+  "rows": 35,
+  "support_cells": 545
+ },
+ "committed_asset_name": "Haltern AV9 Wind Turbine (Nordex N149/4.5)",
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/haltern/haltern_ocv_channels.csv",
+   "sha256": "a82d716056ef7fa468f8b65d30302f9a03db6b1faba518de1c9b0296d52fc883"
+  },
+  "manifest": {
+   "path": "data/haltern/support/haltern_rects_support.txt.manifest.json",
+   "sha256": "6da364d13e4f82b0d65be8c65a60cf338a509eb469d57f4bd523925c1651524c"
+  },
+  "rects": {
+   "path": "data/haltern/support/haltern_rects_support.txt",
+   "sha256": "a431b064e06e81dbd259f05a4faf3baecf563d03f85f3cab4c2ceb39653517a8"
+  }
+ },
+ "label": "Haltern AV9 wind turbine",
+ "n_rects": 107,
+ "n_refused": 0,
+ "n_rows": 107,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "haltern",
+ "spacing": {
+  "azimuth_sample_m": 13.859,
+  "incidence_deg": 43.589554,
+  "range_ground_m": 3.3787
+ },
+ "support_band": [
+  5,
+  109
+ ],
+ "without_partner": []
+}

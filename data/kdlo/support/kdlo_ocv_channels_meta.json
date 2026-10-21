@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(35, 475)": 60
+ },
+ "asset_name_note": null,
+ "chip": {
+  "cols": 475,
+  "guard_cells": 2450,
+  "ring_cells": 12280,
+  "ring_complete": true,
+  "rows": 35,
+  "support_cells": 1895
+ },
+ "committed_asset_name": null,
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/kdlo/kdlo_ocv_channels.csv",
+   "sha256": "21dfe5b649c535ad0ca10b5414c55e08a445462b8d8755d39813c8a045415d78"
+  },
+  "manifest": {
+   "path": "data/kdlo/support/kdlo_rects_support.txt.manifest.json",
+   "sha256": "1333d27bab7698c352daed1addfba681950d2915d7299267a0c4fc2d3f38613c"
+  },
+  "rects": {
+   "path": "data/kdlo/support/kdlo_rects_support.txt",
+   "sha256": "240c7d3f29d7d35a05b1a670bc09249b6f87e96764a85e6de05023dd68f7a4c9"
+  }
+ },
+ "label": "KDLO media tower",
+ "n_rects": 60,
+ "n_refused": 0,
+ "n_rows": 60,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "kdlo",
+ "spacing": {
+  "azimuth_sample_m": 13.9421,
+  "incidence_deg": 33.595326,
+  "range_ground_m": 4.2101
+ },
+ "support_band": [
+  5,
+  379
+ ],
+ "without_partner": []
+}

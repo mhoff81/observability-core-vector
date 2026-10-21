@@ -45,8 +45,8 @@
   "range_ground_m": 3.3583
  },
  "support_band": [
-  "lines",
-  "bins"
+  9,
+  25
  ],
  "without_partner": []
 }

@@ -402,3 +402,24 @@ Both files are deterministic: the bootstrap is seeded, so two runs are byte for
 byte identical. The `pooled_all_damage` block pins the committed LUMO EMV
 reference for the five dimensions of that file; a deviation makes the script
 exit 1.
+
+## The support-sized migration (`data/<site>/support/`)
+
+CTS, KDLO, Carolabrücke, Haltern and YWF now carry a second, support-sized
+chip bundle beside their committed table; Bautzen and LUMO already did. The
+method, the per-site numbers, the refusal finding (ASC of Haltern and YWF does
+not fit into its burst) and the reason Ponte Morandi is not cut yet are written
+down in [`support_migration.md`](support_migration.md).
+
+Nothing in this folder was replaced: each migrated site keeps its committed
+table untouched and gains `<site>/support/` with the chips, the cut manifest and
+the re-measured table (every mask column beside its `*_committed` twin).
+
+### Orbit figures on the support chip
+
+Each migrated site carries `fig_<site>_ocv_orbits.json` in its `support/` folder:
+the plotted overpasses, the state runs and the per-state medians, with the table's
+sha256 and the cut manifest's chip, band, cell counts and refusals. It is written
+by `code/orbits/fig_ocv_orbits.py`, the companion of
+`figures/<site>/fig_<site>_ocv_orbits.{jpg,md}`; `--verify` re-derives every value
+from the table.

@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(35, 189)": 14
+ },
+ "asset_name_note": "the committed table's asset_name column carries this label and is copied verbatim, not repaired; the dates, orbit and sub-swath identify the site's own target",
+ "chip": {
+  "cols": 189,
+  "guard_cells": 612,
+  "ring_cells": 5658,
+  "ring_complete": true,
+  "rows": 35,
+  "support_cells": 345
+ },
+ "committed_asset_name": "Yeongdeok Wind Turbine (Samgye-ri)",
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/ywf/ywf_ocv_channels.csv",
+   "sha256": "b5b17240246f613357814068ec3df62fceedead11b8426e01e3ebd6b006c5f33"
+  },
+  "manifest": {
+   "path": "data/ywf/support/ywf_rects_support.txt.manifest.json",
+   "sha256": "66440913fe5e86eacc9b6f4e99c4a666ce66cb84b60b1d67fdd17f074dbc0c2c"
+  },
+  "rects": {
+   "path": "data/ywf/support/ywf_rects_support.txt",
+   "sha256": "49e4cd7abe79a568bc980fea19b7b8bd4577c4a45114f949f81a559b0228ae00"
+  }
+ },
+ "label": "Yeongdeok Unit 21",
+ "n_rects": 14,
+ "n_refused": 0,
+ "n_rows": 14,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "ywf",
+ "spacing": {
+  "azimuth_sample_m": 13.9073,
+  "incidence_deg": 43.829114,
+  "range_ground_m": 3.3639
+ },
+ "support_band": [
+  5,
+  69
+ ],
+ "without_partner": []
+}

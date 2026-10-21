@@ -1,0 +1,131 @@
+{
+ "dimensions": {
+  "base_width_m": {
+   "method": "not read",
+   "reason": "nobody read a width: at 64.5 m a 12 m base subtends 10.5 deg (about 110 px at 640 px / 60 deg) and a 1.5 m car 1.3 deg, so it is readable, but the reading was not made. The registry default of 12.0 m therefore stands, unconfirmed.",
+   "settles": [
+    "a reading in the existing frame",
+    "a closer pano",
+    "an orthophoto at <= 0.5 m/px (12 m = 24 px)"
+   ],
+   "source_type": null,
+   "status": "unconfirmed_default",
+   "uncertainty_m": null,
+   "value_m": null
+  },
+  "mast_height_m": {
+   "method": "documented in data/espoo/reference/espoo_mast_observability.json; confirmed as plausible by the reviewer in pano eyKXqe8bXRKVcBnJdsPogA",
+   "note": "a 36 m mast subtends 29.2 deg at 64.5 m and 36.2 deg at 49.2 m, so it is unmistakable in the frame",
+   "source_type": "OSM node 2233589804 (height=36) + human visual check",
+   "status": "confirmed_qualitatively",
+   "uncertainty_m": null,
+   "value_m": 36.0
+  }
+ },
+ "generated_by": "manual record: readings from Street View panos, written by hand because a human reading cannot be regenerated",
+ "label": "Espoo Kurttila mast (event-free control)",
+ "licence": "Street View imagery is NOT stored in this repository. Only the reading, the pano ids and their metadata are recorded; the Maps Platform terms forbid storing the imagery itself.",
+ "mast_position": {
+  "adopted": {
+   "evidence": "equals OSM node 2233589804 to 0.0 m (height=36, man_made=mast, tower:construction=lattice, tower:type=communication) and is the coordinate the site's own reference uses (espoo_phase_stationarity.json)",
+   "point": [
+    60.1708674,
+    24.6111439
+   ],
+   "status": "adopted"
+  },
+  "consequence": "none for the numbers: Espoo has no mask layer, so no chip and no OCV value depends on the asset point. If it ever gets one, this must be settled first.",
+  "decision": {
+   "decided_by": "the reviewer",
+   "decision": "use the OSM node",
+   "effect": "none on any number - Espoo has no mask layer. It fixes the asset point for any future work: the OSM node, not a map click.",
+   "point": [
+    60.1708674,
+    24.6111439
+   ],
+   "why": "OSM node 2233589804 carries the height the record documents (36 m) and the lattice/communication tags, and it is the coordinate the site's SAR reference already uses; the reported alternatives are 50.7 m and 3 869.8 m away and carry no evidence."
+  },
+  "reported_alternatives": [
+   {
+    "distance_from_adopted_m": 50.7,
+    "point": [
+     60.17130731440243,
+     24.61090453976148
+    ],
+    "reason": "no corroboration: Overpass was unavailable (502 / timeout), so whether a second mast node exists there is unchecked. 50.7 m is inside a telecom site and may well be another antenna, but the SAR record anchors on the OSM node.",
+    "reported_by": "the reviewer, \"here is the mast\"",
+    "status": "not adopted"
+   },
+   {
+    "distance_from_adopted_m": 3869.8,
+    "point": [
+     60.20518,
+     24.622357
+    ],
+    "reason": "3.87 km from the site the SAR record measured. Kurttila is fixed by that record, so a point 3.9 km away cannot be the same asset.",
+    "reported_by": "the reviewer, as a fallback",
+    "status": "rejected"
+   }
+  ],
+  "settles": [
+   "an Overpass query at the reported point when the API is back",
+   "an orthophoto at <= 0.5 m/px showing both structures",
+   "the site project's own asset record, if it names a node"
+  ]
+ },
+ "not_claimed": [
+  "The height was confirmed qualitatively, not measured.",
+  "base_width_m is still the registry default and is marked unconfirmed.",
+  "The mast coordinate is not verified against the panorama.",
+  "Nothing here makes Espoo migratable: it has no mask layer."
+ ],
+ "position_check": {
+  "computed_bearing_deg": 71.1,
+  "consequence": "none for the numbers: Espoo has no mask layer and no chip. If it ever gets one, the OSM node is the anchor, not a structure identified by eye in a panorama.",
+  "observed": "the reviewer reports the mast on the right of the frame at yaw 97.46 deg, elevation plausible",
+  "osm": {
+   "construction": "lattice",
+   "coordinates": [
+    60.170867,
+    24.611144
+   ],
+   "height": "36",
+   "node": "2233589804",
+   "offset_from_repo_point_m": 0.0,
+   "resolved_by": "asset_onboarder.osm.resolve(lattice_tower, dist=400)",
+   "tower_type": "communication"
+  },
+  "repo_point": [
+   60.1708674,
+   24.6111439
+  ],
+  "status": "explained_as_another_structure",
+  "why": "the repository point equals OSM node 2233589804 to 0.0 m, and that node carries height=36 m, so the OSM mast sits 26.4 deg LEFT of centre in that frame. What is on the right is another antenna on the same telecom site, not the asset. Only the OSM node is measured."
+ },
+ "schema": "ocv-asset-evidence-v1",
+ "site": "espoo",
+ "sources": [
+  {
+   "bearing_to_repo_point_deg": 30.6,
+   "captured": "2026-07",
+   "distance_to_repo_point_m": 49.2,
+   "how": "streetview/metadata with radius 50 m at 60.1708674, 24.6111439",
+   "pano_id": "wk6r5QGt3DnY8yBZhL_KDw",
+   "position": [
+    60.17048733157149,
+    24.61069130415455
+   ]
+  },
+  {
+   "bearing_to_repo_point_deg": 71.1,
+   "captured": "2026-07",
+   "distance_to_repo_point_m": 64.5,
+   "how": "the frame the reviewer opened (yaw 97.46 deg, pitch -12.46 deg)",
+   "pano_id": "eyKXqe8bXRKVcBnJdsPogA",
+   "position": [
+    60.17070345637237,
+    24.61008499271463
+   ]
+  }
+ ]
+}

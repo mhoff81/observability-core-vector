@@ -785,3 +785,9 @@ bash figures/espoo/fig_espoo_ocv_months.sh            # ~4 s
 python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
 ```
 
+## `figures/orbits/` — the support-sized OCV time series
+
+`fig_ocv_orbits.sh` draws one twelve-panel figure per migrated site into
+`figures/<site>/` (see `code/README.md`). The wrapper picks the first interpreter
+that has numpy and matplotlib and prints which one it used, because the figure
+has to be reproducible on a machine whose virtualenv is not the author's.

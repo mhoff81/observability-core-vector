@@ -95,6 +95,99 @@ SITES = {
         "support": "data/lumo/support/lumo_ocv_channels.csv",
         "emv_reference": "data/lumo/reference/lumo_echo_mask_vector.json",
     },
+    "cts": {
+        "label": "Champlain Towers South (target footprint)",
+        "table_key": "cts",
+        "channel_column": "orbit_direction",
+        "channels": ("ASCENDING",),
+        "label_column": "state",
+        "healthy": "pre-collapse (healthy)",
+        "states": ("post-collapse",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/cts/cts_ocv_channels.csv",
+        "support": "data/cts/support/cts_ocv_channels.csv",
+        "emv_reference": None,
+    },
+    "kdlo": {
+        "label": "KDLO media tower",
+        "table_key": "kdlo",
+        "channel_column": "orbit_direction",
+        "channels": ("DESCENDING",),
+        "label_column": "state",
+        "healthy": "pre",
+        "states": ("rebuild",),
+        # `single` carries n = 1: a state with one overpass has no contrast, and
+        # scoring it would turn a single comparison into an SDS.
+        "exclude_states": ("single",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/kdlo/kdlo_ocv_channels.csv",
+        "support": "data/kdlo/support/kdlo_ocv_channels.csv",
+        "emv_reference": None,
+    },
+    "carola": {
+        "label": "Carolabrücke deck",
+        "table_key": "carola",
+        "channel_column": "orbit_direction",
+        "channels": ("ASCENDING", "DESCENDING"),
+        "label_column": "state",
+        "healthy": "pre-collapse (healthy)",
+        "states": ("post-collapse",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/carola/carola_ocv_channels.csv",
+        "support": "data/carola/support/carola_ocv_channels.csv",
+        "emv_reference": None,
+    },
+    "haltern": {
+        "label": "Haltern AV9 wind turbine",
+        "table_key": "haltern",
+        "channel_column": "orbit_direction",
+        "channels": ("ASCENDING", "DESCENDING"),
+        "label_column": "state",
+        "healthy": "pre-collapse (healthy)",
+        "states": ("post-collapse",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/haltern/haltern_ocv_channels.csv",
+        "support": "data/haltern/support/haltern_ocv_channels.csv",
+        "emv_reference": None,
+    },
+    "ywf": {
+        "label": "Yeongdeok Unit 21",
+        "table_key": "ywf",
+        "channel_column": "orbit_direction",
+        "channels": ("ASCENDING", "DESCENDING"),
+        "label_column": "state",
+        "healthy": "pre-collapse (healthy)",
+        "states": ("post-collapse",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/ywf/ywf_ocv_channels.csv",
+        "support": "data/ywf/support/ywf_ocv_channels.csv",
+        "emv_reference": None,
+    },
+    "morandi": {
+        "label": "Ponte Morandi deck",
+        "table_key": "morandi",
+        "channel_column": "orbit_direction",
+        "channels": ("ASCENDING", "DESCENDING"),
+        "label_column": "state",
+        "healthy": "pre-collapse (healthy)",
+        "states": ("post-collapse",),
+        "record_class": False,
+        "dimensions": (("gamma2", "gamma2_mask"), ("P", "P"), ("D", "D"),
+                       ("F", "F"), ("A", "A"), ("S", "S")),
+        "committed": "data/morandi/morandi_ocv_channels.csv",
+        "support": "data/morandi/support/morandi_ocv_channels.csv",
+        "emv_reference": None,
+    },
     "bautzen": {
         "label": "Bautzen OpenLabs bridge",
         "table_key": "bautzen",
@@ -202,6 +295,7 @@ def _states_in(rows, spec):
     found = {row.get(spec["label_column"]) for row in rows}
     found.discard(spec["healthy"])
     found = {value for value in found if value not in (None, "")}
+    found -= set(spec.get("exclude_states") or ())
     if found != set(spec["states"]):
         raise ValueError(
             f"{spec['label']}: the table carries {sorted(found)} but the "
@@ -482,8 +576,9 @@ def markdown(report, repo):
     add("")
     metric = report["metric"]
     ci_meta = metric["ci"]
-    add("Bautzen and LUMO, recomputed on the **support-sized chip** (odd, "
-        "anchor-centred, guard 30 m, reference ring 30–200 m) and beside it on "
+    add(f"{len(report['sites'])} sites (" + ", ".join(sorted(report['sites'])) +
+        "), recomputed on the **support-sized chip** (odd, anchor-centred, "
+        "guard 30 m, reference ring 30–200 m) and beside it on "
         "the committed table. The metric is the project's own: "
         "`SDS = 10 · |Cliff's delta|`, computed with "
         "`code/lumo/lumo_ocv_stats.cliffs_delta`; the interval is a percentile "

@@ -30,6 +30,30 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 | [`ywf/`](ywf/README.md) | Yeongdeok Wind Farm, Unit 21, Samgye-ri (collapsed 2026-02-02) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest; its second cross-cut (the pass geometry, ASCENDING / DESCENDING) is reported as a pinned, explicitly descriptive echo-coverage split; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the OSM road anchor) and committed beside it | `ywf/README.md` |
 | [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed | `espoo/README.md` |
 
+### `orbits/` — one OCV time-series figure per support-sized table
+
+`[orbits/fig_ocv_orbits.py](orbits/fig_ocv_orbits.py)` draws the twelve-panel
+companion for the six sites migrated to the support-sized chip (CTS, KDLO,
+Carolabrücke, Haltern, YWF, Ponte Morandi): one panel per **dimension x
+observation channel**, in the order and with the axes the LUMO and Bautzen
+figures use (`gamma2, P, D, F, A, S`; `P, D, F, A` logarithmic).
+
+Two states, never more: **pre-collapse and post-collapse**, except KDLO, whose
+record carries **pre-collapse and after rebuild**. A state with a single overpass
+(KDLO's `single`) is dropped and named in the markdown. A channel with no data is
+not drawn empty — the panel carries the reason (YWF's ASC track has one healthy
+and no damaged overpass).
+
+```sh
+bash figures/orbits/fig_ocv_orbits.sh            # all six, with --verify
+bash figures/orbits/fig_ocv_orbits.sh --site cts
+```
+
+Outputs: `figures/<site>/fig_<site>_ocv_orbits.{jpg,md}` and
+`data/<site>/support/fig_<site>_ocv_orbits.json`. `--verify` re-derives every
+plotted point, run and median from the table and fails on a mismatch — the figure
+computes nothing the JSON does not carry.
+
 ### `sds/` — the cross-site SDS report (the one script that reads two sites)
 
 `[sds/sds_support.py](sds/sds_support.py)` asks the question the new chip has to
