@@ -1,0 +1,15 @@
+Experiment,State,Channel,n,R_mask,R_other,Direction,Scale,Support
+LUMO,healthy,ASC,40,0,0,A=0 F=0 | gamma2=0 P=0 S=0,mad,ok
+LUMO,DAM 3,ASC,8,0.853355,0.571261,A+ F+ | gamma2- P- S+,mad,ok
+LUMO,DAM 4,ASC,5,0.364967,0.792969,A- F- | gamma2+ P- S+,mad,thin
+LUMO,DAM 6,ASC,4,0.398503,0.724573,A+ F+ | gamma2- P- S+,mad,thin
+LUMO,healthy,DESC,81,0,0,A=0 F=0 | gamma2=0 P=0 S=0,mad,ok
+LUMO,DAM 3,DESC,17,0.388716,0.28057,A- F- | gamma2+ P- S-,mad,ok
+LUMO,DAM 4,DESC,11,0,0.17921,A=0 F=0 | gamma2- P+ S+,mad,ok
+LUMO,DAM 6,DESC,12,0.22248,0.647646,A- F- | gamma2- P+ S+,mad,ok
+Bautzen,RS,ASC,7,0,0,A=0 F=0 | gamma2=0 P=0 S=0,pooled_mad,ok
+Bautzen,DS1,ASC,23,0.689595,1.89658,A+ F=0 | gamma2+ P- S+,pooled_mad,ok
+Bautzen,DS2,ASC,6,0.755981,1.80758,A+ F- | gamma2+ P- S+,pooled_mad,ok
+Bautzen,RS,DESC,7,0,0,A=0 F=0 | gamma2=0 P=0 S=0,pooled_mad,ok
+Bautzen,DS1,DESC,23,1.3096,0.833856,A+ F- | gamma2- P+ S-,pooled_mad,ok
+Bautzen,DS2,DESC,5,1.57257,1.91137,A+ F- | gamma2- P+ S-,pooled_mad,thin

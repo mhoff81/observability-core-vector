@@ -1,6 +1,6 @@
 # Haltern AV9 wind turbine — OCV trajectories before and after the collapse
 
-Trajectories of the six OCV dimensions across the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
+Trajectories of the six OCV dimensions before and after the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
 
 ## States
 
@@ -8,7 +8,7 @@ Two states, as the record defines them: **pre-collapse** and **post-collapse** (
 
 ## Rows and refusals
 
-| channel | pre | post | runs |
+| channel | pre-collapse | post-collapse | runs |
 | --- | --- | --- | --- |
 | ASC | 44 | 5 | 2 |
 | DESC | 52 | 6 | 2 |

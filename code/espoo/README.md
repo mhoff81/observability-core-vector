@@ -229,3 +229,249 @@ bash figures/espoo/fig_espoo_ocv_months.sh            # the same, via the wrappe
 python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
 ```
 
+
+### `fig_espoo_ocv_orbits.py` — two years, two orbits, no states
+
+Espoo is the **event-free control**: `damage_label` and `structural_state` are
+empty in every row, so this figure has no state bands at all — the axis is time
+only, and the question is stability.
+
+The record gives two full years (2024-09-05 … 2026-09-07), a regular
+six-rows-per-month cadence, and 69 dates that carry **both** an afternoon ASC and
+a morning DESC. Six panels (`gamma2`, `A`, `displacement`, `brightness`,
+`phase_coherence`, `phase_rms`), two series each, points per overpass. The trend
+is a **Theil–Sen line**, drawn solid only where the ported stationarity rule says
+trend (block interval excludes zero *and* Mann-Kendall p < 0.05), dashed otherwise
+— a statement with an interval, not a smoother.
+
+```bash
+python3 code/espoo/fig_espoo_ocv_orbits.py            # ~3 min, writes JPG + MD + JSON
+python3 code/espoo/fig_espoo_ocv_orbits.py --boot 300 --selftest
+python3 code/espoo/fig_espoo_ocv_orbits.py --verify    # 42 fields recomputed
+```
+
+Outputs `figures/espoo/fig_espoo_ocv_orbits.{jpg,md}` (630 dpi JPEG) and
+`data/espoo/fig_espoo_ocv_orbits.json`. Three tests, pre-registered:
+
+1. **drift** (`espoo_ocv_stats.stationarity_of`, reused): **no dimension and no
+   orbit gets the trend flag.** The one borderline cell is `gamma2` DESC
+   (+0.0071/a, interval [+4.9e-05, +0.0156], but Mann-Kendall p = 0.088 — the flag
+   rule needs both, so the line stays dashed).
+2. **year repeat**, twelve month pairs between the two 365-day campaign windows:
+   `gamma2` ASC +0.070 [−0.030, +0.143] (8 of 12 months positive) and DESC
+   +0.0156 [−0.0015, +0.0165] (8 of 12) — no systematic year difference. The one
+   clear exception is **`A` in DESC: −3.5 masked pixels [−12, −0.5], 2 of 10**
+   months positive; the mask is systematically smaller in year two. `brightness`
+   ASC sits on the boundary (0.0, [−0.075, 0], 1 of 11 months positive). The two
+   phase dimensions cannot run this test: they cover 2024-09 … 2025-10 only, so
+   just two months fall in both windows (reported with that reason).
+3. **orbit contrast, paired by date** (n = 69, no event in it): ASC − DESC is
+   +0.113 for `gamma2` [+0.071, +0.224], 93 % of days positive; −4 masked pixels
+   [−5, −1] for `A`, 28 %; −0.0024 m for `displacement`, 17 %; +0.261 for
+   `brightness`, 67 %; the phase dimensions are not distinguishable from zero.
+   **The difference itself does not drift** in any dimension — the geometry effect
+   is stable across the two years.
+
+That last table is the number the event sites lack: a geometry offset measured
+with no event in it, and stable. Espoo has **no mask layer** (`A` is the
+pipeline's `coherence_masked_pixels`; `D, F, S, P` and `gamma2_mask` do not
+exist here), so a chip-sized version still waits on a confirmed `base_width_m`.
+
+### `espoo_base_width.py` — the one geometric number the record does not carry
+
+`asset_evidence.json` holds `base_width_m` as `unconfirmed_default` (12.0 m, the
+registry default for a lattice tower) with the reason "nobody read a width". The
+mast is 36 m tall and documented, the footprint width is not — and it is the only
+geometric input missing for a support rectangle (the chip itself is sized by the
+200 m reference ring, not by the mast).
+
+```bash
+python3 code/espoo/espoo_base_width.py --panos                 # the pano table
+python3 code/espoo/espoo_base_width.py --selftest              # the geometry and the guard
+python3 code/espoo/espoo_base_width.py \
+    --pano AEYr7sSKMbOVLnwPVDRY3g --px 116 --fov 60 \
+    --pano SbCRupSUGyADKLwb7veNGQ --px 148 --fov 60 --adopt
+```
+
+Measured quantity: **outer edge to outer edge of the two outer legs at ground
+level**, at 60 deg horizontal over 640 px (10.67 px/deg, the scale
+`asset_evidence.json` already uses for its "12 m = 110 px at 64.5 m" note). The
+rule is deliberately unforgiving: **two independent readings within 1.5 m** or
+nothing is adopted, and `--adopt` writes the value plus both readings and the
+formula into `asset_evidence.json` (keeping `.bak-width`) and refuses to
+overwrite a value that is already confirmed.
+
+Why 1.5 m is enough: the width only sets the support rectangle inside the chip,
+and the 30 m guard means a 1.5 m error cannot clip the mast. Why it is still
+worth doing: it makes `A` admissible instead of defaulted.
+
+Pano table (from `espoo_site_geometry.md`; 12 m ≈ px at 60 deg / 640 px):
+`AEYr7sSKMbOVLnwPVDRY3g` 63.1 m → 116 px (best view), `SbCRupSUGyADKLwb7veNGQ`
+49.0 m → 149 px, `GveCM2wS-gN-zWrNFmII_w` 49.9 m → 146 px, `lSdEAOCz4_FlRTNG352ziQ`
+53.0 m → 138 px, `W9HFZy8cxmXKeMXtRohb3A` 54.1 m → 135 px, `vvhBpOg7YlLxmWTeFPMLbQ`
+68.2 m → 107 px, `eggBJwZBZH1iEGBuWAXE3w` 50.2 m → 145 px,
+`f2MnW9O3tbDOVvzhfNaBLg` 60.1 m → 122 px, `9c6Glb7byX0fkTMNHBHhqA` 74.0 m → 99 px.
+
+### The echo mask: what the first S3 probe found (2026-10-22)
+
+The support-chip rule **can** be applied at Espoo, but the site is at the edge of
+the swath, and that limits which overpasses are cuttable:
+
+```
+python3 tools/ocv_migrate.py --probe 3 --site espoo \
+    --env-file secrets/espoo_slc.env --auth static
+
+2024-09-05 ASCE   35 x 129  A=65                     cut
+2024-09-10 ASCE  REFUSED: window ends at column 23344, past the raster's 23280 samples
+2024-09-05 DESC  REFUSED: window ends at column 23062, past the raster's 22998 samples
+```
+
+* **IW1 is the only sub-swath that images the mast.** IW2 and IW3 return `NaN`
+  for the anchor (the point is outside their grids), so `subswath` in
+  `tools/ocv_migrate.py` is pinned to `IW1`.
+* **In IW1 the mast sits on the far range edge** of the burst raster: the chip
+  needs `half_bins = 64` (200 m ring + margin at 3.70 m ground range), and on
+  two of the three probed dates only ~0 of those 64 columns exist beyond the
+  anchor. The refusal is the tool doing its job — it will not crop the ring.
+* The offset **varies per acquisition** by a few hundred metres (the burst
+  window is placed per date), so the eligibility is a property of the date, not
+  of the site: 1 of 3 probed overpasses was cuttable.
+
+What this means for a cut: the mask would exist only for the subset of dates
+whose burst window leaves the ring margin. That subset is deterministic but not
+random — it selects on burst-window placement, which co-varies with orbit
+geometry and season — so a cut must report the excluded dates and the acceptance
+rate, and the stability figure must say which series it is actually looking at.
+
+Alternatives, in order of rule fidelity: (1) cut the eligible subset and report
+it, (2) a **half-ring** (azimuth ±200 m, range 30-200 m on the near side only)
+if every date is needed — a documented deviation from the eight-site rule, (3)
+no mask, which is where this stood before the probe.
+
+The eight-date probe (2026-10-22) makes the pattern quantitative:
+
+| date | orbit | result |
+|---|---|---|
+| 2024-09-05 | ASC | **cut**, chip 35 x 129, `A = 65` |
+| 2024-09-10 | ASC | refused (column 23344 > raster 23280) |
+| 2024-09-17 | ASC | **cut**, `A = 61` |
+| 2024-10-04 | ASC | refused (23344 > 23280) |
+| 2024-09-05 | DESC | refused (23062 > 22998) |
+| 2024-09-10 | DESC | **cut**, `A = 392` |
+| 2024-09-17 | DESC | refused (23061 > 22997) |
+| 2024-10-04 | DESC | **cut**, `A = 708` |
+
+**4 of 8 cut, and the refusals alternate by acquisition** (same column offsets to the
+sample): the burst-window placement flips, so a cut of the eligible subset would
+keep every other overpass, not a random half. Two consequences for any later
+figure: the series is halved *and* selected on burst geometry, and `A` at the
+mast differs by an **order of magnitude between the orbits** (ASC 61-65,
+DESC 392-708) - a property of the observation geometry, not of the tower.
+
+### `fig_espoo_ocv_chips.py` — the first OCV vector of the chip, and its three tests
+
+The 75 support chips carry what the pipeline export never had: `A, D, F, S, P`
+and `gamma2_mask`. This module runs the same three tests as the pipeline figure on
+that vector — with one structural change: **the pairing is gone**. The cut is
+restricted to the two tracks that place the mast inside the swath (ASC =
+relative orbit **160**, DESC = **51**), and those tracks have only **three shared
+dates**, so the orbit contrast is a two-sample comparison.
+
+```bash
+python3 code/espoo/fig_espoo_ocv_chips.py            # ~20 s, writes JPG + MD + JSON
+python3 code/espoo/fig_espoo_ocv_chips.py --selftest  # 9 checks
+python3 code/espoo/fig_espoo_ocv_chips.py --verify    # 42 fields recomputed
+```
+
+Result, in three lines:
+
+* **No drift anywhere.** All six dimensions on both tracks get `trend = no`; the
+  closest case is `P` on ASC (slope −0.022/a, interval [−0.044, +0.0007], MK
+  p = 0.013 — the interval covers zero, so the flag rule says no).
+* **One year-on-year difference**: `P` on ASC drops by −0.018 [−0.032, −0.002]
+  with 2 of 9 months positive. Everything else repeats within its interval.
+* **The two tracks are not two samples of one distribution.** The orbit contrast
+  is a complete separation: `A` 76 vs 528, `D` 0.021 vs 0.117, `F` 19 vs 133
+  (δ = −1.00), `S` 25.7 vs 14.4, `P` 0.234 vs 0.147, `gamma2_mask` 0.0164 vs
+  0.0007 (δ = +0.84 … +0.94), every p < 0.001.
+
+So "Espoo is stable" holds **within a track** and not **between** tracks: the
+series is flat over two years, and the two acquisition geometries sit at
+completely different levels. And the tautology travels with every number:
+`D = A / bbox_area` exactly, `gamma2_mask` has `n = A` in its denominator, and
+`A` itself differs sevenfold between the tracks.
+
+### Espoo in the shared orbit family — one state, drawn as one band
+
+`code/orbits/fig_ocv_orbits.py` now knows Espoo, so the twelve-panel family that
+carries the six labelled sites carries the control too:
+
+```bash
+bash figures/orbits/fig_ocv_orbits.sh --site espoo   # + --verify
+```
+
+Outputs `figures/espoo/fig_espoo_ocv_orbits_chip.{jpg,md}` and
+`data/espoo/support/fig_espoo_ocv_orbits_chip.json`. The `_chip` stem is not
+decoration: the site's `fig_espoo_ocv_orbits.jpg` is the **pipeline** figure
+(A vs S, no chip, section above), and two different figures must not share a name.
+
+What the figure had to learn. The family assumed **exactly two states** — the
+loops over `("pre", "post")`, the counts table, the legend, the title's "before
+and after". An event-free site has one, so the registry entry sets
+
+```python
+"label_column": None,              # no state column in the table
+"states": {"all": "event-free"},   # every overpass takes this state
+"out_name": "fig_espoo_ocv_orbits_chip",
+```
+
+and everything state-dependent now iterates `spec["states"]`. The `all` slot of
+`STATE_COLORS/FILL/MARKERS` is a **neutral fill** on purpose: with one state there
+is no contrast to colour, and a second colour would imply a comparison the record
+does not make. The title reads *across* the event-free record, not *before and
+after* it.
+
+The result is the flattest figure in the family: two columns (ASC 31, DESC 44),
+one run per column, six medians per column and no boundary to draw —
+`gamma2` 0.0164 / 0.0007, `P` 0.234 / 0.147, `D` 0.021 / 0.117, `F` 19 / 133,
+`A` 76 / 528, `S` 25.7 / 14.4. The horizontal median line is the whole series, and
+the separation that matters is **between the columns**, not along the time axis —
+the same reading the chip figure reaches with KS tests.
+
+The six labelled sites keep every number. For them the generalisation is an
+identity on the data — `spec["states"]` holds the same two keys in the same order
+— and the diff agrees: Carola's JSON (`data/carola/support/fig_carola_ocv_orbits.json`,
+436 overpasses) gains exactly one line, `"out_name": "fig_carola_ocv_orbits"`, and
+no value, run or median moves. `--verify` re-derives all seven without a failure.
+Note that `A` here is the chip amplitude, so it is not the pipeline figure's `A`;
+the two figures are complementary, not interchangeable.
+
+### Width sensitivity — run at 11, 12 and 13 m, and it does **not** reach the cells
+
+The 12 m base width is still `unconfirmed_default`, so the chip was re-cut at
+**11 m and 13 m** on the same 75 dates (`--base-m` in `tools/ocv_migrate.py`,
+outputs in `/tmp/espoo_w11`, `/tmp/espoo_w13`):
+
+| width | support band | chip | support cells | support_m | margin | A median |
+|---|---|---|---|---|---|---|
+| 11 m | (5, 33) | (35, 129) | 165 | (139.113, 69.540) | (1, 1) | 329 |
+| 12 m | (5, 33) | (35, 129) | 165 | (139.113, 69.540) | (1, 1) | 329 |
+| 13 m | (5, 33) | (35, 129) | 165 | (139.113, 69.540) | (1, 1) | 329 |
+
+The `(date, orbit, A, gamma2)` series are **byte-identical** at all three widths
+(row hash `41fc35be…`), and so is the support geometry — which means every other
+dimension is identical too, because `D, F, S, P` are functions of the same chip
+and the same masks.
+
+**Why:** the band is quantised in cells, `band = 2·ceil(half) + 1`. One metre of
+base width is **0.07 lines** (13.9 m/line) and **0.27 bins** (3.7 m/bin) — below
+the rounding threshold. The support is also dominated by the **height layover**
+(36 m → 12.88 bins), so a ±1 m change never approaches a cell boundary.
+
+So the pre-registered width test passes **by construction**, and the honest
+reading is narrower than "the widths agree": the trend decision cannot differ
+between 11 and 13 m at this site because the mask is the same. A confirmed width
+inside ±2 m would change nothing in the numbers; it would only make the statement
+"the support is the mast base" literally true instead of defaulted. A width would
+have to move by about **4 m in range** (one bin) or **14 m in azimuth** (one
+line) before it could touch a single cell.

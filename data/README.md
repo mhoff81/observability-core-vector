@@ -403,6 +403,22 @@ byte identical. The `pooled_all_damage` block pins the committed LUMO EMV
 reference for the five dimensions of that file; a deviation makes the script
 exit 1.
 
+### `data/sds/ocv_reconfigure.*` — the controlled-dose comparison
+
+Written by `code/sds/ocv_reconfigure.py` against the pre-registration in
+`code/sds/ocv_reconfigure_spec.md` (written before the run).
+
+| file | content |
+| --- | --- |
+| `ocv_reconfigure.json` | the dose (from `data/lumo/reference/lumo_state_frequencies.json`, with its sha256), every reference median/scale with the step of the fallback chain that produced it and **which scale was used** (`mad`, or `pooled_mad` when the reference has fewer than ten units — Bautzen), the drop counts per dimension, `r` and `z` per channel × dimension × state and × dose level, the two block magnitudes `R_mask` / `R_other` (plus the literal `[A, D, F]` block), the Jonckheere–Terpstra statistic and one-sided p per primary cell with its **Holm value inside that asset's own four-test family** (`hypotheses.H1_family`), the moving-block intervals (the reference level carries `[0, 0]` and is listed in `by_construction`), the descriptive cosines with their intervals and random-direction null, the sign patterns, and `reading.per_asset` — one verdict and one bound per asset — beside `reading.comparison` |
+| `ocv_reconfigure.md` | the report: the dose table, the compact table (`Experiment, State, Channel, n, R_mask, R_other, Direction, Support`), the H1 and H2 tables, the verdicts on P1–P3 and the list of what the numbers do not claim |
+| `ocv_reconfigure_table.csv` | the same compact table as CSV — one row per experiment × state × channel, with the `Scale` column that standardised it |
+
+Deterministic (seeded bootstrap and permutation), and `--verify` re-derives every
+cell of the table from the two records before the run is allowed to overwrite
+anything.
+
+
 ## The support-sized migration (`data/<site>/support/`)
 
 CTS, KDLO, Carolabrücke, Haltern and YWF now carry a second, support-sized

@@ -1,6 +1,6 @@
 # `code/carola/` — Carola site package: analysis and plotting scripts
 
-Seven Python modules, no package, no dependencies beyond the standard library plus
+Eight Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Carola Brücke
 (Dresden) half of the repository; the LUMO tower lives in `../lumo/`, Bautzen in
@@ -263,3 +263,93 @@ What it finds, and what it does not:
   window ends before the event does — the report prints that gap per channel
   rather than letting a short window read as "unchanged until the end".
 
+
+### `carola_ocv_decompose.py` — what is left of the post-collapse signature
+
+*This is now a thin wrapper: the method lives in `../orbits/ocv_decompose.py`, whose registry describes every site (table, event, geometry rule, targets, model tree). The Carola numbers are its regression pin — 6096 leaves of the site JSON reproduce field by field.*
+
+The orbit figure shows a large pre/post difference; this module asks how much of
+it survives once the four candidate contributions are in the model: the observed
+area `A` (explanatory, never a target), the acquisition geometry, temperature and
+season, and a residual post effect.
+
+Two **parallel ladders** are fitted per stratum and target:
+
+```
+A-adjusted   M0 (state) -> M1 (+log A) -> M2 (+T) -> M3 (+T, season)
+A-free       M0 (state) -> M2- (+T)   -> M3- (+T, season)
+```
+
+`g(Y) = log Y` for `gamma2, P, D, F` and the identity for `S` (pixels). `f(log A)`
+is linear with a 3-df restricted cubic spline as sensitivity, `h(T)` is linear and
+`season` is the two-term annual harmonic in day-of-year (a twelve-month dummy
+variant is the sensitivity). Every post coefficient carries a **moving-block
+bootstrap** CI (block 5, 3 and 7 as stability check) in which blocks are drawn
+inside each state, so none crosses the pre/post boundary or a stratum.
+
+Strata are fitted separately — `ASC 36.9` (62/85), `ASC 44.8` (62/81), `DESC`
+(60/86) — because the two ASC tracks are a strict 2-cycle and their post moves
+point in opposite directions for `A`, `D` and `F`. Pooled ASC medians read
+`A +10 %`, `D +8 %`, `F +10 %`: the strata cancel, so there is no pooled ASC
+headline. The joint ASC model (`post`, `angle`, `post x angle`) is family B and
+confirms it: the interaction is significant for `gamma2` (F 8.75, p 0.003) and
+`P` (F 6.29, p 0.013).
+
+```bash
+python3 code/carola/carola_ocv_decompose.py            # ~90 s, writes JSON + MD
+python3 code/carola/carola_ocv_decompose.py --selftest  # four planted worlds
+python3 code/carola/carola_ocv_decompose.py --verify    # 228 fields recomputed
+python3 code/orbits/ocv_decompose.py --site all        # Carola, CTS, Haltern, Morandi
+                                                       # + data/decompose_summary.md
+```
+
+Outputs `data/carola/support/carola_ocv_decompose.{json,md}`. `--selftest` builds
+four synthetic worlds where the answer is known before the fit — the effect made
+by the area alone (A-adjusted CI covers no effect, A-free does not), by the
+season (M0 sees it, M3 removes it), a genuine step (survives at −0.40) and nothing
+(all CIs cover no effect) — plus the bootstrap's determinism, the no-crossing
+rule, the refusal of `T24`/`T72`, and a wording guard that the report never
+contains `area-driven`, `caused by` or `explained by`.
+
+What it finds: after area, geometry, temperature and season, and after Holm over
+the five targets in each stratum, **one cell survives** — `gamma2` in ASC 36.9,
+ratio 2.10, CI [1.50, 2.85], Holm < 0.001. Two more have intervals that exclude
+1 without surviving Holm (`ASC 44.8 F` 0.965 [0.927, 0.992], Holm 0.110;
+`DESC P` 0.797 [0.678, 0.956], Holm 0.100). Most of the rest **co-moves with the
+observed area**: `DESC D` falls to 0.32 raw and to 0.99 after `log A`, `DESC F`
+from 0.31 to 1.05. `ASC 44.8 F` even changes sign between the ladders, which the
+verdict column reports as a sign flip rather than a result.
+
+Run across the four sites (`--site all`, summary in
+`data/decompose_summary.md`), the answer is that the Carola pattern **does**
+generalise — the post-collapse signature is largely co-movement with the
+observed area — with exactly one exception after the pre-registered robustness
+gate (`data/analysis_freeze.md`): **Morandi `D`** (ratio **0.31**, CI
+[0.22, 0.52], Holm < 0.001, placebo rank 1 of 8, n_post = 9). At Carola itself
+every dimension collapses onto the area, including `gamma2` (A-free +0.540 →
+A-adjusted +0.274, CI [−0.20, 0.61]); at CTS `P` is direction-consistent but never
+Holm-firm (0.93, Holm 0.21); Haltern's `gamma2` shrinks to 1.40 with a ladder
+that disagrees, and Morandi's `gamma2`, `P` and `S` show no independent effect
+(`gamma2` placebo rank 9 of 8). Morandi and Haltern are `thin` (9 and 11 post
+overpasses) and carry that label wherever they appear.
+
+Two warnings the report states, because they are easy to get backwards:
+
+* **`A` is not a neutral confounder.** The collapse moves the area (DESC −77 %),
+  so conditioning on it removes part of the change being measured — and for a
+  mediator it can also *create* association where the raw data show none
+  (`ASC 36.9 P`: raw ratio 1.03, A-adjusted 1.05 with an interval that grazes 1).
+  The A-adjusted column measures co-movement; the A-free column is the structural
+  signature. Both are reported for that reason.
+* **`T24` and `T72` do not exist in this record** — one temperature per overpass,
+  5 to 12 days apart. `T0` is primary and `T_smooth30` (a 30-day centred mean of
+  the overpass temperatures) the sensitivity; neither is a deck temperature.
+
+The multivariate check (standardised `M3-` residuals, circular-shift null) finds
+no global shift beyond the covariates: p = 0.21 (ASC 36.9), 0.07 (ASC 44.8),
+0.20 (DESC). The placebo panel ranks the real signature against eight pseudo
+events inside the pre period: rank 1 of 8 for DESC (raw and size-matched) and for
+ASC 44.8 raw (5 of 8 when size-matched), but 9 of 8 for ASC 36.9 — its large
+`gamma2` move is *not* exceptional against the pre period's own variability.
+DESC has 56 % of its post area below the pre 5th percentile, so its A-adjusted number
+is an extrapolation and the common-support subset is the one to read.

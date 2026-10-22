@@ -208,3 +208,37 @@ JSONs (`VERIFICATION OK`, zero problems, two independent traversals
 cross-checked); the figure script reproduces the two reference JSONs pin by pin
 (8656 checks, 0 failures) and translates the 56 German doc strings.
 
+
+### `../orbits/ocv_dose.py` — the damage ladder as a paired contrast
+
+The Bautzen record cannot be decomposed like the pre/post sites, and the table
+says why: the states are a **dose ladder** (`RS 28 / DS1 92 / DS2 22`), the states
+are also the **calendar** (RS only April/May, DS2 only September/October), the
+table carries no temperature, `gamma2` is the floor-corrected band coherence and
+can be **negative** (`gamma2_band_floor_corrected`, DS1 median −0.021), and
+`D = A / bbox_area` exactly while `A == n_band` in every row.
+
+What it does carry is a **control track 500 m east on the same dates** —
+`ASC Brücke` / `DESC Brücke` / `ASC Kontrolle 500 m östlich` /
+`DESC Kontrolle 500 m östlich`, 71 complete `(date, orbit)` pairs and no orphans.
+The module therefore works on the paired difference bridge − control, which
+removes season, acquisition day and processing (everything the missing
+temperature control would otherwise have to absorb), and then fits the state
+contrast on that difference: `RS → DS1`, `RS → DS2`, `RS → {DS1, DS2}`, each with
+and without `log A`, with a moving-block bootstrap that never crosses the dose
+step and Holm over the targets within a contrast.
+
+```bash
+python3 code/orbits/ocv_dose.py            # ~30 s, writes JSON + MD
+python3 code/orbits/ocv_dose.py --selftest  # planted step, shared step, pairing
+python3 code/orbits/ocv_dose.py --verify    # 30 fields recomputed
+```
+
+Outputs `data/bautzen/support/bautzen_ocv_dose.{json,md}`. The result is a clean
+area signature — the bridge's mask grows 51 % (DS1) and 96 % (DS2) relative to
+the control, whose area is flat to falling — while `D` and `F` "survive" Holm only
+because they **are** the area (`D = A / bbox_area`, `F` tracks `A` at r ≈ 0.98);
+`S` (−0.748) and `gamma2` (+0.203) have intervals excluding zero but Holm 0.126
+each, and `P` shows nothing. No cell can reach the four-site
+`generalisation-grade` label, because the state is a campaign phase and a placebo
+would be a placebo in time only — see `data/analysis_freeze.md`.

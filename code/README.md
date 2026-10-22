@@ -33,16 +33,32 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 ### `orbits/` — one OCV time-series figure per support-sized table
 
 `[orbits/fig_ocv_orbits.py](orbits/fig_ocv_orbits.py)` draws the twelve-panel
-companion for the six sites migrated to the support-sized chip (CTS, KDLO,
-Carolabrücke, Haltern, YWF, Ponte Morandi): one panel per **dimension x
-observation channel**, in the order and with the axes the LUMO and Bautzen
+companion for the seven sites migrated to the support-sized chip (CTS, KDLO,
+Carolabrücke, Haltern, YWF, Ponte Morandi, and Espoo): one panel per **dimension
+x observation channel**, in the order and with the axes the LUMO and Bautzen
 figures use (`gamma2, P, D, F, A, S`; `P, D, F, A` logarithmic).
 
-Two states, never more: **pre-collapse and post-collapse**, except KDLO, whose
-record carries **pre-collapse and after rebuild**. A state with a single overpass
-(KDLO's `single`) is dropped and named in the markdown. A channel with no data is
-not drawn empty — the panel carries the reason (YWF's ASC track has one healthy
-and no damaged overpass).
+Two states for the six labelled sites: **pre-collapse and post-collapse**, except
+KDLO, whose record carries **pre-collapse and after rebuild**. A state with a
+single overpass (KDLO's `single`) is dropped and named in the markdown. A channel
+with no data is not drawn empty — the panel carries the reason (YWF's ASC track
+has one healthy and no damaged overpass).
+
+**One state is allowed too**, for a site whose record labels no damage at all:
+Espoo registers `states = {"all": "event-free"}` and `label_column = None`, so
+every overpass takes the single state, the band is the one run, the median is the
+level of the whole series, and the title reads *across* instead of *before and
+after*. The two-state sites keep every number: their JSON gains exactly one key,
+`out_name`, and no value, run or median changes. Everything state-dependent is now driven by the
+registry: the per-state loops, the counts column, the legend and the markdown
+tables all iterate `spec["states"]`, and `STATE_COLORS/FILL/MARKERS` carry an
+`all` slot (a neutral fill, because one state has no contrast to colour).
+
+Espoo also carries `out_name` (`fig_espoo_ocv_orbits_chip`), because the site
+already owns `fig_espoo_ocv_orbits.jpg` — the *pipeline* figure (A vs S, no chip,
+see [`espoo/README.md`](espoo/README.md)). Same base name, different figure: the
+`.png` is the pipeline record, the `.jpg`/`.json`/`.md` of the `_chip` stem are
+the shared six-dimension family on the support chip.
 
 ```sh
 bash figures/orbits/fig_ocv_orbits.sh            # all six, with --verify
@@ -50,9 +66,10 @@ bash figures/orbits/fig_ocv_orbits.sh --site cts
 ```
 
 Outputs: `figures/<site>/fig_<site>_ocv_orbits.{jpg,md}` and
-`data/<site>/support/fig_<site>_ocv_orbits.json`. `--verify` re-derives every
-plotted point, run and median from the table and fails on a mismatch — the figure
-computes nothing the JSON does not carry.
+`data/<site>/support/fig_<site>_ocv_orbits.json`, or the registry's `out_name`
+where a site already owns that stem (Espoo's `fig_espoo_ocv_orbits_chip.*`).
+`--verify` re-derives every plotted point, run and median from the table and
+fails on a mismatch — the figure computes nothing the JSON does not carry.
 
 ### `sds/` — the cross-site SDS report (the one script that reads two sites)
 
@@ -85,6 +102,49 @@ delta, interval or counts raises instead of leaving a blank cell.
 python3 code/sds/sds_support.py            # both sites, 10 000 resamples
 python3 code/sds/sds_support.py --selftest # 25 offline checks
 ```
+
+### `sds/ocv_reconfigure.py` — do the two experiments reconfigure the same way?
+
+The second cross-site script, and the one that asks the research question of
+Paper 2: **does the magnitude of OCV reconfiguration grow with an independently
+defined state dose, and is the direction the same in both experiments?** Every
+number is a distance from that experiment's *own* reference state — LUMO against
+`healthy`, Bautzen against `RS` on the paired bridge-minus-control difference —
+so the two assets never share a scale and their magnitudes are never compared.
+
+`code/sds/ocv_reconfigure_spec.md` fixes the design and was written **before** the
+first run: the dose (LUMO's measured first-higher-mode drop, 0 / 7.41 / 12.96 %,
+which makes `DAM 3` and `DAM 4` one level because they sit one FFT bin apart), the
+transforms (`log` for positive dimensions, identity for `S` and Bautzen's signed
+γ²), the zero rule (drop the unit for that dimension, count it), the blocks
+(`mask = [A, F]` because `D = A/bbox_area` holds in 178 of 178 LUMO rows;
+`other = [γ², P, S]`, with the literal `[A, D, F]` as a sensitivity), the tests and
+the three pre-registered predictions.
+
+| step | what it does |
+| --- | --- |
+| **H1, per asset** | Jonckheere–Terpstra on the **per-unit** magnitudes (the reference's median magnitude is 0 by construction, so a test on medians would be degenerate), **Holm within each asset's own four-test family**, moving-block bootstrap with the reference re-estimated inside every draw |
+| **verdict, per asset** | each asset gets its own verdict **and a bound** — the largest top-step change its interval still covers — because neither alone is a null result, only a bound |
+| **comparison** | cosine of the standardised response vectors at the largest state, per block and channel, with a random-direction null and a sign-agreement count. **Descriptive**: it asks whether the same metric applied twice answers the same way, not whether a response transfers. γ² is also reported without γ², because it is a different quantity in the two experiments |
+
+The 2026-10-22 amendment in the spec separates the two assets. Two consequences a
+reader should know: the reference level carries **no** interval (`R = 0` by
+construction, its noise belongs to `ΔR`), and where the reference state has fewer
+than ten units — Bautzen has 6 (ASC) and 7 (DESC) complete pairs — the **pooled
+MAD** is the standardising scale, because a MAD from six numbers is itself too
+unstable. `scale_used` travels with every cell, in the JSON and in the table.
+
+```sh
+python3 code/sds/ocv_reconfigure.py            # ~22 s, JSON + MD + CSV + figure
+python3 code/sds/ocv_reconfigure.py --selftest # 9 checks on synthetic units
+python3 code/sds/ocv_reconfigure.py --verify   # re-derives every table cell
+```
+
+Outputs `data/sds/ocv_reconfigure.{json,md}`,
+`data/sds/ocv_reconfigure_table.csv` and three 630 dpi plates with one panel guide:
+`fig_sds_ocv_reconfigure.jpg` (the juxtaposition), `..._lumo.jpg` and
+`..._bautzen.jpg` (each asset standing alone).
+
 
 The scripts are started from the **repository root** (each wrapper in
 `../figures/<site>/` does that), so that their defaults resolve to

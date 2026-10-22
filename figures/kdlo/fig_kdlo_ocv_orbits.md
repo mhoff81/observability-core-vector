@@ -1,6 +1,6 @@
 # KDLO media tower — OCV trajectories before and after the rebuild
 
-Trajectories of the six OCV dimensions across the rebuild, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
+Trajectories of the six OCV dimensions before and after the rebuild, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
 
 ## States
 
@@ -10,7 +10,7 @@ Excluded: `single` (1 row(s)) — a state that carries a single overpass has no 
 
 ## Rows and refusals
 
-| channel | pre | post | runs |
+| channel | pre-collapse | after rebuild | runs |
 | --- | --- | --- | --- |
 | ASC | 0 | 0 | 0 |
 | DESC | 16 | 43 | 2 |

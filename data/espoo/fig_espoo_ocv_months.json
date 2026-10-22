@@ -1061,7 +1061,7 @@
  "event": null,
  "event_note": "the record is event-free: no damage_label, no structural_state and no condition_label on any of the 150 rows, so this companion has no window to anchor and shows the whole span instead",
  "figures": [
-  "figures/espoo/fig_espoo_ocv_months.png"
+  "figures/espoo/fig_espoo_ocv_months.jpg"
  ],
  "generated_by": "code/espoo/fig_espoo_ocv_months.py",
  "min_side": 3,

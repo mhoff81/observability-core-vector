@@ -34,6 +34,7 @@
   "ring_m": 200.0,
   "support_cells": 225
  },
+ "out_name": "fig_cts_ocv_orbits",
  "runs": {
   "ASCENDING": [
    {

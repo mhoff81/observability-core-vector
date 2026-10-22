@@ -166,6 +166,6 @@ python3 code/espoo/fig_espoo_ocv_paper.py --quick  # without the permutation nul
 python3 code/espoo/fig_espoo_ocv_months.py         # the month companion
 ```
 
-*environment: python 3.13.5, numpy 2.4.6, matplotlib 3.11.1*
+*environment: python 3.13.5, numpy 2.5.4, matplotlib 3.11.2*
 
 *No wall-clock value appears in this file, so two runs of the same code produce identical bytes.*

@@ -27,11 +27,20 @@ figures/
 │              defined by its own figure script (--write-reference)
 │              plus the companions fig_ywf_ocv_weeks.md|.png (no wrapper) and
 │              fig_ywf_ocv_series.sh|.md|.png (the whole record on one dated axis)
-├── espoo/     Espoo Kurttila mast — fig_espoo_ocv_paper.sh|.md|[A-E].png
+├── espoo/     Espoo Kurttila mast — fig_espoo_ocv_paper.sh|.md|[A-E].jpg
 │              the **event-free control**: no damage label on any of the 150
 │              acquisitions, no mask raster either, so the only contrast is the
 │              orbit geometry (ASC / DESC) and `A` is the delivered mask size,
-│              copied and proved; plus the companion fig_espoo_ocv_months.sh|.md|.png
+│              copied and proved; plus the companion fig_espoo_ocv_months.sh|.md|.jpg,
+│              the pipeline orbit figure fig_espoo_ocv_orbits.jpg (A vs S, no chip)
+│              and the two figures built on the support chip: fig_espoo_ocv_chips.*
+│              (the chip's own three tests) and fig_espoo_ocv_orbits_chip.* (Espoo
+│              in the shared six-dimension family, one state; see `../code/espoo/README.md`)
+├── sds/       the cross-site figures (Bautzen + LUMO, one script that reads both)
+│              fig_sds_ocv_reconfigure.jpg|.md — the controlled-dose comparison,
+│              630 dpi, from `../code/sds/ocv_reconfigure.py`, plus the two
+│              single-asset plates fig_sds_ocv_reconfigure_lumo.jpg and
+│              fig_sds_ocv_reconfigure_bautzen.jpg
 └── README.md
 ```
 
@@ -116,7 +125,8 @@ DAM4, DAM6) over the 178 coherence overpasses, plus the English report
 | `lumo/fig_lumo_ocv_paper_E.png` | controls: severity trend of gamma^2 (Spearman, Jonckheere-Terpstra), season/orbit strata, and the mask brightness / wind covariates per state |
 
 The figures are 183 mm wide, 600 dpi PNGs with the same style as the Espoo
-figures (DejaVu Sans + STIX). They are deterministic: fixed seeds, no timestamps
+figures (DejaVu Sans + STIX); Espoo itself has since moved to 630 dpi JPEG, the
+format its OCV figures are delivered in, while LUMO keeps the PNG. They are deterministic: fixed seeds, no timestamps
 in any annotation, so two runs produce byte-identical files.
 
 `lumo/fig_lumo_ocv_paper.md` is the same content in prose: question and design,
@@ -739,18 +749,19 @@ The script recomputes and then pins the effect sizes (median `gamma^2` 0.1746 AS
 t = 7.31, p = 2.7e-10), the 2-class LDA over the whole record (leave-one-out,
 balanced accuracy 0.7259 at a chance level of 0.5, label-permutation null) and the
 four no-event controls. It writes `../data/espoo/fig_espoo_ocv_paper.json`, the report
-[`espoo/fig_espoo_ocv_paper.md`](espoo/fig_espoo_ocv_paper.md) and the five PNGs, and
+[`espoo/fig_espoo_ocv_paper.md`](espoo/fig_espoo_ocv_paper.md) and the five **630 dpi
+JPEGs** (`A` … `E`), and
 it reads **only** `../data/espoo/` (the channel table, the three committed references
 of the upstream project and its own findings lock) — no network, no database, no
 cache, no payload file.
 
 | file | panel content |
 | --- | --- |
-| `espoo/fig_espoo_ocv_paper_A.png` | (a)-(b) the raw distributions of the two measured channels `gamma2` and `A` per orbit, per-acquisition dots under the box; (c) the **phase ladder** for the 80 of 150 acquisitions that carry it (and the note that `phase_snr_db` exists for 0) |
-| `espoo/fig_espoo_ocv_paper_B.png` | (a) the pooled effect sizes ASC vs. DESC — Cliff's delta (DESC − ASC) with its bootstrap 95 % CI and SDS for `gamma2`, `A`, the two phase columns and the two weather co-variates; (b) the same contrast recomputed **per season**, the strata of the same sign |
-| `espoo/fig_espoo_ocv_paper_C.png` | (a) the 2-class LDA over the whole record: leave-one-out balanced accuracy against the label-permutation null (chance **0.5**, the two-state counterpart of LUMO's four-state 0.25); (b) the LOO counts of the headline model — where the orbit is read back wrong |
-| `espoo/fig_espoo_ocv_paper_D.png` | (a) the out-of-fold SDS of the four feature sets with the paired CI of the difference against `gamma2` alone; (b) the **out-of-time** split (75 / 75 by acquisition order, cut at 2025-09-06) — `A` and the weather co-variates add nothing that survives it |
-| `espoo/fig_espoo_ocv_paper_E.png` | the four no-event controls: **E1** the 14 committed phase-coherence series (13 of 14 stationary, the flagged one marked), **E2** the month/season composition (nothing is cut on — there is no event), **E3** the same effect size recomputed *inside* each distinct wind stratum, with the pooled Spearman rho on the title line, **E4** the phase-ladder availability per month |
+| `espoo/fig_espoo_ocv_paper_A.jpg` | (a)-(b) the raw distributions of the two measured channels `gamma2` and `A` per orbit, per-acquisition dots under the box; (c) the **phase ladder** for the 80 of 150 acquisitions that carry it (and the note that `phase_snr_db` exists for 0) |
+| `espoo/fig_espoo_ocv_paper_B.jpg` | (a) the pooled effect sizes ASC vs. DESC — Cliff's delta (DESC − ASC) with its bootstrap 95 % CI and SDS for `gamma2`, `A`, the two phase columns and the two weather co-variates; (b) the same contrast recomputed **per season**, the strata of the same sign |
+| `espoo/fig_espoo_ocv_paper_C.jpg` | (a) the 2-class LDA over the whole record: leave-one-out balanced accuracy against the label-permutation null (chance **0.5**, the two-state counterpart of LUMO's four-state 0.25); (b) the LOO counts of the headline model — where the orbit is read back wrong |
+| `espoo/fig_espoo_ocv_paper_D.jpg` | (a) the out-of-fold SDS of the four feature sets with the paired CI of the difference against `gamma2` alone; (b) the **out-of-time** split (75 / 75 by acquisition order, cut at 2025-09-06) — `A` and the weather co-variates add nothing that survives it |
+| `espoo/fig_espoo_ocv_paper_E.jpg` | the four no-event controls: **E1** the 14 committed phase-coherence series (13 of 14 stationary, the flagged one marked), **E2** the month/season composition (nothing is cut on — there is no event), **E3** the same effect size recomputed *inside* each distinct wind stratum, with the pooled Spearman rho on the title line, **E4** the phase-ladder availability per month |
 
 ```bash
 bash figures/espoo/fig_espoo_ocv_paper.sh                   # ~4.5 min, figures + report + pins
@@ -769,11 +780,11 @@ channel table and `../data/espoo/reference/espoo_phase_stationarity.json`, adds 
 number to the A–E pin contract, and writes
 [`espoo/fig_espoo_ocv_months.md`](espoo/fig_espoo_ocv_months.md),
 [`../data/espoo/fig_espoo_ocv_months.json`](../data/espoo/fig_espoo_ocv_months.json)
-and one PNG:
+and one 630 dpi JPEG:
 
 | file | panel content |
 | --- | --- |
-| `espoo/fig_espoo_ocv_months.png` | 2 x 3: (a) `gamma^2` by month, per orbit, per-acquisition dots with the monthly median; (b) the same for `A`; (c) the per-month Cliff's delta with its 2000-draw bootstrap CI, quoted only for the months in which both orbits carry ≥ 3 acquisitions (20 of 25 — the other 5 are reported as not evaluable rather than quoted on two rows); (d) the two primary stationarity series `3-8 Hz · strip400_pipeline` ASC / DESC; (e) coverage and the phase ladder by month (the two availability controls); (f) the weather co-variates by month (wind, temperature) |
+| `espoo/fig_espoo_ocv_months.jpg` | 2 x 3: (a) `gamma^2` by month, per orbit, per-acquisition dots with the monthly median; (b) the same for `A`; (c) the per-month Cliff's delta with its 2000-draw bootstrap CI, quoted only for the months in which both orbits carry ≥ 3 acquisitions (20 of 25 — the other 5 are reported as not evaluable rather than quoted on two rows); (d) the two primary stationarity series `3-8 Hz · strip400_pipeline` ASC / DESC; (e) coverage and the phase ladder by month (the two availability controls); (f) the weather co-variates by month (wind, temperature) |
 
 Its own pin block re-derives the two primary series (`ASC` 0.2474 / `DESC` 0.2165 as
 literal claims to four decimals), the 25 committed monthly means of both, the trend
@@ -791,3 +802,25 @@ python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --
 `figures/<site>/` (see `code/README.md`). The wrapper picks the first interpreter
 that has numpy and matplotlib and prints which one it used, because the figure
 has to be reproducible on a machine whose virtualenv is not the author's.
+
+Seven sites now: the six labelled ones on their state bands, plus
+`figures/espoo/fig_espoo_ocv_orbits_chip.jpg` for the event-free control — one
+state, one band, medians over the whole series. Espoo's `_chip` stem is deliberate:
+the site's `.png` of nearly the same name is the *pipeline* figure (A vs S, no
+chip), drawn by `code/espoo/fig_espoo_ocv_orbits.py`.
+
+## `figures/sds/` — the two experiments side by side
+
+`fig_sds_ocv_reconfigure.jpg` (630 dpi, from `../code/sds/ocv_reconfigure.py`)
+is the one cross-site plate that is not a site package: rows are the two assets
+(LUMO, Bautzen), columns are `ASC`/`DESC` crossed with the two response blocks, and
+every arrow starts at that asset's **own** reference state. The inset in each panel
+carries the block magnitude `R` per dose level with its moving-block interval — the
+quantity H1 tests, while the arrows carry the direction the comparison section
+describes. The same script also writes `fig_sds_ocv_reconfigure_lumo.jpg` and
+`fig_sds_ocv_reconfigure_bautzen.jpg`, one plate per asset, because each asset is
+concluded on its own numbers and on its **own** Holm family; the joint plate is a
+juxtaposition, not a shared scale. The panel guide is
+`fig_sds_ocv_reconfigure.md`; the numbers behind all three are
+`../data/sds/ocv_reconfigure.json`, and the design was fixed in
+`../code/sds/ocv_reconfigure_spec.md` before the first run.

@@ -1,0 +1,2647 @@
+{
+ "guard_m": 30.0,
+ "height_m": 36.0,
+ "label": "Espoo mast (OSM 2233589804)",
+ "n_dates": 75,
+ "n_refused": 1,
+ "point": [
+  60.17086739999999,
+  24.611143900000002
+ ],
+ "polarization": "VV",
+ "problems": [
+  {
+   "date": "2026-07-04",
+   "orbit": "ASCENDING",
+   "reason": "ValueError: the window ends at row 13535, past the raster's 13518 rows"
+  }
+ ],
+ "producer": "erlking_mvp/tools/ocv_migrate.py",
+ "rect": "/home/projects/research/observability-core-vector/data/espoo/support/espoo_rects_support.txt",
+ "ring_m": 200.0,
+ "rows": [
+  {
+   "A": 65,
+   "anchor": {
+    "incidence_deg": 35.003917203881684,
+    "line": 8579,
+    "nearest_node_m": 5436.366786400464,
+    "pixel": 16114,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16050,
+     "first_row": 8562,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "1a2ae76c-bb93-4047-9974-67ec196588e3",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-09-05",
+   "gamma2": 0.028038,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 61,
+   "anchor": {
+    "incidence_deg": 35.0091393957877,
+    "line": 8575,
+    "nearest_node_m": 5483.445872778155,
+    "pixel": 16124,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 16060,
+     "first_row": 8558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "7b729eff-467d-46a4-884d-12c0ae0c6091",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-09-17",
+   "gamma2": 0.046422,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 110,
+   "anchor": {
+    "incidence_deg": 35.017403691991404,
+    "line": 8575,
+    "nearest_node_m": 5493.4686516405145,
+    "pixel": 16137,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16073,
+     "first_row": 8558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "4562fe2a-5108-49a2-ac87-46e87a4eed1a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-10-11",
+   "gamma2": 0.028974,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 79,
+   "anchor": {
+    "incidence_deg": 35.00648835673471,
+    "line": 8575,
+    "nearest_node_m": 5492.24036808834,
+    "pixel": 16117,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16053,
+     "first_row": 8558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "11ed5d65-cf7f-4e4f-84a9-37b80629b95e",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-11-04",
+   "gamma2": 0.011273,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 76,
+   "anchor": {
+    "incidence_deg": 35.00085816172945,
+    "line": 8575,
+    "nearest_node_m": 5483.455211044347,
+    "pixel": 16107,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 8.834257758922918e-10,
+    "window": {
+     "first_col": 16043,
+     "first_row": 8558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "2a8df1ea-b898-4d16-ab82-6cb41dd2a8a4",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-11-16",
+   "gamma2": 0.064302,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 62,
+   "anchor": {
+    "incidence_deg": 35.00104217420838,
+    "line": 8576,
+    "nearest_node_m": 5476.268405199308,
+    "pixel": 16127,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.630144478995313e-09,
+    "window": {
+     "first_col": 16063,
+     "first_row": 8559,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "abfef633-79d4-4cbd-97a1-8a20b122e53c",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-12-10",
+   "gamma2": 0.042407,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 87,
+   "anchor": {
+    "incidence_deg": 34.99578002618641,
+    "line": 8577,
+    "nearest_node_m": 5465.2067251111985,
+    "pixel": 16103,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16039,
+     "first_row": 8560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "70a8afef-1b4b-4b50-b2ad-a5d7bef61b94",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-01-03",
+   "gamma2": 0.059338,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 74,
+   "anchor": {
+    "incidence_deg": 34.99413404963984,
+    "line": 8575,
+    "nearest_node_m": 5492.017372648184,
+    "pixel": 16102,
+    "raster": [
+     13527,
+     21399
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 16038,
+     "first_row": 8558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "7302d7c2-629d-43c4-a551-2dd881504439",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-01-15",
+   "gamma2": 0.002882,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 83,
+   "anchor": {
+    "incidence_deg": 35.00776864270653,
+    "line": 8573,
+    "nearest_node_m": 5523.632731836525,
+    "pixel": 16139,
+    "raster": [
+     13527,
+     21399
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16075,
+     "first_row": 8556,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "bbe9b2e9-ba39-4ac4-b359-93868bf84255",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-02-08",
+   "gamma2": 0.00173,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 63,
+   "anchor": {
+    "incidence_deg": 35.01173223744143,
+    "line": 8578,
+    "nearest_node_m": 5464.793969271465,
+    "pixel": 16142,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 16078,
+     "first_row": 8561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "10082c3c-6c27-4bfa-979d-f818003a2d2d",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-03-04",
+   "gamma2": 0.026571,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 53,
+   "anchor": {
+    "incidence_deg": 35.01003753148227,
+    "line": 8577,
+    "nearest_node_m": 5467.982411648907,
+    "pixel": 16135,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 16071,
+     "first_row": 8560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "dec69249-79ee-4841-bdd0-61b7670a05fd",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-03-16",
+   "gamma2": 0.02354,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 105,
+   "anchor": {
+    "incidence_deg": 35.00152467867615,
+    "line": 8586,
+    "nearest_node_m": 5355.432879076356,
+    "pixel": 16097,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16033,
+     "first_row": 8569,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "8ace4695-8767-4264-b3d6-9e16633cd21e",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-04-09",
+   "gamma2": 0.003934,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 62,
+   "anchor": {
+    "incidence_deg": 34.99866524077009,
+    "line": 8581,
+    "nearest_node_m": 5412.832812386567,
+    "pixel": 16079,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 16015,
+     "first_row": 8564,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "191dbb45-1865-4575-afb8-c26fdeff660d",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-05-03",
+   "gamma2": 0.029237,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 102,
+   "anchor": {
+    "incidence_deg": 35.0119849184236,
+    "line": 8576,
+    "nearest_node_m": 5624.821292567821,
+    "pixel": 17909,
+    "raster": [
+     13509,
+     23262
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 17845,
+     "first_row": 8559,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "77716b21-fb73-4ebf-bee5-d29a646ca706",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-06-02",
+   "gamma2": 0.029601,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 60,
+   "anchor": {
+    "incidence_deg": 34.98774249411474,
+    "line": 8584,
+    "nearest_node_m": 5376.986008110989,
+    "pixel": 16039,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 15975,
+     "first_row": 8567,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "0cd16c2a-1076-4cb5-a4f6-db15894061b7",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-07-02",
+   "gamma2": 0.01379,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 116,
+   "anchor": {
+    "incidence_deg": 35.00873203323396,
+    "line": 8574,
+    "nearest_node_m": 5632.890256223911,
+    "pixel": 17894,
+    "raster": [
+     13509,
+     23263
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 17830,
+     "first_row": 8557,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "bc15b850-af59-449d-a512-fef07d08519a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-08-01",
+   "gamma2": 0.013022,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 77,
+   "anchor": {
+    "incidence_deg": 34.99365817670635,
+    "line": 8580,
+    "nearest_node_m": 5422.059183939824,
+    "pixel": 16059,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 15995,
+     "first_row": 8563,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "c4b99976-31ca-4b7f-899c-14ccb768dcd1",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-08-07",
+   "gamma2": 0.000412,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 82,
+   "anchor": {
+    "incidence_deg": 35.00516588045551,
+    "line": 8573,
+    "nearest_node_m": 5645.157685369715,
+    "pixel": 17895,
+    "raster": [
+     13509,
+     23263
+    ],
+    "residual_m": 3.934435087127886e-10,
+    "window": {
+     "first_col": 17831,
+     "first_row": 8556,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "34cbd1b4-d947-4367-b9aa-38bd36be0e12",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-09-06",
+   "gamma2": 0.016387,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 88,
+   "anchor": {
+    "incidence_deg": 35.006351435052125,
+    "line": 8577,
+    "nearest_node_m": 5472.710522130077,
+    "pixel": 16125,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 16061,
+     "first_row": 8560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "d8f06759-dd2c-484c-bda1-9c9df0b8bb43",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-10-06",
+   "gamma2": 0.03765,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 80,
+   "anchor": {
+    "incidence_deg": 35.00176816198271,
+    "line": 8573,
+    "nearest_node_m": 5644.198510845775,
+    "pixel": 17894,
+    "raster": [
+     13509,
+     23263
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 17830,
+     "first_row": 8556,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "29477df3-dbb3-43b5-ab5c-ddc9bbde1c75",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-11-05",
+   "gamma2": 0.017927,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 86,
+   "anchor": {
+    "incidence_deg": 34.98951855562854,
+    "line": 8585,
+    "nearest_node_m": 5355.54993883511,
+    "pixel": 16077,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16013,
+     "first_row": 8568,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "56e6e9b6-eb24-44fd-9d05-2e2610867d95",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-12-05",
+   "gamma2": 0.003807,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 72,
+   "anchor": {
+    "incidence_deg": 34.99268422212758,
+    "line": 8582,
+    "nearest_node_m": 5403.657556755409,
+    "pixel": 16099,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16035,
+     "first_row": 8565,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "ffcc8c82-9e4f-4298-bc24-e5a60328e6c4",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-12-17",
+   "gamma2": 0.013613,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 119,
+   "anchor": {
+    "incidence_deg": 35.00003219874053,
+    "line": 8589,
+    "nearest_node_m": 5321.436224295267,
+    "pixel": 16128,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 3.934435087127886e-10,
+    "window": {
+     "first_col": 16064,
+     "first_row": 8572,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "7d78b7d5-f329-454c-85dc-3e5b3cb61b3f",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-01-10",
+   "gamma2": 0.000107,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 210,
+   "anchor": {
+    "incidence_deg": 35.00149371884401,
+    "line": 8584,
+    "nearest_node_m": 5383.598956248041,
+    "pixel": 16112,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.630144478995313e-09,
+    "window": {
+     "first_col": 16048,
+     "first_row": 8567,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "5476dfe5-306b-4b25-876c-09f0a84da212",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-02-03",
+   "gamma2": 0.006078,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 64,
+   "anchor": {
+    "incidence_deg": 35.01186716619115,
+    "line": 8585,
+    "nearest_node_m": 5380.047428689144,
+    "pixel": 16144,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 16080,
+     "first_row": 8568,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "fcbe5d0d-2b1c-4bc3-8b07-8db4a2c78906",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-03-11",
+   "gamma2": 0.003442,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 61,
+   "anchor": {
+    "incidence_deg": 35.001317877700956,
+    "line": 8589,
+    "nearest_node_m": 5319.01718004545,
+    "pixel": 16099,
+    "raster": [
+     13527,
+     21399
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16035,
+     "first_row": 8572,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "d6bbb4b1-651f-4bfa-b06e-522eb38cd446",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-04-04",
+   "gamma2": 0.017823,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 46,
+   "anchor": {
+    "incidence_deg": 34.99681172906772,
+    "line": 8590,
+    "nearest_node_m": 5298.403558449377,
+    "pixel": 16079,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 16015,
+     "first_row": 8573,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "390687e0-fb64-41b6-a5a2-43e15e0f532e",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-04-16",
+   "gamma2": 0.005699,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 75,
+   "anchor": {
+    "incidence_deg": 35.00489655938355,
+    "line": 8577,
+    "nearest_node_m": 5638.058391047173,
+    "pixel": 17879,
+    "raster": [
+     13509,
+     23202
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 17815,
+     "first_row": 8560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "072087ed-7283-41f4-9532-d0ac7301c6a0",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-05-05",
+   "gamma2": 0.062424,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 43,
+   "anchor": {
+    "incidence_deg": 34.98062117617589,
+    "line": 8589,
+    "nearest_node_m": 5309.805748272228,
+    "pixel": 16011,
+    "raster": [
+     13527,
+     21400
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 15947,
+     "first_row": 8572,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "80453fae-8d4a-4497-a3b8-fd512c9ace3b",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-06-03",
+   "gamma2": 0.010341,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 69,
+   "anchor": {
+    "incidence_deg": 35.01007509828091,
+    "line": 8573,
+    "nearest_node_m": 5651.956707205122,
+    "pixel": 17901,
+    "raster": [
+     13509,
+     23262
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 17837,
+     "first_row": 8556,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "179e9f30-5015-471b-a1a2-582a110678b8",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-08-03",
+   "gamma2": 0.052947,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 115,
+   "anchor": {
+    "incidence_deg": 35.00995494069193,
+    "line": 11576,
+    "nearest_node_m": 5633.931278363943,
+    "pixel": 17821,
+    "raster": [
+     13509,
+     23180
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 17757,
+     "first_row": 11559,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "2a448491-d695-4a5b-9677-706e81f75876",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-09-02",
+   "gamma2": 0.009889,
+   "orbit": "ASCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 392,
+   "anchor": {
+    "incidence_deg": 32.9710165529834,
+    "line": 3577,
+    "nearest_node_m": 6966.189632544739,
+    "pixel": 10212,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10148,
+     "first_row": 3560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "d83caeeb-f53c-4ec9-afa4-3a06e72982c3",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-09-10",
+   "gamma2": 0.001872,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 708,
+   "anchor": {
+    "incidence_deg": 32.96832354984647,
+    "line": 3579,
+    "nearest_node_m": 6986.2245678217405,
+    "pixel": 10214,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 3.934435087127886e-10,
+    "window": {
+     "first_col": 10150,
+     "first_row": 3562,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "80bfdf6c-a343-4313-813f-f4877e8c9642",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-10-04",
+   "gamma2": 3e-05,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 669,
+   "anchor": {
+    "incidence_deg": 32.96518586452507,
+    "line": 3578,
+    "nearest_node_m": 6981.020469543287,
+    "pixel": 10222,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10158,
+     "first_row": 3561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "acf3feaa-5977-41ac-b57c-bd35c88dc7fb",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-10-16",
+   "gamma2": 0.00097,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 590,
+   "anchor": {
+    "incidence_deg": 32.96743961139382,
+    "line": 3572,
+    "nearest_node_m": 6916.125521455906,
+    "pixel": 10233,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 10169,
+     "first_row": 3555,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "9c3f2c59-6aac-4634-843a-959fc9a7272c",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-11-09",
+   "gamma2": 0.000134,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 614,
+   "anchor": {
+    "incidence_deg": 32.94961626327327,
+    "line": 3573,
+    "nearest_node_m": 6931.970715287474,
+    "pixel": 10182,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10118,
+     "first_row": 3556,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "e2b46d9d-35a9-4f6b-8363-62239f6ffb2a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-12-03",
+   "gamma2": 3.8e-05,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 594,
+   "anchor": {
+    "incidence_deg": 32.945016006858474,
+    "line": 3574,
+    "nearest_node_m": 6951.309581574028,
+    "pixel": 10165,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10101,
+     "first_row": 3557,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "1cff011b-b512-443b-81a0-a84a9f28c6ca",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2024-12-15",
+   "gamma2": 0.000997,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 392,
+   "anchor": {
+    "incidence_deg": 32.95907017027628,
+    "line": 3577,
+    "nearest_node_m": 6960.951448794658,
+    "pixel": 10218,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 10154,
+     "first_row": 3560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "160b8aff-82d9-4bae-a6e5-0ad39a00e4f8",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-01-08",
+   "gamma2": 0.000296,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 578,
+   "anchor": {
+    "incidence_deg": 32.96080318219158,
+    "line": 3578,
+    "nearest_node_m": 6977.076690036855,
+    "pixel": 10216,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10152,
+     "first_row": 3561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "b7fafbf8-0d0f-4f41-896f-e7d7529027ce",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-02-01",
+   "gamma2": 0.000661,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 516,
+   "anchor": {
+    "incidence_deg": 32.957394222732844,
+    "line": 3575,
+    "nearest_node_m": 6938.937604578788,
+    "pixel": 10193,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 10129,
+     "first_row": 3558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "7806a58d-4424-4fb1-b138-4af8be2bc726",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-02-13",
+   "gamma2": 0.002984,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 393,
+   "anchor": {
+    "incidence_deg": 32.96559459047013,
+    "line": 3575,
+    "nearest_node_m": 6949.525921388247,
+    "pixel": 10214,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10150,
+     "first_row": 3558,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "f08b4826-9574-4fb5-baee-e0c3f4b3b0e9",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-03-09",
+   "gamma2": 0.001513,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 498,
+   "anchor": {
+    "incidence_deg": 32.959105781986004,
+    "line": 3576,
+    "nearest_node_m": 6972.073663603842,
+    "pixel": 10184,
+    "raster": [
+     13572,
+     22997
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 10120,
+     "first_row": 3559,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "4fe9b670-c41c-4eae-9ace-3e407932270b",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-04-02",
+   "gamma2": 0.001104,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 786,
+   "anchor": {
+    "incidence_deg": 32.97849417136244,
+    "line": 2084,
+    "nearest_node_m": 7131.376891007879,
+    "pixel": 10241,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10177,
+     "first_row": 2067,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "b43c5f5b-d2f0-47a0-a83d-80bb54265396",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-04-08",
+   "gamma2": 0.00292,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 584,
+   "anchor": {
+    "incidence_deg": 32.9811231845028,
+    "line": 2086,
+    "nearest_node_m": 7148.221720421044,
+    "pixel": 10318,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10254,
+     "first_row": 2069,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "2e10ee38-603d-4ad2-bdb1-5b82e82083aa",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-05-02",
+   "gamma2": 0.000317,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 167,
+   "anchor": {
+    "incidence_deg": 32.94758343868532,
+    "line": 3581,
+    "nearest_node_m": 7046.185608108782,
+    "pixel": 10137,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.5941369691741447e-09,
+    "window": {
+     "first_col": 10073,
+     "first_row": 3564,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "76ecf876-b9a7-4c12-a680-17af03dff058",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-05-08",
+   "gamma2": 0.005442,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 558,
+   "anchor": {
+    "incidence_deg": 32.942681387243006,
+    "line": 3578,
+    "nearest_node_m": 7034.077542643618,
+    "pixel": 10121,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.630144478995313e-09,
+    "window": {
+     "first_col": 10057,
+     "first_row": 3561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "1ba15578-3d5c-40d8-ad15-7723c3dc60ae",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-06-01",
+   "gamma2": 0.002383,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 376,
+   "anchor": {
+    "incidence_deg": 32.96401126696654,
+    "line": 2084,
+    "nearest_node_m": 7150.280160167479,
+    "pixel": 10261,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 10197,
+     "first_row": 2067,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "f2233b14-32d5-4f23-9461-3f272d37c869",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-06-07",
+   "gamma2": 0.000315,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 277,
+   "anchor": {
+    "incidence_deg": 32.97236236816054,
+    "line": 2086,
+    "nearest_node_m": 7165.676044547424,
+    "pixel": 10289,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 1.5941369691741447e-09,
+    "window": {
+     "first_col": 10225,
+     "first_row": 2069,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "3adda5b2-44bf-4744-be72-47fa3959b4a6",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-07-01",
+   "gamma2": 0.00134,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 625,
+   "anchor": {
+    "incidence_deg": 32.938753192537504,
+    "line": 3576,
+    "nearest_node_m": 7016.139122265534,
+    "pixel": 10101,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10037,
+     "first_row": 3559,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "7eaca46f-5e49-4c38-a48a-9017c792c188",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-07-07",
+   "gamma2": 0.002204,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 538,
+   "anchor": {
+    "incidence_deg": 32.96284369581216,
+    "line": 2082,
+    "nearest_node_m": 7125.846565261511,
+    "pixel": 10256,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10192,
+     "first_row": 2065,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "75bf1729-db52-424a-a803-47708012b363",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-08-06",
+   "gamma2": 0.000365,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 598,
+   "anchor": {
+    "incidence_deg": 32.9631953744859,
+    "line": 3583,
+    "nearest_node_m": 7036.113953189679,
+    "pixel": 10198,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 10134,
+     "first_row": 3566,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "d49a88c4-fcd1-4a85-b0a4-e1ccc21f79c1",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-09-05",
+   "gamma2": 2e-05,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 441,
+   "anchor": {
+    "incidence_deg": 32.96207232105267,
+    "line": 2076,
+    "nearest_node_m": 7041.261668236225,
+    "pixel": 10257,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10193,
+     "first_row": 2059,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "c0de2a85-7efb-4669-b1d9-276f5b4e5b8b",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-09-11",
+   "gamma2": 0.0003,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 459,
+   "anchor": {
+    "incidence_deg": 32.96578248648299,
+    "line": 2079,
+    "nearest_node_m": 7064.164632733489,
+    "pixel": 10279,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10215,
+     "first_row": 2062,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "c5009d4f-c797-4f98-8d0f-37ddc7eb5b2a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-10-05",
+   "gamma2": 0.001259,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 438,
+   "anchor": {
+    "incidence_deg": 32.959377880746494,
+    "line": 3577,
+    "nearest_node_m": 7005.0540086825795,
+    "pixel": 10193,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 10129,
+     "first_row": 3560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "020d6be3-19f1-4dc1-b932-050ffd44fb39",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-10-11",
+   "gamma2": 0.001325,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 671,
+   "anchor": {
+    "incidence_deg": 32.956010262297255,
+    "line": 3578,
+    "nearest_node_m": 7004.013055166366,
+    "pixel": 10193,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10129,
+     "first_row": 3561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "6a016082-1db7-4eca-91fc-4ac776e20c9d",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-11-04",
+   "gamma2": 0.001402,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 658,
+   "anchor": {
+    "incidence_deg": 32.962791350365876,
+    "line": 2079,
+    "nearest_node_m": 7060.20975307915,
+    "pixel": 10283,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 3.934435087127886e-10,
+    "window": {
+     "first_col": 10219,
+     "first_row": 2062,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "2b67c615-4aec-4fb4-904f-af37bace875e",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-11-10",
+   "gamma2": 4e-06,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 606,
+   "anchor": {
+    "incidence_deg": 32.95154229551286,
+    "line": 3577,
+    "nearest_node_m": 6978.474013346692,
+    "pixel": 10197,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10133,
+     "first_row": 3560,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "53862ead-8d03-4a2b-b5d1-598bbdfda4e0",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2025-12-10",
+   "gamma2": 0.000528,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 430,
+   "anchor": {
+    "incidence_deg": 32.94502019963316,
+    "line": 3585,
+    "nearest_node_m": 7078.659568833644,
+    "pixel": 10169,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10105,
+     "first_row": 3568,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "eeeaa474-d070-429f-a8ca-839b5a2e75d5",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-01-03",
+   "gamma2": 0.001096,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 562,
+   "anchor": {
+    "incidence_deg": 32.965380864532555,
+    "line": 8081,
+    "nearest_node_m": 7312.930463139483,
+    "pixel": 8429,
+    "raster": [
+     18000,
+     20412
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 8365,
+     "first_row": 8064,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "cf2453da-8821-456c-bd0b-14c7f9488363",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-01-10",
+   "gamma2": 6e-06,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 467,
+   "anchor": {
+    "incidence_deg": 32.95136421656716,
+    "line": 3583,
+    "nearest_node_m": 7040.769020892441,
+    "pixel": 10183,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10119,
+     "first_row": 3566,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "a6b8c93a-1c7c-4209-98da-251235802161",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-01-15",
+   "gamma2": 0.000782,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 316,
+   "anchor": {
+    "incidence_deg": 32.96061445523736,
+    "line": 8088,
+    "nearest_node_m": 7388.722076991077,
+    "pixel": 8394,
+    "raster": [
+     18000,
+     20411
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 8330,
+     "first_row": 8071,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "bac68012-bf31-4e4f-8c13-a6405d170548",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-02-03",
+   "gamma2": 2.4e-05,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 214,
+   "anchor": {
+    "incidence_deg": 32.962369831326434,
+    "line": 3590,
+    "nearest_node_m": 7143.415590934489,
+    "pixel": 10213,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.630144478995313e-09,
+    "window": {
+     "first_col": 10149,
+     "first_row": 3573,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "48df7f70-9df6-4b36-bec5-bf1a0a0ff67e",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-02-08",
+   "gamma2": 0.00101,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 329,
+   "anchor": {
+    "incidence_deg": 32.95989093448021,
+    "line": 3588,
+    "nearest_node_m": 7106.458431850679,
+    "pixel": 10199,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 10135,
+     "first_row": 3571,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "e056dc40-5a34-4ade-8167-7f3751c8bbf7",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-03-04",
+   "gamma2": 0.002183,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 346,
+   "anchor": {
+    "incidence_deg": 32.95931558228608,
+    "line": 3587,
+    "nearest_node_m": 7116.183418908919,
+    "pixel": 10192,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10128,
+     "first_row": 3570,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "6996c6b3-b1f7-46fb-8d73-1b9c7e47451a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-03-16",
+   "gamma2": 0.000457,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 411,
+   "anchor": {
+    "incidence_deg": 32.961169759625605,
+    "line": 3588,
+    "nearest_node_m": 7105.501032638236,
+    "pixel": 10184,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10120,
+     "first_row": 3571,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "fd9715d4-2fd3-4a5f-8275-63ddf1b89c10",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-04-09",
+   "gamma2": 0.002098,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 517,
+   "anchor": {
+    "incidence_deg": 32.943523834715045,
+    "line": 3578,
+    "nearest_node_m": 7032.101968004083,
+    "pixel": 10126,
+    "raster": [
+     13572,
+     22998
+    ],
+    "residual_m": 1.5941369691741447e-09,
+    "window": {
+     "first_col": 10062,
+     "first_row": 3561,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "f21f1486-e3bf-4f55-97c7-8d87b8137267",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-05-03",
+   "gamma2": 0.000171,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 254,
+   "anchor": {
+    "incidence_deg": 32.96987756689384,
+    "line": 2084,
+    "nearest_node_m": 7138.873902698308,
+    "pixel": 10278,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10214,
+     "first_row": 2067,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "fa76b4e3-6ed0-4327-b12a-50d8d9c7a64a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-05-10",
+   "gamma2": 0.000831,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 659,
+   "anchor": {
+    "incidence_deg": 32.961323671237174,
+    "line": 2081,
+    "nearest_node_m": 7169.156150217585,
+    "pixel": 10250,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10186,
+     "first_row": 2064,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "9b852f74-7191-432d-9879-4f410db90b0c",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-06-02",
+   "gamma2": 0.000347,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 693,
+   "anchor": {
+    "incidence_deg": 32.96679354996654,
+    "line": 2084,
+    "nearest_node_m": 7173.432129098475,
+    "pixel": 10273,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 7.909761734481435e-10,
+    "window": {
+     "first_col": 10209,
+     "first_row": 2067,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "0189ca3f-049a-4492-8ae9-383ef670aaa9",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-06-03",
+   "gamma2": 0.000273,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 628,
+   "anchor": {
+    "incidence_deg": 32.96274548351772,
+    "line": 2084,
+    "nearest_node_m": 7136.275617705977,
+    "pixel": 10258,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 8.150722394976565e-10,
+    "window": {
+     "first_col": 10194,
+     "first_row": 2067,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "6a306c89-969f-457e-9d88-0a4b89905a86",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-07-03",
+   "gamma2": 9.5e-05,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 604,
+   "anchor": {
+    "incidence_deg": 32.97024979669369,
+    "line": 2083,
+    "nearest_node_m": 7128.052930099831,
+    "pixel": 10277,
+    "raster": [
+     13572,
+     23057
+    ],
+    "residual_m": 1.581952346896287e-09,
+    "window": {
+     "first_col": 10213,
+     "first_row": 2066,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "b0c0c29a-d651-48e6-9168-b52e662843c8",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-07-09",
+   "gamma2": 0.000184,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 306,
+   "anchor": {
+    "incidence_deg": 32.96407658001273,
+    "line": 2080,
+    "nearest_node_m": 7099.80100248445,
+    "pixel": 10260,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10196,
+     "first_row": 2063,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "e514432a-d741-48b3-9f83-b77524d47252",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-08-02",
+   "gamma2": 0.00163,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 693,
+   "anchor": {
+    "incidence_deg": 32.972768198242306,
+    "line": 2082,
+    "nearest_node_m": 7118.108685075051,
+    "pixel": 10292,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10228,
+     "first_row": 2065,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "18c26da9-dd84-45fb-8d58-37f64d3dad8a",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-08-08",
+   "gamma2": 0.000748,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 723,
+   "anchor": {
+    "incidence_deg": 32.97012241885062,
+    "line": 2077,
+    "nearest_node_m": 7057.443284886418,
+    "pixel": 10281,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 0.0,
+    "window": {
+     "first_col": 10217,
+     "first_row": 2060,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "4aa43629-c807-4e39-a689-ae07f8295ae1",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-09-01",
+   "gamma2": 0.000316,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  },
+  {
+   "A": 504,
+   "anchor": {
+    "incidence_deg": 32.96963255096509,
+    "line": 2079,
+    "nearest_node_m": 7074.3770095848595,
+    "pixel": 10283,
+    "raster": [
+     13572,
+     23058
+    ],
+    "residual_m": 1.967217543563943e-10,
+    "window": {
+     "first_col": 10219,
+     "first_row": 2062,
+     "n_cols": 129,
+     "n_rows": 35
+    }
+   },
+   "burst": "e0e267b9-5a2e-4fcc-8548-0f344f0dc998",
+   "chip": [
+    35,
+    129
+   ],
+   "date": "2026-09-07",
+   "gamma2": 0.000453,
+   "orbit": "DESCENDING",
+   "subswath": "IW1"
+  }
+ ],
+ "site": "espoo",
+ "support": {
+  "assumptions": [
+   "height projection: 36.0 m x cos(33.546 deg) / 2.3296 m = 12.88 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+   "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+  ],
+  "band": [
+   5,
+   33
+  ],
+  "chip": [
+   35,
+   129
+  ],
+  "guard_cells": 374,
+  "height_projected": true,
+  "height_shift_bins": 12.879588760633995,
+  "hull_m": [
+   69.08070523951248,
+   15.904396771281952
+  ],
+  "margin": {
+   "bins": 1,
+   "bins_m": 4.215550220970901,
+   "lines": 1,
+   "lines_m": 13.90793,
+   "min_margin": 1,
+   "rule": "max(min_margin, ceil(metres/ground_spacing + model_bins)) per axis"
+  },
+  "record": {
+   "N_bins": 33,
+   "N_lines": 5,
+   "anchor_bin": 16114,
+   "anchor_line": 8579,
+   "assumptions": [
+    "height projection: 36.0 m x cos(33.546 deg) / 2.3296 m = 12.88 range samples toward near range, azimuth unchanged (zero-Doppler); assumes a locally horizontal ground plane and the channel's mid-swath incidence",
+    "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+   ],
+   "azimuth_sample_m": 13.9079,
+   "budget": {
+    "azimuth_bins": 0.0,
+    "azimuth_m": 1.0,
+    "height_uncertainty_bins": 0.0,
+    "height_uncertainty_m": 0.0,
+    "model_azimuth_m": 0.0,
+    "notes": [
+     "registration uncertainty: the default 1 m was used because nothing measured it for this group"
+    ],
+    "placement_note": "systematic geolocation error moves the echo and the support together, so it is recorded, not margined",
+    "placement_uncertainty_m": 0.0,
+    "range_bins": 0.0,
+    "range_m": 1.0,
+    "registration_m": 1.0,
+    "registration_source": "default (no measured registration error for this group)"
+   },
+   "chip": [
+    8577,
+    8581,
+    16098,
+    16130
+   ],
+   "chip_cells": 165,
+   "chip_m": [
+    69.5,
+    139.1
+   ],
+   "geometry_notes": [
+    "ground range = dr_slant / sin(theta)"
+   ],
+   "group": null,
+   "height_m": 36.0,
+   "height_projected": true,
+   "height_shift_bins": 12.8796,
+   "incidence_deg": 33.54636555485135,
+   "incidence_source": "burst annotation",
+   "margin_bins": 1,
+   "margin_lines": 1,
+   "margin_m": [
+    13.908,
+    4.216
+   ],
+   "model": "hull",
+   "range_ground_m": 4.2156,
+   "range_sample_m": 2.329562,
+   "sample_source": {
+    "azimuth_sample_m": "burst annotation",
+    "range_sample_m": "burst annotation"
+   },
+   "schema": "ocv-observation-support-v1",
+   "shape": "polygon"
+  },
+  "ring_cells": 3976,
+  "ring_complete": true,
+  "support_cells": 165,
+  "support_m": [
+   139.11315729203972,
+   69.53965
+  ]
+ },
+ "support_shape": "polygon",
+ "skipped": [
+  {
+   "date": "2024-09-10",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-10-04",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-10-16",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-11-09",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-12-03",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-12-15",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-01-08",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-02-01",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-02-13",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-03-09",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-04-02",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-05-02",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-05-08",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-06-01",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-06-07",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-07-01",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-07-07",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-08-06",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-09-05",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-09-11",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-10-05",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-10-11",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-11-04",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-11-10",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-12-10",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-01-03",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-02-08",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-03-04",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-04-09",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-05-03",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-06-02",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-07-03",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-07-09",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-08-02",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-08-08",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-09-01",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-09-07",
+   "orbit": "ASCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-09-05",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-09-17",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-10-11",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-11-04",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-11-16",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2024-12-10",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-01-03",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-01-15",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-02-08",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-03-04",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-03-16",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-04-03",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-04-09",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-05-03",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-06-02",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-07-02",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-08-01",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-08-07",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-09-06",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-10-06",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-11-05",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-12-05",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2025-12-17",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-02-10",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-03-06",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-03-11",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-04-04",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-04-16",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-05-05",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-07-04",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-08-03",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  },
+  {
+   "date": "2026-09-02",
+   "orbit": "DESCENDING",
+   "reason": "relative orbit not usable at this site (allowed [51, 160])"
+  }
+ ],
+ "n_skipped": 69
+}

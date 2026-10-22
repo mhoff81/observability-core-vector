@@ -148,10 +148,15 @@ CHANNEL_AXIS = core.CHANNEL_AXIS
 CHANNEL_TITLE = core.CHANNEL_TITLE
 
 
+#: Appended to every figure stem by ``save_fig``. ``""`` is the committed chip;
+#: the support-chip run sets it to ``"_support"`` and writes a second, additive set.
+FIG_SUFFIX = ""
+
+
 def save_fig(fig, name, out_dir=None):
-    """Write one 600 dpi PNG (the espoo set keeps the binary out of git)."""
+    """Write one 600 dpi PNG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + ".png")
+    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
     fig.savefig(png)
     plt.close(fig)
     print(f"  {os.path.relpath(png)}")
@@ -231,22 +236,36 @@ def fig_b_block(rows, keys):
             "keys": list(keys)}
 
 
-def compute(quick=False):
-    """Recompute all numbers of figures A–E (and the raw values for the pins)."""
-    rows = core.load_csv()
+def compute(quick=False, table=None):
+    """Recompute all numbers of figures A–E (and the raw values for the pins).
+
+    ``table`` selects the chip: the committed fixed-window table (default) or
+    ``core.SUPPORT_CSV``, the support-sized chip. Nothing is replaced — the two
+    runs are additive and each pins its own numbers.
+    """
+    chip = core.chip_of(table)
+    if chip is None:
+        raise SystemExit(f"unknown chip table: {table}")
+    table = table or core.CSV_PATH
+    rows = core.load_csv(table)
     ref = core.load_reference()
     meta = core.load_csv_meta()
+    support_meta = (core.load_csv_meta(core.SUPPORT_META) if chip == "support"
+                    else None)
     by_part, prov = core.load_raw_parts()
     extra, extra_prov = core.db_extra_rows()
     res = {"rows": rows, "ref": ref, "meta": meta, "prov": prov, "extra": extra,
-           "extra_prov": extra_prov, "by_part": by_part}
+           "extra_prov": extra_prov, "by_part": by_part,
+           "chip": chip, "table": table, "support_meta": support_meta}
 
     days = core.days_of(rows)
     by_state = st.by_state(rows)
     res["data"] = {
-        "csv": os.path.relpath(core.CSV_PATH, os.path.dirname(core.DATA)),
-        "csv_meta": os.path.relpath(core.CSV_META_PATH, os.path.dirname(core.DATA)),
-        "csv_sha256": core.sha256(core.CSV_PATH),
+        "chip": chip,
+        "csv": os.path.relpath(table, os.path.dirname(core.DATA)),
+        "csv_meta": os.path.relpath(core.table_paths(chip)[1],
+                                    os.path.dirname(core.DATA)),
+        "csv_sha256": core.sha256(table),
         "db_extra": os.path.relpath(core.DB_EXTRA_PATH, os.path.dirname(core.DATA)),
         "db_extra_sha256": core.sha256(core.DB_EXTRA_PATH),
         "raw_parts": {str(p): {"file": prov[p]["file"], "sha256": prov[p]["sha256"],
@@ -889,8 +908,112 @@ def _row_derived_recomputed(row):
             core.echo_mode_of(core._num(row.get("A"))))
 
 
-def pin_all(res, quick=False):
-    """All pins against the four committed reference JSONs and the meta file."""
+#: The chip the support table was cut with (``ocv_migrate.py``), pinned so a
+#: re-cut with other parameters cannot pass unnoticed.
+SUPPORT_CHIP = {"rows": 35, "cols": 475}
+SUPPORT_FINDINGS = os.path.join(core.REF, "kdlo_support_findings.json")
+
+
+def support_snapshot(res):
+    """The numbers a support run locks: chip, inputs, and the effect sizes."""
+    meta = res.get("support_meta") or {}
+    chip = meta.get("chip") or {}
+    return {
+        "chip": {k: chip.get(k) for k in ("rows", "cols", "guard_cells",
+                                          "ring_cells", "support_cells",
+                                          "ring_complete")},
+        "guard_m": meta.get("guard_m"), "ring_m": meta.get("ring_m"),
+        "table_sha256": res["data"]["csv_sha256"],
+        "n_rows": res["data"]["n_rows"],
+        "n_by_state": res["data"]["n_by_state"],
+        "effect_sizes": {k: {"delta": (v or {}).get("delta"),
+                             "sds": (v or {}).get("sds"),
+                             "n": (v or {}).get("n")}
+                         for k, v in res["fig_b"]["table"].items()},
+    }
+
+
+def _pin_tree(P, prefix, got, want, tol=1e-9):
+    """Structural comparison that reports through ``Pins`` with a tolerance."""
+    if isinstance(want, dict):
+        if not isinstance(got, dict):
+            P.add(prefix, f"<{type(got).__name__}>", "<dict>", 0.0)
+            return
+        for key in want:
+            if key not in got:
+                P.add(f"{prefix}.{key}", "<missing>", "<present>", 0.0)
+                continue
+            _pin_tree(P, f"{prefix}.{key}", got[key], want[key], tol)
+        return
+    if isinstance(want, list):
+        if not isinstance(got, (list, tuple)) or len(got) != len(want):
+            P.add(f"{prefix}.len", len(got) if hasattr(got, "__len__") else -1,
+                  len(want), 0.0)
+            return
+        for index, (g, w) in enumerate(zip(got, want)):
+            _pin_tree(P, f"{prefix}[{index}]", g, w, tol)
+        return
+    if isinstance(want, (int, float)) and isinstance(got, (int, float))             and not isinstance(want, bool) and not isinstance(got, bool):
+        P.add(prefix, float(got), float(want), tol)
+        return
+    P.add(prefix, got, want, 0.0)
+
+
+def pin_support(res, write_reference=False):
+    """The support-chip pins: the chip itself, the shared rows, the effect sizes."""
+    P = Pins()
+    meta = res.get("support_meta") or {}
+    chip = meta.get("chip") or {}
+    P.cmp("support.generated_by", meta.get("generated_by"),
+          "erlking_mvp/tools/ocv_table.py")
+    P.cmp("support.n_rows", meta.get("n_rows"), res["data"]["n_rows"])
+    P.cmp("support.chip.rows", chip.get("rows"), SUPPORT_CHIP["rows"])
+    P.cmp("support.chip.cols", chip.get("cols"), SUPPORT_CHIP["cols"])
+    P.cmp("support.chip.ring_complete", chip.get("ring_complete"), True)
+    P.cmp("support.guard_m", meta.get("guard_m"), 30.0)
+    P.cmp("support.ring_m", meta.get("ring_m"), 200.0)
+
+    # the same acquisitions, and the committed values the chip table carries
+    committed = core.load_csv(core.CSV_PATH)
+    P.cmp("support.same_ids", sorted(r["id"] for r in res["rows"]),
+          sorted(r["id"] for r in committed))
+    carried = core.load_committed_columns(res["table"])
+    checked = mismatches = 0
+    for row in committed:
+        for dim in ("A", "D", "F", "S", "P", "gamma2"):
+            have, said = row.get(dim), (carried.get(row["id"]) or {}).get(dim)
+            if have is None or said is None:
+                continue
+            checked += 1
+            if abs(have - said) > 1e-9:
+                mismatches += 1
+    P.cmp("support.committed_values.mismatches", mismatches, 0)
+    P.add("support.committed_values.checked", checked, checked, 0.0)
+
+    snapshot = support_snapshot(res)
+    if write_reference:
+        os.makedirs(os.path.dirname(SUPPORT_FINDINGS), exist_ok=True)
+        with open(SUPPORT_FINDINGS, "w", encoding="utf-8") as fh:
+            json.dump(snapshot, fh, indent=1, sort_keys=True, default=json_default)
+            fh.write("\n")
+        print(f"  wrote {os.path.relpath(SUPPORT_FINDINGS, os.path.dirname(core.DATA))}")
+    elif os.path.exists(SUPPORT_FINDINGS):
+        with open(SUPPORT_FINDINGS, encoding="utf-8") as fh:
+            _pin_tree(P, "findings", snapshot, json.load(fh))
+    else:
+        P.add("findings", "<missing>", "<present>", 0.0)
+    return P
+
+
+def pin_all(res, quick=False, write_reference=False):
+    """All pins against the four committed reference JSONs and the meta file.
+
+    On the support chip the committed meta does not apply (it describes the table
+    the generator wrote), so that run takes its own, smaller set — see
+    ``pin_support``.
+    """
+    if res.get("chip") == "support":
+        return pin_support(res, write_reference=write_reference)
     ref, rows, meta = res["ref"], res["rows"], res["meta"]
     P = Pins()
 
@@ -1305,15 +1428,60 @@ def report(res, pins, quick):
     A(md_table(["channel", "median pre / rebuild", "delta (all)", "SDS", "delta (matched)"],
                rows))
     A("")
-    A(f"The headline is `gamma^2`: median **{g2['median'][0]:.6f} -> "
-      f"{g2['median'][1]:.6f}**, Cliff's delta **{sgn(g2['delta'])}** "
-      f"(SDS {g2['sds']:.2f}, {g2['n_pairs']} pre x rebuild pairs, "
-      f"CI [{g2['delta_ci95'][0]:+.3f}, {g2['delta_ci95'][1]:+.3f}]). It is the "
-      f"largest effect in the table. The strongest **counter**-moving channel is "
-      f"`A` (delta {sgn(fb['table']['A']['delta'])}): the rebuild has *smaller* "
-      "masks, i.e. the return is more concentrated, not less coherent in the "
-      "absolute sense.")
+    # The headline is whatever the table ranks first, not a fixed name: on the
+    # committed chip that is `gamma2`, on the support-sized chip it is not, and a
+    # sentence that names it in advance would be wrong on one of the two.
+    ranked = [k for k in fb["ranking_by_abs_delta"]
+              if (fb["table"].get(k) or {}).get("delta") is not None]
+    top = ranked[0]
+    t = fb["table"][top]
+    ci = t.get("delta_ci95") or [None, None]
+    A(f"The headline is `{top}`: median **{fmt(t['median'][0], 6)} -> "
+      f"{fmt(t['median'][1], 6)}**, Cliff's delta **{sgn(t['delta'])}** "
+      f"(SDS {fmt(t['sds'], 2)}, {t.get('n_pairs')} pre x rebuild pairs, "
+      f"CI [{ci[0]:+.3f}, {ci[1]:+.3f}]). It is the largest effect in the table.")
+    counters = [k for k in ranked
+                if (fb["table"][k]["delta"] > 0) != (t["delta"] > 0)]
+    if counters:
+        other = counters[0]
+        extra = ("the rebuild has *smaller* masks, i.e. the return is more "
+                 "concentrated, not less coherent in the absolute sense"
+                 if other == "A" else
+                 "the two blocks move in opposite directions, which is what the "
+                 "block split in the summary table keeps apart")
+        A(f"The strongest **counter**-moving channel is `{other}` (delta "
+          f"{sgn(fb['table'][other]['delta'])}): {extra}.")
     A("")
+    if res.get("chip") == "support":
+        # What the chip change did, from the committed run that this one sits next
+        # to: same acquisitions, same code, only the search window differs.
+        A("### What the chip changed")
+        A("")
+        committed_path = os.path.join(core.DATA, "fig_kdlo_ocv_paper.json")
+        past = {}
+        if os.path.exists(committed_path):
+            with open(committed_path, encoding="utf-8") as fh:
+                past = ((json.load(fh).get("fig_b") or {}).get("table") or {})
+        rows, flips = [], []
+        for key in fb["keys"]:
+            old = past.get(key) or {}
+            new = fb["table"][key]
+            if old.get("delta") is None or new.get("delta") is None:
+                continue
+            flipped = (old["delta"] > 0) != (new["delta"] > 0)
+            if flipped:
+                flips.append(key)
+            rows.append([f"`{key}`", f"{old['delta']:+.3f}", f"{new['delta']:+.3f}",
+                         f"{new['delta'] - old['delta']:+.3f}",
+                         "**yes**" if flipped else "no",
+                         f"{old.get('sds', 0.0):.2f} -> {new.get('sds', 0.0):.2f}"])
+        A(md_table(["channel", "delta committed", "delta support", "change",
+                    "sign flip", "SDS committed -> support"], rows))
+        A("")
+        A("Same 60 acquisitions, same code, same estimators: only the search window "
+          "differed. " + (f"The sign of the effect flips on {', '.join('`' + k + '`' for k in flips)}."
+                          if flips else "No channel flips its sign."))
+        A("")
     A("## 4. The epoch problem: is it the collapse, or the calendar?")
     A("")
     A(f"`pre` holds {d['state_windows']['pre'][0]}..{d['state_windows']['pre'][1]} "
@@ -1538,17 +1706,35 @@ def main(argv=None):
                     help="skip the two label-permutation tests (panel C null)")
     ap.add_argument("--figdir", default=FIGDIR,
                     help="output directory of the PNG figures")
-    ap.add_argument("--json", default=OUT_JSON, help="path of the result JSON")
-    ap.add_argument("--md", default=OUT_MD, help="path of the Markdown report")
+    ap.add_argument("--json", default=None, help="path of the result JSON")
+    ap.add_argument("--md", default=None, help="path of the Markdown report")
+    ap.add_argument("--table", default=None,
+                    help="chip table to read; the committed one by default, or "
+                         "data/kdlo/support/kdlo_ocv_channels.csv")
+    ap.add_argument("--suffix", default=None,
+                    help="appended to every output stem; defaults to '' for the "
+                         "committed chip and '_support' for the support chip")
+    ap.add_argument("--write-reference", action="store_true",
+                    help="(support chip) write the findings lock instead of "
+                         "checking it")
     args = ap.parse_args(argv)
+    chip = core.chip_of(args.table)
+    if chip is None:
+        ap.error(f"unknown chip table: {args.table}")
+    suffix = args.suffix if args.suffix is not None else         ("_support" if chip == "support" else "")
+    global FIG_SUFFIX
+    FIG_SUFFIX = suffix
+    args.json = args.json or os.path.join(core.DATA,
+                                          f"fig_kdlo_ocv_paper{suffix}.json")
+    args.md = args.md or os.path.join(FIGDIR, f"fig_kdlo_ocv_paper{suffix}.md")
 
     t0 = time.perf_counter()
     print("KDLO OCV figure package — recomputing figures A-E "
           f"({'quick' if args.quick else 'full'} mode) ...")
-    res = compute(quick=args.quick)
+    res = compute(quick=args.quick, table=args.table)
     print(f"  compute: {time.perf_counter() - t0:.1f}s")
 
-    P = pin_all(res, quick=args.quick)
+    P = pin_all(res, quick=args.quick, write_reference=args.write_reference)
     s = P.summary()
     print(f"  pins: {s['n_checks']} checks, {s['n_exact']} exact, "
           f"{s['n_failed']} failures, max |dev| {s['max_abs_deviation']}")

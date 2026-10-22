@@ -244,10 +244,14 @@ def span_days(start, end):
     return (D(end) - D(start)).days + 1
 
 
+#: Appended to the figure stem; the support-chip run sets it to ``_support``.
+FIG_SUFFIX = ""
+
+
 def save_fig(fig, name, out_dir=None):
     """Write one 600 dpi PNG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + ".png")
+    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
     fig.savefig(png)
     plt.close(fig)
     print(f"  {os.path.relpath(png)}")
@@ -606,7 +610,7 @@ def _median(rows, dim):
     return st._stats(vals) if vals else None
 
 
-def compute():
+def compute(table=None):
     """The era rows, the record rows, the per-stretch medians, the segments.
 
     The medians are the 1.0 of the figure: **each stretch is divided by its own
@@ -619,10 +623,11 @@ def compute():
     the baseline the months companion uses, and the cross-read of the two
     artifacts hangs on it.
     """
+    table = table or CHANNEL_CSV
     t0 = time.time()
     av = load_availability()
     era, era_strips_meta = era_rows(av)
-    csv_rows = core.load_csv()
+    csv_rows = core.load_csv(table)
     record = record_rows(csv_rows)
     single = singleton_row(csv_rows)
     later = sorted(core.day_of(r) for r in csv_rows if core.day_of(r) > AXIS_END)
@@ -696,7 +701,8 @@ def compute():
                                            "coherence_masked_pixels "
                                            f"({era_strips_meta['days_held_to_the_export']}"
                                            f"/{era_strips_meta['n_strips']})"},
-        "channel_table": {"path": _rel(CHANNEL_CSV), "sha256": sha(CHANNEL_CSV)},
+        "channel_table": {"path": _rel(table), "sha256": sha(table),
+                          "chip": core.chip_of(table)},
         "availability_reference": {"path": _rel(AVAILABILITY_REF),
                                    "sha256": sha(AVAILABILITY_REF)},
     }
@@ -1497,15 +1503,36 @@ def main(argv=None):
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--figdir", default=FIGDIR)
-    ap.add_argument("--json", default=OUT_JSON)
-    ap.add_argument("--md", default=OUT_MD)
+    ap.add_argument("--json", default=None)
+    ap.add_argument("--md", default=None)
+    ap.add_argument("--table", default=None,
+                    help="chip table to read; committed by default")
+    ap.add_argument("--suffix", default=None,
+                    help="appended to every output stem")
     args = ap.parse_args(argv)
+    chip = core.chip_of(args.table)
+    if chip is None:
+        ap.error(f"unknown chip table: {args.table}")
+    suffix = args.suffix if args.suffix is not None else         ("_support" if chip == "support" else "")
+    global FIG_SUFFIX
+    FIG_SUFFIX = suffix
+    args.json = args.json or os.path.join(core.DATA,
+                                          f"fig_kdlo_ocv_series{suffix}.json")
+    args.md = args.md or os.path.join(FIGDIR, f"fig_kdlo_ocv_series{suffix}.md")
 
     print(f"computing — KDLO, the axis {AXIS_START}..{AXIS_END} in four stretches "
           f"(era {AXIS_START}..{ERA_END}, blind gap {BLIND_GAP_DAYS} d, catalogue "
           f"only, record {RECORD_START}..{AXIS_END}) …")
-    res = compute()
-    res["checks"] = self_checks(res)
+    res = compute(args.table)
+    if chip == "support":
+        # The record-side self-checks pin the committed chip's own numbers; on the
+        # support chip the table is instead checked by the carry-over audit in the
+        # paper run (300/300 committed values) and by --verify of the migration.
+        res["checks"] = {}
+        print("  self-checks: skipped on the support chip (they pin the committed "
+              "numbers; see the paper run's carry-over audit)")
+    else:
+        res["checks"] = self_checks(res)
     print(f"  era {res['n_era']} rows ({', '.join(PANELS)} — gamma2/A from the "
           f"export, P/D/F/S from the era's {res['era_strips']['n_strips']} strips, "
           f"held to the export on all "

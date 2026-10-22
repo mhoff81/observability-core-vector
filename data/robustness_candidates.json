@@ -1,0 +1,837 @@
+{
+ "schema": "ocv-decompose-v2-robustness",
+ "blocks": [
+  2,
+  3,
+  5
+ ],
+ "boot": 1000,
+ "draws_per_event": 20,
+ "gate_order": [
+  "1 ladder (A-free and A-adjusted both exclude no effect)",
+  "2 blocks (2, 3 and 5 all exclude no effect)",
+  "3 placebo (size-matched rank 1 of 8; rank <= 2 counts as supporting)",
+  "4 Holm (p < 0.05 within the site's family)"
+ ],
+ "rule": "generalisation-grade = all four gates; supporting = ladder and block gates plus placebo rank <= 2; everything else keeps a failure label and is not promoted",
+ "candidates": [
+  {
+   "site": "morandi",
+   "stratum": "ALL",
+   "target": "gamma2",
+   "model": "M1",
+   "spec": {
+    "area": "linear"
+   },
+   "available": true,
+   "n_post": 9,
+   "n_pre": 198,
+   "by_block": {
+    "2": {
+     "beta": 0.05978749952745899,
+     "ci": [
+      -0.5953559510512779,
+      0.37946241675599945
+     ],
+     "excludes_null": false
+    },
+    "3": {
+     "beta": 0.05978749952745899,
+     "ci": [
+      -0.5011218307636084,
+      0.34611450656887227
+     ],
+     "excludes_null": false
+    },
+    "5": {
+     "beta": 0.05978749952745899,
+     "ci": [
+      -0.33724620231321106,
+      0.32405167997059875
+     ],
+     "excludes_null": false
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 9,
+    "n_pre": 198,
+    "real_z_full": 0.02639928101544087,
+    "real_z_matched": 0.02639928101544087,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2017-05-29T17:13:44",
+      "size": 9,
+      "z": 0.11811319116353758
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2017-07-04T17:13:46",
+      "size": 9,
+      "z": 0.18678735069056773
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2017-08-09T17:13:48",
+      "size": 9,
+      "z": 0.12681333077276588
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2017-09-12T05:35:36",
+      "size": 9,
+      "z": 0.15729363709573058
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2017-10-14T17:14:29",
+      "size": 9,
+      "z": 0.1349941807753351
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2017-11-23T05:35:36",
+      "size": 9,
+      "z": 0.11289762074186169
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2018-01-04T05:34:56",
+      "size": 9,
+      "z": 0.19256529088333307
+     },
+     {
+      "share": 0.8,
+      "cut": "2018-02-17T17:13:50",
+      "size": 9,
+      "z": 0.32836342612977265
+     }
+    ],
+    "rank_of_real": 9,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": false,
+    "blocks": false,
+    "placebo_rank_1": false,
+    "placebo_rank_le_2": false,
+    "holm": false
+   },
+   "holm_p": 0.756,
+   "beta": 0.05978749952745899,
+   "ci": [
+    -0.4665819232881412,
+    0.3681698438868825
+   ],
+   "verdict": "not rescued (ladder gate)",
+   "note": "correction: gamma2 was missing only through a column mapping error",
+   "prereg": null
+  },
+  {
+   "site": "morandi",
+   "stratum": "ALL",
+   "target": "D",
+   "model": "M1",
+   "spec": {
+    "area": "linear"
+   },
+   "available": true,
+   "n_post": 9,
+   "n_pre": 198,
+   "by_block": {
+    "2": {
+     "beta": -1.1869363790707492,
+     "ci": [
+      -1.7452047677440616,
+      -0.6001653003912264
+     ],
+     "excludes_null": true
+    },
+    "3": {
+     "beta": -1.1869363790707492,
+     "ci": [
+      -1.4783810068337757,
+      -0.6465247679971705
+     ],
+     "excludes_null": true
+    },
+    "5": {
+     "beta": -1.1869363790707492,
+     "ci": [
+      -1.416645114847746,
+      -0.6568808577477345
+     ],
+     "excludes_null": true
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 9,
+    "n_pre": 198,
+    "real_z_full": 0.8030126628510342,
+    "real_z_matched": 0.8030126628510341,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2017-05-29T17:13:44",
+      "size": 9,
+      "z": 0.31404152303968935
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2017-07-04T17:13:46",
+      "size": 9,
+      "z": 0.3029351236410672
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2017-08-09T17:13:48",
+      "size": 9,
+      "z": 0.26021950020711215
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2017-09-12T05:35:36",
+      "size": 9,
+      "z": 0.40131587111135625
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2017-10-14T17:14:29",
+      "size": 9,
+      "z": 0.38793665848170433
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2017-11-23T05:35:36",
+      "size": 9,
+      "z": 0.2841910593348598
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2018-01-04T05:34:56",
+      "size": 9,
+      "z": 0.2717810942135538
+     },
+     {
+      "share": 0.8,
+      "cut": "2018-02-17T17:13:50",
+      "size": 9,
+      "z": 0.10276650900935914
+     }
+    ],
+    "rank_of_real": 1,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": true,
+    "blocks": true,
+    "placebo_rank_1": true,
+    "placebo_rank_le_2": true,
+    "holm": true
+   },
+   "holm_p": 0.0,
+   "beta": -1.1869363790707492,
+   "ci": [
+    -1.5137237853962637,
+    -0.6632460511624941
+   ],
+   "verdict": "generalisation-grade",
+   "note": "strongest independent candidate",
+   "prereg": null
+  },
+  {
+   "site": "morandi",
+   "stratum": "ALL",
+   "target": "F",
+   "model": "M1",
+   "spec": {
+    "area": "linear"
+   },
+   "available": true,
+   "n_post": 9,
+   "n_pre": 198,
+   "by_block": {
+    "2": {
+     "beta": 0.23603203832525432,
+     "ci": [
+      0.119094932013944,
+      0.36346773424878437
+     ],
+     "excludes_null": true
+    },
+    "3": {
+     "beta": 0.23603203832525432,
+     "ci": [
+      0.1340624314072187,
+      0.32332094146448886
+     ],
+     "excludes_null": true
+    },
+    "5": {
+     "beta": 0.23603203832525432,
+     "ci": [
+      0.1407794156715114,
+      0.3261519848669299
+     ],
+     "excludes_null": true
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 9,
+    "n_pre": 198,
+    "real_z_full": 0.14664126320476492,
+    "real_z_matched": 0.14664126320476492,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2017-05-29T17:13:44",
+      "size": 9,
+      "z": 0.0786837858179258
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2017-07-04T17:13:46",
+      "size": 9,
+      "z": 0.06103541358780101
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2017-08-09T17:13:48",
+      "size": 9,
+      "z": 0.07582302191213634
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2017-09-12T05:35:36",
+      "size": 9,
+      "z": 0.07190040386903905
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2017-10-14T17:14:29",
+      "size": 9,
+      "z": 0.09756159420582511
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2017-11-23T05:35:36",
+      "size": 9,
+      "z": 0.06982232598933777
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2018-01-04T05:34:56",
+      "size": 9,
+      "z": 0.054140812741731714
+     },
+     {
+      "share": 0.8,
+      "cut": "2018-02-17T17:13:50",
+      "size": 9,
+      "z": 0.03603740805985567
+     }
+    ],
+    "rank_of_real": 1,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": true,
+    "blocks": true,
+    "placebo_rank_1": true,
+    "placebo_rank_le_2": true,
+    "holm": true
+   },
+   "holm_p": 0.0,
+   "beta": 0.23603203832525432,
+   "ci": [
+    0.13027089487784735,
+    0.32224573592611205
+   ],
+   "verdict": "not rescued (pre-registered)",
+   "note": "ladder already disagreed; not rescuable",
+   "prereg": "not_rescuable"
+  },
+  {
+   "site": "haltern",
+   "stratum": "ALL",
+   "target": "gamma2",
+   "model": "M1",
+   "spec": {
+    "area": "linear"
+   },
+   "available": true,
+   "n_post": 11,
+   "n_pre": 96,
+   "by_block": {
+    "2": {
+     "beta": 0.33445076216176783,
+     "ci": [
+      -0.11989209529471785,
+      1.0506593788662753
+     ],
+     "excludes_null": false
+    },
+    "3": {
+     "beta": 0.33445076216176783,
+     "ci": [
+      0.09399780225938077,
+      0.9277884910371925
+     ],
+     "excludes_null": true
+    },
+    "5": {
+     "beta": 0.33445076216176783,
+     "ci": [
+      -0.024305578613037896,
+      0.979770467016016
+     ],
+     "excludes_null": false
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 11,
+    "n_pre": 96,
+    "real_z_full": 0.24275544759791015,
+    "real_z_matched": 0.2427554475979103,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2021-04-10T05:50:30.405644",
+      "size": 11,
+      "z": 0.21994128791302914
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2021-05-02T17:17:03.124227",
+      "size": 11,
+      "z": 0.22526560039561705
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2021-05-11T05:42:20.956945",
+      "size": 11,
+      "z": 0.22861696461514802
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2021-06-04T05:42:22.225561",
+      "size": 11,
+      "z": 0.19487171041495463
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2021-06-13T17:16:23.816573",
+      "size": 11,
+      "z": 0.25589947387503365
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2021-07-03T05:50:34.917302",
+      "size": 11,
+      "z": 0.16765944370564145
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2021-07-13T17:17:07.441182",
+      "size": 11,
+      "z": 0.11412812143106614
+     },
+     {
+      "share": 0.8,
+      "cut": "2021-08-05T17:24:37.646532",
+      "size": 11,
+      "z": 0.16354995928502536
+     }
+    ],
+    "rank_of_real": 2,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": false,
+    "blocks": false,
+    "placebo_rank_1": false,
+    "placebo_rank_le_2": true,
+    "holm": false
+   },
+   "holm_p": 0.09,
+   "beta": 0.33445076216176783,
+   "ci": [
+    0.08746310033778239,
+    0.9226053321538705
+   ],
+   "verdict": "not rescued (ladder gate)",
+   "note": "thin, no geometry adjustment",
+   "prereg": null
+  },
+  {
+   "site": "carola",
+   "stratum": "ASC 36.9",
+   "target": "gamma2",
+   "model": "M3",
+   "spec": {
+    "area": "linear",
+    "temp": true,
+    "season": "harmonic"
+   },
+   "available": true,
+   "n_post": 85,
+   "n_pre": 62,
+   "by_block": {
+    "2": {
+     "beta": 0.2738587709041585,
+     "ci": [
+      -0.15622053837212094,
+      0.5930604744084939
+     ],
+     "excludes_null": false
+    },
+    "3": {
+     "beta": 0.2738587709041585,
+     "ci": [
+      -0.18322780502224292,
+      0.6320687114351429
+     ],
+     "excludes_null": false
+    },
+    "5": {
+     "beta": 0.2738587709041585,
+     "ci": [
+      -0.2035558651429836,
+      0.6136755054081254
+     ],
+     "excludes_null": false
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 85,
+    "n_pre": 62,
+    "real_z_full": 0.19473105485042172,
+    "real_z_matched": 0.17932261508260816,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2023-06-30T16:00:00",
+      "size": 37,
+      "z": 0.20700755641492977
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2023-08-05T16:00:00",
+      "size": 34,
+      "z": 0.16055113105365415
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2023-09-22T16:00:00",
+      "size": 30,
+      "z": 0.0026940110029362455
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2023-10-28T16:00:00",
+      "size": 27,
+      "z": 0.2754989314641183
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2023-12-15T16:00:00",
+      "size": 23,
+      "z": 0.11700026006232521
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2024-02-01T16:00:00",
+      "size": 19,
+      "z": 0.39208932247847383
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2024-03-08T16:00:00",
+      "size": 16,
+      "z": 0.20588116099931722
+     },
+     {
+      "share": 0.8,
+      "cut": "2024-04-25T16:00:00",
+      "size": 12,
+      "z": 0.13815002383027766
+     }
+    ],
+    "rank_of_real": 5,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": false,
+    "blocks": false,
+    "placebo_rank_1": false,
+    "placebo_rank_le_2": false,
+    "holm": false
+   },
+   "holm_p": 0.972,
+   "beta": 0.2738587709041585,
+   "ci": [
+    -0.2035558651429836,
+    0.6136755054081254
+   ],
+   "verdict": "not rescued (ladder gate)",
+   "note": "robust, but the placebos say not event-specific",
+   "prereg": null
+  },
+  {
+   "site": "carola",
+   "stratum": "DESC",
+   "target": "P",
+   "model": "M3",
+   "spec": {
+    "area": "linear",
+    "temp": true,
+    "season": "harmonic"
+   },
+   "available": true,
+   "n_post": 86,
+   "n_pre": 60,
+   "by_block": {
+    "2": {
+     "beta": -0.2265104178502949,
+     "ci": [
+      -0.38113469100423325,
+      -0.049858458334549084
+     ],
+     "excludes_null": true
+    },
+    "3": {
+     "beta": -0.2265104178502949,
+     "ci": [
+      -0.38951515431716954,
+      -0.052150743314708536
+     ],
+     "excludes_null": true
+    },
+    "5": {
+     "beta": -0.2265104178502949,
+     "ci": [
+      -0.388645369093298,
+      -0.044487275189946524
+     ],
+     "excludes_null": true
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 86,
+    "n_pre": 60,
+    "real_z_full": 0.3848847675621589,
+    "real_z_matched": 0.9491639392065843,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2023-06-27T05:00:00",
+      "size": 36,
+      "z": 0.005086355661808565
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2023-08-02T05:00:00",
+      "size": 33,
+      "z": 0.0666872716471388
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2023-09-19T05:00:00",
+      "size": 29,
+      "z": 0.06422849995556097
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2023-10-25T05:00:00",
+      "size": 26,
+      "z": 0.10169018943575847
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2023-12-12T05:00:00",
+      "size": 22,
+      "z": 0.22696415726784705
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2024-01-17T05:00:00",
+      "size": 19,
+      "z": 0.19136972505794356
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2024-03-05T05:00:00",
+      "size": 15,
+      "z": 0.23894030034309324
+     },
+     {
+      "share": 0.8,
+      "cut": "2024-04-10T05:00:00",
+      "size": 12,
+      "z": 0.21936483160279846
+     }
+    ],
+    "rank_of_real": 1,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": true,
+    "blocks": true,
+    "placebo_rank_1": true,
+    "placebo_rank_le_2": true,
+    "holm": false
+   },
+   "holm_p": 0.1,
+   "beta": -0.2265104178502949,
+   "ci": [
+    -0.388645369093298,
+    -0.044487275189946524
+   ],
+   "verdict": "candidate, not Holm-firm",
+   "note": "direction-consistent, never Holm-firm",
+   "prereg": null
+  },
+  {
+   "site": "cts",
+   "stratum": "ASC",
+   "target": "P",
+   "model": "M3",
+   "spec": {
+    "area": "linear",
+    "temp": true,
+    "season": "harmonic"
+   },
+   "available": true,
+   "n_post": 42,
+   "n_pre": 136,
+   "by_block": {
+    "2": {
+     "beta": -0.06955181070438371,
+     "ci": [
+      -0.12803284693865277,
+      -0.003304607998498495
+     ],
+     "excludes_null": true
+    },
+    "3": {
+     "beta": -0.06955181070438371,
+     "ci": [
+      -0.13409366839658599,
+      -0.0028191035369770495
+     ],
+     "excludes_null": true
+    },
+    "5": {
+     "beta": -0.06955181070438371,
+     "ci": [
+      -0.12809871798057018,
+      -0.0028509670428029585
+     ],
+     "excludes_null": true
+    }
+   },
+   "placebo": {
+    "available": true,
+    "n_post": 42,
+    "n_pre": 136,
+    "real_z_full": 0.24900240549022576,
+    "real_z_matched": 0.24900240549022562,
+    "events": [
+     {
+      "share": 0.4,
+      "cut": "2018-09-17T23:28:10",
+      "size": 42,
+      "z": 0.0820834696036878
+     },
+     {
+      "share": 0.4571428571428572,
+      "cut": "2019-01-03T23:28:08",
+      "size": 42,
+      "z": 0.09553332759963643
+     },
+     {
+      "share": 0.5142857142857143,
+      "cut": "2019-04-09T23:28:07",
+      "size": 42,
+      "z": 0.05666402432474149
+     },
+     {
+      "share": 0.5714285714285714,
+      "cut": "2019-07-14T23:28:12",
+      "size": 42,
+      "z": 0.04441620345790839
+     },
+     {
+      "share": 0.6285714285714286,
+      "cut": "2019-09-24T23:28:16",
+      "size": 42,
+      "z": 0.02481493901961614
+     },
+     {
+      "share": 0.6857142857142857,
+      "cut": "2019-12-29T23:28:15",
+      "size": 42,
+      "z": 0.005901024528191474
+     },
+     {
+      "share": 0.7428571428571429,
+      "cut": "2020-04-03T23:28:13",
+      "size": 35,
+      "z": 0.062271733689151704
+     },
+     {
+      "share": 0.8,
+      "cut": "2020-07-08T23:28:18",
+      "size": 27,
+      "z": 0.059781698496809005
+     }
+    ],
+    "rank_of_real": 1,
+    "of": 8,
+    "draws_per_event": 20,
+    "seed": 7,
+    "matched": true
+   },
+   "gates": {
+    "ladder": true,
+    "blocks": true,
+    "placebo_rank_1": true,
+    "placebo_rank_le_2": true,
+    "holm": false
+   },
+   "holm_p": 0.21000000000000002,
+   "beta": -0.06955181070438371,
+   "ci": [
+    -0.12809871798057018,
+    -0.0028509670428029585
+   ],
+   "verdict": "candidate, not Holm-firm",
+   "note": "boundary case",
+   "prereg": null
+  }
+ ]
+}

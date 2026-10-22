@@ -136,11 +136,23 @@ def record_months(csv_rows):
     return out
 
 
-# The analysed axis: the record's calendar months, in time order. Built from the
-# committed CSV at import so that a change of record cannot silently stale it.
-WINDOWS = record_months(core.load_csv())
-WINDOW_LABELS = [w[0] for w in WINDOWS]
+# The analysed axis: the record's calendar months, in time order. It is built by
+# ``init_axis`` from the table that will actually be read — the committed chip by
+# default, the support-sized chip with ``--table`` — so a change of chip can never
+# silently stale the axis.
+WINDOWS = None
+WINDOW_LABELS = None
 COLLAPSE_MONTH = COLLAPSE_DAY[:7]                  # "2022-12"
+
+
+def init_axis(table=None):
+    """(Re)build the month axis from ``table``; also fixes the collapse cut."""
+    global WINDOWS, WINDOW_LABELS, COLLAPSE_CUT_X, BASELINE_WINDOWS
+    WINDOWS = record_months(core.load_csv(table))
+    WINDOW_LABELS = [w[0] for w in WINDOWS]
+    COLLAPSE_CUT_X = month_frac_x(COLLAPSE_DAY)
+    BASELINE_WINDOWS = [WINDOW_LABELS[0]]
+    return WINDOWS
 
 
 def month_frac_x(day):
@@ -156,16 +168,21 @@ def month_frac_x(day):
 
 # Where the collapse falls on the calendar-month axis (2022-12-11 -> x ~ 6.32):
 # inside the month, not on a bucket boundary as it is for the anchored sites.
-COLLAPSE_CUT_X = month_frac_x(COLLAPSE_DAY)
+# Filled by ``init_axis``.
+COLLAPSE_CUT_X = None
 # The fingerprint baseline is the first record month (2022-06): the only month
-# whose value does not depend on any later one.
-BASELINE_WINDOWS = [WINDOW_LABELS[0]]
+# whose value does not depend on any later one. Filled by ``init_axis``.
+BASELINE_WINDOWS = None
+
+
+#: Appended to the figure stem; the support-chip run sets it to ``_support``.
+FIG_SUFFIX = ""
 
 
 def save_fig(fig, name, out_dir=None):
     """Write one 600 dpi PNG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + ".png")
+    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
     fig.savefig(png)
     plt.close(fig)
     print(f"  {os.path.relpath(png)}")
@@ -295,8 +312,10 @@ def fingerprint(blocks, base):
     return out
 
 
-def compute():
-    csv_rows = core.load_csv()
+def compute(table=None):
+    if WINDOWS is None:
+        init_axis(table)
+    csv_rows = core.load_csv(table)
     rows = month_rows(csv_rows)
     t0 = time.time()
     blocks = window_block(rows)
@@ -679,14 +698,28 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--figdir", default=FIGDIR)
-    ap.add_argument("--json", default=OUT_JSON)
-    ap.add_argument("--md", default=OUT_MD)
+    ap.add_argument("--json", default=None)
+    ap.add_argument("--md", default=None)
+    ap.add_argument("--table", default=None,
+                    help="chip table to read; committed by default")
+    ap.add_argument("--suffix", default=None,
+                    help="appended to every output stem")
     args = ap.parse_args(argv)
+    chip = core.chip_of(args.table)
+    if chip is None:
+        ap.error(f"unknown chip table: {args.table}")
+    suffix = args.suffix if args.suffix is not None else         ("_support" if chip == "support" else "")
+    global FIG_SUFFIX
+    FIG_SUFFIX = suffix
+    args.json = args.json or os.path.join(core.DATA,
+                                          f"fig_kdlo_ocv_months{suffix}.json")
+    args.md = args.md or os.path.join(FIGDIR, f"fig_kdlo_ocv_months{suffix}.md")
+    init_axis(args.table)
 
     t0 = time.time()
     print(f"computing — KDLO media tower, {len(WINDOW_LABELS)} calendar months "
           f"{WINDOW_LABELS[0]}..{WINDOW_LABELS[-1]} …")
-    res = compute()
+    res = compute(args.table)
     print(f"  {res['n_rows']} acquisitions "
           f"({res['partition']['per_window']}), {res['runtime_s']:.1f} s")
 

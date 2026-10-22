@@ -1,0 +1,81 @@
+{
+ "schema": "lumo-state-frequencies-v1",
+ "method": "Welch power spectral density per accelerometer channel (4 s windows), averaged over the 18 acceleration channels, peaks ranked by normalised power in the 1-50 Hz band, then a mode consensus across the five recordings of a state (+-0.75 Hz clustering). The healthy reference is the healthy recording of the *same* campaign, so each state is compared with the tower as it stood days before that state.",
+ "params": {
+  "fs_hz": 1651.6,
+  "fft_bin_hz": 0.25,
+  "bin_centre_uncertainty_hz": 0.125,
+  "band_hz": [1.0, 50.0],
+  "n_recordings_per_state": 5,
+  "seed": 7
+ },
+ "provenance": {
+  "dam3": {
+   "report": "/home/projects/lumo_dam3_analysis/LUMO_DAM3_FREQUENCY_ANALYSIS.md",
+   "script": "/home/projects/lumo_dam3_analysis/analyze_lumo_dam3.py",
+   "dataset": "exemplary_datasets_dam3_111.zip",
+   "doi": "https://data.uni-hannover.de/dataset/93b52576-6a5a-4ce9-8c27-a0372590f7b0/resource/78da8221-a6bb-4ad9-9f53-e3d9164b3c52"
+  },
+  "dam4": {
+   "report": "/home/projects/lumo_dam4_analysis/LUMO_DAM4_FREQUENCY_ANALYSIS.md",
+   "script": "/home/projects/lumo_dam4_analysis/analyze_lumo_dam4.py",
+   "dataset": "exemplary_datasets_dam4_111.zip"
+  },
+  "dam6": {
+   "report": "/home/projects/lumo_dam6_analysis/LUMO_DAM6_FREQUENCY_ANALYSIS.md",
+   "script": "/home/projects/lumo_dam6_analysis/analyze_lumo_dam6.py",
+   "dataset": "exemplary_datasets_dam6_111.zip",
+   "doi": "https://data.uni-hannover.de/dataset/93b52576-6a5a-4ce9-8c27-a0372590f7b0/resource/d9661b47-1f25-4194-99e8-6805fcd5810e"
+  }
+ },
+ "campaigns": [
+  {
+   "state": "DAM 3",
+   "healthy_window": "2021-03-10/2021-03-15",
+   "state_window": "2021-03-19/2021-03-24",
+   "modes": [
+    {"name": "fundamental", "healthy_hz": 2.75, "healthy_n": 5, "state_hz": 2.75, "state_n": 4, "shift_pct": 0.0},
+    {"name": "first_higher", "healthy_hz": 13.501, "healthy_n": 5, "state_hz": 12.501, "state_n": 5, "shift_pct": -7.41},
+    {"name": "second_higher", "healthy_hz": 16.001, "healthy_n": 3, "state_hz": 16.189, "state_n": 4, "shift_pct": 1.17}
+   ]
+  },
+  {
+   "state": "DAM 4",
+   "healthy_window": "2020-11-01/2020-11-05",
+   "state_window": "2020-11-10/2020-11-15",
+   "modes": [
+    {"name": "fundamental", "healthy_hz": 2.7502, "healthy_n": 5, "state_hz": 2.7502, "state_n": 5, "shift_pct": 0.0},
+    {"name": "first_higher", "healthy_hz": 13.5009, "healthy_n": 4, "state_hz": 12.5009, "state_n": 5, "shift_pct": -7.41},
+    {"name": "second_higher", "healthy_hz": 16.0511, "healthy_n": 5, "state_hz": 16.1511, "state_n": 5, "shift_pct": 0.62}
+   ]
+  },
+  {
+   "state": "DAM 6",
+   "healthy_window": "2020-10-05/2020-10-08",
+   "state_window": "2020-10-14/2020-10-19",
+   "modes": [
+    {"name": "fundamental", "healthy_hz": 2.75, "healthy_n": 5, "state_hz": 2.75, "state_n": 5, "shift_pct": 0.0},
+    {"name": "first_higher", "healthy_hz": 13.501, "healthy_n": 4, "state_hz": 11.751, "state_n": 5, "shift_pct": -12.96},
+    {"name": "second_higher", "healthy_hz": 16.101, "healthy_n": 5, "state_hz": 14.551, "state_n": 5, "shift_pct": -9.63}
+   ]
+  }
+ ],
+ "dose": {
+  "healthy": 0.0,
+  "DAM 3": 7.41,
+  "DAM 4": 7.41,
+  "DAM 6": 12.96
+ },
+ "dose_definition": "Magnitude of the first-higher-mode drop against the healthy recording of the same campaign, in percent. The fundamental (2.750 Hz) is unchanged in every state, so the damage is local, and the first-higher mode is the one that moves.",
+ "levels": [
+  {"level": "L0", "dose_pct": 0.0, "states": ["healthy"]},
+  {"level": "L1", "dose_pct": 7.41, "states": ["DAM 3", "DAM 4"]},
+  {"level": "L2", "dose_pct": 12.96, "states": ["DAM 6"]}
+ ],
+ "notes": [
+  "DAM 3 and DAM 4 are one FFT bin apart from each other (12.501 vs 12.5009 Hz); at 0.25 Hz resolution they are indistinguishable, which is why the dose has two distinct levels above healthy, not three.",
+  "The DAM 6 ordering is confirmed by the second-higher mode as well (-9.63 % against +1.17 % for DAM 3 and +0.62 % for DAM 4), so it does not rest on a single peak.",
+  "The dose is measured on the tower under controlled excitation, in separate campaigns; it is not derived from the SAR record and not from any OCV dimension.",
+  "Bautzen has no counterpart of this measurement: its ladder (RS, DS1, DS2) is ordinal only."
+ ]
+}

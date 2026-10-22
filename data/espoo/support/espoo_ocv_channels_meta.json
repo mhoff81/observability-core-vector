@@ -1,0 +1,52 @@
+{
+ "P_groups": {
+  "(35, 129)": 75
+ },
+ "asset_name_note": null,
+ "chip": {
+  "cols": 129,
+  "guard_cells": 374,
+  "ring_cells": 3976,
+  "ring_complete": true,
+  "rows": 35,
+  "support_cells": 165
+ },
+ "committed_asset_name": null,
+ "generated_by": "erlking_mvp/tools/ocv_table.py",
+ "guard_m": 30.0,
+ "inputs": {
+  "committed": {
+   "path": "data/espoo/espoo_ocv_channels.csv",
+   "sha256": "0f167c108f7db8f5b7ee3179ec35bdcb65ba146d7d39064fbc15342d350ace53"
+  },
+  "manifest": {
+   "path": "data/espoo/support/espoo_rects_support.txt.manifest.json",
+   "sha256": "7d39fd90fc4f67c2354166ef031d6399ce8e44a136850c366918e644864f7faa"
+  },
+  "rects": {
+   "path": "data/espoo/support/espoo_rects_support.txt",
+   "sha256": "547eae0f914da42f7885241644d3d71a9163edaf05c2abd7ebfb92e5c4659d1e"
+  }
+ },
+ "label": "Espoo mast (OSM 2233589804)",
+ "n_rects": 75,
+ "n_refused": 0,
+ "n_rows": 75,
+ "n_without_committed_row": 0,
+ "reference": "ring",
+ "refused": [],
+ "ring_m": 200.0,
+ "rule": "intensity >= 0.30 * peak(support) and >= 5.0 * median(ring), at least 2 cells",
+ "schema": "ocv-channel-table-support-v1",
+ "site": "espoo",
+ "spacing": {
+  "azimuth_sample_m": 13.9079,
+  "incidence_deg": 33.546366,
+  "range_ground_m": 4.2156
+ },
+ "support_band": [
+  5,
+  33
+ ],
+ "without_partner": []
+}

@@ -87,7 +87,7 @@ GRP_STATE = core.STATE_ORDER[1]     # DESCENDING
 
 # The repository-wide figure style (identical to the LUMO/Morandi/CTS/YWF paper
 # scripts and to this site's months companion): DejaVu Sans, 183 mm column width,
-# 600 dpi PNG, no top/right spines.
+# 630 dpi JPEG, no top/right spines.
 plt.rcParams.update({
     "font.family": "DejaVu Sans",
     "mathtext.fontset": "stix",
@@ -103,7 +103,7 @@ plt.rcParams.update({
     "grid.alpha": 0.25,
     "grid.linewidth": 0.4,
     "figure.dpi": 110,
-    "savefig.dpi": 600,
+    "savefig.dpi": 630,
     "savefig.bbox": "tight",
     "pdf.fonttype": 42,
 })
@@ -150,7 +150,7 @@ CONTROL_CHANNELS = ["wind_speed_ms", "temperature_c"]
 # scipy test or a random stream. Deviations above the tolerance => exit != 0.
 FLOAT_TOL = 1e-6
 TOL_KEYS = {"welch_t", "welch_p", "mannwhitney_p", "mannwhitney_u", "p", "rho",
-            "tau", "z", "S", "Q", "r2", "amplitude", "peak_day_of_year",
+            "tau", "z", "S", "Q", "r2", "seasonal_r2", "amplitude", "peak_day_of_year",
             "residual_std", "theil_sen_per_year", "lag1_autocorr",
             "lag1_detrended", "p_accuracy", "p_balanced_accuracy",
             "p_decreasing", "p_increasing", "p_two_sided",
@@ -164,13 +164,13 @@ TOL_KEYS = {"welch_t", "welch_p", "mannwhitney_p", "mannwhitney_u", "p", "rho",
 # Small shared helpers
 # ---------------------------------------------------------------------------
 def save_fig(fig, name, out_dir=None):
-    """Write one 600 dpi PNG (the binaries stay out of git)."""
+    """Write one 630 dpi JPEG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + ".png")
-    fig.savefig(png)
+    jpg = os.path.join(out_dir, name + ".jpg")
+    fig.savefig(jpg, dpi=630, facecolor="white")
     plt.close(fig)
-    print(f"  {os.path.relpath(png)}")
-    return png
+    print(f"  {os.path.relpath(jpg)}")
+    return jpg
 
 
 def panel(ax, letter, text):
@@ -630,7 +630,7 @@ def compute(quick=False):
 
 
 # ---------------------------------------------------------------------------
-# Rendering — figures A–E, 183 mm column width, 600 dpi PNG (espoo style)
+# Rendering — figures A–E, 183 mm column width, 630 dpi JPEG (espoo style)
 # ---------------------------------------------------------------------------
 def fig_A(res, out_dir=None):
     """Raw distributions of the measured channels per orbit geometry."""
@@ -1403,7 +1403,7 @@ def build_json(res, problems, findings_ref, wrote_reference):
                  "problems": problems,
                  "findings_pinned": findings_ref is not None,
                  "findings_written": bool(wrote_reference)},
-        "figures": [f"figures/espoo/fig_espoo_ocv_paper_{L}.png"
+        "figures": [f"figures/espoo/fig_espoo_ocv_paper_{L}.jpg"
                     for L in "ABCDE"],
     }
 
@@ -1424,7 +1424,7 @@ def md_table(header, rows):
 
 
 def report(res, problems, findings_ref):
-    """The markdown report written next to the PNGs."""
+    """The markdown report written next to the JPEGs."""
     data = res["data"]
     stt = res["controls"]["stationarity"]
     obs = data["orbit"]

@@ -34,6 +34,7 @@
   "ring_m": 200.0,
   "support_cells": 861
  },
+ "out_name": "fig_morandi_ocv_orbits",
  "runs": {
   "ASCENDING": [
    {

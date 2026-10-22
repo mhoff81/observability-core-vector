@@ -63,6 +63,47 @@ FIGDIR = os.path.join(HERE, os.pardir, os.pardir, "figures", "kdlo")
 
 CSV_PATH = os.path.join(DATA, "kdlo_ocv_channels.csv")
 CSV_META_PATH = os.path.join(DATA, "kdlo_ocv_channels_meta.json")
+
+#: The support-sized chip (guard 30 m, ring 200 m), cut by
+#: ``erlking_mvp/tools/ocv_migrate.py``. It carries the same 60 acquisitions,
+#: the echo-mask dimensions recomputed on the chip, and the committed values
+#: beside them as ``A_committed`` … ``gamma2_committed``, so the two chips can be
+#: compared row by row.
+SUPPORT_DIR = os.path.join(DATA, "support")
+SUPPORT_CSV = os.path.join(SUPPORT_DIR, "kdlo_ocv_channels.csv")
+SUPPORT_META = os.path.join(SUPPORT_DIR, "kdlo_ocv_channels_meta.json")
+SUPPORT_MANIFEST = os.path.join(SUPPORT_DIR, "kdlo_rects_support.txt.manifest.json")
+
+#: chip name -> (table, meta). The two are additive: nothing here replaces the
+#: committed record, and every figure package can be produced from either.
+CHIPS = {"committed": (CSV_PATH, CSV_META_PATH),
+         "support": (SUPPORT_CSV, SUPPORT_META)}
+
+
+def chip_of(path):
+    """The chip a table path belongs to (``committed``, ``support`` or None)."""
+    if not path:
+        return "committed"
+    here = os.path.abspath(path)
+    for name, (table, _meta) in CHIPS.items():
+        if here == os.path.abspath(table):
+            return name
+    return None
+
+
+def table_paths(chip="committed"):
+    """``(table, meta)`` for a chip name; the committed pair by default."""
+    return CHIPS[chip]
+
+
+def load_committed_columns(path=SUPPORT_CSV):
+    """``{id: {dim: value}}`` — the committed values carried inside a chip table."""
+    out = {}
+    with open(path, newline="") as fh:
+        for row in csv.DictReader(fh):
+            out[row["id"]] = {dim: _num((row.get(dim + "_committed") or "").strip())
+                               for dim in ("A", "D", "F", "S", "P", "gamma2")}
+    return out
 DB_EXTRA_PATH = os.path.join(DATA, "kdlo_db_extra.json")
 RAW_PATHS = {1: os.path.join(DATA, "fig_kdlo_1_raw.json"),
              2: os.path.join(DATA, "fig_kdlo_2_raw.json")}
@@ -431,7 +472,12 @@ TEXT_SOURCE_COLUMNS = ("id", "acquisition_ts", "pass_label", "orbit_direction",
 
 
 def load_csv(path=CSV_PATH):
-    """The 60 merged acquisitions in committed order (all states)."""
+    """The 60 merged acquisitions in committed order (all states).
+
+    ``path=None`` means the committed table, so callers can pass an optional
+    ``--table`` straight through.
+    """
+    path = path or CSV_PATH
     rows = []
     with open(path, newline="") as fh:
         for r in csv.DictReader(fh):
@@ -473,6 +519,7 @@ def load_reference():
 
 
 def load_csv_meta(path=CSV_META_PATH):
+    path = path or CSV_META_PATH
     with open(path) as fh:
         return json.load(fh)
 

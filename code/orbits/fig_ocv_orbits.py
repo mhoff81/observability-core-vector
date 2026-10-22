@@ -76,9 +76,11 @@ CHANNEL_TITLE = {
     "A": "area (masked cells)",
     "S": "shift (centroid to support peak, px)",
 }
-STATE_COLORS = {"pre": "#2b6cb0", "post": "#c53030"}
-STATE_FILL = {"pre": "#bee3f8", "post": "#feb2b2"}
-STATE_MARKERS = {"pre": "o", "post": "s"}
+#: ``all`` is the single state of an event-free site (Espoo): one band, one
+#: median, no pre/post contrast -- the figure then shows trajectories only.
+STATE_COLORS = {"pre": "#2b6cb0", "post": "#c53030", "all": "#2b6cb0"}
+STATE_FILL = {"pre": "#bee3f8", "post": "#feb2b2", "all": "#e2e8f0"}
+STATE_MARKERS = {"pre": "o", "post": "s", "all": "o"}
 PANEL_LETTERS = "ABCDEFGHIJKL"
 
 SITES = {
@@ -155,6 +157,25 @@ SITES = {
         "channels": {"ASCENDING": "ASC", "DESCENDING": "DESC"},
         "framing": "collapse",
     },
+    "espoo": {
+        "label": "Espoo mast (event-free control)",
+        # The support chips of the S3 cut: 75 of 150 overpasses, the two
+        # relative orbits that place the mast inside the IW1 swath (ASC 160,
+        # DESC 51). The record has no damage label, so the figure has one state
+        # and therefore one band: trajectories only.
+        "table": "data/espoo/support/espoo_ocv_channels.csv",
+        "manifest": "data/espoo/support/espoo_rects_support.txt.manifest.json",
+        "date_column": "acquisition_date", "orbit_column": "orbit_direction",
+        "label_column": None,
+        "states": {"all": "event-free"},
+        "state_names": {"all": "event-free"},
+        "gamma2": "gamma2_mask",
+        "channels": {"ASCENDING": "ASC", "DESCENDING": "DESC"},
+        "framing": "event-free record (ASC R160 / DESC R51)",
+        # Espoo's pipeline figure already owns fig_espoo_ocv_orbits.jpg (A vs S,
+        # no chip); this one is the shared six-dimension family on the chip.
+        "out_name": "fig_espoo_ocv_orbits_chip",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -198,18 +219,24 @@ def read_points(path, spec):
     """Every overpass with its state, channel and the six dimension values."""
     excluded = set(spec.get("exclude_states") or ())
     by_state = {label: state for state, label in spec["states"].items()}
+    label_column = spec.get("label_column")
+    one_state = None if label_column else next(iter(spec["states"]))
     dims = [(name, field) for name, field in
             (("gamma2", spec["gamma2"]), ("P", "P"), ("D", "D"),
              ("F", "F"), ("A", "A"), ("S", "S"))]
     points, skipped = [], Counter()
     with open(path, newline="") as handle:
         for row in csv.DictReader(handle):
-            state = by_state.get(row.get(spec["label_column"]))
-            if state is None:
-                label = row.get(spec["label_column"])
-                if label in excluded:
-                    skipped[label] += 1
-                continue
+            if label_column:
+                state = by_state.get(row.get(label_column))
+                if state is None:
+                    label = row.get(label_column)
+                    if label in excluded:
+                        skipped[label] += 1
+                    continue
+            else:
+                # An event-free site: every overpass is the one state.
+                state = one_state
             channel = row.get(spec["orbit_column"])
             if channel not in spec["channels"]:
                 continue
@@ -275,13 +302,13 @@ def compute(site, spec, repo):
         series[channel] = {}
         summary[channel] = {}
         counts[channel] = {state: len([p for p in subset if p["state"] == state])
-                           for state in ("pre", "post")}
+                           for state in spec["states"]}
         for dim in CHANNELS:
             series[channel][dim] = [
                 {"t": p["t"].isoformat(), "v": p["values"][dim],
                  "state": p["state"]} for p in subset]
             block = {}
-            for state in ("pre", "post"):
+            for state in spec["states"]:
                 vals = [p["values"][dim] for p in subset if p["state"] == state]
                 block[state] = {"n": len([v for v in vals if v is not None]),
                                 "median": median(vals)}
@@ -290,6 +317,7 @@ def compute(site, spec, repo):
     support = manifest.get("support") or {}
     return {
         "schema": SCHEMA, "site": site, "label": spec["label"],
+        "out_name": spec.get("out_name") or f"fig_{site}_ocv_orbits",
         "generated_by": "code/orbits/fig_ocv_orbits.py",
         "states": spec["state_names"],
         "framing": spec["framing"],
@@ -364,7 +392,7 @@ def make_figure(res, figdir):
                     ax.axvspan(run["start"], run["end"],
                                color=STATE_FILL[run["state"]], alpha=0.55,
                                lw=0, zorder=0)
-                for state in ("pre", "post"):
+                for state in res["state_labels"]:
                     block = summary[channel][dim][state]
                     if block["median"] is None:
                         continue
@@ -412,23 +440,25 @@ def make_figure(res, figdir):
         ax.set_xlabel("overpass date", fontsize=5.6)
 
     handles = [Patch(facecolor=STATE_FILL[state], edgecolor=STATE_COLORS[state],
-                     label=res["states"][state]) for state in ("pre", "post")]
+                     label=res["states"][state]) for state in res["states"]]
     handles.append(Line2D([], [], color="0.42", lw=0.9, label="overpass"))
     handles.append(Line2D([], [], color="0.42", lw=1.1, label="state median"))
     fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False,
                fontsize=6.0, bbox_to_anchor=(0.5, 0.004))
+    framing_line = (f"OCV trajectories before and after the {res['framing']}"
+                    if len(res["states"]) > 1
+                    else f"OCV trajectories across the {res['framing']}")
     fig.suptitle(
-        f"{res['label']} — OCV trajectories before and after "
-        f"the {res['framing']}\n"
+        f"{res['label']} — {framing_line}\n"
         f"{res['table']['n_rows']} overpasses on the support-sized chip; "
-        f"states = {res['states']['pre']} / {res['states']['post']}; "
+        f"states = {' / '.join(res['states'].values())}; "
         f"bands = state runs, edges at the midpoints between runs\n"
         f"markers = overpasses; horizontal segments = per-state medians with n; "
         f"P, D, F and A on log axes",
         fontsize=7.6, y=0.992)
     fig.tight_layout(rect=(0, 0.030, 1, 0.918))
     os.makedirs(figdir, exist_ok=True)
-    out = os.path.join(figdir, f"fig_{res['site']}_ocv_orbits.jpg")
+    out = os.path.join(figdir, f"{res['out_name']}.jpg")
     fig.savefig(out, dpi=FIG_DPI, facecolor="white")
     plt.close(fig)
     return out
@@ -444,10 +474,13 @@ def markdown(res):
     """The companion report: what is drawn, in numbers."""
     lines = []
     add = lines.append
-    add(f"# {res['label']} — OCV trajectories before and after the "
+    heading = ("before and after" if len(res["states"]) > 1
+               else "across")
+    add(f"# {res['label']} — OCV trajectories {heading} the "
         f"{res['framing']}")
     add("")
-    add(f"Trajectories of the six OCV dimensions across the {res['framing']}, "
+    add(f"Trajectories of the six OCV dimensions {heading} the "
+        f"{res['framing']}, "
         "one panel per **dimension x observation channel**, drawn from the "
         "support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order "
         "the LUMO and Bautzen figures use), ASC / DESC across the columns. "
@@ -455,9 +488,17 @@ def markdown(res):
     add("")
     add("## States")
     add("")
-    add(f"Two states, as the record defines them: **{res['states']['pre']}** and "
-        f"**{res['states']['post']}** (table labels "
-        f"`{res['state_labels']['pre']}` / `{res['state_labels']['post']}`).")
+    if len(res["states"]) == 1:
+        state = next(iter(res["states"]))
+        add(f"**One state: {res['states'][state]}.** The record labels no damage "
+            f"state, so there is no pre/post contrast: the bands are runs of the "
+            f"single label and the medians are the level of the whole series.")
+    else:
+        add("Two states, as the record defines them: "
+            + " and ".join(f"**{label}**" for label in res["states"].values())
+            + " (table labels "
+            + " / ".join(f"`{res['state_labels'][s]}`" for s in res["state_labels"])
+            + ").")
     if res["excluded_states"]:
         dropped = sum(res["skipped"].get(state, 0)
                       for state in res["excluded_states"])
@@ -468,12 +509,13 @@ def markdown(res):
     add("")
     add("## Rows and refusals")
     add("")
-    add("| channel | pre | post | runs |")
-    add("| --- | --- | --- | --- |")
+    add("| channel | " + " | ".join(res["states"].values()) + " | runs |")
+    add("| --- |" + " --- |" * len(res["states"]) + " --- |")
     for channel in res["channels"]:
         counts = res["counts"].get(channel) or {}
-        add(f"| {res['channels'][channel]} | {counts.get('pre', 0)} | "
-            f"{counts.get('post', 0)} | {len(res['runs'].get(channel) or [])} |")
+        cells = " | ".join(str(counts.get(state, 0)) for state in res["states"])
+        add(f"| {res['channels'][channel]} | {cells} | "
+            f"{len(res['runs'].get(channel) or [])} |")
     add("")
     block = res["manifest"]
     add(f"Table `{res['table']['path']}` ({res['table']['n_rows']} overpasses, "
@@ -489,18 +531,19 @@ def markdown(res):
     add("")
     for channel in res["channels"]:
         counts = res["counts"].get(channel) or {}
-        if not (counts.get("pre") or 0) + (counts.get("post") or 0):
+        if not sum((counts.get(state) or 0) for state in res["states"]):
             add(f"**{res['channels'][channel]}** — no overpasses of this channel "
                 f"in the table, so the panel is empty on purpose.")
             add("")
             continue
         add(f"**{res['channels'][channel]}**")
         add("")
-        add("| dimension | " + " | ".join(res["states"][s] for s in ("pre", "post")) + " |")
-        add("| --- | --- | --- |")
+        add("| dimension | " + " | ".join(res["states"][s] for s in res["states"])
+            + " |")
+        add("| --- |" + " --- |" * len(res["states"]))
         for dim in CHANNELS:
             cells = []
-            for state in ("pre", "post"):
+            for state in res["states"]:
                 item = res["summary"][channel][dim][state]
                 cells.append(f"{_num(item['median'])} (n={item['n']})")
             add(f"| `{dim}` | " + " | ".join(cells) + " |")
@@ -532,7 +575,7 @@ def verify(res, repo):
         if [run["n"] for run in runs] != [run["n"] for run in res["runs"][channel]]:
             failures.append(f"{channel}: run lengths differ")
         for dim in CHANNELS:
-            for state in ("pre", "post"):
+            for state in res["states"]:
                 vals = [p["values"][dim] for p in subset if p["state"] == state]
                 want = res["summary"][channel][dim][state]
                 if median(vals) != want["median"]:
@@ -567,13 +610,13 @@ def main(argv=None):
         figdir = args.figdir or os.path.join(REPO, "figures", site)
         out = make_figure(res, figdir)
         json_path = args.json or os.path.join(
-            REPO, "data", site, "support", f"fig_{site}_ocv_orbits.json")
+            REPO, "data", site, "support", f"{res['out_name']}.json")
         os.makedirs(os.path.dirname(json_path), exist_ok=True)
         with open(json_path, "w") as handle:
             # run edges are datetimes; the JSON carries them as ISO strings
             json.dump(res, handle, indent=1, sort_keys=True, default=str)
             handle.write("\n")
-        md_path = args.md or os.path.join(figdir, f"fig_{site}_ocv_orbits.md")
+        md_path = args.md or os.path.join(figdir, f"{res['out_name']}.md")
         with open(md_path, "w") as handle:
             handle.write(markdown(res))
         if not args.quiet:
