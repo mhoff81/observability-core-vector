@@ -5,9 +5,9 @@
 ```
 x     = [gamma2, P, D, A, F, S]      echo-mask vector
 mask  = intensity >= 0.30*peak AND >= 5.0*np.median(intensity), A >= 2
-pre     2022-06-02..2022-12-11  standing mast       16 acquisitions
+pre     2022-06-02..2022-12-11  pre-rebuild (standing mast) 16 acquisitions
 single  2022-12-23              in neither epoch    1 acquisition
-rebuild 2023-05-04..2024-09-19  during the rebuild  43 acquisitions
+rebuild 2023-05-04..2024-09-19  post-rebuild (reconstruction) 43 acquisitions
 ```
 
 ## Why this is not a 24-month series

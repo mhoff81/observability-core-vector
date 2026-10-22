@@ -248,14 +248,17 @@ def span_days(start, end):
 FIG_SUFFIX = ""
 
 
+FIG_DPI = 630
+
+
 def save_fig(fig, name, out_dir=None):
-    """Write one 600 dpi PNG (the binaries stay out of git)."""
+    """Write one 630 dpi JPEG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
-    fig.savefig(png)
+    jpg = os.path.join(out_dir, name + FIG_SUFFIX + ".jpg")
+    fig.savefig(jpg, dpi=FIG_DPI, facecolor="white")
     plt.close(fig)
-    print(f"  {os.path.relpath(png)}")
-    return png
+    print(f"  {os.path.relpath(jpg)}")
+    return jpg
 
 
 def panel(ax, letter, text):

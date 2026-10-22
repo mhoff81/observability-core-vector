@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Runs code/kdlo/fig_kdlo_ocv_months.py from the repository root, so its defaults
 # (data/kdlo/kdlo_ocv_channels.csv in; data/kdlo/fig_kdlo_ocv_months.json,
-# figures/kdlo/fig_kdlo_ocv_months.md and figures/kdlo/fig_kdlo_ocv_months.png
+# figures/kdlo/fig_kdlo_ocv_months.md and figures/kdlo/fig_kdlo_ocv_months.jpg
 # out) resolve correctly. Any argument is passed through, e.g. --figdir /tmp/x.
 #
 # Interpreter: `python3` from PATH, unless PYTHON names another one — needed

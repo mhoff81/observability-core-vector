@@ -1,6 +1,6 @@
 # Espoo mast (event-free control) — OCV trajectories across the event-free record (ASC R160 / DESC R51)
 
-Trajectories of the six OCV dimensions across the event-free record (ASC R160 / DESC R51), one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
+Trajectories of the six OCV dimensions across the event-free record (ASC R160 / DESC R51), one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), `ASC` / `DESC` across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
 
 ## States
 

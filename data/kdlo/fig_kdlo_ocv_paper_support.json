@@ -120,8 +120,8 @@
   },
   "singleton_day": "2022-12-23",
   "state_label": {
-   "pre": "pre-collapse (standing mast, 2022-06-02..2022-12-11)",
-   "rebuild": "during the rebuild (2023-05-04..2024-09-19)"
+   "pre": "pre-rebuild (standing mast, 2022-06-02..2022-12-11)",
+   "rebuild": "post-rebuild (reconstruction window, 2023-05-04..2024-09-19)"
   },
   "state_windows": {
    "pre": [
@@ -3794,11 +3794,11 @@
   "csv": "kdlo/support/kdlo_ocv_channels.csv",
   "csv_sha256": "9c6bb9197197b38210f543702c425c5c7b1d7facb25c700907e89cdb2dec6381",
   "figures": [
-   "figures/kdlo/fig_kdlo_ocv_paper_A.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_B.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_C.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_D.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_E.png"
+   "figures/kdlo/fig_kdlo_ocv_paper_A_support.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_B_support.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_C_support.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_D_support.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_E_support.jpg"
   ],
   "generator": "code/kdlo/fig_kdlo_ocv_paper.py",
   "n_by_state": {

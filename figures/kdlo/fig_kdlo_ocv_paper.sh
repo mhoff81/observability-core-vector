@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Runs code/kdlo/fig_kdlo_ocv_paper.py from the repository root, so its defaults
 # (data/kdlo/kdlo_ocv_channels.csv in; data/kdlo/fig_kdlo_ocv_paper.json,
-# figures/kdlo/fig_kdlo_ocv_paper.md and figures/kdlo/fig_kdlo_ocv_paper_[A-E].png
+# figures/kdlo/fig_kdlo_ocv_paper.md and figures/kdlo/fig_kdlo_ocv_paper_[A-E].jpg
 # out) resolve correctly. Any argument is passed through, e.g. --quick.
 #
 # Interpreter: `python3` from PATH, unless PYTHON names another one — needed

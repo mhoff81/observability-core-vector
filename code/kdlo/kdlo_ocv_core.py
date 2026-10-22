@@ -169,8 +169,9 @@ GEOMETRY_BREAK = {"last_ascending_day_before": "2021-12-19",
 SINGLETON_DAY = "2022-12-23"       # the only acquisition between the windows
 STATE_WINDOWS = {"pre": ("2022-06-02", "2022-12-11"),
                  "rebuild": ("2023-05-04", "2024-09-19")}
-STATE_LABEL = {"pre": "pre-collapse (standing mast, 2022-06-02..2022-12-11)",
-               "rebuild": "during the rebuild (2023-05-04..2024-09-19)"}
+STATE_LABEL = {"pre": "pre-rebuild (standing mast, 2022-06-02..2022-12-11)",
+               "rebuild": "post-rebuild (reconstruction window, "
+                          "2023-05-04..2024-09-19)"}
 STATE_LIST = list(st.STATE_ORDER)
 
 # ---------------------------------------------------------------------------

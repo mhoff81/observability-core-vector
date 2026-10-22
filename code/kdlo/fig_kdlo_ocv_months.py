@@ -179,14 +179,17 @@ BASELINE_WINDOWS = None
 FIG_SUFFIX = ""
 
 
+FIG_DPI = 630
+
+
 def save_fig(fig, name, out_dir=None):
-    """Write one 600 dpi PNG (the binaries stay out of git)."""
+    """Write one 630 dpi JPEG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
-    fig.savefig(png)
+    jpg = os.path.join(out_dir, name + FIG_SUFFIX + ".jpg")
+    fig.savefig(jpg, dpi=FIG_DPI, facecolor="white")
     plt.close(fig)
-    print(f"  {os.path.relpath(png)}")
-    return png
+    print(f"  {os.path.relpath(jpg)}")
+    return jpg
 
 
 def panel(ax, letter, text):
@@ -532,12 +535,12 @@ def report(res):
     md.append("mask  = intensity >= 0.30*peak AND >= 5.0*np.median(intensity), A >= 2")
     for lab, win, note, cnt in (
             (PRE, f"{core.STATE_WINDOWS[PRE][0]}..{core.STATE_WINDOWS[PRE][1]}",
-             "standing mast", f"{n_pre} acquisitions"),
+             "pre-rebuild (standing mast)", f"{n_pre} acquisitions"),
             ("single", FIRST_COLLAPSED_DAY, "in neither epoch",
              f"{n_single} acquisition"),
             (REBUILD,
              f"{core.STATE_WINDOWS[REBUILD][0]}..{core.STATE_WINDOWS[REBUILD][1]}",
-             "during the rebuild", f"{n_reb} acquisitions")):
+             "post-rebuild (reconstruction)", f"{n_reb} acquisitions")):
         md.append(f"{lab:<7} {win:<23} {note:<19} {cnt}")
     md.append("```")
     md.append("")
@@ -690,7 +693,7 @@ def build_json(res):
         "fingerprint": res["fingerprint"],
         "blocks": res["blocks"],
         "deltas": res["deltas"],
-        "figures": ["figures/kdlo/fig_kdlo_ocv_months.png"],
+        "figures": ["figures/kdlo/fig_kdlo_ocv_months%s.jpg" % FIG_SUFFIX],
     }
 
 

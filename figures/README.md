@@ -8,11 +8,14 @@ figures/
 ├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
 │              and the companions fig_bautzen_ocv_amp_phase.sh|.md|.png and
 │              fig_bautzen_ocv_orbits.sh|.md|.jpg (6 x 2 OCV time series)
-├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].png
-│              and the companions fig_kdlo_ocv_months.sh|.md|.png (calendar months
+├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].jpg
+│              and the companions fig_kdlo_ocv_months.sh|.md|.jpg (calendar months
 │              over the whole record, two disjoint epochs, no 24-month pre stretch)
-│              and fig_kdlo_ocv_series.sh|.md|.png (one dated axis from the first
+│              and fig_kdlo_ocv_series.sh|.md|.jpg (one dated axis from the first
 │              ascending IW2 scene 2015-03-20 to the collapse cut 2022-12-11)
+│              plus the same three on the support-sized chip, additive and never
+│              overwriting: fig_kdlo_ocv_paper_support[A-E].jpg,
+│              fig_kdlo_ocv_months_support.jpg, fig_kdlo_ocv_series_support.jpg
 ├── carola/    Carolabrücke, Dresden — fig_carola_ocv_paper.sh|.md|[A-E].png
 │              and the companion fig_carola_ocv_months.sh|.md|.png
 ├── morandi/   Ponte Morandi, Genova — fig_morandi_ocv_paper.sh|.md|[A-E].png
@@ -242,17 +245,18 @@ PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
 ## `kdlo/fig_kdlo_ocv_paper.sh` → `../code/kdlo/fig_kdlo_ocv_paper.py`
 
 Five figures for the KDLO media tower, on the committed 60-acquisition record and
-its two analysis channels (`gamma2`, `A`), plus the English report
+its two analysis channels (`gamma2`, `A`), drawn at **630 dpi as JPEG** (the format
+the Espoo OCV figures use), plus the English report
 [`kdlo/fig_kdlo_ocv_paper.md`](kdlo/fig_kdlo_ocv_paper.md) and
 [`../data/kdlo/fig_kdlo_ocv_paper.json`](../data/kdlo/fig_kdlo_ocv_paper.json):
 
 | file | panel content |
 | --- | --- |
-| `kdlo/fig_kdlo_ocv_paper_A.png` | the ranked channels one panel each: per-acquisition dots (pre vs. rebuild) and the median bar for the 6D echo-mask vector gamma^2, P, D, A, F, S and the controls (the three phase channels, intensity, wind and temperature) |
-| `kdlo/fig_kdlo_ocv_paper_B.png` | in-sample effect sizes: SDS = 10&#124;Cliff's delta&#124; per channel with the signed delta, plus the delta and its bootstrap CI for every channel on all rows **and** on the month-matched subset |
-| `kdlo/fig_kdlo_ocv_paper_C.png` | 2-class LDA (pre vs. rebuild): balanced accuracy over the shrinkage grid (gamma^2, [P,D,S], the [gamma^2,P,D] headline, the 6D vector and a weather-only competitor), the leave-one-out confusion matrix and the label-permutation verdict |
-| `kdlo/fig_kdlo_ocv_paper_D.png` | out-of-fold Fisher-LDA scores per acquisition and the SDS of the four models, all rows vs. month-matched, with the paired bootstrap against gamma^2 |
-| `kdlo/fig_kdlo_ocv_paper_E.png` | the alternative explanations: the echo-mode split (compact/intermediate/distributed), the per-month delta table, the mask-size and weather medians, and the singleton acquisition |
+| `kdlo/fig_kdlo_ocv_paper_A.jpg` | the ranked channels one panel each: per-acquisition dots (pre vs. rebuild) and the median bar for the 6D echo-mask vector gamma^2, P, D, A, F, S and the controls (the three phase channels, intensity, wind and temperature) |
+| `kdlo/fig_kdlo_ocv_paper_B.jpg` | in-sample effect sizes: SDS = 10&#124;Cliff's delta&#124; per channel with the signed delta, plus the delta and its bootstrap CI for every channel on all rows **and** on the month-matched subset |
+| `kdlo/fig_kdlo_ocv_paper_C.jpg` | 2-class LDA (pre vs. rebuild): balanced accuracy over the shrinkage grid (gamma^2, [P,D,S], the [gamma^2,P,D] headline, the 6D vector and a weather-only competitor), the leave-one-out confusion matrix and the label-permutation verdict |
+| `kdlo/fig_kdlo_ocv_paper_D.jpg` | out-of-fold Fisher-LDA scores per acquisition and the SDS of the four models, all rows vs. month-matched, with the paired bootstrap against gamma^2 |
+| `kdlo/fig_kdlo_ocv_paper_E.jpg` | the alternative explanations: the echo-mode split (compact/intermediate/distributed), the per-month delta table, the mask-size and weather medians, and the singleton acquisition |
 
 Its two states are **epochs** (2022-06-02..2022-12-11 vs. 2023-05-04..2024-09-19,
 with 2022-12-23 belonging to neither), so the report and the figures carry the
@@ -281,7 +285,7 @@ column (`core.day_of` — the CSV has no `day` column), plus the English report
 
 | file | panel content |
 | --- | --- |
-| `kdlo/fig_kdlo_ocv_months.png` | 2 x 3: (a)-(d) one dot per acquisition per calendar month for `gamma2`, `P`, `D`, `A` with the month median and the IQR, the epoch tints (pre blue, rebuild orange) and the collapse cut drawn *inside* the mixed bucket 2022-12 as a red dot and label at a fractional x; (e) the `(P, D)` plane, one dot per acquisition coloured by month (symlog y, `linthresh=0.01`); (f) the 6D fingerprint — each month's median divided by the `2022-06` (first record month) baseline median on a log axis, the 1.0 line drawn |
+| `kdlo/fig_kdlo_ocv_months.jpg` | 2 x 3: (a)-(d) one dot per acquisition per calendar month for `gamma2`, `P`, `D`, `A` with the month median and the IQR, the epoch tints (pre blue, rebuild orange) and the collapse cut drawn *inside* the mixed bucket 2022-12 as a red dot and label at a fractional x; (e) the `(P, D)` plane, one dot per acquisition coloured by month (symlog y, `linthresh=0.01`); (f) the 6D fingerprint — each month's median divided by the `2022-06` (first record month) baseline median on a log axis, the 1.0 line drawn |
 
 The figure adds **one** image to the site and does **not** touch the committed
 reference JSONs or the figures A–E pin block (it never reads
@@ -322,7 +326,7 @@ reference rather than typed:
 
 | file | panel content |
 | --- | --- |
-| `kdlo/fig_kdlo_ocv_series.png` | 3 x 2, 183 mm wide: all six panels — (a) `gamma^2`, (b) the echo-mask size `A`, (c) `P`, (d) `D`, (e) `F`, (f) `S` — on a log y axis, era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn |
+| `kdlo/fig_kdlo_ocv_series.jpg` | 3 x 2, 183 mm wide: all six panels — (a) `gamma^2`, (b) the echo-mask size `A`, (c) `P`, (d) `D`, (e) `F`, (f) `S` — on a log y axis, era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn |
 
 All six dimensions exist on both sides of the break. `gamma^2` and `A` are the same
 backend columns by name (`coherence_gamma2` / `coherence_masked_pixels`, which the
@@ -799,7 +803,9 @@ python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --
 ## `figures/orbits/` — the support-sized OCV time series
 
 `fig_ocv_orbits.sh` draws one twelve-panel figure per migrated site into
-`figures/<site>/` (see `code/README.md`). The wrapper picks the first interpreter
+`figures/<site>/` (see `code/README.md`) — twelve when both orbits carry
+overpasses, six when only one does: KDLO is DESC-only, so its plate has a single
+column and the markdown names the missing channel instead of drawing it empty. The wrapper picks the first interpreter
 that has numpy and matplotlib and prints which one it used, because the figure
 has to be reproducible on a machine whose virtualenv is not the author's.
 

@@ -130,6 +130,25 @@ committed era export `fig_kdlo_0_raw.json`). Re-extracting the nine DB columns
 needs the `tower-postgres` container
 (`--fetch-db-extra`); that is a maintenance step, never part of a normal run.
 
+### The support-sized chip (additive)
+
+`support/kdlo_ocv_channels.csv` (60 rows, 65 columns) is the same record on the
+support-sized chip (guard 30 m, reference ring 200 m, chip 35 x 475 cells, ring
+complete), cut by `erlking_mvp/tools/ocv_migrate.py`; it carries the committed values
+beside the recomputed ones (`A_committed` … `gamma2_committed`) and a `reference`
+column, and `support/kdlo_rects_support.txt` + `.manifest.json` are its rect list and
+chip description. Nothing in the committed set above is replaced.
+
+| file | content |
+| --- | --- |
+| `fig_kdlo_ocv_paper_support.{json,md}` | the A–E package recomputed on the chip: a different pin set (`pin_support` — the chip, the same 60 ids, the carry-over audit, the findings lock) and the “what the chip changed” table |
+| `fig_kdlo_ocv_months_support.{json,md}` | the calendar-month companion on the chip |
+| `fig_kdlo_ocv_series_support.{json,md}` | the dated series on the chip (`sources.channel_table.chip = "support"`); its record-side self-checks pin committed numbers and are skipped, which the run states |
+| `reference/kdlo_support_findings.json` | the support chip's own lock: chip shape, table sha256, n by state and the effect sizes (delta, SDS, n) per channel |
+
+The support tables of the other sites live in `data/<site>/support/` and are
+documented with their site sections.
+
 ## `data/carola/` — Carolabrücke (Dresden), collapsed on 2024-09-11
 
 The collapsed bridge. Like KDLO, this site cannot be rebuilt from a small table:

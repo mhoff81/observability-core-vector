@@ -6,8 +6,8 @@ Figures A–E of `research/observability-core-vector/` for the KDLO-TV site. Thi
 
 The **observability core vector** here is `OCV = [gamma2, P, D]` — the interferometric coherence `gamma^2` of the KDLO acquisition plus two dimensions of its **echo mask**: the persistence `P` (how often a mask pixel is masked across the 64 dates) and the density `D = A / bbox_area`. The full **6D echo-mask vector** of this package is `[gamma2, P, D, A, F, S]` (`A` = masked pixels = `coherence_masked_pixels`, `F` = number of 8-connected components, `S` = ||mask centroid - peak pixel|| in px). The contrast under test is not a damage label but an **epoch**:
 
-- `pre` — pre-collapse (standing mast, 2022-06-02..2022-12-11): **16** acquisitions;
-- `rebuild` — during the rebuild (2023-05-04..2024-09-19): **43** acquisitions;
+- `pre` — pre-rebuild (standing mast, 2022-06-02..2022-12-11): **16** acquisitions;
+- `rebuild` — post-rebuild (reconstruction window, 2023-05-04..2024-09-19): **43** acquisitions;
 - the single acquisition **2022-12-23** in between belongs to neither epoch and is in **no** state statistic of this package.
 
 Because the two states are disjoint time windows, every effect size below is reported twice: once on all rows and once on the **month-matched** subset, and the classifier of panel C is run against a **weather-only** competitor. The design cannot prove causation; it can show which alternative explanations survive.
@@ -18,7 +18,7 @@ Input is the committed `kdlo/support/kdlo_ocv_channels.csv` (`60` acquisitions, 
 
 The echo-mask dimensions are recomputed from the committed full-dwell strip cache `strips/` (64 strips, manifest sha256 `2c2e5fde8ba0c2a8...`) with the rule of the pipeline itself — so `A` reproduces `coherence_masked_pixels` exactly and the recomputed masked coherence reproduces `coherence_gamma2` to 1e-12 on all 60 acquisitions (the generator refuses to write the CSV otherwise). `P` is a property of the whole record (the 64 dates), so it cannot be checked against a single row.
 
-Recomputed against the four committed reference JSONs: **129 checks, 0 failures** (129 exact, 0 within 1e-12; max |deviation| 0). Of those, 0 are structural checks of `kdlo_s1_availability.json` and 0 of `kdlo_fem_frequencies.json` — those two files are catalogue and eigenmode-solver output and are **not** rederivable from the record, so they are pinned structurally and reported honestly as such.
+Pinned against the chip itself — `ocv_table.py` as the producer, the 35 x 475 cell chip, the complete reference ring, the same 60 acquisition ids, the committed values carried inside the chip table, and the `kdlo_support_findings.json` lock: **129 checks, 0 failures** (129 exact, max |deviation| 0). The four committed reference JSONs are `not` used here: they describe the committed chip's numbers, and this report is the one that says how they changed.
 
 ## 3. What moves — and what does not
 
@@ -122,8 +122,8 @@ Three handicaps remain, none of which the pinning can remove: the labels are epo
 ## 8. Reproduce
 
 ```bash
-bash figures/kdlo/fig_kdlo_ocv_paper.sh          # full run, all pins
-python3 code/kdlo/fig_kdlo_ocv_paper.py --quick  # without the permutation null
+python3 code/kdlo/fig_kdlo_ocv_paper.py --table data/kdlo/support/kdlo_ocv_channels.csv   # this run, on the chip
+python3 code/kdlo/fig_kdlo_ocv_paper.py --table data/kdlo/support/kdlo_ocv_channels.csv --write-reference  # once, to (re)write the lock
 ```
 
 Verdict of this run: **129 checks, 0 failures** (case: full); the package is reproducible and the figures are byte-deterministic.

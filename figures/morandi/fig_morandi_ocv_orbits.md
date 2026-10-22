@@ -1,6 +1,6 @@
 # Ponte Morandi deck — OCV trajectories before and after the collapse
 
-Trajectories of the six OCV dimensions before and after the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
+Trajectories of the six OCV dimensions before and after the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), `ASC` / `DESC` across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
 
 ## States
 

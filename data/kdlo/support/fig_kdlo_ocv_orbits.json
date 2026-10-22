@@ -2629,8 +2629,8 @@
   "pre": "pre"
  },
  "states": {
-  "post": "after rebuild",
-  "pre": "pre-collapse"
+  "post": "post-rebuild",
+  "pre": "pre-rebuild"
  },
  "summary": {
   "ASCENDING": {

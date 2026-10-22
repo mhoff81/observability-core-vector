@@ -1,6 +1,6 @@
 # Champlain Towers South (target footprint) — OCV trajectories before and after the collapse
 
-Trajectories of the six OCV dimensions before and after the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), ASC / DESC across the columns. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
+Trajectories of the six OCV dimensions before and after the collapse, one panel per **dimension x observation channel**, drawn from the support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order the LUMO and Bautzen figures use), `ASC` across the column. `P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.
 
 ## States
 
@@ -17,6 +17,8 @@ Table `data/cts/support/cts_ocv_channels.csv` (178 overpasses, sha256 `3965a15b2
 
 ## Per-state medians
 
+**Channel not drawn:** `DESC` carries no overpass at this site, so the plate has one column for `ASC`. The empty channel is kept in the tables below, where its n = 0 is the record.
+
 **ASC**
 
 | dimension | pre-collapse | post-collapse |
@@ -28,7 +30,7 @@ Table `data/cts/support/cts_ocv_channels.csv` (178 overpasses, sha256 `3965a15b2
 | `A` | 193 (n=136) | 238 (n=42) |
 | `S` | 19.95 (n=136) | 16.7 (n=42) |
 
-**DESC** — no overpasses of this channel in the table, so the panel is empty on purpose.
+**DESC** — no overpasses of this channel in the table, so it is not drawn as a panel.
 
 ## What this does not claim
 

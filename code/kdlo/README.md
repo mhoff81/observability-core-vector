@@ -20,6 +20,56 @@ All paths below are relative to the **repository root** and the scripts are alwa
 started from there (the wrapper `../../figures/kdlo/fig_kdlo_ocv_paper.sh` does
 that): inputs and outputs in `data/kdlo/`, figures in `figures/kdlo/`.
 
+### Two chips, two figure sets (additive, never replacing)
+
+KDLO exists twice in this package, and the difference is the **search window**, not
+the record:
+
+| chip | table | cut by |
+| --- | --- | --- |
+| `committed` | `data/kdlo/kdlo_ocv_channels.csv` | `kdlo_ocv_channels_csv.py`, the fixed window of the original pipeline |
+| `support` | `data/kdlo/support/kdlo_ocv_channels.csv` | `erlking_mvp/tools/ocv_migrate.py`, the support-sized chip (guard 30 m, reference ring 200 m, chip 35 x 475 cells, ring complete) |
+
+The support table carries the same 60 acquisitions and the committed values beside
+the recomputed ones (`A_committed` … `gamma2_committed`), so the two can be compared
+row by row — 300 of 300 committed values are carried exactly.
+
+The three figure packages take `--table` and default to the committed chip; the
+support run appends `_support` to every output stem, so nothing is overwritten:
+
+```sh
+python3 code/kdlo/fig_kdlo_ocv_paper.py                 # committed: 3035 pins
+python3 code/kdlo/fig_kdlo_ocv_paper.py --table data/kdlo/support/kdlo_ocv_channels.csv
+python3 code/kdlo/fig_kdlo_ocv_months.py --table data/kdlo/support/kdlo_ocv_channels.csv
+python3 code/kdlo/fig_kdlo_ocv_series.py --table data/kdlo/support/kdlo_ocv_channels.csv
+```
+
+On the support chip the pin block is a **different, smaller set** (`pin_support`):
+the chip itself (`generated_by`, rows/cols, `ring_complete`, guard, ring), the same
+60 ids, the carry-over audit, and a findings lock
+(`data/kdlo/reference/kdlo_support_findings.json`, written once with
+`--write-reference`). The 123 committed-value comparisons stay with the committed
+run, where they belong. The series' record-side self-checks are skipped on the
+support chip for the same reason, and the run says so.
+
+**Why this matters.** Same acquisitions, same code, same estimators — only the
+window differs, and the effect sizes move by more than a rounding:
+
+| channel | Δ committed | Δ support | sign flip | SDS |
+| --- | ---: | ---: | --- | --- |
+| `gamma2` | +0.529 | +0.529 | no | 5.29 → 5.29 |
+| `P` | +0.235 | −0.628 | **yes** | 2.35 → **6.28** |
+| `S` | −0.145 | −0.640 | no | 1.45 → **6.40** |
+| `A` | −0.281 | +0.499 | **yes** | 2.81 → **4.99** |
+| `F` | −0.267 | +0.121 | **yes** | 2.67 → 1.21 |
+| `D` | −0.070 | −0.201 | no | 0.70 → 2.01 |
+
+`gamma2` is the pipeline coherence and does not depend on the chip, which is why it
+is the one row that does not move. On the committed chip it is the largest effect;
+on the support chip **`S` and `P` overtake it** and three of the five mask dimensions
+flip sign. The support report therefore names its headline from the table instead of
+naming `gamma2` in advance.
+
 ### `kdlo_ocv_stats.py` — statistics layer (verbatim port)
 
 `_stats`, `welch_mw_test`, `cliffs_delta` (+ `cliffs_delta_bruteforce`),
@@ -192,7 +242,7 @@ with the month median and IQR (`D` on a symlog y axis, `linthresh=0.01`, so the
 near-zero cluster stays visible); (e) the `(P, D)` plane, one dot per acquisition
 coloured by month; (f) the 6D fingerprint — each month's median divided by the
 `2022-06` baseline median on a log axis. `main()` writes the PNG to
-`figures/kdlo/fig_kdlo_ocv_months.png`, the JSON to
+`figures/kdlo/fig_kdlo_ocv_months.jpg`, the JSON to
 `data/kdlo/fig_kdlo_ocv_months.json` and the report to
 `figures/kdlo/fig_kdlo_ocv_months.md`:
 
@@ -249,7 +299,7 @@ bars in all six panels; (c)-(f) `P`, `D`, `F`, `S`, drawn the same way on both
 stretches. Every panel carries the blind gap,
 the catalogue-only stretch, the collapse cut and the first collapsed acquisition
 (`2022-12-23`) drawn hollow and labelled as outside the axis. `main()` writes the
-PNG to `figures/kdlo/fig_kdlo_ocv_series.png`, the JSON to
+PNG to `figures/kdlo/fig_kdlo_ocv_series.jpg`, the JSON to
 `data/kdlo/fig_kdlo_ocv_series.json` and the report to
 `figures/kdlo/fig_kdlo_ocv_series.md`:
 

@@ -10,7 +10,7 @@ knows this one.
 Two states, never more
 ----------------------
 Every site carries **pre-collapse and post-collapse**; KDLO is the exception and
-carries **pre-collapse and after rebuild**, because that is what its record says.
+carries **pre-rebuild and post-rebuild**, because that is what its record says.
 A state with a single overpass (KDLO's ``single``) is not a state: it is dropped
 and named in the markdown.
 
@@ -103,7 +103,7 @@ SITES = {
         "date_column": "acquisition_ts", "orbit_column": "orbit_direction",
         "label_column": "state",
         "states": {"pre": "pre", "post": "rebuild"},
-        "state_names": {"pre": "pre-collapse", "post": "after rebuild"},
+        "state_names": {"pre": "pre-rebuild", "post": "post-rebuild"},
         "exclude_states": ("single",),
         "gamma2": "gamma2_mask",
         "channels": {"ASCENDING": "ASC", "DESCENDING": "DESC"},
@@ -353,10 +353,21 @@ def _channel_ylim(dim, series, channels):
     return (low - 0.12 * span, high + 0.12 * span)
 
 
+def drawn_channels(res):
+    """The channels that get a column: those with at least one overpass.
+
+    A channel with no acquisition costs a third of the plate and says nothing the
+    report does not say in one line, so it is dropped from the grid and named in
+    the markdown instead (KDLO has DESC overpasses only).
+    """
+    return [channel for channel in ("ASCENDING", "DESCENDING")
+            if sum((res["counts"].get(channel) or {}).values()) > 0]
+
+
 def make_figure(res, figdir):
-    """Draw the 6 x 2 grid and return the JPEG path."""
+    """Draw the 6 x N grid (N = channels with data) and return the JPEG path."""
     spec_channels = list(res["channels"])
-    columns = ["ASCENDING", "DESCENDING"]
+    columns = drawn_channels(res) or list(spec_channels)
     series = res["series"]
     runs = res["runs"]
     summary = res["summary"]
@@ -373,7 +384,7 @@ def make_figure(res, figdir):
     fig, axes = plt.subplots(nrows, ncols, figsize=(COL_WIDTH, 245 * MM),
                              sharex="col", sharey="row", squeeze=False)
     for row, dim in enumerate(CHANNELS):
-        ylim = _channel_ylim(dim, series, spec_channels)
+        ylim = _channel_ylim(dim, series, columns)
         for col, channel in enumerate(columns):
             ax = axes[row][col]
             available = channel in spec_channels
@@ -479,12 +490,15 @@ def markdown(res):
     add(f"# {res['label']} — OCV trajectories {heading} the "
         f"{res['framing']}")
     add("")
+    drawn = drawn_channels(res)
     add(f"Trajectories of the six OCV dimensions {heading} the "
         f"{res['framing']}, "
         "one panel per **dimension x observation channel**, drawn from the "
         "support-sized chip: `gamma2, P, D, F, A, S` down the rows (the order "
-        "the LUMO and Bautzen figures use), ASC / DESC across the columns. "
-        "`P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.")
+        "the LUMO and Bautzen figures use), "
+        + " / ".join(f"`{res['channels'][c]}`" for c in drawn)
+        + (" across the columns. " if len(drawn) > 1 else " across the column. ")
+        + "`P, D, F` and `A` are logarithmic, `gamma2` and `S` linear.")
     add("")
     add("## States")
     add("")
@@ -529,11 +543,22 @@ def markdown(res):
     add("")
     add("## Per-state medians")
     add("")
+    drawn = drawn_channels(res)
+    missing = [channel for channel in res["channels"] if channel not in drawn]
+    if missing:
+        add("**Channel not drawn:** " + ", ".join(
+            f"`{res['channels'][c]}`" for c in missing)
+            + " carries no overpass at this site, so the plate has "
+            + ("one column for " if len(drawn) == 1 else "columns for ")
+            + ", ".join(f"`{res['channels'][c]}`" for c in drawn)
+            + ". The empty channel is kept in the tables below, where its n = 0 "
+              "is the record.")
+        add("")
     for channel in res["channels"]:
         counts = res["counts"].get(channel) or {}
         if not sum((counts.get(state) or 0) for state in res["states"]):
             add(f"**{res['channels'][channel]}** — no overpasses of this channel "
-                f"in the table, so the panel is empty on purpose.")
+                f"in the table, so it is not drawn as a panel.")
             add("")
             continue
         add(f"**{res['channels'][channel]}**")

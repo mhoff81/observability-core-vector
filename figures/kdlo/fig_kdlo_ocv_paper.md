@@ -6,8 +6,8 @@ Figures A–E of `research/observability-core-vector/` for the KDLO-TV site. Thi
 
 The **observability core vector** here is `OCV = [gamma2, P, D]` — the interferometric coherence `gamma^2` of the KDLO acquisition plus two dimensions of its **echo mask**: the persistence `P` (how often a mask pixel is masked across the 64 dates) and the density `D = A / bbox_area`. The full **6D echo-mask vector** of this package is `[gamma2, P, D, A, F, S]` (`A` = masked pixels = `coherence_masked_pixels`, `F` = number of 8-connected components, `S` = ||mask centroid - peak pixel|| in px). The contrast under test is not a damage label but an **epoch**:
 
-- `pre` — pre-collapse (standing mast, 2022-06-02..2022-12-11): **16** acquisitions;
-- `rebuild` — during the rebuild (2023-05-04..2024-09-19): **43** acquisitions;
+- `pre` — pre-rebuild (standing mast, 2022-06-02..2022-12-11): **16** acquisitions;
+- `rebuild` — post-rebuild (reconstruction window, 2023-05-04..2024-09-19): **43** acquisitions;
 - the single acquisition **2022-12-23** in between belongs to neither epoch and is in **no** state statistic of this package.
 
 Because the two states are disjoint time windows, every effect size below is reported twice: once on all rows and once on the **month-matched** subset, and the classifier of panel C is run against a **weather-only** competitor. The design cannot prove causation; it can show which alternative explanations survive.
@@ -39,7 +39,8 @@ Cliff's delta (positive = the rebuild is larger), its 95 % bootstrap CI and the 
 | `wind_speed_ms` | 4.690 / 4.400 | -0.065 | 0.65 | -0.156 |
 | `temperature_c` | 18.150 / 16.800 | -0.067 | 0.67 | +0.118 |
 
-The headline is `gamma^2`: median **0.003698 -> 0.017673**, Cliff's delta **+0.529** (SDS 5.29, 688 pre x rebuild pairs, CI [+0.262, +0.762]). It is the largest effect in the table. The strongest **counter**-moving channel is `A` (delta -0.281): the rebuild has *smaller* masks, i.e. the return is more concentrated, not less coherent in the absolute sense.
+The headline is `gamma2`: median **0.003698 -> 0.017673**, Cliff's delta **+0.529** (SDS 5.29, 688 pre x rebuild pairs, CI [+0.262, +0.762]). It is the largest effect in the table.
+The strongest **counter**-moving channel is `A` (delta -0.281): the rebuild has *smaller* masks, i.e. the return is more concentrated, not less coherent in the absolute sense.
 
 ## 4. The epoch problem: is it the collapse, or the calendar?
 

@@ -34,6 +34,7 @@
     "precipitation_mm"
    ]
   },
+  "chip": "committed",
   "csv": "kdlo/kdlo_ocv_channels.csv",
   "csv_meta": "kdlo/kdlo_ocv_channels_meta.json",
   "csv_sha256": "21dfe5b649c535ad0ca10b5414c55e08a445462b8d8755d39813c8a045415d78",
@@ -119,8 +120,8 @@
   },
   "singleton_day": "2022-12-23",
   "state_label": {
-   "pre": "pre-collapse (standing mast, 2022-06-02..2022-12-11)",
-   "rebuild": "during the rebuild (2023-05-04..2024-09-19)"
+   "pre": "pre-rebuild (standing mast, 2022-06-02..2022-12-11)",
+   "rebuild": "post-rebuild (reconstruction window, 2023-05-04..2024-09-19)"
   },
   "state_windows": {
    "pre": [
@@ -3809,11 +3810,11 @@
   "csv": "kdlo/kdlo_ocv_channels.csv",
   "csv_sha256": "21dfe5b649c535ad0ca10b5414c55e08a445462b8d8755d39813c8a045415d78",
   "figures": [
-   "figures/kdlo/fig_kdlo_ocv_paper_A.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_B.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_C.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_D.png",
-   "figures/kdlo/fig_kdlo_ocv_paper_E.png"
+   "figures/kdlo/fig_kdlo_ocv_paper_A.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_B.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_C.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_D.jpg",
+   "figures/kdlo/fig_kdlo_ocv_paper_E.jpg"
   ],
   "generator": "code/kdlo/fig_kdlo_ocv_paper.py",
   "n_by_state": {
@@ -3842,8 +3843,8 @@
    ]
   },
   "versions": {
-   "matplotlib": "3.11.1",
-   "numpy": "2.4.6",
+   "matplotlib": "3.11.2",
+   "numpy": "2.5.4",
    "python": "3.13.5"
   }
  },

@@ -33,13 +33,15 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 ### `orbits/` — one OCV time-series figure per support-sized table
 
 `[orbits/fig_ocv_orbits.py](orbits/fig_ocv_orbits.py)` draws the twelve-panel
-companion for the seven sites migrated to the support-sized chip (CTS, KDLO,
+companion (six where only one orbit has data — KDLO is DESC-only, so its plate
+has one column and the report names the missing channel) for the seven sites
+migrated to the support-sized chip (CTS, KDLO,
 Carolabrücke, Haltern, YWF, Ponte Morandi, and Espoo): one panel per **dimension
 x observation channel**, in the order and with the axes the LUMO and Bautzen
 figures use (`gamma2, P, D, F, A, S`; `P, D, F, A` logarithmic).
 
 Two states for the six labelled sites: **pre-collapse and post-collapse**, except
-KDLO, whose record carries **pre-collapse and after rebuild**. A state with a
+KDLO, whose record carries **pre-rebuild and post-rebuild**. A state with a
 single overpass (KDLO's `single`) is dropped and named in the markdown. A channel
 with no data is not drawn empty — the panel carries the reason (YWF's ASC track
 has one healthy and no damaged overpass).

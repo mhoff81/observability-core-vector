@@ -153,14 +153,17 @@ CHANNEL_TITLE = core.CHANNEL_TITLE
 FIG_SUFFIX = ""
 
 
+FIG_DPI = 630
+
+
 def save_fig(fig, name, out_dir=None):
-    """Write one 600 dpi PNG (the binaries stay out of git)."""
+    """Write one 630 dpi JPEG (the binaries stay out of git)."""
     out_dir = out_dir or FIGDIR
-    png = os.path.join(out_dir, name + FIG_SUFFIX + ".png")
-    fig.savefig(png)
+    jpg = os.path.join(out_dir, name + FIG_SUFFIX + ".jpg")
+    fig.savefig(jpg, dpi=FIG_DPI, facecolor="white")
     plt.close(fig)
-    print(f"  {os.path.relpath(png)}")
-    return png
+    print(f"  {os.path.relpath(jpg)}")
+    return jpg
 
 
 # ---------------------------------------------------------------------------
@@ -455,7 +458,7 @@ def compute(quick=False, table=None):
 
 
 # ---------------------------------------------------------------------------
-# Rendering — figures A–E, 183 mm column width, 600 dpi PNG (espoo style)
+# Rendering — figures A–E, 183 mm column width, 630 dpi JPEG (espoo style)
 # ---------------------------------------------------------------------------
 def panel(ax, letter, text):
     ax.set_title(f"({letter}) {text}", fontsize=8.0, loc="left")
@@ -1404,16 +1407,26 @@ def report(res, pins, quick):
       f"otherwise). `P` is a property of the whole record (the 64 dates), so it "
       f"cannot be checked against a single row.")
     A("")
-    A(f"Recomputed against the four committed reference JSONs: **{pins['n_checks']} "
-      f"checks, {pins['n_failed']} failures** "
-      f"({pins['n_exact']} exact, {pins['n_within_tolerance']} within "
-      f"{pins['float_tolerance']:g}; max |deviation| "
-      f"{pins['max_abs_deviation']:g}). Of those, "
-      f"{pins['n_availability_checks']} are structural checks of "
-      "`kdlo_s1_availability.json` and "
-      f"{pins['n_fem_checks']} of `kdlo_fem_frequencies.json` — those two files are "
-      "catalogue and eigenmode-solver output and are **not** rederivable from the "
-      "record, so they are pinned structurally and reported honestly as such.")
+    if res.get("chip") == "support":
+        A(f"Pinned against the chip itself — `ocv_table.py` as the producer, the "
+          f"35 x 475 cell chip, the complete reference ring, the same 60 acquisition "
+          f"ids, the committed values carried inside the chip table, and the "
+          f"`kdlo_support_findings.json` lock: **{pins['n_checks']} checks, "
+          f"{pins['n_failed']} failures** ({pins['n_exact']} exact, max |deviation| "
+          f"{pins['max_abs_deviation']:g}). The four committed reference JSONs are "
+          "`not` used here: they describe the committed chip's numbers, and this "
+          "report is the one that says how they changed.")
+    else:
+        A(f"Recomputed against the four committed reference JSONs: "
+          f"**{pins['n_checks']} checks, {pins['n_failed']} failures** "
+          f"({pins['n_exact']} exact, {pins['n_within_tolerance']} within "
+          f"{pins['float_tolerance']:g}; max |deviation| "
+          f"{pins['max_abs_deviation']:g}). Of those, "
+          f"{pins['n_availability_checks']} are structural checks of "
+          "`kdlo_s1_availability.json` and "
+          f"{pins['n_fem_checks']} of `kdlo_fem_frequencies.json` — those two files "
+          "are catalogue and eigenmode-solver output and are **not** rederivable from "
+          "the record, so they are pinned structurally and reported honestly as such.")
     A("")
     A("## 3. What moves — and what does not")
     A("")
@@ -1635,8 +1648,16 @@ def report(res, pins, quick):
     A("## 8. Reproduce")
     A("")
     A("```bash")
-    A("bash figures/kdlo/fig_kdlo_ocv_paper.sh          # full run, all pins")
-    A("python3 code/kdlo/fig_kdlo_ocv_paper.py --quick  # without the permutation null")
+    if res.get("chip") == "support":
+        A("python3 code/kdlo/fig_kdlo_ocv_paper.py --table "
+          "data/kdlo/support/kdlo_ocv_channels.csv   # this run, on the chip")
+        A("python3 code/kdlo/fig_kdlo_ocv_paper.py --table "
+          "data/kdlo/support/kdlo_ocv_channels.csv --write-reference  # once, to "
+          "(re)write the lock")
+    else:
+        A("bash figures/kdlo/fig_kdlo_ocv_paper.sh          # full run, all pins")
+        A("python3 code/kdlo/fig_kdlo_ocv_paper.py --quick  # without the "
+          "permutation null")
     A("```")
     A("")
     A(f"Verdict of this run: **{pins['n_checks']} checks, {pins['n_failed']} "
@@ -1672,7 +1693,8 @@ def build_json(res, pins_summary, quick):
             "csv": res["data"]["csv"],
             "csv_sha256": res["data"]["csv_sha256"],
             "n_rows": res["data"]["n_rows"],
-            "figures": ["figures/kdlo/fig_kdlo_ocv_paper_%s.png" % k for k in "ABCDE"],
+            "figures": ["figures/kdlo/fig_kdlo_ocv_paper_%s%s.jpg" % (k, FIG_SUFFIX)
+                        for k in "ABCDE"],
             "report": "figures/kdlo/fig_kdlo_ocv_paper.md",
             "state_windows": res["data"]["state_windows"],
             "singleton_day": res["data"]["singleton_day"],

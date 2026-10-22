@@ -14257,6 +14257,7 @@
    "sha256": "8d56dd42b79d7efc5d373bace9905e24c876a2b5764b36e3d82d89d8fcc483d9"
   },
   "channel_table": {
+   "chip": "committed",
    "path": "data/kdlo/kdlo_ocv_channels.csv",
    "sha256": "21dfe5b649c535ad0ca10b5414c55e08a445462b8d8755d39813c8a045415d78"
   },
