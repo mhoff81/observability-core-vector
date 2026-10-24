@@ -836,7 +836,7 @@ def fig_series(res, out_dir=None):
         draw_stretches(ax)
         draw_dimension(ax, res, dim)
         date_axis(ax)
-        panel(ax, letter, core.CHANNEL_TITLE[dim])
+        panel(ax, letter, core.FIG_CHANNEL_TITLE[dim])
     for ax in flat[:4]:
         ax.tick_params(labelbottom=False)
     for ax in flat[4:]:

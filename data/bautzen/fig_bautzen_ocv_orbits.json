@@ -238,6 +238,7 @@
    "DESC Br\u00fccke": "bautzen_rects_desc_iw3.txt",
    "DESC Kontrolle 500 m \u00f6stlich": "bautzen_rects_ctrl_500m_east.txt"
   },
+  "reference": "neighbour",
   "site": "bautzen_openbridge",
   "state_rule": "RS / DS1 / DS2 assigned by overpass time (DESC 07:08, ASC 18:51 local), not by date; cuts at 2025-05-12 10:00 and 2025-09-29 10:00 local",
   "states": {

@@ -1625,7 +1625,7 @@ def draw_channel(ax, res, dim, letter, right=False, bottom=False):
     ax2.tick_params(axis="y", labelsize=6.4, length=2.0, pad=1.5)
     if right:
         ax2.set_ylabel(DELTA_LABEL, fontsize=6.6, labelpad=0.8)
-    panel(ax, letter, f"{core.CHANNEL_TITLE[dim]} — Δ {pooled:+.3f}\n"
+    panel(ax, letter, f"{core.FIG_CHANNEL_TITLE[dim]} — Δ {pooled:+.3f}\n"
                       f"{axis_label(dim)}")
 
 

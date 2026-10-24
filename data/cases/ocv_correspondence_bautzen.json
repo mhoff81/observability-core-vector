@@ -1,0 +1,719 @@
+{
+ "asset": "bautzen",
+ "cross_checks": [
+  {
+   "check": "bautzen.n_rows",
+   "ok": true
+  },
+  {
+   "check": "bautzen.states",
+   "ok": true
+  },
+  {
+   "check": "bautzen.paired_dates",
+   "ok": true
+  },
+  {
+   "check": "bautzen.incomplete_pairs",
+   "ok": true
+  },
+  {
+   "check": "bautzen.ds2_has_no_physics",
+   "ok": true
+  },
+  {
+   "check": "bautzen.rs_is_origin",
+   "ok": true
+  },
+  {
+   "check": "bautzen.transform",
+   "ok": true
+  },
+  {
+   "check": "bautzen.gamma2_nonpositive",
+   "ok": true
+  },
+  {
+   "check": "bautzen.a_not_defined",
+   "ok": true
+  },
+  {
+   "check": "bautzen.c_not_defined",
+   "ok": true
+  },
+  {
+   "check": "bautzen.d_defined",
+   "ok": true
+  },
+  {
+   "check": "bautzen.d_contrast_pair",
+   "ok": true
+  },
+  {
+   "check": "bautzen.d_not_identifiable",
+   "ok": true
+  },
+  {
+   "check": "bautzen.d_distinct_x",
+   "ok": true
+  },
+  {
+   "check": "bautzen.models_not_defined",
+   "ok": true
+  },
+  {
+   "check": "bautzen.b_not_defined",
+   "ok": true
+  }
+ ],
+ "label": "Bautzen OpenLabs bridge",
+ "n_cross_checks": 16,
+ "n_cross_checks_failed": 0,
+ "pairing": {
+  "DS1.ASC": {
+   "n_dates_total": 23,
+   "n_dates_without_complete_pair": 13,
+   "n_paired_dates": 10
+  },
+  "DS1.DESC": {
+   "n_dates_total": 23,
+   "n_dates_without_complete_pair": 0,
+   "n_paired_dates": 23
+  },
+  "DS2.ASC": {
+   "n_dates_total": 6,
+   "n_dates_without_complete_pair": 0,
+   "n_paired_dates": 6
+  },
+  "DS2.DESC": {
+   "n_dates_total": 5,
+   "n_dates_without_complete_pair": 0,
+   "n_paired_dates": 5
+  },
+  "RS.ASC": {
+   "n_dates_total": 7,
+   "n_dates_without_complete_pair": 1,
+   "n_paired_dates": 6
+  },
+  "RS.DESC": {
+   "n_dates_total": 7,
+   "n_dates_without_complete_pair": 0,
+   "n_paired_dates": 7
+  }
+ },
+ "reference": {
+  "ASC": {
+   "P": {
+    "centre": 0.5373619233268356,
+    "n": 6,
+    "scale": 0.03210547504025768,
+    "transform": "identity"
+   },
+   "gamma2": {
+    "centre": -0.4072104485906254,
+    "n": 6,
+    "scale": 0.2922790085469799,
+    "transform": "identity"
+   }
+  },
+  "DESC": {
+   "P": {
+    "centre": -0.03333333333333327,
+    "n": 7,
+    "scale": 0.010476190476190472,
+    "transform": "identity"
+   },
+   "gamma2": {
+    "centre": 0.0018672065262598236,
+    "n": 7,
+    "scale": 0.09659750997751028,
+    "transform": "identity"
+   }
+  }
+ },
+ "reference_label": "RS",
+ "schema": "ocv-correspondence-v1",
+ "sources": {
+  "csv": "/home/projects/research/observability-core-vector/data/bautzen/bautzen_ocv_channels.csv",
+  "csv_sha256": "32b2180cc28551ae85056c8b5994d6dedf02cc724353b2d130880230078c37fa",
+  "dynamics": "/home/projects/research/observability-core-vector/data/bautzen/reference/bautzen_state_dynamics.json",
+  "dynamics_sha256": "c1c61eb935dcaa7cfe27b57a16f0507f13f426d4664f2b12adee96770111d272"
+ },
+ "subjects": [
+  {
+   "dates": {
+    "ASC": [
+     "2025-04-02",
+     "2025-04-08",
+     "2025-04-14",
+     "2025-04-20",
+     "2025-04-26",
+     "2025-05-08"
+    ],
+    "DESC": [
+     "2025-04-06",
+     "2025-04-12",
+     "2025-04-18",
+     "2025-04-24",
+     "2025-04-30",
+     "2025-05-06",
+     "2025-05-12"
+    ]
+   },
+   "id": "RS",
+   "is_reference": true,
+   "n_channel": {
+    "ASC": {
+     "P": 6,
+     "gamma2": 6
+    },
+    "DESC": {
+     "P": 7,
+     "gamma2": 7
+    }
+   },
+   "n_dates": {
+    "ASC": 6,
+    "DESC": 7
+   },
+   "state": "RS",
+   "state_short": "RS",
+   "visit": 1,
+   "x": [
+    0.0,
+    0.0
+   ],
+   "y": {
+    "ASC": [
+     0.0,
+     0.0
+    ],
+    "DESC": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "dates": {
+    "ASC": [
+     "2025-05-14",
+     "2025-05-20",
+     "2025-06-25",
+     "2025-07-07",
+     "2025-07-19",
+     "2025-08-06",
+     "2025-08-12",
+     "2025-08-30",
+     "2025-09-11",
+     "2025-09-23"
+    ],
+    "DESC": [
+     "2025-05-18",
+     "2025-05-24",
+     "2025-05-30",
+     "2025-06-05",
+     "2025-06-11",
+     "2025-06-17",
+     "2025-06-23",
+     "2025-06-29",
+     "2025-07-05",
+     "2025-07-11",
+     "2025-07-17",
+     "2025-07-23",
+     "2025-07-29",
+     "2025-08-04",
+     "2025-08-10",
+     "2025-08-16",
+     "2025-08-22",
+     "2025-08-28",
+     "2025-09-03",
+     "2025-09-09",
+     "2025-09-15",
+     "2025-09-21",
+     "2025-09-27"
+    ]
+   },
+   "id": "DS1",
+   "is_reference": false,
+   "n_channel": {
+    "ASC": {
+     "P": 10,
+     "gamma2": 10
+    },
+    "DESC": {
+     "P": 23,
+     "gamma2": 23
+    }
+   },
+   "n_dates": {
+    "ASC": 10,
+    "DESC": 23
+   },
+   "state": "DS1",
+   "state_short": "DS1",
+   "visit": 1,
+   "x": [
+    -0.010030090270812475,
+    -0.12339446571896032
+   ],
+   "y": {
+    "ASC": [
+     1.6793203046556064,
+     0.47828191167573986
+    ],
+    "DESC": [
+     -0.443813499661703,
+     2.5757575757575677
+    ]
+   }
+  },
+  {
+   "dates": {
+    "ASC": [
+     "2025-09-29",
+     "2025-10-05",
+     "2025-10-11",
+     "2025-10-17",
+     "2025-10-23",
+     "2025-10-29"
+    ],
+    "DESC": [
+     "2025-10-03",
+     "2025-10-09",
+     "2025-10-15",
+     "2025-10-21",
+     "2025-10-27"
+    ]
+   },
+   "id": "DS2",
+   "is_reference": false,
+   "n_channel": {
+    "ASC": {
+     "P": 6,
+     "gamma2": 6
+    },
+    "DESC": {
+     "P": 5,
+     "gamma2": 5
+    }
+   },
+   "n_dates": {
+    "ASC": 6,
+    "DESC": 5
+   },
+   "state": "DS2",
+   "state_short": "DS2",
+   "visit": 1,
+   "x": null,
+   "y": {
+    "ASC": [
+     2.037141120535614,
+     -0.13886990202779992
+    ],
+    "DESC": [
+     -0.40987529571906817,
+     4.090909090909088
+    ]
+   }
+  }
+ ],
+ "tests": {
+  "a": {
+   "defined": false,
+   "orbits": {},
+   "reason": "no state was visited twice: every configuration has exactly one campaign, so a repeatability estimate would have to come from dates inside one campaign, which are not independent visits of the tower"
+  },
+  "b": {
+   "contrasts": [
+    {
+     "angle_deg": -44.651688921536554,
+     "ci_measurement_norm": [
+      0.7247157116788657,
+      4.193803648875181
+     ],
+     "id": "DS1",
+     "n_dates": [
+      10,
+      23
+     ],
+     "norm": 2.984476723388942,
+     "state": "DS1",
+     "v": [
+      2.1231338043173094,
+      -2.097475664081828
+     ]
+    },
+    {
+     "angle_deg": -59.94971255171155,
+     "ci_measurement_norm": [
+      3.8644109823276547,
+      9.185390863426631
+     ],
+     "id": "DS2",
+     "n_dates": [
+      6,
+      5
+     ],
+     "norm": 4.886606150541509,
+     "state": "DS2",
+     "v": [
+      2.4470164162546824,
+      -4.229778992936888
+     ]
+    }
+   ],
+   "defined": false,
+   "n_campaigns": 2,
+   "reason": "2 non-reference campaigns carry both geometries; a between-state share needs at least three"
+  },
+  "c": {
+   "defined": false,
+   "orbits": {
+    "ASC": {
+     "n_campaigns": 1,
+     "reason": "fewer than three campaigns carry both a physical and an OCV vector, so there are no distance matrices to compare"
+    },
+    "DESC": {
+     "n_campaigns": 1,
+     "reason": "fewer than three campaigns carry both a physical and an OCV vector, so there are no distance matrices to compare"
+    }
+   },
+   "standardised": false
+  },
+  "c_standardised": {
+   "defined": false,
+   "orbits": {
+    "ASC": {
+     "n_campaigns": 1,
+     "reason": "fewer than three campaigns carry both a physical and an OCV vector, so there are no distance matrices to compare"
+    },
+    "DESC": {
+     "n_campaigns": 1,
+     "reason": "fewer than three campaigns carry both a physical and an OCV vector, so there are no distance matrices to compare"
+    }
+   },
+   "standardised": true
+  },
+  "d": {
+   "contrast_pair": {
+    "distance": 0.12380144135230542,
+    "states": [
+     "DS1",
+     "RS"
+    ]
+   },
+   "defined": true,
+   "distinct_x_vectors": 2,
+   "identifiable": false,
+   "n_campaigns": 2,
+   "orbits": {
+    "ASC": {
+     "ci_measurement_components": [
+      [
+       -1.4729979215605433,
+       2.8265932074791627
+      ],
+      [
+       -1.0533795303305258,
+       1.978941545270148
+      ]
+     ],
+     "ci_measurement_norm": [
+      0.3486830352973818,
+      2.9744238577646187
+     ],
+     "contrast_over_visit_noise": null,
+     "median_visit_noise": null,
+     "n_campaigns": 2,
+     "raw_contrast": [
+      1.6793203046556064,
+      0.47828191167573986
+     ],
+     "raw_contrast_norm": 1.7461014497058294,
+     "residual_contrast": [
+      0.0,
+      0.0
+     ],
+     "residual_contrast_note": "zero by construction: the state-level residuals vanish because the design is saturated at the state level",
+     "states": [
+      "DS1",
+      "RS"
+     ],
+     "visit_noise_same_orbit": [],
+     "y_mean": {
+      "DS1": [
+       1.6793203046556064,
+       0.47828191167573986
+      ],
+      "RS": [
+       0.0,
+       0.0
+      ]
+     }
+    },
+    "DESC": {
+     "ci_measurement_components": [
+      [
+       -1.9943108880400209,
+       1.1176419371277455
+      ],
+      [
+       -1.8506493506493418,
+       4.025974025974024
+      ]
+     ],
+     "ci_measurement_norm": [
+      0.2329456000950651,
+      4.713589496667464
+     ],
+     "contrast_over_visit_noise": null,
+     "median_visit_noise": null,
+     "n_campaigns": 2,
+     "raw_contrast": [
+      -0.443813499661703,
+      2.5757575757575677
+     ],
+     "raw_contrast_norm": 2.6137133568076036,
+     "residual_contrast": [
+      0.0,
+      0.0
+     ],
+     "residual_contrast_note": "zero by construction: the state-level residuals vanish because the design is saturated at the state level",
+     "states": [
+      "DS1",
+      "RS"
+     ],
+     "visit_noise_same_orbit": [],
+     "y_mean": {
+      "DS1": [
+       -0.443813499661703,
+       2.5757575757575677
+      ],
+      "RS": [
+       0.0,
+       0.0
+      ]
+     }
+    }
+   },
+   "parameters_per_channel": 3,
+   "physical_distance": 0.12380144135230542,
+   "reason": "2 distinct physical vectors for 3 parameters per channel: y = a + B x is saturated at the state level, so the residuals of a state sum to zero and the residual contrast would be zero for any data. The raw contrast is reported instead."
+  },
+  "descriptive": [
+   {
+    "ci_measurement": [
+     [
+      -1.0000000000000002,
+      2.3642038812000203
+     ],
+     [
+      -1.3689329424356658,
+      1.0841656830767537
+     ]
+    ],
+    "id": "RS",
+    "is_reference": true,
+    "n_dates": 6,
+    "orbit": "ASC",
+    "state": "RS",
+    "visit": 1,
+    "x": [
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "ci_measurement": [
+     [
+      -1.0,
+      1.0122832361338987
+     ],
+     [
+      -1.0,
+      1.988636363636352
+     ]
+    ],
+    "id": "RS",
+    "is_reference": true,
+    "n_dates": 7,
+    "orbit": "DESC",
+    "state": "RS",
+    "visit": 1,
+    "x": [
+     0.0,
+     0.0
+    ],
+    "y": [
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "ci_measurement": [
+     [
+      -0.20557734344448464,
+      2.272593640927145
+     ],
+     [
+      -0.4558303710258843,
+      1.2032259331714832
+     ]
+    ],
+    "id": "DS1",
+    "is_reference": false,
+    "n_dates": 10,
+    "orbit": "ASC",
+    "state": "DS1",
+    "visit": 1,
+    "x": [
+     -0.010030090270812475,
+     -0.12339446571896032
+    ],
+    "y": [
+     1.6793203046556064,
+     0.47828191167573986
+    ]
+   },
+   {
+    "ci_measurement": [
+     [
+      -1.1773768428023725,
+      0.32873186821417566
+     ],
+     [
+      -0.20479520479520869,
+      3.4545454545454533
+     ]
+    ],
+    "id": "DS1",
+    "is_reference": false,
+    "n_dates": 23,
+    "orbit": "DESC",
+    "state": "DS1",
+    "visit": 1,
+    "x": [
+     -0.010030090270812475,
+     -0.12339446571896032
+    ],
+    "y": [
+     -0.443813499661703,
+     2.5757575757575677
+    ]
+   },
+   {
+    "ci_measurement": [
+     [
+      -0.037910902307410135,
+      2.3239993700587265
+     ],
+     [
+      -2.6772691203643184,
+      0.536704614200077
+     ]
+    ],
+    "id": "DS2",
+    "is_reference": false,
+    "n_dates": 6,
+    "orbit": "ASC",
+    "state": "DS2",
+    "visit": 1,
+    "x": null,
+    "y": [
+     2.037141120535614,
+     -0.13886990202779992
+    ]
+   },
+   {
+    "ci_measurement": [
+     [
+      -3.227992676354337,
+      5.299311912619122
+     ],
+     [
+      -6.636363636363646,
+      8.116883116883118
+     ]
+    ],
+    "id": "DS2",
+    "is_reference": false,
+    "n_dates": 5,
+    "orbit": "DESC",
+    "state": "DS2",
+    "visit": 1,
+    "x": null,
+    "y": [
+     -0.40987529571906817,
+     4.090909090909088
+    ]
+   }
+  ],
+  "models": {
+   "defined": false,
+   "m0": {
+    "formula": "y ~ orbit",
+    "params_per_channel": 2
+   },
+   "m1": {
+    "formula": "y ~ orbit + x",
+    "params_per_channel": 4
+   },
+   "m2": {
+    "formula": "y ~ M1 + orbit x x",
+    "identifiable": false,
+    "params_per_channel": 6,
+    "reason": "six independent campaigns and six scalar parameters per channel: the two orbits of a campaign share x, so the twelve campaign-orbit cells are not twelve independent units and M2 has no residual degrees of freedom. It is reported, not fitted -- a ridge fit would produce numbers without producing information."
+   },
+   "orbits": {
+    "ASC": {
+     "n_campaigns": 1,
+     "reason": "1 campaigns: comparison of M0 and M1 needs at least four (three parameters plus one)"
+    },
+    "DESC": {
+     "n_campaigns": 1,
+     "reason": "1 campaigns: comparison of M0 and M1 needs at least four (three parameters plus one)"
+    }
+   }
+  },
+  "multiplicity": {
+   "family": [
+    {
+     "p": null,
+     "p_holm": null,
+     "test": "B.geometry"
+    },
+    {
+     "p": null,
+     "p_holm": null,
+     "test": "C.rho.ASC"
+    },
+    {
+     "p": null,
+     "p_holm": null,
+     "test": "C.rho.DESC"
+    },
+    {
+     "p": null,
+     "p_holm": null,
+     "test": "M1.loco.ASC"
+    },
+    {
+     "p": null,
+     "p_holm": null,
+     "test": "M1.loco.DESC"
+    }
+   ],
+   "note": "Holm inside this five-test family; the standardised distance variant is a sensitivity and stays outside it."
+  }
+ },
+ "transform": "identity",
+ "unit": "campaign (visit)",
+ "unit_rule": "one campaign per state; the dates inside a campaign are paired bridge-minus-control acquisitions, not replicates",
+ "x_definition": "primary matched mode pair: signed df/f0 and dzeta/zeta0 against the RS night; DS2 has no independent physics",
+ "y_definition": "z of the median paired difference (bridge - control) of gamma2 and P against the RS distribution of the same paired difference, same orbit; identity scale because the floor-corrected gamma2 is not strictly positive"
+}

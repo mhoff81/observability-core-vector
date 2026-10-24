@@ -1,0 +1,1486 @@
+{
+ "cases": {
+  "carola": {
+   "dims": {
+    "D": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.046736542945977455,
+        0.22542144383987558
+       ],
+       "delta": 0.09376214535561601,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        124,
+        166
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 0.9376214535561601,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.7137596899224806,
+        -0.4217005813953489
+       ],
+       "delta": -0.5742248062015504,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        60,
+        86
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 5.742248062015504,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.046736542945977455,
+      0.22542144383987558
+     ],
+     "delta": 0.09376214535561601,
+     "intensity": 0,
+     "n": [
+      124,
+      166
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 0.9376214535561601,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "F": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.06189273221919938,
+        0.20919403420132138
+       ],
+       "delta": 0.07559269335406141,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        124,
+        166
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 0.755926933540614,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.7168701550387597,
+        -0.4319670542635661
+       ],
+       "delta": -0.5806201550387597,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        60,
+        86
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 5.806201550387597,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.06189273221919938,
+      0.20919403420132138
+     ],
+     "delta": 0.07559269335406141,
+     "intensity": 0,
+     "n": [
+      124,
+      166
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 0.755926933540614,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "P": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.25923289933929267,
+        0.021475417800233158
+       ],
+       "delta": -0.11980178779634668,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        124,
+        166
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.1980178779634667,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.46473837209302327,
+        -0.11161821705426371
+       ],
+       "delta": -0.29031007751937987,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        60,
+        86
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.9031007751937987,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.25923289933929267,
+      0.021475417800233158
+     ],
+     "delta": -0.11980178779634668,
+     "intensity": 0,
+     "n": [
+      124,
+      166
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 1.1980178779634667,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "gamma2": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.15672609794014766,
+        0.10999562767197812
+       ],
+       "delta": -0.02535950252623397,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        124,
+        166
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 0.2535950252623397,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        0.39573643410852716,
+        0.6937984496124031
+       ],
+       "delta": 0.5503875968992248,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        60,
+        86
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 5.503875968992248,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.15672609794014766,
+      0.10999562767197812
+     ],
+     "delta": -0.02535950252623397,
+     "intensity": 0,
+     "n": [
+      124,
+      166
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 0.2535950252623397,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    }
+   },
+   "label": "Carolabr\u00fccke",
+   "question": "collapse of a prestressed bridge deck",
+   "reasons": {},
+   "x": 0.6
+  },
+  "cts": {
+   "dims": {
+    "D": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.07457983193277311,
+        0.35470063025210075
+       ],
+       "delta": 0.1407563025210084,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        136,
+        42
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.407563025210084,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.07457983193277311,
+      0.35470063025210075
+     ],
+     "delta": 0.1407563025210084,
+     "intensity": 0,
+     "n": [
+      136,
+      42
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 1.407563025210084,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "F": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.09034051120448179,
+        0.3279105392156862
+       ],
+       "delta": 0.11817226890756302,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        136,
+        42
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.1817226890756303,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.09034051120448179,
+      0.3279105392156862
+     ],
+     "delta": 0.11817226890756302,
+     "intensity": 0,
+     "n": [
+      136,
+      42
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 1.1817226890756303,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "P": {
+     "band": "weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.41876750700280113,
+        -0.029044117647059078
+       ],
+       "delta": -0.22759103641456582,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        136,
+        42
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.275910364145658,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.41876750700280113,
+      -0.029044117647059078
+     ],
+     "delta": -0.22759103641456582,
+     "intensity": 1,
+     "n": [
+      136,
+      42
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.275910364145658,
+     "small_n": false,
+     "symbol": "\u2193",
+     "why": "the interval excludes zero"
+    },
+    "gamma2": {
+     "band": "very weak",
+     "channel": "ASC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.17822128851540617,
+        0.20554971988795492
+       ],
+       "delta": 0.016456582633053222,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        136,
+        42
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 0.1645658263305322,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.17822128851540617,
+      0.20554971988795492
+     ],
+     "delta": 0.016456582633053222,
+     "intensity": 0,
+     "n": [
+      136,
+      42
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 0.1645658263305322,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    }
+   },
+   "label": "Champlain Towers South",
+   "question": "long-term evolution / degradation over 7 years",
+   "reasons": {},
+   "x": 0.34
+  },
+  "espoo": {
+   "dims": {
+    "D": {
+     "band": null,
+     "channel": null,
+     "channels": {
+      "ASC": {
+       "trend": false
+      },
+      "DESC": {
+       "trend": false
+      }
+     },
+     "ci": null,
+     "delta": null,
+     "intensity": -1,
+     "n": {
+      "ASC": 31,
+      "DESC": 44
+     },
+     "p": null,
+     "pair": null,
+     "sds": null,
+     "small_n": null,
+     "symbol": "\u25cb",
+     "why": "no trend in either orbit over two years"
+    },
+    "F": {
+     "band": null,
+     "channel": null,
+     "channels": {
+      "ASC": {
+       "trend": false
+      },
+      "DESC": {
+       "trend": false
+      }
+     },
+     "ci": null,
+     "delta": null,
+     "intensity": -1,
+     "n": {
+      "ASC": 31,
+      "DESC": 44
+     },
+     "p": null,
+     "pair": null,
+     "sds": null,
+     "small_n": null,
+     "symbol": "\u25cb",
+     "why": "no trend in either orbit over two years"
+    },
+    "P": {
+     "band": null,
+     "channel": null,
+     "channels": {
+      "ASC": {
+       "trend": false
+      },
+      "DESC": {
+       "trend": false
+      }
+     },
+     "ci": null,
+     "delta": null,
+     "intensity": -1,
+     "n": {
+      "ASC": 31,
+      "DESC": 44
+     },
+     "p": null,
+     "pair": null,
+     "sds": null,
+     "small_n": null,
+     "symbol": "\u25cb",
+     "why": "no trend in either orbit over two years"
+    },
+    "gamma2": {
+     "band": null,
+     "channel": null,
+     "channels": {
+      "ASC": {
+       "trend": false
+      },
+      "DESC": {
+       "trend": false
+      }
+     },
+     "ci": null,
+     "delta": null,
+     "intensity": -1,
+     "n": {
+      "ASC": 31,
+      "DESC": 44
+     },
+     "p": null,
+     "pair": null,
+     "sds": null,
+     "small_n": null,
+     "symbol": "\u25cb",
+     "why": "no trend in either orbit over two years"
+    }
+   },
+   "label": "Espoo mast",
+   "question": "stable reference \u2014 no event, no label",
+   "reasons": {},
+   "x": 0.06
+  },
+  "haltern": {
+   "dims": {
+    "D": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.5909090909090909,
+        0.41818181818181815
+       ],
+       "delta": -0.10909090909090909,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        44,
+        5
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.0909090909090908,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.2692307692307692,
+        0.7435897435897436
+       ],
+       "delta": 0.27564102564102566,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        52,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.7564102564102564,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.2692307692307692,
+      0.7435897435897436
+     ],
+     "delta": 0.27564102564102566,
+     "intensity": 1,
+     "n": [
+      52,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.7564102564102564,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "F": {
+     "band": "moderate",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.34545454545454546,
+        0.7727272727272727
+       ],
+       "delta": 0.2727272727272727,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        44,
+        5
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.727272727272727,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        0.038461538461538464,
+        0.7756410256410257
+       ],
+       "delta": 0.4358974358974359,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        52,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 4.3589743589743595,
+       "small_n": false
+      }
+     },
+     "ci": [
+      0.038461538461538464,
+      0.7756410256410257
+     ],
+     "delta": 0.4358974358974359,
+     "intensity": 2,
+     "n": [
+      52,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 4.3589743589743595,
+     "small_n": false,
+     "symbol": "\u2191",
+     "why": "the interval excludes zero"
+    },
+    "P": {
+     "band": "very weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.2818181818181818,
+        0.5
+       ],
+       "delta": 0.12272727272727273,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        44,
+        5
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.2272727272727273,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.22435897435897437,
+        0.5
+       ],
+       "delta": 0.14102564102564102,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        52,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.4102564102564101,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.22435897435897437,
+      0.5
+     ],
+     "delta": 0.14102564102564102,
+     "intensity": 0,
+     "n": [
+      52,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 1.4102564102564101,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "gamma2": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.6454545454545455,
+        0.3090909090909091
+       ],
+       "delta": -0.21818181818181817,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        44,
+        5
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.1818181818181817,
+       "small_n": false
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.25,
+        0.6538461538461539
+       ],
+       "delta": 0.21794871794871795,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        52,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.1794871794871797,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.25,
+      0.6538461538461539
+     ],
+     "delta": 0.21794871794871795,
+     "intensity": 1,
+     "n": [
+      52,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.1794871794871797,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    }
+   },
+   "label": "Haltern AV9",
+   "question": "a wind turbine's collapse, seen in the mask fragmentation",
+   "reasons": {},
+   "x": 0.78
+  },
+  "kdlo": {
+   "dims": {
+    "D": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.5319767441860465,
+        0.14534883720930233
+       ],
+       "delta": -0.2005813953488372,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        16,
+        43
+       ],
+       "p": null,
+       "pair": "pre \u2013 rebuild",
+       "sds": 2.005813953488372,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.5319767441860465,
+      0.14534883720930233
+     ],
+     "delta": -0.2005813953488372,
+     "intensity": 1,
+     "n": [
+      16,
+      43
+     ],
+     "p": null,
+     "pair": "pre \u2013 rebuild",
+     "sds": 2.005813953488372,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "F": {
+     "band": "very weak",
+     "channel": "DESC",
+     "channels": {
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.18604651162790697,
+        0.42296511627906974
+       ],
+       "delta": 0.12063953488372094,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        16,
+        43
+       ],
+       "p": null,
+       "pair": "pre \u2013 rebuild",
+       "sds": 1.2063953488372094,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.18604651162790697,
+      0.42296511627906974
+     ],
+     "delta": 0.12063953488372094,
+     "intensity": 0,
+     "n": [
+      16,
+      43
+     ],
+     "p": null,
+     "pair": "pre \u2013 rebuild",
+     "sds": 1.2063953488372094,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "P": {
+     "band": "strong",
+     "channel": "DESC",
+     "channels": {
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.8604651162790697,
+        -0.3372093023255814
+       ],
+       "delta": -0.627906976744186,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        16,
+        43
+       ],
+       "p": null,
+       "pair": "pre \u2013 rebuild",
+       "sds": 6.279069767441861,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.8604651162790697,
+      -0.3372093023255814
+     ],
+     "delta": -0.627906976744186,
+     "intensity": 3,
+     "n": [
+      16,
+      43
+     ],
+     "p": null,
+     "pair": "pre \u2013 rebuild",
+     "sds": 6.279069767441861,
+     "small_n": false,
+     "symbol": "\u2193",
+     "why": "the interval excludes zero"
+    },
+    "gamma2": {
+     "band": "very weak",
+     "channel": "DESC",
+     "channels": {
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.2877906976744186,
+        0.38372093023255816
+       ],
+       "delta": 0.046511627906976744,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        16,
+        43
+       ],
+       "p": null,
+       "pair": "pre \u2013 rebuild",
+       "sds": 0.46511627906976744,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.2877906976744186,
+      0.38372093023255816
+     ],
+     "delta": 0.046511627906976744,
+     "intensity": 0,
+     "n": [
+      16,
+      43
+     ],
+     "p": null,
+     "pair": "pre \u2013 rebuild",
+     "sds": 0.46511627906976744,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    }
+   },
+   "label": "KDLO media tower",
+   "question": "reconstruction \u2014 the record's second state",
+   "reasons": {},
+   "x": 0.93
+  },
+  "morandi": {
+   "dims": {
+    "D": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -1.0,
+        -0.23076923076923078
+       ],
+       "delta": -0.7289377289377289,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        91,
+        3
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 7.289377289377289,
+       "small_n": true
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.5919003115264797,
+        0.13707165109034267
+       ],
+       "delta": -0.22429906542056074,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        107,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.2429906542056073,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.5919003115264797,
+      0.13707165109034267
+     ],
+     "delta": -0.22429906542056074,
+     "intensity": 1,
+     "n": [
+      107,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.2429906542056073,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "F": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        0.43956043956043955,
+        0.8131868131868132
+       ],
+       "delta": 0.6446886446886447,
+       "gate": true,
+       "gate_kind": "interval",
+       "n": [
+        91,
+        3
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 6.446886446886447,
+       "small_n": true
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.5763239875389408,
+        0.1292834890965732
+       ],
+       "delta": -0.22429906542056074,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        107,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.2429906542056073,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.5763239875389408,
+      0.1292834890965732
+     ],
+     "delta": -0.22429906542056074,
+     "intensity": 1,
+     "n": [
+      107,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.2429906542056073,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "P": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.0989010989010989,
+        0.304029304029304
+       ],
+       "delta": 0.10622710622710622,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        91,
+        3
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 1.0622710622710623,
+       "small_n": true
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.102803738317757,
+        0.8099688473520249
+       ],
+       "delta": 0.38006230529595014,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        107,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 3.8006230529595015,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.102803738317757,
+      0.8099688473520249
+     ],
+     "delta": 0.38006230529595014,
+     "intensity": 1,
+     "n": [
+      107,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 3.8006230529595015,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    },
+    "gamma2": {
+     "band": "weak",
+     "channel": "DESC",
+     "channels": {
+      "ASC": {
+       "channel": null,
+       "ci": [
+        -0.7655677655677655,
+        0.14285714285714285
+       ],
+       "delta": -0.36996336996337,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        91,
+        3
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 3.6996336996337,
+       "small_n": true
+      },
+      "DESC": {
+       "channel": null,
+       "ci": [
+        -0.24610591900311526,
+        0.660436137071651
+       ],
+       "delta": 0.2118380062305296,
+       "gate": false,
+       "gate_kind": "interval",
+       "n": [
+        107,
+        6
+       ],
+       "p": null,
+       "pair": "pre-collapse (healthy) \u2013 post-collapse",
+       "sds": 2.1183800623052957,
+       "small_n": false
+      }
+     },
+     "ci": [
+      -0.24610591900311526,
+      0.660436137071651
+     ],
+     "delta": 0.2118380062305296,
+     "intensity": 1,
+     "n": [
+      107,
+      6
+     ],
+     "p": null,
+     "pair": "pre-collapse (healthy) \u2013 post-collapse",
+     "sds": 2.1183800623052957,
+     "small_n": false,
+     "symbol": "\u25cb",
+     "why": "the interval covers zero"
+    }
+   },
+   "label": "Ponte Morandi",
+   "question": "an independent collapse, other structure, other sensor",
+   "reasons": {},
+   "x": 0.69
+  }
+ },
+ "chip": "support",
+ "excluded": {
+  "ywf": {
+   "n_acquisitions": 33,
+   "n_committed_dates": 32,
+   "n_dates": 14,
+   "n_refused": 19,
+   "post_committed": 6,
+   "post_refused": 4,
+   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows",
+   "support_by_state": {
+    "post-collapse": 2,
+    "pre-collapse (healthy)": 12
+   },
+   "support_echo": 14,
+   "support_rows": 14
+  }
+ },
+ "generated_by": "code/cases/fig_cases_overview.py",
+ "references": [
+  {
+   "label": "LUMO tower",
+   "role": "controlled ladder, measured natural frequency",
+   "site": "lumo"
+  },
+  {
+   "label": "Bautzen bridge",
+   "role": "bridge + control track, ordinal ladder",
+   "site": "bautzen"
+  }
+ ],
+ "rules": {
+  "arrow_gate": "the case's own interval must exclude zero",
+  "bands": [
+   [
+    2.0,
+    "very weak"
+   ],
+   [
+    4.0,
+    "weak"
+   ],
+   [
+    6.0,
+    "moderate"
+   ],
+   [
+    8.0,
+    "strong"
+   ],
+   [
+    null,
+    "very strong"
+   ]
+  ],
+  "channel": "where a case has two channels, the cell shows the one with the larger total n and the JSON keeps both",
+  "columns": [
+   [
+    "gamma2",
+    "\u03b3\u00b2"
+   ],
+   [
+    "P",
+    "P"
+   ],
+   [
+    "D",
+    "D"
+   ],
+   [
+    "F",
+    "F"
+   ]
+  ],
+  "cross_case": "SDS is an intensity scale inside a cell; no effect size is compared across cases",
+  "intensity": "the SDS band of the cell, capped at 'weak' when the interval covers zero"
+ },
+ "schema": "ocv-cases-overview-v1",
+ "sources": {
+  "carola": {
+   "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
+   "path": "data/sds/sds_support.json",
+   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+  },
+  "cts": {
+   "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
+   "path": "data/sds/sds_support.json",
+   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+  },
+  "espoo": {
+   "chip_level": null,
+   "path": "data/espoo/fig_espoo_ocv_chips.json",
+   "sha256": "05c9ddf4488e31d550c58d96701ea61d6a3a2ecf2ce5a334cc2fb65a2fbc38fe"
+  },
+  "haltern": {
+   "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
+   "path": "data/sds/sds_support.json",
+   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+  },
+  "kdlo": {
+   "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
+   "path": "data/sds/sds_support.json",
+   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+  },
+  "morandi": {
+   "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
+   "path": "data/sds/sds_support.json",
+   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+  }
+ },
+ "spectrum": [
+  {
+   "label": "stable",
+   "x": 0.06
+  },
+  {
+   "label": "damage / degradation",
+   "x": 0.34
+  },
+  {
+   "label": "collapse",
+   "x": 0.72
+  },
+  {
+   "label": "reconstruction",
+   "x": 0.93
+  }
+ ],
+ "track": {
+  "carola": {
+   "event": 0.5,
+   "note": "transition at the collapse",
+   "segments": [
+    [
+     [
+      0.02,
+      0.45
+     ],
+     [
+      0.5,
+      0.45
+     ]
+    ],
+    [
+     [
+      0.5,
+      0.45
+     ],
+     [
+      0.54,
+      0.85
+     ]
+    ],
+    [
+     [
+      0.54,
+      0.85
+     ],
+     [
+      0.98,
+      0.88
+     ]
+    ]
+   ]
+  },
+  "cts": {
+   "event": null,
+   "note": "long-term change, no single event to point at",
+   "segments": [
+    [
+     [
+      0.02,
+      0.3
+     ],
+     [
+      0.4,
+      0.32
+     ],
+     [
+      0.52,
+      0.62
+     ],
+     [
+      0.66,
+      0.66
+     ],
+     [
+      0.98,
+      0.72
+     ]
+    ]
+   ]
+  },
+  "espoo": {
+   "event": null,
+   "note": "stable over two years, no drift in any dimension",
+   "segments": [
+    [
+     [
+      0.02,
+      0.55
+     ],
+     [
+      0.98,
+      0.55
+     ]
+    ]
+   ]
+  },
+  "haltern": {
+   "event": 0.56,
+   "note": "a wind turbine's collapse; the mask fragments afterwards (F \u2191)",
+   "segments": [
+    [
+     [
+      0.02,
+      0.45
+     ],
+     [
+      0.56,
+      0.45
+     ]
+    ],
+    [
+     [
+      0.56,
+      0.45
+     ],
+     [
+      0.6,
+      0.78
+     ]
+    ],
+    [
+     [
+      0.6,
+      0.78
+     ],
+     [
+      0.98,
+      0.8
+     ]
+    ]
+   ]
+  },
+  "kdlo": {
+   "event": 0.45,
+   "note": "second state after the reconstruction",
+   "segments": [
+    [
+     [
+      0.02,
+      0.35
+     ],
+     [
+      0.45,
+      0.35
+     ]
+    ],
+    [
+     [
+      0.45,
+      0.35
+     ],
+     [
+      0.5,
+      0.7
+     ]
+    ],
+    [
+     [
+      0.5,
+      0.7
+     ],
+     [
+      0.98,
+      0.72
+     ]
+    ]
+   ]
+  },
+  "morandi": {
+   "event": 0.55,
+   "note": "an independent collapse, same shape",
+   "segments": [
+    [
+     [
+      0.02,
+      0.42
+     ],
+     [
+      0.55,
+      0.42
+     ]
+    ],
+    [
+     [
+      0.55,
+      0.42
+     ],
+     [
+      0.59,
+      0.82
+     ]
+    ],
+    [
+     [
+      0.59,
+      0.82
+     ],
+     [
+      0.98,
+      0.85
+     ]
+    ]
+   ]
+  }
+ }
+}

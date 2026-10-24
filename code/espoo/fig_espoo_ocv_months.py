@@ -82,6 +82,7 @@ PIN_MEDIAN_TOL = 5e-5
 # The two OCV channels of the paper, in the paper's order.
 CHANNELS = ["gamma2", "A"]
 CHANNEL_LABEL = {"gamma2": "coherence  gamma^2", "A": "mask area  A  [px]"}
+FIG_CHANNEL_LABEL = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_LABEL.items()}
 CHANNEL_COLORS = {"gamma2": "#4C72B0", "A": "#DD8452"}
 ORBIT_COLORS = {"ASCENDING": "#4C72B0", "DESCENDING": "#DD8452"}
 # A per-month delta is only quoted when both sides carry at least this many
@@ -373,7 +374,7 @@ def _month_channel_panel(ax, res, key, seed):
         ax.plot(range(len(months)), meds, "-o", ms=2.4, lw=1.0,
                 color=ORBIT_COLORS[s])
     _month_axis(ax, months)
-    ax.set_ylabel(CHANNEL_LABEL[key])
+    ax.set_ylabel(FIG_CHANNEL_LABEL[key])
 
 
 def fig_months(res, out_dir=None):

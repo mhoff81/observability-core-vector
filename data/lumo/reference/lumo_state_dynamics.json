@@ -1,0 +1,438 @@
+{
+ "schema": "lumo-state-dynamics-v1",
+ "method": "Frequency: Welch PSD per accelerometer channel (4 s windows), averaged over the 18 acceleration channels, peaks in the 1-50 Hz band, mode consensus across the five recordings of a campaign (+-0.75 Hz clustering). Damping: half-power bandwidth on the channel-mean Welch PSD (nperseg 32 s, parabolic peak interpolation, SNR gate 3x, state-adaptive mode windows), one value per recording, median over the five recordings of a campaign. The healthy reference of a state is the healthy block of the same campaign, so both halves of v_phys refer to the tower as it stood days before that state.",
+ "params": {
+  "fft_bin_hz": 0.25,
+  "h1_bin_uncertainty_hz": 0.125,
+  "n_recordings_per_block": 5,
+  "n_recordings_total": 30,
+  "primary_mode": "first_higher",
+  "sensitivity_mode": "fundamental",
+  "rel_reference": "healthy block of the same campaign"
+ },
+ "provenance": {
+  "sources": {
+   "frequencies": {
+    "path": "/home/projects/research/observability-core-vector/code/lumo/../../data/lumo/reference/lumo_state_frequencies.json",
+    "sha256": "c707ce53b043fce22cc1dcd4c3c6a68f085e471c66f95ef64835acc5533440aa"
+   },
+   "damping_recordings": {
+    "path": "/home/projects/lumo_shm_data/lumo_damping_ratio.json",
+    "sha256": "cd6032f094dcd20114c481aeeeb70df85017ea2ec590196ef7663d8cbef55a8d"
+   },
+   "damping_summary": {
+    "path": "/home/projects/lumo_dam6_analysis/lumo_damping_gamma2_modulation.json",
+    "sha256": "f0a8404d535e42b38cddad1bc5b254c144ace3b85a165cc95a054521c663a4a5"
+   }
+  },
+  "note": "The damping summaries live outside this repository; the per-recording values are copied verbatim so that this JSON is self-contained.  `--verify` recomputes every derived number from these lists."
+ },
+ "prepared_by": "code/lumo/lumo_state_dynamics_json.py",
+ "states": [
+  {
+   "state": "DAM 3",
+   "healthy_campaign": "05_Healthy",
+   "damaged_campaign": "06_DAM3_111",
+   "healthy_window": "2021-03-10/2021-03-15",
+   "state_window": "2021-03-19/2021-03-24",
+   "modes": [
+    {
+     "name": "fundamental",
+     "damping_key": "fundamental",
+     "role": "sensitivity",
+     "healthy_hz": 2.75,
+     "state_hz": 2.75,
+     "healthy_n": 5,
+     "state_n": 4,
+     "df_rel": 0.0,
+     "df_bin_uncertainty_rel": 0.045454545454545456,
+     "zeta_healthy": 0.01469909840418774,
+     "zeta_state": 0.014363962427118012,
+     "zeta_rel": -0.022799764166096612,
+     "zeta_healthy_recordings": [
+      0.012660348050994483,
+      0.015080158099764535,
+      0.013389609761136604,
+      0.01492023551554048,
+      0.01469909840418774
+     ],
+     "zeta_state_recordings": [
+      0.01370889453739043,
+      0.014363962427118012,
+      0.013109363731635279,
+      0.015989151402113082,
+      0.01530574750576134
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202103100004.mat",
+      "SHMTS_202103101523.mat",
+      "SHMTS_202103110713.mat",
+      "SHMTS_202103120243.mat",
+      "SHMTS_202103150101.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202103190009.mat",
+      "SHMTS_202103200038.mat",
+      "SHMTS_202103200708.mat",
+      "SHMTS_202103210228.mat",
+      "SHMTS_202103240111.mat"
+     ]
+    },
+    {
+     "name": "first_higher",
+     "damping_key": "H1",
+     "role": "primary",
+     "healthy_hz": 13.501,
+     "state_hz": 12.501,
+     "healthy_n": 5,
+     "state_n": 5,
+     "df_rel": -0.07406858751203615,
+     "df_bin_uncertainty_rel": 0.00925857343900452,
+     "zeta_healthy": 0.003373878049368959,
+     "zeta_state": 0.002574850031118885,
+     "zeta_rel": -0.23682777105696576,
+     "zeta_healthy_recordings": [
+      0.0035111706498525143,
+      0.003373878049368959,
+      0.0039409236591119775,
+      0.0027737957411293904,
+      0.003092536913870828
+     ],
+     "zeta_state_recordings": [
+      0.002213213505290824,
+      0.0026231130396266603,
+      0.002106010828808535,
+      0.002946195487380807,
+      0.002574850031118885
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202103100004.mat",
+      "SHMTS_202103101523.mat",
+      "SHMTS_202103110713.mat",
+      "SHMTS_202103120243.mat",
+      "SHMTS_202103150101.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202103190009.mat",
+      "SHMTS_202103200038.mat",
+      "SHMTS_202103200708.mat",
+      "SHMTS_202103210228.mat",
+      "SHMTS_202103240111.mat"
+     ]
+    },
+    {
+     "name": "second_higher",
+     "damping_key": "H2",
+     "role": "context",
+     "healthy_hz": 16.001,
+     "state_hz": 16.189,
+     "healthy_n": 3,
+     "state_n": 4,
+     "df_rel": 0.011749265670895495,
+     "df_bin_uncertainty_rel": 0.00781201174926567,
+     "zeta_healthy": 0.003665001046511733,
+     "zeta_state": 0.0495994702904602,
+     "zeta_rel": 12.533275887511104,
+     "zeta_healthy_recordings": [
+      0.0031321853038518165,
+      0.003279002874901896,
+      0.003793077160373662,
+      0.004307725404636815,
+      0.003665001046511733
+     ],
+     "zeta_state_recordings": [
+      0.11369586121408713,
+      0.05932375029526368,
+      0.0495994702904602,
+      0.03927998327382285,
+      0.03538070327611513
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202103100004.mat",
+      "SHMTS_202103101523.mat",
+      "SHMTS_202103110713.mat",
+      "SHMTS_202103120243.mat",
+      "SHMTS_202103150101.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202103190009.mat",
+      "SHMTS_202103200038.mat",
+      "SHMTS_202103200708.mat",
+      "SHMTS_202103210228.mat",
+      "SHMTS_202103240111.mat"
+     ]
+    }
+   ]
+  },
+  {
+   "state": "DAM 4",
+   "healthy_campaign": "03_Healthy",
+   "damaged_campaign": "04_DAM4_111",
+   "healthy_window": "2020-11-01/2020-11-05",
+   "state_window": "2020-11-10/2020-11-15",
+   "modes": [
+    {
+     "name": "fundamental",
+     "damping_key": "fundamental",
+     "role": "sensitivity",
+     "healthy_hz": 2.7502,
+     "state_hz": 2.7502,
+     "healthy_n": 5,
+     "state_n": 5,
+     "df_rel": 0.0,
+     "df_bin_uncertainty_rel": 0.04545123990982474,
+     "zeta_healthy": 0.014900461294792867,
+     "zeta_state": 0.016545759609758307,
+     "zeta_rel": 0.11041928718947829,
+     "zeta_healthy_recordings": [
+      0.014083377840649001,
+      0.015459929514138647,
+      0.014900461294792867,
+      0.014594895396849208,
+      0.015964814697379794
+     ],
+     "zeta_state_recordings": [
+      0.016698027138814974,
+      0.016906914948606074,
+      0.015552491682045621,
+      0.0159075838459292,
+      0.016545759609758307
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202011010004.mat",
+      "SHMTS_202011011523.mat",
+      "SHMTS_202011020023.mat",
+      "SHMTS_202011020653.mat",
+      "SHMTS_202011052351.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202011100008.mat",
+      "SHMTS_202011110407.mat",
+      "SHMTS_202011111157.mat",
+      "SHMTS_202011130806.mat",
+      "SHMTS_202011151825.mat"
+     ]
+    },
+    {
+     "name": "first_higher",
+     "damping_key": "H1",
+     "role": "primary",
+     "healthy_hz": 13.5009,
+     "state_hz": 12.5009,
+     "healthy_n": 4,
+     "state_n": 5,
+     "df_rel": -0.0740691361316653,
+     "df_bin_uncertainty_rel": 0.009258642016458162,
+     "zeta_healthy": 0.003280004336675198,
+     "zeta_state": 0.002452767161214422,
+     "zeta_rel": -0.25220612247705493,
+     "zeta_healthy_recordings": [
+      0.0030878316010643134,
+      0.003380256734186401,
+      0.002893782437733823,
+      0.004386318690089608,
+      0.003280004336675198
+     ],
+     "zeta_state_recordings": [
+      0.0028853018050001723,
+      0.002005281098223329,
+      0.002335692840117382,
+      0.002452767161214422,
+      0.002554346988043904
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202011010004.mat",
+      "SHMTS_202011011523.mat",
+      "SHMTS_202011020023.mat",
+      "SHMTS_202011020653.mat",
+      "SHMTS_202011052351.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202011100008.mat",
+      "SHMTS_202011110407.mat",
+      "SHMTS_202011111157.mat",
+      "SHMTS_202011130806.mat",
+      "SHMTS_202011151825.mat"
+     ]
+    },
+    {
+     "name": "second_higher",
+     "damping_key": "H2",
+     "role": "context",
+     "healthy_hz": 16.0511,
+     "state_hz": 16.1511,
+     "healthy_n": 5,
+     "state_n": 5,
+     "df_rel": 0.00623010260978985,
+     "df_bin_uncertainty_rel": 0.007787628262237478,
+     "zeta_healthy": 0.002613065876391641,
+     "zeta_state": 0.002120163269648833,
+     "zeta_rel": -0.18862999635640743,
+     "zeta_healthy_recordings": [
+      0.0029010896937077587,
+      0.002613065876391641,
+      0.00190883605783327,
+      0.0027779866863514957,
+      0.002577436003274043
+     ],
+     "zeta_state_recordings": [
+      0.002120163269648833,
+      0.0019238807392863524,
+      0.0024712796914717916,
+      0.0019741441263636315,
+      0.0026137932974242763
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202011010004.mat",
+      "SHMTS_202011011523.mat",
+      "SHMTS_202011020023.mat",
+      "SHMTS_202011020653.mat",
+      "SHMTS_202011052351.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202011100008.mat",
+      "SHMTS_202011110407.mat",
+      "SHMTS_202011111157.mat",
+      "SHMTS_202011130806.mat",
+      "SHMTS_202011151825.mat"
+     ]
+    }
+   ]
+  },
+  {
+   "state": "DAM 6",
+   "healthy_campaign": "01_Healthy",
+   "damaged_campaign": "02_DAM6_111",
+   "healthy_window": "2020-10-05/2020-10-08",
+   "state_window": "2020-10-14/2020-10-19",
+   "modes": [
+    {
+     "name": "fundamental",
+     "damping_key": "fundamental",
+     "role": "sensitivity",
+     "healthy_hz": 2.75,
+     "state_hz": 2.75,
+     "healthy_n": 5,
+     "state_n": 5,
+     "df_rel": 0.0,
+     "df_bin_uncertainty_rel": 0.045454545454545456,
+     "zeta_healthy": 0.01388147506997865,
+     "zeta_state": 0.015215566479593576,
+     "zeta_rel": 0.09610588232803546,
+     "zeta_healthy_recordings": [
+      0.014263695028540517,
+      0.01640167435712129,
+      0.01388147506997865,
+      0.0125047756787387,
+      0.013566913994436448
+     ],
+     "zeta_state_recordings": [
+      0.014193968493594607,
+      0.017523341517021666,
+      0.011962851739214913,
+      0.015328449187635542,
+      0.015215566479593576
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202010050012.mat",
+      "SHMTS_202010051522.mat",
+      "SHMTS_202010051932.mat",
+      "SHMTS_202010061931.mat",
+      "SHMTS_202010080330.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202010140009.mat",
+      "SHMTS_202010141759.mat",
+      "SHMTS_202010150419.mat",
+      "SHMTS_202010161008.mat",
+      "SHMTS_202010191806.mat"
+     ]
+    },
+    {
+     "name": "first_higher",
+     "damping_key": "H1",
+     "role": "primary",
+     "healthy_hz": 13.501,
+     "state_hz": 11.751,
+     "healthy_n": 4,
+     "state_n": 5,
+     "df_rel": -0.12962002814606327,
+     "df_bin_uncertainty_rel": 0.00925857343900452,
+     "zeta_healthy": 0.004031285663055913,
+     "zeta_state": 0.002901798995921568,
+     "zeta_rel": -0.28018026047753175,
+     "zeta_healthy_recordings": [
+      0.0034691338564351794,
+      0.004031285663055913,
+      0.004649135932261986,
+      0.004066697631651692,
+      0.0036072986164542007
+     ],
+     "zeta_state_recordings": [
+      0.002709691790095169,
+      0.003022844823526259,
+      0.002901798995921568,
+      0.0029464435827483257,
+      0.002410993641072433
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202010050012.mat",
+      "SHMTS_202010051522.mat",
+      "SHMTS_202010051932.mat",
+      "SHMTS_202010061931.mat",
+      "SHMTS_202010080330.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202010140009.mat",
+      "SHMTS_202010141759.mat",
+      "SHMTS_202010150419.mat",
+      "SHMTS_202010161008.mat",
+      "SHMTS_202010191806.mat"
+     ]
+    },
+    {
+     "name": "second_higher",
+     "damping_key": "H2",
+     "role": "context",
+     "healthy_hz": 16.101,
+     "state_hz": 14.551,
+     "healthy_n": 5,
+     "state_n": 5,
+     "df_rel": -0.0962673125892801,
+     "df_bin_uncertainty_rel": 0.007763492950748401,
+     "zeta_healthy": 0.0025219829623081445,
+     "zeta_state": 0.0027524158239728585,
+     "zeta_rel": 0.09136971387539411,
+     "zeta_healthy_recordings": [
+      0.00220084123164598,
+      0.0028160556189138377,
+      0.0025219829623081445,
+      0.0027650288150494946,
+      0.0021359868261587142
+     ],
+     "zeta_state_recordings": [
+      0.0027954386243063565,
+      0.0024654505861866887,
+      0.002772024762272063,
+      0.0027524158239728585,
+      0.002205299050867512
+     ],
+     "zeta_healthy_files": [
+      "SHMTS_202010050012.mat",
+      "SHMTS_202010051522.mat",
+      "SHMTS_202010051932.mat",
+      "SHMTS_202010061931.mat",
+      "SHMTS_202010080330.mat"
+     ],
+     "zeta_state_files": [
+      "SHMTS_202010140009.mat",
+      "SHMTS_202010141759.mat",
+      "SHMTS_202010150419.mat",
+      "SHMTS_202010161008.mat",
+      "SHMTS_202010191806.mat"
+     ]
+    }
+   ]
+  }
+ ]
+}

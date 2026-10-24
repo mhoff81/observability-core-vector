@@ -846,7 +846,7 @@ def fig_a(ax, res):
                               color=NO_ECHO_COLOR, label="no echo (A = 0)"))
     ax.set_ylim(-0.5, 8.4)
     ax.set_yticks([0, 2, 4, 6])
-    ax.set_ylabel(core.CHANNEL_AXIS["A"])
+    ax.set_ylabel(core.FIG_CHANNEL_AXIS["A"])
     ax.legend(handles=handles, frameon=False, ncols=1, loc="upper left",
               fontsize=5.5, handletextpad=0.4, borderpad=0.1,
               labelspacing=0.22, handlelength=1.0)
@@ -856,7 +856,7 @@ def fig_a(ax, res):
             alpha=0.85, zorder=1)
     tw.set_yscale("log")
     tw.set_ylim(250.0, 1.2e5)
-    tw.set_ylabel(core.CHANNEL_AXIS["intensity"] + " (log)", fontsize=7.5,
+    tw.set_ylabel(core.FIG_CHANNEL_AXIS["intensity"] + " (log)", fontsize=7.5,
                   color=COVARIATE_COLORS["intensity"])
     tw.tick_params(axis="y", labelsize=6.2,
                    colors=COVARIATE_COLORS["intensity"])
@@ -888,7 +888,7 @@ def fig_strip(ax, res, key, letter):
     lo = min(min(ys), min(p["median"] for p in roll))
     hi = max(max(ys), max(p["median"] for p in roll))
     ax.set_ylim(lo - 0.18 * (hi - lo), hi + 0.32 * (hi - lo))
-    ax.set_ylabel(core.CHANNEL_AXIS[key])
+    ax.set_ylabel(core.FIG_CHANNEL_AXIS[key])
     if key == "P":
         ax.legend(frameon=False, loc="upper left", fontsize=5.4,
                   handletextpad=0.4, borderpad=0.1, labelspacing=0.22,
@@ -927,7 +927,7 @@ def fig_f(ax, res):
     temp = [d[TEMP_KEY] for d in res["chips"]]
     ax.plot(xs, temp, "o-", ms=3.0, lw=0.8, color=COVARIATE_COLORS[TEMP_KEY],
             alpha=0.9, markeredgewidth=0, label="temperature (C)")
-    ax.set_ylabel(core.CHANNEL_AXIS[TEMP_KEY], color=COVARIATE_COLORS[TEMP_KEY])
+    ax.set_ylabel(core.FIG_CHANNEL_AXIS[TEMP_KEY], color=COVARIATE_COLORS[TEMP_KEY])
     ax.tick_params(axis="y", colors=COVARIATE_COLORS[TEMP_KEY])
     ax.set_ylim(min(temp) - 4.0, max(temp) + 9.0)
     tw = ax.twinx()

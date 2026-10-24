@@ -30,7 +30,7 @@ The three committed references are re-derived by this script and pinned to 1e-9 
 | `displacement_los_m` | 0 | — | — | — | — | — | — | — | eine der vier Zellen hat < 5 Werte |
 | `coherence_gamma2` | 356 | -3.625e-05 | -4.79e-05 | **+4.164e-05** | +0.53 | 0.596 | 0.191 | 0.017 | +0.10 / -0.00 |
 | `coherence` | 350 | -0.02372 | -0.004949 | **-0.02116** | -0.65 | 0.518 | 0.667 | 0.090 | +0.25 / -0.00 |
-| `coherence_masked_pixels` | 356 | +0 | +0 | -5.07e-14* | — | — | n/a | n/a | n/a / n/a |
+| `coherence_masked_pixels` | 356 | +0 | +0 | -3.587e-14* | — | — | n/a | n/a | n/a / n/a |
 | `intensity` | 356 | +643.3 | +3499 | **-2830** | -1.88 | 0.060 | 0.000 | 0.004 | -0.08 / +0.07 |
 | `brightness_ratio` | 356 | +0.016 | +0.07695 | **-0.06023** | -1.71 | 0.088 | 0.755 | 0.004 | -0.08 / +0.07 |
 
@@ -44,7 +44,7 @@ The three committed references are re-derived by this script and pinned to 1e-9 
 | `displacement_los_m` | 0 | — | — | — | — | — | — | — | eine der vier Zellen hat < 5 Werte |
 | `coherence_gamma2` | 356 | -3.625e-05 | -2.836e-05 | **-1.14e-05** | -0.14 | 0.890 | 0.671 | 0.394 | +0.10 / -0.00 |
 | `coherence` | 350 | -0.02372 | -0.009867 | **-0.008225** | -0.24 | 0.807 | 0.904 | 0.029 | +0.25 / +0.09 |
-| `coherence_masked_pixels` | 356 | +0 | +0 | -5.07e-14* | — | — | n/a | n/a | n/a / n/a |
+| `coherence_masked_pixels` | 356 | +0 | +0 | -3.587e-14* | — | — | n/a | n/a | n/a / n/a |
 | `intensity` | 356 | +643.3 | +145.2 | **-118.6** | -0.08 | 0.934 | 0.838 | 0.469 | -0.08 / -0.13 |
 | `brightness_ratio` | 356 | +0.016 | +0.003615 | **-0.002971** | -0.08 | 0.934 | 0.886 | 0.469 | -0.08 / -0.13 |
 
@@ -58,7 +58,7 @@ The three committed references are re-derived by this script and pinned to 1e-9 
 | `displacement_los_m` | 0 | — | — | — | — | — | — | — | eine der vier Zellen hat < 5 Werte |
 | `coherence_gamma2` | 356 | -4.79e-05 | -2.836e-05 | **-5.304e-05** | -0.71 | 0.478 | 0.352 | 0.394 | -0.00 / -0.00 |
 | `coherence` | 350 | -0.004949 | -0.009867 | **+0.01294** | +0.38 | 0.703 | 0.591 | 0.029 | -0.00 / +0.09 |
-| `coherence_masked_pixels` | 356 | +0 | +0 | -5.07e-14* | — | — | n/a | n/a | n/a / n/a |
+| `coherence_masked_pixels` | 356 | +0 | +0 | -3.587e-14* | — | — | n/a | n/a | n/a / n/a |
 | `intensity` | 356 | +3499 | +145.2 | **+2712** | +1.84 | 0.067 | 0.000 | 0.469 | +0.07 / -0.13 |
 | `brightness_ratio` | 356 | +0.07695 | +0.003615 | **+0.05726** | +1.66 | 0.097 | 0.866 | 0.469 | +0.07 / -0.13 |
 
@@ -125,11 +125,11 @@ The three committed references are re-derived by this script and pinned to 1e-9 
 
 | model | dims | LOO acc. | balanced acc. | p (perm.) |
 | --- | --- | --- | --- | --- |
-| gamma2 | 1 | 0.584 | 0.436 | – |
-| PD | 2 | 0.678 | 0.602 | – |
-| gamma2PD | 3 | 0.677 | 0.605 | – |
-| x_6d | 6 | 0.627 | 0.626 | – |
-| weather | 2 | 0.696 | 0.579 | – |
+| gamma2 | 1 | 0.584 | 0.436 | 0.490 |
+| PD | 2 | 0.678 | 0.602 | 0.103 |
+| gamma2PD | 3 | 0.677 | 0.605 | 0.042 |
+| x_6d | 6 | 0.627 | 0.626 | 0.035 |
+| weather | 2 | 0.696 | 0.579 | 0.001 |
 
 ## What this does and does not say
 

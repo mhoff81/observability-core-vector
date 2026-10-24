@@ -131,12 +131,14 @@ CHANCE = 1.0 / 3.0
 CHANNELS = ["gamma2"] + core.DIMS
 CHANNEL_AXIS = {"gamma2": "gamma^2", "A": "A  [px]", "D": "D  [1]",
                 "F": "F  [components]", "S": "S  [px]", "P": "P  [1]"}
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "deck-band coherence gamma^2",
     "A": "mask area (deck-edge pixels)", "D": "mask density",
     "F": "mask fragmentation", "S": "centroid-to-peak shift",
     "P": "mask persistence",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 
 # The gamma^2 variants of the committed gamma2_step_tests / gamma2_placebo
 # blocks: (block key, column, row gate, gate label used by the reference).
@@ -955,8 +957,8 @@ def fig_a(res, out_dir=None):
             ax.set_ylim(0.0, 1.02)
         elif key == "gamma2":
             ax.axhline(0.0, color="0.6", lw=0.8, ls=":")
-        ax.set_ylabel(CHANNEL_AXIS[key], fontsize=7.0)
-        panel(ax, "abcdef"[CHANNELS.index(key)], CHANNEL_TITLE[key])
+        ax.set_ylabel(FIG_CHANNEL_AXIS[key], fontsize=7.0)
+        panel(ax, "abcdef"[CHANNELS.index(key)], FIG_CHANNEL_TITLE[key])
     n_by_state = res["data"]["n_by_state"]
     fig.suptitle(
         "Figure A — the six OCV components per overpass, per rect series and "

@@ -163,6 +163,7 @@ CHANNEL_AXIS = {
     "coherence_masked_pixels": "mask pixels (fixed 640 px)",
     "brightness_ratio": "brightness ratio",
 }
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "gamma2", "P": "P", "D": "D", "A": "A", "F": "F", "S": "S",
     "temperature_c": "temperature (C)", "precipitation_mm": "precip (mm)",
@@ -173,6 +174,7 @@ CHANNEL_TITLE = {
     "coherence_masked_pixels": "mask pixels",
     "brightness_ratio": "brightness ratio",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 
 WEATHER = ["temperature_c", "precipitation_mm"]
 CONTROLS = ["temperature_c", "precipitation_mm", "shift_x", "shift_y"]

@@ -429,7 +429,7 @@ def fig_months(res, out_dir=None):
             title += (f"\nΔ({COLLAPSE_MONTH}−{classes['pre'][-1]}) = "
                       f"{b['delta']:+.2f}")
         ax.set_title(f"({letter}) {title}", loc="left", fontsize=8.0)
-        ax.set_ylabel(core.CHANNEL_AXIS.get(k, k), fontsize=7.0)
+        ax.set_ylabel(core.FIG_CHANNEL_AXIS.get(k, k), fontsize=7.0)
     # the collapse day, on the exact fractional cut inside the month: the cut is
     # not a bucket boundary here, so the label sits just past the dashed line
     axes[0][0].text(COLLAPSE_CUT_X + 0.22, 0.34, f"collapse\n{COLLAPSE_DAY}",

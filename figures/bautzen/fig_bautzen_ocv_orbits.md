@@ -64,7 +64,7 @@ python3 code/bautzen/fig_bautzen_ocv_orbits.py
 PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
 ```
 
-Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.4.6, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
+Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.2. No output carries a timestamp, so repeated runs are identical.
 
 ## 6. Caveats
 

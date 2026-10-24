@@ -121,6 +121,7 @@ CHANNEL_AXIS = {
     "A": "A  [px]",
     "S": "S  [px]",
 }
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "deck-band coherence",
     "P": "mask persistence",
@@ -129,6 +130,7 @@ CHANNEL_TITLE = {
     "A": "mask area",
     "S": "centroid-to-peak shift",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 PANEL_LETTERS = "abcdefghijkl"
 
 
@@ -419,7 +421,7 @@ def make_figure(res, figdir):
             # One y label per row, one x label per column, panel letters in
             # the corner; with sharex/sharey the inner tick labels are hidden.
             if col == 0:
-                ax.set_ylabel(CHANNEL_AXIS[dim])
+                ax.set_ylabel(FIG_CHANNEL_AXIS[dim])
             ax.tick_params(labelleft=(col == 0),
                            labelbottom=(row == nrows - 1))
             if dim == "F":

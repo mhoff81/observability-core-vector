@@ -171,6 +171,7 @@ CHANNEL_TITLE = {
     "brightness_ratio": "brightness ratio - brightness_ratio",
     "coherence": "coherence - the export's coherence",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 CHANNEL_NOTE = {
     "coherence_gamma2": "the pipeline's coherence column of the window. The mask rule "
                         "of this package cannot be re-run offline on a record whose "
@@ -900,7 +901,7 @@ def fig_series(res, out_dir=None):
         set_y_ticks(ax)
         floor_ticks(ax, res, key)
         date_axis(ax, res)
-        panel(ax, letter, f"{CHANNEL_TITLE[key]} ({PANEL_SCALE[key]})")
+        panel(ax, letter, f"{FIG_CHANNEL_TITLE[key]} ({PANEL_SCALE[key]})")
     for ax in flat[:-2]:
         ax.tick_params(labelbottom=False)
     for ax in flat[-2:]:

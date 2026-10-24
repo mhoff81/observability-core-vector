@@ -138,6 +138,7 @@ CHANNEL_AXIS = {
     "A": "A  [px]",
     "S": "S  [px]",
 }
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "coherence",
     "P": "mask persistence",
@@ -146,6 +147,7 @@ CHANNEL_TITLE = {
     "A": "mask area",
     "S": "centroid-to-peak shift",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 PANEL_LETTERS = "abcdefghijkl"
 X_PAD_DAYS = 10
 
@@ -934,7 +936,7 @@ def make_figure(res, figdir):
 
             if col == 0:
                 note = "  (log)" if dim in LOG_CHANNELS else ""
-                ax.set_ylabel(f"{CHANNEL_AXIS[dim]}{note}\n"
+                ax.set_ylabel(f"{FIG_CHANNEL_AXIS[dim]}{note}\n"
                               f"{CHANNEL_TITLE[dim]}")
             ax.tick_params(labelleft=(col == 0),
                            labelbottom=(row == nrows - 1))

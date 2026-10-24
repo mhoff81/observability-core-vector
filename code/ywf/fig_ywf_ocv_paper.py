@@ -501,10 +501,10 @@ def fig_A(res, out_dir=None):
                     ha="center", va="top", fontsize=6.4, color=STATE_COLORS[s])
         ax.set_xticks(range(len(core.STATES)))
         ax.set_xticklabels([core.STATE_SHORT[s] for s in core.STATES])
-        ax.set_ylabel(core.CHANNEL_TITLE.get(k, k))
+        ax.set_ylabel(core.FIG_CHANNEL_TITLE.get(k, k))
         if k in ("A", "D", "S"):
             ax.set_yscale("log")
-        panel(ax, "abcdef"[i], core.CHANNEL_AXIS.get(k, k))
+        panel(ax, "abcdef"[i], core.FIG_CHANNEL_AXIS.get(k, k))
     n_pre = len([r for r in rows if r["state"] == core.PRE])
     fig.suptitle(f"(YWF) echo-mask channels per state — the "
                  f"{res['n_rows']} chips of the record, the {len(rows)} of them "
@@ -633,9 +633,9 @@ def fig_D(res, out_dir=None):
                     "o" if pre else "*", ms=3.0 if pre else 10.0,
                     alpha=0.55 if pre else 1.0, color=STATE_COLORS[s],
                     markeredgewidth=0, label=core.STATE_SHORT[s])
-        ax.set_xlabel(core.CHANNEL_TITLE.get(xa, xa))
-        ax.set_ylabel(core.CHANNEL_TITLE.get(ya, ya))
-        panel(ax, "abc"[i], f"{core.CHANNEL_TITLE.get(xa, xa)} vs "
+        ax.set_xlabel(core.FIG_CHANNEL_TITLE.get(xa, xa))
+        ax.set_ylabel(core.FIG_CHANNEL_TITLE.get(ya, ya))
+        panel(ax, "abc"[i], f"{core.FIG_CHANNEL_TITLE.get(xa, xa)} vs "
                             f"{core.CHANNEL_TITLE.get(ya, ya)}")
     axes[0].legend(frameon=False, fontsize=6.8)
     axes[2].text(0.03, 0.03, "1 post-event echo chip:\nno classifier is fitted",

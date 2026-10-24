@@ -1553,8 +1553,8 @@
   "floor_ticks": "the 16 echo-free chips: no ordinate on any channel, drawn on the panel floor",
   "g": "the pooled difference beside the pre-only one, each with its seeded 95% CI, a star for a CI that excludes zero",
   "grid": [
-   2,
-   4
+   4,
+   2
   ],
   "h": "the 33 chips per orbit and state, split into their echo-bearing and echo-free parts, with both Fisher tests printed",
   "letters": "abcdef",

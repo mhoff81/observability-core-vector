@@ -1464,7 +1464,7 @@ def fig_series(res, out_dir=None):
         set_y_ticks(ax, *ax.get_ylim(), PANEL_SCALE[dim])
         floor_ticks(ax, res)
         date_axis(ax, res)
-        panel(ax, letter, f"{core.CHANNEL_TITLE[dim]} ({PANEL_SCALE[dim]})")
+        panel(ax, letter, f"{core.FIG_CHANNEL_TITLE[dim]} ({PANEL_SCALE[dim]})")
     for ax in flat[:-2]:
         ax.tick_params(labelbottom=False)
     for ax in flat[-2:]:

@@ -1,0 +1,2056 @@
+{
+ "analysis": {
+  "cross": {
+   "ASC": {
+    "DAM 3": {
+     "angle_deg": 17.78706147176499,
+     "cosine": 0.9521984005535256,
+     "n_ocv_dates": 8,
+     "norm_ocv": 0.9447206907779088,
+     "norm_physical": 0.2481401797368551
+    },
+    "DAM 4": {
+     "angle_deg": 47.15464603443999,
+     "cosine": 0.680021894306088,
+     "n_ocv_dates": 5,
+     "norm_ocv": 0.8655349480348,
+     "norm_physical": 0.2628576899050176
+    },
+    "DAM 6": {
+     "angle_deg": 121.36931610040611,
+     "cosine": -0.520552450759754,
+     "n_ocv_dates": 4,
+     "norm_ocv": 1.3391260215208498,
+     "norm_physical": 0.3087107546844518
+    },
+    "pairwise": [
+     {
+      "abs_diff": 62.940688458729525,
+      "angle_ocv": 63.94119798246756,
+      "angle_physical": 1.000509523738029,
+      "pair": [
+       "DAM 3",
+       "DAM 4"
+      ]
+     },
+     {
+      "abs_diff": 88.6632777955615,
+      "angle_ocv": 96.1227662121013,
+      "angle_physical": 7.459488416539792,
+      "pair": [
+       "DAM 3",
+       "DAM 6"
+      ]
+     },
+     {
+      "abs_diff": 151.60396625429166,
+      "angle_ocv": 160.06396419456885,
+      "angle_physical": 8.459997940277203,
+      "pair": [
+       "DAM 4",
+       "DAM 6"
+      ]
+     }
+    ]
+   },
+   "DESC": {
+    "DAM 3": {
+     "angle_deg": 3.574398451997455,
+     "cosine": 0.9980546855650829,
+     "n_ocv_dates": 17,
+     "norm_ocv": 0.9514267699919989,
+     "norm_physical": 0.2481401797368551
+    },
+    "DAM 4": {
+     "angle_deg": 170.52959921391164,
+     "cosine": -0.9863707341340368,
+     "n_ocv_dates": 11,
+     "norm_ocv": 0.6361614834731462,
+     "norm_physical": 0.2628576899050176
+    },
+    "DAM 6": {
+     "angle_deg": 60.17556841386946,
+     "cosine": 0.4973439411070174,
+     "n_ocv_dates": 12,
+     "norm_ocv": 1.2282989710394911,
+     "norm_physical": 0.3087107546844518
+    },
+    "pairwise": [
+     {
+      "abs_diff": 166.95520076191352,
+      "angle_ocv": 167.95571028565155,
+      "angle_physical": 1.000509523738029,
+      "pair": [
+       "DAM 3",
+       "DAM 4"
+      ]
+     },
+     {
+      "abs_diff": 63.749966865867016,
+      "angle_ocv": 71.20945528240681,
+      "angle_physical": 7.459488416539792,
+      "pair": [
+       "DAM 3",
+       "DAM 6"
+      ]
+     },
+     {
+      "abs_diff": 112.37483649166448,
+      "angle_ocv": 120.83483443194169,
+      "angle_physical": 8.459997940277203,
+      "pair": [
+       "DAM 4",
+       "DAM 6"
+      ]
+     }
+    ]
+   }
+  },
+  "ordering": {
+   "ASC": {
+    "ocv_by_norm": [
+     "DAM 4",
+     "DAM 3",
+     "DAM 6"
+    ],
+    "physical_by_norm": [
+     "DAM 3",
+     "DAM 4",
+     "DAM 6"
+    ],
+    "same_order": false
+   },
+   "DESC": {
+    "ocv_by_norm": [
+     "DAM 4",
+     "DAM 3",
+     "DAM 6"
+    ],
+    "physical_by_norm": [
+     "DAM 3",
+     "DAM 4",
+     "DAM 6"
+    ],
+    "same_order": false
+   }
+  },
+  "repeatability": {
+   "ASC": {
+    "DAM 3": {
+     "angle_deg": 54.72541523855626,
+     "cosine": 0.5774955455648916,
+     "n_visits": 2,
+     "thin": false,
+     "visit_n": [
+      5,
+      3
+     ],
+     "visit_v": [
+      [
+       -0.4596183739841083,
+       -0.5067313431302166
+      ],
+      [
+       0.34262475685769817,
+       -1.543367068166564
+      ]
+     ]
+    },
+    "DAM 4": {
+     "angle_deg": 153.77071299054904,
+     "cosine": -0.8970325746559881,
+     "n_visits": 2,
+     "thin": true,
+     "visit_n": [
+      3,
+      2
+     ],
+     "visit_v": [
+      [
+       -1.78562716299506,
+       1.1565795263386969
+      ],
+      [
+       0.3492683515377487,
+       -0.5849989825810193
+      ]
+     ]
+    },
+    "DAM 6": {
+     "angle_deg": 29.42891048353605,
+     "cosine": 0.8709659984727974,
+     "n_visits": 2,
+     "thin": true,
+     "visit_n": [
+      2,
+      2
+     ],
+     "visit_v": [
+      [
+       1.3304048480748856,
+       0.9535448093602218
+      ],
+      [
+       0.9094927967822207,
+       0.09882663711745339
+      ]
+     ]
+    }
+   },
+   "DESC": {
+    "DAM 3": {
+     "angle_deg": 67.21115167627221,
+     "cosine": 0.3873361536909905,
+     "n_visits": 2,
+     "thin": false,
+     "visit_n": [
+      12,
+      5
+     ],
+     "visit_v": [
+      [
+       -1.8767952538417298,
+       -1.0292658890911026
+      ],
+      [
+       0.09633696313510931,
+       -0.9239915458729004
+      ]
+     ]
+    },
+    "DAM 4": {
+     "angle_deg": 6.76794988593194,
+     "cosine": 0.9930315855643539,
+     "n_visits": 2,
+     "thin": false,
+     "visit_n": [
+      5,
+      6
+     ],
+     "visit_v": [
+      [
+       1.0332826461727715,
+       0.7599912448946129
+      ],
+      [
+       0.09968720232044617,
+       0.09329496273662737
+      ]
+     ]
+    },
+    "DAM 6": {
+     "angle_deg": 15.651691724041639,
+     "cosine": 0.9629195578655081,
+     "n_visits": 2,
+     "thin": false,
+     "visit_n": [
+      6,
+      6
+     ],
+     "visit_v": [
+      [
+       -1.0843674111519381,
+       0.05092034666679789
+      ],
+      [
+       -1.2236291907148373,
+       -0.28166799819794924
+      ]
+     ]
+    }
+   }
+  }
+ },
+ "chip": "support",
+ "cross_checks": [
+  {
+   "check": "reference.schema",
+   "ok": true
+  },
+  {
+   "check": "reference.n_states",
+   "ok": true
+  },
+  {
+   "check": "reference.state_order",
+   "ok": true
+  },
+  {
+   "check": "reference.primary_mode",
+   "ok": true
+  },
+  {
+   "check": "reference.sensitivity_mode",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.n_modes",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.fundamental.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.first_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 3.second_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.n_modes",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.fundamental.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.first_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 4.second_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.n_modes",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.fundamental.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.first_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.n_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.n_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.median_healthy",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.median_state",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.zeta_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.df_rel",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.healthy_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.state_in_range",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.freq_reference_healthy_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.freq_reference_state_hz",
+   "ok": true
+  },
+  {
+   "check": "reference.DAM 6.second_higher.freq_reference_shift_pct",
+   "ok": true
+  },
+  {
+   "check": "data.n_rows",
+   "ok": true
+  },
+  {
+   "check": "data.n_runs",
+   "ok": true
+  },
+  {
+   "check": "data.n_by_state",
+   "ok": true
+  },
+  {
+   "check": "data.healthy_by_orbit",
+   "ok": true
+  },
+  {
+   "check": "data.n_visits_per_state",
+   "ok": true
+  },
+  {
+   "check": "data.visit_n_by_orbit",
+   "ok": true
+  },
+  {
+   "check": "data.pooled_equals_visit_sum",
+   "ok": true
+  },
+  {
+   "check": "panel_a.n_states",
+   "ok": true
+  },
+  {
+   "check": "panel_a.primary_mode",
+   "ok": true
+  },
+  {
+   "check": "panel_b.orbits_separate",
+   "ok": true
+  },
+  {
+   "check": "panel_b.healthy_scale_positive",
+   "ok": true
+  },
+  {
+   "check": "panel_b.visits_kept_per_orbit",
+   "ok": true
+  },
+  {
+   "check": "sensitivity.chip_rows_equal",
+   "ok": true
+  },
+  {
+   "check": "sensitivity.n_state_vectors_changed",
+   "ok": true
+  }
+ ],
+ "csv": "/home/projects/research/observability-core-vector/code/lumo/../../data/lumo/support/lumo_ocv_channels.csv",
+ "csv_sha256": "4874a2c8c938bc1e06d820cf01720dd15d8d7ab283ac44185c059b4d4d3445c6",
+ "figure": "fig_lumo_ocv_physics",
+ "n_cross_checks": 121,
+ "n_cross_checks_failed": 0,
+ "panel_a": [
+  {
+   "angle_deg": -107.36722800791618,
+   "damaged_campaign": "06_DAM3_111",
+   "df_bin_uncertainty_rel": 0.00925857343900452,
+   "df_rel": -0.07406858751203615,
+   "dzeta_ci95": [
+    -0.4001969602653755,
+    -0.054323647292564343
+   ],
+   "dzeta_rel": -0.23682777105696576,
+   "healthy_campaign": "05_Healthy",
+   "healthy_window": "2021-03-10/2021-03-15",
+   "n_healthy_recordings": 5,
+   "n_state_recordings": 5,
+   "norm": 0.2481401797368551,
+   "sensitivity_fundamental": {
+    "angle_deg": -90.0,
+    "df_rel": 0.0,
+    "dzeta_ci95": [
+     -0.12137018762331536,
+     0.19414618404500922
+    ],
+    "dzeta_rel": -0.022799764166096612,
+    "norm": 0.022799764166096612,
+    "v": [
+     0.0,
+     -0.022799764166096612
+    ]
+   },
+   "state": "DAM 3",
+   "state_window": "2021-03-19/2021-03-24",
+   "v": [
+    -0.07406858751203615,
+    -0.23682777105696576
+   ],
+   "zeta_healthy": 0.003373878049368959,
+   "zeta_state": 0.002574850031118885
+  },
+  {
+   "angle_deg": -106.36671848417878,
+   "damaged_campaign": "04_DAM4_111",
+   "df_bin_uncertainty_rel": 0.009258642016458162,
+   "df_rel": -0.0740691361316653,
+   "dzeta_ci95": [
+    -0.44081419191994137,
+    -0.11729819258829194
+   ],
+   "dzeta_rel": -0.25220612247705493,
+   "healthy_campaign": "03_Healthy",
+   "healthy_window": "2020-11-01/2020-11-05",
+   "n_healthy_recordings": 5,
+   "n_state_recordings": 5,
+   "norm": 0.2628576899050176,
+   "sensitivity_fundamental": {
+    "angle_deg": 90.0,
+    "df_rel": 0.0,
+    "dzeta_ci95": [
+     0.005987230913460672,
+     0.17484312335937668
+    ],
+    "dzeta_rel": 0.11041928718947829,
+    "norm": 0.11041928718947829,
+    "v": [
+     0.0,
+     0.11041928718947829
+    ]
+   },
+   "state": "DAM 4",
+   "state_window": "2020-11-10/2020-11-15",
+   "v": [
+    -0.0740691361316653,
+    -0.25220612247705493
+   ],
+   "zeta_healthy": 0.003280004336675198,
+   "zeta_state": 0.002452767161214422
+  },
+  {
+   "angle_deg": -114.82671642445604,
+   "damaged_campaign": "02_DAM6_111",
+   "df_bin_uncertainty_rel": 0.00925857343900452,
+   "df_rel": -0.12962002814606327,
+   "dzeta_ci95": [
+    -0.40713722547077924,
+    -0.15066881109740776
+   ],
+   "dzeta_rel": -0.28018026047753175,
+   "healthy_campaign": "01_Healthy",
+   "healthy_window": "2020-10-05/2020-10-08",
+   "n_healthy_recordings": 5,
+   "n_state_recordings": 5,
+   "norm": 0.3087107546844518,
+   "sensitivity_fundamental": {
+    "angle_deg": 90.0,
+    "df_rel": 0.0,
+    "dzeta_ci95": [
+     -0.13821465810309508,
+     0.26235442765871836
+    ],
+    "dzeta_rel": 0.09610588232803546,
+    "norm": 0.09610588232803546,
+    "v": [
+     0.0,
+     0.09610588232803546
+    ]
+   },
+   "state": "DAM 6",
+   "state_window": "2020-10-14/2020-10-19",
+   "v": [
+    -0.12962002814606327,
+    -0.28018026047753175
+   ],
+   "zeta_healthy": 0.004031285663055913,
+   "zeta_state": 0.002901798995921568
+  }
+ ],
+ "panel_b": {
+  "n_rows": 178,
+  "n_runs": 13,
+  "orbits": {
+   "ASC": {
+    "healthy": {
+     "P": {
+      "centre_log": -2.3694991059139108,
+      "n": 40,
+      "scale_log_mad": 0.43269654268257907
+     },
+     "gamma2": {
+      "centre_log": -2.0872198591696822,
+      "n": 40,
+      "scale_log_mad": 0.7706117533138027
+     }
+    },
+    "states": {
+     "DAM 3": {
+      "angle_deg": -89.58016653615121,
+      "channels": {
+       "P": {
+        "median_log": -2.7782655086446075,
+        "n": 8,
+        "z": -0.9446953289630576
+       },
+       "gamma2": {
+        "median_log": -2.081885409903719,
+        "n": 8,
+        "z": 0.0069223564823969064
+       }
+      },
+      "n_dates": 8,
+      "n_visits": 2,
+      "norm": 0.9447206907779088,
+      "state": "DAM 3",
+      "thin": false,
+      "v": [
+       0.0069223564823969064,
+       -0.9446953289630576
+      ],
+      "visits": [
+       {
+        "angle_deg": -132.20883799261978,
+        "channels": {
+         "P": {
+          "median_log": -2.588760006155255,
+          "n": 5,
+          "z": -0.5067313431302166
+         },
+         "gamma2": {
+          "median_log": -2.441407180200815,
+          "n": 5,
+          "z": -0.4596183739841083
+         }
+        },
+        "first": "2021-03-18",
+        "last": "2021-04-18",
+        "n_dates": 5,
+        "norm": 0.684124041248624,
+        "thin": false,
+        "v": [
+         -0.4596183739841083,
+         -0.5067313431302166
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": -77.48342275406351,
+        "channels": {
+         "P": {
+          "median_log": -3.0373087003997314,
+          "n": 3,
+          "z": -1.543367068166564
+         },
+         "gamma2": {
+          "median_log": -1.823189194558856,
+          "n": 3,
+          "z": 0.34262475685769817
+         }
+        },
+        "first": "2021-06-26",
+        "last": "2021-07-11",
+        "n_dates": 3,
+        "norm": 1.5809407424419337,
+        "thin": false,
+        "v": [
+         0.34262475685769817,
+         -1.543367068166564
+        ],
+        "visit": 2
+       }
+      ]
+     },
+     "DAM 4": {
+      "angle_deg": -153.52136451861878,
+      "channels": {
+       "P": {
+        "median_log": -2.5364814360845176,
+        "n": 5,
+        "z": -0.3859109415004109
+       },
+       "gamma2": {
+        "median_log": -2.6842443170878667,
+        "n": 5,
+        "z": -0.7747409189528267
+       }
+      },
+      "n_dates": 5,
+      "n_visits": 2,
+      "norm": 0.8655349480348,
+      "state": "DAM 4",
+      "thin": false,
+      "v": [
+       -0.7747409189528267,
+       -0.3859109415004109
+      ],
+      "visits": [
+       {
+        "angle_deg": 147.06821846085805,
+        "channels": {
+         "P": {
+          "median_log": -1.8690511435297017,
+          "n": 3,
+          "z": 1.1565795263386969
+         },
+         "gamma2": {
+          "median_log": -3.463245138010057,
+          "n": 3,
+          "z": -1.78562716299506
+         }
+        },
+        "first": "2020-11-10",
+        "last": "2020-11-24",
+        "n_dates": 3,
+        "norm": 2.1274728120405277,
+        "thin": false,
+        "v": [
+         -1.78562716299506,
+         1.1565795263386969
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": -59.161068548592894,
+        "channels": {
+         "P": {
+          "median_log": -2.622626143149544,
+          "n": 2,
+          "z": -0.5849989825810193
+         },
+         "gamma2": {
+          "median_log": -1.818069562414156,
+          "n": 2,
+          "z": 0.3492683515377487
+         }
+        },
+        "first": "2021-05-29",
+        "last": "2021-06-14",
+        "n_dates": 2,
+        "norm": 0.6813311903962156,
+        "thin": true,
+        "v": [
+         0.3492683515377487,
+         -0.5849989825810193
+        ],
+        "visit": 2
+       }
+      ]
+     },
+     "DAM 6": {
+      "angle_deg": 6.5425996759500835,
+      "channels": {
+       "P": {
+        "median_log": -2.303477153890796,
+        "n": 4,
+        "z": 0.15258257349088084
+       },
+       "gamma2": {
+        "median_log": -1.0619942465775114,
+        "n": 4,
+        "z": 1.3304048480748856
+       }
+      },
+      "n_dates": 4,
+      "n_visits": 2,
+      "norm": 1.3391260215208498,
+      "state": "DAM 6",
+      "thin": false,
+      "v": [
+       1.3304048480748856,
+       0.15258257349088084
+      ],
+      "visits": [
+       {
+        "angle_deg": 35.63041110125504,
+        "channels": {
+         "P": {
+          "median_log": -1.9569035636108238,
+          "n": 2,
+          "z": 0.9535448093602218
+         },
+         "gamma2": {
+          "median_log": -1.0619942465775114,
+          "n": 2,
+          "z": 1.3304048480748856
+         }
+        },
+        "first": "2020-10-13",
+        "last": "2020-10-26",
+        "n_dates": 2,
+        "norm": 1.6368337616382982,
+        "thin": true,
+        "v": [
+         1.3304048480748856,
+         0.9535448093602218
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": 6.201500617719002,
+        "channels": {
+         "P": {
+          "median_log": -2.326737161708243,
+          "n": 2,
+          "z": 0.09882663711745339
+         },
+         "gamma2": {
+          "median_log": -1.386354020415061,
+          "n": 2,
+          "z": 0.9094927967822207
+         }
+        },
+        "first": "2021-05-05",
+        "last": "2021-05-18",
+        "n_dates": 2,
+        "norm": 0.9148463540959709,
+        "thin": true,
+        "v": [
+         0.9094927967822207,
+         0.09882663711745339
+        ],
+        "visit": 2
+       }
+      ]
+     }
+    }
+   },
+   "DESC": {
+    "healthy": {
+     "P": {
+      "centre_log": -1.6519975268528961,
+      "n": 81,
+      "scale_log_mad": 0.39275845683904986
+     },
+     "gamma2": {
+      "centre_log": -0.42941385020373746,
+      "n": 81,
+      "scale_log_mad": 0.29595737660786436
+     }
+    },
+    "states": {
+     "DAM 3": {
+      "angle_deg": -103.79282955591869,
+      "channels": {
+       "P": {
+        "median_log": -2.0149030205422647,
+        "n": 17,
+        "z": -0.9239915458729004
+       },
+       "gamma2": {
+        "median_log": -0.49654630093114777,
+        "n": 17,
+        "z": -0.2268314832928088
+       }
+      },
+      "n_dates": 17,
+      "n_visits": 2,
+      "norm": 0.9514267699919989,
+      "state": "DAM 3",
+      "thin": false,
+      "v": [
+       -0.2268314832928088,
+       -0.9239915458729004
+      ],
+      "visits": [
+       {
+        "angle_deg": -151.25890004213878,
+        "channels": {
+         "P": {
+          "median_log": -2.0562504091293903,
+          "n": 12,
+          "z": -1.0292658890911026
+         },
+         "gamma2": {
+          "median_log": -0.9848652499608267,
+          "n": 12,
+          "z": -1.8767952538417298
+         }
+        },
+        "first": "2021-03-18",
+        "last": "2021-04-18",
+        "n_dates": 12,
+        "norm": 2.1405019727366152,
+        "thin": false,
+        "v": [
+         -1.8767952538417298,
+         -1.0292658890911026
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": -84.04774836586657,
+        "channels": {
+         "P": {
+          "median_log": -2.0149030205422647,
+          "n": 5,
+          "z": -0.9239915458729004
+         },
+         "gamma2": {
+          "median_log": -0.40090221532390197,
+          "n": 5,
+          "z": 0.09633696313510931
+         }
+        },
+        "first": "2021-06-26",
+        "last": "2021-07-11",
+        "n_dates": 5,
+        "norm": 0.9290001008130665,
+        "thin": false,
+        "v": [
+         0.09633696313510931,
+         -0.9239915458729004
+        ],
+        "visit": 2
+       }
+      ]
+     },
+     "DAM 4": {
+      "angle_deg": 64.16288072973285,
+      "channels": {
+       "P": {
+        "median_log": -1.4271163556401456,
+        "n": 11,
+        "z": 0.5725686291330591
+       },
+       "gamma2": {
+        "median_log": -0.34736018233722576,
+        "n": 11,
+        "z": 0.2772482605670296
+       }
+      },
+      "n_dates": 11,
+      "n_visits": 2,
+      "norm": 0.6361614834731462,
+      "state": "DAM 4",
+      "thin": false,
+      "v": [
+       0.2772482605670296,
+       0.5725686291330591
+      ],
+      "visits": [
+       {
+        "angle_deg": 36.33490851606502,
+        "channels": {
+         "P": {
+          "median_log": -1.3535045382968995,
+          "n": 5,
+          "z": 0.7599912448946129
+         },
+         "gamma2": {
+          "median_log": -0.12360622894801185,
+          "n": 5,
+          "z": 1.0332826461727715
+         }
+        },
+        "first": "2020-11-10",
+        "last": "2020-11-24",
+        "n_dates": 5,
+        "norm": 1.2826767789268927,
+        "thin": false,
+        "v": [
+         1.0332826461727715,
+         0.7599912448946129
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": 43.102858401996905,
+        "channels": {
+         "P": {
+          "median_log": -1.6153551412576017,
+          "n": 6,
+          "z": 0.09329496273662737
+         },
+         "gamma2": {
+          "median_log": -0.3999106873236008,
+          "n": 6,
+          "z": 0.09968720232044617
+         }
+        },
+        "first": "2021-05-29",
+        "last": "2021-06-14",
+        "n_dates": 6,
+        "norm": 0.13653383602062258,
+        "thin": false,
+        "v": [
+         0.09968720232044617,
+         0.09329496273662737
+        ],
+        "visit": 2
+       }
+      ]
+     },
+     "DAM 6": {
+      "angle_deg": -175.0022848383255,
+      "channels": {
+       "P": {
+        "median_log": -1.6940244544093246,
+        "n": 12,
+        "z": -0.10700451339651444
+       },
+       "gamma2": {
+        "median_log": -0.7915559354285049,
+        "n": 12,
+        "z": -1.2236291907148373
+       }
+      },
+      "n_dates": 12,
+      "n_visits": 2,
+      "norm": 1.2282989710394911,
+      "state": "DAM 6",
+      "thin": false,
+      "v": [
+       -1.2236291907148373,
+       -0.10700451339651444
+      ],
+      "visits": [
+       {
+        "angle_deg": 177.31144695456862,
+        "channels": {
+         "P": {
+          "median_log": -1.6319981300743351,
+          "n": 6,
+          "z": 0.05092034666679789
+         },
+         "gamma2": {
+          "median_log": -0.7503403844873265,
+          "n": 6,
+          "z": -1.0843674111519381
+         }
+        },
+        "first": "2020-10-13",
+        "last": "2020-10-26",
+        "n_dates": 6,
+        "norm": 1.085562326203808,
+        "thin": false,
+        "v": [
+         -1.0843674111519381,
+         0.05092034666679789
+        ],
+        "visit": 1
+       },
+       {
+        "angle_deg": -167.03686132138972,
+        "channels": {
+         "P": {
+          "median_log": -1.762625015166067,
+          "n": 6,
+          "z": -0.28166799819794924
+         },
+         "gamma2": {
+          "median_log": -0.7915559354285049,
+          "n": 6,
+          "z": -1.2236291907148373
+         }
+        },
+        "first": "2021-05-05",
+        "last": "2021-05-18",
+        "n_dates": 6,
+        "norm": 1.2556294268526393,
+        "thin": false,
+        "v": [
+         -1.2236291907148373,
+         -0.28166799819794924
+        ],
+        "visit": 2
+       }
+      ]
+     }
+    }
+   }
+  },
+  "runs": [
+   {
+    "first": "2020-08-02",
+    "last": "2020-10-11",
+    "n": 36,
+    "run": 1,
+    "state": "healthy"
+   },
+   {
+    "first": "2020-10-13",
+    "last": "2020-10-26",
+    "n": 8,
+    "run": 2,
+    "state": "DAM 6"
+   },
+   {
+    "first": "2020-10-29",
+    "last": "2020-11-07",
+    "n": 6,
+    "run": 3,
+    "state": "healthy"
+   },
+   {
+    "first": "2020-11-10",
+    "last": "2020-11-24",
+    "n": 8,
+    "run": 4,
+    "state": "DAM 4"
+   },
+   {
+    "first": "2020-11-25",
+    "last": "2021-03-13",
+    "n": 54,
+    "run": 5,
+    "state": "healthy"
+   },
+   {
+    "first": "2021-03-18",
+    "last": "2021-04-18",
+    "n": 17,
+    "run": 6,
+    "state": "DAM 3"
+   },
+   {
+    "first": "2021-04-21",
+    "last": "2021-05-03",
+    "n": 7,
+    "run": 7,
+    "state": "healthy"
+   },
+   {
+    "first": "2021-05-05",
+    "last": "2021-05-18",
+    "n": 8,
+    "run": 8,
+    "state": "DAM 6"
+   },
+   {
+    "first": "2021-05-21",
+    "last": "2021-05-27",
+    "n": 4,
+    "run": 9,
+    "state": "healthy"
+   },
+   {
+    "first": "2021-05-29",
+    "last": "2021-06-14",
+    "n": 8,
+    "run": 10,
+    "state": "DAM 4"
+   },
+   {
+    "first": "2021-06-16",
+    "last": "2021-06-23",
+    "n": 5,
+    "run": 11,
+    "state": "healthy"
+   },
+   {
+    "first": "2021-06-26",
+    "last": "2021-07-11",
+    "n": 8,
+    "run": 12,
+    "state": "DAM 3"
+   },
+   {
+    "first": "2021-07-14",
+    "last": "2021-07-29",
+    "n": 9,
+    "run": 13,
+    "state": "healthy"
+   }
+  ]
+ },
+ "reference": {
+  "n_checks": 107,
+  "n_failed": 0,
+  "path": "/home/projects/research/observability-core-vector/code/lumo/../../data/lumo/reference/lumo_state_dynamics.json"
+ },
+ "sensitivity": {
+  "chip": "committed",
+  "csv": "/home/projects/research/observability-core-vector/code/lumo/../../data/lumo/lumo_ocv_channels.csv",
+  "panel_b": {
+   "n_rows": 178,
+   "n_runs": 13,
+   "orbits": {
+    "ASC": {
+     "healthy": {
+      "P": {
+       "centre_log": -4.164548820895349,
+       "n": 39,
+       "scale_log_mad": 0.15154989812720032
+      },
+      "gamma2": {
+       "centre_log": -2.69928495881007,
+       "n": 40,
+       "scale_log_mad": 1.01340577471414
+      }
+     },
+     "states": {
+      "DAM 3": {
+       "angle_deg": -95.37315016521963,
+       "channels": {
+        "P": {
+         "median_log": -4.297031343979123,
+         "n": 8,
+         "z": -0.8741841777589158
+        },
+        "gamma2": {
+         "median_log": -2.782608634512869,
+         "n": 8,
+         "z": -0.08222143368612923
+        }
+       },
+       "n_dates": 8,
+       "n_visits": 2,
+       "norm": 0.8780423342877234,
+       "state": "DAM 3",
+       "thin": false,
+       "v": [
+        -0.08222143368612923,
+        -0.8741841777589158
+       ],
+       "visits": [
+        {
+         "angle_deg": -90.21347264871959,
+         "channels": {
+          "P": {
+           "median_log": -4.244591528568885,
+           "n": 5,
+           "z": -0.5281607487875325
+          },
+          "gamma2": {
+           "median_log": -2.7012791698368868,
+           "n": 5,
+           "z": -0.001967830731356611
+          }
+         },
+         "first": "2021-03-18",
+         "last": "2021-04-18",
+         "n_dates": 5,
+         "norm": 0.5281644146642164,
+         "thin": false,
+         "v": [
+          -0.001967830731356611,
+          -0.5281607487875325
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": -95.8965979129838,
+         "channels": {
+          "P": {
+           "median_log": -4.402959844340347,
+           "n": 3,
+           "z": -1.5731519875050832
+          },
+          "gamma2": {
+           "median_log": -2.8639380991888514,
+           "n": 3,
+           "z": -0.16247503664090185
+          }
+         },
+         "first": "2021-06-26",
+         "last": "2021-07-11",
+         "n_dates": 3,
+         "norm": 1.5815199376936908,
+         "thin": false,
+         "v": [
+          -0.16247503664090185,
+          -1.5731519875050832
+         ],
+         "visit": 2
+        }
+       ]
+      },
+      "DAM 4": {
+       "angle_deg": -89.97494955749241,
+       "channels": {
+        "P": {
+         "median_log": -4.341352034950857,
+         "n": 5,
+         "z": -1.1666336714202992
+        },
+        "gamma2": {
+         "median_log": -2.6987680538746885,
+         "n": 5,
+         "z": 0.0005100670908721503
+        }
+       },
+       "n_dates": 5,
+       "n_visits": 2,
+       "norm": 1.1666337829242062,
+       "state": "DAM 4",
+       "thin": false,
+       "v": [
+        0.0005100670908721503,
+        -1.1666336714202992
+       ],
+       "visits": [
+        {
+         "angle_deg": -75.03005706939597,
+         "channels": {
+          "P": {
+           "median_log": -4.300680995219929,
+           "n": 3,
+           "z": -0.8982663532397804
+          },
+          "gamma2": {
+           "median_log": -2.4558803395747826,
+           "n": 3,
+           "z": 0.24018475649987947
+          }
+         },
+         "first": "2020-11-10",
+         "last": "2020-11-24",
+         "n_dates": 3,
+         "norm": 0.9298231867498252,
+         "thin": false,
+         "v": [
+          0.24018475649987947,
+          -0.8982663532397804
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": -98.60345153461286,
+         "channels": {
+          "P": {
+           "median_log": -4.379908032913585,
+           "n": 2,
+           "z": -1.4210449144444741
+          },
+          "gamma2": {
+           "median_log": -2.9171676065585572,
+           "n": 2,
+           "z": -0.215000400811755
+          }
+         },
+         "first": "2021-05-29",
+         "last": "2021-06-14",
+         "n_dates": 2,
+         "norm": 1.4372173882950756,
+         "thin": true,
+         "v": [
+          -0.215000400811755,
+          -1.4210449144444741
+         ],
+         "visit": 2
+        }
+       ]
+      },
+      "DAM 6": {
+       "angle_deg": -106.89339632512636,
+       "channels": {
+        "P": {
+         "median_log": -4.344186683714744,
+         "n": 4,
+         "z": -1.1853380638277942
+        },
+        "gamma2": {
+         "median_log": -3.0640948397273426,
+         "n": 4,
+         "z": -0.359984016294142
+        }
+       },
+       "n_dates": 4,
+       "n_visits": 2,
+       "norm": 1.2387957125960216,
+       "state": "DAM 6",
+       "thin": false,
+       "v": [
+        -0.359984016294142,
+        -1.1853380638277942
+       ],
+       "visits": [
+        {
+         "angle_deg": -62.19680250210685,
+         "channels": {
+          "P": {
+           "median_log": -4.344186683714744,
+           "n": 2,
+           "z": -1.1853380638277942
+          },
+          "gamma2": {
+           "median_log": -2.06586337561142,
+           "n": 2,
+           "z": 0.6250424055234189
+          }
+         },
+         "first": "2020-10-13",
+         "last": "2020-10-26",
+         "n_dates": 2,
+         "norm": 1.3400389301290936,
+         "thin": true,
+         "v": [
+          0.6250424055234189,
+          -1.1853380638277942
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": -132.60885711393138,
+         "channels": {
+          "P": {
+           "median_log": -4.393939469231958,
+           "n": 2,
+           "z": -1.5136311615602305
+          },
+          "gamma2": {
+           "median_log": -4.110236746485869,
+           "n": 2,
+           "z": -1.3922871004695017
+          }
+         },
+         "first": "2021-05-05",
+         "last": "2021-05-18",
+         "n_dates": 2,
+         "norm": 2.0565851947779707,
+         "thin": true,
+         "v": [
+          -1.3922871004695017,
+          -1.5136311615602305
+         ],
+         "visit": 2
+        }
+       ]
+      }
+     }
+    },
+    "DESC": {
+     "healthy": {
+      "P": {
+       "centre_log": -4.212975414800824,
+       "n": 81,
+       "scale_log_mad": 0.12586851987895376
+      },
+      "gamma2": {
+       "centre_log": -3.3312679973156305,
+       "n": 80,
+       "scale_log_mad": 1.7497385565508012
+      }
+     },
+     "states": {
+      "DAM 3": {
+       "angle_deg": -74.81847520304407,
+       "channels": {
+        "P": {
+         "median_log": -4.267406206335057,
+         "n": 17,
+         "z": -0.43244165885622743
+        },
+        "gamma2": {
+         "median_log": -3.1259500426659668,
+         "n": 17,
+         "z": 0.11734207598099677
+        }
+       },
+       "n_dates": 17,
+       "n_visits": 2,
+       "norm": 0.4480791795094432,
+       "state": "DAM 3",
+       "thin": false,
+       "v": [
+        0.11734207598099677,
+        -0.43244165885622743
+       ],
+       "visits": [
+        {
+         "angle_deg": 46.219367955792855,
+         "channels": {
+          "P": {
+           "median_log": -4.201051032040363,
+           "n": 12,
+           "z": 0.0947368156225932
+          },
+          "gamma2": {
+           "median_log": -3.1724129337670837,
+           "n": 12,
+           "z": 0.09078788539797185
+          }
+         },
+         "first": "2021-03-18",
+         "last": "2021-04-18",
+         "n_dates": 12,
+         "norm": 0.13121548829823593,
+         "thin": false,
+         "v": [
+          0.09078788539797185,
+          0.0947368156225932
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": -34.53730643454685,
+         "channels": {
+          "P": {
+           "median_log": -4.288846537572926,
+           "n": 5,
+           "z": -0.602780765556522
+          },
+          "gamma2": {
+           "median_log": -1.7987958328468425,
+           "n": 5,
+           "z": 0.875829225304206
+          }
+         },
+         "first": "2021-06-26",
+         "last": "2021-07-11",
+         "n_dates": 5,
+         "norm": 1.0632128118217314,
+         "thin": false,
+         "v": [
+          0.875829225304206,
+          -0.602780765556522
+         ],
+         "visit": 2
+        }
+       ]
+      },
+      "DAM 4": {
+       "angle_deg": 145.68818809414861,
+       "channels": {
+        "P": {
+         "median_log": -4.200770084329668,
+         "n": 11,
+         "z": 0.09696888851075501
+        },
+        "gamma2": {
+         "median_log": -3.579885099090675,
+         "n": 11,
+         "z": -0.14208814273666973
+        }
+       },
+       "n_dates": 11,
+       "n_visits": 2,
+       "norm": 0.17202327065071013,
+       "state": "DAM 4",
+       "thin": false,
+       "v": [
+        -0.14208814273666973,
+        0.09696888851075501
+       ],
+       "visits": [
+        {
+         "angle_deg": 111.80928465976122,
+         "channels": {
+          "P": {
+           "median_log": -4.130181177391141,
+           "n": 5,
+           "z": 0.6577835148081908
+          },
+          "gamma2": {
+           "median_log": -3.791831185070673,
+           "n": 5,
+           "z": -0.2632182882584098
+          }
+         },
+         "first": "2020-11-10",
+         "last": "2020-11-24",
+         "n_dates": 5,
+         "norm": 0.7084934859454282,
+         "thin": false,
+         "v": [
+          -0.2632182882584098,
+          0.6577835148081908
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": -98.75028260418584,
+         "channels": {
+          "P": {
+           "median_log": -4.2448083109512975,
+           "n": 6,
+           "z": -0.25290593852288706
+          },
+          "gamma2": {
+           "median_log": -3.3993804619794377,
+           "n": 6,
+           "z": -0.03892722396086127
+          }
+         },
+         "first": "2021-05-29",
+         "last": "2021-06-14",
+         "n_dates": 6,
+         "norm": 0.2558842365317594,
+         "thin": false,
+         "v": [
+          -0.03892722396086127,
+          -0.25290593852288706
+         ],
+         "visit": 2
+        }
+       ]
+      },
+      "DAM 6": {
+       "angle_deg": 98.88320980857411,
+       "channels": {
+        "P": {
+         "median_log": -4.078861947991507,
+         "n": 12,
+         "z": 1.0655044401752876
+        },
+        "gamma2": {
+         "median_log": -3.622658364277038,
+         "n": 12,
+         "z": -0.1665336606263138
+        }
+       },
+       "n_dates": 12,
+       "n_visits": 2,
+       "norm": 1.078440156965074,
+       "state": "DAM 6",
+       "thin": false,
+       "v": [
+        -0.1665336606263138,
+        1.0655044401752876
+       ],
+       "visits": [
+        {
+         "angle_deg": -178.1101694395477,
+         "channels": {
+          "P": {
+           "median_log": -4.218369897021474,
+           "n": 6,
+           "z": -0.042858073057804966
+          },
+          "gamma2": {
+           "median_log": -5.603998986046223,
+           "n": 6,
+           "z": -1.2988974725519842
+          }
+         },
+         "first": "2020-10-13",
+         "last": "2020-10-26",
+         "n_dates": 6,
+         "norm": 1.299604346956473,
+         "thin": false,
+         "v": [
+          -1.2988974725519842,
+          -0.042858073057804966
+         ],
+         "visit": 1
+        },
+        {
+         "angle_deg": 83.61658760152525,
+         "channels": {
+          "P": {
+           "median_log": -3.992030200966088,
+           "n": 6,
+           "z": 1.7553651544263527
+          },
+          "gamma2": {
+           "median_log": -2.987652275411894,
+           "n": 6,
+           "z": 0.19638117970098018
+          }
+         },
+         "first": "2021-05-05",
+         "last": "2021-05-18",
+         "n_dates": 6,
+         "norm": 1.7663160513099012,
+         "thin": false,
+         "v": [
+          0.19638117970098018,
+          1.7553651544263527
+         ],
+         "visit": 2
+        }
+       ]
+      }
+     }
+    }
+   },
+   "runs": [
+    {
+     "first": "2020-08-02",
+     "last": "2020-10-11",
+     "n": 36,
+     "run": 1,
+     "state": "healthy"
+    },
+    {
+     "first": "2020-10-13",
+     "last": "2020-10-26",
+     "n": 8,
+     "run": 2,
+     "state": "DAM 6"
+    },
+    {
+     "first": "2020-10-29",
+     "last": "2020-11-07",
+     "n": 6,
+     "run": 3,
+     "state": "healthy"
+    },
+    {
+     "first": "2020-11-10",
+     "last": "2020-11-24",
+     "n": 8,
+     "run": 4,
+     "state": "DAM 4"
+    },
+    {
+     "first": "2020-11-25",
+     "last": "2021-03-13",
+     "n": 54,
+     "run": 5,
+     "state": "healthy"
+    },
+    {
+     "first": "2021-03-18",
+     "last": "2021-04-18",
+     "n": 17,
+     "run": 6,
+     "state": "DAM 3"
+    },
+    {
+     "first": "2021-04-21",
+     "last": "2021-05-03",
+     "n": 7,
+     "run": 7,
+     "state": "healthy"
+    },
+    {
+     "first": "2021-05-05",
+     "last": "2021-05-18",
+     "n": 8,
+     "run": 8,
+     "state": "DAM 6"
+    },
+    {
+     "first": "2021-05-21",
+     "last": "2021-05-27",
+     "n": 4,
+     "run": 9,
+     "state": "healthy"
+    },
+    {
+     "first": "2021-05-29",
+     "last": "2021-06-14",
+     "n": 8,
+     "run": 10,
+     "state": "DAM 4"
+    },
+    {
+     "first": "2021-06-16",
+     "last": "2021-06-23",
+     "n": 5,
+     "run": 11,
+     "state": "healthy"
+    },
+    {
+     "first": "2021-06-26",
+     "last": "2021-07-11",
+     "n": 8,
+     "run": 12,
+     "state": "DAM 3"
+    },
+    {
+     "first": "2021-07-14",
+     "last": "2021-07-29",
+     "n": 9,
+     "run": 13,
+     "state": "healthy"
+    }
+   ]
+  }
+ },
+ "site": "LUMO"
+}

@@ -68,6 +68,7 @@ CHANNELS = ("gamma2", "P", "D", "F", "A", "S")
 LOG_CHANNELS = ("P", "D", "F", "A")
 CHANNEL_AXIS = {"gamma2": "$\\gamma^2$", "P": "P", "D": "D",
                "F": "F", "A": "A", "S": "S"}
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "echo coherence",
     "P": "persistence (mean pixel frequency)",
@@ -76,6 +77,7 @@ CHANNEL_TITLE = {
     "A": "area (masked cells)",
     "S": "shift (centroid to support peak, px)",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 #: ``all`` is the single state of an event-free site (Espoo): one band, one
 #: median, no pre/post contrast -- the figure then shows trajectories only.
 STATE_COLORS = {"pre": "#2b6cb0", "post": "#c53030", "all": "#2b6cb0"}

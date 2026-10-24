@@ -204,6 +204,7 @@ CHANNEL_AXIS = {"gamma2": "gamma^2  [1]", "A": "A  [masked px]",
                 "wind_gust_ms": "wind gust  [m/s]",
                 "temperature_c": "temperature  [deg C]",
                 "phase_detected_frequency_hz": "phase freq  [Hz]"}
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {"gamma2": "interferometric coherence gamma^2",
                  "A": "echo-mask size (clutter discriminator)",
                  "P": "echo-mask persistence",
@@ -219,6 +220,7 @@ CHANNEL_TITLE = {"gamma2": "interferometric coherence gamma^2",
                  "wind_gust_ms": "wind gust at acquisition",
                  "temperature_c": "air temperature at acquisition",
                  "phase_detected_frequency_hz": "phase-detected frequency"}
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 
 # Columns only Postgres carries (read once, vendored into
 # ``data/kdlo/kdlo_db_extra.json`` by ``kdlo_ocv_channels_csv.py --fetch-db-extra``)

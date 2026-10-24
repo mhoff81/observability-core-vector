@@ -11,6 +11,32 @@ always started from there (the wrappers `../../figures/lumo/fig_lumo_ocv_paper.s
 and `../../figures/lumo/fig_lumo_ocv_orbits.sh` do that): inputs and outputs in
 `data/lumo/`, figures in `figures/lumo/`.
 
+### What the state labels mean
+
+The dataset's own description of its reversible damage mechanisms is positional,
+not ordinal: **DAM 1 … DAM 6 are six attachment positions on the tower**, and each
+campaign removes the mechanisms at one or more of them —
+
+* `DAM 3` = *all damage mechanisms removed at one strut* (the dataset's wording),
+* `DAM 4` = the same pattern at a **different strut**,
+* `DAM 6` = *all damage mechanisms removed* (the most extensive state).
+
+The measurement levels are `ML 1 … ML 10` (ten accelerometer heights, ~1 m apart,
+which is why the tower is modelled as 3 segments × 3 m).  Consequences that matter
+for every number in this package:
+
+* `DAM 3` and `DAM 4` are **different locations with the same mechanism pattern**,
+  and they produce the *same* first-higher-mode drop (−1.00 Hz, −7.41 %) — two
+  different damages that global modal frequency cannot tell apart.  Grouping them
+  as one "dose level" (as `lumo_state_frequencies.json` does, `L1`) is therefore a
+  grouping by *measured frequency*, never by damage type or location.
+* The dataset publishes **six** damaged campaigns — the three positions above in
+  the pattern `111` *and* in a second pattern `010` — of which this repository uses
+  only the `111` sets (`02_DAM6_111`, `04_DAM4_111`, `06_DAM3_111`).  The `010`
+  sets are the same three positions with a different set of mechanisms removed;
+  they are not part of the committed tables, and their campaign dates have not been
+  checked against the SAR record.
+
 ### `lumo_ocv_stats.py` — statistics layer (verbatim port)
 
 `_stats`, `welch_mw_test`, `cliffs_delta`, `delta_sds`, `bootstrap_delta_ci`,
@@ -105,6 +131,65 @@ repeated runs are byte-identical.
 ```bash
 python3 code/lumo/fig_lumo_ocv_orbits.py              # figure + JSON + report
 python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures # checks only
+```
+
+### `fig_lumo_ocv_physics.py` — physical dynamics against OCV behaviour
+
+Two panels, one state colour scheme, asking whether states that sit close
+together in an **independently measured physical** plane also sit close together
+in the OCV behaviour plane:
+
+| panel | x | y |
+| --- | --- | --- |
+| A physical | `df_H1 / f_H1,0` (signed, frequency loss to the left) | `dzeta_H1 / zeta_H1,0` |
+| B OCV | `z(gamma2)` | `z(P)` |
+
+Both origins are the healthy state. Panel A has **one point per state** — each
+state was measured in one controlled campaign of five healthy plus five damaged
+recordings, so there is no physical replicate; it carries a 95 % bootstrap
+interval over those ten recordings (seeded, 2000 draws) and a ±0.125 Hz
+quantisation bar on the frequency axis. Panel B has **two visits per state** (the
+two SAR state runs); colour = state, marker shape = orbit (circle ASC, square
+DESC), fill = visit (filled first, open repeat), marker area ∝ n, a grey ring
+marks n < 3. The orbits are never pooled; the dashed arrow is the state-level
+(visit-pooled) vector, which is the reproducible object.
+
+The report (`figures/lumo/fig_lumo_ocv_physics.md`) gives the direction and
+magnitude of every vector, the visit-to-visit repeatability (cosine and angle,
+with the per-visit n), the state ordering by `|v|` in both planes and the
+cross-plane cosine **as a descriptive statistic only** — a matching direction
+would be evidence of consistency between two measurement channels, not evidence
+that `(gamma2, P)` measures stiffness or damping.
+
+Data: `data/lumo/reference/lumo_state_dynamics.json` (H1 frequency change from
+the committed Welch mode consensus, H1 damping from the half-power bandwidth of
+30 recordings; built and verified by `lumo_state_dynamics_json.py`) and the
+**support** chip `data/lumo/support/lumo_ocv_channels.csv`. `--chip committed`
+repeats the whole panel on `data/lumo/lumo_ocv_channels.csv`: the two chips
+define `gamma2` differently (the support re-cut raises it by an order of
+magnitude), and the report shows how far that moves the OCV points.
+
+```bash
+python3 code/lumo/fig_lumo_ocv_physics.py                 # support chip
+python3 code/lumo/fig_lumo_ocv_physics.py --chip committed
+python3 code/lumo/fig_lumo_ocv_physics.py --selftest       # geometry helpers
+python3 code/lumo/fig_lumo_ocv_physics.py --no-figures     # checks only
+```
+
+### `lumo_state_dynamics_json.py` — builder of the damping reference
+
+The damping half of `v_phys` lives outside this repository (LUMO SHM project).
+This script reads the three sources, pins their sha256, copies the thirty
+per-recording damping values verbatim into
+`data/lumo/reference/lumo_state_dynamics.json` and cross-checks the medians
+against `lumo_dam6_analysis/lumo_damping_gamma2_modulation.json`. Without
+`--build` it only verifies the committed file (107 checks: medians, spreads,
+relative changes, campaign names, agreement with the committed frequency
+reference).
+
+```bash
+python3 code/lumo/lumo_state_dynamics_json.py --build   # rebuild (needs the SHM data)
+python3 code/lumo/lumo_state_dynamics_json.py           # verify only
 ```
 
 Note that the module and site names keep their `lumo_` prefix although the folder

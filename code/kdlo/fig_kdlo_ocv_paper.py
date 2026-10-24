@@ -146,6 +146,8 @@ CHANNELS = (list(core.OCV) + ["A", "F", "S"]
                "intensity", "wind_speed_ms", "temperature_c"])
 CHANNEL_AXIS = core.CHANNEL_AXIS
 CHANNEL_TITLE = core.CHANNEL_TITLE
+FIG_CHANNEL_AXIS = core.FIG_CHANNEL_AXIS
+FIG_CHANNEL_TITLE = core.FIG_CHANNEL_TITLE
 
 
 #: Appended to every figure stem by ``save_fig``. ``""`` is the committed chip;
@@ -495,8 +497,8 @@ def fig_a(res, out_dir=None):
         state_strip(ax, vals_[key], seed0=10 + keys.index(key) * 7)
         if key == "A":
             ax.set_yscale("log")
-        ax.set_ylabel(CHANNEL_AXIS[key], fontsize=6.4)
-        panel(ax, "abcdefgh"[keys.index(key)], CHANNEL_TITLE[key])
+        ax.set_ylabel(FIG_CHANNEL_AXIS[key], fontsize=6.4)
+        panel(ax, "abcdefgh"[keys.index(key)], FIG_CHANNEL_TITLE[key])
     fig.suptitle(
         "Figure A — the measured channels per KDLO epoch state "
         f"({res['data']['n_rows']} acquisitions: "
@@ -526,7 +528,7 @@ def fig_b(res, out_dir=None):
                 f"{tab[k]['delta']:+.2f} (n={tab[k]['n'][0]}/{tab[k]['n'][1]})",
                 va="center", fontsize=6.0)
     ax.set_yticks(y)
-    ax.set_yticklabels([CHANNEL_AXIS[k] for k in rank], fontsize=6.6)
+    ax.set_yticklabels([FIG_CHANNEL_AXIS[k] for k in rank], fontsize=6.6)
     ax.invert_yaxis()
     ax.set_xlim(0.0, max([tab[k]["sds"] or 0.0 for k in rank] + [1.0]) * 1.5)
     ax.set_xlabel("SDS = 10 |Cliff's delta|,  pre vs. rebuild", fontsize=7.0)
@@ -547,7 +549,7 @@ def fig_b(res, out_dir=None):
                     if i == 0 else None)
     ax.axhline(0.0, color="0.35", ls=":", lw=1.0)
     ax.set_xticks(range(len(keys)))
-    ax.set_xticklabels([CHANNEL_AXIS[k].split("  ")[0] for k in keys], fontsize=6.0,
+    ax.set_xticklabels([FIG_CHANNEL_AXIS[k].split("  ")[0] for k in keys], fontsize=6.0,
                        rotation=22, ha="right")
     ax.set_ylabel("Cliff's delta (95% bootstrap CI)", fontsize=7.0)
     ax.legend(fontsize=6.0, loc="lower right")

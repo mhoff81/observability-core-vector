@@ -74,9 +74,9 @@ Means, minima and maxima are in the result JSON under `summary.<orbit>.<dimensio
 
 ## 5. Cross-checks
 
-The script recomputes every plotted point from the committed table and checks it against the metadata, the paper figure JSON and the committed tower reference: **144 checks, 0 failures**.
+The script recomputes every plotted point from the table it reads (`data/lumo/lumo_ocv_channels.csv`) and checks it against the metadata, the paper figure JSON and the committed tower reference: **144 checks, 0 failures**.
 
-**Failures: none.** The checks cover row and date counts, the 482-row acquisition join, the 13-run sequence and lengths, sub-swath counts, per-state/per-orbit counts, row-by-row `burst_id` / date / orbit / label / `gamma2` / `n_masked` parity with the tower reference, `A == n_masked`, channel completeness, strict positivity on the log axes, local-time ranges and UTC offsets, and all committed sha256 pins.
+**Failures: none.** The checks cover row and date counts, the 482-row acquisition join, the 13-run sequence and lengths, sub-swath counts, per-state/per-orbit counts, row-by-row `burst_id` / date / orbit / label parity with the tower reference, `A == n_masked`, strict positivity on the log axes, local-time ranges and UTC offsets, and all committed sha256 pins.
 
 | check group | checks |
 | --- | --- |
@@ -103,7 +103,7 @@ python3 code/lumo/fig_lumo_ocv_orbits.py
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 ```
 
-Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.4.6, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
+Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.2. No output carries a timestamp, so repeated runs are identical.
 
 ## 7. Caveats
 

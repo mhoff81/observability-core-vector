@@ -527,7 +527,7 @@ def fig_a(res, out_dir=None):
     fig, axes = plt.subplots(2, 3, figsize=(COL_WIDTH, 105 * MM))
     for ax, k in zip(axes.ravel(), core.FEATURES[:6]):
         strip(ax, rows, k, seed0=100 + 7 * core.FEATURES.index(k))
-        ax.set_title(core.CHANNEL_AXIS[k], loc="left", fontsize=8.0)
+        ax.set_title(core.FIG_CHANNEL_AXIS[k], loc="left", fontsize=8.0)
     fig.suptitle(f"(A) Echo-mask channels per state — {res['n_rows']} 80x80 chips, "
                  f"{core.SITE}", fontsize=9.0, x=0.01, ha="left")
     fig.tight_layout(rect=(0, 0, 1, 0.965))

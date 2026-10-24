@@ -117,7 +117,45 @@ licenses a dose gradient.* Each half stands or falls on its own numbers.
 
 ---
 
-## Transforms
+## Amendment 2 — 2026-10-22: the blocks are behaviour and geometry
+
+*The first amendment separated the two assets. This one splits the response the
+other way — by what the dimension *is*, not by how it is observed.*
+
+**The two blocks, and why.**
+
+| block | dimensions | meaning |
+|---|---|---|
+| `behaviour` | `γ²`, `P` | **cross-acquisition echo behaviour** — `γ²` is the consistency of the echo across acquisitions, `P` its persistence/continuity across acquisitions. `P` belongs here even though its computation depends on valid echo detections: it describes how the echo behaves *between* acquisitions, not how the mask looks. |
+| `geometry` | `A`, `D`, `F`, `S` | **spatial echo-mask geometry** — `A` extent (how much is observable), `D` occupancy, `F` fragmentation (how spatially organised the mask is), `S` the spatial shift. |
+
+`D` was previously paired with `A` and `F` in a "mask" block that omitted `S`;
+`S` sat with `γ²` and `P` in an "other" block. That cut did not follow the physics:
+`S` is a spatial property, and `A`–`D`–`F`–`S` are one family. The literal
+`[A, D, F]` sensitivity block is therefore dropped — `D` is no longer an extra vote
+inside a two-dimension block, it is one of four geometry dimensions.
+
+**Consequences, fixed before the run.**
+
+* the magnitudes are `R_behaviour = rms(z_γ², z_P)` and
+  `R_geometry = rms(z_A, z_D, z_F, z_S)`; the two are **not** comparable with each
+  other (two dimensions against four) and are never compared across assets;
+* `R_geometry` keeps all four dimensions even though the figure's plane draws only
+  `A` × `F`: `D` is kept out of the axes because it partly inherits `A`
+  algebraically, and `S` is annotated because a shift describes position, not
+  morphology;
+* the Holm family stays **four tests per asset** (2 channels × 2 blocks), so the
+  multiplicity does not change;
+* the pre-registered predictions are re-stated per block: **P1** and **P2** are asked
+  of the `geometry` block (the dose hypothesis is a mask-geometry hypothesis), and
+  **P3** becomes "the `behaviour` block need not follow the dose";
+* the H2 comparison keeps one cosine per block and channel; the former
+  "other block without γ²" variant is replaced by the two single-dimension `z`
+  readings of the behaviour block, because a one-dimension "vector" has no cosine.
+
+The order of the blocks in the table, the figure and the report is
+`behaviour`, then `geometry`.
+
 
 
 | dimension | LUMO | Bautzen |
@@ -135,7 +173,41 @@ on the identity scale, so their zeros are values, not gaps. Known at
 pre-registration time: LUMO `gamma2` 1 zero of 178; Bautzen `A` 8 and `F` 8 of 142
 (and one side of a pair at zero kills that pair for that dimension).
 
-## Blocks
+## Amendment 3 — 2026-10-22: a single asset with two states (Carola)
+
+*The module was written for the LUMO/Bautzen pair. This amendment lets it run one
+asset alone, and adds Carola to the registry.*
+
+**Why Carola, and what changes.** Carola has exactly **two** states — `pre-collapse
+(healthy)` and `post-collapse`, separated by the 2024-09-11 collapse — so:
+
+* the ordered test collapses to its two-group case: a one-sided rank test between
+  the two states, still through the same Jonckheere–Terpstra statistic, so `ΔR` is
+  the post-minus-pre step;
+* there is **no ordering claim**: with two states no ladder is tested, and the report
+  says "the pre-to-post contrast" instead of "a dose ordering";
+* **H2 is not computed** in a single-asset run (there is no partner), and the report
+  says so instead of printing an empty table;
+* the predictions P1–P3 belong to LUMO and are absent from a Carola run;
+* the Holm family stays four tests (2 channels × 2 blocks), as in every other run.
+
+**The table.** `data/carola/support/carola_ocv_channels.csv` — the support-sized
+chip, **436 chips, `Girder A` only** (the committed table carries 1 717 chips over
+Girders A/B/C, so nothing here speaks for B and C), 184 pre / 252 post, with
+`gamma2_mask` as the coherence channel (log scale, like LUMO) and the `*_committed`
+carry-over columns.
+
+**What Carola cannot carry.** The two states are a **time split without a control
+track**: Bautzen's bridge-minus-control difference removes what both tracks share,
+Carola has nothing comparable, so its post signature is confounded with the
+calendar. That is written into the report's closing section, together with the
+girder limitation and the no-ordering statement.
+
+**Outputs.** A single-asset run writes its own stem — `data/sds/ocv_carola.{json,md}`,
+`data/sds/ocv_carola_table.csv`,
+`figures/sds/fig_sds_ocv_reconfigure_carola.jpg|.md` — and never touches the pair's
+files. `--sites` selects the assets; the default is still `lumo,bautzen`.
+
 
 `A`, `D`, `F` are not three independent votes: `D = A / bbox_area` holds in
 **178 of 178** LUMO rows and in every Bautzen row (`A == n_band` too). The primary

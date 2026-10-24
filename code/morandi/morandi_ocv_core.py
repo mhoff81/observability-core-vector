@@ -101,12 +101,14 @@ CHANNEL_AXIS = {
     "wind_gust_ms": "gust (m/s)",
     "nearest_lag_h": "weather lag (h)",
 }
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 CHANNEL_TITLE = {
     "gamma2": "gamma2", "P": "P", "D": "D", "A": "A", "F": "F", "S": "S",
     "wind_speed_ms": "wind (m/s)", "temperature_c": "temperature (C)",
     "precipitation_mm": "precip (mm)", "wind_gust_ms": "gust (m/s)",
     "nearest_lag_h": "weather lag (h)",
 }
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 
 WEATHER = ["wind_speed_ms", "temperature_c", "precipitation_mm", "wind_gust_ms"]
 CONTROLS = ["wind_speed_ms", "temperature_c", "precipitation_mm", "wind_gust_ms",

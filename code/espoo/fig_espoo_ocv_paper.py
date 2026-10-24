@@ -123,11 +123,13 @@ CHANNEL_TITLE = {"gamma2": "coherence  gamma^2", "A": "mask area  A  [px]",
                  "phase_rms_rad": "phase RMS  [rad]",
                  "wind_speed_ms": "wind  [m/s]",
                  "temperature_c": "temperature  [degC]"}
+FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
 CHANNEL_AXIS = {"gamma2": "gamma^2  [1]", "A": "A = echo pixels  [px]",
                 "phase_coherence": "phase coherence  [1]",
                 "phase_rms_rad": "phase RMS  [rad]",
                 "wind_speed_ms": "wind speed  [m/s]",
                 "temperature_c": "air temperature  [degC]"}
+FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
 
 # The four feature sets panels C and D compare (the site's own model registry).
 FEATSET_ORDER = ["gamma2", "A", "gamma2A", "x_cov"]
@@ -655,8 +657,8 @@ def fig_A(res, out_dir=None):
             ax.set_yscale("log")
         ax.set_xticks(range(len(core.STATE_ORDER)))
         ax.set_xticklabels([core.SHORT[s] for s in core.STATE_ORDER])
-        ax.set_ylabel(CHANNEL_AXIS[key])
-        panel(ax, "abc"[i], CHANNEL_TITLE[key])
+        ax.set_ylabel(FIG_CHANNEL_AXIS[key])
+        panel(ax, "abc"[i], FIG_CHANNEL_TITLE[key])
 
     # (c) the phase ladder, where it exists at all
     ax = axes[2]
@@ -673,7 +675,7 @@ def fig_A(res, out_dir=None):
                     fontsize=6.2, color=STATE_COLORS[s])
     ax.set_xticks(range(len(core.STATE_ORDER)))
     ax.set_xticklabels([core.SHORT[s] for s in core.STATE_ORDER])
-    ax.set_ylabel(CHANNEL_AXIS["phase_coherence"])
+    ax.set_ylabel(FIG_CHANNEL_AXIS["phase_coherence"])
     panel(ax, "c", f"phase ladder, the {len(avail)} of {len(rows)} acquisitions that carry it")
 
     counts = res["data"]["n_by_state"]
@@ -710,7 +712,7 @@ def fig_B(res, out_dir=None):
                 transform=ax.get_yaxis_transform())
     ax.axvline(0.0, color="#888888", lw=0.9)
     ax.set_yticks(ys)
-    ax.set_yticklabels([CHANNEL_TITLE[k] + ("  (control)" if k in CONTROL_CHANNELS else "")
+    ax.set_yticklabels([FIG_CHANNEL_TITLE[k] + ("  (control)" if k in CONTROL_CHANNELS else "")
                         for k in order], fontsize=7.0)
     ax.invert_yaxis()
     ax.set_xlabel("Cliff's delta  (DESC - ASC)")

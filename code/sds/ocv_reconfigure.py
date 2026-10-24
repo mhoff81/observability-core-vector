@@ -83,6 +83,8 @@ COLUMNS = {
              "gamma2": "coherence_gamma2"},
     "bautzen": {"A": "A", "D": "D", "F": "F", "P": "P", "S": "S",
                 "gamma2": "gamma2_band_floor_corrected"},
+    "carola": {"A": "A", "D": "D", "F": "F", "P": "P", "S": "S",
+               "gamma2": "gamma2_mask"},
 }
 
 #: The scale each dimension is analysed on. `S` is a non-negative distance and
@@ -92,19 +94,51 @@ TRANSFORM = {
              "S": "identity"},
     "bautzen": {"A": "log", "D": "log", "F": "log", "P": "log", "gamma2": "identity",
                 "S": "identity"},
+    "carola": {"A": "log", "D": "log", "F": "log", "P": "log",
+               "gamma2": "log", "S": "identity"},
 }
 
-#: The primary blocks, and the literal three-dimension mask block as sensitivity.
+#: The two response blocks (see the dict below); see the 2026-10-22 amendment.
+#: How a dimension is written when it is a *label* (the figures), never as a key.
+DIM_DISPLAY = {"gamma2": r"$\gamma^2$", "A": "A", "D": "D", "F": "F",
+               "P": "P", "S": "S"}
+
+
+#: The two response blocks, in the wording the paper uses:
+#:
+#: * ``behaviour`` -- cross-acquisition echo behaviour: `gamma2` is the consistency
+#:   of the echo across acquisitions, `P` its persistence/continuity across
+#:   acquisitions. `P` belongs here and not in the geometry block, even though its
+#:   computation depends on valid echo detections.
+#: * ``geometry`` -- spatial echo-mask geometry: `A` extent (how much is
+#:   observable), `D` occupancy, `F` fragmentation (how spatially organised the
+#:   mask is), `S` the spatial shift. `D` is kept out of the figure's axes because
+#:   it partly inherits `A` algebraically, and `S` is reported as a supplementary
+#:   coordinate because a shift describes position, not morphology -- both stay in
+#:   the block magnitude.
 BLOCKS = {
-    "mask": ("A", "F"),
-    "other": ("gamma2", "P", "S"),
-    "mask_literal": ("A", "D", "F"),
+    "behaviour": ("gamma2", "P"),
+    "geometry": ("A", "D", "F", "S"),
 }
 
-REFERENCE = {"lumo": "healthy", "bautzen": "RS"}
+#: The two dimensions drawn as the plane of the geometry block; `D` and `S` are
+#: annotated beside it (see ``BLOCKS``).
+GEOMETRY_PLANE = ("A", "F")
+
+#: Where a single-table asset keeps its state, orbit and date.
+UNIT_SHAPE = {
+    "lumo": {"state": "damage_label", "orbit": "orbit_direction",
+             "date": "acquisition_date"},
+    "carola": {"state": "state", "orbit": "orbit_direction",
+               "date": "acquisition_ts"},
+}
+
+REFERENCE = {"lumo": "healthy", "bautzen": "RS",
+             "carola": "pre-collapse (healthy)"}
 
 STATES = {"lumo": ["healthy", "DAM 3", "DAM 4", "DAM 6"],
-          "bautzen": ["RS", "DS1", "DS2"]}
+          "bautzen": ["RS", "DS1", "DS2"],
+          "carola": ["pre-collapse (healthy)", "post-collapse"]}
 
 #: Dose levels for the ordered test. LUMO's dose is measured (percent drop of the
 #: first-higher mode); DAM 3 and DAM 4 share it to one FFT bin. Bautzen has no
@@ -114,11 +148,17 @@ LEVELS = {
              ("L1", ("DAM 3", "DAM 4"), 7.41),
              ("L2", ("DAM 6",), 12.96)],
     "bautzen": [("RS", ("RS",), 0.0), ("DS1", ("DS1",), 1.0), ("DS2", ("DS2",), 2.0)],
+    # Carola has two states and nothing in between: the ordered test collapses to a
+    # one-sided rank test between them, and dR is the post-minus-pre step.
+    "carola": [("pre", ("pre-collapse (healthy)",), 0.0),
+               ("post", ("post-collapse",), 1.0)],
 }
 
 #: The state used for the cross-experiment direction (and the middle one).
-LARGEST = {"lumo": "DAM 6", "bautzen": "DS2"}
-MIDDLE = {"lumo": ("DAM 3", "DAM 4"), "bautzen": ("DS1",)}
+LARGEST = {"lumo": "DAM 6", "bautzen": "DS2",
+           "carola": "post-collapse"}
+MIDDLE = {"lumo": ("DAM 3", "DAM 4"), "bautzen": ("DS1",),
+          "carola": ("pre-collapse (healthy)",)}
 
 #: Below this many units a cell is marked thin and must be quoted with its n.
 SMALL_N = 6
@@ -129,7 +169,14 @@ SCALE_MIN_REF = 10
 
 TABLE = {"lumo": os.path.join(REPO, "data", "lumo", "lumo_ocv_channels.csv"),
          "bautzen": os.path.join(REPO, "data", "bautzen",
-                                 "bautzen_ocv_channels.csv")}
+                                 "bautzen_ocv_channels.csv"),
+         # Carola is read on the support-sized chip, where only Girder A survives
+         # the cut (436 chips of the committed 1 717).
+         "carola": os.path.join(REPO, "data", "carola", "support",
+                                 "carola_ocv_channels.csv")}
+
+#: The two-asset pair the module was built for; ``--sites`` may select any subset.
+DEFAULT_SITES = ("lumo", "bautzen")
 
 FREQUENCIES = os.path.join(REPO, "data", "lumo", "reference",
                            "lumo_state_frequencies.json")
@@ -234,10 +281,13 @@ def load_units(site, path=None):
     columns = COLUMNS[site]
     audit = {"dropped": {}, "rows": 0, "pairs": 0, "unpaired": 0}
     units = []
-    if site == "lumo":
+    if site != "bautzen":
+        # one row per observation (a coherence row for LUMO, a chip for Carola)
         with open(path, newline="") as handle:
-            rows = [r for r in csv.DictReader(handle)
-                    if r.get("record_class") == "coherence"]
+            rows = list(csv.DictReader(handle))
+        if site == "lumo":
+            rows = [r for r in rows if r.get("record_class") == "coherence"]
+        shape = UNIT_SHAPE[site]
         audit["rows"] = len(rows)
         for row in rows:
             values = {}
@@ -246,9 +296,9 @@ def load_units(site, path=None):
                 values[dim] = transform(site, dim, raw)
                 if raw is not None and values[dim] is None:
                     audit["dropped"][dim] = audit["dropped"].get(dim, 0) + 1
-            units.append({"state": row["damage_label"],
-                          "channel": CHANNEL.get(row["orbit_direction"], "?"),
-                          "date": row["acquisition_date"], "values": values})
+            units.append({"state": row[shape["state"]],
+                          "channel": CHANNEL.get(row[shape["orbit"]], "?"),
+                          "date": row[shape["date"]], "values": values})
     else:
         with open(path, newline="") as handle:
             rows = list(csv.DictReader(handle))
@@ -582,12 +632,21 @@ def _vector(report, site, channel, kind, key, dims):
     return z_of(source, dims)
 
 
-def compute(boot=BOOT, perm=PERM, seed=SEED):
-    """Every number the table, the markdown and the figure quote."""
+def compute(sites=None, boot=BOOT, perm=PERM, seed=SEED):
+    """Every number the table, the markdown and the figure quote.
+
+    ``sites`` selects the assets: the two-asset pair by default (LUMO and Bautzen,
+    the cross-asset comparison), or a single asset such as ``("carola",)`` for the
+    two-state case. A single-asset run has no H2 partner and says so.
+    """
+    sites = tuple(sites or DEFAULT_SITES)
+    for site in sites:
+        if site not in TABLE:
+            raise SystemExit(f"unknown site: {site}")
     with open(FREQUENCIES) as handle:
         frequencies = json.load(handle)
     report = {
-        "schema": SCHEMA,
+        "schema": SCHEMA, "sites": list(sites),
         "generated_by": "code/sds/ocv_reconfigure.py",
         "spec": "code/sds/ocv_reconfigure_spec.md",
         "rules": {"boot": boot, "perm": perm, "seed": seed,
@@ -606,7 +665,7 @@ def compute(boot=BOOT, perm=PERM, seed=SEED):
         "hypotheses": {"H1": {}, "H2": {}},
     }
     units_by_site = {}
-    for site in ("lumo", "bautzen"):
+    for site in sites:
         units, audit = load_units(site)
         units_by_site[site] = units
         block = responses(units, site)
@@ -657,22 +716,23 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
     raw = {}
     for site, store in report["experiments"].items():
         for channel, cell in store["channels"].items():
-            for name in ("mask", "other"):
+            for name in ("behaviour", "geometry"):
                 test = cell["blocks"][name].get("jonckheere") or {}
                 raw[f"{site}/{channel}/{name}"] = test.get("p_increasing")
     # Holm per asset (amendment 2026-10-22, item 1): four tests each, because the
     # two assets no longer carry a joint claim.
+    sites = tuple(report.get("sites") or DEFAULT_SITES)
     adjusted = {}
-    for site in ("lumo", "bautzen"):
+    for site in sites:
         family = {k: v for k, v in raw.items() if k.split("/")[0] == site}
         for key, value in holm(family).items():
             adjusted[key] = value
     report["hypotheses"]["H1_family"] = {
         site: sorted(k for k in raw if k.split("/")[0] == site)
-        for site in ("lumo", "bautzen")}
+        for site in sites}
     for site, store in report["experiments"].items():
         for channel, cell in store["channels"].items():
-            for name in ("mask", "other"):
+            for name in ("behaviour", "geometry"):
                 key = f"{site}/{channel}/{name}"
                 entry = cell["blocks"][name]
                 entry["p_holm"] = adjusted.get(key)
@@ -690,6 +750,11 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
                     "n_by_level": entry["n_by_level"]}
 
     h2 = report["hypotheses"]["H2"]
+    if set(sites) != set(DEFAULT_SITES):
+        h2["rules"] = ("not computed: the cross-asset comparison needs the two "
+                        "controlled-reference experiments")
+        h2["skipped"] = True
+        return
     h2["rules"] = ("cosine of the standardised response vectors, each against its own "
                    "reference; magnitudes are never compared across experiments")
     comparisons = {"largest": {"lumo": ("state", LARGEST["lumo"], (LARGEST["lumo"],)),
@@ -699,7 +764,7 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
                               "bautzen": ("level", "DS1", tuple(MIDDLE["bautzen"]))}}
     for channel in ("ASC", "DESC"):
         h2[channel] = {}
-        for block_name in ("mask", "other"):
+        for block_name in ("behaviour", "geometry"):
             dims = BLOCKS[block_name]
             cell = {}
             for label, sides in comparisons.items():
@@ -727,18 +792,19 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
                     "lumo_z": left, "bautzen_z": right}
                 if value is not None:
                     cell[label]["p_null"] = null_percentile(abs(value), k, seed=seed)
-            if block_name == "other":
-                reduced = ("P", "S")
-                left = _vector(report, "lumo", channel, "state", LARGEST["lumo"], reduced)
-                right = _vector(report, "bautzen", channel, "state",
-                                LARGEST["bautzen"], reduced)
-                value, k = cosine(left, right, reduced)
-                cell["largest_without_gamma2"] = {
-                    "dims": list(reduced), "k": k, "cosine": value,
-                    "p_null": None if value is None else
-                    null_percentile(abs(value), k, seed=seed),
-                    "lumo_direction": sign_pattern(left, reduced),
-                    "bautzen_direction": sign_pattern(right, reduced)}
+            if block_name == "behaviour":
+                # the two dimensions of the block, side by side: a cosine needs a
+                # vector, so a single dimension is a sign comparison
+                for dim in BLOCKS["behaviour"]:
+                    left = _vector(report, "lumo", channel, "state",
+                                   LARGEST["lumo"], (dim,))
+                    right = _vector(report, "bautzen", channel, "state",
+                                    LARGEST["bautzen"], (dim,))
+                    cell[f"only_{dim}"] = {
+                        "lumo_z": left.get(dim), "bautzen_z": right.get(dim),
+                        "same_sign": (None if left.get(dim) is None or
+                                      right.get(dim) is None
+                                      else (left[dim] > 0) == (right[dim] > 0))}
             matrix = {}
             for lumo_state in STATES["lumo"]:
                 for bautzen_state in STATES["bautzen"]:
@@ -756,69 +822,82 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
 # ---------------------------------------------------------------------------
 # The table, the reading, the predictions
 # ---------------------------------------------------------------------------
-EXPERIMENT = {"lumo": "LUMO", "bautzen": "Bautzen"}
+EXPERIMENT = {"lumo": "LUMO", "bautzen": "Bautzen",
+              "carola": "Carolabrücke"}
 
 
 def table_rows(report):
     """The compact table the pre-registration asks for, one row per cell."""
     rows = []
-    for site in ("lumo", "bautzen"):
+    for site in (report.get("sites") or DEFAULT_SITES):
         store = report["experiments"][site]
         for channel in ("ASC", "DESC"):
             cell = store["channels"][channel]
             for state in STATES[site]:
                 entry = cell["states"][state]
-                mask, other = entry["blocks"]["mask"], entry["blocks"]["other"]
+                behaviour, geometry = (entry["blocks"]["behaviour"],
+                              entry["blocks"]["geometry"])
                 rows.append({
                     "Experiment": EXPERIMENT[site], "State": state,
                     "Channel": channel, "n": entry["n_units"],
-                    "R_mask": mask["value"], "R_other": other["value"],
-                    "Direction": f"{mask['direction']} | {other['direction']}",
+                    "R_behaviour": behaviour["value"], "R_geometry": geometry["value"],
+                    "Direction": (f"{behaviour['direction']} | "
+                                  f"{geometry['direction']}"),
                     "Scale": cell["dims"]["A"]["scale_used"],
                     "Support": "thin" if entry["n_units"] < SMALL_N else "ok"})
     return rows
 
 
 def reading_by_site(report):
-    """One verdict per asset, each with the bound its own interval licenses."""
+    """One verdict per asset and per block, with the bound each interval licenses."""
     out = {}
     h1 = report["hypotheses"]["H1"]
-    for site in ("lumo", "bautzen"):
-        mask = {ch: h1[f"{site}/{ch}/mask"] for ch in ("ASC", "DESC")}
-        other = {ch: h1[f"{site}/{ch}/other"] for ch in ("ASC", "DESC")}
-        significant_mask = [ch for ch, c in mask.items()
-                            if (c["p_holm"] or 1.0) < 0.05]
-        significant_other = [ch for ch, c in other.items()
-                             if (c["p_holm"] or 1.0) < 0.05]
-        monotone, bounds = {}, {}
-        for channel in ("ASC", "DESC"):
-            values = [v for v in mask[channel]["R_by_level"].values()
-                      if v is not None]
-            monotone[channel] = (all(b >= a for a, b in zip(values, values[1:]))
-                                 if len(values) > 1 else None)
-            pair = mask[channel]["delta_ci"]
-            bounds[channel] = {"delta_ci": pair,
-                               "excludes_increase_above": None if not pair else pair[1],
-                               "excludes_decrease_below": None if not pair else pair[0]}
-        if significant_mask:
-            verdict = ("a dose ordering in the mask block survives the asset's own "
-                       "Holm family on " + ", ".join(significant_mask))
-        elif any(monotone.values()):
-            rising = [ch for ch, flag in monotone.items() if flag]
-            verdict = ("no dose ordering survives the asset's own Holm family; the mask "
-                       "point estimate rises monotonically on " + ", ".join(rising)
-                       + " only")
-        else:
-            verdict = ("no dose ordering survives the asset's own Holm family, and the "
-                       "mask point estimate is not monotone on either channel")
-        wide = max((c["delta_ci"] or [None, None])[1] or 0.0 for c in mask.values())
+    for site in (report.get("sites") or DEFAULT_SITES):
+        block = {name: {ch: h1[f"{site}/{ch}/{name}"] for ch in ("ASC", "DESC")}
+                 for name in ("behaviour", "geometry")}
+        summary = {}
+        for name, cells in block.items():
+            significant = [ch for ch, c in cells.items()
+                           if (c["p_holm"] or 1.0) < 0.05]
+            monotone = {}
+            bounds = {}
+            for channel in ("ASC", "DESC"):
+                values = [v for v in cells[channel]["R_by_level"].values()
+                          if v is not None]
+                monotone[channel] = (all(b >= a for a, b in zip(values, values[1:]))
+                                     if len(values) > 1 else None)
+                pair = cells[channel]["delta_ci"]
+                bounds[channel] = {"delta_ci": pair,
+                                   "excludes_increase_above": (None if not pair
+                                                               else pair[1]),
+                                   "excludes_decrease_below": (None if not pair
+                                                               else pair[0])}
+            ordered = len(LEVELS[site]) > 2
+            if significant:
+                what = ("a dose ordering" if ordered else
+                        "the pre-to-post contrast")
+                verdict = (f"{what} in the {name} block survives the asset's own "
+                           f"Holm family on " + ", ".join(significant))
+            elif any(monotone.values()):
+                rising = [ch for ch, flag in monotone.items() if flag]
+                where = ("both channels" if len(rising) == 2
+                         else " ".join(rising) + " only")
+                verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
+                           f"in the {name} block survives the asset's own Holm family; "
+                           f"the point estimate of the step is positive on " + where)
+            else:
+                verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
+                           f"in the {name} block survives the asset's own Holm family, "
+                           f"and the point estimate of the step is not monotone")
+                verdict += " on either channel"
+            summary[name] = {
+                "verdict": verdict, "significant": significant,
+                "monotone_by_channel": monotone, "delta_ci": bounds,
+                "widest_upper_bound": max((c["delta_ci"] or [None, None])[1] or 0.0
+                                          for c in cells.values())}
+        verdicts = {name: item["verdict"] for name, item in summary.items()}
         out[site] = {
-            "verdict": verdict,
-            "mask_significant": significant_mask,
-            "other_significant": significant_other,
-            "mask_monotone_by_channel": monotone,
-            "mask_delta_ci": bounds,
-            "widest_upper_bound": wide,
+            "verdicts": verdicts, "blocks": summary,
             "n_ref": {ch: report["experiments"][site]["channels"][ch]["dims"]["A"]["n"]
                       for ch in ("ASC", "DESC")},
             "scale_used": {ch: report["experiments"][site]["channels"][ch]["dims"]["A"]
@@ -827,68 +906,90 @@ def reading_by_site(report):
 
 
 def reading(report):
-    """Per-asset verdicts plus the descriptive comparison. No joint label."""
+    """Per-asset verdicts plus — for the pair — the descriptive comparison."""
     h2 = report["hypotheses"]["H2"]
     comparison = {}
-    for channel in ("ASC", "DESC"):
-        comparison[channel] = {}
-        for block_name in ("mask", "other"):
-            item = h2[channel][block_name]["largest"]
-            comparison[channel][block_name] = {
-                "cosine": item["cosine"], "ci": item["ci"],
-                "sign_agreement": item["sign_agreement"],
-                "p_null": item.get("p_null"),
-                "lumo_direction": item["lumo_direction"],
-                "bautzen_direction": item["bautzen_direction"]}
+    if not h2.get("skipped"):
+        for channel in ("ASC", "DESC"):
+            comparison[channel] = {}
+            for block_name in ("behaviour", "geometry"):
+                item = h2[channel][block_name]["largest"]
+                comparison[channel][block_name] = {
+                    "cosine": item["cosine"], "ci": item["ci"],
+                    "sign_agreement": item["sign_agreement"],
+                    "p_null": item.get("p_null"),
+                    "lumo_direction": item["lumo_direction"],
+                    "bautzen_direction": item["bautzen_direction"]}
+    role = ("not computed: a single-asset run has no comparison partner"
+            if h2.get("skipped") else
+            "descriptive: the same metric applied to two assets, not a "
+            "transferability test")
     return {"per_asset": reading_by_site(report), "comparison": comparison,
-            "comparison_role": "descriptive: the same metric applied to two assets, "
-                               "not a transferability test"}
+            "comparison_role": role}
 
 
 def predictions(report):
-    """P1-P3 as pre-registered, with the numbers that decide them."""
+    """P1-P3, re-stated per block in the 2026-10-22 amendment (block split).
+
+    The three predictions belong to LUMO (they are statements about the measured
+    frequency dose), so a run without the tower has none.
+    """
     out = []
+    if "lumo" not in (report.get("sites") or DEFAULT_SITES):
+        return out
+
+    # P1 -- the geometry block of the tower rises with the measured dose
     details, holds = [], []
     for channel in ("ASC", "DESC"):
-        levels = report["hypotheses"]["H1"][f"lumo/{channel}/mask"]["R_by_level"]
+        levels = report["hypotheses"]["H1"][f"lumo/{channel}/geometry"]["R_by_level"]
         low, mid, high = levels.get("L0"), levels.get("L1"), levels.get("L2")
         holds.append(all(v is not None for v in (low, mid, high)) and high > mid > 0)
         details.append(f"{channel} {_num(low)} < {_num(mid)} < {_num(high)}")
     out.append({"key": "P1",
                 "verdict": "held" if all(holds) else
                            ("partly" if any(holds) else "did not hold"),
-                "statement": "LUMO's mask magnitude rises with the dose, L0 < L1 < L2",
+                "statement": "the tower's **geometry** magnitude rises with the dose, "
+                             "L0 < L1 < L2",
                 "detail": "; ".join(details)})
 
-    details, holds = [], []
-    for channel in ("ASC", "DESC"):
-        states = report["experiments"]["lumo"]["channels"][channel]["states"]
-        three = states["DAM 3"]["blocks"]["mask"]["value"]
-        four = states["DAM 4"]["blocks"]["mask"]["value"]
-        levels = report["hypotheses"]["H1"][f"lumo/{channel}/mask"]["R_by_level"]
-        step = None if (levels.get("L1") is None or levels.get("L2") is None) \
-            else abs(levels["L2"] - levels["L1"])
-        gap = None if (three is None or four is None) else abs(three - four)
-        holds.append(gap is not None and step is not None and gap <= step)
-        details.append(f"{channel} |R(DAM 3) - R(DAM 4)| = {_num(gap)} against a "
-                       f"cross-dose step of {_num(step)}")
+    # P2 -- DAM 3 and DAM 4 share one dose, so the same-dose gap stays inside the
+    # cross-dose step. Evaluated per block, because the amendment made the two
+    # blocks answer differently.
+    details, verdicts = [], []
+    for name in ("geometry", "behaviour"):
+        holds = []
+        for channel in ("ASC", "DESC"):
+            states = report["experiments"]["lumo"]["channels"][channel]["states"]
+            three = states["DAM 3"]["blocks"][name]["value"]
+            four = states["DAM 4"]["blocks"][name]["value"]
+            levels = report["hypotheses"]["H1"][f"lumo/{channel}/{name}"]["R_by_level"]
+            step = None if (levels.get("L1") is None or levels.get("L2") is None)                 else abs(levels["L2"] - levels["L1"])
+            gap = None if (three is None or four is None) else abs(three - four)
+            holds.append(gap is not None and step is not None and gap <= step)
+            details.append(f"{name}/{channel}: |R(DAM 3) - R(DAM 4)| = {_num(gap)} "
+                           f"against a cross-dose step of {_num(step)}")
+        verdicts.append("held" if all(holds) else
+                        ("partly" if any(holds) else "did not hold"))
     out.append({"key": "P2",
-                "verdict": "held" if all(holds) else
-                           ("partly" if any(holds) else "did not hold"),
+                "verdict": "; ".join(f"{name} {verdict}" for name, verdict in
+                                      zip(("geometry", "behaviour"), verdicts))
+                           if len(set(verdicts)) > 1 else verdicts[0],
                 "statement": "DAM 3 and DAM 4 share one dose, so their magnitudes "
                              "agree (the same-dose gap is not larger than the "
-                             "cross-dose step)",
+                             "cross-dose step) — asked per block",
                 "detail": "; ".join(details)})
 
-    other = [report["hypotheses"]["H1"][f"{site}/{channel}/other"]["p_holm"]
-             for site in ("lumo", "bautzen") for channel in ("ASC", "DESC")]
-    following = [p for p in other if p is not None and p < 0.05]
+    # P3 -- the behaviour block need not follow the dose
+    behaviour = [report["hypotheses"]["H1"][f"{site}/{channel}/behaviour"]["p_holm"]
+                 for site in (report.get("sites") or DEFAULT_SITES)
+                 for channel in ("ASC", "DESC")]
+    following = [p for p in behaviour if p is not None and p < 0.05]
     out.append({"key": "P3",
                 "verdict": "consistent" if not following else
-                           "the other block follows the dose too",
-                "statement": "the γ²/P/S block need not follow the dose",
-                "detail": f"{len(following)} of {len(other)} other-block tests reach "
-                          f"Holm < 0.05"})
+                           "the behaviour block follows the dose too",
+                "statement": "the γ²/P behaviour block need not follow the dose",
+                "detail": f"{len(following)} of {len(behaviour)} behaviour-block tests "
+                          f"reach Holm < 0.05"})
     return out
 
 
@@ -915,20 +1016,27 @@ def markdown(report):
     add = lines.append
     dose = report["dose"]
     reading = report["reading"]
-    add("# OCV reconfiguration against the controlled state dose — two assets, "
-        "two verdicts")
+    sites = tuple(report.get("sites") or DEFAULT_SITES)
+    is_pair = set(sites) == set(DEFAULT_SITES)
+    subject = ("two assets, two verdicts" if is_pair else
+               " ".join(EXPERIMENT[site] for site in sites) + ", two states")
+    add(f"# OCV reconfiguration against the controlled state dose — {subject}")
     add("")
     add("*generated by `code/sds/ocv_reconfigure.py`; the design is fixed in "
         "`code/sds/ocv_reconfigure_spec.md`, including the 2026-10-22 amendment that "
         "separates the two assets*")
     add("")
     add("Each asset is measured against **its own reference state**, in units of that "
-        "reference's own variability: LUMO against `healthy` on the coherence rows, "
-        "Bautzen against `RS` on the paired bridge-minus-control difference. The two "
-        "assets share a metric, not a scale, so their magnitudes are never compared. "
-        "Each carries its **own** Holm family of four tests and its own verdict; no "
-        "joint label is issued, and the section at the end is a description, not a "
-        "hypothesis.")
+        "reference's own variability"
+        + (" — LUMO against `healthy` on the coherence rows, Bautzen against `RS` on "
+           "the paired bridge-minus-control difference" if is_pair else
+           " — Carola against `pre-collapse (healthy)` on the support-sized chip, "
+           "with the post-collapse state as the single contrast")
+        + ". Assets share a metric, not a scale, so their magnitudes are never "
+        "compared. Each carries its **own** Holm family of four tests and its own "
+        "verdict; no joint label is issued"
+        + (", and the comparison section is a description, not a hypothesis."
+           if is_pair else "."))
     add("")
     add("## What the dose is")
     add("")
@@ -946,7 +1054,7 @@ def markdown(report):
         "frequency per state — its ladder `RS < DS1 < DS2` is ordinal, and no dose "
         "regression is run on it.")
     add("")
-    for site in ("lumo", "bautzen"):
+    for site in (report.get("sites") or DEFAULT_SITES):
         block = reading["per_asset"][site]
         add(f"## {EXPERIMENT[site]}")
         add("")
@@ -955,20 +1063,20 @@ def markdown(report):
             f"`{block['scale_used']['ASC']}` (ASC) / `{block['scale_used']['DESC']}` "
             f"(DESC).")
         add("")
-        add("| State | Channel | n | R_mask | R_other | Direction | Scale | Support |")
+        add("| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |")
         add("| --- | --- | ---: | ---: | ---: | --- | --- | --- |")
         for row in report["table"]:
             if row["Experiment"] != EXPERIMENT[site]:
                 continue
             add(f"| {row['State']} | {row['Channel']} | {row['n']} | "
-                f"{_num(row['R_mask'])} | {_num(row['R_other'])} | "
+                f"{_num(row['R_behaviour'])} | {_num(row['R_geometry'])} | "
                 f"{row['Direction']} | `{row['Scale']}` | {row['Support']} |")
         add("")
         add("| channel | block | R by level | ΔR, top step | p (one-sided) | Holm "
             "in the asset's family |")
         add("| --- | --- | --- | --- | ---: | ---: |")
         for channel in ("ASC", "DESC"):
-            for name in ("mask", "other"):
+            for name in ("behaviour", "geometry"):
                 cell = report["hypotheses"]["H1"][f"{site}/{channel}/{name}"]
                 levels = " < ".join(f"{key} {_num(value)}"
                                     for key, value in cell["R_by_level"].items())
@@ -977,10 +1085,14 @@ def markdown(report):
                     f"{_num(pair[0])} … {_num(pair[1])} | "
                     f"{_p(cell['p_increasing'])} | {_p(cell['p_holm'])} |")
         add("")
-        add(f"**Verdict — {EXPERIMENT[site]}**: {block['verdict']}. "
-            f"Its own interval still covers a top-step change of up to "
-            f"{_num(block['widest_upper_bound'], 2)} R-units, so what the asset "
-            f"**excludes** is bounded by that number, and nothing smaller.")
+        for name in ("behaviour", "geometry"):
+            item = block["blocks"][name]
+            add(f"**Verdict — {EXPERIMENT[site]}, {name}**: {item['verdict']}. Its own "
+                f"interval still covers a top-step change of up to "
+                f"{_num(item['widest_upper_bound'], 2)} R-units, so what the asset "
+                f"**excludes** for this block is bounded by that number, and nothing "
+                f"smaller.")
+            add("")
         add("")
         if site == "lumo":
             add("The tower's two visits per state make one further statement "
@@ -989,54 +1101,76 @@ def markdown(report):
                 "dose levels do** (P2 below), so the response is not a function of "
                 "the frequency drop.")
             add("")
-        else:
+        elif site == "bautzen":
             add("The bridge's states are its calendar; the paired "
                 "bridge-minus-control difference removes everything the two tracks "
                 "share (season, acquisition day, processing) and nothing more.")
             add("")
-        add("**Pre-registered predictions that belong to this asset:**")
-        add("")
-        for item in report["predictions"]:
-            if (site == "lumo" and item["key"] in ("P1", "P2")) or                (site == "bautzen" and item["key"] == "P3"):
+        else:
+            add("Carola has two states and no control track: `pre` and `post` are "
+                "separated by the collapse date itself, so this is a before/after "
+                "contrast in time, not a controlled comparison. The table is the "
+                "support-sized chip of `Girder A` alone.")
+            add("")
+        applicable = [item for item in report["predictions"]
+                      if (site == "lumo" and item["key"] in ("P1", "P2"))
+                      or (site == "bautzen" and item["key"] == "P3")]
+        if applicable:
+            add("**Pre-registered predictions that belong to this asset:**")
+            add("")
+            for item in applicable:
                 add(f"* **{item['key']}** — {item['statement']}: "
                     f"*{item['verdict']}*. {item['detail']}")
+            add("")
+    if not is_pair:
+        add("## No comparison section")
         add("")
-    add("## Comparison — the same metric, two assets (descriptive)")
-    add("")
-    add("Not a hypothesis and not a test: the cosine of the two standardised "
-        "response vectors at the largest state says whether the *same metric*, applied "
-        "twice to two assets, answers with the same direction. Magnitudes are not "
-        "compared — each asset's `R` lives on its own scale.")
-    add("")
-    add("| channel | block | cosine | 95 % CI | sign agreement | null p | LUMO | Bautzen |")
-    add("| --- | --- | ---: | --- | --- | ---: | --- | --- |")
-    for channel in ("ASC", "DESC"):
-        for block_name in ("mask", "other"):
-            cell = report["hypotheses"]["H2"][channel][block_name]
-            item = cell["largest"]
-            add(f"| {channel} | `{block_name}` "
-                f"[{', '.join(item['dims'])}] | {_num(item['cosine'])} | "
-                f"{_ci(item['ci'])} | "
-                f"{item['sign_agreement'][0]}/{item['sign_agreement'][1]} | "
-                f"{_p(item.get('p_null'))} | {item['lumo_direction']} | "
-                f"{item['bautzen_direction']} |")
-            if "largest_without_gamma2" in cell:
-                reduced = cell["largest_without_gamma2"]
-                add(f"| {channel} | `{block_name}` [{', '.join(reduced['dims'])}] | "
-                    f"{_num(reduced['cosine'])} | – | – | "
-                    f"{_p(reduced.get('p_null'))} | {reduced['lumo_direction']} | "
-                    f"{reduced['bautzen_direction']} |")
-    add("")
-    add("`null p` is the share of random directions in 3 (or 2) dimensions whose "
-        "absolute cosine is at least as large — a guard against a coarse direction "
-        "space, not a significance claim. γ² is a different quantity in the two "
-        "experiments, which is why the other block is also given without it.")
-    add("")
+        add(f"A single-asset run has no comparison partner, so the cosine block of "
+            f"the pair is not computed. The cross-asset question (`{EXPERIMENT['lumo']}` "
+            f"vs. `{EXPERIMENT['bautzen']}`) needs both controlled-reference "
+            f"experiments and is reported in `data/sds/ocv_reconfigure.md`.")
+        add("")
+    if is_pair:
+        add("## Comparison — the same metric, two assets (descriptive)")
+        add("")
+        add("Not a hypothesis and not a test: the cosine of the two standardised "
+            "response vectors at the largest state says whether the *same metric*, applied "
+            "twice to two assets, answers with the same direction. Magnitudes are not "
+            "compared — each asset's `R` lives on its own scale.")
+        add("")
+        add("| channel | block | cosine | 95 % CI | sign agreement | null p | LUMO | Bautzen |")
+        add("| --- | --- | ---: | --- | --- | ---: | --- | --- |")
+        for channel in ("ASC", "DESC"):
+            for block_name in ("behaviour", "geometry"):
+                cell = report["hypotheses"]["H2"][channel][block_name]
+                item = cell["largest"]
+                add(f"| {channel} | `{block_name}` "
+                    f"[{', '.join(item['dims'])}] | {_num(item['cosine'])} | "
+                    f"{_ci(item['ci'])} | "
+                    f"{item['sign_agreement'][0]}/{item['sign_agreement'][1]} | "
+                    f"{_p(item.get('p_null'))} | {item['lumo_direction']} | "
+                    f"{item['bautzen_direction']} |")
+                for dim in ("gamma2", "P"):
+                    only = cell.get(f"only_{dim}")
+                    if not only:
+                        continue
+                    add(f"| {channel} | `{dim}` alone | — | – | – | – | "
+                        f"{_num(only['lumo_z'], 2)} | {_num(only['bautzen_z'], 2)} |")
+        add("")
+        add("`null p` is the share of random directions in 3 (or 2) dimensions whose "
+            "absolute cosine is at least as large — a guard against a coarse direction "
+            "space, not a significance claim. γ² is a different quantity in the two "
+            "experiments, which is why the two dimensions of the behaviour block are "
+            "also printed one by one (`z` per asset). The geometry block carries four "
+            "dimensions while its plane shows two: `R_geometry` is the RMS over "
+            "`A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not "
+            "morphology) are annotated beside the plane rather than drawn as axes.")
+        add("")
     add("### Units dropped, per dimension")
     add("")
     add("| experiment | units | " + " | ".join(DIMS) + " | unpaired |")
     add("| --- | ---: |" + " ---: |" * (len(DIMS) + 1))
-    for site in ("lumo", "bautzen"):
+    for site in (report.get("sites") or DEFAULT_SITES):
         audit = report["experiments"][site]["audit"]
         dropped = audit.get("dropped") or {}
         cells = " | ".join(str(dropped.get(dim, 0)) for dim in DIMS)
@@ -1060,23 +1194,35 @@ def markdown(report):
     add("* No failure case enters the construction of this metric; projecting them "
         "afterwards is a separate step with these definitions frozen.")
     add("")
+    if "carola" in sites:
+        add("* **One girder, not three.** The support-sized chip keeps only "
+            "`Girder A` (436 chips of the committed 1 717); `Girder B` and "
+            "`Girder C` are not in this table, so nothing here speaks for them.")
+        add("* **Two states, no control.** Carola's `pre` and `post` are separated "
+            "by the collapse date and the table carries no control track, so the "
+            "post signature is confounded with the calendar — unlike Bautzen, "
+            "whose bridge-minus-control difference removes what the two tracks "
+            "share.")
+        add("* **No ordering claim.** With two states there is no dose ladder to "
+            "order: the ordered test reduces to a one-sided rank test between "
+            "`pre` and `post`, and only its two-group version is reported.")
     return "\n".join(lines)
 
 
 def write_outputs(report, json_path=None, md_path=None, csv_path=None, quiet=False):
     """JSON, the report, and the compact table — all from the same object."""
-    json_path = json_path or os.path.join(REPO, "data", "sds", "ocv_reconfigure.json")
-    md_path = md_path or os.path.join(REPO, "data", "sds", "ocv_reconfigure.md")
-    csv_path = csv_path or os.path.join(REPO, "data", "sds",
-                                        "ocv_reconfigure_table.csv")
+    stem = output_stem(report.get("sites") or DEFAULT_SITES)
+    json_path = json_path or os.path.join(REPO, "data", "sds", f"{stem}.json")
+    md_path = md_path or os.path.join(REPO, "data", "sds", f"{stem}.md")
+    csv_path = csv_path or os.path.join(REPO, "data", "sds", f"{stem}_table.csv")
     os.makedirs(os.path.dirname(os.path.abspath(json_path)), exist_ok=True)
     with open(json_path, "w") as handle:
         json.dump(report, handle, indent=1, sort_keys=True, default=str)
         handle.write("\n")
     with open(md_path, "w") as handle:
         handle.write(markdown(report))
-    fields = ["Experiment", "State", "Channel", "n", "R_mask", "R_other", "Direction",
-              "Scale", "Support"]
+    fields = ["Experiment", "State", "Channel", "n", "R_behaviour", "R_geometry",
+              "Direction", "Scale", "Support"]
     with open(csv_path, "w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -1092,7 +1238,8 @@ def write_outputs(report, json_path=None, md_path=None, csv_path=None, quiet=Fal
 # ---------------------------------------------------------------------------
 # The figure — two rows, four panels, arrows from the reference
 # ---------------------------------------------------------------------------
-PANELS = (("ASC", "mask"), ("ASC", "other"), ("DESC", "mask"), ("DESC", "other"))
+PANELS = (("ASC", "behaviour"), ("ASC", "geometry"),
+          ("DESC", "behaviour"), ("DESC", "geometry"))
 
 
 def _magnitude_strip(ax, entry, site):
@@ -1120,7 +1267,7 @@ def _magnitude_strip(ax, entry, site):
 
 def _panel(ax, report, site, channel, block_name, plt):
     """One cell of a plate: arrows from the reference, plus the R strip."""
-    dims = BLOCKS[block_name]
+    dims = GEOMETRY_PLANE if block_name == "geometry" else BLOCKS[block_name]
     cell = report["experiments"][site]["channels"][channel]
     span = 0.3
     for state in STATES[site]:
@@ -1146,13 +1293,18 @@ def _panel(ax, report, site, channel, block_name, plt):
     ax.set_xlabel(f"z({dims[0]})", fontsize=5.4, labelpad=1.0)
     ax.set_ylabel(f"z({dims[1]})", fontsize=5.4, labelpad=1.0)
     ax.set_title(f"{EXPERIMENT[site]} · {channel} · {block_name} "
-                 f"[{', '.join(dims)}]", fontsize=6.2, loc="left")
-    if block_name == "other":
-        gamma = cell["states"][LARGEST[site]]["blocks"]["other"]["z"].get("gamma2")
-        if gamma is not None:
-            ax.text(0.97, 0.97, f"γ² of {LARGEST[site]}: {gamma:+.2f}",
-                    transform=ax.transAxes, ha="right", va="top", fontsize=4.6,
-                    color="0.35")
+                 f"[{', '.join(DIM_DISPLAY.get(dim, dim) for dim in dims)}]",
+                 fontsize=6.2, loc="left")
+    if block_name == "geometry":
+        # D and S stay in the block magnitude but are not on the plane: D partly
+        # inherits A algebraically, and S describes position, not morphology
+        mark = cell["states"][LARGEST[site]]["blocks"]["geometry"]["z"]
+        note = " ".join(f"{dim}{mark[dim]:+.2f}" for dim in ("D", "S")
+                        if mark.get(dim) is not None)
+        if note:
+            ax.text(0.97, 0.97, note, transform=ax.transAxes, ha="right",
+                    va="top", fontsize=4.6, color="0.35")
+
     _magnitude_strip(ax, cell["blocks"][block_name], site)
 
 
@@ -1177,41 +1329,63 @@ def _plate(report, sites, figdir, stem, suptitle):
     return out
 
 
+#: One line per plate title, so a single-asset run reads like the pair's rows.
+PLATE_TITLE = {
+    "lumo": "LUMO tower — OCV reconfiguration against the measured frequency drop",
+    "bautzen": "Bautzen bridge — OCV reconfiguration against the ordinal state "
+               "ladder (paired bridge minus control)",
+    "carola": "Carolabrücke — OCV reconfiguration between the pre- and the "
+               "post-collapse state (support-sized chip, Girder A)",
+}
+
+
 def make_figure(report, figdir=None):
-    """Three plates: the juxtaposition, then one per asset standing alone."""
+    """The plates: the juxtaposition for the pair, one plate per asset otherwise."""
     figdir = figdir or os.path.join(REPO, "figures", "sds")
     os.makedirs(figdir, exist_ok=True)
-    plates = [
-        ("fig_sds_ocv_reconfigure", ("lumo", "bautzen"),
-         "OCV reconfiguration against the controlled state dose — juxtaposition of "
-         "two assets (each against its own reference; no shared scale)"),
-        ("fig_sds_ocv_reconfigure_lumo", ("lumo",),
-         "LUMO tower — OCV reconfiguration against the measured frequency drop"),
-        ("fig_sds_ocv_reconfigure_bautzen", ("bautzen",),
-         "Bautzen bridge — OCV reconfiguration against the ordinal state ladder "
-         "(paired bridge minus control)"),
-    ]
-    return [_plate(report, sites, figdir, stem, title)
-            for stem, sites, title in plates]
+    sites = tuple(report.get("sites") or DEFAULT_SITES)
+    if set(sites) == set(DEFAULT_SITES):
+        plates = [("fig_sds_ocv_reconfigure", tuple(sites),
+                   "OCV reconfiguration against the controlled state dose — "
+                   "juxtaposition of two assets (each against its own reference; "
+                   "no shared scale)")]
+        plates += [(f"fig_sds_ocv_reconfigure_{site}", (site,), PLATE_TITLE[site])
+                   for site in sites]
+    else:
+        plates = [(f"fig_sds_ocv_reconfigure_{site}", (site,), PLATE_TITLE[site])
+                  for site in sites]
+    return [_plate(report, subset, figdir, stem, title)
+            for stem, subset, title in plates]
 
 
 def figure_markdown(report):
-    """The panel guide for the three plates."""
+    """The panel guide: the pair's three plates, or one plate per asset."""
+    sites = tuple(report.get("sites") or DEFAULT_SITES)
+    stem = output_stem(sites)
+    pair = set(sites) == set(DEFAULT_SITES)
     lines = ["# `fig_sds_ocv_reconfigure*.jpg` — panel guide", "",
-             "*generated by `code/sds/ocv_reconfigure.py`; the numbers behind every "
-             "arrow are in `data/sds/ocv_reconfigure.json`*", "",
-             "Three plates, two roles:", "",
-             "| file | role |", "| --- | --- |",
-             "| `fig_sds_ocv_reconfigure.jpg` | the juxtaposition — rows = the two "
-             "assets, columns = channel × block; the caption says *no shared scale* |",
-             "| `fig_sds_ocv_reconfigure_lumo.jpg` | the tower alone (4 panels) |",
-             "| `fig_sds_ocv_reconfigure_bautzen.jpg` | the bridge alone (4 panels) |",
-             "",
+             f"*generated by `code/sds/ocv_reconfigure.py`; the numbers behind every "
+             f"arrow are in `data/sds/{stem}.json`*", "",
+             ("Three plates, two roles:" if pair
+              else "One plate — the asset standing alone:"), "",
+             "| file | role |", "| --- | --- |"]
+    if pair:
+        lines += [
+            "| `fig_sds_ocv_reconfigure.jpg` | the juxtaposition — rows = the two "
+            "assets, columns = channel × block; the caption says *no shared scale* |",
+            "| `fig_sds_ocv_reconfigure_lumo.jpg` | the tower alone (4 panels) |",
+            "| `fig_sds_ocv_reconfigure_bautzen.jpg` | the bridge alone (4 panels) |"]
+    else:
+        for site in sites:
+            lines.append(f"| `fig_sds_ocv_reconfigure_{site}.jpg` | "
+                         f"{EXPERIMENT[site]} alone "
+                         f"(4 panels) |")
+    lines += ["",
              "In every panel the origin is that asset's **reference state** and the "
              "arrows end at its standardised responses "
              "(`z = (median − median_ref) / scale`), so the geometry is "
              "within-asset; the two assets never share a scale.", ""]
-    for site in ("lumo", "bautzen"):
+    for site in (report.get("sites") or DEFAULT_SITES):
         block = report["reading"]["per_asset"][site]
         if site == "lumo":
             levels = ", ".join(f"`{name}` ({_num(dose, 2)} % frequency drop)"
@@ -1222,9 +1396,10 @@ def figure_markdown(report):
         lines.append(f"* **{EXPERIMENT[site]}** — reference `{REFERENCE[site]}` "
                      f"(n_ref {block['n_ref']['ASC']} ASC / {block['n_ref']['DESC']} "
                      f"DESC), scale `{block['scale_used']['ASC']}` / "
-                     f"`{block['scale_used']['DESC']}`, levels {levels}; mask block "
-                     f"`[{'`, `'.join(BLOCKS['mask'])}]`, other block "
-                     f"`[{'`, `'.join(BLOCKS['other'])}]`.")
+                     f"`{block['scale_used']['DESC']}`, levels {levels}; behaviour "
+                     f"`[{'`, `'.join(BLOCKS['behaviour'])}]`, geometry "
+                     f"`[{'`, `'.join(BLOCKS['geometry'])}]` (plane "
+                     f"`[{', '.join(GEOMETRY_PLANE)}]`).")
     lines += ["",
               "The inset in each panel repeats the block magnitude `R` per level with "
               "its moving-block 95 % interval — the quantity H1 tests. The reference "
@@ -1262,23 +1437,24 @@ def selftest():
         if not condition:
             failures.append(f"{label}: {detail}")
 
-    # 1. a planted progression is found by the ordered test
-    units = _synthetic("lumo", effect=2.0)
-    refs = {d: reference_stats(units, "lumo", "ASC", d) for d in BLOCKS["mask"]}
-    per_unit = unit_magnitudes(units, "lumo", "ASC", BLOCKS["mask"], refs)
-    groups = [[x["R"] for x in per_unit if x["state"] in states]
-              for _n, states, _d in LEVELS["lumo"]]
-    test = jonckheere(groups, n_perm=2000, seed=7)
-    check("planted progression is detected", test["p_increasing"] < 0.01, str(test))
+    # 1./2. the ordered test on the geometry block: it must find a planted
+    # progression and must not manufacture one. Three seeds each, because a single
+    # draw of a permutation p is itself noisy.
+    def ordered_p(effect, seed):
+        units = _synthetic("lumo", effect=effect, seed=seed)
+        refs = {d: reference_stats(units, "lumo", "ASC", d)
+                for d in BLOCKS["geometry"]}
+        per_unit = unit_magnitudes(units, "lumo", "ASC", BLOCKS["geometry"], refs)
+        groups = [[x["R"] for x in per_unit if x["state"] in states]
+                  for _n, states, _d in LEVELS["lumo"]]
+        return jonckheere(groups, n_perm=2000, seed=seed)["p_increasing"]
 
-    # 2. no effect is not detected
-    units = _synthetic("lumo", effect=0.0, seed=11)
-    refs = {d: reference_stats(units, "lumo", "ASC", d) for d in BLOCKS["mask"]}
-    per_unit = unit_magnitudes(units, "lumo", "ASC", BLOCKS["mask"], refs)
-    groups = [[x["R"] for x in per_unit if x["state"] in states]
-              for _n, states, _d in LEVELS["lumo"]]
-    test = jonckheere(groups, n_perm=2000, seed=7)
-    check("no effect is not flagged", test["p_increasing"] > 0.05, str(test))
+    planted = [ordered_p(2.0, seed) for seed in (3, 5, 7)]
+    check("a planted progression is detected in at least 2 of 3 seeds",
+          sum(1 for p in planted if p < 0.01) >= 2, str(planted))
+    null = [ordered_p(0.0, seed) for seed in (11, 12, 13)]
+    check("a null draws p > 0.05 in at least 2 of 3 seeds",
+          sum(1 for p in null if p > 0.05) >= 2, str(null))
 
     # 3. the scale chain names its step
     scale, kind = robust_scale([1.0])
@@ -1306,7 +1482,7 @@ def selftest():
 
     # 7. the reference level carries no interval, by construction
     units = _synthetic("lumo", effect=1.0, n=12, seed=5)
-    boot = bootstrap_magnitudes(units, "lumo", "ASC", BLOCKS["mask"], boot=120, seed=7)
+    boot = bootstrap_magnitudes(units, "lumo", "ASC", BLOCKS["behaviour"], boot=120, seed=7)
     reference_name = LEVELS["lumo"][0][0]
     check("the reference level has a [0, 0] interval",
           boot["ci"].get(reference_name) == [0.0, 0.0] and
@@ -1338,7 +1514,7 @@ def selftest():
 def verify(report):
     """Re-derive every table cell from the two records and compare with the JSON."""
     problems = []
-    for site in ("lumo", "bautzen"):
+    for site in (report.get("sites") or DEFAULT_SITES):
         units, _audit = load_units(site)
         block = responses(units, site)
         store = report["experiments"][site]
@@ -1381,8 +1557,12 @@ def verify(report):
 
 def build_parser():
     parser = argparse.ArgumentParser(
-        description=("OCV reconfiguration against the controlled state dose — "
-                     "LUMO and Bautzen"))
+        description=("OCV reconfiguration against the controlled state dose — the "
+                     "LUMO/Bautzen pair by default, or a single asset with "
+                     "--sites"))
+    parser.add_argument("--sites", default=",".join(DEFAULT_SITES),
+                        help="comma-separated assets: lumo,bautzen (default) or "
+                             "a single one such as carola")
     parser.add_argument("--boot", type=int, default=BOOT)
     parser.add_argument("--perm", type=int, default=PERM)
     parser.add_argument("--seed", type=int, default=SEED)
@@ -1397,13 +1577,23 @@ def build_parser():
     return parser
 
 
+def output_stem(sites):
+    """The file stem of a run: the pair keeps the plain name, a single asset its own."""
+    sites = tuple(sites)
+    if set(sites) == set(DEFAULT_SITES):
+        return "ocv_reconfigure"
+    return "ocv_" + "_".join(sites)
+
+
 def main(argv=None):
     args = build_parser().parse_args(argv)
     if args.selftest:
         return selftest()
+    sites = tuple(part.strip() for part in args.sites.split(",") if part.strip())
+    stem = output_stem(sites)
     committed_path = args.json or os.path.join(REPO, "data", "sds",
-                                               "ocv_reconfigure.json")
-    report = compute(boot=args.boot, perm=args.perm, seed=args.seed)
+                                               f"{stem}.json")
+    report = compute(sites=sites, boot=args.boot, perm=args.perm, seed=args.seed)
     if args.verify:
         with open(committed_path) as handle:
             committed = json.load(handle)
@@ -1416,8 +1606,9 @@ def main(argv=None):
     json_path, md_path, csv_path = write_outputs(report, args.json, args.md,
                                                  args.csv, quiet=args.quiet)
     figures = make_figure(report, args.figdir)
-    figure_md = os.path.join(os.path.dirname(figures[0]),
-                             "fig_sds_ocv_reconfigure.md")
+    figure_md_name = ("fig_sds_ocv_reconfigure.md" if stem == "ocv_reconfigure"
+                      else f"fig_sds_ocv_reconfigure_{'_'.join(sites)}.md")
+    figure_md = os.path.join(os.path.dirname(figures[0]), figure_md_name)
     with open(figure_md, "w") as handle:
         handle.write(figure_markdown(report))
     if not args.quiet:
@@ -1425,7 +1616,8 @@ def main(argv=None):
             print(f"  {os.path.relpath(path, REPO)}")
         print(f"  {os.path.relpath(figure_md, REPO)}")
         for site, block in report["reading"]["per_asset"].items():
-            print(f"  {EXPERIMENT[site]}: {block['verdict']}")
+            for name, verdict in block["verdicts"].items():
+                print(f"  {EXPERIMENT[site]} / {name}: {verdict}")
         print(f"  comparison: {report['reading']['comparison_role']}")
         for item in report["predictions"]:
             print(f"  {item['key']}: {item['verdict']}")

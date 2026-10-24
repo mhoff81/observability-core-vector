@@ -73,6 +73,67 @@ where a site already owns that stem (Espoo's `fig_espoo_ocv_orbits_chip.*`).
 `--verify` re-derives every plotted point, run and median from the table and
 fails on a mismatch — the figure computes nothing the JSON does not carry.
 
+### `cases/` — the six-case overview page
+
+`[cases/fig_cases_overview.py](cases/fig_cases_overview.py)` reads the six cases on
+the **support-sized chip** (`data/sds/sds_support.json` for the state contrasts,
+Espoo's chip figure for the event-free control) and draws one page: the case map on the event spectrum, the
+dimension-response matrix, and six schematic time lines. A matrix cell carries an
+arrow only when that case's own interval excludes zero **and** both sides carry at
+least six units (`○` = tested, nothing resolved; `?` = no evidence; fill = the SDS
+band inside the cell), so Haltern's single resolved dimension is `F ↑` and
+Morandi's row is four circles on purpose. YWF is **not** a row: nineteen of its 33
+acquisitions cannot be cut on the support chip (four of the six post-collapse
+dates among them), which is fewer than an interval — the report states it instead
+of leaving a silent hole. `--selftest` checks the gate rules and the three
+adapters; `--verify` re-derives every cell and every source hash.
+
+```sh
+python3 code/cases/fig_cases_overview.py            # JSON + report + 630 dpi JPEG
+python3 code/cases/fig_cases_overview.py --selftest # 11 checks
+python3 code/cases/fig_cases_overview.py --verify   # every cell, every sha256
+```
+
+### `cases/` — the correspondence model (campaign as the unit)
+
+`[cases/ocv_correspondence.py](cases/ocv_correspondence.py)` tests the question the
+two-panel figure only *shows*: do states that sit close in the physical plane also
+sit close in the OCV plane? One rule is frozen in the code and in every report:
+**the campaign / visit is the independent unit, never the single overpass** —
+several SAR acquisitions inside one structural campaign improve the estimate of
+`(gamma2, P)` but do not create additional independent measurements of `(f,
+zeta)`. Inference intervals resample **campaigns**; the date-level bootstrap
+appears only as `ci_measurement` inside a campaign and never increases n.
+
+Four tests in the order the question forces: **A** repeatability of the OCV
+response across visits (with the pre-declared rule `R = d_visit / d_between < 1`),
+**B** a state-dependent ASC-DESC contrast (permutation of the six labels), **C**
+the Spearman correlation between `d_phys` and `d_OCV` over the campaign pairs
+(Mantel permutation of the campaign labels, exact at 720 relabellings; the
+z-scored variant is a sensitivity, not a way to align the planes) and **D** the
+pre-declared contrast between the two physically closest states. Two findings are
+built into the code instead of being glossed over: `x` takes one value per state,
+so **M2 (`orbit x x`) is saturated and is reported, not fitted**, and the residual
+contrast of D is **zero by construction** for exactly that reason, which is why D
+reports the *raw* contrast against the visit noise.
+
+`--asset lumo` runs the six LUMO campaigns (17 pins: 178 overpasses, 13 runs, the
+per-campaign/per-orbit date counts, the healthy reference counts, the exact 720
+relabellings, six LOCO folds, the DAM3-DAM4 contrast pair); `--asset bautzen`
+runs the degenerate arm (16 pins) where the same code reports A and C as *not
+defined* and B as *not informative*, and where D degenerates to the single
+RS→DS1 contrast that the asset can carry — Bautzen has one campaign per state and
+no independent f/zeta for DS2. `--build-bautzen-reference` rebuilds
+`data/bautzen/reference/bautzen_state_dynamics.json` from the OpenBridgeLAB
+analysis; `--selftest` runs the synthetic positive, negative and degenerate
+controls against the real statistics.
+
+```sh
+python3 code/cases/ocv_correspondence.py --asset all   # both JSONs + reports + JPEG
+python3 code/cases/ocv_correspondence.py --selftest    # 15 checks incl. controls
+python3 code/cases/ocv_correspondence.py --build-bautzen-reference
+```
+
 ### `sds/` — the cross-site SDS report (the one script that reads two sites)
 
 `[sds/sds_support.py](sds/sds_support.py)` asks the question the new chip has to
@@ -119,8 +180,8 @@ first run: the dose (LUMO's measured first-higher-mode drop, 0 / 7.41 / 12.96 %,
 which makes `DAM 3` and `DAM 4` one level because they sit one FFT bin apart), the
 transforms (`log` for positive dimensions, identity for `S` and Bautzen's signed
 γ²), the zero rule (drop the unit for that dimension, count it), the blocks
-(`mask = [A, F]` because `D = A/bbox_area` holds in 178 of 178 LUMO rows;
-`other = [γ², P, S]`, with the literal `[A, D, F]` as a sensitivity), the tests and
+(`behaviour = [γ², P]` (cross-acquisition echo behaviour) and `geometry = [A, D, F, S]` (spatial mask geometry, with `D` kept off the plane because it partly inherits `A` and `S` annotated because a shift is position, not morphology);
+both blocks carry their dimensions into the magnitude), the tests and
 the three pre-registered predictions.
 
 | step | what it does |
@@ -137,10 +198,19 @@ MAD** is the standardising scale, because a MAD from six numbers is itself too
 unstable. `scale_used` travels with every cell, in the JSON and in the table.
 
 ```sh
-python3 code/sds/ocv_reconfigure.py            # ~22 s, JSON + MD + CSV + figure
-python3 code/sds/ocv_reconfigure.py --selftest # 9 checks on synthetic units
-python3 code/sds/ocv_reconfigure.py --verify   # re-derives every table cell
+python3 code/sds/ocv_reconfigure.py                 # the pair, ~40 s
+python3 code/sds/ocv_reconfigure.py --sites carola  # one asset, two states
+python3 code/sds/ocv_reconfigure.py --selftest      # 11 checks on synthetic units
+python3 code/sds/ocv_reconfigure.py --verify        # re-derives every table cell
 ```
+
+`--sites` chooses the assets. **Carola** (`--sites carola`) is the two-state case:
+pre-collapse against post-collapse on the support-sized chip, where only `Girder A`
+survives the cut (436 of the committed 1 717 chips). With two states the ordered
+test is its two-group case (a one-sided rank test), there is **no ordering claim**,
+and the H2 comparison is skipped because a single asset has no partner — the report
+says all three things rather than leaving blanks. Its post signature is a time
+contrast without a control track, which the closing section states.
 
 Outputs `data/sds/ocv_reconfigure.{json,md}`,
 `data/sds/ocv_reconfigure_table.csv` and three 630 dpi plates with one panel guide:

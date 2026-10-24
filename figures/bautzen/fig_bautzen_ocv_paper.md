@@ -10,8 +10,8 @@ Recomputation of the five figures of the Bautzen deck-edge observability package
 | mode | full recomputation |
 | figures | `figures/bautzen/fig_bautzen_ocv_paper_A..E.png` (600 dpi) |
 | result JSON | `data/bautzen/fig_bautzen_ocv_paper.json` |
-| pins | 8656 checks, 0 failures, 56 doc-string translations |
-| cross-checks | 43 meta checks, 0 failed |
+| pins | 8656 checks, 45 failures, 56 doc-string translations |
+| cross-checks | 43 meta checks, 1 failed |
 
 ## 1. Question and design
 
@@ -164,19 +164,67 @@ Every block of the two committed reference files is recomputed from the channel 
 | pin result | value |
 |---|---|
 | checks | 8656 |
-| exact (byte for byte) | 8656 |
-| within tolerance | 0 (<= 1e-06) |
-| failures | 0 |
-| max |deviation| | 0.0 |
+| exact (byte for byte) | 8606 |
+| within tolerance | 50 (<= 1e-06) |
+| failures | 45 |
+| max |deviation| | 3.774758283725532e-15 |
 | doc strings translated | 56 |
 
 **Comparison rules.** Deterministic numbers (medians, effect sizes, SDS, counters, mask sets, unions, gamma^2 values) must match exactly. Permutation and scipy p-values — `mannwhitney_p`, `p`, `p_perm`, `perm_p`, `rho`, `welch_p` — are compared with a tolerance of 1e-06, because they depend on the library's RNG and normalisation internals. Committed German doc strings are compared through `core.LABEL_EN` (an unmapped German string mismatches and becomes a failure). Committed JSON lists and recomputed tuples are normalised before the comparison.
 
-**Meta cross-checks.** 43 independent checks against `bautzen_ocv_channels_meta.json` (0 failed): the file names and geometries of the four series, the per-date row counts, the mask summary, both persistence unions, the mask definition constants, the sha256 of the four rect files and the reference-source names.
+**Meta cross-checks.** 43 independent checks against `bautzen_ocv_channels_meta.json` (1 failed): the file names and geometries of the four series, the per-date row counts, the mask summary, both persistence unions, the mask definition constants, the sha256 of the four rect files and the reference-source names.
 
 **Keys beyond the reference.** The recomputed blocks carry 8 additional keys (the figure payloads and the per-variant gamma^2 gates); they are listed in `pins.recomputed_keys_not_in_reference` and are not failures — the reference files do not contain these values, they are added here.
 
-**Failures: none.** Every pinned number of the two committed reference files is reproduced from the channel table alone.
+**Failures:**
+
+| path | recomputed | committed | |dev| |
+|---|---|---|---|
+| state.series.ASC Brücke.metrics.RS.position_slope_px_per_date | 0.17857142857142708 | 0.17857142857142902 | 0.000 |
+| state.series.ASC Brücke.metrics.RS.gamma2.gamma2_house_floor_corrected_slope_per_date | -0.047220943046132724 | -0.04722094304613274 | 0.000 |
+| state.series.ASC Brücke.metrics.DS1.position_slope_px_per_date | 0.014822134387351514 | 0.014822134387352071 | 0.000 |
+| state.series.ASC Brücke.metrics.DS1.gamma2.gamma2_band_floor_corrected_slope_per_date | 0.00021765903450245077 | 0.00021765903450245096 | 0.000 |
+| state.series.ASC Brücke.metrics.DS2.gamma2.gamma2_band_floor_corrected_slope_per_date | -0.003632608022324416 | -0.0036326080223244273 | 0.000 |
+| state.series.ASC Brücke.metrics.ALL.position_slope_px_per_date | 0.0034749034749044522 | 0.003474903474904268 | 0.000 |
+| state.series.ASC Brücke.metrics.ALL.gamma2.gamma2_band_floor_corrected_slope_per_date | 0.002401639019980812 | 0.0024016390199808114 | 0.000 |
+| state.series.DESC Brücke.metrics.RS.position_slope_px_per_date | -1.1428571428571428 | -1.1428571428571437 | 0.000 |
+| state.series.DESC Brücke.metrics.RS.gamma2.gamma2_house_floor_corrected_slope_per_date | -0.018590503552362272 | -0.018590503552362275 | 0.000 |
+| state.series.DESC Brücke.metrics.DS1.position_slope_px_per_date | 0.16798418972332002 | 0.1679841897233204 | 0.000 |
+| state.series.DESC Brücke.metrics.DS1.gamma2.gamma2_band_floor_corrected_slope_per_date | -0.002803968756742355 | -0.0028039687567423545 | 0.000 |
+| state.series.DESC Brücke.metrics.DS1.gamma2.gamma2_house_floor_corrected_slope_per_date | 0.000545771127610554 | 0.0005457711276105611 | 0.000 |
+| state.series.DESC Brücke.metrics.DS2.position_slope_px_per_date | -1.0000000000000013 | -1.000000000000005 | 0.000 |
+| state.series.DESC Brücke.metrics.DS2.gamma2.gamma2_house_floor_corrected_slope_per_date | 0.12306686182082278 | 0.12306686182082281 | 0.000 |
+| state.series.DESC Brücke.metrics.ALL.gamma2.gamma2_band_floor_corrected_slope_per_date | 0.0012321023608665854 | 0.001232102360866584 | 0.000 |
+| state.series.DESC Brücke.metrics.ALL.gamma2.gamma2_house_floor_corrected_slope_per_date | -0.0032593757607459303 | -0.003259375760745926 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.RS.position_slope_px_per_date | -0.25000000000000067 | -0.2500000000000036 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.RS.gamma2.gamma2_band_floor_corrected_slope_per_date | -0.1809483652510333 | -0.18094836525103344 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.RS.gamma2.gamma2_house_floor_corrected_slope_per_date | 0.03737995550884868 | 0.03737995550884867 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.DS1.position_slope_px_per_date | -0.007905138339920997 | -0.007905138339921092 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.DS1.gamma2.gamma2_band_floor_corrected_slope_per_date | -0.015765410747428647 | -0.015765410747428654 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.DS1.gamma2.gamma2_house_floor_corrected_slope_per_date | -0.020551095518612186 | -0.02055109551861219 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.DS2.position_slope_px_per_date | -0.6857142857142846 | -0.6857142857142862 | 0.000 |
+| state.series.ASC Kontrolle 500 m östlich.metrics.ALL.gamma2.gamma2_band_floor_corrected_slope_per_date | -0.018671330567788826 | -0.01867133056778882 | 0.000 |
+| state.series.DESC Kontrolle 500 m östlich.metrics.RS.gamma2.gamma2_house_floor_corrected_slope_per_date | 0.054837087459779166 | 0.05483708745977918 | 0.000 |
+| state.series.DESC Kontrolle 500 m östlich.metrics.DS1.gamma2.gamma2_house_floor_corrected_slope_per_date | 0.004640768391690876 | 0.004640768391690875 | 0.000 |
+| state.series.DESC Kontrolle 500 m östlich.metrics.DS2.position_slope_px_per_date | -1.6000000000000083 | -1.600000000000005 | 0.000 |
+| state.series.DESC Kontrolle 500 m östlich.metrics.DS2.gamma2.gamma2_house_floor_corrected_slope_per_date | -0.007130344803128026 | -0.007130344803128021 | 0.000 |
+| state.series.DESC Kontrolle 500 m östlich.metrics.ALL.gamma2.gamma2_house_floor_corrected_slope_per_date | 5.243635118782566e-05 | 5.2436351187825556e-05 | 0.000 |
+| state.gamma2_environment.ASC Brücke.vars.T.fit.slope | -0.0036517873410662816 | -0.003651787341066287 | 0.000 |
+| state.gamma2_environment.ASC Brücke.vars.T.fit.intercept | 0.10180052506822158 | 0.1018005250682217 | 0.000 |
+| state.gamma2_environment.ASC Brücke.vars.RH.fit.intercept | -0.0350789287906336 | -0.03507892879063359 | 0.000 |
+| state.gamma2_environment.DESC Brücke.vars.T.fit.slope | 0.0010657337295541876 | 0.0010657337295541878 | 0.000 |
+| state.gamma2_environment.DESC Brücke.vars.T.fit.intercept | -0.05332604794792968 | -0.053326047947929646 | 0.000 |
+| state.gamma2_environment.DESC Brücke.vars.RH.fit.slope | -0.0018939500761475157 | -0.0018939500761475162 | 0.000 |
+| state.gamma2_environment.DESC Brücke.vars.RH.fit.intercept | 0.1142293762846809 | 0.11422937628468095 | 0.000 |
+| state.gamma2_environment.DESC Brücke.vars.RH.fit.se_slope | 0.0022619647331686295 | 0.00226196473316863 | 0.000 |
+| state.gamma2_environment.ASC Kontrolle 500 m östlich.vars.T.fit.slope | 0.003418989134282797 | 0.003418989134282792 | 0.000 |
+| state.gamma2_environment.ASC Kontrolle 500 m östlich.vars.T.fit.intercept | 0.07183132724212463 | 0.07183132724212471 | 0.000 |
+| state.gamma2_environment.ASC Kontrolle 500 m östlich.vars.RH.fit.slope | -0.00025761020617296674 | -0.00025761020617296945 | 0.000 |
+| state.gamma2_environment.ASC Kontrolle 500 m östlich.vars.RH.fit.intercept | 0.14293221493342947 | 0.14293221493342964 | 0.000 |
+| state.gamma2_environment.DESC Kontrolle 500 m östlich.vars.T.fit.slope | -0.003950286789951249 | -0.003950286789951248 | 0.000 |
+| state.gamma2_environment.DESC Kontrolle 500 m östlich.vars.T.fit.intercept | 0.04278485484417507 | 0.04278485484417504 | 0.000 |
+| state.gamma2_environment.DESC Kontrolle 500 m östlich.vars.RH.fit.slope | 0.002222882095597185 | 0.0022228820955971845 | 0.000 |
+| state.gamma2_environment.DESC Kontrolle 500 m östlich.vars.RH.fit.intercept | -0.18727006063298013 | -0.18727006063298005 | 0.000 |
 
 ## 6. Documented deviations from the LUMO figure package
 
@@ -198,7 +246,7 @@ python3 code/bautzen/fig_bautzen_ocv_paper.py --quick    # placebo copied
 bash figures/bautzen/fig_bautzen_ocv_paper.sh          # the same, via the shell wrapper
 ```
 
-The figures need numpy, matplotlib (600 dpi PNG) and scipy. This report was generated with python 3.13.5, numpy 2.4.6, matplotlib 3.11.1, scipy 1.18.0. All random draws use fixed seeds and no output carries a timestamp or a run time, so repeated runs produce identical JSON, Markdown and PNG files.
+The figures need numpy, matplotlib (600 dpi PNG) and scipy. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.2, scipy 1.18.1. All random draws use fixed seeds and no output carries a timestamp or a run time, so repeated runs produce identical JSON, Markdown and PNG files.
 
 ## 8. Caveats
 
@@ -210,4 +258,4 @@ The figures need numpy, matplotlib (600 dpi PNG) and scipy. This report was gene
 
 ---
 
-Generated by `code/bautzen/fig_bautzen_ocv_paper.py` (full mode, 8656 pins, 0 failures).
+Generated by `code/bautzen/fig_bautzen_ocv_paper.py` (full mode, 8656 pins, 45 failures).

@@ -307,10 +307,10 @@ def fig_A(res, out_dir=None):
                     ha="center", va="top", fontsize=6.4, color=STATE_COLORS[s])
         ax.set_xticks(range(len(core.STATES)))
         ax.set_xticklabels([core.STATE_SHORT[s] for s in core.STATES])
-        ax.set_ylabel(core.CHANNEL_TITLE.get(k, k))
+        ax.set_ylabel(core.FIG_CHANNEL_TITLE.get(k, k))
         if k in ("A", "D", "S"):
             ax.set_yscale("log")
-        panel(ax, "abcdef"[i], core.CHANNEL_AXIS.get(k, k))
+        panel(ax, "abcdef"[i], core.FIG_CHANNEL_AXIS.get(k, k))
     fig.suptitle(f"(CTS) echo-mask channels per state — {res['n_rows']} chips, "
                  f"pre = {res['states'].get('pre', 0)}, "
                  f"post = {res['states'].get('post', 0)}",
@@ -406,8 +406,8 @@ def fig_D(res, out_dir=None):
             ax.plot([r[kx] for r in sel], [r[ky] for r in sel], "o", ms=2.4,
                     alpha=0.45, color=STATE_COLORS[s], markeredgewidth=0,
                     label=core.STATE_SHORT[s])
-        ax.set_xlabel(core.CHANNEL_TITLE.get(kx, kx))
-        ax.set_ylabel(core.CHANNEL_TITLE.get(ky, ky))
+        ax.set_xlabel(core.FIG_CHANNEL_TITLE.get(kx, kx))
+        ax.set_ylabel(core.FIG_CHANNEL_TITLE.get(ky, ky))
     axes[1].set_yscale("log")
     axes[2].set_yscale("log")
     axes[0].legend(frameon=False, markerscale=2)
@@ -438,7 +438,7 @@ def fig_E(res, out_dir=None):
             ax.plot([lo, hi], [i, i], "-", lw=1.4, color=CHANNEL_COLORS[k])
     ax.axvline(0.0, color="#888888", lw=0.9)
     ax.set_yticks(range(len(wc)))
-    ax.set_yticklabels([core.CHANNEL_TITLE.get(k, k) for k in wc])
+    ax.set_yticklabels([core.FIG_CHANNEL_TITLE.get(k, k) for k in wc])
     ax.invert_yaxis()
     ax.set_xlabel("Cliff's delta  (post − pre)")
     panel(ax, "a", "weather moves with the state too")

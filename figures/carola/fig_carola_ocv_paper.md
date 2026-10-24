@@ -99,7 +99,7 @@ The mask-size co-variate (fig. E panel b) and the nested OLS (the reference's `m
 
 ## Pins
 
-474 checks against the committed references (414 exact, 60 within 1e-12); **0 deviations**.
+474 checks against the committed references (412 exact, 62 within 1e-12); **0 deviations**.
 
 | reference | what is pinned |
 | --- | --- |

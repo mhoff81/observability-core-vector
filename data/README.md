@@ -18,6 +18,8 @@ other.
 | `reference/lumo_echo_mask_vector.json` | committed LUMO result: the per-dimension EMV aggregates (A/D/F/S/P + gamma^2), the ranking by pooled SDS and the meta block | same |
 | `reference/lumo_emv_multivariate_cv.json` | committed LUMO result: 4-class LDA, leave-one-out over the shrinkage grid, confusion matrix and label-permutation test | same |
 | `reference/lumo_emv_pairwise_triplets_cv.json` | committed LUMO result: out-of-fold scores and SDS/CI/permutation values of the six binary state pairs for the four feature sets | same |
+| `reference/lumo_state_dynamics.json` | the **physical** counterpart of `lumo_state_frequencies.json`: per damage state the relative H1 frequency change (`df_H1/f_H1,0`, signed) and the relative damping change (`dzeta_H1/zeta_H1,0`, half-power bandwidth), the fundamental mode as a sensitivity and the second-higher mode as context, each with the **five per-recording damping values** of the healthy and the damaged block, the campaign names, the method and the sha256 of the three external sources | built and verified by `code/lumo/lumo_state_dynamics_json.py` (107 checks); read by `code/lumo/fig_lumo_ocv_physics.py` and `code/cases/ocv_correspondence.py` |
+| `reference/bautzen_state_dynamics.json` | the Bautzen physical reference: the seven matched mode pairs of RS → DS1 with both frequencies, the relative frequency change, the median relative power and the per-recording damping values of both nights, `role` = primary/sensitivity/context, the primary rule (largest median rel_power in RS) and the sha256 of the two external OpenBridgeLAB analyses; **DS2 is recorded as a gap** (`physical: null`) because its raw data is not in this repository | built by `code/cases/ocv_correspondence.py --build-bautzen-reference`; read by the same script's `bautzen` adapter |
 
 The five JSONs are the *reference* of this repository: the whole point of the
 figure script is to recompute their numbers and to fail loudly if any of them
@@ -31,6 +33,7 @@ does not come out identically.
 | `lumo_ocv_channels_meta.json` | `code/lumo/lumo_ocv_channels_csv.py` | provenance: source CSV + sha256, burst-cache path, number of cache directories matched / skipped, the mask thresholds, the resulting `n_masked` statistics and the cross-check against the committed values |
 | `fig_lumo_ocv_paper.json` | `code/lumo/fig_lumo_ocv_paper.py` | the complete result of figures A–E in machine-readable form (descriptives, effect sizes, CV grid, per-pair scores, control tests) plus the summary of the pin block and the versions/seeds of the run |
 | `fig_lumo_ocv_orbits.json` | `code/lumo/fig_lumo_ocv_orbits.py` | the 6 x 2 time-series companion: the 178 plotted points with their joined local acquisition instants, the 13 consecutive state runs with lengths/bands/medians, per-state summaries, the local clocks and UTC offsets, the single missing `P`, sub-swath provenance and the 144 cross-checks |
+| `fig_lumo_ocv_physics.json` | `code/lumo/fig_lumo_ocv_physics.py` | the two-panel comparison: the physical vector, its bootstrap interval and quantisation bar per state; the OCV vector per state × orbit pooled **and** per visit (with n per channel and the thin flag); the healthy median/MAD reference per orbit; the repeatability cosines, the ordering by norm, the cross-plane cosines and pairwise angles; the whole OCV panel again on the other chip and the fundamental-mode sensitivity; the 121 cross-checks |
 
 To rebuild the extended table the burst cache must be present (the generator
 looks four levels above `code/lumo/`, i.e. `../../lumo_dam6_analysis/monthly_bursts/`,
@@ -408,6 +411,18 @@ from the committed `espoo_channels.csv` and the committed reference JSONs, so th
 figures and every pin block run offline from a fresh clone. Two runs of the
 generator produce the same CSV and the same meta JSON, byte for byte.
 
+## `data/cases/` — the six-case overview
+
+| file | content |
+| --- | --- |
+| `fig_cases_overview.json` | the spectrum positions and the question each case answers, the two controlled-reference experiments, and one block per case with the symbol, the reason, the fill index (SDS band), the delta, its interval, `n` and the winning pair — plus an `excluded` block that records why YWF is not a row, the `trajectories` geometry of panel (c) and the sha256 of every source file |
+| `ocv_correspondence_lumo.json` | the six LUMO campaigns with their physical vector and their OCV vector per orbit, the per-campaign date counts, the healthy reference (median/MAD of the log channel per orbit), every OCV vector with its date-level `ci_measurement`, the four tests (A repeatability with the `R` rule, B geometry share with its 720-relabelling null, C raw **and** z-scored Mantel rho with its null and cluster-bootstrap interval, D the closest physical pair with the saturation reason and the raw contrast against the visit noise), the M0/M1 leave-one-campaign-out errors with the x-permutation p, M2 marked **not identifiable**, the five-test Holm family and 17 pins |
+| `ocv_correspondence_bautzen.json` | the same schema on the paired **bridge-minus-control** vector: three campaigns (one per state), exact per-date pairing with the counts of incomplete pairs, the identity channel scale with its reason, `x` for RS and DS1 and *not available* for DS2, and the same code reporting A and C as **not defined**, B as **not informative**, D as the single RS→DS1 contrast (not identifiable as a residual model, so measured raw), and M2 as not identifiable — 16 pins |
+
+Written by `code/cases/fig_cases_overview.py`; all six cases are read on the
+**support-sized chip** (the state contrasts from `data/sds/sds_support.json`, level
+`support`), and `--verify` re-derives every cell and hash.
+
 ## `data/sds/` — the cross-site SDS report (Bautzen + LUMO)
 
 Written by `code/sds/sds_support.py`, the one script that reads two sites.
@@ -429,9 +444,10 @@ Written by `code/sds/ocv_reconfigure.py` against the pre-registration in
 
 | file | content |
 | --- | --- |
-| `ocv_reconfigure.json` | the dose (from `data/lumo/reference/lumo_state_frequencies.json`, with its sha256), every reference median/scale with the step of the fallback chain that produced it and **which scale was used** (`mad`, or `pooled_mad` when the reference has fewer than ten units — Bautzen), the drop counts per dimension, `r` and `z` per channel × dimension × state and × dose level, the two block magnitudes `R_mask` / `R_other` (plus the literal `[A, D, F]` block), the Jonckheere–Terpstra statistic and one-sided p per primary cell with its **Holm value inside that asset's own four-test family** (`hypotheses.H1_family`), the moving-block intervals (the reference level carries `[0, 0]` and is listed in `by_construction`), the descriptive cosines with their intervals and random-direction null, the sign patterns, and `reading.per_asset` — one verdict and one bound per asset — beside `reading.comparison` |
-| `ocv_reconfigure.md` | the report: the dose table, the compact table (`Experiment, State, Channel, n, R_mask, R_other, Direction, Support`), the H1 and H2 tables, the verdicts on P1–P3 and the list of what the numbers do not claim |
+| `ocv_reconfigure.json` | the dose (from `data/lumo/reference/lumo_state_frequencies.json`, with its sha256), every reference median/scale with the step of the fallback chain that produced it and **which scale was used** (`mad`, or `pooled_mad` when the reference has fewer than ten units — Bautzen), the drop counts per dimension, `r` and `z` per channel × dimension × state and × dose level, the two block magnitudes `R_behaviour` (`γ², P`) / `R_geometry` (`A, D, F, S`), the Jonckheere–Terpstra statistic and one-sided p per primary cell with its **Holm value inside that asset's own four-test family** (`hypotheses.H1_family`), the moving-block intervals (the reference level carries `[0, 0]` and is listed in `by_construction`), the descriptive cosines with their intervals and random-direction null, the sign patterns, and `reading.per_asset` — one verdict and one bound per asset — beside `reading.comparison` |
+| `ocv_reconfigure.md` | the report: the dose table, the compact table (`Experiment, State, Channel, n, R_behaviour, R_geometry, Direction, Support`), the H1 and H2 tables, the verdicts on P1–P3 and the list of what the numbers do not claim |
 | `ocv_reconfigure_table.csv` | the same compact table as CSV — one row per experiment × state × channel, with the `Scale` column that standardised it |
+| `ocv_carola.{json,md}` + `ocv_carola_table.csv` | the same three for the two-state run (`--sites carola`): pre-collapse against post-collapse on the support-sized chip, `Girder A` only, with the no-ordering and no-control statements in the report |
 
 Deterministic (seeded bootstrap and permutation), and `--verify` re-derives every
 cell of the table from the two records before the run is allowed to overwrite

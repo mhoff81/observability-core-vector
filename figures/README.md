@@ -3,8 +3,10 @@
 ```
 figures/
 ├── lumo/      LUMO lattice tower  — fig_lumo_ocv_paper.sh|.md|[A-E].png
-│              and the companion fig_lumo_ocv_orbits.sh|.md|.jpg (6 x 2 OCV
-│              time series over actual local overpass time)
+│              and the companions fig_lumo_ocv_orbits.sh|.md|.jpg (6 x 2 OCV
+│              time series over actual local overpass time) and
+│              fig_lumo_ocv_physics.sh|.md|.jpg (physical plane vs OCV plane,
+│              two panels, visits separate)
 ├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
 │              and the companions fig_bautzen_ocv_amp_phase.sh|.md|.png and
 │              fig_bautzen_ocv_orbits.sh|.md|.jpg (6 x 2 OCV time series)
@@ -39,13 +41,23 @@ figures/
 │              and the two figures built on the support chip: fig_espoo_ocv_chips.*
 │              (the chip's own three tests) and fig_espoo_ocv_orbits_chip.* (Espoo
 │              in the shared six-dimension family, one state; see `../code/espoo/README.md`)
+├── cases/     the one page for the whole case set — fig_cases_overview.jpg|.md
+│              (map, dimension matrix, trajectories) from `../code/cases/`
 ├── sds/       the cross-site figures (Bautzen + LUMO, one script that reads both)
 │              fig_sds_ocv_reconfigure.jpg|.md — the controlled-dose comparison,
 │              630 dpi, from `../code/sds/ocv_reconfigure.py`, plus the two
 │              single-asset plates fig_sds_ocv_reconfigure_lumo.jpg and
-│              fig_sds_ocv_reconfigure_bautzen.jpg
+│              fig_sds_ocv_reconfigure_bautzen.jpg and, for the two-state
+│              case, fig_sds_ocv_reconfigure_carola.jpg (support chip, Girder A)
 └── README.md
 ```
+
+**Channel labels are mathtext.** Wherever a figure names the coherence channel it
+prints `$\gamma^2$`, not `gamma^2`: each site's label dicts (`CHANNEL_AXIS`,
+`CHANNEL_TITLE`, `CHANNEL_LABEL`) keep their plain-text form for the markdown, and
+the figure call sites read a `FIG_CHANNEL_*` twin built with
+`.replace("gamma^2", r"$\gamma^2$")`. That way a table stays grep-able and a plot
+stays typographically correct.
 
 The plotting scripts themselves live in `../code/<site>/` (they share that
 folder's Python conventions and import each other); the wrapper in each site
@@ -165,6 +177,49 @@ Any deviation exits non-zero before the artifact is accepted.
 bash figures/lumo/fig_lumo_ocv_orbits.sh            # ~3 s
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures
+```
+
+## `lumo/fig_lumo_ocv_physics.sh` → `../code/lumo/fig_lumo_ocv_physics.py`
+
+The physical counterpart of the behaviour figure: does a state that sits in a
+given place in the **independently measured** physical plane also sit in a
+comparable place in the OCV plane? Writes
+[`lumo/fig_lumo_ocv_physics.jpg`](lumo/fig_lumo_ocv_physics.jpg),
+[`lumo/fig_lumo_ocv_physics.md`](lumo/fig_lumo_ocv_physics.md) and
+[`../data/lumo/fig_lumo_ocv_physics.json`](../data/lumo/fig_lumo_ocv_physics.json).
+
+| file | panel content |
+| --- | --- |
+| `lumo/fig_lumo_ocv_physics.jpg` | two panels, 183 mm wide, 630 dpi. **(A)** physical response: x = signed `df_H1 / f_H1,0` (frequency loss to the left, never converted to a drop percentage), y = `dzeta_H1 / zeta_H1,0`, origin = the healthy block of the *same* campaign, one arrow per state with a 95 % bootstrap bar over the 5 + 5 recordings and a ±0.125 Hz quantisation bar on x. **(B)** OCV behaviour: x = `z(gamma2)`, y = `z(P)`, z against the healthy median of the same orbit in healthy MADs of the log channel; colour = state, marker shape = orbit (circle ASC, square DESC), fill = visit (filled = first, open = repeat), marker area ∝ n, grey ring when n < 3; the dashed arrow is the state-level (visit-pooled) vector. The orbits are never pooled |
+
+**One point per state in A, two visits per state in B** — that asymmetry is the
+point of the figure: each state was measured in exactly one controlled campaign
+(no physical replicate, hence the bootstrap interval), while the OCV record holds
+two state runs. The report therefore assesses repeatability on the OCV side
+(cosine and angle between the two visit vectors, with their n), reports the
+direction and magnitude of every vector, the ordering by `|v|` in both planes
+(DAM3 < DAM4 < DAM6 physically, DAM4 < DAM3 < DAM6 on the OCV side, in both
+orbits) and the cross-plane cosine **as a descriptive statistic only**.
+
+Its **121 self-checks** verify the dynamics reference (107: medians, spreads,
+relative changes, campaign names, agreement with
+`reference/lumo_state_frequencies.json`), the chip (7: 178 overpasses, 13 runs,
+the per-state and per-orbit counts, the per-visit counts, pooled = sum of
+visits), the panel data (2 + 3: three states, primary mode, orbits kept apart,
+positive healthy scale, visits kept per orbit) and the chip sensitivity (2: both
+chips carry the same 178 rows, and all six state-level vectors change). Any
+deviation exits non-zero.
+
+Panel B is drawn on the **support** chip. The two chips define `gamma2`
+differently — the support re-cut raises it by an order of magnitude — so
+`--chip committed` repeats the whole panel on
+`../data/lumo/lumo_ocv_channels.csv`; the report prints both and the angle
+between them, which reaches 113° for DAM6 ASC.
+
+```bash
+bash figures/lumo/fig_lumo_ocv_physics.sh              # ~2 s, support chip
+bash figures/lumo/fig_lumo_ocv_physics.sh --chip committed
+python3 code/lumo/fig_lumo_ocv_physics.py --selftest
 ```
 
 ## `bautzen/fig_bautzen_ocv_paper.sh` → `../code/bautzen/fig_bautzen_ocv_paper.py`
@@ -815,16 +870,61 @@ state, one band, medians over the whole series. Espoo's `_chip` stem is delibera
 the site's `.png` of nearly the same name is the *pipeline* figure (A vs S, no
 chip), drawn by `code/espoo/fig_espoo_ocv_orbits.py`.
 
+## `figures/cases/` — the six cases on one page
+
+`fig_cases_overview.jpg` (630 dpi, from `../code/cases/fig_cases_overview.py`) is
+the figure that says **why the cases exist**, read on the **support-sized chip**: (a) places Espoo, CTS, Carola,
+Morandi, Haltern and KDLO on the spectrum *stable → degradation → collapse →
+reconstruction*, with LUMO and Bautzen above it as controlled-reference
+experiments rather than further cases; (b) the dimension-response matrix for `γ²,
+P, D, F`, where an arrow needs that case's own
+interval to exclude zero **and** both sides carry at least six units, `○` means
+tested-but-unresolved, `?` means the evidence is not there and the fill is the
+project's SDS band *inside* the cell — YWF is not a row (19 of its 33 acquisitions
+cannot be cut on this chip, four of them post-collapse) and the report says so;
+(c) six
+schematic time lines that encode the kind of result each case reports. The report
+`fig_cases_overview.md` lists every number behind every cell and its source file
+with its sha256; the JSON is `../data/cases/fig_cases_overview.json`.
+
+## `figures/cases/` — the correspondence model, per asset
+
+`fig_ocv_correspondence_lumo.jpg` (630 dpi, from
+`../code/cases/ocv_correspondence.py --asset lumo`) shows the two tests that can
+be drawn: **(a)** every campaign pair as `d_phys` against `d_OCV` (marker shape =
+orbit, fill = within/between state), with the visit repeats sitting on the
+vertical `d_phys = 0` line because both visits of a state share the same physical
+vector, and the Mantel rho/p per orbit; **(b)** the six visit-repeat distances and
+the DAM3-DAM4 contrast, each with its date-level bootstrap interval, against the
+median between-state distance. Everything else is in the report:
+[`cases/fig_ocv_correspondence_lumo.md`](cases/fig_ocv_correspondence_lumo.md) —
+repeatability, the geometry contrast, the distance correspondence (raw and
+z-scored), the not-identifiable residual contrast, the M0/M1 leave-one-campaign-out
+comparison with its permutation p, the Holm family, the pins and the caveats.
+
+`fig_ocv_correspondence_bautzen.md` is the degenerate arm of the same code: one
+campaign per state, no independent f/zeta for DS2, so A and C are reported as
+**not defined** rather than computed from dates, B as **not informative**, and D
+shrinks to the single RS→DS1 contrast (with the saturation stated: two distinct
+x vectors against three parameters). The image is deliberately not drawn — there
+are no distance matrices to draw.
+
+```bash
+python3 code/cases/ocv_correspondence.py --asset all
+python3 code/cases/ocv_correspondence.py --selftest
+```
+
 ## `figures/sds/` — the two experiments side by side
 
 `fig_sds_ocv_reconfigure.jpg` (630 dpi, from `../code/sds/ocv_reconfigure.py`)
 is the one cross-site plate that is not a site package: rows are the two assets
-(LUMO, Bautzen), columns are `ASC`/`DESC` crossed with the two response blocks, and
+(LUMO, Bautzen), columns are `ASC`/`DESC` crossed with the two blocks — `behaviour` (`γ², P`, plane `γ²`×`P`) and `geometry` (`A, D, F, S`, plane `A`×`F` with `D` and `S` annotated), and
 every arrow starts at that asset's **own** reference state. The inset in each panel
 carries the block magnitude `R` per dose level with its moving-block interval — the
 quantity H1 tests, while the arrows carry the direction the comparison section
 describes. The same script also writes `fig_sds_ocv_reconfigure_lumo.jpg` and
-`fig_sds_ocv_reconfigure_bautzen.jpg`, one plate per asset, because each asset is
+`fig_sds_ocv_reconfigure_bautzen.jpg` (and, from `--sites carola`,
+`fig_sds_ocv_reconfigure_carola.jpg`), one plate per asset, because each asset is
 concluded on its own numbers and on its **own** Holm family; the joint plate is a
 juxtaposition, not a shared scale. The panel guide is
 `fig_sds_ocv_reconfigure.md`; the numbers behind all three are
