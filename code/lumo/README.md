@@ -54,6 +54,17 @@ The echo-mask rule of `analyze_lumo_echo_mask_vector.py`: threshold at
 `S = ||mask centroid - peak||`, plus the persistence `P` (mean pixel frequency
 across the 177 majority-shape masks).
 
+**Audit note (2026-10).** `A`, `D`, `F`, `S`, `centroid_r/c` and `bbox_area`
+reproduce **exactly** (deviation 0, 178 of 178 overpasses) when the rule is
+replayed against `support/lumo_rects_ring.txt`, which carries every chip cell —
+see `physical_model-observability/code/mask_replay.py`.  The two columns
+`peak_r` / `peak_c` do **not**: they agree neither with the strip argmax used by
+`S`, nor with the brightest cell of the mask, nor with the argmax of the 11 bin
+columns, nor with the chip-wide argmax.  `S` itself reproduces, so the peak used
+in the computation is the strip argmax; the two audit columns were evidently
+written from something else.  Nothing in the LUMO pipeline reads them, but they
+should not be quoted as "the peak pixel" until the producer is identified.
+
 ### `lumo_ocv_core.py` — data layer and constants
 
 Paths, the channel/feature order (`FEATURES = [gamma2, P, D, A, F, S]`), the
