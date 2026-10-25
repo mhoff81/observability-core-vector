@@ -1,6 +1,6 @@
 # `code/carola/` — Carola site package: analysis and plotting scripts
 
-Eight Python modules, no package, no dependencies beyond the standard library plus
+Nine Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Carola Brücke
 (Dresden) half of the repository; the LUMO tower lives in `../lumo/`, Bautzen in
@@ -353,3 +353,109 @@ ASC 44.8 raw (5 of 8 when size-matched), but 9 of 8 for ASC 36.9 — its large
 `gamma2` move is *not* exceptional against the pre period's own variability.
 DESC has 56 % of its post area below the pre 5th percentile, so its A-adjusted number
 is an extrapolation and the common-support subset is the one to read.
+
+### `carola_ocv_persist.py` — at which spatial scale does deck persistence appear?
+
+The support chip says the mask is chip-wide and the deck band carries no more of it
+than its area; the year-round test says no deck cell holds a stable phase. Both are
+answers about *one cell*. The question that remains is the one a look at an
+aggregated product invites: does a persistent scatterer **appear** when the band is
+aggregated — 3 x 3, a few lines, a third of the deck, the whole 585-cell support?
+
+Two pieces of arithmetic decide the answer of any such ladder, and neither is
+physics:
+
+* `D_A` of an **incoherent** average falls like `1/sqrt(N)` whether or not anything
+  is stable. Pushed through a naive gate, a ladder "discovers" persistence at N
+  around 15-45 purely by averaging;
+* aggregating **dilutes** a real scatterer: its share of the block power falls with
+  N, so a coarser step sees *less*, never more.
+
+So the ladder runs with two controls and two scale-free readings. Each step is
+compared with a **ring null of the same cell count** (2000 placements inside the
+200 m annulus, two-sided, Holm over the blocks of that step), and a
+**planted-scatterer curve** says what amplitude a block can still see. `dom` (share
+of a block's power in its brightest cell) and `RV` (`Var|sum z|^2 / <|sum z|^2>^2`,
+1 = speckle, 0 = one stable scatterer) are the readings that do not move with N on
+their own; `D_A` and `gamma_g` are reported next to their nulls rather than used as
+the gate. The acceptance gates (D_A <= 0.35, local peak >= 0.70, cold >= 0.50,
+cold/warm in [0.35, 2.80]) are ported verbatim from
+`carola_analysis/milestone2_persistence.py`, not re-tuned for this ladder, and are
+applied to the ring as well so that a zero on the band can be read against a
+non-zero elsewhere. Regions come from the manifest (39 x 15 band, 900 guard, 7140
+ring, `ring_complete`), never from constants; the 39.0 m deck hull maps onto columns
+57-67, so the two outermost band bins per side (55-56, 68-69) are reported apart.
+
+Single cells and 3 x 3 blocks are swept over the whole deck (429 and 333 blocks) and
+tested as one question — is the most extreme block outside the most extreme of as
+many ring placements — because 429 blocks cannot be Holm-tested against any finite
+null; every other step is tiled and Holm-tested block by block.
+
+```bash
+python3 code/carola/carola_ocv_persist.py             # ~20 s, writes JSON + MD
+python3 code/carola/carola_ocv_persist.py --selftest  # offline, no payload
+python3 code/carola/carola_ocv_persist.py --verify    # recompute every field
+```
+
+Outputs `data/carola/support/carola_ocv_persist.{json,md}` (schema
+`ocv-persist-v1`, event `2024-09-11`, no timestamp, no payload). The inputs are
+sha256-pinned: the 436-date support table, its manifest and the committed channel
+table. `--selftest` builds the worlds where the answer is known — a steady phasor
+drives `RV` to 0 while speckle keeps it at 1, speckle `D_A` falls from 0.52 to 0.19
+at eight cells while `RV` stays at 0.96 and `dom` lands on `H_8/8`, the mask rule
+finds one planted bright cell, the gates pass one planted steady cell and no
+speckle, a planted scatterer is easy at 11 cells and hard at 585, the ladder and its
+null are reproducible, `holm([0.01, 0.02, 0.03]) == [0.03, 0.04, 0.04]`, and no
+state word or timestamp reaches the report. `--verify` recomputes the whole JSON and
+the whole Markdown from the committed table and refuses a moved input.
+
+
+What it finds:
+
+* **Nothing on the band passes the gates, and the gate is not vacuous.** 0 of 585
+  band cells pass in each of the three groups (ASC-IW2, ASC-IW3, DESC-IW2; 0 of
+  1,755 combined) against 0, 3 and 32 of 7,140 ring cells. The best band `D_A` is
+  0.33 / 0.35 / 0.34, i.e. at the gate's own edge rather than safely inside it.
+* **The ladder is flat where it must be.** From one cell to 585, `D_A` falls
+  0.569 -> 0.053 (ASC-IW2), 0.553 -> 0.052 (ASC-IW3), 0.575 -> 0.068 (DESC-IW2)
+  while the ring null at the same N falls 0.567 -> 0.052, 0.541 -> 0.049,
+  0.548 -> 0.089. The deck sits on the null at every rung, and `RV` stays between
+  0.76 and 1.13 on the deck and band steps (speckle) at every scale. The
+  "emergence" around 15-45 cells is the `1/sqrt(N)` of incoherent averaging,
+  reproduced exactly by the null.
+* **No step leaves the null on the phase side**, in any group, after Holm — not the
+  single cell (extreme test, p 0.90 / 1.00 / 0.998), not the 3 x 3 sweep, not the
+  full support (RV 0.87 / 0.97 / 0.98 against nulls 0.93 / 0.90 / 1.01). Two steps
+  leave it on the **brightness** side: the DESC-IW2 3 x 3 sweep (brightest 0.723
+  against 0.676 for the null extreme, p < 0.001) and the DESC-IW2 left margin over
+  39 lines (dom 0.30 against 0.17, p 0.028). Brightness concentration is not phase
+  stability, and the margin block sits outside the 39 m deck anyway.
+* **The bins beside the carriageway are bright and incoherent** — over 39 lines
+  dom 0.10-0.30 against nulls 0.11-0.17 with RV 0.83-1.31, and at two cells they
+  sit exactly on the speckle null (0.73 against 0.73). Ground clutter beside the
+  deck, not a scatterer on it.
+* **Aggregation never helps.** A scatterer planted at 8 x the local cell mean reads
+  `RV` 0.75 in 11 cells but 0.99 in 585 (mean of the three groups); at 32 x it is
+  0.26 against 0.64. The finest block that covers the cell is the most sensitive
+  one, which is why the answer is stated at the cell and not at the band.
+* **The mask is reproduced and carries no deck preference.** All 436 mask areas
+  equal the committed `A` and the manifest's own column, largest difference 0 cells
+  (median area 205, range 8-1,106). 7.1 % of the mask lies on the band against
+  6.8 % of the chip being band: brightness, not the deck.
+
+The verdict is therefore a statement about scatterers only: no scatterer on the
+39 m deck is simultaneously bright (>= 8 x the local block mean) and phase-stable,
+and aggregation creates none. It converges with the two earlier results — five
+corridor pixels with 0 on the deck at 80.4 m nearest (`milestone1_geometry.json`)
+and 0 of 7 persisting year-round (`milestone2_persistence.md`) — and it does **not**
+say the chip is wrong or the deck is featureless: the deck carries brightness
+structure of its own (its full-support `dom` is 0.03-0.09 against a null of
+0.03-0.07), it simply has no stable phase to build a persistent scatterer on. The
+report states three limits with the numbers: the chip is cut around the deck anchor
+per date, so a deck-fixed scatterer keeps its chip index and ground clutter does not
+(the right frame for the question, the wrong frame for an absolute ground claim,
+with a registration residual of +-1-2 cells, which is why the single-cell row is
+reported but never decides the verdict); the ring null bounds what incoherent
+averaging does at a cell count, not what the deck must look like; and `gamma_g`
+still carries unremoved atmosphere at 12-day repeat.
+
