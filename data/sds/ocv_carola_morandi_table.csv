@@ -1,0 +1,9 @@
+Experiment,State,Channel,n,R_behaviour,R_geometry,Direction,Scale,Support
+Carolabrücke,pre-collapse (healthy),ASC,124,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Carolabrücke,post-collapse,ASC,166,0.222717,0.172071,gamma2- P- | A+ D+ F+ S-,mad,ok
+Carolabrücke,pre-collapse (healthy),DESC,60,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Carolabrücke,post-collapse,DESC,86,1.63494,2.88075,gamma2+ P- | A- D- F- S+,mad,ok
+Ponte Morandi,pre-collapse (healthy),ASC,91,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Ponte Morandi,post-collapse,ASC,3,0.841643,1.16184,gamma2- P+ | A+ D- F+ S-,mad,thin
+Ponte Morandi,pre-collapse (healthy),DESC,107,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Ponte Morandi,post-collapse,DESC,6,0.983416,0.903966,gamma2+ P+ | A- D- F- S+,mad,ok

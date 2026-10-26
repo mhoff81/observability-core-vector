@@ -198,10 +198,11 @@ MAD** is the standardising scale, because a MAD from six numbers is itself too
 unstable. `scale_used` travels with every cell, in the JSON and in the table.
 
 ```sh
-python3 code/sds/ocv_reconfigure.py                 # the pair, ~40 s
-python3 code/sds/ocv_reconfigure.py --sites carola  # one asset, two states
-python3 code/sds/ocv_reconfigure.py --selftest      # 11 checks on synthetic units
-python3 code/sds/ocv_reconfigure.py --verify        # re-derives every table cell
+python3 code/sds/ocv_reconfigure.py                        # the dose pair, ~40 s
+python3 code/sds/ocv_reconfigure.py --sites carola,morandi  # the bridge pair
+python3 code/sds/ocv_reconfigure.py --sites carola          # one asset, two states
+python3 code/sds/ocv_reconfigure.py --selftest              # 17 checks on synthetic units
+python3 code/sds/ocv_reconfigure.py --verify                # re-derives every table cell
 ```
 
 `--sites` chooses the assets. **Carola** (`--sites carola`) is the two-state case:
@@ -212,10 +213,30 @@ and the H2 comparison is skipped because a single asset has no partner — the r
 says all three things rather than leaving blanks. Its post signature is a time
 contrast without a control track, which the closing section states.
 
+**Carolabrücke and Ponte Morandi** (`--sites carola,morandi`) are the second
+registered pair (spec amendment 4): two bridges read across a collapse instead of a
+dose, on support-sized chips produced by the same window rule (207 chips of
+Morandi's committed 232, 436 of Carola's 1 717). There is no dose, so the report
+opens with `## There is no dose` and a per-state `n` table; H2 keeps `largest` only
+(no `middle`, no 2 × 2 matrix, both declared under `not_computed`); and the report
+closes with **Two verdicts, read together** — Carola resolves a large coherent DESC
+reconfiguration (both blocks at Holm < 0.001), Morandi resolves nothing, and exactly
+one of the four cosine cells shares a direction (DESC geometry, 4/4 signs, null
+`p = 0.083` — a guard, not a test).
+
+The **thin-cell rule** applies to every plate and report: a cell whose `n` does not
+exceed the bootstrap block (3) is marked `✱` wherever it is quoted and named in
+`bootstrap_caveats` in the JSON — its interval then carries the reference's
+uncertainty only. Morandi's ASC post-collapse cell (n = 3) is the one such cell in
+the bridge pair; the dose pair's list is empty.
+
 Outputs `data/sds/ocv_reconfigure.{json,md}`,
 `data/sds/ocv_reconfigure_table.csv` and three 630 dpi plates with one panel guide:
 `fig_sds_ocv_reconfigure.jpg` (the juxtaposition), `..._lumo.jpg` and
-`..._bautzen.jpg` (each asset standing alone).
+`..._bautzen.jpg` (each asset standing alone). The bridge pair writes its own stem —
+`data/sds/ocv_carola_morandi.{json,md}`, `..._table.csv` and the plates
+`fig_sds_ocv_reconfigure_carola_morandi.jpg`, `..._carola.jpg`, `..._morandi.jpg` —
+and never touches the dose files.
 
 
 The scripts are started from the **repository root** (each wrapper in

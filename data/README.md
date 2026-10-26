@@ -448,6 +448,14 @@ Written by `code/sds/ocv_reconfigure.py` against the pre-registration in
 | `ocv_reconfigure.md` | the report: the dose table, the compact table (`Experiment, State, Channel, n, R_behaviour, R_geometry, Direction, Support`), the H1 and H2 tables, the verdicts on P1–P3 and the list of what the numbers do not claim |
 | `ocv_reconfigure_table.csv` | the same compact table as CSV — one row per experiment × state × channel, with the `Scale` column that standardised it |
 | `ocv_carola.{json,md}` + `ocv_carola_table.csv` | the same three for the two-state run (`--sites carola`): pre-collapse against post-collapse on the support-sized chip, `Girder A` only, with the no-ordering and no-control statements in the report |
+| `ocv_carola_morandi.{json,md}` + `ocv_carola_morandi_table.csv` | the **bridge pair** (`--sites carola,morandi`, spec amendment 4): two collapses read with the same metric on two support-sized chips. `dose.applies` is `false` (the LUMO ladder is kept for provenance only), H2 carries `largest` alone with `not_computed` naming the `middle` and `matrix` it cannot support, and the report closes with *Two verdicts, read together* — Carola resolves both DESC blocks, Morandi resolves nothing, one of four cosine cells shares a direction |
+
+Every run also writes `bootstrap_caveats` — the cells whose `n` does not exceed the
+bootstrap block (3 units), with site, channel, block, level and `n`. Such a cell is
+resampled as a single block, so its interval carries the reference's uncertainty
+only; the list is empty for the dose pair and names Morandi's ASC post-collapse cell
+(n = 3) for the bridge pair. `--verify` re-derives the list from the units and fails
+on a mismatch.
 
 Deterministic (seeded bootstrap and permutation), and `--verify` re-derives every
 cell of the table from the two records before the run is allowed to overwrite

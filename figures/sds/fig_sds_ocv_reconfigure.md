@@ -10,11 +10,13 @@ Three plates, two roles:
 | `fig_sds_ocv_reconfigure_lumo.jpg` | the tower alone (4 panels) |
 | `fig_sds_ocv_reconfigure_bautzen.jpg` | the bridge alone (4 panels) |
 
-In every panel the origin is that asset's **reference state** and the arrows end at its standardised responses (`z = (median − median_ref) / scale`), so the geometry is within-asset; the two assets never share a scale.
+In every panel the origin is that asset's **reference state** and the arrows end at its standardised responses (`z = (median − median_ref) / scale`), so the geometry is within-asset and no scale is shared between assets.
 
 * **LUMO** — reference `healthy` (n_ref 40 ASC / 81 DESC), scale `mad` / `mad`, levels `L0` (0 % frequency drop), `L1` (7.4 % frequency drop), `L2` (13 % frequency drop); behaviour `[gamma2`, `P]`, geometry `[A`, `D`, `F`, `S]` (plane `[A, F]`).
 * **Bautzen** — reference `RS` (n_ref 6 ASC / 7 DESC), scale `pooled_mad` / `pooled_mad`, levels `RS` (rank 0), `DS1` (rank 1), `DS2` (rank 2); behaviour `[gamma2`, `P]`, geometry `[A`, `D`, `F`, `S]` (plane `[A, F]`).
 
 The inset in each panel repeats the block magnitude `R` per level with its moving-block 95 % interval — the quantity H1 tests. The reference level sits at the origin by construction and carries no interval.
+
+Every state label carries its cell's `n`; a cell at or below the bootstrap block is marked ✱ and its interval then reflects the reference's uncertainty only.
 
 Nothing is clipped: the axis limits follow the largest coordinate in the panel.

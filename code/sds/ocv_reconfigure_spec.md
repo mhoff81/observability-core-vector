@@ -229,6 +229,82 @@ in (0, 1]; Bautzen: floor-corrected band coherence, 72 of 128 values ≤ 0). It 
 in the `other` block, but the cross-experiment cosine of that block is reported
 **with and without γ²**, and the γ² row is the weakest link in H2.
 
+## Amendment 4 — 2026-10-26: the bridge pair (Carola, Morandi)
+
+*Amendment 3 let the metric run on one two-state asset. This one runs it on two at
+once, so the two collapses can be read side by side — the second pair, added
+without a new hypothesis class.*
+
+**Why a second pair.** Carolabrücke and Ponte Morandi are the two experiments in the
+corpus that are (a) a bridge, (b) read across a collapse, and (c) available as a
+support-sized chip produced by the same window rule. Comparing them asks the
+question the dose pair asks — does the same metric, applied twice, answer the same
+way? — in the one setting where the answer is not confounded with a dose ladder,
+because neither asset has one.
+
+**The registry entry.** `morandi` is registered exactly like `carola`: the same
+eight dimensions (`A, D, F, S`, `P`, `gamma2_mask`), `log` for `A, D, F, P, γ²` and
+`identity` for `S`, states `pre-collapse (healthy) → post-collapse`, reference
+`pre-collapse (healthy)`, largest state `post-collapse`, the two-level ladder
+`pre → post`, and `data/morandi/support/morandi_ocv_channels.csv` — **207 chips of
+the committed 232**, one platform track, both orbit directions, zero drops for any
+dimension. Nothing else in the registry changes; the dose pair's entries are
+untouched.
+
+**What H2 becomes.** The comparison keeps the cosine, its moving-block interval, the
+sign agreement and the random-direction null, and loses what a two-state pair cannot
+support:
+
+* `largest` only — both assets have exactly one response state;
+* no `middle` (no intermediate state exists) and no 2 × 2 matrix (only `post|post`
+  carries a response); both omissions are declared in the JSON under `not_computed`
+  rather than left as absent keys;
+* the null stays coarse by construction: 2 dimensions give 2 random sign patterns,
+  4 dimensions give 16 — so a 4-D `p` is a guard, never a significance claim. For
+  this pair the one shared direction (DESC geometry, `A− D− F− S+`, cosine
+  0.83, 4/4 signs) carries null `p = 0.083` and an interval that still covers zero.
+
+**What the pair may claim.** That Carola resolves a large, coherent DESC
+reconfiguration (both blocks, Holm < 0.001) and Morandi resolves nothing — its
+post-collapse cell holds 3 ASC and 6 DESC chips, the ASC one at the bootstrap block,
+its largest point estimate (DESC behaviour, `R` = 0.98) sits at Holm 0.797 and every
+other cell at 1.000 — and that exactly one of the four cells shares a direction. It
+may **not** claim that the two bridges reorganised alike, and no magnitude crosses
+between them — each `R` is on its own reference's scale.
+
+**The thin-cell rule, now written down.** Amendment 3 quoted cells with `n = 3`
+without marking them. Any cell whose `n` does not exceed the bootstrap block
+(`BLOCK_BOOT = 3`) is now flagged everywhere it is quoted: `✱` beside its `n` in the
+plate labels and a legend line in the suptitle, a `✱` in the report's state table,
+and a `bootstrap_caveats` list in the JSON naming site, channel, block, level and
+`n`. Such a cell is resampled as a single block, so its interval carries the
+*reference's* uncertainty only; the interval is still reported, with that caveat.
+The flag is computed per run, so the dose pair's reports carry an empty list.
+
+Two thresholds coexist and are not the same thing: `SMALL_N = 6` dates from the first
+pre-registration and writes `thin` in the table's `Support` column, while `✱` marks
+the narrower case in which the resample block itself exceeds the cell
+(`n ≤ BLOCK_BOOT = 3`) — the only case in which the interval is the reference's
+alone. Bautzen's `DS2` cell (n = 5) is therefore `thin` in the table and unmarked on
+the plate.
+
+**One key added to the dose block.** `dose.applies` is `true` only when LUMO is in
+the run. A bridge run still records the frequency ladder for provenance — it is the
+same JSON schema — but flags it `applies: false`, prints `## There is no dose`
+instead of the ladder, and puts the per-state `n` in its place.
+
+**Outputs.** A registered pair keeps its own stem: `data/sds/ocv_carola_morandi.{json,md}`,
+`data/sds/ocv_carola_morandi_table.csv`, and the plates
+`figures/sds/fig_sds_ocv_reconfigure_carola_morandi.jpg` (2 × 4 juxtaposition) plus
+the two single-asset plates. `--sites carola,morandi` selects it; the default is
+still `lumo,bautzen`, and a single asset is still `--sites carola`.
+
+**Self-test and verify.** Two checks are added to `--selftest` (17 total): a
+registered pair is recognised in either order while a single asset is not, and a
+cell at or below the bootstrap block is flagged while a larger cell is not.
+`--verify` re-derives the expected caveat set from the units and fails if the
+committed `bootstrap_caveats` names a different set of cells.
+
 ## Tests
 
 **H1 — ordered, per experiment, per channel, per block.** Jonckheere–Terpstra on the

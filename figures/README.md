@@ -49,6 +49,9 @@ figures/
 │              single-asset plates fig_sds_ocv_reconfigure_lumo.jpg and
 │              fig_sds_ocv_reconfigure_bautzen.jpg and, for the two-state
 │              case, fig_sds_ocv_reconfigure_carola.jpg (support chip, Girder A)
+│              and fig_sds_ocv_reconfigure_morandi.jpg (Ponte Morandi's support
+│              chip), with fig_sds_ocv_reconfigure_carola_morandi.jpg|.md as the
+│              bridge pair's own juxtaposition
 └── README.md
 ```
 
@@ -923,10 +926,23 @@ every arrow starts at that asset's **own** reference state. The inset in each pa
 carries the block magnitude `R` per dose level with its moving-block interval — the
 quantity H1 tests, while the arrows carry the direction the comparison section
 describes. The same script also writes `fig_sds_ocv_reconfigure_lumo.jpg` and
-`fig_sds_ocv_reconfigure_bautzen.jpg` (and, from `--sites carola`,
-`fig_sds_ocv_reconfigure_carola.jpg`), one plate per asset, because each asset is
+`fig_sds_ocv_reconfigure_bautzen.jpg` (and, from `--sites carola` or
+`--sites morandi`, `fig_sds_ocv_reconfigure_carola.jpg` /
+`fig_sds_ocv_reconfigure_morandi.jpg`), one plate per asset, because each asset is
 concluded on its own numbers and on its **own** Holm family; the joint plate is a
 juxtaposition, not a shared scale. The panel guide is
 `fig_sds_ocv_reconfigure.md`; the numbers behind all three are
 `../data/sds/ocv_reconfigure.json`, and the design was fixed in
 `../code/sds/ocv_reconfigure_spec.md` before the first run.
+
+The **bridge pair** (`--sites carola,morandi`, spec amendment 4) has its own plate
+and guide: `fig_sds_ocv_reconfigure_carola_morandi.jpg|.md`, rows = Carolabrücke and
+Ponte Morandi, same 2 × 4 layout, every arrow from that bridge's own pre-collapse
+reference, and the numbers in `../data/sds/ocv_carola_morandi.json`. It carries what
+amendment 4 added to **every** plate: each state label ends in its cell's `n`, and a
+cell at or below the bootstrap block (3 units) is marked `✱` with a legend line in
+the suptitle — Morandi's ASC post-collapse cell is the one such cell, and its
+interval therefore reflects the reference's uncertainty only. (The report's
+`Support: thin` flag is a different, older threshold — `SMALL_N = 6` — so Bautzen's
+`DS2` cell, n = 5, is thin in the table and unmarked on the plate.) The inset keeps
+to whichever corner of the panel the response leaves free, so no label crosses it.

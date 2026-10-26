@@ -1,5 +1,11 @@
 {
+ "bootstrap_caveats": {
+  "block": 3,
+  "cells": [],
+  "small_n": 6
+ },
  "dose": {
+  "applies": false,
   "definition": "Magnitude of the first-higher-mode drop against the healthy recording of the same campaign, in percent. The fundamental (2.750 Hz) is unchanged in every state, so the damage is local, and the first-higher mode is the one that moves.",
   "levels": [
    {
@@ -1293,7 +1299,7 @@
    ]
   },
   "H2": {
-   "rules": "not computed: the cross-asset comparison needs the two controlled-reference experiments",
+   "rules": "not computed: a single-asset run has no comparison partner, so no cosine is carried \u2014 `Ponte Morandi` is its partner in the registered pair `--sites carola,morandi`, and a cosine needs both",
    "skipped": true
   }
  },
@@ -1456,13 +1462,30 @@
      ],
      12.96
     ]
+   ],
+   "morandi": [
+    [
+     "pre",
+     [
+      "pre-collapse (healthy)"
+     ],
+     0.0
+    ],
+    [
+     "post",
+     [
+      "post-collapse"
+     ],
+     1.0
+    ]
    ]
   },
   "perm": 20000,
   "reference": {
    "bautzen": "RS",
    "carola": "pre-collapse (healthy)",
-   "lumo": "healthy"
+   "lumo": "healthy",
+   "morandi": "pre-collapse (healthy)"
   },
   "seed": 7,
   "small_n": 6,
@@ -1484,6 +1507,14 @@
     "gamma2": "log"
    },
    "lumo": {
+    "A": "log",
+    "D": "log",
+    "F": "log",
+    "P": "log",
+    "S": "identity",
+    "gamma2": "log"
+   },
+   "morandi": {
     "A": "log",
     "D": "log",
     "F": "log",
