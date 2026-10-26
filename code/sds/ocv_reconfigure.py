@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OCV reconfiguration against a controlled state change — two registered pairs.
+"""OCV reconfiguration against a controlled state change — three registered pairs.
 
 Two questions, one metric. **Does the magnitude of OCV reconfiguration grow with
 an independently defined state dose, and is the direction of that reconfiguration
@@ -7,7 +7,8 @@ the same in both assets?** The quantity is the distance from each experiment's
 *own* reference state; raw OCV values are never compared between two assets.
 
 The dose pair is LUMO and Bautzen; the bridge pair is Carolabrücke and Ponte
-Morandi, read across a collapse instead of a dose (amendment 4). The design is
+Morandi, read across a collapse instead of a dose (amendment 4); the tower pair is
+Haltern and KDLO, read across a collapse and a rebuild (amendment 5). The design is
 fixed in ``code/sds/ocv_reconfigure_spec.md`` and was written before this module
 ran. Short version:
 
@@ -15,8 +16,9 @@ ran. Short version:
   frequency of the tower drops 0 % (healthy) / 7.41 % (DAM 3 and DAM 4) / 12.96 %
   (DAM 6), so the ordered test has three levels and DAM 3 and DAM 4 are one level
   (``data/lumo/reference/lumo_state_frequencies.json``). Bautzen's ladder
-  ``RS < DS1 < DS2`` is ordinal only. The bridges have no dose at all: two states,
-  one binary event, and the ordered test reduces to its two-group case;
+  ``RS < DS1 < DS2`` is ordinal only. The bridges and the towers have no dose at
+  all: two states, one binary event, and the ordered test reduces to its
+  two-group case;
 * **response** — ``r = median(g(X_state)) - median(g(X_ref))`` on the transformed
   scale ``g`` (``log`` for positive dimensions, identity for ``S`` and Bautzen's
   floor-corrected ``gamma2``), standardised by the **MAD of the reference state**
@@ -26,12 +28,23 @@ ran. Short version:
 * **blocks** — ``mask = [A, F]`` and ``other = [gamma2, P, S]``. ``D = A/bbox_area``
   holds in 178 of 178 LUMO rows, so the literal ``[A, D, F]`` block is a
   sensitivity analysis, not the primary one;
+* **channels** — a record carries the orbit directions it was actually acquired in.
+  KDLO was acquired DESCENDING only, so its run has one channel, one H1 cell pair
+  per block and a two-test Holm family. A channel a record does not carry is
+  *declared* (``channels_absent``), never filled and never counted as a null;
 * **H1** — Jonckheere-Terpstra on the *per-unit* magnitudes (the reference's median
   magnitude is 0 by construction, so a test on state medians would be degenerate),
-  Holm over the eight primary cells, moving-block bootstrap for the intervals;
+  Holm over the asset's own family — two cells per channel it carries — and a
+  moving-block bootstrap for the intervals;
 * **H2** — cosine between the standardised response vectors, block by block, with a
   random-direction null; γ² is reported with and without, because it is a different
   quantity in the two experiments. Descriptive in every run, never a hypothesis.
+  It needs both assets on the same channel, so a pair whose records share only one
+  orbit direction carries its cosines on that one;
+* **excluded rows** — an acquisition whose state the registry excludes is removed
+  before any statistic and *counted* in the audit, never folded into a neighbouring
+  state: KDLO's ``single`` is the one acquisition at the collapse itself, and one
+  date can carry no median of its own.
 
 A cell whose ``n`` cannot fill the bootstrap block is flagged wherever it is quoted
 (``✱`` on the plates, a named list in the report): its interval then carries the
@@ -41,7 +54,8 @@ Usage
 -----
   python3 code/sds/ocv_reconfigure.py
   python3 code/sds/ocv_reconfigure.py --sites carola,morandi
-  python3 code/sds/ocv_reconfigure.py --sites carola
+  python3 code/sds/ocv_reconfigure.py --sites haltern,kdlo
+  python3 code/sds/ocv_reconfigure.py --sites kdlo
   python3 code/sds/ocv_reconfigure.py --selftest
   python3 code/sds/ocv_reconfigure.py --verify
 
@@ -51,7 +65,8 @@ Outputs
   figures/sds/<figure stem>.jpg   (630 dpi)
   figures/sds/<figure stem>.md
 where ``<stem>`` is ``ocv_reconfigure`` for the dose pair, ``ocv_carola_morandi``
-for the bridge pair, and ``ocv_<site>`` for a single asset.
+for the bridge pair, ``ocv_haltern_kdlo`` for the tower pair, and ``ocv_<site>``
+for a single asset.
 """
 from __future__ import annotations
 
@@ -95,6 +110,14 @@ COLUMNS = {
                "gamma2": "gamma2_mask"},
     "morandi": {"A": "A", "D": "D", "F": "F", "P": "P", "S": "S",
                 "gamma2": "gamma2_mask"},
+    # Both tower chips carry `gamma2_mask` and also Haltern's asset-point
+    # `gamma2_export`. The masked coherence is the one the window rule defines (the
+    # mask is the support-sized chip's own), so `gamma2_export` is left unused: it is
+    # a single point of the scene, not the site's masked coherence.
+    "haltern": {"A": "A", "D": "D", "F": "F", "P": "P", "S": "S",
+                "gamma2": "gamma2_mask"},
+    "kdlo": {"A": "A", "D": "D", "F": "F", "P": "P", "S": "S",
+             "gamma2": "gamma2_mask"},
 }
 
 #: The scale each dimension is analysed on. `S` is a non-negative distance and
@@ -110,6 +133,12 @@ TRANSFORM = {
     # positive in every row, so it stays on the log scale like Carola's.
     "morandi": {"A": "log", "D": "log", "F": "log", "P": "log",
                 "gamma2": "log", "S": "identity"},
+    # The tower chips: every dimension is positive in every row of both, so all six
+    # except `S` are analysed on the log scale.
+    "haltern": {"A": "log", "D": "log", "F": "log", "P": "log",
+                "gamma2": "log", "S": "identity"},
+    "kdlo": {"A": "log", "D": "log", "F": "log", "P": "log",
+             "gamma2": "log", "S": "identity"},
 }
 
 #: The two response blocks (see the dict below); see the 2026-10-22 amendment.
@@ -147,16 +176,43 @@ UNIT_SHAPE = {
                "date": "acquisition_ts"},
     "morandi": {"state": "state", "orbit": "orbit_direction",
                 "date": "acquisition_ts"},
+    "haltern": {"state": "state", "orbit": "orbit_direction",
+                "date": "acquisition_ts"},
+    "kdlo": {"state": "state", "orbit": "orbit_direction",
+             "date": "acquisition_ts"},
 }
 
 REFERENCE = {"lumo": "healthy", "bautzen": "RS",
              "carola": "pre-collapse (healthy)",
-             "morandi": "pre-collapse (healthy)"}
+             "morandi": "pre-collapse (healthy)",
+             "haltern": "pre-collapse (healthy)",
+             "kdlo": "pre"}
 
 STATES = {"lumo": ["healthy", "DAM 3", "DAM 4", "DAM 6"],
           "bautzen": ["RS", "DS1", "DS2"],
           "carola": ["pre-collapse (healthy)", "post-collapse"],
-          "morandi": ["pre-collapse (healthy)", "post-collapse"]}
+          "morandi": ["pre-collapse (healthy)", "post-collapse"],
+          "haltern": ["pre-collapse (healthy)", "post-collapse"],
+          "kdlo": ["pre", "rebuild"]}
+
+#: Rows the registry removes before any statistic, with the reason it gives. An
+#: excluded state is *counted* in the audit and never folded into a neighbour. KDLO's
+#: `single` is the one acquisition at the collapse itself (2022-12-23): one date
+#: cannot carry a median of its own, and it belongs to neither the standing nor the
+#: rebuilt tower. Registering it would create an n = 1 cell; dropping it silently
+#: would hide a decision, so it is excluded here and reported.
+EXCLUDED = {
+    "kdlo": {"single": "the collapse itself, 2022-12-23, and one date cannot carry a "
+                       "median"},
+}
+
+#: How the two-state contrast is called in a verdict, and how a single asset's title
+#: reads. KDLO's second state is a rebuild, and its report says so.
+CONTRAST = {"carola": "pre-to-post", "morandi": "pre-to-post",
+            "haltern": "pre-to-post", "kdlo": "pre-to-rebuild"}
+SITE_HEADLINE = {"carola": "across a collapse", "morandi": "across a collapse",
+                 "haltern": "across a collapse",
+                 "kdlo": "across a collapse and a rebuild"}
 
 #: Dose levels for the ordered test. LUMO's dose is measured (percent drop of the
 #: first-higher mode); DAM 3 and DAM 4 share it to one FFT bin. Bautzen has no
@@ -173,14 +229,23 @@ LEVELS = {
                ("post", ("post-collapse",), 1.0)],
     "morandi": [("pre", ("pre-collapse (healthy)",), 0.0),
                 ("post", ("post-collapse",), 1.0)],
+    # The towers carry the same two-level shape. Haltern's `post` is the fallen
+    # turbine; KDLO's second level is the *rebuilt* mast, which is why it is called
+    # `rebuild` and not `post` — the level names travel from here into the reports.
+    "haltern": [("pre", ("pre-collapse (healthy)",), 0.0),
+                ("post", ("post-collapse",), 1.0)],
+    "kdlo": [("pre", ("pre",), 0.0), ("rebuild", ("rebuild",), 1.0)],
 }
 
 #: The state used for the cross-experiment direction (and the middle one).
 LARGEST = {"lumo": "DAM 6", "bautzen": "DS2",
-           "carola": "post-collapse", "morandi": "post-collapse"}
+           "carola": "post-collapse", "morandi": "post-collapse",
+           "haltern": "post-collapse", "kdlo": "rebuild"}
 MIDDLE = {"lumo": ("DAM 3", "DAM 4"), "bautzen": ("DS1",),
           "carola": ("pre-collapse (healthy)",),
-          "morandi": ("pre-collapse (healthy)",)}
+          "morandi": ("pre-collapse (healthy)",),
+          "haltern": ("pre-collapse (healthy)",),
+          "kdlo": ("pre",)}
 
 #: Below this many units a cell is marked thin and must be quoted with its n.
 SMALL_N = 6
@@ -199,7 +264,14 @@ TABLE = {"lumo": os.path.join(REPO, "data", "lumo", "lumo_ocv_channels.csv"),
          # Morandi is read on its support-sized chip too (207 of the committed 232),
          # which is what makes the two bridges a comparison of one window rule.
          "morandi": os.path.join(REPO, "data", "morandi", "support",
-                                 "morandi_ocv_channels.csv")}
+                                 "morandi_ocv_channels.csv"),
+         # The towers are read on the same rule's chip: Haltern 107 of 120 committed
+         # overpasses, KDLO 60 of 60 (every one of its acquisitions lies inside the
+         # support).
+         "haltern": os.path.join(REPO, "data", "haltern", "support",
+                                 "haltern_ocv_channels.csv"),
+         "kdlo": os.path.join(REPO, "data", "kdlo", "support",
+                              "kdlo_ocv_channels.csv")}
 
 #: The pair the module was built for; ``--sites`` may select any registered asset.
 DEFAULT_SITES = ("lumo", "bautzen")
@@ -208,8 +280,16 @@ DEFAULT_SITES = ("lumo", "bautzen")
 #: pre-collapse reference. A pair, not a new hypothesis class: amendment 4.
 BRIDGE_PAIR = ("carola", "morandi")
 
+#: The two towers, read against their own pre-collapse reference: one came down and
+#: stayed down, the other came down and was rebuilt. Amendment 5.
+TOWER_PAIR = ("haltern", "kdlo")
+
 #: The pairs that carry a descriptive H2; every other selection is per-asset only.
-PAIRS = (DEFAULT_SITES, BRIDGE_PAIR)
+PAIRS = (DEFAULT_SITES, BRIDGE_PAIR, TOWER_PAIR)
+
+#: The pairs whose assets each have exactly two states, so H2 reduces to the one
+#: largest-state cosine per channel and block.
+TWO_STATE_PAIRS = (BRIDGE_PAIR, TOWER_PAIR)
 
 FREQUENCIES = os.path.join(REPO, "data", "lumo", "reference",
                            "lumo_state_frequencies.json")
@@ -317,11 +397,15 @@ def load_units(site, path=None):
 
     A unit carries its state, channel, date and the dimensions on the
     transformed scale; ``None`` marks a dimension the log made undefined, and
-    the audit counts those drops.
+    the audit counts those drops. A row whose state the registry excludes is
+    removed here, before any statistic, and counted under ``excluded`` — the
+    registry decides the vocabulary, so a state that is neither registered nor
+    excluded stops the run instead of being folded into a neighbour.
     """
     path = path or TABLE[site]
     columns = COLUMNS[site]
-    audit = {"dropped": {}, "rows": 0, "pairs": 0, "unpaired": 0}
+    audit = {"dropped": {}, "rows": 0, "pairs": 0, "unpaired": 0, "excluded": {}}
+    drop = EXCLUDED.get(site) or {}
     units = []
     if site != "bautzen":
         # one row per observation (a coherence row for LUMO, a chip for Carola)
@@ -332,13 +416,22 @@ def load_units(site, path=None):
         shape = UNIT_SHAPE[site]
         audit["rows"] = len(rows)
         for row in rows:
+            state = row[shape["state"]]
+            if state in drop:
+                audit["excluded"][state] = audit["excluded"].get(state, 0) + 1
+                continue
+            if state not in STATES[site]:
+                raise SystemExit(
+                    f"{site}: state {state!r} is neither registered in STATES nor "
+                    f"excluded in EXCLUDED — the registry decides the vocabulary, so "
+                    f"the run stops here")
             values = {}
             for dim in DIMS:
                 raw = _number(row.get(columns[dim]))
                 values[dim] = transform(site, dim, raw)
                 if raw is not None and values[dim] is None:
                     audit["dropped"][dim] = audit["dropped"].get(dim, 0) + 1
-            units.append({"state": row[shape["state"]],
+            units.append({"state": state,
                           "channel": CHANNEL.get(row[shape["orbit"]], "?"),
                           "date": row[shape["date"]], "values": values})
     else:
@@ -375,6 +468,38 @@ def units_of(units, channel, states):
     """The units of one channel and one or more states, in date order."""
     wanted = set(states)
     return [u for u in units if u["channel"] == channel and u["state"] in wanted]
+
+
+def channels_present(units):
+    """The orbit directions a record was actually acquired in, in report order.
+
+    A record that was never acquired ASCENDING has no ASC units, so every cell,
+    test and panel that would quote one is *declared* absent rather than filled
+    with an empty cell — an empty cell would read as a null result.
+    """
+    return tuple(channel for channel in ("ASC", "DESC")
+                 if any(u["channel"] == channel for u in units))
+
+
+def channels_of(report, site):
+    """The channels one asset's record carries, as stored in the report."""
+    store = report["experiments"][site]
+    return tuple(store.get("channels_present") or store["channels"])
+
+
+def shared_channels(report, pair):
+    """The channels both assets of a pair carry: what a cosine can be built on."""
+    left, right = pair
+    return tuple(channel for channel in channels_of(report, left)
+                 if channel in channels_of(report, right))
+
+
+def comparison_channels(report, pair):
+    """The channels a pair's comparison section actually carries."""
+    h2 = report["hypotheses"]["H2"]
+    return tuple(channel for channel in shared_channels(report, pair)
+                 if channel in h2)
+
 
 
 
@@ -415,10 +540,10 @@ def _cell(values, ref):
             "z_pooled": z_pooled, "thin": len(values) < SMALL_N}
 
 
-def responses(units, site, channels=("ASC", "DESC")):
+def responses(units, site, channels=None):
     """``r`` and ``z`` for every channel, dimension, state and dose level."""
     out = {}
-    for channel in channels:
+    for channel in (channels or channels_present(units)):
         block = {"dims": {}, "states": {}, "levels": {}}
         for dim in DIMS:
             ref = reference_stats(units, site, channel, dim)
@@ -713,9 +838,15 @@ def compute(sites=None, boot=BOOT, perm=PERM, seed=SEED):
         units, audit = load_units(site)
         units_by_site[site] = units
         block = responses(units, site)
+        channels = channels_present(units)
+        absent = {channel: ("no %s acquisition"
+                            % ("ASCENDING" if channel == "ASC" else "DESCENDING"))
+                  for channel in ("ASC", "DESC") if channel not in channels}
         store = {"table": os.path.relpath(TABLE[site], REPO),
-                 "sha256": _sha256(TABLE[site]), "audit": audit, "channels": {}}
-        for channel in ("ASC", "DESC"):
+                 "sha256": _sha256(TABLE[site]), "audit": audit,
+                 "channels_present": list(channels), "channels_absent": absent,
+                 "channels": {}}
+        for channel in channels:
             cell = {"n_by_state": {s: len(units_of(units, channel, [s]))
                                    for s in STATES[site]},
                     "dims": block[channel]["dims"], "states": {}, "levels": {},
@@ -772,22 +903,33 @@ def _hypotheses_two_state(h2, report, units_by_site, pair, boot=BOOT, seed=SEED)
     """H2 for a pair of assets that each have exactly two states.
 
     Only ``largest`` exists — both assets have a single response state — and only
-    the ``post|post`` cell of the 2 x 2 carries a response, so no ``middle`` and no
-    ``matrix`` are computed. The cosine stays descriptive, as in the dose pair: it
-    asks whether the two assets' responses point the same way, and it never
-    compares a magnitude.
+    the ``post|post`` (or, for the towers, ``post|rebuild``) cell of the 2 x 2
+    carries a response, so no ``middle`` and no full ``matrix`` are computed. The
+    cosine stays descriptive, as in the dose pair: it asks whether the two assets'
+    responses point the same way, and it never compares a magnitude.
+
+    A cosine needs a vector on each side, so it runs on the channels *both* records
+    carry. KDLO was acquired DESCENDING only, which leaves one channel, two cells
+    and a two-test Holm family; the ASCENDING channel is declared under
+    ``not_computed`` instead of being filled with an empty cell.
     """
     left_site, right_site = pair
-    h2["rules"] = ("descriptive: cosine of the two bridges' standardised "
-                   "post-collapse response vectors, each against its own "
-                   "pre-collapse reference; no magnitude is compared and the two "
-                   "assets share no orbit, date or atmosphere")
+    h2["rules"] = PAIR_NOTE[pair]["h2_rules"]
     h2["pair"] = list(pair)
     h2["not_computed"] = {
         "middle": "both assets have exactly two states, so there is no "
                   "intermediate state to compare",
-        "matrix": "2 x 2, of which only the post|post cell carries a response"}
+        "matrix": "2 x 2, of which only the "
+                  f"{LEVELS[left_site][-1][0]}|{LEVELS[right_site][-1][0]} cell "
+                  "carries a response"}
+    shared = shared_channels(report, pair)
+    h2["shared_channels"] = list(shared)
     for channel in ("ASC", "DESC"):
+        if channel not in shared:
+            h2["not_computed"][channel] = (
+                "no %s acquisition in both records, so no cosine is carried on "
+                "that channel" % ("ASCENDING" if channel == "ASC" else "DESCENDING"))
+    for channel in shared:
         h2[channel] = {}
         for block_name in ("behaviour", "geometry"):
             dims = BLOCKS[block_name]
@@ -879,7 +1021,7 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
                        + _partner_hint(sites))
         h2["skipped"] = True
         return
-    if pair == BRIDGE_PAIR:
+    if pair in TWO_STATE_PAIRS:
         _hypotheses_two_state(h2, report, units_by_site, pair, boot=boot, seed=seed)
         return
     h2["rules"] = ("cosine of the standardised response vectors, each against its own "
@@ -950,7 +1092,52 @@ def _hypotheses(report, units_by_site, boot=BOOT, seed=SEED):
 # The table, the reading, the predictions
 # ---------------------------------------------------------------------------
 EXPERIMENT = {"lumo": "LUMO", "bautzen": "Bautzen",
-              "carola": "Carolabrücke", "morandi": "Ponte Morandi"}
+              "carola": "Carolabrücke", "morandi": "Ponte Morandi",
+              "haltern": "Haltern", "kdlo": "KDLO"}
+
+#: What one row of an asset's table *is*, for the sentences that name it.
+TABLE_NOUN = {"lumo": "coherence", "bautzen": "bridge", "carola": "bridge",
+              "morandi": "bridge", "haltern": "tower", "kdlo": "tower"}
+
+#: The prose a registered pair owns, so that no sentence has to be typed twice and
+#: nothing about one pair is asserted for another. The towers are read across a
+#: collapse *and a rebuild*, and only the second asset has a rebuilt state.
+PAIR_NOTE = {
+    BRIDGE_PAIR: {
+        "headline": "across a collapse",
+        "noun": "bridges",
+        "unit": "chips",
+        "amendment": 4,
+        "h2_rules": "descriptive: cosine of the two bridges' standardised "
+                    "post-collapse response vectors, each against its own "
+                    "pre-collapse reference; no magnitude is compared and the two "
+                    "assets share no orbit, date or atmosphere",
+        "window": "Both chips were masked by the same rule (`30 %` of the peak and "
+                  "`5 ×` the ring median, 200 m ring, 30 m guard) in "
+                  "`erlking_mvp/tools/ocv_table.py`; the comparison inherits that "
+                  "rule rather than re-deriving it.",
+        "event": "",
+    },
+    TOWER_PAIR: {
+        "headline": "across a collapse and a rebuild",
+        "noun": "towers",
+        "unit": "overpasses",
+        "amendment": 5,
+        "h2_rules": "descriptive: cosine of the two towers' standardised response "
+                    "vectors at the collapsed state — Haltern's post-collapse, "
+                    "KDLO's rebuild — each against its own pre-collapse reference; "
+                    "no magnitude is compared and the two assets share no orbit, "
+                    "date or atmosphere",
+        "window": "Both chips were masked by the same rule (`30 %` of the peak and "
+                  "`5 ×` the ring median, 200 m ring, 30 m guard) in "
+                  "`erlking_mvp/tools/ocv_table.py`, the same rule the two bridges "
+                  "were cut with; the comparison inherits that rule rather than "
+                  "re-deriving it.",
+        "event": " — Haltern's turbine came down on 2021-09-29, and KDLO's mast "
+                 "collapsed between 2022-12-11 and 2022-12-23 and was rebuilt "
+                 "afterwards (its second state is a *rebuild*, not a ruin)",
+    },
+}
 
 
 def bootstrap_caveats(report):
@@ -964,7 +1151,7 @@ def bootstrap_caveats(report):
     """
     cells = []
     for site in (report.get("sites") or DEFAULT_SITES):
-        for channel in ("ASC", "DESC"):
+        for channel in channels_of(report, site):
             blocks = report["experiments"][site]["channels"][channel]["blocks"]
             for name in ("behaviour", "geometry"):
                 sizes = blocks[name].get("n_by_level") or []
@@ -982,7 +1169,7 @@ def table_rows(report):
     rows = []
     for site in (report.get("sites") or DEFAULT_SITES):
         store = report["experiments"][site]
-        for channel in ("ASC", "DESC"):
+        for channel in channels_of(report, site):
             cell = store["channels"][channel]
             for state in STATES[site]:
                 entry = cell["states"][state]
@@ -1004,7 +1191,8 @@ def reading_by_site(report):
     out = {}
     h1 = report["hypotheses"]["H1"]
     for site in (report.get("sites") or DEFAULT_SITES):
-        block = {name: {ch: h1[f"{site}/{ch}/{name}"] for ch in ("ASC", "DESC")}
+        channels = channels_of(report, site)
+        block = {name: {ch: h1[f"{site}/{ch}/{name}"] for ch in channels}
                  for name in ("behaviour", "geometry")}
         summary = {}
         for name, cells in block.items():
@@ -1012,7 +1200,7 @@ def reading_by_site(report):
                            if (c["p_holm"] or 1.0) < 0.05]
             monotone = {}
             bounds = {}
-            for channel in ("ASC", "DESC"):
+            for channel in channels:
                 values = [v for v in cells[channel]["R_by_level"].values()
                           if v is not None]
                 monotone[channel] = (all(b >= a for a, b in zip(values, values[1:]))
@@ -1026,12 +1214,12 @@ def reading_by_site(report):
             ordered = len(LEVELS[site]) > 2
             if significant:
                 what = ("a dose ordering" if ordered else
-                        "the pre-to-post contrast")
+                        f"the {CONTRAST[site]} contrast")
                 verdict = (f"{what} in the {name} block survives the asset's own "
                            f"Holm family on " + ", ".join(significant))
             elif any(monotone.values()):
                 rising = [ch for ch, flag in monotone.items() if flag]
-                where = ("both channels" if len(rising) == 2
+                where = ("both channels" if len(rising) == len(channels) == 2
                          else " ".join(rising) + " only")
                 verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
                            f"in the {name} block survives the asset's own Holm family; "
@@ -1040,7 +1228,8 @@ def reading_by_site(report):
                 verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
                            f"in the {name} block survives the asset's own Holm family, "
                            f"and the point estimate of the step is not monotone")
-                verdict += " on either channel"
+                verdict += (" on either channel" if len(channels) > 1
+                            else " on the one channel this record carries")
             summary[name] = {
                 "verdict": verdict, "significant": significant,
                 "monotone_by_channel": monotone, "delta_ci": bounds,
@@ -1050,9 +1239,9 @@ def reading_by_site(report):
         out[site] = {
             "verdicts": verdicts, "blocks": summary,
             "n_ref": {ch: report["experiments"][site]["channels"][ch]["dims"]["A"]["n"]
-                      for ch in ("ASC", "DESC")},
+                      for ch in channels},
             "scale_used": {ch: report["experiments"][site]["channels"][ch]["dims"]["A"]
-                                       ["scale_used"] for ch in ("ASC", "DESC")}}
+                                       ["scale_used"] for ch in channels}}
     return out
 
 
@@ -1063,7 +1252,7 @@ def reading(report):
     left_site, right_site = pair or (None, None)
     comparison = {}
     if not h2.get("skipped"):
-        for channel in ("ASC", "DESC"):
+        for channel in comparison_channels(report, pair):
             comparison[channel] = {}
             for block_name in ("behaviour", "geometry"):
                 item = h2[channel][block_name]["largest"]
@@ -1164,7 +1353,11 @@ def _p(value):
 
 
 def _caveat_sentence(report):
-    """One sentence naming the cells whose interval cannot resolve their own cell."""
+    """One sentence naming the cells whose interval cannot resolve their own cell.
+
+    An empty caveat list produces no sentence at all: a plate with no such cell
+    must not carry a sentence saying so.
+    """
     caveats = report["bootstrap_caveats"]
     labels = []
     for cell in caveats["cells"]:
@@ -1172,6 +1365,8 @@ def _caveat_sentence(report):
                  f"`{cell['level']}` (n = {cell['n']})")
         if label not in labels:
             labels.append(label)
+    if not labels:
+        return ""
     return ("**Bootstrap caveat:** the moving-block resample runs on blocks of "
             f"{caveats['block']} units, so a cell with `n` at or below that is drawn "
             "as a single block and its interval reflects the reference's uncertainty "
@@ -1187,7 +1382,15 @@ REFERENCE_NOTE = {
               "with the post-collapse state as the single contrast",
     "morandi": "Morandi against `pre-collapse (healthy)` on the support-sized chip, "
                "with the post-collapse state as the single contrast",
+    "haltern": "Haltern against `pre-collapse (healthy)` on the support-sized chip, "
+               "with the post-collapse state as the single contrast",
+    "kdlo": "KDLO against `pre` on the support-sized chip, with the rebuilt state as "
+            "the single contrast and one orbit direction only",
 }
+
+
+#: Small counts, spelled out: "of four tests", not "of 4 tests".
+_WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 
 
 def markdown(report):
@@ -1205,24 +1408,33 @@ def markdown(report):
         add("# OCV reconfiguration against the controlled state dose — two assets, "
             "two verdicts")
     elif pair:
-        add(f"# OCV reconfiguration across a collapse — {left_name} vs. "
+        add(f"# OCV reconfiguration {PAIR_NOTE[pair]['headline']} — {left_name} vs. "
             f"{right_name}, two verdicts")
     elif len(STATES[sites[0]]) == 2:
-        add(f"# OCV reconfiguration across a collapse — {EXPERIMENT[sites[0]]}, "
-            f"two states")
+        add(f"# OCV reconfiguration {SITE_HEADLINE.get(sites[0], 'across a collapse')} "
+            f"— {EXPERIMENT[sites[0]]}, two states")
     else:
         add(f"# OCV reconfiguration against the controlled state dose — "
             f"{EXPERIMENT[sites[0]]}")
     add("")
     add("*generated by `code/sds/ocv_reconfigure.py`; the design is fixed in "
         "`code/sds/ocv_reconfigure_spec.md`, including the 2026-10-22 amendment that "
-        "separates the two assets*")
+        "separates the two assets"
+        + (f" and amendment {PAIR_NOTE[pair]['amendment']} that registers this pair*"
+           if pair and pair != DEFAULT_SITES else "*"))
     add("")
+    families = {site: 2 * len(channels_of(report, site)) for site in sites}
+    if len(set(families.values())) == 1:
+        family = f"of {_WORDS.get(families[sites[0]], families[sites[0]])} tests"
+    else:
+        family = ("— two cells per channel, so "
+                  + " and ".join(f"{_WORDS.get(count, count)} for {EXPERIMENT[site]}"
+                                 for site, count in families.items()) + " —")
     add("Each asset is measured against **its own reference state**, in units of that "
         "reference's own variability"
         + " — " + ", ".join(REFERENCE_NOTE[site] for site in sites)
         + ". Assets share a metric, not a scale, so their magnitudes are never "
-        "compared. Each carries its **own** Holm family of four tests and its own "
+        "compared. Each carries its **own** Holm family " + family + " and its own "
         "verdict; no joint label is issued"
         + (", and the comparison section is a description, not a hypothesis."
            if pair else "."))
@@ -1247,27 +1459,55 @@ def markdown(report):
     else:
         add("## There is no dose")
         add("")
+        # A two-state pair whose levels are literally `pre`/`post` keeps the wording
+        # the bridge amendment used. KDLO's second level is a *rebuild*, so the
+        # sentence names the reference instead of a level that does not exist.
+        plain_states = {LEVELS[site][-1][0] for site in sites} == {"post"}
         add(("Both assets have" if pair else "This asset has")
-            + " exactly two states, separated by the collapse date, so there is no "
-            "ladder to order and no frequency drop to regress against. The ordered "
+            + " exactly two states, separated by the collapse date"
+            + (PAIR_NOTE[pair]["event"] if pair else "")
+            + ", so there is no " "ladder to order and no frequency drop to regress "
+            "against. The ordered "
             "test reduces to its two-group case — one one-sided rank test between "
-            "`pre` and `post` per block"
-            + (" and per asset — and `ΔR` is the post-minus-pre step." if pair else
-               ", and `ΔR` is the post-minus-pre step."))
+            + ("`pre` and `post`" if plain_states else
+               "the reference and the other state")
+            + " per block"
+            + (" and per asset — and `ΔR` is the post-minus-pre step." if pair and plain_states
+               else " and per asset — and `ΔR` is the step." if pair
+               else ", and `ΔR` is the post-minus-pre step." if plain_states
+               else ", and `ΔR` is the step."))
         add("")
-        add("| experiment | state | n ASC | n DESC |")
-        add("| --- | --- | ---: | ---: |")
+        counted = [channel for channel in ("ASC", "DESC")
+                   if any(channel in channels_of(report, site) for site in sites)]
+        add("| experiment | state | "
+            + " | ".join(f"n {channel}" for channel in counted) + " |")
+        add("| --- | --- |" + " ---: |" * len(counted))
         for site in sites:
             for index, (_level, state_names, _dose_value) in enumerate(LEVELS[site]):
                 counts = []
-                for channel in ("ASC", "DESC"):
+                for channel in counted:
+                    if channel not in channels_of(report, site):
+                        counts.append("–")
+                        continue
                     sizes = (report["experiments"][site]["channels"][channel]["blocks"]
                              ["geometry"].get("n_by_level") or [])
                     counts.append(sizes[index] if index < len(sizes) else "–")
                 mark = " (reference)" if state_names == (REFERENCE[site],) else ""
                 add(f"| {EXPERIMENT[site]} | {state_names[0]}{mark} | "
-                    f"{counts[0]} | {counts[1]} |")
+                    + " | ".join(str(count) for count in counts) + " |")
         add("")
+        absent = [(site, channel) for site in sites
+                  for channel in (report["experiments"][site].get("channels_absent")
+                                  or {})]
+        if absent:
+            add("A `–` is a channel the record does not contain, not a cell that came "
+                "out empty: "
+                + "; ".join(f"{EXPERIMENT[site]} was never acquired "
+                            f"{'ASCENDING' if channel == 'ASC' else 'DESCENDING'}"
+                            for site, channel in absent)
+                + ". Such a channel carries no cell, no test and no panel, and it "
+                "contributes nothing to the asset's Holm family.")
+            add("")
         add("LUMO's measured frequency ladder is not used here — "
             + ("not by either asset" if pair else "not by this asset")
             + "; it is kept under `dose` in the JSON, flagged `applies: false`, and "
@@ -1277,10 +1517,12 @@ def markdown(report):
         block = reading["per_asset"][site]
         add(f"## {EXPERIMENT[site]}")
         add("")
-        add(f"* reference `{REFERENCE[site]}`, n_ref = {block['n_ref']['ASC']} (ASC) / "
-            f"{block['n_ref']['DESC']} (DESC); scale used = "
-            f"`{block['scale_used']['ASC']}` (ASC) / `{block['scale_used']['DESC']}` "
-            f"(DESC).")
+        add(f"* reference `{REFERENCE[site]}`, n_ref = "
+            + " / ".join(f"{block['n_ref'][channel]} ({channel})"
+                         for channel in channels_of(report, site))
+            + "; scale used = "
+            + " / ".join(f"`{block['scale_used'][channel]}` ({channel})"
+                         for channel in channels_of(report, site)) + ".")
         add("")
         add("| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |")
         add("| --- | --- | ---: | ---: | ---: | --- | --- | --- |")
@@ -1293,10 +1535,16 @@ def markdown(report):
                 f"{_num(row['R_behaviour'])} | {_num(row['R_geometry'])} | "
                 f"{row['Direction']} | `{row['Scale']}` | {row['Support']} |")
         add("")
+        for channel, note in (report["experiments"][site].get("channels_absent")
+                              or {}).items():
+            add(f"*{channel} is absent from this record ({note}), so it has no rows in "
+                f"the table above, no H1 cells below and no panels on the plate: "
+                f"`–`, `not_computed` and an empty panel, never a null.*")
+            add("")
         add("| channel | block | R by level | ΔR, top step | p (one-sided) | Holm "
             "in the asset's family |")
         add("| --- | --- | --- | --- | ---: | ---: |")
-        for channel in ("ASC", "DESC"):
+        for channel in channels_of(report, site):
             for name in ("behaviour", "geometry"):
                 cell = report["hypotheses"]["H1"][f"{site}/{channel}/{name}"]
                 levels = " < ".join(f"{key} {_num(value)}"
@@ -1348,10 +1596,91 @@ def markdown(report):
                 f"{sizes['DESC'][0]} pre-collapse ones: **p = 1.000 here is not "
                 f"evidence of no change — it is what this many chips can resolve.**")
             add("")
+        elif site == "haltern":
+            audit = report["experiments"]["haltern"]["audit"]
+            sizes = {channel: (report["experiments"]["haltern"]["channels"][channel]
+                               ["blocks"]["geometry"]["n_by_level"])
+                     for channel in channels_of(report, site)}
+            after = " and ".join(f"{sizes[channel][1]} {channel}"
+                                 for channel in channels_of(report, site))
+            before = " and ".join(f"{sizes[channel][0]} {channel}"
+                                  for channel in channels_of(report, site))
+            thin = [channel for channel in channels_of(report, site)
+                    if sizes[channel][1] <= BLOCK_BOOT]
+            below = [channel for channel in channels_of(report, site)
+                     if sizes[channel][1] < SMALL_N]
+            add(f"Haltern has two states and no control track: the turbine came down "
+                f"on 2021-09-29, and `pre-collapse (healthy)` and `post-collapse` are "
+                f"separated by that date alone, so this is a before/after contrast in "
+                f"time, not a controlled comparison. The table is the support-sized "
+                f"chip of the turbine mast ({audit.get('rows')} of the 120 committed "
+                f"overpasses). The post-collapse state holds {after} units against "
+                f"{before} pre-collapse ones"
+                + (f"; {' and '.join(thin)} is at or below the bootstrap block of "
+                   f"{BLOCK_BOOT}" if thin else "")
+                + (f"; {', '.join(below)} sits below the six-unit threshold the table "
+                   f"calls `thin`" if below else "")
+                + (". No contrast survives the asset's own family, so the intervals "
+                   "above are what these data give."
+                   if not [1 for channel in channels_of(report, site)
+                           for name in ("behaviour", "geometry")
+                           if (report["hypotheses"]["H1"][f"{site}/{channel}/{name}"]
+                               ["p_holm"] or 1.0) < 0.05] else "."))
+            add("")
+        elif site == "kdlo":
+            audit = report["experiments"]["kdlo"]["audit"]
+            channels = channels_of(report, site)
+            sizes = {channel: (report["experiments"]["kdlo"]["channels"][channel]
+                               ["blocks"]["geometry"]["n_by_level"])
+                     for channel in channels}
+            excluded = audit.get("excluded") or {}
+            cell = report["experiments"]["kdlo"]["channels"][channels[0]]
+            largest = cell["states"][LARGEST["kdlo"]]
+            block = largest["blocks"]["geometry"]["z"]
+            shares = {dim: (block.get(dim) or 0.0) ** 2 for dim in BLOCKS["geometry"]}
+            leading = max(shares, key=shares.get)
+            lead_share = shares[leading] / sum(shares.values()) if sum(shares.values()) else 0.0
+            others = max(abs(block[dim]) for dim in BLOCKS["geometry"] if dim != leading)
+            add(f"KDLO has two states and no control track either: the mast collapsed "
+                f"between 2022-12-11 and 2022-12-23 and was rebuilt, so `pre` and "
+                f"`rebuild` are separated by that event alone — a before/after "
+                f"contrast in time in which the second state is a *new* structure, "
+                f"not a damaged one. The table is the support-sized chip, which here "
+                f"is the whole record ({audit.get('pairs') or audit.get('rows')} "
+                f"acquisitions)"
+                + (", and the record carries no ASCENDING acquisition, so this asset "
+                   "has one channel, two H1 cells per block and a two-test Holm "
+                   "family." if len(channels) == 1 else ".")
+                + " The reference holds "
+                + " and ".join(f"{sizes[channel][0]} {channel}" for channel in channels)
+                + " units and the rebuilt state "
+                + " and ".join(f"{sizes[channel][1]} {channel}" for channel in channels)
+                + " units."
+                + "".join(f" The {'one' if count == 1 else count} acquisition"
+                          f"{'' if count == 1 else 's'} in state `{state}` "
+                          f"{'is' if count == 1 else 'are'} excluded before any "
+                          f"statistic — {EXCLUDED[site][state]} — and counted in the "
+                          f"audit, so neither state inherits it."
+                          for state, count in excluded.items())
+                + (f" The geometry magnitude of the rebuilt state (`R` = "
+                   f"{_num(largest['blocks']['geometry']['value'], 3)}) is carried by "
+                   f"`{leading}` (z = {block[leading]:+.1f}, "
+                   f"{lead_share * 100:.1f} % of the block's squared magnitude): the "
+                   f"reference's `{leading}` median is "
+                   f"{_num(cell['dims'][leading]['median'], 3)} (on the "
+                   f"`{TRANSFORM['kdlo'][leading]}` scale) with a MAD of "
+                   f"{_num(cell['dims'][leading]['scale'], 2)}, the rebuilt state's is "
+                   f"{_num(largest['dims'][leading]['median'], 3)}, and the other "
+                   f"three dimensions stay within {_num(others, 2)} z. `R` is an RMS "
+                   f"over four dimensions, so one coordinate can carry it — which is "
+                   f"why `{leading}` is annotated beside the plane and not drawn on "
+                   f"it." if lead_share > 0.5 else ""))
+            add("")
         else:
-            add(f"{EXPERIMENT[site]} has two states and no control track: `pre` and "
-                f"`post` are separated by the collapse date, so this is a "
-                f"before/after contrast in time, not a controlled comparison.")
+            levels = " and ".join(f"`{name}`" for name, _states, _dose in LEVELS[site])
+            add(f"{EXPERIMENT[site]} has two states and no control track: {levels} "
+                f"are separated by the event date alone, so this is a before/after "
+                f"contrast in time, not a controlled comparison.")
             add("")
         applicable = [item for item in report["predictions"]
                       if (site == "lumo" and item["key"] in ("P1", "P2"))
@@ -1384,7 +1713,7 @@ def markdown(report):
         add(f"| channel | block | cosine | 95 % CI | sign agreement | null p | "
             f"{left_name} | {right_name} |")
         add("| --- | --- | ---: | --- | --- | ---: | --- | --- |")
-        for channel in ("ASC", "DESC"):
+        for channel in comparison_channels(report, pair):
             for block_name in ("behaviour", "geometry"):
                 cell = report["hypotheses"]["H2"][channel][block_name]
                 item = cell["largest"]
@@ -1415,27 +1744,37 @@ def markdown(report):
             "`A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not "
             "morphology) are annotated beside the plane rather than drawn as axes.")
         add("")
-    if pair == BRIDGE_PAIR:
+    if pair in TWO_STATE_PAIRS:
         add("### Two verdicts, read together")
         add("")
         h1 = report["hypotheses"]["H1"]
+        resolved_sites = []
         for site in pair:
             cells = [(channel, block_name, h1[f"{site}/{channel}/{block_name}"])
-                     for channel in ("ASC", "DESC")
+                     for channel in channels_of(report, site)
                      for block_name in ("behaviour", "geometry")]
+            level = LEVELS[site][-1][0]
             parts = "; ".join(
-                f"{channel} {block_name} `R` = {_num(cell['R_by_level'].get('post'))}, "
+                f"{channel} {block_name} `R` = {_num(cell['R_by_level'].get(level))}, "
                 f"Holm {_p(cell['p_holm'])}" for channel, block_name, cell in cells)
             resolved = [f"{channel} {block_name}" for channel, block_name, cell in cells
                         if cell["p_holm"] is not None and cell["p_holm"] < 0.05]
+            if resolved:
+                resolved_sites.append(site)
             add(f"* **{EXPERIMENT[site]}** — {parts}. "
                 + ("Resolves " + ", ".join(resolved) + " at Holm < 0.05."
                    if resolved else "Resolves no cell at Holm < 0.05."))
         add("")
         cells = [(channel, block_name,
                   report["hypotheses"]["H2"][channel][block_name]["largest"])
-                 for channel in ("ASC", "DESC") for block_name in ("behaviour", "geometry")]
-        shared = [item for item in cells if (item[2]["cosine"] or 0) > 0]
+                 for channel in comparison_channels(report, pair)
+                 for block_name in ("behaviour", "geometry")]
+        # A shared direction needs a positive cosine *and* the signs to agree
+        # dimension by dimension: a cosine that one dimension carries alone is not a
+        # direction the two assets share.
+        shared = [item for item in cells
+                  if (item[2]["cosine"] or 0) > 0
+                  and item[2]["sign_agreement"][0] == item[2]["sign_agreement"][1]]
         if shared:
             phrases = []
             for channel, block_name, item in shared:
@@ -1451,21 +1790,46 @@ def markdown(report):
                     + (" — an interval that still covers zero, so the agreement is in "
                        "the signs and not in the size" if covers else
                        " — an interval that excludes zero"))
-            add("Of the four cells, "
+            add(f"Of the {len(cells)} cells, "
                 + ("exactly one shares a direction: " if len(shared) == 1
                    else f"{len(shared)} share a direction: ")
                 + "; ".join(phrases) + ".")
             add("")
-        sizes = {channel: report["experiments"]["morandi"]["channels"][channel]
-                 ["blocks"]["geometry"]["n_by_level"] for channel in ("ASC", "DESC")}
-        add("So the comparison does not say that the two bridges reorganised alike. It "
-            "says that one of them reorganised measurably and the other did not, and "
-            "that where the two directions do agree, the agreement rests on signs "
-            "rather than on magnitudes, on a null that is too coarse to call "
-            f"significant, and on {sum(sizes['ASC'][1:]) + sum(sizes['DESC'][1:])} "
-            f"post-collapse chips against {sum(sizes['ASC'][:1]) + sum(sizes['DESC'][:1])} "
-            "pre-collapse ones in the second asset. That is the answer these data "
-            "support, and it is not the same as *no change*.")
+        elif cells:
+            channel, block_name, item = max(
+                cells, key=lambda cell: (cell[2]["sign_agreement"][0]
+                                         / max(1, cell[2]["sign_agreement"][1])))
+            agree, total = item["sign_agreement"]
+            add(f"None of the {len(cells)} cells shares a direction: in every one the "
+                f"cosine is not positive or the signs disagree in at least one "
+                f"dimension. The closest is {channel} {block_name}, cosine "
+                f"{_num(item['cosine'])} {_ci(item['ci'])} with {agree}/{total} signs "
+                f"equal (null p {_p(item.get('p_null'))}) — a cosine that does not "
+                f"carry the block's dimensions with it.")
+            add("")
+        sizes = {channel: report["experiments"][right_site]["channels"][channel]
+                 ["blocks"]["geometry"]["n_by_level"]
+                 for channel in channels_of(report, right_site)}
+        post = sum(sum(sizes[channel][1:]) for channel in sizes)
+        pre = sum(sum(sizes[channel][:1]) for channel in sizes)
+        unit = PAIR_NOTE[pair]["unit"]
+        lead = ("both reorganised measurably, each against its own reference and on "
+                "its own scale" if len(resolved_sites) == 2 else
+                "one of them reorganised measurably and the other did not"
+                if resolved_sites else
+                "neither reorganised measurably at this n")
+        add(f"So the comparison does not say that the two {PAIR_NOTE[pair]['noun']} "
+            f"reorganised alike. It says that {lead}"
+            + (", and that where the two directions do agree, the agreement rests on "
+               "signs rather than on magnitudes, on a null that is too coarse to call "
+               f"significant, and on {post} {unit} after the event against {pre} "
+               "before it in the second asset."
+               if shared else
+               ", and that no cell has both a positive cosine and agreeing signs — "
+               f"the second asset holds {post} {unit} after the event against {pre} "
+               "before it.")
+            + " That is the answer these data support, and it is not the same as *no "
+              "change*.")
         add("")
     add("### Units dropped, per dimension")
     add("")
@@ -1480,21 +1844,33 @@ def markdown(report):
     add("")
     dropped_total = sum(sum((report["experiments"][site]["audit"].get("dropped") or
                              {}).values()) for site in sites)
+    noun = TABLE_NOUN[pair[0]] if pair else TABLE_NOUN[sites[0]]
     add("A unit is dropped for one dimension only when the transformed value is "
         "undefined. "
         + ("LUMO loses one `gamma2` row (a zero); Bautzen loses a *pair* "
            "whenever either side of the bridge-control difference is missing or zero."
            if pair == DEFAULT_SITES else
-           ("Neither bridge table loses a unit for any dimension, so every `R` above "
+           (f"Neither {noun} table loses a unit for any dimension, so every `R` above "
             "is computed on the full cell." if len(sites) > 1 else
-            "The bridge table loses no unit for any dimension, so every `R` above is "
+            f"The {noun} table loses no unit for any dimension, so every `R` above is "
             "computed on the full cell.") if not dropped_total else
-           f"The bridge table{'s' if len(sites) > 1 else ''} lose"
+           f"The {noun} table{'s' if len(sites) > 1 else ''} lose"
            f"{'s' if len(sites) == 1 else ''} {dropped_total} unit-dimension(s) in "
            "total.")
         + ("" if not report.get("bootstrap_caveats", {}).get("cells") else
            " " + _caveat_sentence(report)))
     add("")
+    excluded = [(site, state, count) for site in sites
+                for state, count in (report["experiments"][site]["audit"].get("excluded")
+                                     or {}).items()]
+    if excluded:
+        add("**Excluded before any statistic:** "
+            + "; ".join(f"{EXPERIMENT[site]} `{state}` — {count} acquisition"
+                        f"{'' if count == 1 else 's'}: {EXCLUDED[site][state]}; counted "
+                        "here and in the JSON audit and never folded into a "
+                        "neighbouring state" for site, state, count in excluded)
+            + ".")
+        add("")
     add("## What this does not claim")
     add("")
     add("* No magnitude comparison between the assets: `R` is scaled by each "
@@ -1503,13 +1879,20 @@ def markdown(report):
         "units by construction.")
     add("* No joint verdict. Each asset's Holm family, and therefore each asset's "
         "verdict and bound, is its own.")
-    add("* No severity derived from an OCV response: "
-        + ("LUMO's ordering comes from the measured natural frequencies, Bautzen's "
-           "from the documented ladder." if pair == DEFAULT_SITES else
-           "this asset has no ordered state ladder — `pre` and `post` are one "
-           "binary event, and `ΔR` is its size, not a dose response." if len(sites) == 1
-           else "neither bridge has an ordered state ladder — `pre` and `post` are "
-           "one binary event, and `ΔR` is its size, not a dose response."))
+    if pair == DEFAULT_SITES:
+        severity = ("LUMO's ordering comes from the measured natural frequencies, "
+                    "Bautzen's from the documented ladder.")
+    elif len(sites) == 1:
+        one = " and ".join(f"`{name}`" for name, _states, _dose in LEVELS[sites[0]])
+        severity = (f"this asset has no ordered state ladder — {one} are one binary "
+                    "event, and `ΔR` is its size, not a dose response.")
+    else:
+        one = ("`pre` and `post`"
+               if {name for site in sites for name, _s, _d in LEVELS[site]}
+               == {"pre", "post"} else "the two states")
+        severity = (f"neither {noun} has an ordered state ladder — {one} are one "
+                    "binary event, and `ΔR` is its size, not a dose response.")
+    add("* No severity derived from an OCV response: " + severity)
     add("* No failure case enters the construction of this metric; projecting them "
         "afterwards is a separate step with these definitions frozen.")
     add("")
@@ -1531,27 +1914,88 @@ def markdown(report):
             "whole, and no second track exists to control for what the two dates "
             "share.")
         sizes = {channel: report["experiments"]["morandi"]["channels"][channel]
-                 ["blocks"]["geometry"]["n_by_level"] for channel in ("ASC", "DESC")}
-        thin = [f"{channel} (n = {sizes[channel][1]})" for channel in ("ASC", "DESC")
+                 ["blocks"]["geometry"]["n_by_level"]
+                 for channel in channels_of(report, "morandi")}
+        thin = [f"{channel} (n = {sizes[channel][1]})"
+                for channel in channels_of(report, "morandi")
                 if sizes[channel][1] <= BLOCK_BOOT]
-        add(f"* **A thin post-collapse cell.** It holds {sizes['ASC'][1]} ASC and "
-            f"{sizes['DESC'][1]} DESC units"
+        add("* **A thin post-collapse cell.** It holds "
+            + " and ".join(f"{sizes[channel][1]} {channel}"
+                           for channel in channels_of(report, "morandi")) + " units"
             + (f"; that cell is at or below the bootstrap block of {BLOCK_BOOT} on "
                f"{', '.join(thin)}, so its interval cannot resolve it — a null there "
                "is a statement about what this many chips can see, not about the "
                "structure." if thin else "."))
         add("* **No ordering claim.** `pre` and `post` are one binary event, so only "
             "the two-group version of the ordered test is reported.")
-    if pair == BRIDGE_PAIR:
-        add("* **One metric, two events.** The two bridges collapse for different "
-            "reasons on different dates with different structures; the shared element "
-            "is the measurement and the window rule, not the event. A shared cosine "
-            "direction is not a transfer claim, and no magnitude crosses between "
-            "the two.")
-        add("* **Same window rule, verified once.** Both chips were masked by the same "
-            "rule (`30 %` of the peak and `5 ×` the ring median, 200 m ring, 30 m "
-            "guard) in `code/overpass/ocv_table.py`; the comparison inherits that "
-            "rule rather than re-deriving it.")
+    if "haltern" in sites:
+        sizes = {channel: report["experiments"]["haltern"]["channels"][channel]
+                 ["blocks"]["geometry"]["n_by_level"]
+                 for channel in channels_of(report, "haltern")}
+        thin = [f"{channel} (n = {sizes[channel][1]})"
+                for channel in channels_of(report, "haltern")
+                if sizes[channel][1] <= BLOCK_BOOT]
+        below = [channel for channel in channels_of(report, "haltern")
+                 if sizes[channel][1] < SMALL_N]
+        add("* **One section of one mast, no control.** The support-sized chip is the "
+            "`turbine-mast-section` of a single AV9 turbine and the table carries no "
+            "control track, so the post-collapse signature is confounded with the "
+            "calendar — unlike Bautzen, whose bridge-minus-control difference removes "
+            "what the two tracks share.")
+        add("* **A thin post-collapse cell.** It holds "
+            + " and ".join(f"{sizes[channel][1]} {channel}"
+                           for channel in channels_of(report, "haltern"))
+            + " units against "
+            + " and ".join(f"{sizes[channel][0]} {channel}"
+                           for channel in channels_of(report, "haltern"))
+            + " pre-collapse ones"
+            + (f", and {', '.join(thin)} is at or below the bootstrap block of "
+               f"{BLOCK_BOOT}, so its interval carries the reference's uncertainty "
+               "only" if thin else "")
+            + (f"; {', '.join(below)} sits below the six-unit threshold the `Support` "
+               "column calls `thin`" if below else "")
+            + ". With this many post-collapse overpasses a null is a statement about "
+            "what the data can resolve, not about the structure.")
+        add("* **`gamma2_mask`, not `gamma2_export`.** The behaviour block uses the "
+            "masked coherence the window rule defines; the asset-point export the same "
+            "table carries is a single point of the scene, not the site's masked "
+            "coherence, and is not used.")
+        add("* **No ordering claim.** `pre` and `post` are one binary event, so only "
+            "the two-group version of the ordered test is reported.")
+    if "kdlo" in sites:
+        channels = channels_of(report, "kdlo")
+        excluded = report["experiments"]["kdlo"]["audit"].get("excluded") or {}
+        add("* **A rebuild, not a ruin.** KDLO's second state is the mast as rebuilt, "
+            "not the mast as collapsed, so a response there is the difference between "
+            "two structures — the standing one and its replacement — and not a damage "
+            "state. Nothing here reads severity off the size of `ΔR`.")
+        add("* **One channel, half the tests.** "
+            + ("The record carries no ASCENDING acquisition, so every cell is a DESC "
+               "cell: two H1 tests for the asset instead of four, and two cosine cells "
+               "instead of four. The missing channel is declared in the JSON "
+               "(`channels_absent`) and drawn as an empty panel; it is never a null."
+               if len(channels) == 1 else
+               "Both orbit directions are present, so the asset carries the full "
+               "four-cell family."))
+        add("* **One acquisition excluded, and counted.** "
+            + ("; ".join(f"`{state}` — {count} acquisition"
+                         f"{'' if count == 1 else 's'} ({EXCLUDED['kdlo'][state]})"
+                         for state, count in excluded.items())
+               if excluded else "none") + ".")
+        add("* **Support chip = whole record.** All 60 acquisitions of the record lie "
+            "inside the support, so this table is the record rather than a window on "
+            "it — the opposite of Haltern's 107 of 120, and the reason the two counts "
+            "are printed rather than compared.")
+    if pair in TWO_STATE_PAIRS:
+        add(f"* **One metric, two events.** The two {PAIR_NOTE[pair]['noun']} "
+            + ("collapse for different reasons on different dates with different "
+               "structures" if pair == BRIDGE_PAIR else
+               "fail for different reasons on different dates with different "
+               "structures, and only one of them was rebuilt")
+            + "; the shared element is the measurement and the window rule, not the "
+            "event. A shared cosine direction is not a transfer claim, and no "
+            "magnitude crosses between the two.")
+        add("* **Same window rule, verified once.** " + PAIR_NOTE[pair]["window"])
     return "\n".join(lines)
 
 
@@ -1617,10 +2061,40 @@ def _magnitude_strip(ax, entry, site, anchor=(0.60, 0.05)):
 STATE_LABEL = {"pre-collapse (healthy)": "pre", "post-collapse": "post"}
 
 
+def _empty_panel(ax, site, channel, block_name, note):
+    """A panel for a channel the record does not contain: empty, and says so.
+
+    It is drawn, not skipped: the plate keeps its four columns so the two rows stay
+    comparable, and the panel states that the cell does not exist. An empty cell
+    with an axis and no note would read as a null result.
+    """
+    ax.set_xlim(-1.0, 1.0)
+    ax.set_ylim(-1.0, 1.0)
+    ax.set_aspect("equal")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    ax.set_title(f"{EXPERIMENT[site]} · {channel} · {block_name}", fontsize=6.2,
+                 loc="left", color="0.55")
+    ax.text(0.5, 0.56, "—", transform=ax.transAxes, ha="center", va="center",
+            fontsize=13.0, color="0.7")
+    ax.text(0.5, 0.42, note, transform=ax.transAxes, ha="center", va="center",
+            fontsize=5.0, color="0.45", wrap=True)
+    ax.text(0.5, 0.30, "no cell, no test, no interval", transform=ax.transAxes,
+            ha="center", va="center", fontsize=4.8, color="0.45")
+
+
 def _panel(ax, report, site, channel, block_name, plt):
     """One cell of a plate: arrows from the reference, plus the R strip."""
+    store = report["experiments"][site]
+    if channel not in store["channels"]:
+        _empty_panel(ax, site, channel, block_name,
+                     (store.get("channels_absent") or {}).get(channel,
+                                                              "no acquisition"))
+        return
     dims = GEOMETRY_PLANE if block_name == "geometry" else BLOCKS[block_name]
-    cell = report["experiments"][site]["channels"][channel]
+    cell = store["channels"][channel]
     span = 0.3
     marks = []
     for state in STATES[site]:
@@ -1738,7 +2212,7 @@ def _thin_legend(report, sites):
     """The ✱ legend, but only on a plate that actually carries such a cell."""
     thin = []
     for site in sites:
-        for channel in ("ASC", "DESC"):
+        for channel in channels_of(report, site):
             cell = report["experiments"][site]["channels"][channel]
             for state in STATES[site]:
                 count = cell["states"][state].get("n_units")
@@ -1783,6 +2257,10 @@ PLATE_TITLE = {
                "post-collapse state (support-sized chip, Girder A)",
     "morandi": "Ponte Morandi — OCV reconfiguration between the pre- and the "
                "post-collapse state (support-sized chip, one platform track)",
+    "haltern": "Haltern AV9 — OCV reconfiguration between the pre-collapse and the "
+               "post-collapse state (support-sized chip, turbine mast section)",
+    "kdlo": "KDLO media tower — OCV reconfiguration between the standing and the "
+            "rebuilt mast (support-sized chip, DESCENDING only)",
 }
 
 #: The juxtaposition title per registered pair; its stem comes from the site tuple.
@@ -1793,6 +2271,10 @@ PAIR_TITLE = {
     BRIDGE_PAIR: ("OCV reconfiguration across a collapse — Carolabrücke and Ponte "
                   "Morandi side by side (each against its own pre-collapse "
                   "reference; same window rule, no shared scale)"),
+    TOWER_PAIR: ("OCV reconfiguration across a collapse and a rebuild — Haltern and "
+                 "KDLO side by side (each against its own pre-collapse reference; "
+                 "same window rule, no shared scale; KDLO has no ascending "
+                 "acquisition)"),
 }
 
 
@@ -1815,7 +2297,8 @@ def make_figure(report, figdir=None):
 
 #: How a plate's role reads in the guide, one line per asset.
 PLATE_ROLE = {"lumo": "the tower alone", "bautzen": "the bridge alone",
-              "carola": "the girder alone", "morandi": "the bridge alone"}
+              "carola": "the girder alone", "morandi": "the bridge alone",
+              "haltern": "the turbine alone", "kdlo": "the media tower alone"}
 
 
 def figure_markdown(report):
@@ -1835,11 +2318,11 @@ def figure_markdown(report):
                      f"*no shared scale* |")
         for site in pair:
             lines.append(f"| `fig_sds_ocv_reconfigure_{site}.jpg` | "
-                         f"{PLATE_ROLE[site]} (4 panels) |")
+                         f"{PLATE_ROLE[site]} ({_panels_note(report, site)}) |")
     else:
         for site in sites:
             lines.append(f"| `fig_sds_ocv_reconfigure_{site}.jpg` | "
-                         f"{EXPERIMENT[site]} alone (4 panels) |")
+                         f"{EXPERIMENT[site]} alone ({_panels_note(report, site)}) |")
     lines += ["",
              "In every panel the origin is that asset's **reference state** and the "
              "arrows end at its standardised responses "
@@ -1858,9 +2341,13 @@ def figure_markdown(report):
                 f"`{name}` ({'reference' if states == (REFERENCE[site],) else 'the single contrast'})"
                 for name, states, _dose in LEVELS[site])
         lines.append(f"* **{EXPERIMENT[site]}** — reference `{REFERENCE[site]}` "
-                     f"(n_ref {block['n_ref']['ASC']} ASC / {block['n_ref']['DESC']} "
-                     f"DESC), scale `{block['scale_used']['ASC']}` / "
-                     f"`{block['scale_used']['DESC']}`, levels {levels}; behaviour "
+                     + "(n_ref "
+                     + " / ".join(f"{block['n_ref'][channel]} {channel}"
+                                  for channel in channels_of(report, site))
+                     + "), scale "
+                     + " / ".join(f"`{block['scale_used'][channel]}`"
+                                  for channel in channels_of(report, site))
+                     + f", levels {levels}; behaviour "
                      f"`[{'`, `'.join(BLOCKS['behaviour'])}]`, geometry "
                      f"`[{'`, `'.join(BLOCKS['geometry'])}]` (plane "
                      f"`[{', '.join(GEOMETRY_PLANE)}]`).")
@@ -1873,14 +2360,32 @@ def figure_markdown(report):
               "reference's uncertainty only.", ""]
     if report.get("bootstrap_caveats", {}).get("cells"):
         lines += [_caveat_sentence(report), ""]
-    if pair == BRIDGE_PAIR:
-        lines += ["Both rows come from the same window rule in "
-                  "`code/overpass/ocv_table.py` (30 % of the peak and 5 × the ring "
-                  "median, 200 m ring, 30 m guard), which is what makes the "
-                  "juxtaposition a comparison of one rule rather than of two.", ""]
+    if pair in TWO_STATE_PAIRS:
+        lines += [f"Both rows come from the same window rule in "
+                  f"`erlking_mvp/tools/ocv_table.py` (30 % of the peak and 5 × the "
+                  f"ring median, 200 m ring, 30 m guard), which is what makes the "
+                  f"juxtaposition a comparison of one rule rather than of two.", ""]
+    empty = [f"{EXPERIMENT[site]} {channel}"
+             for site in sites
+             for channel in (report["experiments"][site].get("channels_absent")
+                             or {})]
+    if empty:
+        lines += ["A panel for a channel the record does not contain is drawn empty "
+                  "and says so — " + ", ".join(empty) + " — because the plate keeps "
+                  "its four columns so that the rows stay comparable. It carries no "
+                  "arrow, no inset and no ✱: there is no cell to mark.", ""]
     lines += ["Nothing is clipped: the axis limits follow the largest coordinate in "
               "the panel.", ""]
     return "\n".join(lines)
+
+
+def _panels_note(report, site):
+    """``4 panels``, or how many of them are empty and why."""
+    absent = report["experiments"][site].get("channels_absent") or {}
+    if not absent:
+        return "4 panels"
+    return ("4 panels, %d empty — %s" % (2 * len(absent), " and ".join(
+        f"no {channel}" for channel in absent)))
 
 
 def _synthetic(site, effect=0.0, n=40, seed=3):
@@ -2003,6 +2508,85 @@ def selftest():
           all(cell["n"] == BLOCK_BOOT and cell["level"] == "RS"
               for cell in caveats["cells"]), str(caveats["cells"]))
 
+    # 12. the registry is complete and self-consistent across all six assets
+    registry = {"COLUMNS": COLUMNS, "TRANSFORM": TRANSFORM, "REFERENCE": REFERENCE,
+                "STATES": STATES, "LEVELS": LEVELS, "LARGEST": LARGEST,
+                "MIDDLE": MIDDLE, "EXPERIMENT": EXPERIMENT, "TABLE_NOUN": TABLE_NOUN}
+    gaps = {name: sorted(set(TABLE) ^ set(mapping))
+            for name, mapping in registry.items() if set(TABLE) ^ set(mapping)}
+    # Bautzen is the one asset with no single-row table -- it is read on the paired
+    # bridge-minus-control difference -- so `UNIT_SHAPE` names every asset but that
+    # one, and the gap is asserted rather than tolerated.
+    if (set(TABLE) - {"bautzen"}) ^ set(UNIT_SHAPE):
+        gaps["UNIT_SHAPE"] = sorted((set(TABLE) - {"bautzen"}) ^ set(UNIT_SHAPE))
+    check("every registered asset appears in every registry table", not gaps, str(gaps))
+    broken = [site for site in TABLE
+              if REFERENCE[site] not in STATES[site]
+              or LARGEST[site] not in STATES[site]
+              or any(state not in STATES[site] for state in MIDDLE[site])
+              or LEVELS[site][0][1] != (REFERENCE[site],)
+              or LEVELS[site][-1][1] != (LARGEST[site],)
+              or set(DIMS) - set(COLUMNS[site]) or set(DIMS) - set(TRANSFORM[site])]
+    check("the reference is the first level and the largest state the last",
+          not broken, str(broken))
+    check("an excluded state is never also a registered state",
+          set(EXCLUDED) <= set(TABLE)
+          and all(state not in STATES[site]
+                  for site, drop in EXCLUDED.items() for state in drop),
+          str(EXCLUDED))
+
+    # 13. the tower pair is registered and keeps its own stem
+    check("the tower pair is recognised in either order and named once",
+          pair_of(("kdlo", "haltern")) == TOWER_PAIR
+          and output_stem(TOWER_PAIR) == "ocv_haltern_kdlo"
+          and figure_stem(TOWER_PAIR) == "fig_sds_ocv_reconfigure_haltern_kdlo",
+          output_stem(TOWER_PAIR))
+
+    # 14. the two records load as the registry says they do
+    kdlo_units, kdlo_audit = load_units("kdlo")
+    haltern_units, haltern_audit = load_units("haltern")
+    check("KDLO's excluded acquisition is counted and not loaded",
+          len(kdlo_units) == 59 and kdlo_audit["excluded"] == {"single": 1}
+          and channels_present(kdlo_units) == ("DESC",),
+          f"{len(kdlo_units)} units, {kdlo_audit['excluded']}, "
+          f"{channels_present(kdlo_units)}")
+    check("Haltern loads both channels and drops no unit",
+          len(haltern_units) == 107
+          and channels_present(haltern_units) == ("ASC", "DESC")
+          and not any(haltern_audit["dropped"].values()),
+          f"{len(haltern_units)} units, {haltern_audit['dropped']}")
+
+    # 15. channels come from the units, not from the registry's expectation
+    one_track = [dict(unit, channel="DESC") for unit in _synthetic("kdlo", n=2)]
+    check("a record's channels are read off its units",
+          channels_present(one_track) == ("DESC",)
+          and channels_present(one_track + [dict(one_track[0], channel="ASC")])
+          == ("ASC", "DESC"), str(channels_present(one_track)))
+
+    # 16. an absent channel carries no caveat cell, and an empty list no sentence
+    single = {"sites": ["kdlo"],
+              "experiments": {"kdlo": {"channels_present": ["DESC"],
+                                       "channels": {"DESC": {"blocks": {
+                                           name: {"n_by_level": [2, 9]}
+                                           for name in BLOCKS}}}}}}
+    caveats = bootstrap_caveats(single)
+    check("an absent channel contributes no caveat cells",
+          {cell["channel"] for cell in caveats["cells"]} == {"DESC"}
+          and len(caveats["cells"]) == 2, str(caveats["cells"]))
+    check("an empty caveat list yields no sentence",
+          _caveat_sentence({"bootstrap_caveats": {"block": BLOCK_BOOT,
+                                                  "small_n": SMALL_N,
+                                                  "cells": []}}) == "")
+
+    # 17. a pair's cosine runs only where both records carry the channel
+    two_records = {"experiments": {"haltern": {"channels_present": ["ASC", "DESC"]},
+                                   "kdlo": {"channels_present": ["DESC"]}},
+                   "hypotheses": {"H2": {"DESC": {}}}}
+    check("a pair's cosine runs on the channels both records carry",
+          shared_channels(two_records, TOWER_PAIR) == ("DESC",)
+          and comparison_channels(two_records, TOWER_PAIR) == ("DESC",),
+          str(shared_channels(two_records, TOWER_PAIR)))
+
     for line in failures:
         print(f"  SELFTEST FAIL {line}")
     print(f"  selftest: {counted['checks']} checks, {len(failures)} failure(s)")
@@ -2015,10 +2599,22 @@ def verify(report):
     problems = []
     want_flags = set()
     for site in (report.get("sites") or DEFAULT_SITES):
-        units, _audit = load_units(site)
+        units, audit = load_units(site)
         block = responses(units, site)
         store = report["experiments"][site]
-        for channel in ("ASC", "DESC"):
+        channels = channels_present(units)
+        if list(channels) != list(channels_of(report, site)):
+            problems.append(f"{site}: channels_present {store.get('channels_present')} "
+                            f"vs {list(channels)}")
+        if sorted(store.get("channels_absent") or {}) != [
+                channel for channel in ("ASC", "DESC") if channel not in channels]:
+            problems.append(f"{site}: channels_absent "
+                            f"{sorted(store.get('channels_absent') or {})} does not "
+                            f"match the record {list(channels)}")
+        if audit.get("excluded") != ((store.get("audit") or {}).get("excluded") or {}):
+            problems.append(f"{site}: excluded {audit.get('excluded')} vs "
+                            f"{(store.get('audit') or {}).get('excluded')}")
+        for channel in channels:
             cell = store["channels"][channel]
             for state in STATES[site]:
                 cells = block[channel]["states"][state]
@@ -2042,16 +2638,27 @@ def verify(report):
                           for _n, states, _d in LEVELS[site]]
                 if cell["blocks"][name]["n_by_level"] != [len(g) for g in groups]:
                     problems.append(f"{site}/{channel}/{name}: level sizes differ")
+                total = len(units_of(units, channel,
+                                     [state for _n, states, _d in LEVELS[site]
+                                      for state in states]))
+                if sum(len(g) for g in groups) != total:
+                    problems.append(f"{site}/{channel}/{name}: the levels hold "
+                                    f"{sum(len(g) for g in groups)} units, the record "
+                                    f"has {total} in those states")
             # the caveat list must name exactly the cells whose n cannot fill a block
             for name in BLOCKS:
                 for level, states, _dose in LEVELS[site]:
                     if len(units_of(units, channel, list(states))) <= BLOCK_BOOT:
                         want_flags.add((site, channel, name, level))
-        # the Holm value must follow from the asset's own four-test family
+        # the Holm value must follow from the asset's own family -- two cells per
+        # channel the record carries, so two for a single-track asset and four for a
+        # record with both orbit directions
         family = {k: v["p_increasing"] for k, v in report["hypotheses"]["H1"].items()
                   if k.split("/")[0] == site}
-        if len(family) != 4:
-            problems.append(f"{site}: Holm family has {len(family)} tests, not 4")
+        expected = 2 * len(channels)
+        if len(family) != expected:
+            problems.append(f"{site}: Holm family has {len(family)} tests, not "
+                            f"{expected} ({len(channels)} channel(s))")
         recomputed = holm(family)
         for key, value in recomputed.items():
             stored = report["hypotheses"]["H1"][key]["p_holm"]
@@ -2069,11 +2676,13 @@ def build_parser():
     parser = argparse.ArgumentParser(
         description=("OCV reconfiguration against the controlled state dose — the "
                      "LUMO/Bautzen pair by default, the two collapsed bridges with "
-                     "--sites carola,morandi, or a single asset"))
+                     "--sites carola,morandi, the two towers with --sites "
+                     "haltern,kdlo, or a single asset"))
     parser.add_argument("--sites", default=",".join(DEFAULT_SITES),
                         help="comma-separated assets: lumo,bautzen (default), "
-                             "carola,morandi (Carolabrücke and Ponte Morandi), or a "
-                             "single one such as carola")
+                             "carola,morandi (Carolabrücke and Ponte Morandi), "
+                             "haltern,kdlo (Haltern and KDLO), or a single one such "
+                             "as kdlo")
     parser.add_argument("--boot", type=int, default=BOOT)
     parser.add_argument("--perm", type=int, default=PERM)
     parser.add_argument("--seed", type=int, default=SEED)

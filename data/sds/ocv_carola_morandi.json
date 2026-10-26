@@ -61,6 +61,7 @@
   "carola": {
    "audit": {
     "dropped": {},
+    "excluded": {},
     "pairs": 0,
     "rows": 436,
     "unpaired": 0
@@ -1155,12 +1156,18 @@
      }
     }
    },
+   "channels_absent": {},
+   "channels_present": [
+    "ASC",
+    "DESC"
+   ],
    "sha256": "3137d0b31fef80b5075378cb0f1bc71aff655d0f9c8554bc23fede56b7f4d135",
    "table": "data/carola/support/carola_ocv_channels.csv"
   },
   "morandi": {
    "audit": {
     "dropped": {},
+    "excluded": {},
     "pairs": 0,
     "rows": 207,
     "unpaired": 0
@@ -2255,6 +2262,11 @@
      }
     }
    },
+   "channels_absent": {},
+   "channels_present": [
+    "ASC",
+    "DESC"
+   ],
    "sha256": "249c9ee6630c21dfbe3e01366c9863bf1693bc4376d08e93da7b913a0b7a2745",
    "table": "data/morandi/support/morandi_ocv_channels.csv"
   }
@@ -2758,7 +2770,11 @@
     "carola",
     "morandi"
    ],
-   "rules": "descriptive: cosine of the two bridges' standardised post-collapse response vectors, each against its own pre-collapse reference; no magnitude is compared and the two assets share no orbit, date or atmosphere"
+   "rules": "descriptive: cosine of the two bridges' standardised post-collapse response vectors, each against its own pre-collapse reference; no magnitude is compared and the two assets share no orbit, date or atmosphere",
+   "shared_channels": [
+    "ASC",
+    "DESC"
+   ]
   }
  },
  "predictions": [],
@@ -3028,6 +3044,38 @@
      1.0
     ]
    ],
+   "haltern": [
+    [
+     "pre",
+     [
+      "pre-collapse (healthy)"
+     ],
+     0.0
+    ],
+    [
+     "post",
+     [
+      "post-collapse"
+     ],
+     1.0
+    ]
+   ],
+   "kdlo": [
+    [
+     "pre",
+     [
+      "pre"
+     ],
+     0.0
+    ],
+    [
+     "rebuild",
+     [
+      "rebuild"
+     ],
+     1.0
+    ]
+   ],
    "lumo": [
     [
      "L0",
@@ -3073,6 +3121,8 @@
   "reference": {
    "bautzen": "RS",
    "carola": "pre-collapse (healthy)",
+   "haltern": "pre-collapse (healthy)",
+   "kdlo": "pre",
    "lumo": "healthy",
    "morandi": "pre-collapse (healthy)"
   },
@@ -3088,6 +3138,22 @@
     "gamma2": "identity"
    },
    "carola": {
+    "A": "log",
+    "D": "log",
+    "F": "log",
+    "P": "log",
+    "S": "identity",
+    "gamma2": "log"
+   },
+   "haltern": {
+    "A": "log",
+    "D": "log",
+    "F": "log",
+    "P": "log",
+    "S": "identity",
+    "gamma2": "log"
+   },
+   "kdlo": {
     "A": "log",
     "D": "log",
     "F": "log",

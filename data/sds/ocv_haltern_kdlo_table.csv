@@ -1,0 +1,7 @@
+Experiment,State,Channel,n,R_behaviour,R_geometry,Direction,Scale,Support
+Haltern,pre-collapse (healthy),ASC,44,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Haltern,post-collapse,ASC,5,0.818676,0.989852,gamma2- P+ | A- D- F+ S+,mad,thin
+Haltern,pre-collapse (healthy),DESC,52,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+Haltern,post-collapse,DESC,6,0.530332,1.18179,gamma2+ P- | A+ D+ F+ S-,mad,ok
+KDLO,pre,DESC,16,0,0,gamma2=0 P=0 | A=0 D=0 F=0 S=0,mad,ok
+KDLO,rebuild,DESC,43,1.68183,21.5808,gamma2- P- | A+ D- F+ S-,mad,ok

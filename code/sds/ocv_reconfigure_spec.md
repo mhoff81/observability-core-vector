@@ -305,7 +305,82 @@ cell at or below the bootstrap block is flagged while a larger cell is not.
 `--verify` re-derives the expected caveat set from the units and fails if the
 committed `bootstrap_caveats` names a different set of cells.
 
-## Tests
+## Amendment 5 — 2026-10-26: the tower pair (Haltern, KDLO)
+
+*Amendment 4 let two bridges be read across a collapse. This one runs the same metric
+on two towers, and one of them was rebuilt — which is where a second pair stops being
+a copy of the first.*
+
+**Why this pair.** Haltern (an AV9 wind turbine that came down on 2021-09-29) and KDLO
+(a media tower whose mast collapsed between 2022-12-11 and 2022-12-23 and was rebuilt)
+are the two experiments in the corpus that are (a) a tower, (b) read across an event
+that removed the structure, and (c) available as a support-sized chip produced by the
+same window rule as the two bridges (`erlking_mvp/tools/ocv_table.py`, `30 %` of the
+peak and `5 ×` the ring median, 200 m ring, 30 m guard). They differ from the bridges
+in exactly the way that matters for the reading: Haltern's second state is a ruin and
+KDLO's is a *replacement*.
+
+**The registry entries.** Both are registered like `carola`: the same six dimensions
+(`A, D, F, S`, `P`, `gamma2_mask`), `log` for `A, D, F, P, γ²` and `identity` for `S`,
+zero drops for any dimension on either chip. `haltern`: states `pre-collapse (healthy)
+→ post-collapse`, reference `pre-collapse (healthy)`, largest `post-collapse`, ladder
+`pre → post`, `data/haltern/support/haltern_ocv_channels.csv` (**107 of the 120
+committed overpasses**, both orbit directions: 44 ASC and 52 DESC pre-collapse, 5 ASC
+and 6 DESC post). `kdlo`: states `pre → rebuild`, reference `pre`, largest `rebuild`,
+ladder `pre → rebuild`, `data/kdlo/support/kdlo_ocv_channels.csv` (**60 of 60** — the
+support is the whole record, one orbit direction: 16 pre and 43 rebuild, all DESC).
+
+**One acquisition excluded, and counted.** KDLO's `single` state is the one acquisition
+at the collapse itself (2022-12-23). It is removed by the registry before any statistic
+and counted in the JSON audit (`audit.excluded = {"single": 1}`) and in the report, not
+folded into `pre` or into `rebuild`: one date cannot carry a median of its own, and
+registering it would invent an `n = 1` cell. The rule is general — an excluded state is
+never a registered state, and a state that is neither stops the run.
+
+**What changes in the code, and why it is data-driven.** KDLO has one orbit direction,
+so a naive run would have emitted four empty ASC cells, a four-test Holm family with two
+`None`s, and an `✱` on a cell with `n = 0`. Instead:
+
+* **channels come from the record.** `channels_present(units)` reads the orbit directions
+  the table actually carries; every cell, test, caveat, table row and panel iterates
+  that tuple. A channel the record lacks is *declared* (`channels_absent`), carries no
+  cell, contributes no test to the Holm family (`2 × channels`, so 2 for KDLO and 4 for
+  Haltern) and is drawn as an empty panel that says so — never as a null;
+* **H2 runs on the shared channels.** A cosine needs a vector on each side, so KDLO's
+  run carries one channel, two cosine cells instead of four, and an `ASC` key under
+  `not_computed`;
+* **the state names come from the registry.** KDLO's level is `rebuild`, so the report
+  says "pre-to-rebuild", the contrast is named from `LEVELS`, and `post` is never
+  hardcoded;
+* **the pair's prose comes from the registry.** `PAIR_NOTE` holds the headline, the
+  noun, the unit, the window-rule sentence and the H2 rule per pair; the closing
+  paragraph's lead clause is chosen from the data (both, one or neither asset resolves),
+  and the shared-direction count is now a claim only when a cell has *both* a positive
+  cosine and all signs equal.
+
+**What the pair may claim.** Resolution or its absence, per asset and per block, in that
+asset's own Holm family; the count of cells where the two directions agree; and, for
+Haltern, the bound its interval licenses. KDLO's rebuilt state is a different structure,
+so a resolved contrast there is a statement about the rebuild, not about damage; Haltern
+holds 5 ASC and 6 DESC post-collapse overpasses, so a null there is a statement about
+what that many acquisitions can resolve. Neither a shared direction nor a bound crosses
+between the two assets, and no magnitude is compared.
+
+**Outputs.** `data/sds/ocv_haltern_kdlo.{json,md}`, `data/sds/ocv_haltern_kdlo_table.csv`,
+`figures/sds/fig_sds_ocv_reconfigure_haltern_kdlo.jpg` (2 × 4 juxtaposition, two empty
+ASC panels in KDLO's row), plus the plates for `--sites haltern` and `--sites kdlo`.
+
+**Self-test and verify.** `--selftest` grows from 17 to 27 checks: the registry covers
+every asset in every table, the reference is the first level and the largest state the
+last, an excluded state is never registered, the tower pair keeps its own stem, KDLO
+loads 59 units with `{"single": 1}` excluded, Haltern loads 107 with both channels and
+no drops, channels are read off the units, an absent channel contributes no caveat cell
+and an empty caveat list no sentence, and a pair's cosine runs only on the channels both
+records carry. `--verify` re-derives `channels_present`, the exclusion count, the level
+sizes (which must sum to the units in those states) and the family size
+(`2 × channels`) as well as every cell.
+
+
 
 **H1 — ordered, per experiment, per channel, per block.** Jonckheere–Terpstra on the
 **per-unit magnitudes** `R_i` (each overpass or pair gets its own `z_i` against the
@@ -335,7 +410,10 @@ effect.
 
 ## Multiplicity
 
-Eight primary tests: 2 experiments × 2 channels × 2 blocks for H1. Holm within that
+Eight primary tests: 2 experiments × 2 channels × 2 blocks for H1 — four per asset since
+amendment 2026-10-22 separates the two, and **two per asset** when a record carries a
+single orbit direction (amendment 5: KDLO has no ASCENDING acquisition, so its family is
+2, not 4, and no test is computed on a channel that does not exist). Holm within that
 family, and the adjusted value travels with every quoted `p`. H2 is descriptive:
 cosines are reported with their interval and their null percentile, never as
 "significant".
@@ -367,9 +445,16 @@ Pre-registered predictions, written before the run:
 * No use of the failure cases in the construction of the metric; they are projected
   with frozen definitions afterwards, if at all.
 * No "thin" cell is quoted without its `n`: LUMO ASC `DAM 4` (n = 5) and `DAM 6`
-  (n = 4), Bautzen `DS2` (11 pairs).
+  (n = 4), Bautzen `DS2` (11 pairs), Haltern ASC post-collapse (n = 5).
+* No cell, test, caveat or panel for a channel a record does not carry (amendment 5):
+  KDLO has no ASCENDING acquisition, so its `ASC` cells are declared absent, not
+  reported as nulls, and its Holm family has two members.
+* No acquisition folded out of sight: a state the registry excludes (KDLO's `single`,
+  2022-12-23) is removed before any statistic and *counted* in the audit and in the
+  report.
 * Bautzen's state is the calendar; nothing here claims a seasonal control for it
-  beyond what the paired difference removes.
+  beyond what the paired difference removes. The same holds for every two-state asset:
+  its second state is confounded with the calendar, and for KDLO with the rebuild.
 
 ## Outputs
 
@@ -380,3 +465,8 @@ Pre-registered predictions, written before the run:
 * `figures/sds/fig_sds_ocv_reconfigure.jpg` — 630 dpi: rows = experiment, columns =
   ASC-mask, ASC-other, DESC-mask, DESC-other, arrows from the reference state to each
   state in standardised space, bootstrap intervals as thin bars.
+
+A registered pair writes its own stem beside those: `ocv_carola_morandi`
+(amendment 4) and `ocv_haltern_kdlo` (amendment 5), each with `.json`, `.md`,
+`_table.csv`, a `fig_sds_ocv_reconfigure_<pair>.jpg` juxtaposition and one plate per
+asset. A single asset writes `ocv_<site>.*` and `fig_sds_ocv_reconfigure_<site>.jpg`.

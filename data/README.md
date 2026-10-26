@@ -444,18 +444,21 @@ Written by `code/sds/ocv_reconfigure.py` against the pre-registration in
 
 | file | content |
 | --- | --- |
-| `ocv_reconfigure.json` | the dose (from `data/lumo/reference/lumo_state_frequencies.json`, with its sha256), every reference median/scale with the step of the fallback chain that produced it and **which scale was used** (`mad`, or `pooled_mad` when the reference has fewer than ten units — Bautzen), the drop counts per dimension, `r` and `z` per channel × dimension × state and × dose level, the two block magnitudes `R_behaviour` (`γ², P`) / `R_geometry` (`A, D, F, S`), the Jonckheere–Terpstra statistic and one-sided p per primary cell with its **Holm value inside that asset's own four-test family** (`hypotheses.H1_family`), the moving-block intervals (the reference level carries `[0, 0]` and is listed in `by_construction`), the descriptive cosines with their intervals and random-direction null, the sign patterns, and `reading.per_asset` — one verdict and one bound per asset — beside `reading.comparison` |
+| `ocv_reconfigure.json` | the dose (from `data/lumo/reference/lumo_state_frequencies.json`, with its sha256), every reference median/scale with the step of the fallback chain that produced it and **which scale was used** (`mad`, or `pooled_mad` when the reference has fewer than ten units — Bautzen), the drop counts per dimension, `r` and `z` per channel × dimension × state and × dose level, the two block magnitudes `R_behaviour` (`γ², P`) / `R_geometry` (`A, D, F, S`), the Jonckheere–Terpstra statistic and one-sided p per primary cell with its **Holm value inside that asset's own family — two cells per channel the record carries** (`hypotheses.H1_family`), the moving-block intervals (the reference level carries `[0, 0]` and is listed in `by_construction`), the descriptive cosines with their intervals and random-direction null, the sign patterns, and `reading.per_asset` — one verdict and one bound per asset — beside `reading.comparison` |
 | `ocv_reconfigure.md` | the report: the dose table, the compact table (`Experiment, State, Channel, n, R_behaviour, R_geometry, Direction, Support`), the H1 and H2 tables, the verdicts on P1–P3 and the list of what the numbers do not claim |
 | `ocv_reconfigure_table.csv` | the same compact table as CSV — one row per experiment × state × channel, with the `Scale` column that standardised it |
 | `ocv_carola.{json,md}` + `ocv_carola_table.csv` | the same three for the two-state run (`--sites carola`): pre-collapse against post-collapse on the support-sized chip, `Girder A` only, with the no-ordering and no-control statements in the report |
 | `ocv_carola_morandi.{json,md}` + `ocv_carola_morandi_table.csv` | the **bridge pair** (`--sites carola,morandi`, spec amendment 4): two collapses read with the same metric on two support-sized chips. `dose.applies` is `false` (the LUMO ladder is kept for provenance only), H2 carries `largest` alone with `not_computed` naming the `middle` and `matrix` it cannot support, and the report closes with *Two verdicts, read together* — Carola resolves both DESC blocks, Morandi resolves nothing, one of four cosine cells shares a direction |
+| `ocv_haltern_kdlo.{json,md}` + `ocv_haltern_kdlo_table.csv` | the **tower pair** (`--sites haltern,kdlo`, spec amendment 5): the same metric on a turbine that came down and a mast that collapsed **and was rebuilt** (Haltern's support chip 107 of 120 committed overpasses, KDLO's 60 of 60). Each asset declares the channels it carries (`channels_present` / `channels_absent`) — KDLO was acquired DESCENDING only, so its ASC channel is absent, its Holm family has two members instead of four, and its two ASC panels are drawn empty — and the audit carries `excluded: {"single": 1}`, the one KDLO acquisition at the collapse itself, removed before any statistic. H2 runs on the shared channel only (two cosine cells) |
+| `ocv_haltern.{json,md}` + `ocv_haltern_table.csv`, `ocv_kdlo.{json,md}` + `ocv_kdlo_table.csv` | the same three for a single tower (`--sites haltern`, `--sites kdlo`): a before/after contrast with no control track, no H2 (the report names the partner run that carries it), and for KDLO the two-test family and the excluded acquisition in the audit |
 
 Every run also writes `bootstrap_caveats` — the cells whose `n` does not exceed the
 bootstrap block (3 units), with site, channel, block, level and `n`. Such a cell is
 resampled as a single block, so its interval carries the reference's uncertainty
-only; the list is empty for the dose pair and names Morandi's ASC post-collapse cell
-(n = 3) for the bridge pair. `--verify` re-derives the list from the units and fails
-on a mismatch.
+only; the list is empty for the dose pair and for the tower pair, it names Morandi's
+ASC post-collapse cell (n = 3) for the bridge pair, and a channel a record does not
+carry (`channels_absent`) contributes no caveat and no cell at all.
+`--verify` re-derives the list from the units and fails on a mismatch.
 
 Deterministic (seeded bootstrap and permutation), and `--verify` re-derives every
 cell of the table from the two records before the run is allowed to overwrite

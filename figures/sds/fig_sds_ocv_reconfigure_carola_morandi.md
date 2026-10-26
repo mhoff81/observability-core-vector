@@ -21,6 +21,6 @@ Every state label carries its cell's `n`; a cell at or below the bootstrap block
 
 **Bootstrap caveat:** the moving-block resample runs on blocks of 3 units, so a cell with `n` at or below that is drawn as a single block and its interval reflects the reference's uncertainty only — here: Ponte Morandi ASC `post` (n = 3).
 
-Both rows come from the same window rule in `code/overpass/ocv_table.py` (30 % of the peak and 5 × the ring median, 200 m ring, 30 m guard), which is what makes the juxtaposition a comparison of one rule rather than of two.
+Both rows come from the same window rule in `erlking_mvp/tools/ocv_table.py` (30 % of the peak and 5 × the ring median, 200 m ring, 30 m guard), which is what makes the juxtaposition a comparison of one rule rather than of two.
 
 Nothing is clipped: the axis limits follow the largest coordinate in the panel.

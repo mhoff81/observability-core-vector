@@ -51,6 +51,7 @@
      "S": 8,
      "gamma2": 14
     },
+    "excluded": {},
     "pairs": 71,
     "rows": 142,
     "unpaired": 0
@@ -1543,6 +1544,11 @@
      }
     }
    },
+   "channels_absent": {},
+   "channels_present": [
+    "ASC",
+    "DESC"
+   ],
    "sha256": "32b2180cc28551ae85056c8b5994d6dedf02cc724353b2d130880230078c37fa",
    "table": "data/bautzen/bautzen_ocv_channels.csv"
   },
@@ -1551,6 +1557,7 @@
     "dropped": {
      "gamma2": 1
     },
+    "excluded": {},
     "pairs": 0,
     "rows": 178,
     "unpaired": 0
@@ -3229,6 +3236,11 @@
      }
     }
    },
+   "channels_absent": {},
+   "channels_present": [
+    "ASC",
+    "DESC"
+   ],
    "sha256": "8eb976595715799db515f82b89175a5524ce718f83ab77d632cdc34e4b7c0bdb",
    "table": "data/lumo/lumo_ocv_channels.csv"
   }
@@ -4601,6 +4613,38 @@
      1.0
     ]
    ],
+   "haltern": [
+    [
+     "pre",
+     [
+      "pre-collapse (healthy)"
+     ],
+     0.0
+    ],
+    [
+     "post",
+     [
+      "post-collapse"
+     ],
+     1.0
+    ]
+   ],
+   "kdlo": [
+    [
+     "pre",
+     [
+      "pre"
+     ],
+     0.0
+    ],
+    [
+     "rebuild",
+     [
+      "rebuild"
+     ],
+     1.0
+    ]
+   ],
    "lumo": [
     [
      "L0",
@@ -4646,6 +4690,8 @@
   "reference": {
    "bautzen": "RS",
    "carola": "pre-collapse (healthy)",
+   "haltern": "pre-collapse (healthy)",
+   "kdlo": "pre",
    "lumo": "healthy",
    "morandi": "pre-collapse (healthy)"
   },
@@ -4661,6 +4707,22 @@
     "gamma2": "identity"
    },
    "carola": {
+    "A": "log",
+    "D": "log",
+    "F": "log",
+    "P": "log",
+    "S": "identity",
+    "gamma2": "log"
+   },
+   "haltern": {
+    "A": "log",
+    "D": "log",
+    "F": "log",
+    "P": "log",
+    "S": "identity",
+    "gamma2": "log"
+   },
+   "kdlo": {
     "A": "log",
     "D": "log",
     "F": "log",

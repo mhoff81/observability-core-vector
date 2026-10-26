@@ -172,8 +172,11 @@ The second cross-site script, and the one that asks the research question of
 Paper 2: **does the magnitude of OCV reconfiguration grow with an independently
 defined state dose, and is the direction the same in both experiments?** Every
 number is a distance from that experiment's *own* reference state — LUMO against
-`healthy`, Bautzen against `RS` on the paired bridge-minus-control difference —
-so the two assets never share a scale and their magnitudes are never compared.
+`healthy`, Bautzen against `RS` on the paired bridge-minus-control difference, the two
+bridges and the two towers against their own pre-collapse state — so the two assets
+never share a scale and their magnitudes are never compared. Three registered pairs run
+through it: the dose pair (`lumo,bautzen`, the default), the bridge pair and the tower
+pair.
 
 `code/sds/ocv_reconfigure_spec.md` fixes the design and was written **before** the
 first run: the dose (LUMO's measured first-higher-mode drop, 0 / 7.41 / 12.96 %,
@@ -186,7 +189,7 @@ the three pre-registered predictions.
 
 | step | what it does |
 | --- | --- |
-| **H1, per asset** | Jonckheere–Terpstra on the **per-unit** magnitudes (the reference's median magnitude is 0 by construction, so a test on medians would be degenerate), **Holm within each asset's own four-test family**, moving-block bootstrap with the reference re-estimated inside every draw |
+| **H1, per asset** | Jonckheere–Terpstra on the **per-unit** magnitudes (the reference's median magnitude is 0 by construction, so a test on medians would be degenerate), **Holm within each asset's own family — two cells per channel the record carries**, moving-block bootstrap with the reference re-estimated inside every draw |
 | **verdict, per asset** | each asset gets its own verdict **and a bound** — the largest top-step change its interval still covers — because neither alone is a null result, only a bound |
 | **comparison** | cosine of the standardised response vectors at the largest state, per block and channel, with a random-direction null and a sign-agreement count. **Descriptive**: it asks whether the same metric applied twice answers the same way, not whether a response transfers. γ² is also reported without γ², because it is a different quantity in the two experiments |
 
@@ -200,8 +203,9 @@ unstable. `scale_used` travels with every cell, in the JSON and in the table.
 ```sh
 python3 code/sds/ocv_reconfigure.py                        # the dose pair, ~40 s
 python3 code/sds/ocv_reconfigure.py --sites carola,morandi  # the bridge pair
-python3 code/sds/ocv_reconfigure.py --sites carola          # one asset, two states
-python3 code/sds/ocv_reconfigure.py --selftest              # 17 checks on synthetic units
+python3 code/sds/ocv_reconfigure.py --sites haltern,kdlo    # the tower pair
+python3 code/sds/ocv_reconfigure.py --sites kdlo            # one asset, one channel, two states
+python3 code/sds/ocv_reconfigure.py --selftest              # 27 checks, the last ten offline
 python3 code/sds/ocv_reconfigure.py --verify                # re-derives every table cell
 ```
 
@@ -230,13 +234,32 @@ exceed the bootstrap block (3) is marked `✱` wherever it is quoted and named i
 uncertainty only. Morandi's ASC post-collapse cell (n = 3) is the one such cell in
 the bridge pair; the dose pair's list is empty.
 
+**Haltern and KDLO** (`--sites haltern,kdlo`) are the third registered pair (spec
+amendment 5): two towers read across an event that removed the structure — Haltern's
+AV9 turbine came down on 2021-09-29, KDLO's mast collapsed between 2022-12-11 and
+2022-12-23 **and was rebuilt**. That difference is what the pair is for, and it is
+also what stops the run being a copy of the bridge pair: KDLO's second state is a new
+structure, not a damaged one. Three consequences are handled by data rather than by
+prose. First, **channels come from the record**: KDLO was acquired DESCENDING only, so
+its cells are DESC cells, its Holm family has **two** members instead of four, its
+`ASC` channel is declared under `channels_absent` / `not_computed`, and the plate draws
+two empty ASC panels that say so — an empty cell would have read as a null. Second,
+**the level names come from the registry**: KDLO's ladder is `pre → rebuild`, so the
+verdict says "pre-to-rebuild" and no sentence hardcodes `post`. Third, **one
+acquisition is excluded and counted**: KDLO's `single` state is the acquisition at the
+collapse itself (2022-12-23), one date that cannot carry a median; it is removed before
+any statistic and reported in the audit (`{"single": 1}`), never folded into a
+neighbour.
+
 Outputs `data/sds/ocv_reconfigure.{json,md}`,
 `data/sds/ocv_reconfigure_table.csv` and three 630 dpi plates with one panel guide:
 `fig_sds_ocv_reconfigure.jpg` (the juxtaposition), `..._lumo.jpg` and
-`..._bautzen.jpg` (each asset standing alone). The bridge pair writes its own stem —
-`data/sds/ocv_carola_morandi.{json,md}`, `..._table.csv` and the plates
-`fig_sds_ocv_reconfigure_carola_morandi.jpg`, `..._carola.jpg`, `..._morandi.jpg` —
-and never touches the dose files.
+`..._bautzen.jpg` (each asset standing alone). Each registered pair writes its own
+stem — `data/sds/ocv_carola_morandi.{json,md}`, `..._table.csv` and the plates
+`fig_sds_ocv_reconfigure_carola_morandi.jpg`, `..._carola.jpg`, `..._morandi.jpg`;
+`data/sds/ocv_haltern_kdlo.{json,md}`, `..._table.csv` and
+`fig_sds_ocv_reconfigure_haltern_kdlo.jpg`, `..._haltern.jpg`, `..._kdlo.jpg` — and
+never touches the dose files.
 
 
 The scripts are started from the **repository root** (each wrapper in

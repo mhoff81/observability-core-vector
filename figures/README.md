@@ -51,7 +51,11 @@ figures/
 │              case, fig_sds_ocv_reconfigure_carola.jpg (support chip, Girder A)
 │              and fig_sds_ocv_reconfigure_morandi.jpg (Ponte Morandi's support
 │              chip), with fig_sds_ocv_reconfigure_carola_morandi.jpg|.md as the
-│              bridge pair's own juxtaposition
+│              bridge pair's own juxtaposition, fig_sds_ocv_reconfigure_haltern.jpg
+│              and fig_sds_ocv_reconfigure_kdlo.jpg (Haltern's turbine mast,
+│              KDLO's rebuilt media tower — two empty ASC panels), with
+│              fig_sds_ocv_reconfigure_haltern_kdlo.jpg|.md as the tower pair's
+│              own juxtaposition
 └── README.md
 ```
 
@@ -946,3 +950,16 @@ interval therefore reflects the reference's uncertainty only. (The report's
 `Support: thin` flag is a different, older threshold — `SMALL_N = 6` — so Bautzen's
 `DS2` cell, n = 5, is thin in the table and unmarked on the plate.) The inset keeps
 to whichever corner of the panel the response leaves free, so no label crosses it.
+
+The **tower pair** (`--sites haltern,kdlo`, spec amendment 5) adds
+`fig_sds_ocv_reconfigure_haltern_kdlo.jpg|.md` in the same 2 × 4 layout, rows = the
+Haltern turbine and the KDLO media tower, each arrow from that asset's own
+pre-collapse reference, with the numbers in `../data/sds/ocv_haltern_kdlo.json`. Its
+one structural departure is forced by the record, not chosen: KDLO was acquired
+DESCENDING only, so the two ASC panels of its row are drawn **empty and labelled**
+("no ASCENDING acquisition", "no cell, no test, no interval") rather than left blank
+or filled with a null. The juxtaposition keeps its four columns so the rows stay
+comparable, and the guide says how many panels are empty. Nothing else is marked
+down: neither asset has a cell at or below the bootstrap block, so no plate carries a
+`✱` legend here, and Haltern's n = 5 ASC post-collapse cell is `thin` in the report
+(the `SMALL_N = 6` threshold) without the asterisk, which marks the narrower case.
