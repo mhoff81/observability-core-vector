@@ -1,0 +1,6644 @@
+{
+ "assessment": {
+  "answers": [
+   {
+    "answer": "'sustained unusual geometry departure' -- over the 15 monthly bins of the documented interval, R_B exceeds the reference's monthly q95 in 2 of them and R_G in 10. The word is a function of those two persistence rules and of nothing else.",
+    "evidence": {
+     "R_B": {
+      "months_above_q95": 2,
+      "n_months": 15
+     },
+     "R_G": {
+      "months_above_q95": 10,
+      "n_months": 15
+     },
+     "extent": "confined to the intervention interval",
+     "intervals": [
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09 (pre)"
+     ],
+     "n_intervals": 15,
+     "verdict": "sustained unusual geometry departure"
+    },
+    "key": "onset",
+    "question": "Does the vector depart from the frozen reference while the documented works run?",
+    "reads": [
+     "blocks.during.persistence.R_B",
+     "blocks.during.persistence.R_G"
+    ]
+   },
+   {
+    "answer": "The sustained departure sits in the geometry block (A, D, F, S): R_G is above its monthly q95 for 3 consecutive months (2025-02 \u2192 2025-04), R_B for a single month (2024-12), against a threshold of 2 consecutive months.",
+    "evidence": {
+     "R_B_longest_run": {
+      "end": "2024-12",
+      "labels": [
+       "2024-12"
+      ],
+      "length": 1,
+      "start": "2024-12",
+      "values": [
+       1.3145975211
+      ]
+     },
+     "R_G_longest_run": {
+      "end": "2025-04",
+      "labels": [
+       "2025-02",
+       "2025-03",
+       "2025-04"
+      ],
+      "length": 3,
+      "start": "2025-02",
+      "values": [
+       1.2183757078,
+       1.2383467135,
+       1.4633486415
+      ]
+     },
+     "behaviour_sustained": false,
+     "geometry_sustained": true
+    },
+    "key": "block",
+    "question": "Which response block departs - behaviour ($\\gamma^2$, P), geometry (A, D, F, S), or both?",
+    "reads": [
+     "blocks.during.persistence"
+    ]
+   },
+   {
+    "answer": "3 of the 8 registered quantities leave the reference's monthly envelope in at least one interval month while their R5 interval excludes zero: R_G (up, 10 months), z(D) (down, 8 months), z(S) (up, 5 months).",
+    "evidence": {
+     "channels": [
+      {
+       "ci": [
+        -0.3653766393,
+        0.3093938367
+       ],
+       "delta": -0.0081660613,
+       "direction": "down",
+       "excludes_zero": false,
+       "label": "z(gamma2)",
+       "months_outside": 0,
+       "position": "inside q05..q95",
+       "quantity": "gamma2"
+      },
+      {
+       "ci": [
+        -0.6395817768,
+        0.0973414213
+       ],
+       "delta": -0.2713699832,
+       "direction": "down",
+       "excludes_zero": false,
+       "label": "z(P)",
+       "months_outside": 1,
+       "position": "inside q05..q95",
+       "quantity": "P"
+      },
+      {
+       "ci": [
+        -0.0621444592,
+        0.2334895418
+       ],
+       "delta": 0.0783286978,
+       "direction": "up",
+       "excludes_zero": false,
+       "label": "R_B",
+       "months_outside": 2,
+       "position": "inside q05..q95",
+       "quantity": "R_B"
+      },
+      {
+       "ci": [
+        0.0,
+        0.5159423806
+       ],
+       "delta": 0.2564294856,
+       "direction": "up",
+       "excludes_zero": false,
+       "label": "z(A)",
+       "months_outside": 2,
+       "position": "inside q05..q95",
+       "quantity": "A"
+      },
+      {
+       "ci": [
+        -0.6535957991,
+        -0.0936676462
+       ],
+       "delta": -0.4401531999,
+       "direction": "down",
+       "excludes_zero": true,
+       "label": "z(D)",
+       "months_outside": 8,
+       "position": "below q05",
+       "quantity": "D"
+      },
+      {
+       "ci": [
+        0.0,
+        0.6744907595
+       ],
+       "delta": 0.3654809875,
+       "direction": "up",
+       "excludes_zero": false,
+       "label": "z(F)",
+       "months_outside": 2,
+       "position": "inside q05..q95",
+       "quantity": "F"
+      },
+      {
+       "ci": [
+        0.09190328,
+        0.6084136801
+       ],
+       "delta": 0.3430472857,
+       "direction": "up",
+       "excludes_zero": true,
+       "label": "z(S)",
+       "months_outside": 5,
+       "position": "inside q05..q95",
+       "quantity": "S"
+      },
+      {
+       "ci": [
+        0.0920955019,
+        0.4155099985
+       ],
+       "delta": 0.2429128589,
+       "direction": "up",
+       "excludes_zero": true,
+       "label": "R_G",
+       "months_outside": 10,
+       "position": "above q95",
+       "quantity": "R_G"
+      }
+     ],
+     "ranked": [
+      "R_G",
+      "D",
+      "S"
+     ]
+    },
+    "key": "channel",
+    "question": "Which channel carries the departure, and in which direction does it sit in the reference's frame?",
+    "reads": [
+     "blocks.during.dims",
+     "blocks.during.departure_months"
+    ]
+   },
+   {
+    "answer": "In the held-out pre-intervention year, R_B exceeds the reference's monthly q95 in 1 of 12 months and R_G in 2 of 12; that class's own verdict is 'isolated unusual departure'.",
+    "evidence": {
+     "R_B": {
+      "end": "2024-02",
+      "labels": [
+       "2024-02"
+      ],
+      "length": 1,
+      "start": "2024-02",
+      "values": [
+       1.3899313631
+      ]
+     },
+     "R_G": {
+      "end": "2023-11",
+      "labels": [
+       "2023-11"
+      ],
+      "length": 1,
+      "start": "2023-11",
+      "values": [
+       1.1683264002
+      ]
+     },
+     "intervals": [
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-10",
+      "2023-11",
+      "2023-12",
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06"
+     ],
+     "n_intervals": 12,
+     "verdict": "isolated unusual departure"
+    },
+    "key": "precursor",
+    "question": "Had the vector already departed before the documented start?",
+    "reads": [
+     "blocks.outside.persistence"
+    ]
+   },
+   {
+    "answer": "R_B: a single month (2024-12); R_G: 3 consecutive months (2025-02 \u2192 2025-04) above the reference's monthly q95. Sustained means at least 2 consecutive such months (R1).",
+    "evidence": {
+     "R_B": {
+      "longest_run": {
+       "end": "2024-12",
+       "labels": [
+        "2024-12"
+       ],
+       "length": 1,
+       "start": "2024-12",
+       "values": [
+        1.3145975211
+       ]
+      },
+      "months_above_q95": [
+       "2024-12",
+       "2025-03"
+      ],
+      "n_above_q95": 2,
+      "n_months": 15,
+      "persistence_min_months": 2,
+      "quantity": "R_B",
+      "runs": [
+       {
+        "end": "2024-12",
+        "labels": [
+         "2024-12"
+        ],
+        "length": 1,
+        "start": "2024-12",
+        "values": [
+         1.3145975211
+        ]
+       },
+       {
+        "end": "2025-03",
+        "labels": [
+         "2025-03"
+        ],
+        "length": 1,
+        "start": "2025-03",
+        "values": [
+         1.2553677423
+        ]
+       }
+      ],
+      "sustained": false,
+      "threshold": 1.1569524281,
+      "threshold_quantile": 95
+     },
+     "R_G": {
+      "longest_run": {
+       "end": "2025-04",
+       "labels": [
+        "2025-02",
+        "2025-03",
+        "2025-04"
+       ],
+       "length": 3,
+       "start": "2025-02",
+       "values": [
+        1.2183757078,
+        1.2383467135,
+        1.4633486415
+       ]
+      },
+      "months_above_q95": [
+       "2024-07",
+       "2024-08",
+       "2024-10",
+       "2024-12",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-06",
+       "2025-07",
+       "2025-08"
+      ],
+      "n_above_q95": 10,
+      "n_months": 15,
+      "persistence_min_months": 2,
+      "quantity": "R_G",
+      "runs": [
+       {
+        "end": "2024-08",
+        "labels": [
+         "2024-07",
+         "2024-08"
+        ],
+        "length": 2,
+        "start": "2024-07",
+        "values": [
+         1.1514679721,
+         1.5053020441
+        ]
+       },
+       {
+        "end": "2024-10",
+        "labels": [
+         "2024-10"
+        ],
+        "length": 1,
+        "start": "2024-10",
+        "values": [
+         1.1306010241
+        ]
+       },
+       {
+        "end": "2024-12",
+        "labels": [
+         "2024-12"
+        ],
+        "length": 1,
+        "start": "2024-12",
+        "values": [
+         1.3060766464
+        ]
+       },
+       {
+        "end": "2025-04",
+        "labels": [
+         "2025-02",
+         "2025-03",
+         "2025-04"
+        ],
+        "length": 3,
+        "start": "2025-02",
+        "values": [
+         1.2183757078,
+         1.2383467135,
+         1.4633486415
+        ]
+       },
+       {
+        "end": "2025-08",
+        "labels": [
+         "2025-06",
+         "2025-07",
+         "2025-08"
+        ],
+        "length": 3,
+        "start": "2025-06",
+        "values": [
+         1.0960529705,
+         1.1475505864,
+         1.1512489805
+        ]
+       }
+      ],
+      "sustained": true,
+      "threshold": 1.0737664263,
+      "threshold_quantile": 95
+     },
+     "directional_runs": {
+      "longest_run": {
+       "end": "2025-03",
+       "labels": [
+        "2025-02",
+        "2025-03"
+       ],
+       "length": 2,
+       "start": "2025-02"
+      },
+      "months": [
+       "2024-08",
+       "2024-11",
+       "2025-02",
+       "2025-03",
+       "2025-05"
+      ],
+      "n_months": 5,
+      "note": "descriptive only: no statistic is derived from these runs",
+      "pattern": "z(gamma2) > 0 and z(P) < 0",
+      "runs": [
+       {
+        "end": "2024-08",
+        "labels": [
+         "2024-08"
+        ],
+        "length": 1,
+        "start": "2024-08"
+       },
+       {
+        "end": "2024-11",
+        "labels": [
+         "2024-11"
+        ],
+        "length": 1,
+        "start": "2024-11"
+       },
+       {
+        "end": "2025-03",
+        "labels": [
+         "2025-02",
+         "2025-03"
+        ],
+        "length": 2,
+        "start": "2025-02"
+       },
+       {
+        "end": "2025-05",
+        "labels": [
+         "2025-05"
+        ],
+        "length": 1,
+        "start": "2025-05"
+       }
+      ]
+     }
+    },
+    "key": "persistence",
+    "question": "Is a departure sustained across consecutive months of the interval?",
+    "reads": [
+     "blocks.during.persistence",
+     "blocks.during.directional"
+    ]
+   },
+   {
+    "answer": "After the documented end the post class's monthly median sits inside q05..q95 for both R_B and R_G; counted month by month, 1 of 4 post bins above the R_B q95 and 2 of 4 above the R_G q95. The extent word, from the post block's own persistence rules, is 'confined to the intervention interval'.",
+    "evidence": {
+     "R_B": {
+      "months_above_q95": [
+       "2025-12"
+      ],
+      "position": "inside q05..q95"
+     },
+     "R_G": {
+      "months_above_q95": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "position": "inside q05..q95"
+     },
+     "during_R_B": 0.9138299738,
+     "during_R_G": 1.0960529705,
+     "extent": "confined to the intervention interval",
+     "n_intervals": 4,
+     "post_R_B": 1.0441567647,
+     "post_R_G": 1.0239185433
+    },
+    "key": "recovery",
+    "question": "Does the vector move back towards the reference after the documented end, or does it stay displaced?",
+    "reads": [
+     "blocks.post.dims",
+     "blocks.post.persistence"
+    ]
+   },
+   {
+    "answer": "Post minus held-out pre-intervention: the R5 interval excludes zero for 1 of the 8 registered quantities (z(S)). This is a descriptive difference between two held-out classes, not a test.",
+    "evidence": {
+     "dims": {
+      "A": {
+       "block": "geometry",
+       "ci": [
+        -0.1331509558,
+        0.5794078012
+       ],
+       "delta": 0.3711990511,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "D": {
+       "block": "geometry",
+       "ci": [
+        -0.5506423376,
+        0.1482288843
+       ],
+       "delta": -0.1458017129,
+       "direction": "down",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "F": {
+       "block": "geometry",
+       "ci": [
+        -0.3654809875,
+        0.6744907595
+       ],
+       "delta": 0.3654809875,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "P": {
+       "block": "behaviour",
+       "ci": [
+        -0.2026845753,
+        0.6156262499
+       ],
+       "delta": 0.0785409597,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "R_B": {
+       "block": "behaviour",
+       "ci": [
+        -0.1636470369,
+        0.2820447971
+       ],
+       "delta": 0.1592085303,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "R_G": {
+       "block": "geometry",
+       "ci": [
+        -0.0249710462,
+        0.2895520093
+       ],
+       "delta": 0.1649339274,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "S": {
+       "block": "geometry",
+       "ci": [
+        0.2069436246,
+        1.0255201902
+       ],
+       "delta": 0.5565718019,
+       "direction": "up",
+       "excludes_zero": true,
+       "n_left": 122,
+       "n_right": 61
+      },
+      "gamma2": {
+       "block": "behaviour",
+       "ci": [
+        -0.3582692898,
+        0.4188412087
+       ],
+       "delta": 0.0691665998,
+       "direction": "up",
+       "excludes_zero": false,
+       "n_left": 122,
+       "n_right": 61
+      }
+     },
+     "quantities": [
+      "S"
+     ]
+    },
+    "key": "distinction",
+    "question": "Is the post-intervention state distinguishable from the held-out pre-intervention year?",
+    "reads": [
+     "cross.post_minus_outside"
+    ]
+   },
+   {
+    "answer": "14 pronounced months outside the reference (2023-11, 2024-02, 2024-07, 2024-08, 2024-10, 2024-12, 2025-02, 2025-03, 2025-04, 2025-06, 2025-07, 2025-08, 2025-09 (post), 2025-12); 6 of them also carry a co-variate departure larger than one robust scale (2024-02, 2024-07, 2024-08, 2025-02, 2025-06, 2025-07). The co-variates are reported beside the OCV quantities: no correction, no attribution.",
+    "evidence": {
+     "coincident_months": [
+      "2024-02",
+      "2024-07",
+      "2024-08",
+      "2025-02",
+      "2025-06",
+      "2025-07"
+     ],
+     "months": [
+      {
+       "P": 0.1280332449,
+       "R_B": 0.675024902,
+       "R_G": 1.0561294059,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.6620812618,
+       "month": "2023-07",
+       "weather_z": {
+        "precipitation_mm": 2.2764063132,
+        "temperature_c": 1.2257572456
+       }
+      },
+      {
+       "P": 0.6868132138,
+       "R_B": 0.9748366925,
+       "R_G": 0.8226537497,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.2985019799,
+       "month": "2023-08",
+       "weather_z": {
+        "precipitation_mm": 2.3607176582,
+        "temperature_c": 1.0376780915
+       }
+      },
+      {
+       "P": 0.1111676744,
+       "R_B": 0.8384974787,
+       "R_G": 0.5986434604,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.6121443927,
+       "month": "2023-09",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": 0.9857941869
+       }
+      },
+      {
+       "P": -0.7341752431,
+       "R_B": 0.8604752868,
+       "R_G": 0.8688776562,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.0999660032,
+       "month": "2023-10",
+       "weather_z": {
+        "precipitation_mm": 0.0,
+        "temperature_c": 0.1297097614
+       }
+      },
+      {
+       "P": -0.4314366944,
+       "R_B": 1.0286383408,
+       "R_G": 1.1683264002,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "outside",
+       "gamma2": 0.4605089345,
+       "month": "2023-11",
+       "weather_z": {
+        "precipitation_mm": 0.5901794145,
+        "temperature_c": -0.4669551412
+       }
+      },
+      {
+       "P": -0.9265199065,
+       "R_B": 1.0602512474,
+       "R_G": 0.8377197402,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.2072400654,
+       "month": "2023-12",
+       "weather_z": {
+        "precipitation_mm": 1.6019155538,
+        "temperature_c": -0.7523166163
+       }
+      },
+      {
+       "P": -0.8934269953,
+       "R_B": 1.0249155203,
+       "R_G": 0.9966326823,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": 0.4398668866,
+       "month": "2024-01",
+       "weather_z": {
+        "precipitation_mm": 1.5176042088,
+        "temperature_c": -1.173873341
+       }
+      },
+      {
+       "P": -0.3854572996,
+       "R_B": 1.3899313631,
+       "R_G": 1.2116559472,
+       "above_q95": {
+        "R_B": true,
+        "R_G": true
+       },
+       "class": "outside",
+       "gamma2": -0.2089728803,
+       "month": "2024-02",
+       "weather_z": {
+        "precipitation_mm": 1.7705382436,
+        "temperature_c": -0.3826437962
+       }
+      },
+      {
+       "P": -0.8729771943,
+       "R_B": 1.0939098068,
+       "R_G": 0.6038320241,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.6928555071,
+       "month": "2024-03",
+       "weather_z": {
+        "precipitation_mm": -0.5058680696,
+        "temperature_c": -0.4150712366
+       }
+      },
+      {
+       "P": -0.3036877261,
+       "R_B": 0.7747029351,
+       "R_G": 0.8201644764,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": -0.1586852538,
+       "month": "2024-04",
+       "weather_z": {
+        "precipitation_mm": 0.0,
+        "temperature_c": 0.1297097614
+       }
+      },
+      {
+       "P": -0.2144025172,
+       "R_B": 0.6783422333,
+       "R_G": 0.8647208059,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": 0.161363177,
+       "month": "2024-05",
+       "weather_z": {
+        "precipitation_mm": -0.0,
+        "temperature_c": 0.6874617356
+       }
+      },
+      {
+       "P": -0.0025981671,
+       "R_B": 0.5920647699,
+       "R_G": 0.8000970798,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "outside",
+       "gamma2": 0.1752248939,
+       "month": "2024-06",
+       "weather_z": {
+        "precipitation_mm": 0.1686226899,
+        "temperature_c": 1.083076508
+       }
+      },
+      {
+       "P": 0.1290273245,
+       "R_B": 0.5517176431,
+       "R_G": 1.1514679721,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.1656244054,
+       "month": "2024-07",
+       "weather_z": {
+        "precipitation_mm": -0.5058680696,
+        "temperature_c": 1.2776411502
+       }
+      },
+      {
+       "P": -0.1872088938,
+       "R_B": 1.0869911069,
+       "R_G": 1.5053020441,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": 0.1813851944,
+       "month": "2024-08",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": 1.4527493281
+       }
+      },
+      {
+       "P": 0.2930572959,
+       "R_B": 1.0097694034,
+       "R_G": 0.9410199213,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "during",
+       "gamma2": -0.1543914029,
+       "month": "2024-09",
+       "weather_z": {
+        "precipitation_mm": -0.4215567247,
+        "temperature_c": 0.6939472237
+       }
+      },
+      {
+       "P": -0.1757665205,
+       "R_B": 0.7300925804,
+       "R_G": 1.1306010241,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.0632457731,
+       "month": "2024-10",
+       "weather_z": {
+        "precipitation_mm": -0.5901794145,
+        "temperature_c": 0.1232242734
+       }
+      },
+      {
+       "P": -0.0097146979,
+       "R_B": 0.749050534,
+       "R_G": 0.7391475102,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "during",
+       "gamma2": 0.2934497573,
+       "month": "2024-11",
+       "weather_z": {
+        "precipitation_mm": -0.5058680696,
+        "temperature_c": -0.6161213668
+       }
+      },
+      {
+       "P": -0.3206856368,
+       "R_B": 1.3145975211,
+       "R_G": 1.3060766464,
+       "above_q95": {
+        "R_B": true,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.5203579174,
+       "month": "2024-12",
+       "weather_z": {
+        "precipitation_mm": 0.7588021044,
+        "temperature_c": -0.9209393062
+       }
+      },
+      {
+       "P": 0.4246316168,
+       "R_B": 0.7346249139,
+       "R_G": 0.8791387734,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "during",
+       "gamma2": 0.3655746835,
+       "month": "2025-01",
+       "weather_z": {
+        "precipitation_mm": 1.6862268987,
+        "temperature_c": -1.0765910199
+       }
+      },
+      {
+       "P": -0.0953223145,
+       "R_B": 0.9450710579,
+       "R_G": 1.2183757078,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": 0.3531657233,
+       "month": "2025-02",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": -1.3878944474
+       }
+      },
+      {
+       "P": -0.7441599186,
+       "R_B": 1.2553677423,
+       "R_G": 1.2383467135,
+       "above_q95": {
+        "R_B": true,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": 0.2356540995,
+       "month": "2025-03",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": -0.6226068549
+       }
+      },
+      {
+       "P": -0.5748985753,
+       "R_B": 0.8287142248,
+       "R_G": 1.4633486415,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.3172126431,
+       "month": "2025-04",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": 0.1880791541
+       }
+      },
+      {
+       "P": -0.1223388586,
+       "R_B": 1.0813673926,
+       "R_G": 0.910997352,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "during",
+       "gamma2": 0.1644799259,
+       "month": "2025-05",
+       "weather_z": {
+        "precipitation_mm": -0.3372453797,
+        "temperature_c": 0.2853614752
+       }
+      },
+      {
+       "P": -0.5789708573,
+       "R_B": 0.8976824802,
+       "R_G": 1.0960529705,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.2551539793,
+       "month": "2025-06",
+       "weather_z": {
+        "precipitation_mm": 0.5058680696,
+        "temperature_c": 1.0376780915
+       }
+      },
+      {
+       "P": -0.6558713956,
+       "R_B": 1.0295082903,
+       "R_G": 1.1475505864,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.2070977825,
+       "month": "2025-07",
+       "weather_z": {
+        "precipitation_mm": 1.0117361392,
+        "temperature_c": 1.0506490676
+       }
+      },
+      {
+       "P": -0.8478741344,
+       "R_B": 0.898481465,
+       "R_G": 1.1512489805,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "during",
+       "gamma2": -0.4124793665,
+       "month": "2025-08",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": 0.9533667466
+       }
+      },
+      {
+       "P": 0.18643015,
+       "R_B": 0.4203015284,
+       "R_G": 0.8889364144,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "during",
+       "gamma2": -0.19213762,
+       "month": "2025-09 (pre)",
+       "weather_z": {
+        "precipitation_mm": -0.5058680696,
+        "temperature_c": 1.2970976144
+       }
+      },
+      {
+       "P": -0.2329557615,
+       "R_B": 0.7171305154,
+       "R_G": 1.1155636142,
+       "above_q95": {
+        "R_B": false,
+        "R_G": true
+       },
+       "class": "post",
+       "gamma2": 0.1318963213,
+       "month": "2025-09 (post)",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": 0.5707229503
+       }
+      },
+      {
+       "P": 0.2042439609,
+       "R_B": 1.1210132857,
+       "R_G": 0.8798058237,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "post",
+       "gamma2": 0.0275520457,
+       "month": "2025-10",
+       "weather_z": {
+        "precipitation_mm": 0.3372453797,
+        "temperature_c": -0.0259419523
+       }
+      },
+      {
+       "P": -0.1476400682,
+       "R_B": 0.8643644871,
+       "R_G": 0.9908688808,
+       "above_q95": {
+        "R_B": false,
+        "R_G": false
+       },
+       "class": "post",
+       "gamma2": -0.0869346352,
+       "month": "2025-11",
+       "weather_z": {
+        "precipitation_mm": -0.5901794145,
+        "temperature_c": -0.5966649026
+       }
+      },
+      {
+       "P": 0.6981857959,
+       "R_B": 1.7372109239,
+       "R_G": 1.2668270203,
+       "above_q95": {
+        "R_B": true,
+        "R_G": true
+       },
+       "class": "post",
+       "gamma2": 0.1914122079,
+       "month": "2025-12",
+       "weather_z": {
+        "precipitation_mm": -0.6744907595,
+        "temperature_c": -0.9857941869
+       }
+      }
+     ],
+     "pronounced_months": [
+      "2023-11",
+      "2024-02",
+      "2024-07",
+      "2024-08",
+      "2024-10",
+      "2024-12",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09 (post)",
+      "2025-12"
+     ]
+    },
+    "key": "environment",
+    "question": "Do the pronounced months coincide with environmental variation?",
+    "reads": [
+     "environment"
+    ]
+   },
+   {
+    "answer": "Splitting the intervention interval by pass direction, the departure from the reference has z(gamma2): opposite sign in the two orbits; z(P): same sign in both orbits; R_B: opposite sign in the two orbits; R_G: same sign in both orbits. The reference is pooled, so this split is the check that the pattern is not one pass geometry's.",
+    "evidence": {
+     "during": {
+      "asc_minus_desc": {
+       "P": -0.0555274619,
+       "R_B": -0.4081841197,
+       "R_G": -0.4705608423,
+       "gamma2": 0.2623843047
+      },
+      "departure_sign": {
+       "P": "same sign in both orbits",
+       "R_B": "opposite sign in the two orbits",
+       "R_G": "same sign in both orbits",
+       "gamma2": "opposite sign in the two orbits"
+      },
+      "orbits": {
+       "ASCENDING": {
+        "bins": [
+         "2024-07",
+         "2024-08",
+         "2024-09",
+         "2024-10",
+         "2024-11",
+         "2024-12",
+         "2025-01",
+         "2025-02",
+         "2025-03",
+         "2025-04",
+         "2025-05",
+         "2025-06",
+         "2025-07",
+         "2025-08",
+         "2025-09 (pre)"
+        ],
+        "n": 91,
+        "n_bins": 15,
+        "value": {
+         "P": -0.3036877261,
+         "R_B": 0.797689052,
+         "R_G": 0.8682460174,
+         "gamma2": 0.089674152
+        }
+       },
+       "DESCENDING": {
+        "bins": [
+         "2024-07",
+         "2024-08",
+         "2024-09",
+         "2024-10",
+         "2024-11",
+         "2024-12",
+         "2025-01",
+         "2025-02",
+         "2025-03",
+         "2025-04",
+         "2025-05",
+         "2025-06",
+         "2025-07",
+         "2025-08",
+         "2025-09 (pre)"
+        ],
+        "n": 98,
+        "n_bins": 15,
+        "value": {
+         "P": -0.2481602642,
+         "R_B": 1.2058731717,
+         "R_G": 1.3388068598,
+         "gamma2": -0.1727101527
+        }
+       }
+      }
+     },
+     "outside": {
+      "asc_minus_desc": {
+       "P": -0.0464061048,
+       "R_B": -0.3496604049,
+       "R_G": -0.4023318023,
+       "gamma2": -0.2219945821
+      },
+      "departure_sign": {
+       "P": "same sign in both orbits",
+       "R_B": "opposite sign in the two orbits",
+       "R_G": "opposite sign in the two orbits",
+       "gamma2": "opposite sign in the two orbits"
+      },
+      "orbits": {
+       "ASCENDING": {
+        "bins": [
+         "2023-07",
+         "2023-08",
+         "2023-09",
+         "2023-10",
+         "2023-11",
+         "2023-12",
+         "2024-01",
+         "2024-02",
+         "2024-03",
+         "2024-04",
+         "2024-05",
+         "2024-06"
+        ],
+        "n": 61,
+        "n_bins": 12,
+        "value": {
+         "P": -0.3036877261,
+         "R_B": 0.7148125828,
+         "R_G": 0.7137877129,
+         "gamma2": -0.2109707468
+        }
+       },
+       "DESCENDING": {
+        "bins": [
+         "2023-07",
+         "2023-08",
+         "2023-09",
+         "2023-10",
+         "2023-11",
+         "2023-12",
+         "2024-01",
+         "2024-02",
+         "2024-03",
+         "2024-04",
+         "2024-05",
+         "2024-06"
+        ],
+        "n": 61,
+        "n_bins": 12,
+        "value": {
+         "P": -0.2572816213,
+         "R_B": 1.0644729877,
+         "R_G": 1.1161195152,
+         "gamma2": 0.0110238353
+        }
+       }
+      }
+     },
+     "post": {
+      "asc_minus_desc": {
+       "P": -0.5679230938,
+       "R_B": -0.3466780484,
+       "R_G": 0.0828168937,
+       "gamma2": -0.7233434548
+      },
+      "departure_sign": {
+       "P": "opposite sign in the two orbits",
+       "R_B": "opposite sign in the two orbits",
+       "R_G": "same sign in both orbits",
+       "gamma2": "opposite sign in the two orbits"
+      },
+      "orbits": {
+       "ASCENDING": {
+        "bins": [
+         "2025-09 (post)",
+         "2025-10",
+         "2025-11",
+         "2025-12"
+        ],
+        "n": 31,
+        "n_bins": 4,
+        "value": {
+         "P": -0.394494538,
+         "R_B": 0.8296778477,
+         "R_G": 1.0452018446,
+         "gamma2": -0.130880214
+        }
+       },
+       "DESCENDING": {
+        "bins": [
+         "2025-09 (post)",
+         "2025-10",
+         "2025-11",
+         "2025-12"
+        ],
+        "n": 30,
+        "n_bins": 4,
+        "value": {
+         "P": 0.1734285558,
+         "R_B": 1.1763558961,
+         "R_G": 0.9623849509,
+         "gamma2": 0.5924632409
+        }
+       }
+      }
+     },
+     "reference": {
+      "ASCENDING": {
+       "n": 61,
+       "value": {
+        "P": -0.2713699832,
+        "R_B": 0.8102601819,
+        "R_G": 0.7761279033,
+        "gamma2": -0.2811263135
+       }
+      },
+      "DESCENDING": {
+       "n": 58,
+       "value": {
+        "P": 0.2251907337,
+        "R_B": 0.8569378003,
+        "R_G": 0.9077243642,
+        "gamma2": 0.442642288
+       }
+      }
+     }
+    },
+    "key": "orbit",
+    "question": "Does the pattern hold in both orbit directions, or is it one pass geometry?",
+    "reads": [
+     "orbit"
+    ]
+   }
+  ],
+  "applies": true,
+  "extent": "confined to the intervention interval",
+  "interval": [
+   "2024-07-01",
+   "2025-09-05"
+  ],
+  "questions": [
+   {
+    "key": "onset",
+    "question": "Does the vector depart from the frozen reference while the documented works run?"
+   },
+   {
+    "key": "block",
+    "question": "Which response block departs - behaviour ($\\gamma^2$, P), geometry (A, D, F, S), or both?"
+   },
+   {
+    "key": "channel",
+    "question": "Which channel carries the departure, and in which direction does it sit in the reference's frame?"
+   },
+   {
+    "key": "precursor",
+    "question": "Had the vector already departed before the documented start?"
+   },
+   {
+    "key": "persistence",
+    "question": "Is a departure sustained across consecutive months of the interval?"
+   },
+   {
+    "key": "recovery",
+    "question": "Does the vector move back towards the reference after the documented end, or does it stay displaced?"
+   },
+   {
+    "key": "distinction",
+    "question": "Is the post-intervention state distinguishable from the held-out pre-intervention year?"
+   },
+   {
+    "key": "environment",
+    "question": "Do the pronounced months coincide with environmental variation?"
+   },
+   {
+    "key": "orbit",
+    "question": "Does the pattern hold in both orbit directions, or is it one pass geometry?"
+   }
+  ],
+  "verdict": "sustained unusual geometry departure",
+  "verdict_is": "derived: verdict_word on blocks.during.persistence.R_B/R_G, then the extent word from blocks.post.persistence",
+  "vocabulary": {
+   "extents": [
+    "no sustained departure",
+    "confined to the intervention interval",
+    "into the post-intervention period"
+   ],
+   "verdicts": [
+    "no unusual departure resolved",
+    "isolated unusual departure",
+    "sustained unusual behaviour departure",
+    "sustained unusual geometry departure",
+    "sustained multidimensional observability departure",
+    "sustained departure through the intervention interval",
+    "sustained departure that outlasts the intervention interval"
+   ]
+  }
+ },
+ "asset": "werder",
+ "asset_id": "havelbruecke_werder_a10",
+ "bins": {
+  "rule": "a calendar month is one bin unless a documented boundary falls inside it and the record holds chips on both sides",
+  "split_months": {
+   "2025-09": {
+    "boundary": "2025-09-05",
+    "part": "end"
+   }
+  }
+ },
+ "blocks": {
+  "during": {
+   "applies": true,
+   "block": 3,
+   "class": "during",
+   "criterion": "a month is a departure only when its monthly state exceeds the monthly reference q95 of the same magnitude (R_B, R_G: a magnitude has no sign) or leaves the monthly reference [q05, q95] (a signed z); a run of at least 2 consecutive such months is sustained (R1)",
+   "departure_months": {
+    "A": [
+     "2025-06",
+     "2025-08"
+    ],
+    "D": [
+     "2024-09",
+     "2024-10",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06",
+     "2025-09 (pre)"
+    ],
+    "F": [
+     "2025-06",
+     "2025-08"
+    ],
+    "P": [
+     "2025-08"
+    ],
+    "R_B": [
+     "2024-12",
+     "2025-03"
+    ],
+    "R_G": [
+     "2024-07",
+     "2024-08",
+     "2024-10",
+     "2024-12",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-06",
+     "2025-07",
+     "2025-08"
+    ],
+    "S": [
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-06",
+     "2025-09 (pre)"
+    ],
+    "gamma2": []
+   },
+   "dims": {
+    "A": {
+     "block": "geometry",
+     "ci": [
+      0.0,
+      0.5159423806
+     ],
+     "delta": 0.2564294856,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "z(A)",
+     "monthly_median": 0.2392794049,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "A",
+     "r": 0.1541506798,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 2.4849066498,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.2392794049,
+      "max_value": 1.0014037151,
+      "min_value": -0.4785588098,
+      "months_above_q95": [
+       "2025-06",
+       "2025-08"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 2,
+      "n_below_q05": 0,
+      "n_months": 15,
+      "outside_envelope": [
+       "2025-06",
+       "2025-08"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7744489553,
+      "q50": 0.1639705883,
+      "q95": 0.5620785963
+     },
+     "value": 0.2564294856
+    },
+    "D": {
+     "block": "geometry",
+     "ci": [
+      -0.6535957991,
+      -0.0936676462
+     ],
+     "delta": -0.4401531999,
+     "direction": "down",
+     "excludes_zero": true,
+     "label": "z(D)",
+     "monthly_median": -0.441256681,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "D",
+     "r": -0.2905971152,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -4.6786529627,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.441256681,
+      "max_value": 0.1563951867,
+      "min_value": -0.9091636625,
+      "months_above_q95": [],
+      "months_below_q05": [
+       "2024-09",
+       "2024-10",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-05",
+       "2025-06",
+       "2025-09 (pre)"
+      ],
+      "n_above_q95": 0,
+      "n_below_q05": 8,
+      "n_months": 15,
+      "outside_envelope": [
+       "2024-09",
+       "2024-10",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-05",
+       "2025-06",
+       "2025-09 (pre)"
+      ],
+      "position": "below q05",
+      "q05": -0.4300592093,
+      "q50": 0.0181639102,
+      "q95": 0.2069213151
+     },
+     "value": -0.4401531999
+    },
+    "F": {
+     "block": "geometry",
+     "ci": [
+      0.0,
+      0.6744907595
+     ],
+     "delta": 0.3654809875,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "z(F)",
+     "monthly_median": 0.5199858735,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "F",
+     "r": 0.1823215568,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 1.6094379124,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.5199858735,
+      "max_value": 1.0319852681,
+      "min_value": -0.2236562887,
+      "months_above_q95": [
+       "2025-06",
+       "2025-08"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 2,
+      "n_below_q05": 0,
+      "n_months": 15,
+      "outside_envelope": [
+       "2025-06",
+       "2025-08"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.4473125774,
+      "q50": 0.0913702469,
+      "q95": 0.7949451574
+     },
+     "value": 0.3654809875
+    },
+    "P": {
+     "block": "behaviour",
+     "ci": [
+      -0.6395817768,
+      0.0973414213
+     ],
+     "delta": -0.2713699832,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(P)",
+     "monthly_median": -0.1757665205,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "P",
+     "r": -0.1399521549,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -3.2066115764,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.1757665205,
+      "max_value": 0.4246316168,
+      "min_value": -0.8478741344,
+      "months_above_q95": [],
+      "months_below_q05": [
+       "2025-08"
+      ],
+      "n_above_q95": 0,
+      "n_below_q05": 1,
+      "n_months": 15,
+      "outside_envelope": [
+       "2025-08"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7847373585,
+      "q50": 0.0752130538,
+      "q95": 0.4813286705
+     },
+     "value": -0.2713699832
+    },
+    "R_B": {
+     "block": "behaviour",
+     "ci": [
+      -0.0621444592,
+      0.2334895418
+     ],
+     "delta": 0.0783286978,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "R_B",
+     "monthly_median": 0.898481465,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_B",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 0.898481465,
+      "max_value": 1.3145975211,
+      "min_value": 0.4203015284,
+      "months_above_q95": [
+       "2024-12",
+       "2025-03"
+      ],
+      "months_below_q05": [
+       "2024-07",
+       "2025-09 (pre)"
+      ],
+      "n_above_q95": 2,
+      "n_below_q05": 2,
+      "n_months": 15,
+      "outside_envelope": [
+       "2024-12",
+       "2025-03"
+      ],
+      "position": "inside q05..q95",
+      "q05": 0.7284078905,
+      "q50": 0.8057062248,
+      "q95": 1.1569524281
+     },
+     "value": 0.9138299738
+    },
+    "R_G": {
+     "block": "geometry",
+     "ci": [
+      0.0920955019,
+      0.4155099985
+     ],
+     "delta": 0.2429128589,
+     "direction": "up",
+     "excludes_zero": true,
+     "label": "R_G",
+     "monthly_median": 1.1475505864,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_G",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 1.1475505864,
+      "max_value": 1.5053020441,
+      "min_value": 0.7391475102,
+      "months_above_q95": [
+       "2024-07",
+       "2024-08",
+       "2024-10",
+       "2024-12",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-06",
+       "2025-07",
+       "2025-08"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 10,
+      "n_below_q05": 0,
+      "n_months": 15,
+      "outside_envelope": [
+       "2024-07",
+       "2024-08",
+       "2024-10",
+       "2024-12",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-06",
+       "2025-07",
+       "2025-08"
+      ],
+      "position": "above q95",
+      "q05": 0.6679835161,
+      "q50": 0.8407820782,
+      "q95": 1.0737664263
+     },
+     "value": 1.0960529705
+    },
+    "S": {
+     "block": "geometry",
+     "ci": [
+      0.09190328,
+      0.6084136801
+     ],
+     "delta": 0.3430472857,
+     "direction": "up",
+     "excludes_zero": true,
+     "label": "z(S)",
+     "monthly_median": 0.3394480228,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "S",
+     "r": 3.2142964097,
+     "r_unit": "transformed units (identity)",
+     "reference_centre": 14.251705551,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.3394480228,
+      "max_value": 1.815301472,
+      "min_value": -0.3077916462,
+      "months_above_q95": [
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-06",
+       "2025-09 (pre)"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 5,
+      "n_below_q05": 0,
+      "n_months": 15,
+      "outside_envelope": [
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-06",
+       "2025-09 (pre)"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.5950781257,
+      "q50": -0.0344338143,
+      "q95": 0.6426123941
+     },
+     "value": 0.3430472857
+    },
+    "gamma2": {
+     "block": "behaviour",
+     "ci": [
+      -0.3653766393,
+      0.3093938367
+     ],
+     "delta": -0.0081660613,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(gamma2)",
+     "monthly_median": -0.1543914029,
+     "n_class": 189,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "gamma2",
+     "r": -0.0110831294,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -2.7262347643,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.1543914029,
+      "max_value": 0.3655746835,
+      "min_value": -0.5203579174,
+      "months_above_q95": [],
+      "months_below_q05": [],
+      "n_above_q95": 0,
+      "n_below_q05": 0,
+      "n_months": 15,
+      "outside_envelope": [],
+      "position": "inside q05..q95",
+      "q05": -0.713916545,
+      "q50": -0.0384173261,
+      "q95": 0.7161107665
+     },
+     "value": -0.0081660613
+    }
+   },
+   "directional": {
+    "longest_run": {
+     "end": "2025-03",
+     "labels": [
+      "2025-02",
+      "2025-03"
+     ],
+     "length": 2,
+     "start": "2025-02"
+    },
+    "months": [
+     "2024-08",
+     "2024-11",
+     "2025-02",
+     "2025-03",
+     "2025-05"
+    ],
+    "n_months": 5,
+    "note": "descriptive only: no statistic is derived from these runs",
+    "pattern": "z(gamma2) > 0 and z(P) < 0",
+    "runs": [
+     {
+      "end": "2024-08",
+      "labels": [
+       "2024-08"
+      ],
+      "length": 1,
+      "start": "2024-08"
+     },
+     {
+      "end": "2024-11",
+      "labels": [
+       "2024-11"
+      ],
+      "length": 1,
+      "start": "2024-11"
+     },
+     {
+      "end": "2025-03",
+      "labels": [
+       "2025-02",
+       "2025-03"
+      ],
+      "length": 2,
+      "start": "2025-02"
+     },
+     {
+      "end": "2025-05",
+      "labels": [
+       "2025-05"
+      ],
+      "length": 1,
+      "start": "2025-05"
+     }
+    ]
+   },
+   "draws": 2000,
+   "intervals": [
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09 (pre)"
+   ],
+   "label": "intervention period",
+   "n_chips": 189,
+   "n_dates": 189,
+   "n_intervals": 15,
+   "n_reference": 119,
+   "note": "the export's intervention stratum W3_sanierung: the works interval",
+   "orbits": {
+    "ASCENDING": 91,
+    "DESCENDING": 98
+   },
+   "persistence": {
+    "R_B": {
+     "longest_run": {
+      "end": "2024-12",
+      "labels": [
+       "2024-12"
+      ],
+      "length": 1,
+      "start": "2024-12",
+      "values": [
+       1.3145975211
+      ]
+     },
+     "months_above_q95": [
+      "2024-12",
+      "2025-03"
+     ],
+     "n_above_q95": 2,
+     "n_months": 15,
+     "persistence_min_months": 2,
+     "quantity": "R_B",
+     "runs": [
+      {
+       "end": "2024-12",
+       "labels": [
+        "2024-12"
+       ],
+       "length": 1,
+       "start": "2024-12",
+       "values": [
+        1.3145975211
+       ]
+      },
+      {
+       "end": "2025-03",
+       "labels": [
+        "2025-03"
+       ],
+       "length": 1,
+       "start": "2025-03",
+       "values": [
+        1.2553677423
+       ]
+      }
+     ],
+     "sustained": false,
+     "threshold": 1.1569524281,
+     "threshold_quantile": 95
+    },
+    "R_G": {
+     "longest_run": {
+      "end": "2025-04",
+      "labels": [
+       "2025-02",
+       "2025-03",
+       "2025-04"
+      ],
+      "length": 3,
+      "start": "2025-02",
+      "values": [
+       1.2183757078,
+       1.2383467135,
+       1.4633486415
+      ]
+     },
+     "months_above_q95": [
+      "2024-07",
+      "2024-08",
+      "2024-10",
+      "2024-12",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-06",
+      "2025-07",
+      "2025-08"
+     ],
+     "n_above_q95": 10,
+     "n_months": 15,
+     "persistence_min_months": 2,
+     "quantity": "R_G",
+     "runs": [
+      {
+       "end": "2024-08",
+       "labels": [
+        "2024-07",
+        "2024-08"
+       ],
+       "length": 2,
+       "start": "2024-07",
+       "values": [
+        1.1514679721,
+        1.5053020441
+       ]
+      },
+      {
+       "end": "2024-10",
+       "labels": [
+        "2024-10"
+       ],
+       "length": 1,
+       "start": "2024-10",
+       "values": [
+        1.1306010241
+       ]
+      },
+      {
+       "end": "2024-12",
+       "labels": [
+        "2024-12"
+       ],
+       "length": 1,
+       "start": "2024-12",
+       "values": [
+        1.3060766464
+       ]
+      },
+      {
+       "end": "2025-04",
+       "labels": [
+        "2025-02",
+        "2025-03",
+        "2025-04"
+       ],
+       "length": 3,
+       "start": "2025-02",
+       "values": [
+        1.2183757078,
+        1.2383467135,
+        1.4633486415
+       ]
+      },
+      {
+       "end": "2025-08",
+       "labels": [
+        "2025-06",
+        "2025-07",
+        "2025-08"
+       ],
+       "length": 3,
+       "start": "2025-06",
+       "values": [
+        1.0960529705,
+        1.1475505864,
+        1.1512489805
+       ]
+      }
+     ],
+     "sustained": true,
+     "threshold": 1.0737664263,
+     "threshold_quantile": 95
+    }
+   },
+   "seed": 7,
+   "window": [
+    "2024-07",
+    "2025-09"
+   ]
+  },
+  "outside": {
+   "applies": true,
+   "block": 3,
+   "class": "outside",
+   "criterion": "a month is a departure only when its monthly state exceeds the monthly reference q95 of the same magnitude (R_B, R_G: a magnitude has no sign) or leaves the monthly reference [q05, q95] (a signed z); a run of at least 2 consecutive such months is sustained (R1)",
+   "departure_months": {
+    "A": [
+     "2023-07"
+    ],
+    "D": [
+     "2023-07",
+     "2023-10",
+     "2023-11",
+     "2023-12",
+     "2024-02",
+     "2024-03",
+     "2024-04"
+    ],
+    "F": [
+     "2023-07"
+    ],
+    "P": [
+     "2023-08",
+     "2023-12",
+     "2024-01",
+     "2024-03"
+    ],
+    "R_B": [
+     "2024-02"
+    ],
+    "R_G": [
+     "2023-11",
+     "2024-02"
+    ],
+    "S": [
+     "2023-11"
+    ],
+    "gamma2": []
+   },
+   "dims": {
+    "A": {
+     "block": "geometry",
+     "ci": [
+      -0.2778942853,
+      0.2778942853
+     ],
+     "delta": 0.0,
+     "direction": "flat",
+     "excludes_zero": false,
+     "label": "z(A)",
+     "monthly_median": 0.0,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "A",
+     "r": 0.0,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 2.4849066498,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.0,
+      "max_value": 0.8413984996,
+      "min_value": -0.2240175189,
+      "months_above_q95": [
+       "2023-07"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 1,
+      "n_below_q05": 0,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-07"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7744489553,
+      "q50": 0.1639705883,
+      "q95": 0.5620785963
+     },
+     "value": 0.0
+    },
+    "D": {
+     "block": "geometry",
+     "ci": [
+      -0.3972909571,
+      0.3605714636
+     ],
+     "delta": -0.1305472599,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(D)",
+     "monthly_median": -0.0315637394,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "D",
+     "r": -0.0861896656,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -4.6786529627,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.0315637394,
+      "max_value": 0.4578293171,
+      "min_value": -0.4722022597,
+      "months_above_q95": [
+       "2023-07",
+       "2023-10",
+       "2023-11",
+       "2024-02",
+       "2024-03"
+      ],
+      "months_below_q05": [
+       "2023-12",
+       "2024-04"
+      ],
+      "n_above_q95": 5,
+      "n_below_q05": 2,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-07",
+       "2023-10",
+       "2023-11",
+       "2023-12",
+       "2024-02",
+       "2024-03",
+       "2024-04"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.4300592093,
+      "q50": 0.0181639102,
+      "q95": 0.2069213151
+     },
+     "value": -0.1305472599
+    },
+    "F": {
+     "block": "geometry",
+     "ci": [
+      -0.3654809875,
+      0.3654809875
+     ],
+     "delta": 0.0,
+     "direction": "flat",
+     "excludes_zero": false,
+     "label": "z(F)",
+     "monthly_median": 0.0,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "F",
+     "r": 0.0,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 1.6094379124,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.0,
+      "max_value": 1.1782745525,
+      "min_value": -0.4473125774,
+      "months_above_q95": [
+       "2023-07"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 1,
+      "n_below_q05": 0,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-07"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.4473125774,
+      "q50": 0.0913702469,
+      "q95": 0.7949451574
+     },
+     "value": 0.0
+    },
+    "P": {
+     "block": "behaviour",
+     "ci": [
+      -0.7205367975,
+      0.118635478
+     ],
+     "delta": -0.2985169947,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(P)",
+     "monthly_median": -0.3445725129,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "P",
+     "r": -0.1539525344,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -3.2066115764,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.3445725129,
+      "max_value": 0.6868132138,
+      "min_value": -0.9265199065,
+      "months_above_q95": [
+       "2023-08"
+      ],
+      "months_below_q05": [
+       "2023-12",
+       "2024-01",
+       "2024-03"
+      ],
+      "n_above_q95": 1,
+      "n_below_q05": 3,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-08",
+       "2023-12",
+       "2024-01",
+       "2024-03"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7847373585,
+      "q50": 0.0752130538,
+      "q95": 0.4813286705
+     },
+     "value": -0.2985169947
+    },
+    "R_B": {
+     "block": "behaviour",
+     "ci": [
+      -0.0624874959,
+      0.2153995545
+     ],
+     "delta": 0.0494469584,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "R_B",
+     "monthly_median": 0.9176559897,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_B",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 0.9176559897,
+      "max_value": 1.3899313631,
+      "min_value": 0.5920647699,
+      "months_above_q95": [
+       "2024-02"
+      ],
+      "months_below_q05": [
+       "2023-07",
+       "2024-05",
+       "2024-06"
+      ],
+      "n_above_q95": 1,
+      "n_below_q05": 3,
+      "n_months": 12,
+      "outside_envelope": [
+       "2024-02"
+      ],
+      "position": "inside q05..q95",
+      "q05": 0.7284078905,
+      "q50": 0.8057062248,
+      "q95": 1.1569524281
+     },
+     "value": 0.8849482344
+    },
+    "R_G": {
+     "block": "geometry",
+     "ci": [
+      -0.0962342816,
+      0.1890952138
+     ],
+     "delta": 0.0058445044,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "R_G",
+     "monthly_median": 0.8512202731,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_G",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 0.8512202731,
+      "max_value": 1.2116559472,
+      "min_value": 0.5986434604,
+      "months_above_q95": [
+       "2023-11",
+       "2024-02"
+      ],
+      "months_below_q05": [
+       "2023-09",
+       "2024-03"
+      ],
+      "n_above_q95": 2,
+      "n_below_q05": 2,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-11",
+       "2024-02"
+      ],
+      "position": "inside q05..q95",
+      "q05": 0.6679835161,
+      "q50": 0.8407820782,
+      "q95": 1.0737664263
+     },
+     "value": 0.8589846159
+    },
+    "S": {
+     "block": "geometry",
+     "ci": [
+      -0.3913084742,
+      0.3012711206
+     ],
+     "delta": -0.0494958203,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(S)",
+     "monthly_median": -0.1656819245,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "S",
+     "r": -0.4637676612,
+     "r_unit": "transformed units (identity)",
+     "reference_centre": 14.251705551,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.1656819245,
+      "max_value": 0.5933818358,
+      "min_value": -0.8318557095,
+      "months_above_q95": [],
+      "months_below_q05": [
+       "2023-11"
+      ],
+      "n_above_q95": 0,
+      "n_below_q05": 1,
+      "n_months": 12,
+      "outside_envelope": [
+       "2023-11"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.5950781257,
+      "q50": -0.0344338143,
+      "q95": 0.6426123941
+     },
+     "value": -0.0494958203
+    },
+    "gamma2": {
+     "block": "behaviour",
+     "ci": [
+      -0.4303574999,
+      0.2150313368
+     ],
+     "delta": -0.1017643161,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(gamma2)",
+     "monthly_median": -0.1829626596,
+     "n_class": 122,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "gamma2",
+     "r": -0.1381164111,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -2.7262347643,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.1829626596,
+      "max_value": 0.4605089345,
+      "min_value": -0.6928555071,
+      "months_above_q95": [],
+      "months_below_q05": [],
+      "n_above_q95": 0,
+      "n_below_q05": 0,
+      "n_months": 12,
+      "outside_envelope": [],
+      "position": "inside q05..q95",
+      "q05": -0.713916545,
+      "q50": -0.0384173261,
+      "q95": 0.7161107665
+     },
+     "value": -0.1017643161
+    }
+   },
+   "directional": {
+    "longest_run": {
+     "end": "2024-06",
+     "labels": [
+      "2024-05",
+      "2024-06"
+     ],
+     "length": 2,
+     "start": "2024-05"
+    },
+    "months": [
+     "2023-11",
+     "2024-01",
+     "2024-05",
+     "2024-06"
+    ],
+    "n_months": 4,
+    "note": "descriptive only: no statistic is derived from these runs",
+    "pattern": "z(gamma2) > 0 and z(P) < 0",
+    "runs": [
+     {
+      "end": "2023-11",
+      "labels": [
+       "2023-11"
+      ],
+      "length": 1,
+      "start": "2023-11"
+     },
+     {
+      "end": "2024-01",
+      "labels": [
+       "2024-01"
+      ],
+      "length": 1,
+      "start": "2024-01"
+     },
+     {
+      "end": "2024-06",
+      "labels": [
+       "2024-05",
+       "2024-06"
+      ],
+      "length": 2,
+      "start": "2024-05"
+     }
+    ]
+   },
+   "draws": 2000,
+   "intervals": [
+    "2023-07",
+    "2023-08",
+    "2023-09",
+    "2023-10",
+    "2023-11",
+    "2023-12",
+    "2024-01",
+    "2024-02",
+    "2024-03",
+    "2024-04",
+    "2024-05",
+    "2024-06"
+   ],
+   "label": "held-out pre-intervention",
+   "n_chips": 122,
+   "n_dates": 122,
+   "n_intervals": 12,
+   "n_reference": 119,
+   "note": "held out: pre-intervention chips of the reference state that the chosen window leaves out; drawn in the reference frame, standardising nothing",
+   "orbits": {
+    "ASCENDING": 61,
+    "DESCENDING": 61
+   },
+   "persistence": {
+    "R_B": {
+     "longest_run": {
+      "end": "2024-02",
+      "labels": [
+       "2024-02"
+      ],
+      "length": 1,
+      "start": "2024-02",
+      "values": [
+       1.3899313631
+      ]
+     },
+     "months_above_q95": [
+      "2024-02"
+     ],
+     "n_above_q95": 1,
+     "n_months": 12,
+     "persistence_min_months": 2,
+     "quantity": "R_B",
+     "runs": [
+      {
+       "end": "2024-02",
+       "labels": [
+        "2024-02"
+       ],
+       "length": 1,
+       "start": "2024-02",
+       "values": [
+        1.3899313631
+       ]
+      }
+     ],
+     "sustained": false,
+     "threshold": 1.1569524281,
+     "threshold_quantile": 95
+    },
+    "R_G": {
+     "longest_run": {
+      "end": "2023-11",
+      "labels": [
+       "2023-11"
+      ],
+      "length": 1,
+      "start": "2023-11",
+      "values": [
+       1.1683264002
+      ]
+     },
+     "months_above_q95": [
+      "2023-11",
+      "2024-02"
+     ],
+     "n_above_q95": 2,
+     "n_months": 12,
+     "persistence_min_months": 2,
+     "quantity": "R_G",
+     "runs": [
+      {
+       "end": "2023-11",
+       "labels": [
+        "2023-11"
+       ],
+       "length": 1,
+       "start": "2023-11",
+       "values": [
+        1.1683264002
+       ]
+      },
+      {
+       "end": "2024-02",
+       "labels": [
+        "2024-02"
+       ],
+       "length": 1,
+       "start": "2024-02",
+       "values": [
+        1.2116559472
+       ]
+      }
+     ],
+     "sustained": false,
+     "threshold": 1.0737664263,
+     "threshold_quantile": 95
+    }
+   },
+   "seed": 7,
+   "window": [
+    "2023-07",
+    "2024-06"
+   ]
+  },
+  "post": {
+   "applies": true,
+   "block": 3,
+   "class": "post",
+   "criterion": "a month is a departure only when its monthly state exceeds the monthly reference q95 of the same magnitude (R_B, R_G: a magnitude has no sign) or leaves the monthly reference [q05, q95] (a signed z); a run of at least 2 consecutive such months is sustained (R1)",
+   "departure_months": {
+    "A": [
+     "2025-09 (post)",
+     "2025-12"
+    ],
+    "D": [
+     "2025-10"
+    ],
+    "F": [],
+    "P": [
+     "2025-12"
+    ],
+    "R_B": [
+     "2025-12"
+    ],
+    "R_G": [
+     "2025-09 (post)",
+     "2025-12"
+    ],
+    "S": [
+     "2025-09 (post)",
+     "2025-12"
+    ],
+    "gamma2": []
+   },
+   "dims": {
+    "A": {
+     "block": "geometry",
+     "ci": [
+      -0.1331509558,
+      0.5794078012
+     ],
+     "delta": 0.3711990511,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "z(A)",
+     "monthly_median": 0.4179186434,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "A",
+     "r": 0.2231435513,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 2.4849066498,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.4179186434,
+      "max_value": 0.6744907595,
+      "min_value": 0.1331509558,
+      "months_above_q95": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 2,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7744489553,
+      "q50": 0.1639705883,
+      "q95": 0.5620785963
+     },
+     "value": 0.3711990511
+    },
+    "D": {
+     "block": "geometry",
+     "ci": [
+      -0.5207425592,
+      0.0857374741
+     ],
+     "delta": -0.2763489727,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(D)",
+     "monthly_median": -0.2567179491,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "D",
+     "r": -0.1824505974,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -4.6786529627,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": -0.2567179491,
+      "max_value": 0.0589728887,
+      "min_value": -0.4832932028,
+      "months_above_q95": [],
+      "months_below_q05": [
+       "2025-10"
+      ],
+      "n_above_q95": 0,
+      "n_below_q05": 1,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-10"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.4300592093,
+      "q50": 0.0181639102,
+      "q95": 0.2069213151
+     },
+     "value": -0.2763489727
+    },
+    "F": {
+     "block": "geometry",
+     "ci": [
+      -0.3654809875,
+      0.6744907595
+     ],
+     "delta": 0.3654809875,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "z(F)",
+     "monthly_median": 0.3654809875,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "F",
+     "r": 0.1823215568,
+     "r_unit": "transformed units (log)",
+     "reference_centre": 1.6094379124,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.3654809875,
+      "max_value": 0.6744907595,
+      "min_value": 0.0,
+      "months_above_q95": [],
+      "months_below_q05": [],
+      "n_above_q95": 0,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [],
+      "position": "inside q05..q95",
+      "q05": -0.4473125774,
+      "q50": 0.0913702469,
+      "q95": 0.7949451574
+     },
+     "value": 0.3654809875
+    },
+    "P": {
+     "block": "behaviour",
+     "ci": [
+      -0.4516642391,
+      0.3251865042
+     ],
+     "delta": -0.219976035,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(P)",
+     "monthly_median": 0.0283019464,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "P",
+     "r": -0.1134470355,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -3.2066115764,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.0283019464,
+      "max_value": 0.6981857959,
+      "min_value": -0.2329557615,
+      "months_above_q95": [
+       "2025-12"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 1,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-12"
+      ],
+      "position": "inside q05..q95",
+      "q05": -0.7847373585,
+      "q50": 0.0752130538,
+      "q95": 0.4813286705
+     },
+     "value": -0.219976035
+    },
+    "R_B": {
+     "block": "behaviour",
+     "ci": [
+      -0.0732216351,
+      0.3297785296
+     ],
+     "delta": 0.2086554887,
+     "direction": "up",
+     "excludes_zero": false,
+     "label": "R_B",
+     "monthly_median": 0.9926888864,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_B",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 0.9926888864,
+      "max_value": 1.7372109239,
+      "min_value": 0.7171305154,
+      "months_above_q95": [
+       "2025-12"
+      ],
+      "months_below_q05": [
+       "2025-09 (post)"
+      ],
+      "n_above_q95": 1,
+      "n_below_q05": 1,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-12"
+      ],
+      "position": "inside q05..q95",
+      "q05": 0.7284078905,
+      "q50": 0.8057062248,
+      "q95": 1.1569524281
+     },
+     "value": 1.0441567647
+    },
+    "R_G": {
+     "block": "geometry",
+     "ci": [
+      0.0159487715,
+      0.3231983665
+     ],
+     "delta": 0.1707784318,
+     "direction": "up",
+     "excludes_zero": true,
+     "label": "R_G",
+     "monthly_median": 1.0532162475,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": true,
+     "quantity": "R_G",
+     "reference_comparison": {
+      "criterion": "above q95 (one-sided: a magnitude has no sign)",
+      "level": 1.0532162475,
+      "max_value": 1.2668270203,
+      "min_value": 0.8798058237,
+      "months_above_q95": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 2,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "position": "inside q05..q95",
+      "q05": 0.6679835161,
+      "q50": 0.8407820782,
+      "q95": 1.0737664263
+     },
+     "value": 1.0239185433
+    },
+    "S": {
+     "block": "geometry",
+     "ci": [
+      0.1579465167,
+      0.9276369957
+     ],
+     "delta": 0.5070759817,
+     "direction": "up",
+     "excludes_zero": true,
+     "label": "z(S)",
+     "monthly_median": 0.7344775803,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "S",
+     "r": 4.7512182007,
+     "r_unit": "transformed units (identity)",
+     "reference_centre": 14.251705551,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.7344775803,
+      "max_value": 1.0421220831,
+      "min_value": 0.0172274795,
+      "months_above_q95": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "months_below_q05": [],
+      "n_above_q95": 2,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [
+       "2025-09 (post)",
+       "2025-12"
+      ],
+      "position": "above q95",
+      "q05": -0.5950781257,
+      "q50": -0.0344338143,
+      "q95": 0.6426123941
+     },
+     "value": 0.5070759817
+    },
+    "gamma2": {
+     "block": "behaviour",
+     "ci": [
+      -0.4747424634,
+      0.3183171952
+     ],
+     "delta": -0.0325977163,
+     "direction": "down",
+     "excludes_zero": false,
+     "label": "z(gamma2)",
+     "monthly_median": 0.0797241835,
+     "n_class": 61,
+     "n_reference": 119,
+     "one_sided": false,
+     "quantity": "gamma2",
+     "r": -0.0442422232,
+     "r_unit": "transformed units (log)",
+     "reference_centre": -2.7262347643,
+     "reference_comparison": {
+      "criterion": "outside [q05, q95] (two-sided signed departure)",
+      "level": 0.0797241835,
+      "max_value": 0.1914122079,
+      "min_value": -0.0869346352,
+      "months_above_q95": [],
+      "months_below_q05": [],
+      "n_above_q95": 0,
+      "n_below_q05": 0,
+      "n_months": 4,
+      "outside_envelope": [],
+      "position": "inside q05..q95",
+      "q05": -0.713916545,
+      "q50": -0.0384173261,
+      "q95": 0.7161107665
+     },
+     "value": -0.0325977163
+    }
+   },
+   "directional": {
+    "longest_run": {
+     "end": "2025-09 (post)",
+     "labels": [
+      "2025-09 (post)"
+     ],
+     "length": 1,
+     "start": "2025-09 (post)"
+    },
+    "months": [
+     "2025-09 (post)"
+    ],
+    "n_months": 1,
+    "note": "descriptive only: no statistic is derived from these runs",
+    "pattern": "z(gamma2) > 0 and z(P) < 0",
+    "runs": [
+     {
+      "end": "2025-09 (post)",
+      "labels": [
+       "2025-09 (post)"
+      ],
+      "length": 1,
+      "start": "2025-09 (post)"
+     }
+    ]
+   },
+   "draws": 2000,
+   "intervals": [
+    "2025-09 (post)",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+   ],
+   "label": "post-intervention",
+   "n_chips": 61,
+   "n_dates": 61,
+   "n_intervals": 4,
+   "n_reference": 119,
+   "note": "the export's post stratum W4_post",
+   "orbits": {
+    "ASCENDING": 31,
+    "DESCENDING": 30
+   },
+   "persistence": {
+    "R_B": {
+     "longest_run": {
+      "end": "2025-12",
+      "labels": [
+       "2025-12"
+      ],
+      "length": 1,
+      "start": "2025-12",
+      "values": [
+       1.7372109239
+      ]
+     },
+     "months_above_q95": [
+      "2025-12"
+     ],
+     "n_above_q95": 1,
+     "n_months": 4,
+     "persistence_min_months": 2,
+     "quantity": "R_B",
+     "runs": [
+      {
+       "end": "2025-12",
+       "labels": [
+        "2025-12"
+       ],
+       "length": 1,
+       "start": "2025-12",
+       "values": [
+        1.7372109239
+       ]
+      }
+     ],
+     "sustained": false,
+     "threshold": 1.1569524281,
+     "threshold_quantile": 95
+    },
+    "R_G": {
+     "longest_run": {
+      "end": "2025-09 (post)",
+      "labels": [
+       "2025-09 (post)"
+      ],
+      "length": 1,
+      "start": "2025-09 (post)",
+      "values": [
+       1.1155636142
+      ]
+     },
+     "months_above_q95": [
+      "2025-09 (post)",
+      "2025-12"
+     ],
+     "n_above_q95": 2,
+     "n_months": 4,
+     "persistence_min_months": 2,
+     "quantity": "R_G",
+     "runs": [
+      {
+       "end": "2025-09 (post)",
+       "labels": [
+        "2025-09 (post)"
+       ],
+       "length": 1,
+       "start": "2025-09 (post)",
+       "values": [
+        1.1155636142
+       ]
+      },
+      {
+       "end": "2025-12",
+       "labels": [
+        "2025-12"
+       ],
+       "length": 1,
+       "start": "2025-12",
+       "values": [
+        1.2668270203
+       ]
+      }
+     ],
+     "sustained": false,
+     "threshold": 1.0737664263,
+     "threshold_quantile": 95
+    }
+   },
+   "seed": 7,
+   "window": [
+    "2025-09",
+    "2025-12"
+   ]
+  }
+ },
+ "bootstrap": {
+  "block": 3,
+  "draws": 2000,
+  "kind": "circular moving-block, one resample per class",
+  "seed": 7
+ },
+ "classification": {
+  "classes": {
+   "during": {
+    "echo": 189,
+    "months": [
+     "2024-07",
+     "2025-09",
+     15
+    ],
+    "n": 189,
+    "n_dates": 189,
+    "orbits": {
+     "ASCENDING": 91,
+     "DESCENDING": 98
+    },
+    "states": [
+     "W3_sanierung"
+    ]
+   },
+   "outside": {
+    "echo": 122,
+    "months": [
+     "2023-07",
+     "2024-06",
+     12
+    ],
+    "n": 122,
+    "n_dates": 122,
+    "orbits": {
+     "ASCENDING": 61,
+     "DESCENDING": 61
+    },
+    "states": [
+     "W2_bestand"
+    ]
+   },
+   "post": {
+    "echo": 61,
+    "months": [
+     "2025-09",
+     "2025-12",
+     4
+    ],
+    "n": 61,
+    "n_dates": 61,
+    "orbits": {
+     "ASCENDING": 31,
+     "DESCENDING": 30
+    },
+    "states": [
+     "W4_post"
+    ]
+   },
+   "reference": {
+    "echo": 119,
+    "months": [
+     "2022-07",
+     "2023-06",
+     12
+    ],
+    "n": 119,
+    "n_dates": 119,
+    "orbits": {
+     "ASCENDING": 61,
+     "DESCENDING": 58
+    },
+    "states": [
+     "W2_bestand"
+    ]
+   }
+  },
+  "disjoint": true,
+  "months_spanning_classes": {
+   "2025-09": [
+    "during",
+    "post"
+   ]
+  },
+  "reconciles": true,
+  "reference_window": [
+   "2022-07",
+   "2023-06"
+  ],
+  "rule": "state stratum (the export's, cut on the documented dates) x, for the reference state only, the frozen window's months",
+  "split_months": {
+   "2025-09": "2025-09-05"
+  },
+  "total": 491,
+  "unassigned": 0
+ },
+ "comparison": {
+  "classes": {
+   "during": {
+    "intervals": [
+     "2024-07",
+     "2024-08",
+     "2024-09",
+     "2024-10",
+     "2024-11",
+     "2024-12",
+     "2025-01",
+     "2025-02",
+     "2025-03",
+     "2025-04",
+     "2025-05",
+     "2025-06",
+     "2025-07",
+     "2025-08",
+     "2025-09 (pre)"
+    ],
+    "label": "intervention period",
+    "n_chips": 189,
+    "n_intervals": 15,
+    "note": "the export's intervention stratum W3_sanierung: the works interval",
+    "values": {
+     "A": 0.2564294856,
+     "D": -0.4401531999,
+     "F": 0.3654809875,
+     "P": -0.2713699832,
+     "R_B": 0.9138299738,
+     "R_G": 1.0960529705,
+     "S": 0.3430472857,
+     "gamma2": -0.0081660613
+    }
+   },
+   "outside": {
+    "intervals": [
+     "2023-07",
+     "2023-08",
+     "2023-09",
+     "2023-10",
+     "2023-11",
+     "2023-12",
+     "2024-01",
+     "2024-02",
+     "2024-03",
+     "2024-04",
+     "2024-05",
+     "2024-06"
+    ],
+    "label": "held-out pre-intervention",
+    "n_chips": 122,
+    "n_intervals": 12,
+    "note": "held out: pre-intervention chips of the reference state that the chosen window leaves out; drawn in the reference frame, standardising nothing",
+    "values": {
+     "A": 0.0,
+     "D": -0.1305472599,
+     "F": 0.0,
+     "P": -0.2985169947,
+     "R_B": 0.8849482344,
+     "R_G": 0.8589846159,
+     "S": -0.0494958203,
+     "gamma2": -0.1017643161
+    }
+   },
+   "post": {
+    "intervals": [
+     "2025-09 (post)",
+     "2025-10",
+     "2025-11",
+     "2025-12"
+    ],
+    "label": "post-intervention",
+    "n_chips": 61,
+    "n_intervals": 4,
+    "note": "the export's post stratum W4_post",
+    "values": {
+     "A": 0.3711990511,
+     "D": -0.2763489727,
+     "F": 0.3654809875,
+     "P": -0.219976035,
+     "R_B": 1.0441567647,
+     "R_G": 1.0239185433,
+     "S": 0.5070759817,
+     "gamma2": -0.0325977163
+    }
+   },
+   "reference": {
+    "intervals": [
+     "2022-07",
+     "2022-08",
+     "2022-09",
+     "2022-10",
+     "2022-11",
+     "2022-12",
+     "2023-01",
+     "2023-02",
+     "2023-03",
+     "2023-04",
+     "2023-05",
+     "2023-06"
+    ],
+    "label": "frozen pre-intervention reference",
+    "n_chips": 119,
+    "n_intervals": 12,
+    "note": "the frozen reference: the chips the standardisation rests on (R2/R3)",
+    "values": {
+     "A": 0.0,
+     "D": 0.0,
+     "F": 0.0,
+     "P": 0.0,
+     "R_B": 0.835501276,
+     "R_G": 0.8531401115,
+     "S": 0.0,
+     "gamma2": 0.0
+    }
+   }
+  },
+  "labels": {
+   "A": "z(A)",
+   "D": "z(D)",
+   "F": "z(F)",
+   "P": "z(P)",
+   "R_B": "R_B",
+   "R_G": "R_G",
+   "S": "z(S)",
+   "gamma2": "z(gamma2)"
+  },
+  "order": [
+   "gamma2",
+   "P",
+   "R_B",
+   "A",
+   "D",
+   "F",
+   "S",
+   "R_G"
+  ],
+  "units": "z (reference scales); R is a per-chip RMS in the same units"
+ },
+ "cross": {
+  "post_minus_outside": {
+   "block": 3,
+   "dims": {
+    "A": {
+     "block": "geometry",
+     "ci": [
+      -0.1331509558,
+      0.5794078012
+     ],
+     "delta": 0.3711990511,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "D": {
+     "block": "geometry",
+     "ci": [
+      -0.5506423376,
+      0.1482288843
+     ],
+     "delta": -0.1458017129,
+     "direction": "down",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "F": {
+     "block": "geometry",
+     "ci": [
+      -0.3654809875,
+      0.6744907595
+     ],
+     "delta": 0.3654809875,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "P": {
+     "block": "behaviour",
+     "ci": [
+      -0.2026845753,
+      0.6156262499
+     ],
+     "delta": 0.0785409597,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "R_B": {
+     "block": "behaviour",
+     "ci": [
+      -0.1636470369,
+      0.2820447971
+     ],
+     "delta": 0.1592085303,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "R_G": {
+     "block": "geometry",
+     "ci": [
+      -0.0249710462,
+      0.2895520093
+     ],
+     "delta": 0.1649339274,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "S": {
+     "block": "geometry",
+     "ci": [
+      0.2069436246,
+      1.0255201902
+     ],
+     "delta": 0.5565718019,
+     "direction": "up",
+     "excludes_zero": true,
+     "n_left": 122,
+     "n_right": 61
+    },
+    "gamma2": {
+     "block": "behaviour",
+     "ci": [
+      -0.3582692898,
+      0.4188412087
+     ],
+     "delta": 0.0691665998,
+     "direction": "up",
+     "excludes_zero": false,
+     "n_left": 122,
+     "n_right": 61
+    }
+   },
+   "draws": 2000,
+   "left": "outside",
+   "note": "a descriptive interval on a difference between two held-out classes; no hypothesis test and no verdict input",
+   "quantity": "median(post) - median(outside)",
+   "right": "post",
+   "seed": 7
+  }
+ },
+ "cut": {
+  "excluded": 500,
+  "kept": 491,
+  "n_dates": 491,
+  "refused": [],
+  "roles": {
+   "reference": 250,
+   "reference_outside": 250,
+   "target": 491
+  },
+  "rows": 991,
+  "window": [
+   "2022-07-02",
+   "2025-12-04"
+  ]
+ },
+ "envelope": {
+  "aggregation": "monthly median of each calendar-month bin",
+  "chip": {
+   "A": {
+    "max": 2.1987393798,
+    "min": -2.3060991385,
+    "n": 119,
+    "q05": -1.4563412776,
+    "q50": 0.0,
+    "q95": 1.473492946
+   },
+   "D": {
+    "max": 6.0,
+    "min": -1.9032677849,
+    "n": 119,
+    "q05": -1.3206715676,
+    "q50": 0.0,
+    "q95": 1.7933491048
+   },
+   "F": {
+    "max": 2.3316469762,
+    "min": -3.2262721311,
+    "n": 119,
+    "q05": -1.8367923542,
+    "q50": 0.0,
+    "q95": 1.9154140226
+   },
+   "P": {
+    "max": 1.6818711939,
+    "min": -5.7973441711,
+    "n": 119,
+    "q05": -2.2663777817,
+    "q50": 0.0,
+    "q95": 1.1167458663
+   },
+   "R_B": {
+    "max": 4.1127502379,
+    "min": 0.0127024824,
+    "n": 119,
+    "q05": 0.2526590502,
+    "q50": 0.835501276,
+    "q95": 2.2427635683
+   },
+   "R_G": {
+    "max": 3.5999430834,
+    "min": 0.2295791948,
+    "n": 119,
+    "q05": 0.3277037213,
+    "q50": 0.8531401115,
+    "q95": 1.5018305199
+   },
+   "S": {
+    "max": 2.4381264414,
+    "min": -1.4455536301,
+    "n": 119,
+    "q05": -1.2228680757,
+    "q50": 0.0,
+    "q95": 1.9428166377
+   },
+   "gamma2": {
+    "max": 1.951064025,
+    "min": -5.0014562485,
+    "n": 119,
+    "q05": -2.0822495386,
+    "q50": 0.0,
+    "q95": 1.6674645591
+   }
+  },
+  "chip_note": "descriptive only: a single chip is never compared with a monthly state in this analysis",
+  "decision_level": "monthly",
+  "decision_quantile": 95,
+  "monthly": {
+   "A": {
+    "max": 0.6641583353,
+    "min": -0.8966200836,
+    "n": 12,
+    "q05": -0.7744489553,
+    "q50": 0.1639705883,
+    "q95": 0.5620785963,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.1331509558
+     },
+     {
+      "month": "2022-08",
+      "value": -0.8966200836
+     },
+     {
+      "month": "2022-09",
+      "value": 0.4487912391
+     },
+     {
+      "month": "2022-10",
+      "value": 0.4785588098
+     },
+     {
+      "month": "2022-11",
+      "value": 0.1947902207
+     },
+     {
+      "month": "2022-12",
+      "value": 0.3674941477
+     },
+     {
+      "month": "2023-01",
+      "value": -0.1447433295
+     },
+     {
+      "month": "2023-02",
+      "value": -0.4785588098
+     },
+     {
+      "month": "2023-03",
+      "value": -0.6744907595
+     },
+     {
+      "month": "2023-04",
+      "value": 0.0
+     },
+     {
+      "month": "2023-05",
+      "value": 0.2564294856
+     },
+     {
+      "month": "2023-06",
+      "value": 0.6641583353
+     }
+    ]
+   },
+   "D": {
+    "max": 0.2090540915,
+    "min": -0.4954675145,
+    "n": 12,
+    "q05": -0.4300592093,
+    "q50": 0.0181639102,
+    "q95": 0.2069213151,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": -0.3710454915
+     },
+     {
+      "month": "2022-08",
+      "value": 0.1507584417
+     },
+     {
+      "month": "2022-09",
+      "value": -0.4954675145
+     },
+     {
+      "month": "2022-10",
+      "value": 0.2051763161
+     },
+     {
+      "month": "2022-11",
+      "value": -0.0808604928
+     },
+     {
+      "month": "2022-12",
+      "value": -0.1809731917
+     },
+     {
+      "month": "2023-01",
+      "value": -0.2761986277
+     },
+     {
+      "month": "2023-02",
+      "value": -0.3765433232
+     },
+     {
+      "month": "2023-03",
+      "value": 0.2090540915
+     },
+     {
+      "month": "2023-04",
+      "value": 0.1265235093
+     },
+     {
+      "month": "2023-05",
+      "value": 0.1969850957
+     },
+     {
+      "month": "2023-06",
+      "value": 0.1171883131
+     }
+    ]
+   },
+   "F": {
+    "max": 0.9421671994,
+    "min": -0.4473125774,
+    "n": 12,
+    "q05": -0.4473125774,
+    "q50": 0.0913702469,
+    "q95": 0.7949451574,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.0
+     },
+     {
+      "month": "2022-08",
+      "value": -0.4473125774
+     },
+     {
+      "month": "2022-09",
+      "value": 0.9421671994
+     },
+     {
+      "month": "2022-10",
+      "value": 0.0
+     },
+     {
+      "month": "2022-11",
+      "value": 0.1827404938
+     },
+     {
+      "month": "2022-12",
+      "value": 0.3654809875
+     },
+     {
+      "month": "2023-01",
+      "value": 0.0
+     },
+     {
+      "month": "2023-02",
+      "value": -0.4473125774
+     },
+     {
+      "month": "2023-03",
+      "value": -0.4473125774
+     },
+     {
+      "month": "2023-04",
+      "value": 0.3654809875
+     },
+     {
+      "month": "2023-05",
+      "value": 0.3654809875
+     },
+     {
+      "month": "2023-06",
+      "value": 0.6744907595
+     }
+    ]
+   },
+   "P": {
+    "max": 0.4997223565,
+    "min": -0.7969256149,
+    "n": 12,
+    "q05": -0.7847373585,
+    "q50": 0.0752130538,
+    "q95": 0.4813286705,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.2541334753
+     },
+     {
+      "month": "2022-08",
+      "value": -0.5506952515
+     },
+     {
+      "month": "2022-09",
+      "value": -0.5926009119
+     },
+     {
+      "month": "2022-10",
+      "value": 0.1205913232
+     },
+     {
+      "month": "2022-11",
+      "value": 0.4662792911
+     },
+     {
+      "month": "2022-12",
+      "value": -0.1906294287
+     },
+     {
+      "month": "2023-01",
+      "value": 0.176562344
+     },
+     {
+      "month": "2023-02",
+      "value": 0.4997223565
+     },
+     {
+      "month": "2023-03",
+      "value": 0.0998793565
+     },
+     {
+      "month": "2023-04",
+      "value": -0.7747651487
+     },
+     {
+      "month": "2023-05",
+      "value": -0.7969256149
+     },
+     {
+      "month": "2023-06",
+      "value": 0.0505467511
+     }
+    ]
+   },
+   "R_B": {
+    "max": 1.338595097,
+    "min": 0.7195031925,
+    "n": 12,
+    "q05": 0.7284078905,
+    "q50": 0.8057062248,
+    "q95": 1.1569524281,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.8187351864
+     },
+     {
+      "month": "2022-08",
+      "value": 0.7926772632
+     },
+     {
+      "month": "2022-09",
+      "value": 1.008335699
+     },
+     {
+      "month": "2022-10",
+      "value": 0.7195031925
+     },
+     {
+      "month": "2022-11",
+      "value": 0.7895391556
+     },
+     {
+      "month": "2022-12",
+      "value": 0.9284211011
+     },
+     {
+      "month": "2023-01",
+      "value": 0.7508147732
+     },
+     {
+      "month": "2023-02",
+      "value": 0.8915072712
+     },
+     {
+      "month": "2023-03",
+      "value": 0.9251230625
+     },
+     {
+      "month": "2023-04",
+      "value": 1.338595097
+     },
+     {
+      "month": "2023-05",
+      "value": 0.7578137709
+     },
+     {
+      "month": "2023-06",
+      "value": 0.7356935526
+     }
+    ]
+   },
+   "R_G": {
+    "max": 1.2055704845,
+    "min": 0.6505165891,
+    "n": 12,
+    "q05": 0.6679835161,
+    "q50": 0.8407820782,
+    "q95": 1.0737664263,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.7612750526
+     },
+     {
+      "month": "2022-08",
+      "value": 0.9173834066
+     },
+     {
+      "month": "2022-09",
+      "value": 0.9659267423
+     },
+     {
+      "month": "2022-10",
+      "value": 0.6505165891
+     },
+     {
+      "month": "2022-11",
+      "value": 0.7193618511
+     },
+     {
+      "month": "2022-12",
+      "value": 0.9093723046
+     },
+     {
+      "month": "2023-01",
+      "value": 0.6822746381
+     },
+     {
+      "month": "2023-02",
+      "value": 0.7314387324
+     },
+     {
+      "month": "2023-03",
+      "value": 0.893203666
+     },
+     {
+      "month": "2023-04",
+      "value": 0.8635287012
+     },
+     {
+      "month": "2023-05",
+      "value": 0.8180354551
+     },
+     {
+      "month": "2023-06",
+      "value": 1.2055704845
+     }
+    ]
+   },
+   "S": {
+    "max": 0.8614179469,
+    "min": -0.7144753667,
+    "n": 12,
+    "q05": -0.5950781257,
+    "q50": -0.0344338143,
+    "q95": 0.6426123941,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": -0.2304601658
+     },
+     {
+      "month": "2022-08",
+      "value": -0.7144753667
+     },
+     {
+      "month": "2022-09",
+      "value": 0.2059618096
+     },
+     {
+      "month": "2022-10",
+      "value": -0.3808393344
+     },
+     {
+      "month": "2022-11",
+      "value": 0.463589669
+     },
+     {
+      "month": "2022-12",
+      "value": -0.4973894739
+     },
+     {
+      "month": "2023-01",
+      "value": -0.0866638003
+     },
+     {
+      "month": "2023-02",
+      "value": 0.251322757
+     },
+     {
+      "month": "2023-03",
+      "value": 0.4044105916
+     },
+     {
+      "month": "2023-04",
+      "value": 0.0177961716
+     },
+     {
+      "month": "2023-05",
+      "value": -0.0895354095
+     },
+     {
+      "month": "2023-06",
+      "value": 0.8614179469
+     }
+    ]
+   },
+   "gamma2": {
+    "max": 1.1521999245,
+    "min": -1.2553127521,
+    "n": 12,
+    "q05": -0.713916545,
+    "q50": -0.0384173261,
+    "q95": 0.7161107665,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-07",
+      "value": 0.1199390881
+     },
+     {
+      "month": "2022-08",
+      "value": 0.081385373
+     },
+     {
+      "month": "2022-09",
+      "value": -1.2553127521
+     },
+     {
+      "month": "2022-10",
+      "value": -0.270956012
+     },
+     {
+      "month": "2022-11",
+      "value": -0.1011601959
+     },
+     {
+      "month": "2022-12",
+      "value": -0.1495600496
+     },
+     {
+      "month": "2023-01",
+      "value": -0.0486255932
+     },
+     {
+      "month": "2023-02",
+      "value": 1.1521999245
+     },
+     {
+      "month": "2023-03",
+      "value": -0.028209059
+     },
+     {
+      "month": "2023-04",
+      "value": 0.3593105464
+     },
+     {
+      "month": "2023-05",
+      "value": 0.0
+     },
+     {
+      "month": "2023-06",
+      "value": -0.2184861771
+     }
+    ]
+   }
+  },
+  "months": [
+   "2022-07",
+   "2022-08",
+   "2022-09",
+   "2022-10",
+   "2022-11",
+   "2022-12",
+   "2023-01",
+   "2023-02",
+   "2023-03",
+   "2023-04",
+   "2023-05",
+   "2023-06"
+  ],
+  "n_reference_months": 12,
+  "persistence_min_months": 2,
+  "quantiles": [
+   5,
+   50,
+   95
+  ]
+ },
+ "environment": {
+  "applies": true,
+  "coincidence_rule": "a pronounced month (R_B or R_G above the class's reference q95) that also carries |z| > 1 in a co-variate",
+  "coincident_months": [
+   "2024-02",
+   "2024-07",
+   "2024-08",
+   "2025-02",
+   "2025-06",
+   "2025-07"
+  ],
+  "months": [
+   {
+    "P": 0.1280332449,
+    "R_B": 0.675024902,
+    "R_G": 1.0561294059,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.6620812618,
+    "month": "2023-07",
+    "weather_z": {
+     "precipitation_mm": 2.2764063132,
+     "temperature_c": 1.2257572456
+    }
+   },
+   {
+    "P": 0.6868132138,
+    "R_B": 0.9748366925,
+    "R_G": 0.8226537497,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.2985019799,
+    "month": "2023-08",
+    "weather_z": {
+     "precipitation_mm": 2.3607176582,
+     "temperature_c": 1.0376780915
+    }
+   },
+   {
+    "P": 0.1111676744,
+    "R_B": 0.8384974787,
+    "R_G": 0.5986434604,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.6121443927,
+    "month": "2023-09",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": 0.9857941869
+    }
+   },
+   {
+    "P": -0.7341752431,
+    "R_B": 0.8604752868,
+    "R_G": 0.8688776562,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.0999660032,
+    "month": "2023-10",
+    "weather_z": {
+     "precipitation_mm": 0.0,
+     "temperature_c": 0.1297097614
+    }
+   },
+   {
+    "P": -0.4314366944,
+    "R_B": 1.0286383408,
+    "R_G": 1.1683264002,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "outside",
+    "gamma2": 0.4605089345,
+    "month": "2023-11",
+    "weather_z": {
+     "precipitation_mm": 0.5901794145,
+     "temperature_c": -0.4669551412
+    }
+   },
+   {
+    "P": -0.9265199065,
+    "R_B": 1.0602512474,
+    "R_G": 0.8377197402,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.2072400654,
+    "month": "2023-12",
+    "weather_z": {
+     "precipitation_mm": 1.6019155538,
+     "temperature_c": -0.7523166163
+    }
+   },
+   {
+    "P": -0.8934269953,
+    "R_B": 1.0249155203,
+    "R_G": 0.9966326823,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": 0.4398668866,
+    "month": "2024-01",
+    "weather_z": {
+     "precipitation_mm": 1.5176042088,
+     "temperature_c": -1.173873341
+    }
+   },
+   {
+    "P": -0.3854572996,
+    "R_B": 1.3899313631,
+    "R_G": 1.2116559472,
+    "above_q95": {
+     "R_B": true,
+     "R_G": true
+    },
+    "class": "outside",
+    "gamma2": -0.2089728803,
+    "month": "2024-02",
+    "weather_z": {
+     "precipitation_mm": 1.7705382436,
+     "temperature_c": -0.3826437962
+    }
+   },
+   {
+    "P": -0.8729771943,
+    "R_B": 1.0939098068,
+    "R_G": 0.6038320241,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.6928555071,
+    "month": "2024-03",
+    "weather_z": {
+     "precipitation_mm": -0.5058680696,
+     "temperature_c": -0.4150712366
+    }
+   },
+   {
+    "P": -0.3036877261,
+    "R_B": 0.7747029351,
+    "R_G": 0.8201644764,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": -0.1586852538,
+    "month": "2024-04",
+    "weather_z": {
+     "precipitation_mm": 0.0,
+     "temperature_c": 0.1297097614
+    }
+   },
+   {
+    "P": -0.2144025172,
+    "R_B": 0.6783422333,
+    "R_G": 0.8647208059,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": 0.161363177,
+    "month": "2024-05",
+    "weather_z": {
+     "precipitation_mm": -0.0,
+     "temperature_c": 0.6874617356
+    }
+   },
+   {
+    "P": -0.0025981671,
+    "R_B": 0.5920647699,
+    "R_G": 0.8000970798,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "outside",
+    "gamma2": 0.1752248939,
+    "month": "2024-06",
+    "weather_z": {
+     "precipitation_mm": 0.1686226899,
+     "temperature_c": 1.083076508
+    }
+   },
+   {
+    "P": 0.1290273245,
+    "R_B": 0.5517176431,
+    "R_G": 1.1514679721,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.1656244054,
+    "month": "2024-07",
+    "weather_z": {
+     "precipitation_mm": -0.5058680696,
+     "temperature_c": 1.2776411502
+    }
+   },
+   {
+    "P": -0.1872088938,
+    "R_B": 1.0869911069,
+    "R_G": 1.5053020441,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": 0.1813851944,
+    "month": "2024-08",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": 1.4527493281
+    }
+   },
+   {
+    "P": 0.2930572959,
+    "R_B": 1.0097694034,
+    "R_G": 0.9410199213,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "during",
+    "gamma2": -0.1543914029,
+    "month": "2024-09",
+    "weather_z": {
+     "precipitation_mm": -0.4215567247,
+     "temperature_c": 0.6939472237
+    }
+   },
+   {
+    "P": -0.1757665205,
+    "R_B": 0.7300925804,
+    "R_G": 1.1306010241,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.0632457731,
+    "month": "2024-10",
+    "weather_z": {
+     "precipitation_mm": -0.5901794145,
+     "temperature_c": 0.1232242734
+    }
+   },
+   {
+    "P": -0.0097146979,
+    "R_B": 0.749050534,
+    "R_G": 0.7391475102,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "during",
+    "gamma2": 0.2934497573,
+    "month": "2024-11",
+    "weather_z": {
+     "precipitation_mm": -0.5058680696,
+     "temperature_c": -0.6161213668
+    }
+   },
+   {
+    "P": -0.3206856368,
+    "R_B": 1.3145975211,
+    "R_G": 1.3060766464,
+    "above_q95": {
+     "R_B": true,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.5203579174,
+    "month": "2024-12",
+    "weather_z": {
+     "precipitation_mm": 0.7588021044,
+     "temperature_c": -0.9209393062
+    }
+   },
+   {
+    "P": 0.4246316168,
+    "R_B": 0.7346249139,
+    "R_G": 0.8791387734,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "during",
+    "gamma2": 0.3655746835,
+    "month": "2025-01",
+    "weather_z": {
+     "precipitation_mm": 1.6862268987,
+     "temperature_c": -1.0765910199
+    }
+   },
+   {
+    "P": -0.0953223145,
+    "R_B": 0.9450710579,
+    "R_G": 1.2183757078,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": 0.3531657233,
+    "month": "2025-02",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": -1.3878944474
+    }
+   },
+   {
+    "P": -0.7441599186,
+    "R_B": 1.2553677423,
+    "R_G": 1.2383467135,
+    "above_q95": {
+     "R_B": true,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": 0.2356540995,
+    "month": "2025-03",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": -0.6226068549
+    }
+   },
+   {
+    "P": -0.5748985753,
+    "R_B": 0.8287142248,
+    "R_G": 1.4633486415,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.3172126431,
+    "month": "2025-04",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": 0.1880791541
+    }
+   },
+   {
+    "P": -0.1223388586,
+    "R_B": 1.0813673926,
+    "R_G": 0.910997352,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "during",
+    "gamma2": 0.1644799259,
+    "month": "2025-05",
+    "weather_z": {
+     "precipitation_mm": -0.3372453797,
+     "temperature_c": 0.2853614752
+    }
+   },
+   {
+    "P": -0.5789708573,
+    "R_B": 0.8976824802,
+    "R_G": 1.0960529705,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.2551539793,
+    "month": "2025-06",
+    "weather_z": {
+     "precipitation_mm": 0.5058680696,
+     "temperature_c": 1.0376780915
+    }
+   },
+   {
+    "P": -0.6558713956,
+    "R_B": 1.0295082903,
+    "R_G": 1.1475505864,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.2070977825,
+    "month": "2025-07",
+    "weather_z": {
+     "precipitation_mm": 1.0117361392,
+     "temperature_c": 1.0506490676
+    }
+   },
+   {
+    "P": -0.8478741344,
+    "R_B": 0.898481465,
+    "R_G": 1.1512489805,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "during",
+    "gamma2": -0.4124793665,
+    "month": "2025-08",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": 0.9533667466
+    }
+   },
+   {
+    "P": 0.18643015,
+    "R_B": 0.4203015284,
+    "R_G": 0.8889364144,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "during",
+    "gamma2": -0.19213762,
+    "month": "2025-09 (pre)",
+    "weather_z": {
+     "precipitation_mm": -0.5058680696,
+     "temperature_c": 1.2970976144
+    }
+   },
+   {
+    "P": -0.2329557615,
+    "R_B": 0.7171305154,
+    "R_G": 1.1155636142,
+    "above_q95": {
+     "R_B": false,
+     "R_G": true
+    },
+    "class": "post",
+    "gamma2": 0.1318963213,
+    "month": "2025-09 (post)",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": 0.5707229503
+    }
+   },
+   {
+    "P": 0.2042439609,
+    "R_B": 1.1210132857,
+    "R_G": 0.8798058237,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "post",
+    "gamma2": 0.0275520457,
+    "month": "2025-10",
+    "weather_z": {
+     "precipitation_mm": 0.3372453797,
+     "temperature_c": -0.0259419523
+    }
+   },
+   {
+    "P": -0.1476400682,
+    "R_B": 0.8643644871,
+    "R_G": 0.9908688808,
+    "above_q95": {
+     "R_B": false,
+     "R_G": false
+    },
+    "class": "post",
+    "gamma2": -0.0869346352,
+    "month": "2025-11",
+    "weather_z": {
+     "precipitation_mm": -0.5901794145,
+     "temperature_c": -0.5966649026
+    }
+   },
+   {
+    "P": 0.6981857959,
+    "R_B": 1.7372109239,
+    "R_G": 1.2668270203,
+    "above_q95": {
+     "R_B": true,
+     "R_G": true
+    },
+    "class": "post",
+    "gamma2": 0.1914122079,
+    "month": "2025-12",
+    "weather_z": {
+     "precipitation_mm": -0.6744907595,
+     "temperature_c": -0.9857941869
+    }
+   }
+  ],
+  "note": "The co-variates are reported beside the OCV quantities, not inside them: no weather correction is applied and no causal attribution is made",
+  "pronounced_months": [
+   "2023-11",
+   "2024-02",
+   "2024-07",
+   "2024-08",
+   "2024-10",
+   "2024-12",
+   "2025-02",
+   "2025-03",
+   "2025-04",
+   "2025-06",
+   "2025-07",
+   "2025-08",
+   "2025-09 (post)",
+   "2025-12"
+  ],
+  "variables": [
+   "precipitation_mm",
+   "temperature_c"
+  ]
+ },
+ "event": {
+  "check": "The export's strata are cut on the documented dates: W2_bestand 2022-07-02 -> 2024-06-29, W3_sanierung 2024-07-03 -> 2025-09-04, W4_post 2025-09-05 -> 2025-12-04 (W2_bestand -> W3_sanierung 4 d, W3_sanierung -> W4_post 1 d)",
+  "end": "2025-09-05",
+  "external": {
+   "begin": "2024-07-01",
+   "finish": "2025-09-05",
+   "labels": {
+    "sanierung_beginn": "operator material / Autobahn GmbH \u2014 works start between AS Ph\u00f6ben and AS Leest",
+    "sanierung_ende": "Autobahn GmbH, completion reported 2025-09-05 (rbb24, t-online, MAZ, viz.berlin.de)"
+   },
+   "name": "/home/projects/havel_werder_analysis/havel_werder_events.json",
+   "role": "operator record (cross-check)",
+   "sha256": "cad5d6aa9c74a8708aabb977be0f68562cd146a56775645fd8759cff4478c01f"
+  },
+  "from_map": false,
+  "gaps_days": {
+   "W2_bestand -> W3_sanierung": 4,
+   "W3_sanierung -> W4_post": 1
+  },
+  "kind": "documented change (Autobahn GmbH, A 10 renewal)",
+  "map_note": "none of the way's five versions names the 2024/2025 renewal: v4/v5 (2026) add the structural tags, and the ``description`` names the *construction* of the two superstructures (1997 / 2004 \u2014 the 'Richtungsfahrbahn Nauen' and 'Richtungsfahrbahn Werder' decks). The event is the external chain's, corroborated by the record's own strata only (W3_sanierung / W4_post are cut on exactly these two dates)",
+  "reading": "read from data/werder_havel/reference/werder_havel_aoi.json and cross-checked against the generator's meta and the export's strata; never typed into this file",
+  "sources": [
+   {
+    "kind": "documented change (Autobahn GmbH, A 10 renewal)",
+    "name": "data/werder_havel/reference/werder_havel_aoi.json",
+    "note": "none of the way's five versions names the 2024/2025 renewal: v4/v5 (2026) add the structural tags, and the ``description`` names the *construction* of the two superstructures (1997 / 2004 \u2014 the 'Richtungsfahrbahn Nauen' and 'Richtungsfahrbahn Werder' decks). The event is the external chain's, corroborated by the record's own strata only (W3_sanierung / W4_post are cut on exactly these two dates)",
+    "role": "committed reference (read)",
+    "source": "Autobahn GmbH via havel_werder_analysis/havel_werder_asset_hierarchy.md (Step-0 A0 document) and havel_werder_asset.json"
+   },
+   {
+    "kind": "Autobahn GmbH via havel_werder_analysis/havel_werder_asset_hierarchy.md (Step-0 A0 document) and havel_werder_asset.json",
+    "name": "data/werder_havel/support/werder_havel_ocv_channels_meta.json",
+    "role": "generator's own provenance"
+   },
+   {
+    "name": "/home/projects/havel_werder_analysis/havel_werder_events.json",
+    "role": "operator record (agrees)",
+    "sha256": "cad5d6aa9c74a8708aabb977be0f68562cd146a56775645fd8759cff4478c01f"
+   }
+  ],
+  "span_days": 431,
+  "start": "2024-07-01",
+  "state_windows": {
+   "W2_bestand": {
+    "first_date": "2022-07-02",
+    "last_date": "2024-06-29",
+    "n": 241
+   },
+   "W3_sanierung": {
+    "first_date": "2024-07-03",
+    "last_date": "2025-09-04",
+    "n": 189
+   },
+   "W4_post": {
+    "first_date": "2025-09-05",
+    "last_date": "2025-12-04",
+    "n": 61
+   }
+  },
+  "states": {
+   "during": "W3_sanierung",
+   "post": "W4_post",
+   "reference": "W2_bestand"
+  },
+  "tolerance_days": 7
+ },
+ "figure": {
+  "dpi": 630,
+  "file": "figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg",
+  "panels": [
+   {
+    "block": "behaviour",
+    "id": "a1",
+    "shows": "monthly z(gamma2)"
+   },
+   {
+    "block": "behaviour",
+    "id": "a2",
+    "shows": "monthly z(P)"
+   },
+   {
+    "block": "behaviour",
+    "id": "a3",
+    "shows": "behaviour plane, z(gamma2) x z(P)"
+   },
+   {
+    "block": "behaviour",
+    "id": "a4",
+    "shows": "monthly R_B"
+   },
+   {
+    "block": "geometry",
+    "id": "b1",
+    "shows": "monthly z(A)"
+   },
+   {
+    "block": "geometry",
+    "id": "b2",
+    "shows": "monthly z(F)"
+   },
+   {
+    "block": "geometry",
+    "id": "b3",
+    "shows": "geometry plane, z(A) x z(F)"
+   },
+   {
+    "block": "geometry",
+    "id": "b4",
+    "shows": "monthly R_G"
+   },
+   {
+    "block": "context",
+    "id": "c1",
+    "shows": "monthly co-variates, in their own reference frame"
+   },
+   {
+    "block": "context",
+    "id": "c2",
+    "shows": "cadence, chips per bin by orbit"
+   },
+   {
+    "block": "context",
+    "id": "c3",
+    "shows": "echo-bearing share per bin"
+   },
+   {
+    "block": "context",
+    "id": "c4",
+    "shows": "trajectory matrix, z per dimension and bin"
+   }
+  ],
+  "size_mm": [
+   183.0,
+   168.4
+  ]
+ },
+ "inputs": [
+  {
+   "path": "data/werder_havel/support/werder_havel_ocv_channels.csv",
+   "role": "the cut this plate reads",
+   "sha256": "5915a80fdf9841a29819d457f7f9e2ed4388c0e10547abf3059c1d6b9d482526"
+  },
+  {
+   "path": "data/werder_havel/support/werder_havel_ocv_channels_meta.json",
+   "role": "the generator's provenance",
+   "sha256": "39c60f95ad2e01bc0fc0cc742a869f13e5850b870cac80bbf1b5e1914cb0f40e"
+  },
+  {
+   "path": "data/werder_havel/reference/werder_havel_aoi.json",
+   "role": "the documented interval",
+   "sha256": "253da450ec8744e46335f323fbd4c0c0300e151d0138424ba2898a352ce25adc"
+  },
+  {
+   "path": "/home/projects/havel_werder_analysis/havel_werder_events.json",
+   "role": "the external event record (cross-check)",
+   "sha256": "cad5d6aa9c74a8708aabb977be0f68562cd146a56775645fd8759cff4478c01f"
+  }
+ ],
+ "label": "Havelbr\u00fccke Werder, A 10",
+ "months": [
+  {
+   "R_B": 0.8187351864,
+   "R_G": 0.7612750526,
+   "anchor": "2022-07-15",
+   "cls": "reference",
+   "label": "2022-07",
+   "month": "2022-07",
+   "n": 11,
+   "n_ascending": 5,
+   "n_dates": 11,
+   "n_descending": 6,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 11
+   },
+   "weather_z": {
+    "precipitation_mm": -0.3372453797,
+    "temperature_c": 1.2063007814
+   },
+   "z": {
+    "A": 0.1331509558,
+    "D": -0.3710454915,
+    "F": 0.0,
+    "P": 0.2541334753,
+    "S": -0.2304601658,
+    "gamma2": 0.1199390881
+   }
+  },
+  {
+   "R_B": 0.7926772632,
+   "R_G": 0.9173834066,
+   "anchor": "2022-08-15",
+   "cls": "reference",
+   "label": "2022-08",
+   "month": "2022-08",
+   "n": 7,
+   "n_ascending": 5,
+   "n_dates": 7,
+   "n_descending": 2,
+   "n_echo": 7,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 7
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 1.3619524951
+   },
+   "z": {
+    "A": -0.8966200836,
+    "D": 0.1507584417,
+    "F": -0.4473125774,
+    "P": -0.5506952515,
+    "S": -0.7144753667,
+    "gamma2": 0.081385373
+   }
+  },
+  {
+   "R_B": 1.008335699,
+   "R_G": 0.9659267423,
+   "anchor": "2022-09-15",
+   "cls": "reference",
+   "label": "2022-09",
+   "month": "2022-09",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 10
+   },
+   "weather_z": {
+    "precipitation_mm": -0.0843113449,
+    "temperature_c": 0.3891292843
+   },
+   "z": {
+    "A": 0.4487912391,
+    "D": -0.4954675145,
+    "F": 0.9421671994,
+    "P": -0.5926009119,
+    "S": 0.2059618096,
+    "gamma2": -1.2553127521
+   }
+  },
+  {
+   "R_B": 0.7195031925,
+   "R_G": 0.6505165891,
+   "anchor": "2022-10-15",
+   "cls": "reference",
+   "label": "2022-10",
+   "month": "2022-10",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 10
+   },
+   "weather_z": {
+    "precipitation_mm": 0.2529340348,
+    "temperature_c": 0.2594195229
+   },
+   "z": {
+    "A": 0.4785588098,
+    "D": 0.2051763161,
+    "F": 0.0,
+    "P": 0.1205913232,
+    "S": -0.3808393344,
+    "gamma2": -0.270956012
+   }
+  },
+  {
+   "R_B": 0.7895391556,
+   "R_G": 0.7193618511,
+   "anchor": "2022-11-15",
+   "cls": "reference",
+   "label": "2022-11",
+   "month": "2022-11",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 10
+   },
+   "weather_z": {
+    "precipitation_mm": 0.0843113449,
+    "temperature_c": -0.4864116054
+   },
+   "z": {
+    "A": 0.1947902207,
+    "D": -0.0808604928,
+    "F": 0.1827404938,
+    "P": 0.4662792911,
+    "S": 0.463589669,
+    "gamma2": -0.1011601959
+   }
+  },
+  {
+   "R_B": 0.9284211011,
+   "R_G": 0.9093723046,
+   "anchor": "2022-12-15",
+   "cls": "reference",
+   "label": "2022-12",
+   "month": "2022-12",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 10
+   },
+   "weather_z": {
+    "precipitation_mm": 1.6862268987,
+    "temperature_c": -1.1803588291
+   },
+   "z": {
+    "A": 0.3674941477,
+    "D": -0.1809731917,
+    "F": 0.3654809875,
+    "P": -0.1906294287,
+    "S": -0.4973894739,
+    "gamma2": -0.1495600496
+   }
+  },
+  {
+   "R_B": 0.7508147732,
+   "R_G": 0.6822746381,
+   "anchor": "2023-01-15",
+   "cls": "reference",
+   "label": "2023-01",
+   "month": "2023-01",
+   "n": 11,
+   "n_ascending": 6,
+   "n_dates": 11,
+   "n_descending": 5,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 11
+   },
+   "weather_z": {
+    "precipitation_mm": 0.5058680696,
+    "temperature_c": -0.6744907595
+   },
+   "z": {
+    "A": -0.1447433295,
+    "D": -0.2761986277,
+    "F": 0.0,
+    "P": 0.176562344,
+    "S": -0.0866638003,
+    "gamma2": -0.0486255932
+   }
+  },
+  {
+   "R_B": 0.8915072712,
+   "R_G": 0.7314387324,
+   "anchor": "2023-02-15",
+   "cls": "reference",
+   "label": "2023-02",
+   "month": "2023-02",
+   "n": 9,
+   "n_ascending": 4,
+   "n_dates": 9,
+   "n_descending": 5,
+   "n_echo": 9,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 9
+   },
+   "weather_z": {
+    "precipitation_mm": 0.3372453797,
+    "temperature_c": -0.6096358788
+   },
+   "z": {
+    "A": -0.4785588098,
+    "D": -0.3765433232,
+    "F": -0.4473125774,
+    "P": 0.4997223565,
+    "S": 0.251322757,
+    "gamma2": 1.1521999245
+   }
+  },
+  {
+   "R_B": 0.9251230625,
+   "R_G": 0.893203666,
+   "anchor": "2023-03-15",
+   "cls": "reference",
+   "label": "2023-03",
+   "month": "2023-03",
+   "n": 11,
+   "n_ascending": 6,
+   "n_dates": 11,
+   "n_descending": 5,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 11
+   },
+   "weather_z": {
+    "precipitation_mm": 5.0586806961,
+    "temperature_c": -0.8820263778
+   },
+   "z": {
+    "A": -0.6744907595,
+    "D": 0.2090540915,
+    "F": -0.4473125774,
+    "P": 0.0998793565,
+    "S": 0.4044105916,
+    "gamma2": -0.028209059
+   }
+  },
+  {
+   "R_B": 1.338595097,
+   "R_G": 0.8635287012,
+   "anchor": "2023-04-15",
+   "cls": "reference",
+   "label": "2023-04",
+   "month": "2023-04",
+   "n": 9,
+   "n_ascending": 4,
+   "n_dates": 9,
+   "n_descending": 5,
+   "n_echo": 9,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 9
+   },
+   "weather_z": {
+    "precipitation_mm": 1.6862268987,
+    "temperature_c": -0.2983324513
+   },
+   "z": {
+    "A": 0.0,
+    "D": 0.1265235093,
+    "F": 0.3654809875,
+    "P": -0.7747651487,
+    "S": 0.0177961716,
+    "gamma2": 0.3593105464
+   }
+  },
+  {
+   "R_B": 0.7578137709,
+   "R_G": 0.8180354551,
+   "anchor": "2023-05-15",
+   "cls": "reference",
+   "label": "2023-05",
+   "month": "2023-05",
+   "n": 11,
+   "n_ascending": 6,
+   "n_dates": 11,
+   "n_descending": 5,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 11
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 0.4669551412
+   },
+   "z": {
+    "A": 0.2564294856,
+    "D": 0.1969850957,
+    "F": 0.3654809875,
+    "P": -0.7969256149,
+    "S": -0.0895354095,
+    "gamma2": 0.0
+   }
+  },
+  {
+   "R_B": 0.7356935526,
+   "R_G": 1.2055704845,
+   "anchor": "2023-06-15",
+   "cls": "reference",
+   "label": "2023-06",
+   "month": "2023-06",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 0,
+    "reference": 10
+   },
+   "weather_z": {
+    "precipitation_mm": -0.3372453797,
+    "temperature_c": 1.0636200438
+   },
+   "z": {
+    "A": 0.6641583353,
+    "D": 0.1171883131,
+    "F": 0.6744907595,
+    "P": 0.0505467511,
+    "S": 0.8614179469,
+    "gamma2": -0.2184861771
+   }
+  },
+  {
+   "R_B": 0.675024902,
+   "R_G": 1.0561294059,
+   "anchor": "2023-07-15",
+   "cls": "outside",
+   "label": "2023-07",
+   "month": "2023-07",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 2.2764063132,
+    "temperature_c": 1.2257572456
+   },
+   "z": {
+    "A": 0.8413984996,
+    "D": 0.2394190462,
+    "F": 1.1782745525,
+    "P": 0.1280332449,
+    "S": -0.3605217738,
+    "gamma2": -0.6620812618
+   }
+  },
+  {
+   "R_B": 0.9748366925,
+   "R_G": 0.8226537497,
+   "anchor": "2023-08-15",
+   "cls": "outside",
+   "label": "2023-08",
+   "month": "2023-08",
+   "n": 11,
+   "n_ascending": 5,
+   "n_dates": 11,
+   "n_descending": 6,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 11,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 2.3607176582,
+    "temperature_c": 1.0376780915
+   },
+   "z": {
+    "A": 0.1331509558,
+    "D": -0.3702584554,
+    "F": 0.3654809875,
+    "P": 0.6868132138,
+    "S": -0.1633309084,
+    "gamma2": -0.2985019799
+   }
+  },
+  {
+   "R_B": 0.8384974787,
+   "R_G": 0.5986434604,
+   "anchor": "2023-09-15",
+   "cls": "outside",
+   "label": "2023-09",
+   "month": "2023-09",
+   "n": 9,
+   "n_ascending": 5,
+   "n_dates": 9,
+   "n_descending": 4,
+   "n_echo": 9,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 9,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 0.9857941869
+   },
+   "z": {
+    "A": 0.0,
+    "D": -0.1648527628,
+    "F": 0.0,
+    "P": 0.1111676744,
+    "S": -0.4430721676,
+    "gamma2": -0.6121443927
+   }
+  },
+  {
+   "R_B": 0.8604752868,
+   "R_G": 0.8688776562,
+   "anchor": "2023-10-15",
+   "cls": "outside",
+   "label": "2023-10",
+   "month": "2023-10",
+   "n": 11,
+   "n_ascending": 5,
+   "n_dates": 11,
+   "n_descending": 6,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 11,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.0,
+    "temperature_c": 0.1297097614
+   },
+   "z": {
+    "A": 0.0,
+    "D": 0.4578293171,
+    "F": 0.3654809875,
+    "P": -0.7341752431,
+    "S": -0.5362352984,
+    "gamma2": -0.0999660032
+   }
+  },
+  {
+   "R_B": 1.0286383408,
+   "R_G": 1.1683264002,
+   "anchor": "2023-11-15",
+   "cls": "outside",
+   "label": "2023-11",
+   "month": "2023-11",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.5901794145,
+    "temperature_c": -0.4669551412
+   },
+   "z": {
+    "A": -0.2240175189,
+    "D": 0.3152649785,
+    "F": -0.4473125774,
+    "P": -0.4314366944,
+    "S": -0.8318557095,
+    "gamma2": 0.4605089345
+   }
+  },
+  {
+   "R_B": 1.0602512474,
+   "R_G": 0.8377197402,
+   "anchor": "2023-12-15",
+   "cls": "outside",
+   "label": "2023-12",
+   "month": "2023-12",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 1.6019155538,
+    "temperature_c": -0.7523166163
+   },
+   "z": {
+    "A": -0.1447433295,
+    "D": -0.4722022597,
+    "F": 0.0,
+    "P": -0.9265199065,
+    "S": 0.4084234418,
+    "gamma2": -0.2072400654
+   }
+  },
+  {
+   "R_B": 1.0249155203,
+   "R_G": 0.9966326823,
+   "anchor": "2024-01-15",
+   "cls": "outside",
+   "label": "2024-01",
+   "month": "2024-01",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 1.5176042088,
+    "temperature_c": -1.173873341
+   },
+   "z": {
+    "A": -0.0536798793,
+    "D": -0.0306927293,
+    "F": 0.0,
+    "P": -0.8934269953,
+    "S": -0.1680329405,
+    "gamma2": 0.4398668866
+   }
+  },
+  {
+   "R_B": 1.3899313631,
+   "R_G": 1.2116559472,
+   "anchor": "2024-02-15",
+   "cls": "outside",
+   "label": "2024-02",
+   "month": "2024-02",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 1.7705382436,
+    "temperature_c": -0.3826437962
+   },
+   "z": {
+    "A": -0.1516458542,
+    "D": 0.3483435434,
+    "F": 0.0,
+    "P": -0.3854572996,
+    "S": -0.3561680862,
+    "gamma2": -0.2089728803
+   }
+  },
+  {
+   "R_B": 1.0939098068,
+   "R_G": 0.6038320241,
+   "anchor": "2024-03-15",
+   "cls": "outside",
+   "label": "2024-03",
+   "month": "2024-03",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5058680696,
+    "temperature_c": -0.4150712366
+   },
+   "z": {
+    "A": 0.4038208576,
+    "D": 0.2457851512,
+    "F": 0.5199858735,
+    "P": -0.8729771943,
+    "S": 0.358897115,
+    "gamma2": -0.6928555071
+   }
+  },
+  {
+   "R_B": 0.7747029351,
+   "R_G": 0.8201644764,
+   "anchor": "2024-04-15",
+   "cls": "outside",
+   "label": "2024-04",
+   "month": "2024-04",
+   "n": 11,
+   "n_ascending": 6,
+   "n_dates": 11,
+   "n_descending": 5,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 11,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.0,
+    "temperature_c": 0.1297097614
+   },
+   "z": {
+    "A": -0.1447433295,
+    "D": -0.4577429291,
+    "F": 0.0,
+    "P": -0.3036877261,
+    "S": 0.2554313227,
+    "gamma2": -0.1586852538
+   }
+  },
+  {
+   "R_B": 0.6783422333,
+   "R_G": 0.8647208059,
+   "anchor": "2024-05-15",
+   "cls": "outside",
+   "label": "2024-05",
+   "month": "2024-05",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.0,
+    "temperature_c": 0.6874617356
+   },
+   "z": {
+    "A": 0.1947902207,
+    "D": -0.0324347494,
+    "F": 0.1827404938,
+    "P": -0.2144025172,
+    "S": 0.5933818358,
+    "gamma2": 0.161363177
+   }
+  },
+  {
+   "R_B": 0.5920647699,
+   "R_G": 0.8000970798,
+   "anchor": "2024-06-15",
+   "cls": "outside",
+   "label": "2024-06",
+   "month": "2024-06",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 10,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.1686226899,
+    "temperature_c": 1.083076508
+   },
+   "z": {
+    "A": 0.2392794049,
+    "D": -0.3544056463,
+    "F": -0.040915795,
+    "P": -0.0025981671,
+    "S": 0.1236086002,
+    "gamma2": 0.1752248939
+   }
+  },
+  {
+   "R_B": 0.5517176431,
+   "R_G": 1.1514679721,
+   "anchor": "2024-07-15",
+   "cls": "during",
+   "label": "2024-07",
+   "month": "2024-07",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5058680696,
+    "temperature_c": 1.2776411502
+   },
+   "z": {
+    "A": 0.1282147428,
+    "D": -0.1405514646,
+    "F": -0.040915795,
+    "P": 0.1290273245,
+    "S": 0.2067834078,
+    "gamma2": -0.1656244054
+   }
+  },
+  {
+   "R_B": 1.0869911069,
+   "R_G": 1.5053020441,
+   "anchor": "2024-08-15",
+   "cls": "during",
+   "label": "2024-08",
+   "month": "2024-08",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 1.4527493281
+   },
+   "z": {
+    "A": 0.0,
+    "D": -0.1202913528,
+    "F": 0.5199858735,
+    "P": -0.1872088938,
+    "S": 0.3388182976,
+    "gamma2": 0.1813851944
+   }
+  },
+  {
+   "R_B": 1.0097694034,
+   "R_G": 0.9410199213,
+   "anchor": "2024-09-15",
+   "cls": "during",
+   "label": "2024-09",
+   "month": "2024-09",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.4215567247,
+    "temperature_c": 0.6939472237
+   },
+   "z": {
+    "A": -0.1110646621,
+    "D": -0.441256681,
+    "F": -0.2236562887,
+    "P": 0.2930572959,
+    "S": 0.1803137854,
+    "gamma2": -0.1543914029
+   }
+  },
+  {
+   "R_B": 0.7300925804,
+   "R_G": 1.1306010241,
+   "anchor": "2024-10-15",
+   "cls": "during",
+   "label": "2024-10",
+   "month": "2024-10",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5901794145,
+    "temperature_c": 0.1232242734
+   },
+   "z": {
+    "A": 0.3711990511,
+    "D": -0.5836167327,
+    "F": 0.3654809875,
+    "P": -0.1757665205,
+    "S": 0.3339446033,
+    "gamma2": -0.0632457731
+   }
+  },
+  {
+   "R_B": 0.749050534,
+   "R_G": 0.7391475102,
+   "anchor": "2024-11-15",
+   "cls": "during",
+   "label": "2024-11",
+   "month": "2024-11",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5058680696,
+    "temperature_c": -0.6161213668
+   },
+   "z": {
+    "A": -0.2392794049,
+    "D": -0.2700758293,
+    "F": 0.1827404938,
+    "P": -0.0097146979,
+    "S": -0.3077916462,
+    "gamma2": 0.2934497573
+   }
+  },
+  {
+   "R_B": 1.3145975211,
+   "R_G": 1.3060766464,
+   "anchor": "2024-12-15",
+   "cls": "during",
+   "label": "2024-12",
+   "month": "2024-12",
+   "n": 10,
+   "n_ascending": 5,
+   "n_dates": 10,
+   "n_descending": 5,
+   "n_echo": 10,
+   "part": null,
+   "sides": {
+    "during": 10,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.7588021044,
+    "temperature_c": -0.9209393062
+   },
+   "z": {
+    "A": 0.2392794049,
+    "D": 0.0555061345,
+    "F": 0.6538240934,
+    "P": -0.3206856368,
+    "S": -0.2613858635,
+    "gamma2": -0.5203579174
+   }
+  },
+  {
+   "R_B": 0.7346249139,
+   "R_G": 0.8791387734,
+   "anchor": "2025-01-15",
+   "cls": "during",
+   "label": "2025-01",
+   "month": "2025-01",
+   "n": 11,
+   "n_ascending": 6,
+   "n_dates": 11,
+   "n_descending": 5,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 11,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 1.6862268987,
+    "temperature_c": -1.0765910199
+   },
+   "z": {
+    "A": 0.2564294856,
+    "D": 0.1563951867,
+    "F": 0.3654809875,
+    "P": 0.4246316168,
+    "S": 0.2698146431,
+    "gamma2": 0.3655746835
+   }
+  },
+  {
+   "R_B": 0.9450710579,
+   "R_G": 1.2183757078,
+   "anchor": "2025-02-15",
+   "cls": "during",
+   "label": "2025-02",
+   "month": "2025-02",
+   "n": 9,
+   "n_ascending": 4,
+   "n_dates": 9,
+   "n_descending": 5,
+   "n_echo": 9,
+   "part": null,
+   "sides": {
+    "during": 9,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": -1.3878944474
+   },
+   "z": {
+    "A": 0.0,
+    "D": -0.8722296004,
+    "F": 0.6744907595,
+    "P": -0.0953223145,
+    "S": 0.7461985845,
+    "gamma2": 0.3531657233
+   }
+  },
+  {
+   "R_B": 1.2553677423,
+   "R_G": 1.2383467135,
+   "anchor": "2025-03-15",
+   "cls": "during",
+   "label": "2025-03",
+   "month": "2025-03",
+   "n": 11,
+   "n_ascending": 5,
+   "n_dates": 11,
+   "n_descending": 6,
+   "n_echo": 11,
+   "part": null,
+   "sides": {
+    "during": 11,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": -0.6226068549
+   },
+   "z": {
+    "A": 0.1331509558,
+    "D": -0.4618983527,
+    "F": 0.3654809875,
+    "P": -0.7441599186,
+    "S": 0.7245869216,
+    "gamma2": 0.2356540995
+   }
+  },
+  {
+   "R_B": 0.8287142248,
+   "R_G": 1.4633486415,
+   "anchor": "2025-04-15",
+   "cls": "during",
+   "label": "2025-04",
+   "month": "2025-04",
+   "n": 18,
+   "n_ascending": 8,
+   "n_dates": 18,
+   "n_descending": 10,
+   "n_echo": 18,
+   "part": null,
+   "sides": {
+    "during": 18,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 0.1880791541
+   },
+   "z": {
+    "A": 0.3138142684,
+    "D": -0.8443666281,
+    "F": 0.6744907595,
+    "P": -0.5748985753,
+    "S": 1.815301472,
+    "gamma2": -0.3172126431
+   }
+  },
+  {
+   "R_B": 1.0813673926,
+   "R_G": 0.910997352,
+   "anchor": "2025-05-15",
+   "cls": "during",
+   "label": "2025-05",
+   "month": "2025-05",
+   "n": 19,
+   "n_ascending": 9,
+   "n_dates": 19,
+   "n_descending": 10,
+   "n_echo": 19,
+   "part": null,
+   "sides": {
+    "during": 19,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.3372453797,
+    "temperature_c": 0.2853614752
+   },
+   "z": {
+    "A": 0.2564294856,
+    "D": -0.9091636625,
+    "F": 0.6744907595,
+    "P": -0.1223388586,
+    "S": 0.5122420217,
+    "gamma2": 0.1644799259
+   }
+  },
+  {
+   "R_B": 0.8976824802,
+   "R_G": 1.0960529705,
+   "anchor": "2025-06-15",
+   "cls": "during",
+   "label": "2025-06",
+   "month": "2025-06",
+   "n": 19,
+   "n_ascending": 9,
+   "n_dates": 19,
+   "n_descending": 10,
+   "n_echo": 19,
+   "part": null,
+   "sides": {
+    "during": 19,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.5058680696,
+    "temperature_c": 1.0376780915
+   },
+   "z": {
+    "A": 0.5794078012,
+    "D": -0.6488180947,
+    "F": 0.9421671994,
+    "P": -0.5789708573,
+    "S": 1.5468216217,
+    "gamma2": -0.2551539793
+   }
+  },
+  {
+   "R_B": 1.0295082903,
+   "R_G": 1.1475505864,
+   "anchor": "2025-07-15",
+   "cls": "during",
+   "label": "2025-07",
+   "month": "2025-07",
+   "n": 19,
+   "n_ascending": 9,
+   "n_dates": 19,
+   "n_descending": 10,
+   "n_echo": 19,
+   "part": null,
+   "sides": {
+    "during": 19,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 1.0117361392,
+    "temperature_c": 1.0506490676
+   },
+   "z": {
+    "A": 0.3711990511,
+    "D": -0.1648527628,
+    "F": 0.6744907595,
+    "P": -0.6558713956,
+    "S": 0.3394480228,
+    "gamma2": -0.2070977825
+   }
+  },
+  {
+   "R_B": 0.898481465,
+   "R_G": 1.1512489805,
+   "anchor": "2025-08-15",
+   "cls": "during",
+   "label": "2025-08",
+   "month": "2025-08",
+   "n": 20,
+   "n_ascending": 10,
+   "n_dates": 20,
+   "n_descending": 10,
+   "n_echo": 20,
+   "part": null,
+   "sides": {
+    "during": 20,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 0.9533667466
+   },
+   "z": {
+    "A": 1.0014037151,
+    "D": -0.3577374353,
+    "F": 1.0319852681,
+    "P": -0.8478741344,
+    "S": 0.4486904542,
+    "gamma2": -0.4124793665
+   }
+  },
+  {
+   "R_B": 0.4203015284,
+   "R_G": 0.8889364144,
+   "anchor": "2025-09-05",
+   "cls": "during",
+   "label": "2025-09 (pre)",
+   "month": "2025-09",
+   "n": 3,
+   "n_ascending": 1,
+   "n_dates": 3,
+   "n_descending": 2,
+   "n_echo": 3,
+   "part": "pre",
+   "sides": {
+    "during": 3,
+    "outside": 0,
+    "post": 0,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5058680696,
+    "temperature_c": 1.2970976144
+   },
+   "z": {
+    "A": -0.4785588098,
+    "D": -0.4876146065,
+    "F": 0.0,
+    "P": 0.18643015,
+    "S": 1.0198532241,
+    "gamma2": -0.19213762
+   }
+  },
+  {
+   "R_B": 0.7171305154,
+   "R_G": 1.1155636142,
+   "anchor": "2025-09-25",
+   "cls": "post",
+   "label": "2025-09 (post)",
+   "month": "2025-09",
+   "n": 17,
+   "n_ascending": 9,
+   "n_dates": 17,
+   "n_descending": 8,
+   "n_echo": 17,
+   "part": "post",
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 17,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": 0.5707229503
+   },
+   "z": {
+    "A": 0.5794078012,
+    "D": -0.3544312376,
+    "F": 0.6744907595,
+    "P": -0.2329557615,
+    "S": 1.0069194151,
+    "gamma2": 0.1318963213
+   }
+  },
+  {
+   "R_B": 1.1210132857,
+   "R_G": 0.8798058237,
+   "anchor": "2025-10-15",
+   "cls": "post",
+   "label": "2025-10",
+   "month": "2025-10",
+   "n": 21,
+   "n_ascending": 10,
+   "n_dates": 21,
+   "n_descending": 11,
+   "n_echo": 21,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 21,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": 0.3372453797,
+    "temperature_c": -0.0259419523
+   },
+   "z": {
+    "A": 0.2564294856,
+    "D": -0.4832932028,
+    "F": 0.3654809875,
+    "P": 0.2042439609,
+    "S": 0.4620357454,
+    "gamma2": 0.0275520457
+   }
+  },
+  {
+   "R_B": 0.8643644871,
+   "R_G": 0.9908688808,
+   "anchor": "2025-11-15",
+   "cls": "post",
+   "label": "2025-11",
+   "month": "2025-11",
+   "n": 20,
+   "n_ascending": 10,
+   "n_dates": 20,
+   "n_descending": 10,
+   "n_echo": 20,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 20,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.5901794145,
+    "temperature_c": -0.5966649026
+   },
+   "z": {
+    "A": 0.1331509558,
+    "D": -0.1590046605,
+    "F": 0.0,
+    "P": -0.1476400682,
+    "S": 0.0172274795,
+    "gamma2": -0.0869346352
+   }
+  },
+  {
+   "R_B": 1.7372109239,
+   "R_G": 1.2668270203,
+   "anchor": "2025-12-15",
+   "cls": "post",
+   "label": "2025-12",
+   "month": "2025-12",
+   "n": 3,
+   "n_ascending": 2,
+   "n_dates": 3,
+   "n_descending": 1,
+   "n_echo": 3,
+   "part": null,
+   "sides": {
+    "during": 0,
+    "outside": 0,
+    "post": 3,
+    "reference": 0
+   },
+   "weather_z": {
+    "precipitation_mm": -0.6744907595,
+    "temperature_c": -0.9857941869
+   },
+   "z": {
+    "A": 0.6744907595,
+    "D": 0.0589728887,
+    "F": 0.3654809875,
+    "P": 0.6981857959,
+    "S": 1.0421220831,
+    "gamma2": 0.1914122079
+   }
+  }
+ ],
+ "name": "fig_werder_havel_ocv_trajectory",
+ "note": "The crossing's three strata are the export's own (``W2_bestand`` / ``W3_sanierung`` / ``W4_post``), cut on the two documented dates of the 2024/2025 renewal.",
+ "orbit": {
+  "classes": {
+   "during": {
+    "asc_minus_desc": {
+     "P": -0.0555274619,
+     "R_B": -0.4081841197,
+     "R_G": -0.4705608423,
+     "gamma2": 0.2623843047
+    },
+    "departure_sign": {
+     "P": "same sign in both orbits",
+     "R_B": "opposite sign in the two orbits",
+     "R_G": "same sign in both orbits",
+     "gamma2": "opposite sign in the two orbits"
+    },
+    "orbits": {
+     "ASCENDING": {
+      "bins": [
+       "2024-07",
+       "2024-08",
+       "2024-09",
+       "2024-10",
+       "2024-11",
+       "2024-12",
+       "2025-01",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-05",
+       "2025-06",
+       "2025-07",
+       "2025-08",
+       "2025-09 (pre)"
+      ],
+      "n": 91,
+      "n_bins": 15,
+      "value": {
+       "P": -0.3036877261,
+       "R_B": 0.797689052,
+       "R_G": 0.8682460174,
+       "gamma2": 0.089674152
+      }
+     },
+     "DESCENDING": {
+      "bins": [
+       "2024-07",
+       "2024-08",
+       "2024-09",
+       "2024-10",
+       "2024-11",
+       "2024-12",
+       "2025-01",
+       "2025-02",
+       "2025-03",
+       "2025-04",
+       "2025-05",
+       "2025-06",
+       "2025-07",
+       "2025-08",
+       "2025-09 (pre)"
+      ],
+      "n": 98,
+      "n_bins": 15,
+      "value": {
+       "P": -0.2481602642,
+       "R_B": 1.2058731717,
+       "R_G": 1.3388068598,
+       "gamma2": -0.1727101527
+      }
+     }
+    }
+   },
+   "outside": {
+    "asc_minus_desc": {
+     "P": -0.0464061048,
+     "R_B": -0.3496604049,
+     "R_G": -0.4023318023,
+     "gamma2": -0.2219945821
+    },
+    "departure_sign": {
+     "P": "same sign in both orbits",
+     "R_B": "opposite sign in the two orbits",
+     "R_G": "opposite sign in the two orbits",
+     "gamma2": "opposite sign in the two orbits"
+    },
+    "orbits": {
+     "ASCENDING": {
+      "bins": [
+       "2023-07",
+       "2023-08",
+       "2023-09",
+       "2023-10",
+       "2023-11",
+       "2023-12",
+       "2024-01",
+       "2024-02",
+       "2024-03",
+       "2024-04",
+       "2024-05",
+       "2024-06"
+      ],
+      "n": 61,
+      "n_bins": 12,
+      "value": {
+       "P": -0.3036877261,
+       "R_B": 0.7148125828,
+       "R_G": 0.7137877129,
+       "gamma2": -0.2109707468
+      }
+     },
+     "DESCENDING": {
+      "bins": [
+       "2023-07",
+       "2023-08",
+       "2023-09",
+       "2023-10",
+       "2023-11",
+       "2023-12",
+       "2024-01",
+       "2024-02",
+       "2024-03",
+       "2024-04",
+       "2024-05",
+       "2024-06"
+      ],
+      "n": 61,
+      "n_bins": 12,
+      "value": {
+       "P": -0.2572816213,
+       "R_B": 1.0644729877,
+       "R_G": 1.1161195152,
+       "gamma2": 0.0110238353
+      }
+     }
+    }
+   },
+   "post": {
+    "asc_minus_desc": {
+     "P": -0.5679230938,
+     "R_B": -0.3466780484,
+     "R_G": 0.0828168937,
+     "gamma2": -0.7233434548
+    },
+    "departure_sign": {
+     "P": "opposite sign in the two orbits",
+     "R_B": "opposite sign in the two orbits",
+     "R_G": "same sign in both orbits",
+     "gamma2": "opposite sign in the two orbits"
+    },
+    "orbits": {
+     "ASCENDING": {
+      "bins": [
+       "2025-09 (post)",
+       "2025-10",
+       "2025-11",
+       "2025-12"
+      ],
+      "n": 31,
+      "n_bins": 4,
+      "value": {
+       "P": -0.394494538,
+       "R_B": 0.8296778477,
+       "R_G": 1.0452018446,
+       "gamma2": -0.130880214
+      }
+     },
+     "DESCENDING": {
+      "bins": [
+       "2025-09 (post)",
+       "2025-10",
+       "2025-11",
+       "2025-12"
+      ],
+      "n": 30,
+      "n_bins": 4,
+      "value": {
+       "P": 0.1734285558,
+       "R_B": 1.1763558961,
+       "R_G": 0.9623849509,
+       "gamma2": 0.5924632409
+      }
+     }
+    }
+   }
+  },
+  "note": "a chip-level split in the pooled frame; the verdict never reads it -- a departure that only one orbit carries is reported as one pass geometry's departure, not as a site-wide one",
+  "quantities": [
+   "gamma2",
+   "P",
+   "R_B",
+   "R_G"
+  ],
+  "reference": {
+   "ASCENDING": {
+    "n": 61,
+    "value": {
+     "P": -0.2713699832,
+     "R_B": 0.8102601819,
+     "R_G": 0.7761279033,
+     "gamma2": -0.2811263135
+    }
+   },
+   "DESCENDING": {
+    "n": 58,
+    "value": {
+     "P": 0.2251907337,
+     "R_B": 0.8569378003,
+     "R_G": 0.9077243642,
+     "gamma2": 0.442642288
+    }
+   }
+  }
+ },
+ "provenance": {
+  "deterministic": true,
+  "matplotlib": "3.11.1",
+  "note": "no wall-clock value enters this report: two runs are identical",
+  "python": "3.13.5",
+  "script": "code/werder_havel/fig_werder_havel_ocv_trajectory.py",
+  "script_sha256": "6010ecd1522cbe65746394c737d44eb0493bd1d74be0a79a6ffbd6c0c194802c",
+  "seed": 7,
+  "template": "code/cases/ocv_trajectory.py",
+  "template_sha256": "2b87ffb0092fb5978322d59880fb8fe1004d182bd101c0b29fa04fa5706a9818"
+ },
+ "reference": {
+  "choice": "stated choice, frozen before any result of this plate was read",
+  "chosen": null,
+  "label": "frozen pre-intervention reference",
+  "n_chips": 119,
+  "n_intervals": 12,
+  "n_months": 12,
+  "note": "the frozen reference: the chips the standardisation rests on (R2/R3)",
+  "outside_window": [
+   "2023-07",
+   "2024-06"
+  ],
+  "policy": "pooled over the orbits",
+  "standardises": "every held-out chip, through the centre and scale of these chips alone",
+  "state": "W2_bestand",
+  "window": [
+   "2022-07",
+   "2023-06"
+  ]
+ },
+ "schema": "werder-havel-ocv-trajectory-v1",
+ "sha256": "5915a80fdf9841a29819d457f7f9e2ed4388c0e10547abf3059c1d6b9d482526",
+ "standardisation": {
+  "channels": {
+   "A": {
+    "centre": 2.4849066498,
+    "distinct": 30,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "all reference chips",
+    "scale": 0.6011425693,
+    "scale_source": "mad",
+    "transform": "log",
+    "z_max": 2.1987393798,
+    "z_min": -2.3060991385
+   },
+   "D": {
+    "centre": -4.6786529627,
+    "distinct": 110,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "all reference chips",
+    "scale": 0.6602181133,
+    "scale_source": "mad",
+    "transform": "log",
+    "z_max": 7.0865262078,
+    "z_min": -1.9032677849
+   },
+   "F": {
+    "centre": 1.6094379124,
+    "distinct": 15,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "all reference chips",
+    "scale": 0.498853738,
+    "scale_source": "mad",
+    "transform": "log",
+    "z_max": 2.3316469762,
+    "z_min": -3.2262721311
+   },
+   "P": {
+    "centre": -3.2066115764,
+    "distinct": 116,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "echo-bearing reference chips",
+    "scale": 0.515724522,
+    "scale_source": "mad",
+    "transform": "log",
+    "z_max": 1.6818711939,
+    "z_min": -5.7973441711
+   },
+   "S": {
+    "centre": 14.251705551,
+    "distinct": 118,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "all reference chips",
+    "scale": 9.3698348421,
+    "scale_source": "mad",
+    "transform": "identity",
+    "z_max": 2.4381264414,
+    "z_min": -1.4455536301
+   },
+   "gamma2": {
+    "centre": -2.7262347643,
+    "distinct": 119,
+    "n": 119,
+    "n_usable_reference": 119,
+    "rule": "echo-bearing reference chips",
+    "scale": 1.3572184862,
+    "scale_source": "mad",
+    "transform": "log",
+    "z_max": 1.951064025,
+    "z_min": -5.0014562485
+   }
+  },
+  "clipping": {
+   "blocks": {
+    "behaviour": [
+     "gamma2",
+     "P"
+    ],
+    "geometry": [
+     "A",
+     "D",
+     "F",
+     "S"
+    ]
+   },
+   "clip_rule": "|z| <= 6.0, counted not hidden",
+   "clipped": [
+    {
+     "dim": "D",
+     "id": "desc_168_iw1_2022-08-12",
+     "month": "2022-08",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-04-04",
+     "month": "2023-04",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-08-02",
+     "month": "2023-08",
+     "z": 6.4723880921
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-10-13",
+     "month": "2023-10",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-10-25",
+     "month": "2023-10",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-11-06",
+     "month": "2023-11",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-11-18",
+     "month": "2023-11",
+     "z": 6.4723880921
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-11-30",
+     "month": "2023-11",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2023-12-24",
+     "month": "2023-12",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-01-17",
+     "month": "2024-01",
+     "z": 6.8103726866
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-02-10",
+     "month": "2024-02",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-07-03",
+     "month": "2024-07",
+     "z": 6.4723880921
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-07-27",
+     "month": "2024-07",
+     "z": 6.6507882802
+    },
+    {
+     "dim": "D",
+     "id": "desc_168_iw1_2024-08-01",
+     "month": "2024-08",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-09-25",
+     "month": "2024-09",
+     "z": 6.6507882802
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-11-12",
+     "month": "2024-11",
+     "z": 6.8103726866
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-11-24",
+     "month": "2024-11",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-12-06",
+     "month": "2024-12",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2024-12-30",
+     "month": "2024-12",
+     "z": 6.4723880921
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2025-01-11",
+     "month": "2025-01",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2025-07-28",
+     "month": "2025-07",
+     "z": 6.4723880921
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2025-09-02",
+     "month": "2025-09",
+     "z": 6.6507882802
+    },
+    {
+     "dim": "D",
+     "id": "desc_95_iw3_2025-09-14",
+     "month": "2025-09",
+     "z": 7.0865262078
+    },
+    {
+     "dim": "gamma2",
+     "id": "desc_168_iw1_2025-10-31",
+     "month": "2025-10",
+     "z": -6.1434075896
+    }
+   ],
+   "n_clipped": 27
+  },
+  "formula": "z = (t(x) - centre) / scale, centre and scale the median and 1.4826 * MAD of the frozen reference (R3/R4)",
+  "reference": {
+   "choice": "stated choice, frozen before any result of this plate was read",
+   "chosen": null,
+   "label": "frozen pre-intervention reference",
+   "n_chips": 119,
+   "n_intervals": 12,
+   "n_months": 12,
+   "note": "the frozen reference: the chips the standardisation rests on (R2/R3)",
+   "outside_window": [
+    "2023-07",
+    "2024-06"
+   ],
+   "policy": "pooled over the orbits",
+   "standardises": "every held-out chip, through the centre and scale of these chips alone",
+   "state": "W2_bestand",
+   "window": [
+    "2022-07",
+    "2023-06"
+   ]
+  },
+  "rule": "no held-out chip standardises anything, and no weather column enters an OCV channel",
+  "transform": {
+   "A": "log",
+   "D": "log",
+   "F": "log",
+   "P": "log",
+   "S": "identity",
+   "gamma2": "log"
+  },
+  "weather": {
+   "precipitation_mm": {
+    "centre": 0.4,
+    "distinct": 43,
+    "n": 119,
+    "scale": 0.59304,
+    "scale_source": "mad",
+    "transform": "identity"
+   },
+   "temperature_c": {
+    "centre": 10.5,
+    "distinct": 92,
+    "n": 119,
+    "scale": 7.70952,
+    "scale_source": "mad",
+    "transform": "identity"
+   }
+  }
+ },
+ "table": "data/werder_havel/support/werder_havel_ocv_channels.csv"
+}

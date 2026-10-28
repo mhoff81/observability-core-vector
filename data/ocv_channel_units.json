@@ -1,0 +1,397 @@
+{
+ "contract": {
+  "A": "count of cells the site's mask marks on its chip -- a pixel count of a raster, not a band size and not comparable between sites",
+  "D": "A / bbox_area of the mask -- a fraction in (0, 1]",
+  "F": "number of 8-connected components of the mask",
+  "P": "mean pixel frequency inside the own mask, one map per chip shape",
+  "S": "distance from the mask centroid to the site's peak reference (px)",
+  "bbox_area": "area of the mask's bounding box, in cells (the denominator of D)",
+  "coherence_masked_pixels": "the export's own masked-pixel column -- another measurement, never A",
+  "guard_cells": "size of the guard band, in cells",
+  "ring_cells": "size of the reference ring, in cells",
+  "support_cells": "size of the support band, in cells -- a geometry constant of the chip; A may exceed it and usually does"
+ },
+ "rule": "A is a count of cells of the chip; support_cells is the size of the support band. The two are different quantities of the same raster, so A > support_cells is normal (CTS 74 of 178 rows, Carola 27 of 436, Espoo 45 of 75, Haltern 19 of 107) and never an inconsistency. The identity that fixes the unit is A / D == bbox_area, with 0 <= A <= rows x cols (0 = empty mask) and D in (0, 1]. Report A as 'cells of the chip (<= N)', never beside support_cells without saying which raster each number counts, and never across sites -- each site has its own chip (analysis_freeze.md).",
+ "schema": "ocv-channel-units-v1",
+ "sites": {
+  "bautzen": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 0,
+   "A_range": [
+    0.0,
+    24.0
+   ],
+   "D_range": [
+    0.148148148148,
+    1.0
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": null,
+   "chip_cells": null,
+   "chip_source": "undeclared",
+   "examples": {},
+   "guard_cells": null,
+   "mask_dims": {
+    "ASC Br\u00fccke": [
+     [
+      33,
+      119
+     ]
+    ],
+    "ASC Kontrolle 500 m \u00f6stlich": [
+     [
+      33,
+      119
+     ]
+    ],
+    "DESC Br\u00fccke": [
+     [
+      33,
+      129
+     ]
+    ],
+    "DESC Kontrolle 500 m \u00f6stlich": [
+     [
+      33,
+      129
+     ]
+    ]
+   },
+   "ring_cells": null,
+   "rows": 142,
+   "rows_with_A": 142,
+   "rows_with_A_committed": 0,
+   "rows_with_A_zero": 7,
+   "rows_with_export_masked_pixels": 0,
+   "support_cells": null,
+   "table": "data/bautzen/support/bautzen_ocv_channels.csv"
+  },
+  "carola": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 27,
+   "A_range": [
+    8.0,
+    1106.0
+   ],
+   "D_range": [
+    0.002922908294,
+    0.128231884058
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    69,
+    125
+   ],
+   "chip_cells": 8625,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 900,
+   "mask_dims": {
+    "site": [
+     [
+      69,
+      125
+     ]
+    ]
+   },
+   "ring_cells": 7140,
+   "rows": 436,
+   "rows_with_A": 436,
+   "rows_with_A_committed": 436,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 432,
+   "support_cells": 585,
+   "table": "data/carola/support/carola_ocv_channels.csv"
+  },
+  "cts": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 74,
+   "A_range": [
+    37.0,
+    572.0
+   ],
+   "D_range": [
+    0.010762975365,
+    0.111111111111
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    39,
+    145
+   ],
+   "chip_cells": 5655,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 420,
+   "mask_dims": {
+    "cts_asc_48_iw3": [
+     [
+      39,
+      145
+     ]
+    ]
+   },
+   "ring_cells": 5010,
+   "rows": 178,
+   "rows_with_A": 178,
+   "rows_with_A_committed": 178,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 178,
+   "support_cells": 225,
+   "table": "data/cts/support/cts_ocv_channels.csv"
+  },
+  "espoo": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 45,
+   "A_range": [
+    43.0,
+    786.0
+   ],
+   "D_range": [
+    0.01325,
+    0.174086378738
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    35,
+    129
+   ],
+   "chip_cells": 4515,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 374,
+   "mask_dims": {
+    "measurement": [
+     [
+      35,
+      129
+     ]
+    ]
+   },
+   "ring_cells": 3976,
+   "rows": 75,
+   "rows_with_A": 75,
+   "rows_with_A_committed": 75,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 75,
+   "support_cells": 165,
+   "table": "data/espoo/support/espoo_ocv_channels.csv"
+  },
+  "haltern": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 19,
+   "A_range": [
+    112.0,
+    1015.0
+   ],
+   "D_range": [
+    0.014820696043,
+    0.144832605531
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    35,
+    229
+   ],
+   "chip_cells": 8015,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 852,
+   "mask_dims": {
+    "site": [
+     [
+      35,
+      229
+     ]
+    ]
+   },
+   "ring_cells": 6618,
+   "rows": 107,
+   "rows_with_A": 107,
+   "rows_with_A_committed": 56,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 107,
+   "support_cells": 545,
+   "table": "data/haltern/support/haltern_ocv_channels.csv"
+  },
+  "kdlo": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 0,
+   "A_range": [
+    37.0,
+    191.0
+   ],
+   "D_range": [
+    0.008558558559,
+    0.135416666667
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    35,
+    475
+   ],
+   "chip_cells": 16625,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 2450,
+   "mask_dims": {
+    "site": [
+     [
+      35,
+      475
+     ]
+    ]
+   },
+   "ring_cells": 12280,
+   "rows": 60,
+   "rows_with_A": 60,
+   "rows_with_A_committed": 60,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 60,
+   "support_cells": 1895,
+   "table": "data/kdlo/support/kdlo_ocv_channels.csv"
+  },
+  "lumo": {
+   "A_eq_A_committed": 5,
+   "A_eq_export_masked_pixels": 178,
+   "A_gt_support_cells": 0,
+   "A_range": [
+    2.0,
+    25.0
+   ],
+   "D_range": [
+    0.001404494382,
+    1.0
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": null,
+   "chip_cells": null,
+   "chip_source": "undeclared",
+   "examples": {},
+   "guard_cells": null,
+   "mask_dims": {
+    "coherence": [
+     [
+      431,
+      107
+     ],
+     [
+      431,
+      119
+     ],
+     [
+      431,
+      121
+     ]
+    ]
+   },
+   "ring_cells": null,
+   "rows": 1029,
+   "rows_with_A": 178,
+   "rows_with_A_committed": 178,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 178,
+   "support_cells": null,
+   "table": "data/lumo/support/lumo_ocv_channels.csv"
+  },
+  "morandi": {
+   "A_eq_A_committed": 26,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 0,
+   "A_range": [
+    3.0,
+    773.0
+   ],
+   "D_range": [
+    0.003205128205,
+    1.0
+   ],
+   "bbox_area_column": true,
+   "checks": {},
+   "chip": [
+    51,
+    137
+   ],
+   "chip_cells": 6987,
+   "chip_source": "meta.chip",
+   "examples": {},
+   "guard_cells": 678,
+   "mask_dims": {
+    "A_asc": [
+     [
+      51,
+      137
+     ]
+    ],
+    "A_des": [
+     [
+      51,
+      137
+     ]
+    ]
+   },
+   "ring_cells": 5448,
+   "rows": 207,
+   "rows_with_A": 207,
+   "rows_with_A_committed": 207,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 207,
+   "support_cells": 861,
+   "table": "data/morandi/support/morandi_ocv_channels.csv"
+  },
+  "werder_havel": {
+   "A_eq_A_committed": 0,
+   "A_eq_export_masked_pixels": 0,
+   "A_gt_support_cells": 0,
+   "A_range": [
+    2.0,
+    85.0
+   ],
+   "D_range": [
+    null,
+    null
+   ],
+   "bbox_area_column": false,
+   "checks": {},
+   "chip": [
+    80,
+    80
+   ],
+   "chip_cells": 6400,
+   "chip_source": "meta.mask_rule.window",
+   "examples": {},
+   "guard_cells": null,
+   "mask_dims": {},
+   "ring_cells": null,
+   "rows": 991,
+   "rows_with_A": 991,
+   "rows_with_A_committed": 0,
+   "rows_with_A_zero": 0,
+   "rows_with_export_masked_pixels": 991,
+   "support_cells": null,
+   "table": "data/werder_havel/support/werder_havel_ocv_channels.csv"
+  }
+ },
+ "tolerance": 1e-09,
+ "totals": {
+  "A_over_support_cells": 165,
+  "rows": 3225,
+  "rows_with_A": 2374,
+  "sites": 9,
+  "sites_with_A_over_support_cells": 4,
+  "violations": 0
+ }
+}

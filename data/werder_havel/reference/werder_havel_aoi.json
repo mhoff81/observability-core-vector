@@ -193,7 +193,7 @@
   },
   "flat_area_m2": 25295.7,
   "flat_span_m": 704.043,
-  "note": "flat = the family's equirectangular constants (ywf_osm_anchor.py), used for every '*_m' / '*_m2' field because the burst footprints that the pixel-grid audit divides by are converted with them; wgs84 = the same quantity against the local WGS84 degree lengths (111275.2 m/deg meridional, 68037.2 m/deg parallel at the anchor). The family's constants are 0.66 % / 0.21 % low, i.e. 2.29 m (0.325 %) on this span.",
+  "note": "flat = the family's equirectangular constants (as in haltern_osm_anchor.py), used for every '*_m' / '*_m2' field because the burst footprints that the pixel-grid audit divides by are converted with them; wgs84 = the same quantity against the local WGS84 degree lengths (111275.2 m/deg meridional, 68037.2 m/deg parallel at the anchor). The family's constants are 0.66 % / 0.21 % low, i.e. 2.29 m (0.325 %) on this span.",
   "wgs84_area_m2": 25075.8,
   "wgs84_deg_lengths_m": {
    "meridional": 111275.2,

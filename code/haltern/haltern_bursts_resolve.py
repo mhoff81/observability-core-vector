@@ -33,8 +33,8 @@ every id's ``OrbitDirection`` against the measurement extract's own
 Two steps, like ``haltern_ocv_masks.py`` separates ``--extract``
 ------------------------------------------------------------
     --write   query the CDSE catalogue and (re)write the committed file [network]
-    --check   re-verify the committed file offline against the committed index
-              and the measurement extract (the default)
+    (default) re-verify the committed file offline against the committed index
+              and the measurement extract
 
 Resolving needs the live catalogue — a mutable external input — so the committed
 file is pinned **structurally** (the identity facts below), never re-derived

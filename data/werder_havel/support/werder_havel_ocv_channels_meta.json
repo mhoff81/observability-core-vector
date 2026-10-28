@@ -1,0 +1,137 @@
+{
+ "asset": "werder",
+ "asset_id": "40f420c6-c38e-5eab-8f2b-ac00d66707d0",
+ "asset_name": "Havelbr\u00fccke Werder (A 10)",
+ "asset_type": "bridge",
+ "column_names": [
+  "id",
+  "date",
+  "month",
+  "year",
+  "role",
+  "track",
+  "state_window",
+  "orbit_direction",
+  "relative_orbit",
+  "subswath",
+  "platform",
+  "acquisition_ts",
+  "A",
+  "D",
+  "F",
+  "S",
+  "P",
+  "gamma2_mask",
+  "echo",
+  "patch",
+  "temperature_c",
+  "precipitation_mm",
+  "shift_x",
+  "shift_y",
+  "coherence_gamma2",
+  "coherence_masked_pixels",
+  "phase_scatterer_count",
+  "phase_coherence",
+  "displacement_los_m"
+ ],
+ "columns": 29,
+ "dimensions": {
+  "A": "count of the echo mask (px)",
+  "D": "A / bbox_area of the mask",
+  "F": "8-connected components of the mask",
+  "P": "mean pixel frequency inside the own mask, per patch",
+  "S": "distance from the mask centroid to its brightest pixel (px)",
+  "gamma2_mask": "masked coherence consistency, clamped to [0, 1]"
+ },
+ "event": {
+  "end": "2025-09-05",
+  "source": "Autobahn GmbH via havel_werder_analysis/havel_werder_asset_hierarchy.md (Step-0 A0 document) and havel_werder_asset.json",
+  "start": "2024-07-01"
+ },
+ "export_columns": {
+  "coherence_gamma2": "the export's own coherence column \u2014 provenance, never the mask rule's gamma2",
+  "coherence_masked_pixels": "the export's own definition (the brightest decile of the window), not a count of the echo mask",
+  "masked_pixels_values": {
+   "640": 991
+  },
+  "n_A_equal_export_masked_pixels": 0,
+  "rows_with_export_gamma2": 991
+ },
+ "generator": "code/werder_havel/werder_havel_ocv_channels_csv.py",
+ "mask_cache": "werder_havel/support/werder_havel_windows_mask_cache.txt",
+ "mask_cache_sha256": "2342a5ba0aa940a274b5a9704594e01b975e620c80758223d6dc2beb8bdc6401",
+ "mask_rule": {
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3,
+  "text": "intensity >= 0.30 * max(intensity) AND intensity >= 5.0 * np.median(intensity); A = count(mask); gamma2 = |sum z|^2 / (A * sum |z|^2), clamped to [0, 1]",
+  "window": "80 x 80 complex samples (6400 px)",
+  "window_note": "one 80x80 complex window per acquisition at the site point; the export committed no latitude/longitude, no segment_index and no burst id (the anchor is the OSM bridge outline, see werder_havel_aoi.py), and a window carries no pixel-spacing spec"
+ },
+ "measurements": "werder_havel/werder_havel_measurements_full.txt",
+ "measurements_sha256": "b1f9fcc02e4645e3416e4acc5e695ef8faff9ce7d78199249337240b99b25d98",
+ "notes": [
+  "one row per (track, date) of the committed measurement extract; the mask dimensions are recomputed from the committed mask cache",
+  "P is computed within a patch (role): the reference chains measure different objects and are never folded into the bridge's frequency map",
+  "echo = 1 wherever A >= 2; a chip without an echo keeps its geometry dimensions but carries no behaviour channel"
+ ],
+ "persistence": {
+  "note": "P is computed within a role (a patch), never across the export's three objects",
+  "patches": {
+   "reference": {
+    "max_P": 0.198,
+    "median_P": 0.07056842105263159,
+    "min_P": 0.004,
+    "n_chips": 250
+   },
+   "reference_outside": {
+    "max_P": 0.238,
+    "median_P": 0.06494444444444444,
+    "min_P": 0.004,
+    "n_chips": 250
+   },
+   "target": {
+    "max_P": 0.10896130346232179,
+    "median_P": 0.036150712830957235,
+    "min_P": 0.002036659877800407,
+    "n_chips": 491
+   }
+  },
+  "shape": [
+   80,
+   80
+  ]
+ },
+ "roles": {
+  "reference": 250,
+  "reference_outside": 250,
+  "target": 491
+ },
+ "rows": 991,
+ "schema": "werder-ocv-channels-v1",
+ "state_windows": {
+  "W2_bestand": 483,
+  "W3_sanierung": 385,
+  "W4_post": 123
+ },
+ "table": "werder_havel/support/werder_havel_ocv_channels.csv",
+ "table_sha256": "5915a80fdf9841a29819d457f7f9e2ed4388c0e10547abf3059c1d6b9d482526",
+ "target": {
+  "echo": 491,
+  "first_date": "2022-07-02",
+  "last_date": "2025-12-04",
+  "n_dates": 491,
+  "n_tracks": 4,
+  "orbit_directions": {
+   "ASCENDING": 244,
+   "DESCENDING": 247
+  },
+  "rows": 491,
+  "tracks": {
+   "asc_146_iw1": 126,
+   "asc_44_iw3": 118,
+   "desc_168_iw1": 124,
+   "desc_95_iw3": 123
+  }
+ }
+}

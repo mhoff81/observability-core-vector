@@ -14,8 +14,6 @@ Three panels, one page:
   resolved, `↕` when the case reports a non-monotonic response, `?` when the
   evidence is not there. The **fill intensity is the evidence strength** (the
   project's SDS bands), never an effect size that could be compared across cases.
-  YWF gets its own `coverage` column, because its honest result is a coverage loss
-  after the collapse, not a resolved precursor in `γ²/P/D`.
 * **(c) the observability trajectories** — six compact time lines drawn from the
   same facts, so the reader sees *when* each case moves.
 
@@ -48,7 +46,6 @@ Outputs
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import json
 import os
@@ -64,16 +61,11 @@ FIGURE_DPI = 630
 CHIP = "committed"
 
 #: The matrix rows, in the order the cases are read.
-#: The six cases. YWF is **not** among them: on the support-sized chip 19 of its
-#: 33 dates cannot be cut at all (the window runs past the raster edge, and 4 of
-#: its 6 post-collapse dates are in that group), which leaves 12 pre and 2 post
-#: chips -- see the note in the report. Haltern takes its place.
 CASES = ("espoo", "kdlo", "carola", "morandi", "cts", "haltern")
 
 LABEL = {"espoo": "Espoo mast", "kdlo": "KDLO media tower",
          "carola": "Carolabrücke", "morandi": "Ponte Morandi",
          "cts": "Champlain Towers South", "haltern": "Haltern AV9",
-         "ywf": "Yeongdeok Wind Farm",
          "lumo": "LUMO tower", "bautzen": "Bautzen bridge"}
 
 #: column key -> display label. `gamma2` is the site's own coherence channel
@@ -105,9 +97,6 @@ REFERENCES = (("lumo", "controlled ladder, measured natural frequency"),
 
 SDS_JSON = os.path.join(DATA, "sds", "sds_support.json")
 ESPOO_JSON = os.path.join(DATA, "espoo", "fig_espoo_ocv_chips.json")
-#: Kept for the note that explains why YWF is not a row of the matrix.
-YWF_MANIFEST = os.path.join(DATA, "ywf", "support",
-                            "ywf_rects_support.txt.manifest.json")
 
 #: Which chip the matrix reads: the support-sized chip (guard 30 m, ring 200 m),
 #: the one the new work is defined on. The committed fixed-window numbers are not
@@ -210,48 +199,6 @@ def evidence(site, sds_payload, espoo_payload=None):
     return cells
 
 
-def ywf_note():
-    """The numbers behind "YWF is not a row": what the support chip could not cut.
-
-    Nineteen of the 33 dates are refused because the support window runs past the
-    raster edge, and four of the six post-collapse dates are among them. The note
-    is computed from the cut manifest and the committed record, not typed in.
-    """
-    with open(YWF_MANIFEST) as handle:
-        manifest = json.load(handle)
-    problems = manifest.get("problems") or []
-    with open(os.path.join(DATA, "ywf", "ywf_ocv_channels.csv"), newline="") as fh:
-        committed = list(csv.DictReader(fh))
-    state_of = {}
-    for row in committed:
-        day = (row.get("acquisition_ts") or "")[:10]
-        if day:
-            state_of.setdefault(day, row.get("state"))
-    post_days = {day for day, state in state_of.items()
-                 if state == "post-collapse"}
-    refused_post = {item.get("date") for item in problems
-                    if state_of.get(item.get("date")) == "post-collapse"}
-    with open(os.path.join(DATA, "ywf", "support",
-                           "ywf_ocv_channels.csv"), newline="") as fh:
-        support = list(csv.DictReader(fh))
-    states = {}
-    for row in support:
-        states[row.get("state")] = states.get(row.get("state"), 0) + 1
-    echo = sum(1 for row in support if (_num(row.get("A")) or 0.0) > 0)
-    return {"n_dates": manifest.get("n_dates"),
-            "n_refused": manifest.get("n_refused"),
-            "n_acquisitions": (manifest.get("n_dates") or 0)
-                              + (manifest.get("n_refused") or 0),
-            "n_committed_dates": len({(r.get('acquisition_ts') or '')[:10]
-                                      for r in committed
-                                      if r.get('acquisition_ts')}),
-            "post_committed": len(post_days),
-            "post_refused": len(refused_post),
-            "support_rows": len(support), "support_by_state": states,
-            "support_echo": echo,
-            "reason": (problems[0].get("reason") if problems else None)}
-
-
 def symbol(site, dim, cell):
     """The one glyph a cell may carry, and the reason for it.
 
@@ -341,7 +288,6 @@ def compute():
                                   "small_n": (cell or {}).get("small_n"),
                                   "p": (cell or {}).get("p")}
         report["cases"][site] = entry
-    report["excluded"] = {"ywf": ywf_note()}
     report["track"] = trajectories(report)
     return report
 
@@ -572,24 +518,6 @@ def markdown(report):
             cells.append(detail)
         add(f"| **{entry['label']}** | " + " | ".join(cells) + " |")
     add("")
-    excluded = (report.get("excluded") or {}).get("ywf") or {}
-    if excluded:
-        states = excluded.get("support_by_state") or {}
-        post = states.get("post-collapse")
-        pre = states.get("pre-collapse (healthy)")
-        add(f"**Why YWF is not a row.** On the support-sized chip "
-            f"{excluded.get('n_refused')} of {excluded.get('n_acquisitions')} "
-            f"acquisitions cannot be cut at all — the support window runs past the raster "
-            f"edge — and **{excluded.get('post_refused')} of the "
-            f"{excluded.get('post_committed')} post-collapse dates** are in that "
-            f"group. What remains is {pre} pre and {post} post chips, which is an "
-            f"observation, not an interval; and because the support export carries "
-            f"only echo-bearing chips ({excluded.get('support_echo')} of "
-            f"{excluded.get('support_rows')}), even YWF's coverage statistic cannot "
-            f"be rebuilt on this chip. Haltern takes the slot; YWF stays documented "
-            f"in its own site package, where its record and its coverage result are "
-            f"complete.")
-        add("")
     add("Morandi's row is four circles on purpose: an independent collapse is not "
         "automatically an OCV case, and the figure says so instead of borrowing "
         "Carola's arrows.")
@@ -634,9 +562,9 @@ def markdown(report):
     add("* **No cross-case effect size.** `SDS` is used only to shade a cell; the "
         "cases differ in structure, sensor, record length and state definition, so "
         "an arrow in one row says nothing about the size of the arrow in another.")
-    add("* **No completeness.** A `?` is a result, not a gap to be filled: YWF's "
-        "honest answer is that `γ²`, `P` and `D` resolve no precursor while the echo "
-        "coverage drops after the collapse, and the matrix draws exactly that.")
+    add("* **No completeness.** A `?` is a result, not a gap to be filled: where a "
+        "case's contrast cannot be cut on the support chip, the cell says so and the "
+        "reason is in `data/sds/sds_support.md` — not inferred from an empty axis.")
     add("* **No pooled claim about the six.** The controlled-reference experiments "
         "(`LUMO`, `Bautzen`) are what licenses a statement about the method across "
         "structures; the six cases are the applications.")

@@ -1,45 +1,26 @@
 #!/usr/bin/env python3
-"""HALTERN OCV-Paper — statistics ports (verbatim from the Carola package).
+"""HALTERN OCV-Paper — statistics ports (verbatim from the LUMO package).
 
 This module invents *nothing*: it is a byte-for-byte copy of
-``code/carola/carola_ocv_stats.py``, which is a verbatim port of
-``code/kdlo/kdlo_ocv_stats.py``, which is itself a verbatim port of
-``code/lumo/lumo_ocv_stats.py``, which is itself a verbatim port of the LUMO
-project analysis scripts
-
-  * ``analyze_lumo_tower_coherence.py``            (``_stats``, ``_test``)
-  * ``analyze_lumo_gamma2_pairs.py``               (Cliff's delta, Bootstrap-CI,
-                                                    ``delta_block``, ``sign_test``,
-                                                    ``sds_from``, ``by_state``,
-                                                    ``vals``, ``season_of``)
-  * ``analyze_lumo_emv_multivariate_cv.py``        (``fit_lda``, ``predict_lda``,
-                                                    ``loo_cv``, ``permutation_test``)
-  * ``analyze_lumo_emv_pairwise_triplets_cv.py``   (``fit_linear_score``,
-                                                    ``score_row``, ``oof_scores``,
-                                                    ``delta_sds``, ``permutation_p``,
-                                                    ``paired_bootstrap_diff``)
+``code/lumo/lumo_ocv_stats.py``, the canonical port of the LUMO analysis scripts
+(that docstring lists which function comes from which ``analyze_lumo_*`` script).
 
 The HALTERN difference is *naming only* — in fact this file needs no edit at all:
 the site's own collapse alphabet is the same two labels Carola uses
 
     ``pre-collapse (healthy)``  <  2021-09-29  <=  ``post-collapse``
 
-so the state field is ``state`` and ``STATE_ORDER`` is unchanged, and a
-difference in the HALTERN numbers cannot come from a difference in the statistics.
+so the state field is ``state`` and ``STATE_ORDER`` is unchanged.
 The ordering is chronological: the second state is *after* the event (the 100 m
 monopole came down inside the wind farm), and no causal claim about the damage
 follows from it — the HALTERN record straddles the collapse, so season, weather and
 pipeline generation all change with it, and the post side holds 6 unique chips
 in total.
 
-Only this header and the module name differ from the Carola file; every formula,
-bootstrap seed, rank-based Cliff's delta, shrinkage LDA and leave-one-out loop
-below is copied verbatim.
-
-Conventions (identical to the origin):
-  SDS  = 10 * |Cliff's delta|
-  delta(ref, grp) > 0  =>  the *group* is larger than the reference
-  bootstrap seeds 7 (in-sample) resp. 11/12/13 (OOF), permutation seed 7/8
+Only this header and the module name differ from the canonical file; formulas, seeds
+(SDS = 10 * |Cliff's delta|, delta(ref, grp) > 0 => the *group* is larger, bootstrap 7
+in-sample / 11-13 OOF, permutation 7/8), the rank-based Cliff's delta, the shrinkage LDA
+and the leave-one-out loops are copied verbatim.
 """
 from __future__ import annotations
 

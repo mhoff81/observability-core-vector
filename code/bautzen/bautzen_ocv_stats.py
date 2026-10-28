@@ -16,12 +16,10 @@ Only two things differ, both deliberate:
      reference ``bautzen_deck_edge_state.json`` was computed with (same seeds:
      permutation 7, bootstrap 42, 20000 permutations, 5000 draws).
 
-Conventions (identical to the origin):
-  SDS  = 10 * |Cliff's delta|
-  delta(ref, grp) > 0  =>  the *group* is larger than the reference
-  bootstrap seeds 7 (in-sample) resp. 11/12/13 (OOF), permutation seed 7/8
-  ``step_test`` uses the permutation p **without** the +1 correction (as in the
-  Bautzen origin), the LDA tests keep the +1 correction (as in the LUMO origin)
+Conventions (the origin's, unchanged): SDS = 10 * |Cliff's delta|, delta(ref, grp) > 0 =>
+the *group* is larger than the reference, bootstrap seeds 7 (in-sample) / 11-13 (OOF),
+permutation 7/8. ``step_test`` uses the permutation p **without** the +1 correction (as in the
+Bautzen origin), the LDA tests keep it (as in the LUMO origin).
 """
 from __future__ import annotations
 

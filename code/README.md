@@ -9,10 +9,8 @@ and CTS each mask both the **echo of every chip** and the **per-girder /
 per-track deck** of a collapsed structure. CTS is the one
 **difference-in-differences** site: four footprints of the *same* orbit (target
 plus two control towers) share strata, dates and counts, so its package carries a
-first-class DiD layer (`cts_ocv_did.py`) next to the mask layer. YWF is the one
-site whose record is too small and too duplicated for a contrast at all: one
-mask layer, echo **coverage** instead of effect sizes, and a reference file that
-the package itself defines and then pins. Espoo is the one site with **no event at
+first-class DiD layer (`cts_ocv_did.py`) next to the mask layer. Espoo is the
+one site with **no event at
 all**: 150 acquisitions with an empty `damage_label`, `structural_state` and
 `condition_label` on every row and **no mask raster** either (56 of its 78 columns
 are empty), so its OCV is `[gamma2, A]` with `A` = the delivered mask *size*,
@@ -27,24 +25,24 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 | [`carola/`](carola/README.md) | Carolabrücke, Dresden (collapsed 2024-09-11) | pre-collapse (healthy), post-collapse | two layers: the echo mask of every chip **and** the per-girder deck mask, both from a committed window-payload cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px) | `carola/README.md` |
 | [`morandi/`](morandi/README.md) | Ponte Morandi / Polcevera, Genova (collapsed 2018-08-14) | pre-collapse (healthy), post-collapse | two layers: the echo mask of every chip **and** the per-track deck mask, both from a committed window-payload cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px) | `morandi/README.md` |
 | [`cts/`](cts/README.md) | Champlain Towers South, Surfside (collapsed 2021-06-24) | pre-collapse (healthy), post-collapse | two layers over four footprints of one orbit (target + two controls + a beach reference), the echo mask **and** the per-track deck mask from a committed window cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px), **plus a difference-in-differences layer** | `cts/README.md` |
-| [`ywf/`](ywf/README.md) | Yeongdeok Wind Farm, Unit 21, Samgye-ri (collapsed 2026-02-02) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest; its second cross-cut (the pass geometry, ASCENDING / DESCENDING) is reported as a pinned, explicitly descriptive echo-coverage split; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the OSM road anchor) and committed beside it | `ywf/README.md` |
+| [`haltern/`](haltern/) | Haltern AV9 wind turbine, Kreis Recklinghausen (collapsed 2021-09-29) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest, and no edge/band layer is claimed because the tower base spans more than the frame reaches; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the turbine's **own OSM node**) and committed beside it | `haltern_ocv_core.py` docstring (the package carries no separate README) |
 | [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed | `espoo/README.md` |
 
 ### `orbits/` — one OCV time-series figure per support-sized table
 
 `[orbits/fig_ocv_orbits.py](orbits/fig_ocv_orbits.py)` draws the twelve-panel
 companion (six where only one orbit has data — KDLO is DESC-only, so its plate
-has one column and the report names the missing channel) for the seven sites
-migrated to the support-sized chip (CTS, KDLO,
-Carolabrücke, Haltern, YWF, Ponte Morandi, and Espoo): one panel per **dimension
+has one column and the report names the missing channel) for the six sites
+migrated to the support-sized chip (CTS, KDLO, Carolabrücke, Haltern, Ponte
+Morandi, and Espoo): one panel per **dimension
 x observation channel**, in the order and with the axes the LUMO and Bautzen
 figures use (`gamma2, P, D, F, A, S`; `P, D, F, A` logarithmic).
 
-Two states for the six labelled sites: **pre-collapse and post-collapse**, except
-KDLO, whose record carries **pre-rebuild and post-rebuild**. A state with a
+Two states for the five labelled sites: **pre-collapse and post-collapse**,
+except KDLO, whose record carries **pre-rebuild and post-rebuild**. A state with a
 single overpass (KDLO's `single`) is dropped and named in the markdown. A channel
-with no data is not drawn empty — the panel carries the reason (YWF's ASC track
-has one healthy and no damaged overpass).
+with no data is not drawn empty — the panel carries the reason (KDLO's support
+cut holds 60 overpasses, all DESCENDING, so its ASC column has nothing to draw).
 
 **One state is allowed too**, for a site whose record labels no damage at all:
 Espoo registers `states = {"all": "event-free"}` and `label_column = None`, so
@@ -82,16 +80,46 @@ dimension-response matrix, and six schematic time lines. A matrix cell carries a
 arrow only when that case's own interval excludes zero **and** both sides carry at
 least six units (`○` = tested, nothing resolved; `?` = no evidence; fill = the SDS
 band inside the cell), so Haltern's single resolved dimension is `F ↑` and
-Morandi's row is four circles on purpose. YWF is **not** a row: nineteen of its 33
-acquisitions cannot be cut on the support chip (four of the six post-collapse
-dates among them), which is fewer than an interval — the report states it instead
-of leaving a silent hole. `--selftest` checks the gate rules and the three
-adapters; `--verify` re-derives every cell and every source hash.
+Morandi's row is four circles on purpose. `--selftest` checks the gate rules and
+the three adapters; `--verify` re-derives every cell and every source hash.
 
 ```sh
 python3 code/cases/fig_cases_overview.py            # JSON + report + 630 dpi JPEG
 python3 code/cases/fig_cases_overview.py --selftest # 11 checks
 python3 code/cases/fig_cases_overview.py --verify   # every cell, every sha256
+```
+
+### `cases/` — the standard OCV trajectory plate
+
+`[cases/ocv_trajectory.py](cases/ocv_trajectory.py)` draws the **same 3 x 4 plate**
+for every case site, on the support-sized chip, with the post-event tail **drawn**
+instead of cut off — the timeline question the six cases are read for, asked once
+and answered six times in one design. The reference timeline is defined **case by
+case** (R2), each of the two blocks of `ocv_reconfigure.BLOCKS` is standardised on
+**its own** reference set (R3), the z is robust and clipped (R4), and the months are
+bins with holes drawn, never spanned, with one seeded moving-block interval for the
+contrast (R5).
+
+| site | reference window | chips | tail | contrast |
+| --- | --- | --- | --- | --- |
+| carola | 2022-09-03 → 2024-09-09 | 184 | 252 post-collapse | resolves `gamma2, P, S` |
+| cts | 2015-09-21 → 2021-06-21 | 136 | 42 post-collapse | resolves `P, A, D` |
+| morandi | 2016-08-24 → 2018-08-08 | 198 | 9 post-collapse | resolves `D, R_G` |
+| kdlo | 2022-06-02 → 2022-12-11 | 16 | 43 rebuild | resolves `P, A, S, R_B, R_G` |
+| haltern | 2021-01-01 → 2021-09-17 | 96 | 11 post-collapse | resolves nothing |
+| espoo | 2024-09-05 → 2026-09-07 | 75 | none | no contrast (event-free) |
+
+Two states are the rule; KDLO carries three and its `single` acquisition (the
+collapse day itself) is excluded before any statistic, and Espoo carries one and
+standardises **per orbit**, because the pass geometry is the only contrast its
+record has. The full rule set, the rejected windows and the panel inventory are in
+[`ocv_trajectory_spec.md`](ocv_trajectory_spec.md).
+
+```sh
+python3 code/cases/ocv_trajectory.py --site carola   # one plate (+ JSON + report)
+python3 code/cases/ocv_trajectory.py --all           # the six
+python3 code/cases/ocv_trajectory.py --selftest      # 201 checks, writes nothing
+python3 code/cases/ocv_trajectory.py --site kdlo --verify
 ```
 
 ### `cases/` — the correspondence model (campaign as the unit)
@@ -267,7 +295,7 @@ The scripts are started from the **repository root** (each wrapper in
 `data/<site>/…` in and `data/<site>/…`, `figures/<site>/…` out. No package:
 the script's own folder is on `sys.path` (a script run puts its directory first),
 which is why the modules import each other by their `lumo_…` / `bautzen_…` /
-`kdlo_…` / `carola_…` / `morandi_…` / `cts_…` / `ywf_…` / `espoo_…` names.
+`kdlo_…` / `carola_…` / `morandi_…` / `cts_…` / `espoo_…` names.
 
 Adding another site means copying one package and swapping the mask layer (if the
 record has one) plus the `DATA`/`FIGDIR` lines of `…_ocv_core.py` — nothing
@@ -296,39 +324,38 @@ Its figure script `code/cts/fig_cts_ocv_paper.py` (run by
 `figures/cts/fig_cts_ocv_paper.sh`) mirrors the other sites' panels A–E and adds
 panel **F**, the DiD forest — the interaction t per channel for both controls and
 the placebo, the differencing assumption and the pre-trend parallelism — so the
-whole contrast, and its honest null, is readable in one place. The YWF package is
-the family's smallest and the only one with a single mask layer: its 7 x 7 window
-record holds 33 unique chips (24 windows are byte-identical duplicates across the
-requested mast sections, `segment_resolved = false`), only 17 of them carry an
-echo at all, and 1 of the 6 post-event chips does — so `fig_ywf_ocv_paper.py` fits
-no classifier, leads with the echo-coverage table and its Fisher test, adds §A2
-with the same coverage split by pass geometry (10 of 20 ascending vs. 7 of 13
-descending chips, p = 1.0000 — pinned, but read as a description of where the
-echoes sit), and
-*defines* `data/ywf/reference/ywf_ocv_findings.json` with `--write-reference`
-before pinning it on every later run. Two companions read the same record on a
-time axis without touching that pin contract: `code/ywf/fig_ywf_ocv_weeks.py`
-opens the pre-collapse window, and `code/ywf/fig_ywf_ocv_series.py` (run by
-`figures/ywf/fig_ywf_ocv_series.sh`) draws the whole record — all 33 chips on 32
-acquisition days, the 9 steps longer than the 6-day cadence as bands and the
-collapse inside the 12-day step that holds it.
+whole contrast, and its honest null, is readable in one place.
 
-Two further references are not *defined* but *resolved* against public catalogues
-and committed beside it — `reference/ywf_bursts.json` (the CDSE pass of all 33
-chips: sub-swath, polarisation, relative orbit, azimuth time, with ASCENDING =
-IW3 / rel-orbit 54 at 09:2x UT and DESCENDING = IW2 / rel-orbit 61 at 21:2x UT, VV
-and VH interleaved in both) and `reference/ywf_osm_road.json` +
-`reference/ywf_geometry.json` (the OSM way the tower fell on, its centreline and
-the estimated burst grid) — each with its own offline `--check`
-(`ywf_bursts_resolve.py`, `ywf_osm_anchor.py`) and its sha256 digest in the
-figures' pin block. The package also states what the record **cannot** do: a
-7 x 7 px window per acquisition (`TOWER_WINDOW_SIZE`), no rect spec of its own, no
-per-section coordinates and no deck edge — the road lies *outside* the frame (its
-near edge is 8.10-9.33 px across range from the window centre against a 6 px
-reach, so containment needs 19-21 px per side) and a ~7 m carriageway would still
-be 2.0 px across range but 0.5 px across azimuth — which is why the echo mask
-stays the only layer it claims, and why the mask rule itself is only ever
-*studied*: `ywf_mask_sensitivity.py` sweeps it offline on the committed payload
-(the rule is family-wide — identical in the backend's `sarsolve` and in Carola's
-`gamma2`).
+### `audit_ocv_units.py` — what `A` counts, checked on every chip
+
+The one script at this level, and the only one that reads every site at once for a
+single number: [`audit_ocv_units.py`](audit_ocv_units.py) asks what `A` **is**.
+
+`A` is a count of cells of a raster, and the raster has two sizes: the band
+(`support_cells`, e.g. CTS 225) and the chip (`rows x cols`, CTS 39 x 145 = 5 655).
+`A` counts the mask over the whole chip, so `A > support_cells` is normal (CTS 74
+of 178 rows, Carola 27 of 436, Espoo 45 of 75, Haltern 19 of 107) and reading it as
+"cells of the support band" makes a consistent record look inconsistent. The
+script derives the unit from the data instead of assuming it:
+
+| check | what it fixes |
+| --- | --- |
+| `support + guard + ring == rows x cols` | the three bands partition the chip |
+| `A` integer, `0 <= A <= rows x cols` | `A` is a cell count of *this* raster; 0 is an empty mask, which Bautzen's control series really has (`has_mask` false) |
+| `A / D == bbox_area` (1e-9) | `D` is `A` over the mask's bounding box, so `A` is that quotient's numerator |
+| `A` vs `coherence_masked_pixels` and `A_committed` | the export column is another measurement (Werder: constant 640, unequal on all 991 rows); agreement with *both* on every row means the column was copied, the one defect this catches — LUMO agrees with the export on 178 of 178 rows but with `A_committed` on 5, i.e. the same rule on the same strip, recomputed |
+| `mask_rows`/`mask_cols` vs the declared chip | the mask is measured on the chip the record declares |
+
+Output `data/ocv_channel_units.json`: the contract, and per site the chip, the band
+sizes, `A_range`, `D_range`, the `A > support_cells` count and the mask geometry.
+The rule it enforces for every report: quote `A` as "cells of the chip (`<= N`)",
+never beside `support_cells` without saying which raster each number counts, and
+never across sites — each site has its own chip.
+
+```sh
+python3 code/audit_ocv_units.py                      # audit, print, write nothing
+python3 code/audit_ocv_units.py --write-reference    # (re)write data/ocv_channel_units.json
+python3 code/audit_ocv_units.py --verify             # audit vs. the committed reference
+python3 code/audit_ocv_units.py --selftest           # the rules on synthetic rows
+```
 

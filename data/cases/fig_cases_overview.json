@@ -1166,23 +1166,6 @@
   }
  },
  "chip": "support",
- "excluded": {
-  "ywf": {
-   "n_acquisitions": 33,
-   "n_committed_dates": 32,
-   "n_dates": 14,
-   "n_refused": 19,
-   "post_committed": 6,
-   "post_refused": 4,
-   "reason": "ValueError: the window ends at row 15137, past the raster's 15120 rows",
-   "support_by_state": {
-    "post-collapse": 2,
-    "pre-collapse (healthy)": 12
-   },
-   "support_echo": 14,
-   "support_rows": 14
-  }
- },
  "generated_by": "code/cases/fig_cases_overview.py",
  "references": [
   {
@@ -1247,12 +1230,12 @@
   "carola": {
    "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
    "path": "data/sds/sds_support.json",
-   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+   "sha256": "9b54260df01001feb60df257ffed3667fae871b57f947ab98aede380755fc67c"
   },
   "cts": {
    "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
    "path": "data/sds/sds_support.json",
-   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+   "sha256": "9b54260df01001feb60df257ffed3667fae871b57f947ab98aede380755fc67c"
   },
   "espoo": {
    "chip_level": null,
@@ -1262,17 +1245,17 @@
   "haltern": {
    "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
    "path": "data/sds/sds_support.json",
-   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+   "sha256": "9b54260df01001feb60df257ffed3667fae871b57f947ab98aede380755fc67c"
   },
   "kdlo": {
    "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
    "path": "data/sds/sds_support.json",
-   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+   "sha256": "9b54260df01001feb60df257ffed3667fae871b57f947ab98aede380755fc67c"
   },
   "morandi": {
    "chip_level": "sds_support.json levels.support.per_channel_max_pairwise",
    "path": "data/sds/sds_support.json",
-   "sha256": "aa4b81fbd01c8f73fd78847fdcdd0f1b5294b5b622669f11e7ee2d45a713410a"
+   "sha256": "9b54260df01001feb60df257ffed3667fae871b57f947ab98aede380755fc67c"
   }
  },
  "spectrum": [

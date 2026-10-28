@@ -1,0 +1,1257 @@
+{
+ "assessment": {
+  "applies": false,
+  "reason": "there is no held-out pre-event class on this site: the reference window is the reference state's own span, so there is nothing to assess against it"
+ },
+ "bootstrap": {
+  "block": 3,
+  "draws": 2000,
+  "kind": "circular moving-block, one resample per group",
+  "seed": 7
+ },
+ "class_comparison": {
+  "classes": {
+   "outside": {
+    "intervals": [],
+    "label": "held-out pre-event",
+    "n_chips": 0,
+    "n_intervals": 0,
+    "note": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+    "values": {
+     "A": null,
+     "D": null,
+     "F": null,
+     "P": null,
+     "R_B": null,
+     "R_G": null,
+     "S": null,
+     "gamma2": null
+    }
+   },
+   "post": {
+    "intervals": [
+     "2021-10"
+    ],
+    "label": "post-event",
+    "n_chips": 11,
+    "n_intervals": 1,
+    "note": "post-event: every chip of the registry's post state(s)",
+    "values": {
+     "A": 0.6352088843,
+     "D": 0.5460621575,
+     "F": 0.6286240068,
+     "P": 0.2396918431,
+     "R_B": 0.8803704872,
+     "R_G": 1.1300498109,
+     "S": -0.1542047034,
+     "gamma2": -0.2744037175
+    }
+   },
+   "reference": {
+    "intervals": [
+     "2021-01",
+     "2021-02",
+     "2021-03",
+     "2021-04",
+     "2021-05",
+     "2021-06",
+     "2021-07",
+     "2021-08",
+     "2021-09"
+    ],
+    "label": "frozen pre-event reference",
+    "n_chips": 96,
+    "n_intervals": 9,
+    "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+    "values": {
+     "A": 0.0,
+     "D": 0.0,
+     "F": 0.0,
+     "P": -0.0,
+     "R_B": 1.0249754729,
+     "R_G": 0.8287831402,
+     "S": 0.0,
+     "gamma2": 0.0
+    }
+   }
+  },
+  "labels": {
+   "A": "z(A)",
+   "D": "z(D)",
+   "F": "z(F)",
+   "P": "z(P)",
+   "R_B": "R_B",
+   "R_G": "R_G",
+   "S": "z(S)",
+   "gamma2": "z(gamma2)"
+  },
+  "order": [
+   "gamma2",
+   "P",
+   "R_B",
+   "A",
+   "D",
+   "F",
+   "S",
+   "R_G"
+  ],
+  "units": "z (reference scales); R is a per-chip RMS in the same units"
+ },
+ "classes": {
+  "event": "2021-09-29",
+  "event_rule": "OUTSIDE is strictly before 2021-09-29; POST is the registry's post state(s); a chip on the event day is assigned by its registry state, and a reference-state chip on or after the event is reported as unassigned",
+  "labels": {
+   "outside": "held-out pre-event",
+   "post": "post-event",
+   "reference": "frozen pre-event reference"
+  },
+  "n_unassigned": 0,
+  "notes": {
+   "outside": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+   "post": "post-event: every chip of the registry's post state(s)",
+   "reference": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)"
+  },
+  "outside": {
+   "label": "held-out pre-event",
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "post": {
+   "label": "post-event",
+   "months": 1,
+   "n_ascending": 5,
+   "n_chips": 11,
+   "n_descending": 6,
+   "n_echo": 11,
+   "window": [
+    "2021-10-01",
+    "2021-10-17"
+   ]
+  },
+  "reconciliation": {
+   "kept": 107,
+   "outside": 0,
+   "post": 11,
+   "reference": 96,
+   "unassigned": 0
+  },
+  "reference": {
+   "label": "frozen pre-event reference",
+   "months": 9,
+   "n_ascending": 44,
+   "n_chips": 96,
+   "n_descending": 52,
+   "n_echo": 96,
+   "window": [
+    "2021-01-01",
+    "2021-09-17"
+   ]
+  },
+  "unassigned": []
+ },
+ "clipped": 3,
+ "contrast": {
+  "applies": true,
+  "block": 3,
+  "dims": {
+   "A": {
+    "ci": [
+     -0.439457544,
+     1.9575547295
+    ],
+    "delta": 0.6352088843,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "D": {
+    "ci": [
+     -0.5186357791,
+     1.7875307284
+    ],
+    "delta": 0.5460621575,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "F": {
+    "ci": [
+     0.0,
+     1.1871762945
+    ],
+    "delta": 0.6286240068,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "P": {
+    "ci": [
+     -0.2685380039,
+     0.5466457038
+    ],
+    "delta": 0.2396918431,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "R_B": {
+    "block": "behaviour",
+    "ci": [
+     -0.5532009111,
+     0.3069345122
+    ],
+    "delta": -0.1446049857,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "R_G": {
+    "block": "geometry",
+    "ci": [
+     -0.3516202013,
+     0.8577814696
+    ],
+    "delta": 0.3012666707,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "S": {
+    "ci": [
+     -0.4224258973,
+     1.1334248506
+    ],
+    "delta": -0.1542047034,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   },
+   "gamma2": {
+    "ci": [
+     -0.557939258,
+     0.9624495652
+    ],
+    "delta": -0.2744037175,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 11,
+    "n_reference": 96
+   }
+  },
+  "draws": 2000,
+  "n_post": 11,
+  "n_reference": 96,
+  "seed": 7,
+  "states": [
+   "post-collapse"
+  ]
+ },
+ "cut": {
+  "excluded": {},
+  "kept": 107,
+  "refused": [],
+  "rows": 107,
+  "window": [
+   "2021-01-01",
+   "2021-10-17"
+  ]
+ },
+ "environment_context": {
+  "applies": false
+ },
+ "event": "2021-09-29",
+ "figure": {
+  "dpi": 630,
+  "panels": [
+   {
+    "block": "behaviour",
+    "id": "a1",
+    "shows": "z(gamma2) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a2",
+    "shows": "z(P) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a3",
+    "shows": "the behaviour plane (z(gamma2), z(P))"
+   },
+   {
+    "block": "behaviour",
+    "id": "a4",
+    "shows": "R_B -- the behaviour block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b1",
+    "shows": "z(A) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b2",
+    "shows": "z(F) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b3",
+    "shows": "the geometry plane (z(A), z(F))"
+   },
+   {
+    "block": "geometry",
+    "id": "b4",
+    "shows": "R_G -- the geometry block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "context",
+    "id": "c1",
+    "shows": "environmental context (weather, descriptive only)"
+   },
+   {
+    "block": "context",
+    "id": "c2",
+    "shows": "the observation cadence per orbit"
+   },
+   {
+    "block": "context",
+    "id": "c3",
+    "shows": "observation availability: solid = an echo, hollow = a mask without one"
+   },
+   {
+    "block": "context",
+    "id": "c4",
+    "shows": "the trajectory matrix: six dimensions x every month"
+   }
+  ]
+ },
+ "label": "Haltern AV9 wind turbine",
+ "months": [
+  {
+   "R_B": 1.2358681268,
+   "R_G": 0.6822759151,
+   "anchor": "2021-01-15",
+   "label": "2021-01",
+   "month": "2021-01",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.9896216881,
+    "wind_speed_ms": -0.0054175965
+   },
+   "z": {
+    "A": -0.2296331267,
+    "D": -0.1229965399,
+    "F": -0.1542686362,
+    "P": -0.2279790167,
+    "S": -0.4068942377,
+    "gamma2": 0.5530063233
+   }
+  },
+  {
+   "R_B": 0.8359693448,
+   "R_G": 0.6384143369,
+   "anchor": "2021-02-15",
+   "label": "2021-02",
+   "month": "2021-02",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.8569349813,
+    "wind_speed_ms": 1.0076729419
+   },
+   "z": {
+    "A": -0.0951956538,
+    "D": -0.1686493732,
+    "F": -0.1890677771,
+    "P": -0.3372903676,
+    "S": -0.39664847,
+    "gamma2": -0.0666933187
+   }
+  },
+  {
+   "R_B": 1.4919025291,
+   "R_G": 0.6274576475,
+   "anchor": "2021-03-15",
+   "label": "2021-03",
+   "month": "2021-03",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.4146459587,
+    "wind_speed_ms": 0.4659132957
+   },
+   "z": {
+    "A": -0.3173708355,
+    "D": -0.3620790747,
+    "F": -0.4381209915,
+    "P": 0.1101922804,
+    "S": 0.0060773774,
+    "gamma2": -0.3119856271
+   }
+  },
+  {
+   "R_B": 0.8031960444,
+   "R_G": 0.902457004,
+   "anchor": "2021-04-15",
+   "label": "2021-04",
+   "month": "2021-04",
+   "n": 10,
+   "n_ascending": 4,
+   "n_descending": 6,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.6247332444,
+    "wind_speed_ms": 0.6880347506
+   },
+   "z": {
+    "A": 0.371134074,
+    "D": 0.7357176092,
+    "F": 0.4833818895,
+    "P": -0.1159630864,
+    "S": 0.275936115,
+    "gamma2": 0.0571658755
+   }
+  },
+  {
+   "R_B": 1.2912472705,
+   "R_G": 0.6948896669,
+   "anchor": "2021-05-15",
+   "label": "2021-05",
+   "month": "2021-05",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.1603297707,
+    "wind_speed_ms": 0.7205403294
+   },
+   "z": {
+    "A": 0.2629877952,
+    "D": 0.2282102486,
+    "F": -0.3659662514,
+    "P": -0.5252180306,
+    "S": -0.0668411087,
+    "gamma2": 0.1841060513
+   }
+  },
+  {
+   "R_B": 1.4715115043,
+   "R_G": 1.5561970625,
+   "anchor": "2021-06-15",
+   "label": "2021-06",
+   "month": "2021-06",
+   "n": 11,
+   "n_ascending": 6,
+   "n_descending": 5,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.9453927858,
+    "wind_speed_ms": -0.1787806832
+   },
+   "z": {
+    "A": 0.1163109187,
+    "D": 0.0329902747,
+    "F": -0.2240575992,
+    "P": 0.3083500253,
+    "S": 0.0430822822,
+    "gamma2": 0.154180076
+   }
+  },
+  {
+   "R_B": 0.8025130482,
+   "R_G": 1.3683101359,
+   "anchor": "2021-07-15",
+   "label": "2021-07",
+   "month": "2021-07",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.6966052106,
+    "wind_speed_ms": -0.3006766036
+   },
+   "z": {
+    "A": 0.2406104758,
+    "D": 0.1606816024,
+    "F": 0.3380943064,
+    "P": 0.1471091436,
+    "S": -0.2268149331,
+    "gamma2": 0.0097439497
+   }
+  },
+  {
+   "R_B": 1.0457717035,
+   "R_G": 1.0211018831,
+   "anchor": "2021-08-15",
+   "label": "2021-08",
+   "month": "2021-08",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.458874861,
+    "wind_speed_ms": -0.140857508
+   },
+   "z": {
+    "A": -0.0951956538,
+    "D": -0.1132637005,
+    "F": 0.2491682353,
+    "P": 0.221227313,
+    "S": -0.0060773774,
+    "gamma2": -0.1607120336
+   }
+  },
+  {
+   "R_B": 0.8232764944,
+   "R_G": 1.0069546842,
+   "anchor": "2021-09-15",
+   "label": "2021-09",
+   "month": "2021-09",
+   "n": 10,
+   "n_ascending": 4,
+   "n_descending": 6,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.4422890226,
+    "wind_speed_ms": -0.4198637258
+   },
+   "z": {
+    "A": 1.001515792,
+    "D": 0.9518645946,
+    "F": 0.6130886118,
+    "P": 0.0025724704,
+    "S": 0.2366084761,
+    "gamma2": 0.0268431067
+   }
+  },
+  {
+   "R_B": 0.8803704872,
+   "R_G": 1.1300498109,
+   "anchor": "2021-10-15",
+   "label": "2021-10",
+   "month": "2021-10",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 11,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.0939864173,
+    "wind_speed_ms": 0.2979678054
+   },
+   "z": {
+    "A": 0.6352088843,
+    "D": 0.5460621575,
+    "F": 0.6286240068,
+    "P": 0.2396918431,
+    "S": -0.1542047034,
+    "gamma2": -0.2744037175
+   }
+  }
+ ],
+ "note": "13 of the record's 120 dates are refused at the raster edge, all ascending: the cut's own manifest carries them, and the plate does not pretend the missing 11 % are months without data.",
+ "outside": {
+  "applies": false,
+  "block": 3,
+  "dims": {},
+  "directional": {
+   "longest_run": null,
+   "runs": []
+  },
+  "draws": 2000,
+  "intervals": [],
+  "n_intervals": 0,
+  "n_outside": 0,
+  "n_reference": 96,
+  "persistence": {},
+  "reason": "the reference window is the state's own span (R2), so no healthy chip sits outside it and there is nothing for the plate to test",
+  "seed": 7
+ },
+ "post": {
+  "label": "post-event",
+  "months": 1,
+  "n_ascending": 5,
+  "n_chips": 11,
+  "n_descending": 6,
+  "n_echo": 11,
+  "note": "post-event: every chip of the registry's post state(s)",
+  "states": [
+   "post-collapse"
+  ],
+  "window": [
+   "2021-10-01",
+   "2021-10-17"
+  ]
+ },
+ "reference": {
+  "choice": "no sub-window: the state's own span",
+  "chosen": null,
+  "groups": [
+   "pooled"
+  ],
+  "label": "frozen pre-event reference",
+  "months": 9,
+  "n_ascending": 44,
+  "n_chips": 96,
+  "n_descending": 52,
+  "n_echo": 96,
+  "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+  "outside": {
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "policy": "pooled over the orbits",
+  "span": {
+   "months": 9,
+   "n_ascending": 44,
+   "n_chips": 96,
+   "n_descending": 52,
+   "n_echo": 96,
+   "window": [
+    "2021-01-01",
+    "2021-09-17"
+   ]
+  },
+  "state": "pre-collapse (healthy)",
+  "window": [
+   "2021-01-01",
+   "2021-09-17"
+  ]
+ },
+ "reference_envelope": {
+  "aggregation": "monthly median of each calendar-month bin",
+  "chip": {
+   "A": {
+    "max": 4.3985024457,
+    "min": -5.3119483038,
+    "n": 96,
+    "q05": -2.686118368,
+    "q50": 0.0,
+    "q95": 3.1398753438
+   },
+   "D": {
+    "max": 4.6792652739,
+    "min": -4.8949057505,
+    "n": 96,
+    "q05": -1.2687865213,
+    "q50": 0.0,
+    "q95": 3.8719348797
+   },
+   "F": {
+    "max": 1.979426709,
+    "min": -6.0,
+    "n": 96,
+    "q05": -4.957683763,
+    "q50": 0.0,
+    "q95": 1.5490504282
+   },
+   "P": {
+    "max": 5.8255366371,
+    "min": -2.0559649331,
+    "n": 96,
+    "q05": -1.1612136218,
+    "q50": -0.0,
+    "q95": 4.848442594
+   },
+   "R_B": {
+    "max": 4.120843692,
+    "min": 0.0410573686,
+    "n": 96,
+    "q05": 0.2400041786,
+    "q50": 1.0249754729,
+    "q95": 3.4293621678
+   },
+   "R_G": {
+    "max": 4.6952346041,
+    "min": 0.0861735977,
+    "n": 96,
+    "q05": 0.1911765641,
+    "q50": 0.8287831402,
+    "q95": 3.1910516197
+   },
+   "S": {
+    "max": 3.4550797814,
+    "min": -1.0223844532,
+    "n": 96,
+    "q05": -0.939500852,
+    "q50": 0.0,
+    "q95": 1.7209257506
+   },
+   "gamma2": {
+    "max": 2.2203837602,
+    "min": -4.3115649475,
+    "n": 96,
+    "q05": -2.5431137214,
+    "q50": 0.0,
+    "q95": 1.6869190087
+   }
+  },
+  "chip_note": "descriptive only: a single chip is never compared with a monthly state in this analysis",
+  "decision_level": "monthly",
+  "decision_quantile": 95,
+  "monthly": {
+   "A": {
+    "max": 1.001515792,
+    "min": -0.3173708355,
+    "n": 9,
+    "q05": -0.282275752,
+    "q50": 0.1163109187,
+    "q95": 0.7493631048,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": -0.2296331267
+     },
+     {
+      "month": "2021-02",
+      "value": -0.0951956538
+     },
+     {
+      "month": "2021-03",
+      "value": -0.3173708355
+     },
+     {
+      "month": "2021-04",
+      "value": 0.371134074
+     },
+     {
+      "month": "2021-05",
+      "value": 0.2629877952
+     },
+     {
+      "month": "2021-06",
+      "value": 0.1163109187
+     },
+     {
+      "month": "2021-07",
+      "value": 0.2406104758
+     },
+     {
+      "month": "2021-08",
+      "value": -0.0951956538
+     },
+     {
+      "month": "2021-09",
+      "value": 1.001515792
+     }
+    ]
+   },
+   "D": {
+    "max": 0.9518645946,
+    "min": -0.3620790747,
+    "n": 9,
+    "q05": -0.2847071941,
+    "q50": 0.0329902747,
+    "q95": 0.8654058005,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": -0.1229965399
+     },
+     {
+      "month": "2021-02",
+      "value": -0.1686493732
+     },
+     {
+      "month": "2021-03",
+      "value": -0.3620790747
+     },
+     {
+      "month": "2021-04",
+      "value": 0.7357176092
+     },
+     {
+      "month": "2021-05",
+      "value": 0.2282102486
+     },
+     {
+      "month": "2021-06",
+      "value": 0.0329902747
+     },
+     {
+      "month": "2021-07",
+      "value": 0.1606816024
+     },
+     {
+      "month": "2021-08",
+      "value": -0.1132637005
+     },
+     {
+      "month": "2021-09",
+      "value": 0.9518645946
+     }
+    ]
+   },
+   "F": {
+    "max": 0.6130886118,
+    "min": -0.4381209915,
+    "n": 9,
+    "q05": -0.4092590955,
+    "q50": -0.1542686362,
+    "q95": 0.5612059229,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": -0.1542686362
+     },
+     {
+      "month": "2021-02",
+      "value": -0.1890677771
+     },
+     {
+      "month": "2021-03",
+      "value": -0.4381209915
+     },
+     {
+      "month": "2021-04",
+      "value": 0.4833818895
+     },
+     {
+      "month": "2021-05",
+      "value": -0.3659662514
+     },
+     {
+      "month": "2021-06",
+      "value": -0.2240575992
+     },
+     {
+      "month": "2021-07",
+      "value": 0.3380943064
+     },
+     {
+      "month": "2021-08",
+      "value": 0.2491682353
+     },
+     {
+      "month": "2021-09",
+      "value": 0.6130886118
+     }
+    ]
+   },
+   "P": {
+    "max": 0.3083500253,
+    "min": -0.5252180306,
+    "n": 9,
+    "q05": -0.4500469654,
+    "q50": 0.0025724704,
+    "q95": 0.2735009404,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": -0.2279790167
+     },
+     {
+      "month": "2021-02",
+      "value": -0.3372903676
+     },
+     {
+      "month": "2021-03",
+      "value": 0.1101922804
+     },
+     {
+      "month": "2021-04",
+      "value": -0.1159630864
+     },
+     {
+      "month": "2021-05",
+      "value": -0.5252180306
+     },
+     {
+      "month": "2021-06",
+      "value": 0.3083500253
+     },
+     {
+      "month": "2021-07",
+      "value": 0.1471091436
+     },
+     {
+      "month": "2021-08",
+      "value": 0.221227313
+     },
+     {
+      "month": "2021-09",
+      "value": 0.0025724704
+     }
+    ]
+   },
+   "R_B": {
+    "max": 1.4919025291,
+    "min": 0.8025130482,
+    "n": 9,
+    "q05": 0.8027862467,
+    "q50": 1.0457717035,
+    "q95": 1.4837461192,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": 1.2358681268
+     },
+     {
+      "month": "2021-02",
+      "value": 0.8359693448
+     },
+     {
+      "month": "2021-03",
+      "value": 1.4919025291
+     },
+     {
+      "month": "2021-04",
+      "value": 0.8031960444
+     },
+     {
+      "month": "2021-05",
+      "value": 1.2912472705
+     },
+     {
+      "month": "2021-06",
+      "value": 1.4715115043
+     },
+     {
+      "month": "2021-07",
+      "value": 0.8025130482
+     },
+     {
+      "month": "2021-08",
+      "value": 1.0457717035
+     },
+     {
+      "month": "2021-09",
+      "value": 0.8232764944
+     }
+    ]
+   },
+   "R_G": {
+    "max": 1.5561970625,
+    "min": 0.6274576475,
+    "n": 9,
+    "q05": 0.6318403233,
+    "q50": 0.902457004,
+    "q95": 1.4810422919,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": 0.6822759151
+     },
+     {
+      "month": "2021-02",
+      "value": 0.6384143369
+     },
+     {
+      "month": "2021-03",
+      "value": 0.6274576475
+     },
+     {
+      "month": "2021-04",
+      "value": 0.902457004
+     },
+     {
+      "month": "2021-05",
+      "value": 0.6948896669
+     },
+     {
+      "month": "2021-06",
+      "value": 1.5561970625
+     },
+     {
+      "month": "2021-07",
+      "value": 1.3683101359
+     },
+     {
+      "month": "2021-08",
+      "value": 1.0211018831
+     },
+     {
+      "month": "2021-09",
+      "value": 1.0069546842
+     }
+    ]
+   },
+   "S": {
+    "max": 0.275936115,
+    "min": -0.4068942377,
+    "n": 9,
+    "q05": -0.4027959306,
+    "q50": -0.0060773774,
+    "q95": 0.2602050594,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": -0.4068942377
+     },
+     {
+      "month": "2021-02",
+      "value": -0.39664847
+     },
+     {
+      "month": "2021-03",
+      "value": 0.0060773774
+     },
+     {
+      "month": "2021-04",
+      "value": 0.275936115
+     },
+     {
+      "month": "2021-05",
+      "value": -0.0668411087
+     },
+     {
+      "month": "2021-06",
+      "value": 0.0430822822
+     },
+     {
+      "month": "2021-07",
+      "value": -0.2268149331
+     },
+     {
+      "month": "2021-08",
+      "value": -0.0060773774
+     },
+     {
+      "month": "2021-09",
+      "value": 0.2366084761
+     }
+    ]
+   },
+   "gamma2": {
+    "max": 0.5530063233,
+    "min": -0.3119856271,
+    "n": 9,
+    "q05": -0.2514761897,
+    "q50": 0.0268431067,
+    "q95": 0.4054462145,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2021-01",
+      "value": 0.5530063233
+     },
+     {
+      "month": "2021-02",
+      "value": -0.0666933187
+     },
+     {
+      "month": "2021-03",
+      "value": -0.3119856271
+     },
+     {
+      "month": "2021-04",
+      "value": 0.0571658755
+     },
+     {
+      "month": "2021-05",
+      "value": 0.1841060513
+     },
+     {
+      "month": "2021-06",
+      "value": 0.154180076
+     },
+     {
+      "month": "2021-07",
+      "value": 0.0097439497
+     },
+     {
+      "month": "2021-08",
+      "value": -0.1607120336
+     },
+     {
+      "month": "2021-09",
+      "value": 0.0268431067
+     }
+    ]
+   }
+  },
+  "months": [
+   "2021-01",
+   "2021-02",
+   "2021-03",
+   "2021-04",
+   "2021-05",
+   "2021-06",
+   "2021-07",
+   "2021-08",
+   "2021-09"
+  ],
+  "n_reference_months": 9,
+  "persistence_min_months": 2,
+  "quantiles": [
+   5,
+   50,
+   95
+  ]
+ },
+ "schema": "ocv-trajectory-v2",
+ "sha256": "cb39c7473b291540432f65f2428a61b31290bbcf3c8e8021044ff0c0e3b36ee1",
+ "site": "haltern",
+ "standardisation": {
+  "pooled": {
+   "A": {
+    "centre": 5.9242414988,
+    "n": 96,
+    "rule": "all reference chips",
+    "scale": 0.2269868904,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 4.3985024457,
+    "z_min": -5.3119483038
+   },
+   "D": {
+    "centre": -3.0462823036,
+    "n": 96,
+    "rule": "all reference chips",
+    "scale": 0.2380941431,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 4.6792652739,
+    "z_min": -4.8949057505
+   },
+   "F": {
+    "centre": 5.2390944889,
+    "n": 96,
+    "rule": "all reference chips",
+    "scale": 0.1566017042,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.979426709,
+    "z_min": -6.7988226855
+   },
+   "P": {
+    "centre": -2.6799998718,
+    "n": 96,
+    "rule": "echo-bearing reference chips",
+    "scale": 0.0636956124,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 5.8255366371,
+    "z_min": -2.0559649331
+   },
+   "S": {
+    "centre": 19.1278761167,
+    "n": 96,
+    "rule": "all reference chips",
+    "scale": 17.8195088644,
+    "source": "mad",
+    "transform": "identity",
+    "z_max": 3.4550797814,
+    "z_min": -1.0223844532
+   },
+   "gamma2": {
+    "centre": -5.5359847587,
+    "n": 96,
+    "rule": "echo-bearing reference chips",
+    "scale": 1.0860990998,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 2.2203837602,
+    "z_min": -4.3115649475
+   }
+  }
+ },
+ "summer_2024": {
+  "applies": false,
+  "reason": "no held-out pre-event class on this site"
+ },
+ "table": "data/haltern/support/haltern_ocv_channels.csv",
+ "weather_reference": {
+  "temperature_c": {
+   "pooled": {
+    "centre": 10.15,
+    "distinct": 79,
+    "n": 96,
+    "scale": 9.04386,
+    "source": "mad",
+    "transform": "identity"
+   }
+  },
+  "wind_speed_ms": {
+   "pooled": {
+    "centre": 2.95,
+    "distinct": 87,
+    "n": 96,
+    "scale": 1.845837,
+    "source": "mad",
+    "transform": "identity"
+   }
+  }
+ }
+}

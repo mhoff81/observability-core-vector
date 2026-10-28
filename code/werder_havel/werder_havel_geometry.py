@@ -11,19 +11,18 @@ The anchor hands over the structure in metres and *refuses* to turn it into pixe
 bearing 59.59 deg) and the record as an **80 x 80 window per acquisition** whose
 ``coherence_masked_pixels`` is 640 in every one of the 991 rows. That 640 is 10 % of
 6400 **by definition** — the brightest decile of the window's mean amplitude — and
-``werder_havel_ocv_masks.py`` says so and stops. A decile is only a *share of a window*;
-to know what it covers on the ground, one needs the metres per pixel, and the window
-carries no pixel-spacing spec. Only one thing in this package can supply it: the
-**committed burst footprints** of ``werder_havel_bursts_resolve.py`` — 609 frames in
-1218 catalogue records over the 491 dates, each with the catalogue's own ground polygon
-and its ``LinesPerBurst`` / ``SamplesPerBurst``. This file is that division.
+``werder_havel_ocv_masks.py`` says so and stops: a decile is a share of a *window*, and
+the window carries no pixel-spacing spec. Only one thing in this package can supply the
+ground scale: the **committed burst footprints** of ``werder_havel_bursts_resolve.py``
+(609 frames in 1218 catalogue records over the 491 dates, each with the catalogue's own
+ground polygon and its ``LinesPerBurst`` / ``SamplesPerBurst``). This file is that division.
 
 The grid, and why it is a division and not a lookup
 ---------------------------------------------------
 Sentinel-1 SLC pixel spacings are a *product* property (range ~2.33 m slant, azimuth
 ~13.9 m), not a ground distance: the ground distance depends on the local incidence
 angle, which changes along the swath and with the orbit tube. The family's method
-(``haltern_osm_anchor.py``, YWF before it) therefore measures the grid **off the
+(``haltern_osm_anchor.py``) therefore measures the grid **off the
 catalogue's own footprint polygon** rather than quoting a constant: the longest edge of
 the footprint is the **range** axis, its collinear pieces are summed, the vertex spreads
 along and across that axis give the two ground extents, and
@@ -38,11 +37,11 @@ The result for this site, per pass geometry (medians over that geometry's frames
     desc_168_iw1  3.77 m/px range x 15.39 m/px azimuth   58.0 m2/px
     desc_95_iw3   3.11 m/px range x 15.21 m/px azimuth   47.3 m2/px
 
-— i.e. the IW3 geometries see this deck at a higher incidence than the IW1 ones, so a
-range pixel is 3.77 m of ground there against 3.12 m here: a 21 % difference that decides
-the fill ratio below. The spread is committed beside every median, because it is real and
-not noise: the *same* BurstId returns a slightly different footprint on different dates
-(the orbit tube), 3.72..3.96 m/px on ascending IW1 and 3.08..3.13 m/px on ascending IW3.
+— the IW3 geometries see this deck at a higher incidence than the IW1 ones: 3.12 m of
+ground per range pixel against 3.77 m, a 21 % difference that decides the fill ratio
+below. The spread is committed beside every median because it is real: the *same* BurstId
+returns a slightly different footprint on different dates (the orbit tube), 3.72..3.96 m/px
+on ascending IW1 and 3.08..3.13 m/px on ascending IW3.
 
 What the grid prices
 --------------------
@@ -63,12 +62,11 @@ Against that:
     side would be needed to contain it. The record's window is therefore a sample of the
     deck's *middle*, not of the deck — a fact the fill ratio cannot show, which is why it
     is committed here as geometry and not inferred later from a mask;
-  * **the deck's share of the window** — 6.8 % on IW1, 8.3/8.4 % on IW3. Together with
-    the claim this closes the fixture's own arithmetic: a deck of 8.4 % of the window that
-    fills 0.86 of the mask makes the mask 9.6-9.7 % of the window, i.e. the "brightest
-    decile" the export names. The claim's implied pixel area is 45.96 m2 (3.00 m x 14.73 m
-    on one IW3 geometry, 3.02 m x 14.79 m on the other), 2.8-3.7 % finer than the IW3
-    footprints give; that residual is committed below rather than smoothed away.
+  * **the deck's share of the window** — 6.8 % on IW1, 8.3/8.4 % on IW3. With the claim
+    this closes the fixture's own arithmetic: a deck of 8.4 % of the window that fills 0.86
+    of the mask makes the mask 9.6-9.7 % of the window, i.e. the "brightest decile" the
+    export names. The claim's implied pixel area is 45.96 m2 (3.00 m x 14.73 m on one IW3
+    geometry, 3.02 m x 14.79 m on the other), the same 2.8-3.7 % residual as above.
 
 What this file does *not* claim
 -------------------------------
@@ -90,8 +88,8 @@ committed with the numbers rather than left to the reader:
 Modes
 -----
     --write   derive the geometry from the committed anchor and burst layer and write it
-    --check   re-derive and compare field by field (the default; offline)
     --json    print the derived file as JSON (the numbers the notes above quote)
+    (default) re-derive and compare field by field, and print the one-line summary (offline)
 """
 from __future__ import annotations
 

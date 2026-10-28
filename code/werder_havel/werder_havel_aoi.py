@@ -8,11 +8,11 @@ Files: ``data/werder_havel/reference/werder_havel_osm_bridge.json`` and
 The question this file answers
 ------------------------------
 Haltern anchors to the turbine's own OSM **node** — a point, the strongest anchor of
-this family — and YWF to the carriageway **centreline** of the road the tower fell onto
-— a line. Werder can do neither, because its record carries **no coordinate at all**:
-the export's 28 columns hold the asset identity, the acquisition and the 80 x 80 complex
-window, but no latitude, no longitude, no segment index and no burst id. (Haltern's and
-YWF's ``segment_latitude``/``segment_longitude`` columns at least existed, empty.) So
+this family. Werder can do no such thing, because its record carries **no coordinate
+at all**: the export's 28 columns hold the asset identity, the acquisition and the
+80 x 80 complex window, but no latitude, no longitude, no segment index and no burst
+id. (Haltern's ``segment_latitude``/``segment_longitude`` columns at least existed,
+empty.) So
 the anchor of this record cannot be read out of the record. It is taken from the
 **structure itself**, and the structure the record names is its own ``asset_name``:
 *Havelbrücke Werder (A 10)*.
@@ -150,7 +150,7 @@ OSM_EXPECTED = {
 # ---------------------------------------------------------------------------
 # Two metrics, both committed (a finding of this file, not a footnote)
 # ---------------------------------------------------------------------------
-# ``_local`` is the family's projection (``ywf_osm_anchor.py``): equirectangular about
+# ``_local`` is the family's projection (``haltern_osm_anchor.py``): equirectangular about
 # the anchor, M_PER_DEG_LAT 110540 / M_PER_DEG_LON 111320. It is used for every geometry
 # number below *because the burst footprints of the next step are converted with the same
 # constants*, so the metres-per-pixel comparison of the pixel grid stays self-consistent.
@@ -164,11 +164,12 @@ M_PER_DEG_LAT = 110540.0
 M_PER_DEG_LON = 111320.0
 
 METRIC_NOTE = (
-    "flat = the family's equirectangular constants (ywf_osm_anchor.py), used for every "
-    "'*_m' / '*_m2' field because the burst footprints that the pixel-grid audit divides "
-    "by are converted with them; wgs84 = the same quantity against the local WGS84 "
-    "degree lengths (111275.2 m/deg meridional, 68037.2 m/deg parallel at the anchor). "
-    "The family's constants are 0.66 % / 0.21 % low, i.e. 2.29 m (0.325 %) on this span."
+    "flat = the family's equirectangular constants (as in haltern_osm_anchor.py), used "
+    "for every '*_m' / '*_m2' field because the burst footprints that the pixel-grid "
+    "audit divides by are converted with them; wgs84 = the same quantity against the "
+    "local WGS84 degree lengths (111275.2 m/deg meridional, 68037.2 m/deg parallel at "
+    "the anchor). The family's constants are 0.66 % / 0.21 % low, i.e. 2.29 m "
+    "(0.325 %) on this span."
 )
 
 # ---------------------------------------------------------------------------
@@ -195,7 +196,7 @@ def parallel_m_per_deg(lat):
 def _local(lat, lon, lat0, lon0):
     """Local planar metres east/north of ``(lat0, lon0)`` (equirectangular).
 
-    The family's projection, verbatim (``ywf_osm_anchor.py``): adequate at the scale of
+    The family's projection, as ``haltern_osm_anchor.py`` has it: adequate at the scale of
     this question because the outline is 0.7 km, three orders below the scale where the
     flat approximation matters — and used for every metric field here so that the
     metres-per-pixel comparison of the pixel-grid audit, which converts the burst

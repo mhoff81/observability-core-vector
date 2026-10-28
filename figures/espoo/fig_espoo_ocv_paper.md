@@ -142,7 +142,7 @@ At a site with **no event at all**, the observability core vector still splits i
 
 1. an effect size of 7.31 (Welch t) and a leave-one-out balanced accuracy of 0.7259 look like *damage* under any classifier-first reading;
 2. the record's own no-event controls (stationarity, season, weather, coverage) show every one of those numbers is geometry;
-3. so at every other site of this repository the orbit-geometry contrast has to be reported **beside** the damage contrast before the latter can be read — which is exactly what the LUMO, Morandi, YWF and Carola packages do.
+3. so at every other site of this repository the orbit-geometry contrast has to be reported **beside** the damage contrast before the latter can be read — which is exactly what the LUMO, Morandi, Haltern and Carola packages do.
 
 ## Pins
 
@@ -166,6 +166,6 @@ python3 code/espoo/fig_espoo_ocv_paper.py --quick  # without the permutation nul
 python3 code/espoo/fig_espoo_ocv_months.py         # the month companion
 ```
 
-*environment: python 3.13.5, numpy 2.5.4, matplotlib 3.11.2*
+*environment: python 3.13.5, numpy 2.4.6, matplotlib 3.11.1*
 
 *No wall-clock value appears in this file, so two runs of the same code produce identical bytes.*

@@ -54,7 +54,7 @@ The rule below is the project-wide tower/bridge echo definition — identical to
     gamma2    = |sum(z[mask])|^2 / (A * sum(|z[mask]|^2)),  clamped to [0, 1]
 
 The window of this record is **80 x 80 = 6400 complex samples** per acquisition
-(``WINDOW_SIZE``) — 131x the 49-sample payload of Haltern and YWF, and ~250 MB of
+(``WINDOW_SIZE``) — 131x the 49-sample payload of Haltern, and ~250 MB of
 complex JSON across the 991 rows, which is why that payload is the one **external**
 input of this package: it is streamed on demand (``read_windows``, ``read_window_ids``)
 and everything this package commits is derived from it. The export's own

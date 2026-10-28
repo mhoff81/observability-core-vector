@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 """CTS OCV-Paper — the difference-in-differences layer.
 
-This is the layer the CTS site makes possible and a single-structure site cannot
-have. The four Sentinel-1 footprints of the record
-
-    cts_asc_48_iw3    the tower            role ``target``
-    ctn_asc_48_iw3    Champlain Towers N   role ``control_ctn``  (165 m N)
-    cte_asc_48_iw3    Champlain Towers E   role ``control_cte``  (~90 m N)
-    beach_asc_48_iw3  the beach east       role ``reference_beach``
-
-share the *same* orbit (ASC rel-48 IW3), the *same* dates and the *same* counts,
-so a target and a control tower see the same atmosphere, orbit drift and any
-processing effect. The difference of differences removes exactly those common
-terms:
+The layer this site makes possible and a single-structure site cannot have: the
+four footprints of ``cts_ocv_core`` share the *same* orbit (ASC rel-48 IW3), the
+*same* dates and the *same* counts, so the target tower and a control tower see
+the same atmosphere, orbit drift and any processing effect. The difference of
+differences removes exactly those common terms:
 
     y ~ 1 + T + P + T:P        T = is_target, P = is_post
     DiD = coefficient of T:P
@@ -20,14 +13,10 @@ terms:
 The module is a verbatim port of the site's own generator
 (``asset_analysis.reference_did`` — same ``cells`` / ``analyse_channel`` / ``run``
 / ``report``) onto the CTS measurement table, so the three committed references
-
-    data/cts/reference/cts_reference_did_ctn.json               target vs. CTN
-    data/cts/reference/cts_reference_did_cte.json               target vs. CTE
-    data/cts/reference/cts_reference_did_placebo_ctn_vs_cte.json  placebo CTN vs. CTE
-
-can be reproduced and pinned. The placebo (CTN vs. CTE, both controls) is the
-*specificity* check: neither control saw an event, so a significant placebo DiD
-would mean the contrast is not specific to the collapse.
+of ``cts_ocv_core`` (``cts_reference_did_{ctn,cte,placebo_ctn_vs_cte}.json``) can
+be reproduced and pinned to ``TOL = 1e-9``. The placebo (CTN vs. CTE, both
+controls) is the *specificity* check: neither control saw an event, so a
+significant placebo DiD would mean the contrast is not specific to the collapse.
 
 Three things are reported beside the DiD, because a DiD without them is not
 interpretable:

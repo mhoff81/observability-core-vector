@@ -1,0 +1,176 @@
+{
+  "schema": "ocv-policy-pin-v1",
+  "name": "frozen-reference prospective run: the rules it reads, pinned",
+  "created": "2026-10-28",
+  "case": "morandi",
+  "control": "carola",
+  "purpose": "Two readers, one set of numbers. This file records the exact rules each reader applies, by value and, where the file is not the file under test, by digest. The prospective run verifies this file before it builds anything: a moved threshold fails the build rather than quietly moving the verdict.",
+  "families": {
+    "trajectory": {
+      "name": "ocv trajectory rule (this repository)",
+      "source": "code/cases/ocv_trajectory.py",
+      "pinned_by": "value",
+      "why_not_digest": "This family is read by the same file that defines it, so a digest of the file would be a digest of the reader. The values below are asserted one by one by ocv_prospective.py --selftest, which is the check a digest would stand in for.",
+      "constants": {
+        "quantiles": [5, 50, 95],
+        "decision_quantile": 95,
+        "persist_min_months": 2,
+        "z_clip": 6.0,
+        "bootstrap": {"draws": 2000, "block": 3, "seed": 7},
+        "dimensions": ["gamma2", "P", "A", "D", "F", "S"],
+        "blocks": {"behaviour": ["gamma2", "P"], "geometry": ["A", "D", "F", "S"]},
+        "magnitudes": {"R_B": "rms(gamma2, P)", "R_G": "rms(A, D, F, S)"},
+        "envelope": "monthly q05/q50/q95 of the frozen reference months only",
+        "window_rule": {
+          "name": "earliest full cycle",
+          "months": 12,
+          "min_chips": 4,
+          "reads": ["the acquisition date of every chip",
+                    "the number of chips in each calendar month"],
+          "never_reads": ["the event date", "any measured quantity of any chip"]
+        }
+      }
+    },
+    "policy": {
+      "name": "erlking-eas",
+      "version": "1.0.0",
+      "pinned_by": "sha256",
+      "files": [
+        {
+          "path": "erlking_mvp/eas/policy_v1.json",
+          "sha256": "ef2805e1c262b98064a2a57d4e0e4aee74b73c6fb2e4899cd6783d9452c7be14",
+          "carries": "version, states, rules.ocv, gates, alert_enabled"
+        },
+        {
+          "path": "erlking_mvp/eas/rules.py",
+          "sha256": "4157364eb424f7352699ede0fa54dce06a01c8de47b2eae9789de568a2d680c1",
+          "carries": "the predicates the engine applies to each rule"
+        },
+        {
+          "path": "erlking_mvp/eas/metric.py",
+          "sha256": "8850f760116201fce78a95ce97e8e92b09b13183c832918d2696599461a90d15",
+          "carries": "the block magnitudes and the z the rules read"
+        }
+      ],
+      "not_pinned": [
+        {
+          "path": "erlking_mvp/EAS.md",
+          "reason": "Prose. This run adds a section to it, so a digest here would fail on a documentation edit that moves no number. The executable rules above are what the numbers depend on."
+        }
+      ],
+      "alert_enabled": false,
+      "operator_decision_required": true,
+      "states": ["INSUFFICIENT", "NOMINAL", "DEGRADED_OBSERVABILITY", "WATCH",
+                 "UNRESOLVED", "CORROBORATED_WATCH", "ALERT"],
+      "rules_ocv": {
+        "block_z": 2.5,
+        "dimension_z": 3.5,
+        "persist_months": 2,
+        "lookback_months": 4,
+        "observability_drop": 0.5
+      },
+      "gates": {
+        "min_months": 6,
+        "min_reference_months": 3,
+        "min_eligible_share": 0.5,
+        "min_complete_months": 4,
+        "max_degenerate_dims": 2,
+        "max_clip_share": 0.25
+      }
+    }
+  },
+  "mapping": [
+    {
+      "pin": "rules.ocv.block_z",
+      "value": 2.5,
+      "read_as": "abs(R_B) and abs(R_G) of a held-out month",
+      "applied": true,
+      "note": "One pulse for each block magnitude, as the engine reads them; no rescaling."
+    },
+    {
+      "pin": "rules.ocv.dimension_z",
+      "value": 3.5,
+      "read_as": "abs(z(dim)) of a held-out month, for each of the six dimensions",
+      "applied": true,
+      "note": "The floor sits above the reference envelope's own tail by construction, which is why it is a different kind of test from the trajectory rule's q95."
+    },
+    {
+      "pin": "rules.ocv.persist_months",
+      "value": 2,
+      "read_as": "consecutive held-out months over the floor",
+      "applied": true,
+      "note": "Coincides with the trajectory rule's PERSIST_MIN; the coincidence is reported, not used."
+    },
+    {
+      "pin": "rules.ocv.lookback_months",
+      "value": 4,
+      "read_as": "the last four held-out months, recorded beside a whole-span reading",
+      "applied": true,
+      "note": "The whole-span reading is the more permissive one, so a null across the whole span implies a null under the four-month lookback. Both are recorded; the state uses the whole span."
+    },
+    {
+      "pin": "rules.ocv.observability_drop",
+      "value": 0.5,
+      "read_as": "not read: it needs a per-month level of observability, which this cut does not carry",
+      "applied": false,
+      "note": "Recorded as a missing observable. It can neither fire nor clear, so DEGRADED_OBSERVABILITY is not reachable in this read and the artefact says so."
+    },
+    {
+      "pin": "gates.min_months",
+      "value": 6,
+      "read_as": "number of held-out bins",
+      "applied": true
+    },
+    {
+      "pin": "gates.min_reference_months",
+      "value": 3,
+      "read_as": "reference_envelope.n_reference_months",
+      "applied": true
+    },
+    {
+      "pin": "gates.min_eligible_share",
+      "value": 0.5,
+      "read_as": "chips kept by the cut over chips offered",
+      "applied": true
+    },
+    {
+      "pin": "gates.min_complete_months",
+      "value": 4,
+      "read_as": "bins holding all six dimensions and both block magnitudes",
+      "applied": true
+    },
+    {
+      "pin": "gates.max_degenerate_dims",
+      "value": 2,
+      "read_as": "dimensions whose reference scale is missing or zero",
+      "applied": true
+    },
+    {
+      "pin": "gates.max_clip_share",
+      "value": 0.25,
+      "read_as": "standardised values clipped at plus or minus z_clip, over all standardised values",
+      "applied": true
+    },
+    {
+      "pin": "gates.displacement, rules.displacement, rules.corroboration",
+      "value": null,
+      "read_as": "not read",
+      "applied": false,
+      "note": "These govern the displacement stream and the corroboration of two streams. An observability cut carries one stream, so UNRESOLVED and CORROBORATED_WATCH are not reachable here either."
+    },
+    {
+      "pin": "pilot.displacement_materiality",
+      "value": 2.0,
+      "read_as": "not read",
+      "applied": false,
+      "note": "The policy itself reports this one as applied: false. It is named here so that a reader cannot mistake its absence for an oversight."
+    }
+  ],
+  "application": {
+    "shape": "One cut, two readers. The trajectory rule and policy v1.0.0 read the same per-chip numbers, the same standardisation and the same monthly bins. Neither reader is derived from the other and neither takes precedence; the pair is the report.",
+    "thresholds_are_read_not_chosen": "Every threshold in this file was written down before the read and is verified against the artefact at build time. Nothing in this run selects a threshold from the data.",
+    "scope_of_a_live_state": "A live state from this read covers three of the policy's five observability rules. observability_drop needs a level this cut does not carry, and the displacement rules need a second stream. NOMINAL here therefore means NOMINAL over what an observability cut can carry, and the artefact prints that scope beside the word.",
+    "live_vocabulary": "The live reader uses the policy's own words, unaltered: NOMINAL, WATCH, INSUFFICIENT. An earlier draft of this run used a private word, NOT_EVALUABLE, for the unreadable rule; it was dropped because v1.0.0 already names that condition INSUFFICIENT (a missing observable the rule needed), and a private fifth word in the report would be the exact drift this pin exists to prevent.",
+    "no_exoneration": "A live NOMINAL is not a statement that nothing changed. On this record the policy's block floor sits above the entire range of the monthly block magnitudes, so the live column cannot discriminate here at all. The artefact reports that as a property of the two measurement layers, not as a clearance of the asset."
+  }
+}

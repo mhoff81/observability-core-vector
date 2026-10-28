@@ -41,7 +41,7 @@ What this package claims, and what it does not
   * **the mask layer rests on a committed cache.** The 182 MB chip payloads do
     not belong in the repository; the cache carries the echo mask of every chip
     plus the sufficient statistics, and the build re-verifies the mask rule on
-    it (``--check``). The pins are the rest of the argument.
+    it (``carola_ocv_masks.py --check``). The pins are the rest of the argument.
 
 Pinned reference files (``data/carola/reference/``):
   carola_coherence_states.json    per-window gamma2 / n_masked, reproduced

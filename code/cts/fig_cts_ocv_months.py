@@ -13,12 +13,12 @@ whole two years of monthly pre-collapse movement, and the terminal month.
 
 Why ``F0`` is 2015, not 2014
 ----------------------------
-Sentinel-1 data for **this** footprint do not exist in 2014: Sentinel-1A was
-launched on 2014-04-03 and the suitable orbit (ASC rel-48 IW3) has its **first
-acquisition on 2015-09-21** (``data/cts/cts_acquisition_census.json``; the
-Step-0 census already queried from 2014-10-01 and found nothing usable earlier).
-``F0`` is therefore the record-start epoch that carries the first images that
-actually exist, and the report states that rather than inventing a 2014 window.
+Sentinel-1 data for **this** footprint do not exist in 2014: Sentinel-1A launched
+on 2014-04-03 and the suitable orbit (ASC rel-48 IW3) has its **first acquisition
+on 2015-09-21** (``data/cts/cts_acquisition_census.json``; the Step-0 census
+already queried from 2014-10-01 and found nothing usable earlier). ``F0`` is
+therefore the record-start epoch that carries the first images that exist, and
+the report states that rather than inventing a 2014 window.
 
 The windows (end exclusive), in time order:
 
@@ -28,10 +28,9 @@ The windows (end exclusive), in time order:
     M-1   [2021-05-24, 2021-06-24)     pre-collapse (healthy)  last
     M+1   [2021-06-24, 2021-07-24)     post-collapse (the month after)
 
-Approach: this is a **standalone companion** of ``fig_cts_ocv_paper.py`` (like
-``../carola/fig_carola_ocv_months.py`` and ``../morandi/fig_morandi_ocv_months.py``
-are companions of their paper scripts): it reads only the committed channel table
-``data/cts/cts_ocv_channels.csv``, recomputes per-month aggregates with
+Approach: a **standalone companion** of ``fig_cts_ocv_paper.py`` (as the Carola
+and Morandi month scripts are of theirs): it reads only the committed channel
+table ``data/cts/cts_ocv_channels.csv``, recomputes per-month aggregates with
 ``cts_ocv_stats``, draws one figure and writes a small JSON + English report. It
 adds **no** number to the A–F pin contract and touches none of it.
 

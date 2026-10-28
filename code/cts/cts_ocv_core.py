@@ -202,6 +202,10 @@ MASK_COLUMNS = ["A", "D", "F", "S", "P", "gamma2_mask", "coherence_masked_pixels
 # The measurement schema (``cts_measurements_full.txt``, 28 columns, 712 rows:
 # 178 dates x 4 tracks). ``id`` is the pipeline key; ``date``/``acquisition_ts``
 # the day; ``track``/``role`` the footprint; and the numeric channels below.
+#
+# ``asset_id``/``asset_name``/``asset_type`` are carried **only** so that the
+# generated CSV mirrors its source column for column: they are quarantined, see
+# ``QUARANTINED_COLUMNS`` below. ``request_id`` is misnamed (it holds the track).
 SOURCE_TEXT = ["asset_id", "asset_name", "asset_type", "request_id", "date",
                "acquisition_ts", "pass_label", "orbit_direction", "subswath",
                "platform", "state_window", "role", "track"]
@@ -214,6 +218,68 @@ SOURCE_COLUMNS = ["id"] + SOURCE_TEXT + SOURCE_NUMERIC
 DERIVED_COLUMNS = ["segment", "track_index", "state", "pre_collapse", "day",
                    "month", "year", "season", "echo_mode"]
 CSV_COLUMNS = SOURCE_COLUMNS + DERIVED_COLUMNS + MASK_COLUMNS
+
+
+# ---------------------------------------------------------------------------
+# Quarantined metadata -- ``data/ocv_metadata_quarantine.json``
+# ---------------------------------------------------------------------------
+# The export's asset columns are **wrong**, not merely unused, and they are wrong
+# in a way that reads as if it were a cross-reference: on all 712 rows of
+# ``cts_measurements_full.txt`` (and therefore on all 711 CSV rows and all 178
+# support rows) ``asset_id`` is CTS's while ``asset_name``/``asset_type`` are the
+# Havelbruecke Werder's. ``cts_segments.txt`` labels the same ``asset_id``
+# "Champlain Towers South", so the key is right and the two labels are broken --
+# and Werder's own meta pairs that name with a *different* id, so the triple
+# belongs to no asset at all.
+#
+# Consequence, and the rule this module keeps: the columns are provenance. They
+# are printed as provenance (with the register's wording), never selected,
+# joined, grouped, sorted or labelled on. Identity is ``identity_key`` below.
+QUARANTINE_PATH = os.path.join(DATA, os.pardir, "ocv_metadata_quarantine.json")
+QUARANTINED_COLUMNS = ("asset_name", "asset_type")   # wrong values in the source
+MISNAMED_COLUMNS = ("request_id",)                   # right values, wrong name
+IDENTITY_COLUMNS = ("id", "track", "role", "day", "orbit_direction",
+                    "relative_orbit", "subswath")
+
+
+def identity_key(row):
+    """The identity of a row: ``track|day|role`` -- never one of the asset columns.
+
+    ``track`` is the footprint, ``role`` says what it is a footprint *of*
+    (``target``, ``control_ctn``, ...) and ``day`` the acquisition. Those three
+    name a row of the record unambiguously; the asset metadata does not, which
+    is the whole point of the quarantine.
+    """
+    missing = [c for c in ("track", "day", "role") if not row.get(c)]
+    if missing:
+        raise KeyError("row carries no identity (%s missing): %r"
+                       % (", ".join(missing), sorted(row)[:6]))
+    return "%s|%s|%s" % (row["track"], row["day"], row["role"])
+
+
+def assert_identity_unique(rows):
+    """Every ``identity_key`` occurs once; return the count.
+
+    A duplicated key is a defect of the table (two rows claiming to be the same
+    acquisition of the same footprint), never a legitimate replicate -- the
+    record has one chip per track and date.
+    """
+    seen, dupes = set(), []
+    for r in rows:
+        k = identity_key(r)
+        if k in seen:
+            dupes.append(k)
+        seen.add(k)
+    if dupes:
+        raise ValueError("%d duplicated identities, e.g. %s"
+                         % (len(dupes), ", ".join(dupes[:3])))
+    return len(seen)
+
+
+def load_quarantine(path=QUARANTINE_PATH):
+    """The committed register of quarantined metadata (see its ``rule``)."""
+    with open(path) as fh:
+        return json.load(fh)
 
 
 def _num(v):

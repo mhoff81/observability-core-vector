@@ -3,21 +3,8 @@
 the two event-free layers of this site.
 
 This module invents *nothing*: the first block is a byte-for-byte copy of
-``code/lumo/lumo_ocv_stats.py``, itself a verbatim port of
-
-  * ``analyze_lumo_tower_coherence.py``        (``_stats``, ``_test``)
-  * ``analyze_lumo_gamma2_pairs.py``           (Cliff's delta, Bootstrap-CI,
-                                                ``delta_block``, ``sign_test``,
-                                                ``sds_from``, ``by_state``,
-                                                ``vals``, ``pairs_block``,
-                                                Jonckheere-Terpstra,
-                                                ``season_of``)
-  * ``analyze_lumo_emv_multivariate_cv.py``    (``fit_lda``, ``predict_lda``,
-                                                ``loo_cv``, ``permutation_test``)
-  * ``analyze_lumo_emv_pairwise_triplets_cv.py`` (``fit_linear_score``,
-                                                ``score_row``, ``oof_scores``,
-                                                ``delta_sds``, ``permutation_p``,
-                                                ``paired_bootstrap_diff``)
+``code/lumo/lumo_ocv_stats.py``, the canonical port of the LUMO analysis scripts
+(that docstring lists which function comes from which ``analyze_lumo_*`` script).
 
 The Espoo difference is *naming and scope only*, and it is a large one:
 
@@ -55,10 +42,8 @@ The Espoo difference is *naming and scope only*, and it is a large one:
         ``n_observable``, ``dwell_control``) are not re-derived; the report names
         them.
 
-Conventions (identical to the origin):
-  SDS  = 10 * |Cliff's delta|
-  delta(ref, grp) > 0  =>  the *group* is larger than the reference
-  bootstrap seeds 7 (in-sample) resp. 11/12/13 (OOF), permutation seed 7/8
+Conventions — SDS = 10 * |Cliff's delta|, delta(ref, grp) > 0 => the *group* is larger than
+the reference, bootstrap 7 in-sample / 11-13 OOF, permutation 7/8 — are the origin's.
 """
 from __future__ import annotations
 

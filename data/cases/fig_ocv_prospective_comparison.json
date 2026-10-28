@@ -1,0 +1,283 @@
+{
+ "case": {
+  "event": "2018-08-14",
+  "leads": {
+   "anchor": "the bin's own tick: the 15th of a whole month; the event is 2018-08-14",
+   "definitions": {
+    "first_change": "the first month at which the trajectory rule, read on the months up to it, returns CHANGE",
+    "first_flagged": "the first held-out month in which any of the eight streams lies outside the frozen envelope",
+    "first_live_fire": "the first month at which a pinned policy rule would have fired, both blocks and dimensions considered",
+    "first_persistence": "the first month at which some stream had already been outside for 2 consecutive months"
+   },
+   "first_change": {
+    "day": "2017-12-15",
+    "days_before_event": 242,
+    "label": "2017-12",
+    "month": "2017-12"
+   },
+   "first_flagged": {
+    "day": "2017-09-15",
+    "days_before_event": 333,
+    "label": "2017-09",
+    "month": "2017-09"
+   },
+   "first_live_fire": null,
+   "first_live_rule": null,
+   "first_persistence": {
+    "day": "2017-12-15",
+    "days_before_event": 242,
+    "label": "2017-12",
+    "month": "2017-12"
+   },
+   "signed_lead_days": 333,
+   "sustained_lead_days": 242
+  },
+  "live_reason": "no rule this cut can read fires; one of the policy's three firing rules is not carried by an observability cut",
+  "pair": {
+   "collapsed": false,
+   "concur": false,
+   "live": "NOMINAL",
+   "live_over_all_five": "INSUFFICIENT",
+   "live_positive": false,
+   "note": "two vocabularies over one set of numbers. The trajectory word summarises the frozen envelope's own persistence rule; the live word is the pinned policy's, over its own floors. Neither is a translation of the other and no sentence here chooses between them. The live word is read over the rules this cut carries; the same policy over every firing rule it names reads INSUFFICIENT.",
+   "trajectory": "CHANGE",
+   "trajectory_positive": true,
+   "word": "the readers differ: CHANGE against NOMINAL"
+  },
+  "plate_verdict": "sustained multidimensional observability departure",
+  "site": "morandi",
+  "trajectory": "CHANGE"
+ },
+ "control": {
+  "event": "2024-09-11",
+  "leads": {
+   "anchor": "the bin's own tick: the 15th of a whole month; the event is 2024-09-11",
+   "definitions": {
+    "first_change": "the first month at which the trajectory rule, read on the months up to it, returns CHANGE",
+    "first_flagged": "the first held-out month in which any of the eight streams lies outside the frozen envelope",
+    "first_live_fire": "the first month at which a pinned policy rule would have fired, both blocks and dimensions considered",
+    "first_persistence": "the first month at which some stream had already been outside for 2 consecutive months"
+   },
+   "first_change": null,
+   "first_flagged": {
+    "day": "2024-01-15",
+    "days_before_event": 240,
+    "label": "2024-01",
+    "month": "2024-01"
+   },
+   "first_live_fire": null,
+   "first_live_rule": null,
+   "first_persistence": {
+    "day": "2024-02-15",
+    "days_before_event": 209,
+    "label": "2024-02",
+    "month": "2024-02"
+   },
+   "signed_lead_days": 240,
+   "sustained_lead_days": null
+  },
+  "live_reason": "no rule this cut can read fires; one of the policy's three firing rules is not carried by an observability cut",
+  "pair": {
+   "collapsed": false,
+   "concur": false,
+   "live": "NOMINAL",
+   "live_over_all_five": "INSUFFICIENT",
+   "live_positive": false,
+   "note": "two vocabularies over one set of numbers. The trajectory word summarises the frozen envelope's own persistence rule; the live word is the pinned policy's, over its own floors. Neither is a translation of the other and no sentence here chooses between them. The live word is read over the rules this cut carries; the same policy over every firing rule it names reads INSUFFICIENT.",
+   "trajectory": "WATCH",
+   "trajectory_positive": true,
+   "word": "the readers differ: WATCH against NOMINAL"
+  },
+  "plate_verdict": "isolated unusual departure",
+  "site": "carola",
+  "trajectory": "WATCH"
+ },
+ "differs": [
+  "R_B",
+  "R_G",
+  "gamma2",
+  "P",
+  "A",
+  "F",
+  "S"
+ ],
+ "note": "Read in this order: the case, then the control, then the case again. The third reading is compared with the first and must be identical; the control is never an input to the case. The two assets are not pooled and no number here is an average of them.",
+ "order": [
+  "morandi",
+  "carola"
+ ],
+ "rows": [
+  {
+   "case": {
+    "max_abs": 1.4200168798,
+    "median": 1.1104372115,
+    "n_fired": 7,
+    "n_months": 12,
+    "q05": 0.592306109,
+    "q95": 1.0446420568,
+    "run": 6
+   },
+   "control": {
+    "max_abs": 1.2424617043,
+    "median": 0.806904354,
+    "n_fired": 2,
+    "n_months": 9,
+    "q05": 0.4187860288,
+    "q95": 1.1997728779,
+    "run": 1
+   },
+   "stream": "R_B"
+  },
+  {
+   "case": {
+    "max_abs": 2.117374591,
+    "median": 1.6641183776,
+    "n_fired": 4,
+    "n_months": 12,
+    "q05": 0.5463301081,
+    "q95": 1.7131431426,
+    "run": 2
+   },
+   "control": {
+    "max_abs": 0.7563344738,
+    "median": 0.6286133616,
+    "n_fired": 2,
+    "n_months": 9,
+    "q05": 0.4661794043,
+    "q95": 0.9857563481,
+    "run": 1
+   },
+   "stream": "R_G"
+  },
+  {
+   "case": {
+    "max_abs": 2.0069224786,
+    "median": -1.3385283484,
+    "n_fired": 11,
+    "n_months": 12,
+    "q05": -0.4701705288,
+    "q95": 0.3801537206,
+    "run": 10
+   },
+   "control": {
+    "max_abs": 1.2560007324,
+    "median": 0.2628410484,
+    "n_fired": 4,
+    "n_months": 9,
+    "q05": -0.5078036477,
+    "q95": 0.7038349177,
+    "run": 2
+   },
+   "stream": "gamma2"
+  },
+  {
+   "case": {
+    "max_abs": 0.5955244075,
+    "median": 0.1775201609,
+    "n_fired": 1,
+    "n_months": 12,
+    "q05": -0.3622259532,
+    "q95": 0.4481880065,
+    "run": 1
+   },
+   "control": {
+    "max_abs": 0.7326337164,
+    "median": -0.3655371633,
+    "n_fired": 5,
+    "n_months": 9,
+    "q05": -0.3343686946,
+    "q95": 0.5581592503,
+    "run": 3
+   },
+   "stream": "P"
+  },
+  {
+   "case": {
+    "max_abs": 3.0735805948,
+    "median": 1.4460186504,
+    "n_fired": 10,
+    "n_months": 12,
+    "q05": -0.5260067958,
+    "q95": 0.7976654414,
+    "run": 10
+   },
+   "control": {
+    "max_abs": 0.5819798515,
+    "median": 0.0462899002,
+    "n_fired": 0,
+    "n_months": 9,
+    "q05": -0.6907240249,
+    "q95": 0.5848716638,
+    "run": 0
+   },
+   "stream": "A"
+  },
+  {
+   "case": {
+    "max_abs": 2.0611868093,
+    "median": 1.3138279278,
+    "n_fired": 0,
+    "n_months": 12,
+    "q05": -0.2160926117,
+    "q95": 2.6763505036,
+    "run": 0
+   },
+   "control": {
+    "max_abs": 0.6286604127,
+    "median": 0.0544249914,
+    "n_fired": 0,
+    "n_months": 9,
+    "q05": -0.6779345387,
+    "q95": 0.6339264298,
+    "run": 0
+   },
+   "stream": "D"
+  },
+  {
+   "case": {
+    "max_abs": 2.0936388724,
+    "median": 1.1607260719,
+    "n_fired": 9,
+    "n_months": 12,
+    "q05": -0.5055293853,
+    "q95": 0.7998624387,
+    "run": 9
+   },
+   "control": {
+    "max_abs": 0.6219697689,
+    "median": 0.0523217222,
+    "n_fired": 1,
+    "n_months": 9,
+    "q05": -0.8142436714,
+    "q95": 0.3461075127,
+    "run": 1
+   },
+   "stream": "F"
+  },
+  {
+   "case": {
+    "max_abs": 0.8535732307,
+    "median": 0.0616094685,
+    "n_fired": 1,
+    "n_months": 12,
+    "q05": -0.6517942941,
+    "q95": 0.5822485587,
+    "run": 1
+   },
+   "control": {
+    "max_abs": 0.9129644828,
+    "median": 0.0600836852,
+    "n_fired": 3,
+    "n_months": 9,
+    "q05": -0.522212529,
+    "q95": 0.6360994478,
+    "run": 2
+   },
+   "stream": "S"
+  }
+ ],
+ "window_source": {
+  "carola": "the registry declares it, and its descriptive plate is published against it: the registry's window for this asset",
+  "morandi": "the stated rule selected it: the earliest run of twelve consecutive calendar months in which every month holds at least four chips"
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "check": "python3 code/cts/cts_ocv_quarantine.py --check (and --selftest)",
+ "entries": [
+  {
+   "columns": [
+    "asset_name",
+    "asset_type"
+   ],
+   "evidence": [
+    "data/cts/cts_segments.txt (sha256 117cff6ce5b647b4ee6f5e51040787714441f12e0a0b46eaf8251c3910b4f123) labels the same asset_id as `Champlain Towers South`, so the key is right and the name/type columns are wrong -- the join is not what broke, a column is.",
+    "data/cts/cts_asset.json (sha256 fd8986930377530a1f463d365bc090a92cf4205769960b8bee6ed2d4e238ca69) is the site's own asset record: label `Champlain Towers South`, asset_id `null` -- the package never needed an id from the export.",
+    "The label is not a cross-reference to a second asset either: Werder's committed meta (data/werder_havel/support/werder_havel_ocv_channels_meta.json) pairs the same string with asset_id 40f420c6-c38e-5eab-8f2b-ac00d66707d0. The CTS rows therefore mix a CTS key with a Werder label.",
+    "The defect is upstream: erlking_mvp/tools/ocv_table.py (outside this repository) copies the columns into the support table as `committed_*`. Haltern and Carola carry coherent triples in their own measurement exports, so CTS is the only site affected.",
+    "No CTS result reads the columns as identity: the only reference is the passthrough list `SOURCE_TEXT` in code/cts/cts_ocv_core.py; the plates, the DiD layer and the support migration key on `track`/`role`/`day`."
+   ],
+   "files": [
+    {
+     "path": "data/cts/cts_ocv_channels.csv",
+     "role": "verbatim copy",
+     "rows": 711,
+     "sha256": "af092c43bb942e8f406b56544ce3d86756f96c64264eaae5a7af878282e7a3b7"
+    },
+    {
+     "path": "data/cts/support/cts_ocv_channels.csv",
+     "role": "verbatim copy",
+     "rows": 178,
+     "sha256": "3965a15b2053dc0b28a0cdd741092a415e7acd2bd743a788f2462d04bda28826"
+    },
+    {
+     "path": "data/cts/support/cts_ocv_channels_meta.json",
+     "role": "verbatim copy, field `committed_asset_name` / `committed_asset_type`"
+    }
+   ],
+   "finding": "`asset_id` and the `asset_name`/`asset_type` pair do not belong to the same asset: the key is CTS's, the labels are Werder's. No asset in this repository carries this triple.",
+   "identity_replaced_by": [
+    "track",
+    "role",
+    "day",
+    "orbit_direction",
+    "relative_orbit",
+    "subswath"
+   ],
+   "observed": {
+    "asset_id": "6b3f7f30-edbb-53f4-b923-135a1e51658b",
+    "asset_name": "Havelbr\u00fccke Werder (A 10)",
+    "asset_type": "bridge"
+   },
+   "origin": {
+    "path": "data/cts/cts_measurements_full.txt",
+    "rows": 712,
+    "sha256": "78453c7f64ab5910f1612cac116462dc2359b5345e2742f76ef015aa19671218",
+    "where": "columns 1-3 (`asset_id|asset_name|asset_type`), identical on all 712 rows"
+   },
+   "report_wording": "Name the site `Champlain Towers South` from data/cts/cts_asset.json, or by its tracks. Never print the asset_name column as if it described this record.",
+   "rows_affected": 712,
+   "site": "cts",
+   "status": "quarantined",
+   "used_for_identity": false
+  },
+  {
+   "columns": [
+    "request_id"
+   ],
+   "finding": "The column is named like an acquisition-request key but carries the track label: it equals `track` on all 711 rows of the table, so nothing is lost -- only the name is wrong. Read `track`.",
+   "identity_replaced_by": [
+    "track"
+   ],
+   "observed": [
+    "cts_asc_48_iw3",
+    "ctn_asc_48_iw3",
+    "cte_asc_48_iw3",
+    "beach_asc_48_iw3"
+   ],
+   "site": "cts",
+   "status": "misnamed, values correct",
+   "used_for_identity": false
+  },
+  {
+   "columns": [
+    "asset_id",
+    "asset_name",
+    "asset_type"
+   ],
+   "finding": "At Werder the three columns are internally consistent and agree with data/werder_havel/reference/werder_havel_aoi.json. They are listed here only so that the identical name string in the CTS tables cannot be mistaken for them.",
+   "observed": {
+    "asset_id": "40f420c6-c38e-5eab-8f2b-ac00d66707d0",
+    "asset_name": "Havelbr\u00fccke Werder (A 10)",
+    "asset_type": "bridge"
+   },
+   "site": "werder_havel",
+   "status": "verified",
+   "used_for_identity": true
+  }
+ ],
+ "identity_columns": [
+  "id",
+  "day",
+  "date",
+  "track",
+  "role",
+  "orbit_direction",
+  "relative_orbit",
+  "subswath"
+ ],
+ "identity_note": "`id` is the pipeline row key (`<track>_<date>`); `track` is the footprint and carries the role (`target`, `control_ctn`, ...); `day` is the acquisition day. Together they name a row of every site's table without any asset metadata.",
+ "quarantined_columns": [
+  "asset_name",
+  "asset_type"
+ ],
+ "recorded": "2026-10-28",
+ "rule": "A quarantined column is provenance only. It is copied verbatim from its source and is never used to select, join, group, sort or label a record; identity is `identity_columns`. The records stay byte-identical -- the sha256 of every file named below is pinned here -- so a quarantine changes the reader, not the data. Repairing a source is a separate, documented amendment of the source and of this register, never a silent edit.",
+ "schema": "ocv-metadata-quarantine-v1"
+}

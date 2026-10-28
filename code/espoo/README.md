@@ -5,7 +5,7 @@ numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Espoo Kurttila mast
 (Espoo, Finland) half of the repository; the LUMO tower lives in `../lumo/`,
 Bautzen in `../bautzen/`, KDLO in `../kdlo/`, Carola in `../carola/`, Morandi in
-`../morandi/`, CTS in `../cts/` and YWF in `../ywf/`.
+`../morandi/`, CTS in `../cts/` and Haltern in `../haltern/`.
 
 ## What this site is, and what it is for
 
@@ -25,7 +25,7 @@ labels              damage_label / structural_state / condition_label are empty
 
 There is therefore no severity axis to regress against and no event to anchor a
 window on. This package is the family's **event-free control**: the LUMO package
-asks whether an OCV separates four *damage* states, Morandi, CTS, Carola and YWF
+asks whether an OCV separates four *damage* states, Morandi, CTS, Carola and Haltern
 ask the same across a collapse, and Espoo asks what the same machinery reports
 when there is demonstrably nothing to find. The only contrast the record supports
 is the one between its two **orbit geometries** — and `espoo_ocv_core.state_of()`

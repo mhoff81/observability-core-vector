@@ -1,0 +1,1599 @@
+{
+ "assessment": {
+  "applies": false,
+  "reason": "there is no held-out pre-event class on this site: the reference window is the reference state's own span, so there is nothing to assess against it"
+ },
+ "bootstrap": {
+  "block": 3,
+  "draws": 2000,
+  "kind": "circular moving-block, one resample per group",
+  "seed": 7
+ },
+ "class_comparison": {
+  "classes": {
+   "outside": {
+    "intervals": [],
+    "label": "held-out pre-event",
+    "n_chips": 0,
+    "n_intervals": 0,
+    "note": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+    "values": {
+     "A": null,
+     "D": null,
+     "F": null,
+     "P": null,
+     "R_B": null,
+     "R_G": null,
+     "S": null,
+     "gamma2": null
+    }
+   },
+   "post": {
+    "intervals": [
+     "2023-05",
+     "2023-06",
+     "2023-07",
+     "2023-08",
+     "2023-09",
+     "2023-10",
+     "2023-11",
+     "2023-12",
+     "2024-01",
+     "2024-02",
+     "2024-03",
+     "2024-04",
+     "2024-05",
+     "2024-06",
+     "2024-07",
+     "2024-08",
+     "2024-09"
+    ],
+    "label": "post-event",
+    "n_chips": 43,
+    "n_intervals": 17,
+    "note": "post-event: every chip of the registry's post state(s)",
+    "values": {
+     "A": 1.8494643141,
+     "D": -0.4867696167,
+     "F": 0.3525959118,
+     "P": -1.5971335576,
+     "R_B": 1.3266076878,
+     "R_G": 3.1615942917,
+     "S": -6.0,
+     "gamma2": -0.1509321888
+    }
+   },
+   "reference": {
+    "intervals": [
+     "2022-06",
+     "2022-07",
+     "2022-08",
+     "2022-09",
+     "2022-10",
+     "2022-11",
+     "2022-12"
+    ],
+    "label": "frozen pre-event reference",
+    "n_chips": 16,
+    "n_intervals": 7,
+    "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+    "values": {
+     "A": 0.0,
+     "D": 0.0,
+     "F": 0.0,
+     "P": 0.0,
+     "R_B": 0.7991754759,
+     "R_G": 0.809873453,
+     "S": -0.0,
+     "gamma2": 0.0
+    }
+   }
+  },
+  "labels": {
+   "A": "z(A)",
+   "D": "z(D)",
+   "F": "z(F)",
+   "P": "z(P)",
+   "R_B": "R_B",
+   "R_G": "R_G",
+   "S": "z(S)",
+   "gamma2": "z(gamma2)"
+  },
+  "order": [
+   "gamma2",
+   "P",
+   "R_B",
+   "A",
+   "D",
+   "F",
+   "S",
+   "R_G"
+  ],
+  "units": "z (reference scales); R is a per-chip RMS in the same units"
+ },
+ "classes": {
+  "event": "2022-12-11",
+  "event_rule": "OUTSIDE is strictly before 2022-12-11; POST is the registry's post state(s); a chip on the event day is assigned by its registry state, and a reference-state chip on or after the event is reported as unassigned",
+  "labels": {
+   "outside": "held-out pre-event",
+   "post": "post-event",
+   "reference": "frozen pre-event reference"
+  },
+  "n_unassigned": 0,
+  "notes": {
+   "outside": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+   "post": "post-event: every chip of the registry's post state(s)",
+   "reference": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)"
+  },
+  "outside": {
+   "label": "held-out pre-event",
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "post": {
+   "label": "post-event",
+   "months": 17,
+   "n_ascending": 0,
+   "n_chips": 43,
+   "n_descending": 43,
+   "n_echo": 43,
+   "window": [
+    "2023-05-04",
+    "2024-09-19"
+   ]
+  },
+  "reconciliation": {
+   "kept": 59,
+   "outside": 0,
+   "post": 43,
+   "reference": 16,
+   "unassigned": 0
+  },
+  "reference": {
+   "label": "frozen pre-event reference",
+   "months": 7,
+   "n_ascending": 0,
+   "n_chips": 16,
+   "n_descending": 16,
+   "n_echo": 16,
+   "window": [
+    "2022-06-02",
+    "2022-12-11"
+   ]
+  },
+  "unassigned": []
+ },
+ "clipped": 40,
+ "contrast": {
+  "applies": true,
+  "block": 3,
+  "dims": {
+   "A": {
+    "ci": [
+     0.0561190469,
+     2.573002379
+    ],
+    "delta": 1.8494643141,
+    "direction": "up",
+    "excludes_zero": true,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "D": {
+    "ci": [
+     -0.8587404848,
+     0.3383112315
+    ],
+    "delta": -0.4867696167,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "F": {
+    "ci": [
+     -0.7270220769,
+     1.3603820118
+    ],
+    "delta": 0.3525959118,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "P": {
+    "ci": [
+     -2.3559118441,
+     -0.5272130478
+    ],
+    "delta": -1.5971335576,
+    "direction": "down",
+    "excludes_zero": true,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "R_B": {
+    "block": "behaviour",
+    "ci": [
+     0.0434577049,
+     1.2086480855
+    ],
+    "delta": 0.5274322119,
+    "direction": "up",
+    "excludes_zero": true,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "R_G": {
+    "block": "geometry",
+    "ci": [
+     1.3336184448,
+     2.507913977
+    ],
+    "delta": 2.3517208387,
+    "direction": "up",
+    "excludes_zero": true,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "S": {
+    "ci": [
+     -6.2974187103,
+     -3.1163234167
+    ],
+    "delta": -6.0,
+    "direction": "down",
+    "excludes_zero": true,
+    "n_post": 43,
+    "n_reference": 16
+   },
+   "gamma2": {
+    "ci": [
+     -0.7534167568,
+     0.9089733523
+    ],
+    "delta": -0.1509321888,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 43,
+    "n_reference": 16
+   }
+  },
+  "draws": 2000,
+  "n_post": 43,
+  "n_reference": 16,
+  "seed": 7,
+  "states": [
+   "rebuild"
+  ]
+ },
+ "cut": {
+  "excluded": {
+   "single": 1
+  },
+  "kept": 59,
+  "refused": [],
+  "rows": 60,
+  "window": [
+   "2022-06-02",
+   "2024-09-19"
+  ]
+ },
+ "environment_context": {
+  "applies": false
+ },
+ "event": "2022-12-11",
+ "figure": {
+  "dpi": 630,
+  "panels": [
+   {
+    "block": "behaviour",
+    "id": "a1",
+    "shows": "z(gamma2) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a2",
+    "shows": "z(P) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a3",
+    "shows": "the behaviour plane (z(gamma2), z(P))"
+   },
+   {
+    "block": "behaviour",
+    "id": "a4",
+    "shows": "R_B -- the behaviour block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b1",
+    "shows": "z(A) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b2",
+    "shows": "z(F) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b3",
+    "shows": "the geometry plane (z(A), z(F))"
+   },
+   {
+    "block": "geometry",
+    "id": "b4",
+    "shows": "R_G -- the geometry block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "context",
+    "id": "c1",
+    "shows": "environmental context (weather, descriptive only)"
+   },
+   {
+    "block": "context",
+    "id": "c2",
+    "shows": "the observation cadence per orbit"
+   },
+   {
+    "block": "context",
+    "id": "c3",
+    "shows": "observation availability: solid = an echo, hollow = a mask without one"
+   },
+   {
+    "block": "context",
+    "id": "c4",
+    "shows": "the trajectory matrix: six dimensions x every month"
+   }
+  ]
+ },
+ "label": "KDLO media tower, Garden City SD",
+ "months": [
+  {
+   "R_B": 0.4616570532,
+   "R_G": 1.249597033,
+   "anchor": "2022-06-15",
+   "label": "2022-06",
+   "month": "2022-06",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 2,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.2393354308,
+    "wind_speed_ms": -0.1579010159
+   },
+   "z": {
+    "A": 1.0602757717,
+    "D": -0.4486781405,
+    "F": -0.659751809,
+    "P": -0.3445162628,
+    "S": -1.3627145579,
+    "gamma2": -0.4215874902
+   }
+  },
+  {
+   "R_B": 0.8248748153,
+   "R_G": 2.0718223695,
+   "anchor": "2022-07-15",
+   "label": "2022-07",
+   "month": "2022-07",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 2,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.7125668507,
+    "wind_speed_ms": -0.0643300435
+   },
+   "z": {
+    "A": -0.0226074312,
+    "D": -0.8865459392,
+    "F": 0.1423570312,
+    "P": -0.0081226326,
+    "S": -2.8822405587,
+    "gamma2": 0.4519065259
+   }
+  },
+  {
+   "R_B": 0.8139560697,
+   "R_G": 0.4471975599,
+   "anchor": "2022-08-15",
+   "label": "2022-08",
+   "month": "2022-08",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 3,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.3862003542,
+    "wind_speed_ms": -0.4678548621
+   },
+   "z": {
+    "A": -0.0899896956,
+    "D": -0.8386814627,
+    "F": 0.0,
+    "P": -0.1648139587,
+    "S": 0.2974187103,
+    "gamma2": 0.526739268
+   }
+  },
+  {
+   "R_B": 0.3215714426,
+   "R_G": 0.6397745469,
+   "anchor": "2022-09-15",
+   "label": "2022-09",
+   "month": "2022-09",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 3,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.0380760913,
+    "wind_speed_ms": -0.6900859215
+   },
+   "z": {
+    "A": -0.182542742,
+    "D": -0.0009460243,
+    "F": -0.3897766971,
+    "P": 0.4380777603,
+    "S": 0.7456258446,
+    "gamma2": 0.1301617193
+   }
+  },
+  {
+   "R_B": 1.856803975,
+   "R_G": 0.9407195232,
+   "anchor": "2022-10-15",
+   "label": "2022-10",
+   "month": "2022-10",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 2,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.2021165955,
+    "wind_speed_ms": 1.5848583452
+   },
+   "z": {
+    "A": -0.786303932,
+    "D": 0.3486377394,
+    "F": -1.0725067954,
+    "P": 0.4592384161,
+    "S": 0.4400529369,
+    "gamma2": -1.7167727101
+   }
+  },
+  {
+   "R_B": 1.3509694677,
+   "R_G": 0.7871588089,
+   "anchor": "2022-11-15",
+   "label": "2022-11",
+   "month": "2022-11",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 3,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -2.7251602459,
+    "wind_speed_ms": 1.1267504595
+   },
+   "z": {
+    "A": 1.0489370859,
+    "D": 0.6526520643,
+    "F": 0.6744907595,
+    "P": -1.095798496,
+    "S": -1.3448966722,
+    "gamma2": -1.4416399967
+   }
+  },
+  {
+   "R_B": 4.2447325729,
+   "R_G": 4.9239818513,
+   "anchor": "2022-12-15",
+   "label": "2022-12",
+   "month": "2022-12",
+   "n": 1,
+   "n_ascending": 0,
+   "n_descending": 1,
+   "n_echo": 1,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 1,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -2.3226415669,
+    "wind_speed_ms": 0.3547899371
+   },
+   "z": {
+    "A": 6.0,
+    "D": -2.7319157917,
+    "F": 4.1855734608,
+    "P": -6.0,
+    "S": -6.0,
+    "gamma2": -0.1884389328
+   }
+  },
+  {
+   "R_B": 3.4628795492,
+   "R_G": 3.4360474499,
+   "anchor": "2023-05-15",
+   "label": "2023-05",
+   "month": "2023-05",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.2556537556,
+    "wind_speed_ms": -0.0818746009
+   },
+   "z": {
+    "A": 2.9948127365,
+    "D": -0.1001389291,
+    "F": 2.1744914918,
+    "P": -2.3564093393,
+    "S": -4.8297950301,
+    "gamma2": -1.6660588714
+   }
+  },
+  {
+   "R_B": 0.7429990433,
+   "R_G": 2.4414408183,
+   "anchor": "2023-06-15",
+   "label": "2023-06",
+   "month": "2023-06",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.723445734,
+    "wind_speed_ms": -0.8928230284
+   },
+   "z": {
+    "A": 1.4196461792,
+    "D": 0.2974517129,
+    "F": 0.2904143088,
+    "P": -0.7439119336,
+    "S": -4.4388812213,
+    "gamma2": -0.5186734692
+   }
+  },
+  {
+   "R_B": 0.6104597602,
+   "R_G": 3.1652034131,
+   "anchor": "2023-07-15",
+   "label": "2023-07",
+   "month": "2023-07",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.7887190333,
+    "wind_speed_ms": -0.1403564586
+   },
+   "z": {
+    "A": 0.2635398593,
+    "D": -0.3929078415,
+    "F": -1.8897774295,
+    "P": 0.3057370574,
+    "S": -6.0,
+    "gamma2": -0.4093340757
+   }
+  },
+  {
+   "R_B": 2.3385160226,
+   "R_G": 4.294690392,
+   "anchor": "2023-08-15",
+   "label": "2023-08",
+   "month": "2023-08",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.3862003542,
+    "wind_speed_ms": 0.1949395259
+   },
+   "z": {
+    "A": 3.8937834072,
+    "D": -0.8958471896,
+    "F": 2.5872450136,
+    "P": -3.2857077103,
+    "S": 0.0,
+    "gamma2": -0.3401620254
+   }
+  },
+  {
+   "R_B": 1.126300855,
+   "R_G": 2.7824243877,
+   "anchor": "2023-09-15",
+   "label": "2023-09",
+   "month": "2023-09",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.0924705073,
+    "wind_speed_ms": 0.2066358974
+   },
+   "z": {
+    "A": 2.2619812045,
+    "D": 0.0243331688,
+    "F": -0.8255099728,
+    "P": -1.2413366771,
+    "S": -4.973439164,
+    "gamma2": -0.6204868466
+   }
+  },
+  {
+   "R_B": 0.8718881124,
+   "R_G": 1.5401626509,
+   "anchor": "2023-10-15",
+   "label": "2023-10",
+   "month": "2023-10",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.9954178144,
+    "wind_speed_ms": -0.339194775
+   },
+   "z": {
+    "A": 1.6613548347,
+    "D": 0.0440638027,
+    "F": 0.0,
+    "P": -0.5747978673,
+    "S": -1.8225751645,
+    "gamma2": 0.6142277773
+   }
+  },
+  {
+   "R_B": 1.9776762024,
+   "R_G": 3.1795789334,
+   "anchor": "2023-11-15",
+   "label": "2023-11",
+   "month": "2023-11",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -2.126821669,
+    "wind_speed_ms": -0.4405633284
+   },
+   "z": {
+    "A": 2.1886188251,
+    "D": -0.7660385715,
+    "F": 0.6616006132,
+    "P": -1.4075290359,
+    "S": -5.7873397051,
+    "gamma2": -1.8952392539
+   }
+  },
+  {
+   "R_B": 1.7940611029,
+   "R_G": 3.2767222013,
+   "anchor": "2023-12-15",
+   "label": "2023-12",
+   "month": "2023-12",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -2.3987937494,
+    "wind_speed_ms": 0.4327657474
+   },
+   "z": {
+    "A": 2.0894581813,
+    "D": -0.5760172312,
+    "F": 1.244764571,
+    "P": -2.4338546481,
+    "S": -6.0,
+    "gamma2": -0.2337392419
+   }
+  },
+  {
+   "R_B": 1.9122447139,
+   "R_G": 3.286851001,
+   "anchor": "2024-01-15",
+   "label": "2024-01",
+   "month": "2024-01",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -3.2201494323,
+    "wind_speed_ms": -0.1325588776
+   },
+   "z": {
+    "A": 2.2714885206,
+    "D": -0.8658085923,
+    "F": 0.4274939369,
+    "P": -2.2779307989,
+    "S": -6.0,
+    "gamma2": 0.0341275378
+   }
+  },
+  {
+   "R_B": 1.3579556897,
+   "R_G": 3.3815328387,
+   "anchor": "2024-02-15",
+   "label": "2024-02",
+   "month": "2024-02",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -3.4322876551,
+    "wind_speed_ms": -0.4990451862
+   },
+   "z": {
+    "A": 3.0910314851,
+    "D": -0.2873774464,
+    "F": 0.6744907595,
+    "P": -1.8740213223,
+    "S": -6.0,
+    "gamma2": -0.0487663449
+   }
+  },
+  {
+   "R_B": 2.0623443184,
+   "R_G": 3.4022317115,
+   "anchor": "2024-03-15",
+   "label": "2024-03",
+   "month": "2024-03",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.6862268987,
+    "wind_speed_ms": -0.3586887276
+   },
+   "z": {
+    "A": 2.7827166177,
+    "D": -0.413889603,
+    "F": 1.2066244878,
+    "P": -2.8425228823,
+    "S": -6.0,
+    "gamma2": 0.0778169512
+   }
+  },
+  {
+   "R_B": 1.698723477,
+   "R_G": 3.1985524377,
+   "anchor": "2024-04-15",
+   "label": "2024-04",
+   "month": "2024-04",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.2891476613,
+    "wind_speed_ms": 0.9552036767
+   },
+   "z": {
+    "A": 2.205151457,
+    "D": 0.1761151009,
+    "F": 0.0,
+    "P": -1.4374350204,
+    "S": -6.0,
+    "gamma2": 0.1934656074
+   }
+  },
+  {
+   "R_B": 2.5637532185,
+   "R_G": 3.1773747727,
+   "anchor": "2024-05-15",
+   "label": "2024-05",
+   "month": "2024-05",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.1903804563,
+    "wind_speed_ms": 1.009786744
+   },
+   "z": {
+    "A": 1.4061349973,
+    "D": -0.0881791511,
+    "F": 0.5551120176,
+    "P": -3.3159057323,
+    "S": -6.0,
+    "gamma2": 1.4250207264
+   }
+  },
+  {
+   "R_B": 1.6289794108,
+   "R_G": 3.061052618,
+   "anchor": "2024-06-15",
+   "label": "2024-06",
+   "month": "2024-06",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.2012593395,
+    "wind_speed_ms": -0.2534213836
+   },
+   "z": {
+    "A": 0.6720903102,
+    "D": 0.5147532227,
+    "F": -0.3897766971,
+    "P": -2.2656210157,
+    "S": -6.0,
+    "gamma2": 0.4172640103
+   }
+  },
+  {
+   "R_B": 2.2677523926,
+   "R_G": 3.1441478205,
+   "anchor": "2024-07-15",
+   "label": "2024-07",
+   "month": "2024-07",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.5167469528,
+    "wind_speed_ms": -1.3138924043
+   },
+   "z": {
+    "A": 0.7868885482,
+    "D": -0.7245842206,
+    "F": 1.4917613935,
+    "P": -2.3972570253,
+    "S": -6.0,
+    "gamma2": -1.4442457972
+   }
+  },
+  {
+   "R_B": 1.3266076878,
+   "R_G": 3.1324446906,
+   "anchor": "2024-08-15",
+   "label": "2024-08",
+   "month": "2024-08",
+   "n": 3,
+   "n_ascending": 0,
+   "n_descending": 3,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 3,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.6908090843,
+    "wind_speed_ms": 0.1793443638
+   },
+   "z": {
+    "A": 1.5969977611,
+    "D": -0.4867696167,
+    "F": -0.3897766971,
+    "P": -1.7041451382,
+    "S": -6.0,
+    "gamma2": 0.3284824137
+   }
+  },
+  {
+   "R_B": 1.6745844001,
+   "R_G": 3.908932616,
+   "anchor": "2024-09-15",
+   "label": "2024-09",
+   "month": "2024-09",
+   "n": 2,
+   "n_ascending": 0,
+   "n_descending": 2,
+   "n_echo": 2,
+   "n_outside": 0,
+   "n_post": 2,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.1359860402,
+    "wind_speed_ms": 0.0487348815
+   },
+   "z": {
+    "A": 3.5446893092,
+    "D": -2.6149405478,
+    "F": 2.1046821315,
+    "P": -2.318196257,
+    "S": 0.0,
+    "gamma2": -0.4761047513
+   }
+  }
+ ],
+ "note": "the tail is the **rebuild**, not a collapse aftermath: the contrast answers a different question, and the plate says so in its own subtitle rather than in a footnote.",
+ "outside": {
+  "applies": false,
+  "block": 3,
+  "dims": {},
+  "directional": {
+   "longest_run": null,
+   "runs": []
+  },
+  "draws": 2000,
+  "intervals": [],
+  "n_intervals": 0,
+  "n_outside": 0,
+  "n_reference": 16,
+  "persistence": {},
+  "reason": "the reference window is the state's own span (R2), so no healthy chip sits outside it and there is nothing for the plate to test",
+  "seed": 7
+ },
+ "post": {
+  "label": "post-event",
+  "months": 17,
+  "n_ascending": 0,
+  "n_chips": 43,
+  "n_descending": 43,
+  "n_echo": 43,
+  "note": "post-event: every chip of the registry's post state(s)",
+  "states": [
+   "rebuild"
+  ],
+  "window": [
+   "2023-05-04",
+   "2024-09-19"
+  ]
+ },
+ "reference": {
+  "choice": "no sub-window: the state's own span",
+  "chosen": null,
+  "groups": [
+   "pooled"
+  ],
+  "label": "frozen pre-event reference",
+  "months": 7,
+  "n_ascending": 0,
+  "n_chips": 16,
+  "n_descending": 16,
+  "n_echo": 16,
+  "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+  "outside": {
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "policy": "pooled over the orbits",
+  "span": {
+   "months": 7,
+   "n_ascending": 0,
+   "n_chips": 16,
+   "n_descending": 16,
+   "n_echo": 16,
+   "window": [
+    "2022-06-02",
+    "2022-12-11"
+   ]
+  },
+  "state": "pre",
+  "window": [
+   "2022-06-02",
+   "2022-12-11"
+  ]
+ },
+ "reference_envelope": {
+  "aggregation": "monthly median of each calendar-month bin",
+  "chip": {
+   "A": {
+    "max": 6.0,
+    "min": -1.8361477234,
+    "n": 16,
+    "q05": -1.7389642037,
+    "q50": 0.0,
+    "q95": 3.5973474273
+   },
+   "D": {
+    "max": 0.8811522809,
+    "min": -2.7319157917,
+    "n": 16,
+    "q05": -2.0456930248,
+    "q50": 0.0,
+    "q95": 0.8033814024
+   },
+   "F": {
+    "max": 4.1855734608,
+    "min": -1.319503618,
+    "n": 16,
+    "q05": -1.319503618,
+    "q50": 0.0,
+    "q95": 2.5186706634
+   },
+   "P": {
+    "max": 1.0545508468,
+    "min": -6.0,
+    "n": 16,
+    "q05": -2.440319099,
+    "q50": 0.0,
+    "q95": 1.0090381182
+   },
+   "R_B": {
+    "max": 4.2447325729,
+    "min": 0.1389192242,
+    "n": 16,
+    "q05": 0.1416342935,
+    "q50": 0.7991754759,
+    "q95": 3.331767258
+   },
+   "R_G": {
+    "max": 4.9239818513,
+    "min": 0.2577771817,
+    "n": 16,
+    "q05": 0.3242321939,
+    "q50": 0.809873453,
+    "q95": 3.6761666401
+   },
+   "S": {
+    "max": 0.9260311699,
+    "min": -6.0,
+    "n": 16,
+    "q05": -6.0,
+    "q50": -0.0,
+    "q95": 0.8879159522
+   },
+   "gamma2": {
+    "max": 1.1911255039,
+    "min": -4.2615414085,
+    "n": 16,
+    "q05": -2.4302784564,
+    "q50": 0.0,
+    "q95": 0.9187783671
+   }
+  },
+  "chip_note": "descriptive only: a single chip is never compared with a monthly state in this analysis",
+  "decision_level": "monthly",
+  "decision_quantile": 95,
+  "monthly": {
+   "A": {
+    "max": 6.0,
+    "min": -0.786303932,
+    "n": 7,
+    "q05": -0.605175575,
+    "q50": -0.0226074312,
+    "q95": 4.5180827315,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": 1.0602757717
+     },
+     {
+      "month": "2022-07",
+      "value": -0.0226074312
+     },
+     {
+      "month": "2022-08",
+      "value": -0.0899896956
+     },
+     {
+      "month": "2022-09",
+      "value": -0.182542742
+     },
+     {
+      "month": "2022-10",
+      "value": -0.786303932
+     },
+     {
+      "month": "2022-11",
+      "value": 1.0489370859
+     },
+     {
+      "month": "2022-12",
+      "value": 6.0
+     }
+    ]
+   },
+   "D": {
+    "max": 0.6526520643,
+    "min": -2.7319157917,
+    "n": 7,
+    "q05": -2.178304836,
+    "q50": -0.4486781405,
+    "q95": 0.5614477669,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": -0.4486781405
+     },
+     {
+      "month": "2022-07",
+      "value": -0.8865459392
+     },
+     {
+      "month": "2022-08",
+      "value": -0.8386814627
+     },
+     {
+      "month": "2022-09",
+      "value": -0.0009460243
+     },
+     {
+      "month": "2022-10",
+      "value": 0.3486377394
+     },
+     {
+      "month": "2022-11",
+      "value": 0.6526520643
+     },
+     {
+      "month": "2022-12",
+      "value": -2.7319157917
+     }
+    ]
+   },
+   "F": {
+    "max": 4.1855734608,
+    "min": -1.0725067954,
+    "n": 7,
+    "q05": -0.9486802995,
+    "q50": 0.0,
+    "q95": 3.1322486504,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": -0.659751809
+     },
+     {
+      "month": "2022-07",
+      "value": 0.1423570312
+     },
+     {
+      "month": "2022-08",
+      "value": 0.0
+     },
+     {
+      "month": "2022-09",
+      "value": -0.3897766971
+     },
+     {
+      "month": "2022-10",
+      "value": -1.0725067954
+     },
+     {
+      "month": "2022-11",
+      "value": 0.6744907595
+     },
+     {
+      "month": "2022-12",
+      "value": 4.1855734608
+     }
+    ]
+   },
+   "P": {
+    "max": 0.4592384161,
+    "min": -6.0,
+    "n": 7,
+    "q05": -4.5287395488,
+    "q50": -0.1648139587,
+    "q95": 0.4528902194,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": -0.3445162628
+     },
+     {
+      "month": "2022-07",
+      "value": -0.0081226326
+     },
+     {
+      "month": "2022-08",
+      "value": -0.1648139587
+     },
+     {
+      "month": "2022-09",
+      "value": 0.4380777603
+     },
+     {
+      "month": "2022-10",
+      "value": 0.4592384161
+     },
+     {
+      "month": "2022-11",
+      "value": -1.095798496
+     },
+     {
+      "month": "2022-12",
+      "value": -6.0
+     }
+    ]
+   },
+   "R_B": {
+    "max": 4.2447325729,
+    "min": 0.3215714426,
+    "n": 7,
+    "q05": 0.3635971258,
+    "q50": 0.8248748153,
+    "q95": 3.5283539935,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": 0.4616570532
+     },
+     {
+      "month": "2022-07",
+      "value": 0.8248748153
+     },
+     {
+      "month": "2022-08",
+      "value": 0.8139560697
+     },
+     {
+      "month": "2022-09",
+      "value": 0.3215714426
+     },
+     {
+      "month": "2022-10",
+      "value": 1.856803975
+     },
+     {
+      "month": "2022-11",
+      "value": 1.3509694677
+     },
+     {
+      "month": "2022-12",
+      "value": 4.2447325729
+     }
+    ]
+   },
+   "R_G": {
+    "max": 4.9239818513,
+    "min": 0.4471975599,
+    "n": 7,
+    "q05": 0.504970656,
+    "q50": 0.9407195232,
+    "q95": 4.0683340068,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": 1.249597033
+     },
+     {
+      "month": "2022-07",
+      "value": 2.0718223695
+     },
+     {
+      "month": "2022-08",
+      "value": 0.4471975599
+     },
+     {
+      "month": "2022-09",
+      "value": 0.6397745469
+     },
+     {
+      "month": "2022-10",
+      "value": 0.9407195232
+     },
+     {
+      "month": "2022-11",
+      "value": 0.7871588089
+     },
+     {
+      "month": "2022-12",
+      "value": 4.9239818513
+     }
+    ]
+   },
+   "S": {
+    "max": 0.7456258446,
+    "min": -6.0,
+    "n": 7,
+    "q05": -5.0646721676,
+    "q50": -1.3448966722,
+    "q95": 0.6539539723,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": -1.3627145579
+     },
+     {
+      "month": "2022-07",
+      "value": -2.8822405587
+     },
+     {
+      "month": "2022-08",
+      "value": 0.2974187103
+     },
+     {
+      "month": "2022-09",
+      "value": 0.7456258446
+     },
+     {
+      "month": "2022-10",
+      "value": 0.4400529369
+     },
+     {
+      "month": "2022-11",
+      "value": -1.3448966722
+     },
+     {
+      "month": "2022-12",
+      "value": -6.0
+     }
+    ]
+   },
+   "gamma2": {
+    "max": 0.526739268,
+    "min": -1.7167727101,
+    "n": 7,
+    "q05": -1.6342328961,
+    "q50": -0.1884389328,
+    "q95": 0.5042894454,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2022-06",
+      "value": -0.4215874902
+     },
+     {
+      "month": "2022-07",
+      "value": 0.4519065259
+     },
+     {
+      "month": "2022-08",
+      "value": 0.526739268
+     },
+     {
+      "month": "2022-09",
+      "value": 0.1301617193
+     },
+     {
+      "month": "2022-10",
+      "value": -1.7167727101
+     },
+     {
+      "month": "2022-11",
+      "value": -1.4416399967
+     },
+     {
+      "month": "2022-12",
+      "value": -0.1884389328
+     }
+    ]
+   }
+  },
+  "months": [
+   "2022-06",
+   "2022-07",
+   "2022-08",
+   "2022-09",
+   "2022-10",
+   "2022-11",
+   "2022-12"
+  ],
+  "n_reference_months": 7,
+  "persistence_min_months": 2,
+  "quantiles": [
+   5,
+   50,
+   95
+  ]
+ },
+ "schema": "ocv-trajectory-v2",
+ "sha256": "9c6bb9197197b38210f543702c425c5c7b1d7facb25c700907e89cdb2dec6381",
+ "site": "kdlo",
+ "standardisation": {
+  "pooled": {
+   "A": {
+    "centre": 3.9888125494,
+    "n": 16,
+    "rule": "all reference chips",
+    "scale": 0.2058084063,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 6.0101243983,
+    "z_min": -1.8361477234
+   },
+   "D": {
+    "centre": -2.6568705254,
+    "n": 16,
+    "rule": "all reference chips",
+    "scale": 0.6214317689,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 0.8811522809,
+    "z_min": -2.7319157917
+   },
+   "F": {
+    "centre": 2.302585093,
+    "n": 16,
+    "rule": "all reference chips",
+    "scale": 0.2703099401,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 4.1855734608,
+    "z_min": -1.319503618
+   },
+   "P": {
+    "centre": -0.5529945404,
+    "n": 16,
+    "rule": "echo-bearing reference chips",
+    "scale": 0.1010575899,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.0545508468,
+    "z_min": -6.7752896405
+   },
+   "S": {
+    "centre": 22.933799784,
+    "n": 16,
+    "rule": "all reference chips",
+    "scale": 0.5429387163,
+    "source": "mad",
+    "transform": "identity",
+    "z_max": 0.9260311699,
+    "z_min": -32.8592125132
+   },
+   "gamma2": {
+    "centre": -3.1500070664,
+    "n": 16,
+    "rule": "echo-bearing reference chips",
+    "scale": 0.8871549246,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.1911255039,
+    "z_min": -4.2615414085
+   }
+  }
+ },
+ "summer_2024": {
+  "applies": false,
+  "reason": "no held-out pre-event class on this site"
+ },
+ "table": "data/kdlo/support/kdlo_ocv_channels.csv",
+ "weather_reference": {
+  "temperature_c": {
+   "pooled": {
+    "centre": 18.15,
+    "distinct": 16,
+    "n": 16,
+    "scale": 9.19212,
+    "source": "mad",
+    "transform": "identity"
+   }
+  },
+  "wind_speed_ms": {
+   "pooled": {
+    "centre": 4.69,
+    "distinct": 16,
+    "n": 16,
+    "scale": 2.564898,
+    "source": "mad",
+    "transform": "identity"
+   }
+  }
+ }
+}

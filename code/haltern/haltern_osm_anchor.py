@@ -22,9 +22,9 @@ what *is* known and states the limit:
   * the anchor is the **turbine's own OpenStreetMap node** ``8268709968``
     (``generator:source=wind``, ``model=N149``, ``manufacturer=Nordex``,
     ``height=164``, ``generator:output:electricity=4.5 MW``,
-    ``operator=RAG Montan Immobilien, Stadtwerke Haltern``). Haltern does **not**
-    reuse YWF's premise - the tower did not fall onto a named road, so there is
-    no carriageway to anchor to. It is anchored to the structure itself, which is
+    ``operator=RAG Montan Immobilien, Stadtwerke Haltern``). The tower did not
+    fall onto a named road, so there is no carriageway to anchor to. It is
+    anchored to the structure itself, which is
     a **point** object and therefore the strongest anchor of this family: it
     cannot carry the polygon shape error the Bergsoysund analysis measured
     (-81..+7 m, rms 56 m);
@@ -65,7 +65,7 @@ Modes
     --fetch   (re)fetch the node and its full version history from the public OSM
               API and write the extract [network]
     --write   derive the geometry from the committed extract and write it
-    --check   re-derive and compare field by field (the default)
+    (default) re-derive and compare field by field
 """
 from __future__ import annotations
 

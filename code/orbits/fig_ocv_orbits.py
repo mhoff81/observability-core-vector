@@ -22,8 +22,8 @@ What a panel shows
 * for ``gamma2`` a dotted zero line, because zero is the floor of the scale.
 
 A channel with no data is not drawn empty: the panel carries the reason ("no
-ASC dates: 19 of 33 were refused at the raster edge"), because an empty axis
-reads as "no effect" instead of "no measurement".
+ASC dates: all 60 overpasses of the support cut are DESCENDING"), because an
+empty axis reads as "no effect" instead of "no measurement".
 
 Outputs
 -------
@@ -127,18 +127,6 @@ SITES = {
         "label": "Haltern AV9 wind turbine",
         "table": "data/haltern/support/haltern_ocv_channels.csv",
         "manifest": "data/haltern/support/haltern_rects_support.txt.manifest.json",
-        "date_column": "acquisition_ts", "orbit_column": "orbit_direction",
-        "label_column": "state",
-        "states": {"pre": "pre-collapse (healthy)", "post": "post-collapse"},
-        "state_names": {"pre": "pre-collapse", "post": "post-collapse"},
-        "gamma2": "gamma2_mask",
-        "channels": {"ASCENDING": "ASC", "DESCENDING": "DESC"},
-        "framing": "collapse",
-    },
-    "ywf": {
-        "label": "Yeongdeok Unit 21",
-        "table": "data/ywf/support/ywf_ocv_channels.csv",
-        "manifest": "data/ywf/support/ywf_rects_support.txt.manifest.json",
         "date_column": "acquisition_ts", "orbit_column": "orbit_direction",
         "label_column": "state",
         "states": {"pre": "pre-collapse (healthy)", "post": "post-collapse"},

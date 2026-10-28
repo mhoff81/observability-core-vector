@@ -1,0 +1,2278 @@
+{
+ "assessment": {
+  "applies": false,
+  "reason": "there is no held-out pre-event class on this site: the reference window is the reference state's own span, so there is nothing to assess against it"
+ },
+ "bootstrap": {
+  "block": 3,
+  "draws": 2000,
+  "kind": "circular moving-block, one resample per group",
+  "seed": 7
+ },
+ "class_comparison": {
+  "classes": {
+   "outside": {
+    "intervals": [],
+    "label": "held-out pre-event",
+    "n_chips": 0,
+    "n_intervals": 0,
+    "note": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+    "values": {
+     "A": null,
+     "D": null,
+     "F": null,
+     "P": null,
+     "R_B": null,
+     "R_G": null,
+     "S": null,
+     "gamma2": null
+    }
+   },
+   "post": {
+    "intervals": [
+     "2018-08 (post)",
+     "2018-09"
+    ],
+    "label": "post-event",
+    "n_chips": 9,
+    "n_intervals": 2,
+    "note": "post-event: every chip of the registry's post state(s)",
+    "values": {
+     "A": 0.5619111576,
+     "D": -0.5340295133,
+     "F": 0.2986858135,
+     "P": 0.0805306774,
+     "R_B": 0.629216005,
+     "R_G": 1.0306402763,
+     "S": 0.2672370528,
+     "gamma2": 0.0606240886
+    }
+   },
+   "reference": {
+    "intervals": [
+     "2016-08",
+     "2016-09",
+     "2016-10",
+     "2016-11",
+     "2016-12",
+     "2017-01",
+     "2017-02",
+     "2017-03",
+     "2017-04",
+     "2017-05",
+     "2017-06",
+     "2017-07",
+     "2017-08",
+     "2017-09",
+     "2017-10",
+     "2017-11",
+     "2017-12",
+     "2018-01",
+     "2018-02",
+     "2018-03",
+     "2018-04",
+     "2018-05",
+     "2018-06",
+     "2018-07",
+     "2018-08 (pre)"
+    ],
+    "label": "frozen pre-event reference",
+    "n_chips": 198,
+    "n_intervals": 25,
+    "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+    "values": {
+     "A": 0.0,
+     "D": 0.0,
+     "F": -0.0,
+     "P": 0.0,
+     "R_B": 0.7756414699,
+     "R_G": 0.9115234949,
+     "S": 0.0,
+     "gamma2": 0.0
+    }
+   }
+  },
+  "labels": {
+   "A": "z(A)",
+   "D": "z(D)",
+   "F": "z(F)",
+   "P": "z(P)",
+   "R_B": "R_B",
+   "R_G": "R_G",
+   "S": "z(S)",
+   "gamma2": "z(gamma2)"
+  },
+  "order": [
+   "gamma2",
+   "P",
+   "R_B",
+   "A",
+   "D",
+   "F",
+   "S",
+   "R_G"
+  ],
+  "units": "z (reference scales); R is a per-chip RMS in the same units"
+ },
+ "classes": {
+  "event": "2018-08-14",
+  "event_rule": "OUTSIDE is strictly before 2018-08-14; POST is the registry's post state(s); a chip on the event day is assigned by its registry state, and a reference-state chip on or after the event is reported as unassigned",
+  "labels": {
+   "outside": "held-out pre-event",
+   "post": "post-event",
+   "reference": "frozen pre-event reference"
+  },
+  "n_unassigned": 0,
+  "notes": {
+   "outside": "held-out pre-event: reference-state chips after the reference window and strictly before the event; drawn in the reference frame, standardising nothing",
+   "post": "post-event: every chip of the registry's post state(s)",
+   "reference": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)"
+  },
+  "outside": {
+   "label": "held-out pre-event",
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "post": {
+   "label": "post-event",
+   "months": 2,
+   "n_ascending": 3,
+   "n_chips": 9,
+   "n_descending": 6,
+   "n_echo": 9,
+   "window": [
+    "2018-08-14",
+    "2018-09-13"
+   ]
+  },
+  "reconciliation": {
+   "kept": 207,
+   "outside": 0,
+   "post": 9,
+   "reference": 198,
+   "unassigned": 0
+  },
+  "reference": {
+   "label": "frozen pre-event reference",
+   "months": 25,
+   "n_ascending": 91,
+   "n_chips": 198,
+   "n_descending": 107,
+   "n_echo": 198,
+   "window": [
+    "2016-08-24",
+    "2018-08-08"
+   ]
+  },
+  "unassigned": []
+ },
+ "clipped": 0,
+ "contrast": {
+  "applies": true,
+  "block": 3,
+  "dims": {
+   "A": {
+    "ci": [
+     -0.4542993482,
+     0.9683654687
+    ],
+    "delta": 0.5619111576,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "D": {
+    "ci": [
+     -0.9454340022,
+     -0.1199385419
+    ],
+    "delta": -0.5340295133,
+    "direction": "down",
+    "excludes_zero": true,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "F": {
+    "ci": [
+     -0.1813814722,
+     0.7004240285
+    ],
+    "delta": 0.2986858135,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "P": {
+    "ci": [
+     -0.2385828647,
+     0.7421456705
+    ],
+    "delta": 0.0805306774,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "R_B": {
+    "block": "behaviour",
+    "ci": [
+     -0.3085155969,
+     0.0206442848
+    ],
+    "delta": -0.1464254649,
+    "direction": "down",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "R_G": {
+    "block": "geometry",
+    "ci": [
+     0.0325948898,
+     0.256512123
+    ],
+    "delta": 0.1191167813,
+    "direction": "up",
+    "excludes_zero": true,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "S": {
+    "ci": [
+     -0.0403937184,
+     2.2059764423
+    ],
+    "delta": 0.2672370528,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   },
+   "gamma2": {
+    "ci": [
+     -1.0598727106,
+     0.2967274572
+    ],
+    "delta": 0.0606240886,
+    "direction": "up",
+    "excludes_zero": false,
+    "n_post": 9,
+    "n_reference": 198
+   }
+  },
+  "draws": 2000,
+  "n_post": 9,
+  "n_reference": 198,
+  "seed": 7,
+  "states": [
+   "post-collapse"
+  ]
+ },
+ "cut": {
+  "excluded": {},
+  "kept": 207,
+  "refused": [],
+  "rows": 207,
+  "window": [
+   "2016-08-24",
+   "2018-09-13"
+  ]
+ },
+ "environment_context": {
+  "applies": false
+ },
+ "event": "2018-08-14",
+ "figure": {
+  "dpi": 630,
+  "panels": [
+   {
+    "block": "behaviour",
+    "id": "a1",
+    "shows": "z(gamma2) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a2",
+    "shows": "z(P) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "behaviour",
+    "id": "a3",
+    "shows": "the behaviour plane (z(gamma2), z(P))"
+   },
+   {
+    "block": "behaviour",
+    "id": "a4",
+    "shows": "R_B -- the behaviour block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b1",
+    "shows": "z(A) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b2",
+    "shows": "z(F) -- monthly median, with the monthly reference envelope"
+   },
+   {
+    "block": "geometry",
+    "id": "b3",
+    "shows": "the geometry plane (z(A), z(F))"
+   },
+   {
+    "block": "geometry",
+    "id": "b4",
+    "shows": "R_G -- the geometry block magnitude, with its monthly reference envelope"
+   },
+   {
+    "block": "context",
+    "id": "c1",
+    "shows": "environmental context (weather, descriptive only)"
+   },
+   {
+    "block": "context",
+    "id": "c2",
+    "shows": "the observation cadence per orbit"
+   },
+   {
+    "block": "context",
+    "id": "c3",
+    "shows": "observation availability: solid = an echo, hollow = a mask without one"
+   },
+   {
+    "block": "context",
+    "id": "c4",
+    "shows": "the trajectory matrix: six dimensions x every month"
+   }
+  ]
+ },
+ "label": "Ponte Morandi, Genova",
+ "months": [
+  {
+   "R_B": 0.8903516349,
+   "R_G": 0.7218576654,
+   "anchor": "2016-08-15",
+   "label": "2016-08",
+   "month": "2016-08",
+   "n": 1,
+   "n_ascending": 0,
+   "n_descending": 1,
+   "n_echo": 1,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 1,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.6917853943,
+    "wind_speed_ms": 0.4011840949
+   },
+   "z": {
+    "A": 0.8962630207,
+    "D": -0.4523247114,
+    "F": 0.5785215347,
+    "P": -1.1915575692,
+    "S": 0.8612442997,
+    "gamma2": -0.4069921703
+   }
+  },
+  {
+   "R_B": 0.7139816291,
+   "R_G": 0.6738371968,
+   "anchor": "2016-09-15",
+   "label": "2016-09",
+   "month": "2016-09",
+   "n": 6,
+   "n_ascending": 3,
+   "n_descending": 3,
+   "n_echo": 6,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 6,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.8416722298,
+    "wind_speed_ms": -0.5641651334
+   },
+   "z": {
+    "A": 0.0645612596,
+    "D": -0.6330839164,
+    "F": -0.0265515065,
+    "P": -0.060126472,
+    "S": 0.8101757674,
+    "gamma2": 0.3567628702
+   }
+  },
+  {
+   "R_B": 0.7615112586,
+   "R_G": 0.9375678862,
+   "anchor": "2016-10-15",
+   "label": "2016-10",
+   "month": "2016-10",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.1441219572,
+    "wind_speed_ms": -0.2457252581
+   },
+   "z": {
+    "A": -0.5899696787,
+    "D": 0.3014038439,
+    "F": -0.5636871246,
+    "P": -0.6299968642,
+    "S": -0.3557940061,
+    "gamma2": 0.4669869053
+   }
+  },
+  {
+   "R_B": 0.9277781897,
+   "R_G": 0.8654750162,
+   "anchor": "2016-11-15",
+   "label": "2016-11",
+   "month": "2016-11",
+   "n": 9,
+   "n_ascending": 5,
+   "n_descending": 4,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.3343629406,
+    "wind_speed_ms": -0.0250740059
+   },
+   "z": {
+    "A": -0.5263026623,
+    "D": 0.8869285577,
+    "F": -0.5480662324,
+    "P": -0.0132217824,
+    "S": -0.5040785023,
+    "gamma2": 0.5361055051
+   }
+  },
+  {
+   "R_B": 0.8855308013,
+   "R_G": 1.0231011489,
+   "anchor": "2016-12-15",
+   "label": "2016-12",
+   "month": "2016-12",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.8474371081,
+    "wind_speed_ms": 0.0376110089
+   },
+   "z": {
+    "A": -0.2563033593,
+    "D": 0.5808318508,
+    "F": -0.2977792009,
+    "P": -0.0803414394,
+    "S": -0.4761168535,
+    "gamma2": 0.112778218
+   }
+  },
+  {
+   "R_B": 0.4547559262,
+   "R_G": 0.9969680132,
+   "anchor": "2017-01-15",
+   "label": "2017-01",
+   "month": "2017-01",
+   "n": 9,
+   "n_ascending": 5,
+   "n_descending": 4,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.1414459007,
+    "wind_speed_ms": 2.3118233466
+   },
+   "z": {
+    "A": -0.4704005467,
+    "D": 1.3219146802,
+    "F": -0.8836046739,
+    "P": 0.2054012978,
+    "S": -0.8074611411,
+    "gamma2": 0.3243122884
+   }
+  },
+  {
+   "R_B": 0.7951549578,
+   "R_G": 0.6791065245,
+   "anchor": "2017-02-15",
+   "label": "2017-02",
+   "month": "2017-02",
+   "n": 7,
+   "n_ascending": 5,
+   "n_descending": 2,
+   "n_echo": 7,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 7,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.8762614995,
+    "wind_speed_ms": 0.7070869672
+   },
+   "z": {
+    "A": -0.4704005467,
+    "D": 0.0025267408,
+    "F": -0.5480662324,
+    "P": 0.321799306,
+    "S": -0.388059137,
+    "gamma2": 0.4031596645
+   }
+  },
+  {
+   "R_B": 0.7050245547,
+   "R_G": 0.7365919625,
+   "anchor": "2017-03-15",
+   "label": "2017-03",
+   "month": "2017-03",
+   "n": 9,
+   "n_ascending": 5,
+   "n_descending": 4,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.3920117235,
+    "wind_speed_ms": 0.0651924154
+   },
+   "z": {
+    "A": -0.4186432717,
+    "D": 0.5439535965,
+    "F": -0.5480662324,
+    "P": 0.4991707469,
+    "S": -0.6777001271,
+    "gamma2": 0.507069025
+   }
+  },
+  {
+   "R_B": 0.6705799157,
+   "R_G": 1.0169908602,
+   "anchor": "2017-04-15",
+   "label": "2017-04",
+   "month": "2017-04",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.0749434177,
+    "wind_speed_ms": -0.2131290504
+   },
+   "z": {
+    "A": -0.1207350824,
+    "D": -0.5816068371,
+    "F": -0.1354493062,
+    "P": 0.2478562185,
+    "S": 0.3730989563,
+    "gamma2": 0.2423965076
+   }
+  },
+  {
+   "R_B": 0.7862082592,
+   "R_G": 0.6021615812,
+   "anchor": "2017-05-15",
+   "label": "2017-05",
+   "month": "2017-05",
+   "n": 9,
+   "n_ascending": 5,
+   "n_descending": 4,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.3458926972,
+    "wind_speed_ms": 0.1554588368
+   },
+   "z": {
+    "A": -0.0136959437,
+    "D": -0.5659489871,
+    "F": -0.3517888265,
+    "P": 0.408320592,
+    "S": -0.2126792644,
+    "gamma2": 0.246245632
+   }
+  },
+  {
+   "R_B": 0.7863860081,
+   "R_G": 0.6747133268,
+   "anchor": "2017-06-15",
+   "label": "2017-06",
+   "month": "2017-06",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.9050858909,
+    "wind_speed_ms": -0.5165245221
+   },
+   "z": {
+    "A": -0.1575271644,
+    "D": -0.5968493287,
+    "F": -0.1585181652,
+    "P": 0.0538853915,
+    "S": 0.1602370546,
+    "gamma2": 0.1331623149
+   }
+  },
+  {
+   "R_B": 0.7259123784,
+   "R_G": 0.5687896902,
+   "anchor": "2017-07-15",
+   "label": "2017-07",
+   "month": "2017-07",
+   "n": 9,
+   "n_ascending": 5,
+   "n_descending": 4,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 1.0030888218,
+    "wind_speed_ms": 0.1805328427
+   },
+   "z": {
+    "A": -0.0422061719,
+    "D": -0.5900991929,
+    "F": -0.1555114207,
+    "P": 0.4870001381,
+    "S": 0.3813270564,
+    "gamma2": 0.002822077
+   }
+  },
+  {
+   "R_B": 0.5346006951,
+   "R_G": 0.63243329,
+   "anchor": "2017-08-15",
+   "label": "2017-08",
+   "month": "2017-08",
+   "n": 11,
+   "n_ascending": 5,
+   "n_descending": 6,
+   "n_echo": 11,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 11,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 1.0722673612,
+    "wind_speed_ms": -0.1554588368
+   },
+   "z": {
+    "A": 0.6428085153,
+    "D": -0.5199878663,
+    "F": 0.5019285143,
+    "P": -0.1440463871,
+    "S": 0.1887213742,
+    "gamma2": -0.0435135841
+   }
+  },
+  {
+   "R_B": 0.7219719093,
+   "R_G": 0.6652051651,
+   "anchor": "2017-09-15",
+   "label": "2017-09",
+   "month": "2017-09",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.5303688023,
+    "wind_speed_ms": -0.2407104569
+   },
+   "z": {
+    "A": 0.0157561374,
+    "D": -0.5064769163,
+    "F": -0.0997155152,
+    "P": 0.3032393871,
+    "S": -0.0719586933,
+    "gamma2": -0.0693581349
+   }
+  },
+  {
+   "R_B": 0.9650333347,
+   "R_G": 1.2156964229,
+   "anchor": "2017-10-15",
+   "label": "2017-10",
+   "month": "2017-10",
+   "n": 10,
+   "n_ascending": 5,
+   "n_descending": 5,
+   "n_echo": 10,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 10,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.121062444,
+    "wind_speed_ms": -0.689535163
+   },
+   "z": {
+    "A": 0.2463198802,
+    "D": 0.7053042999,
+    "F": 0.097088637,
+    "P": 0.280743656,
+    "S": -0.0171999934,
+    "gamma2": 0.0978002271
+   }
+  },
+  {
+   "R_B": 0.7324863799,
+   "R_G": 1.1745811833,
+   "anchor": "2017-11-15",
+   "label": "2017-11",
+   "month": "2017-11",
+   "n": 9,
+   "n_ascending": 4,
+   "n_descending": 5,
+   "n_echo": 9,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 9,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.5880175852,
+    "wind_speed_ms": 2.0761276909
+   },
+   "z": {
+    "A": 0.456290903,
+    "D": 0.1043821399,
+    "F": 0.0583708215,
+    "P": 0.2161892646,
+    "S": -0.0949224672,
+    "gamma2": -0.4664469665
+   }
+  },
+  {
+   "R_B": 0.8884893775,
+   "R_G": 0.8502424098,
+   "anchor": "2017-12-15",
+   "label": "2017-12",
+   "month": "2017-12",
+   "n": 8,
+   "n_ascending": 3,
+   "n_descending": 5,
+   "n_echo": 8,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 8,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.1818000487,
+    "wind_speed_ms": 0.6669685577
+   },
+   "z": {
+    "A": 1.2841650251,
+    "D": 0.4604998671,
+    "F": 0.6964211039,
+    "P": 0.2632387199,
+    "S": -0.385675394,
+    "gamma2": -0.7208311853
+   }
+  },
+  {
+   "R_B": 0.8668021062,
+   "R_G": 1.2263466168,
+   "anchor": "2018-01-15",
+   "label": "2018-01",
+   "month": "2018-01",
+   "n": 7,
+   "n_ascending": 2,
+   "n_descending": 5,
+   "n_echo": 7,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 7,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.9684995521,
+    "wind_speed_ms": -0.1905624451
+   },
+   "z": {
+    "A": 1.8373677017,
+    "D": 0.6088037121,
+    "F": 1.1220025163,
+    "P": -0.2459541047,
+    "S": 0.0099612008,
+    "gamma2": -0.7058213736
+   }
+  },
+  {
+   "R_B": 0.6937800085,
+   "R_G": 1.115231302,
+   "anchor": "2018-02-15",
+   "label": "2018-02",
+   "month": "2018-02",
+   "n": 7,
+   "n_ascending": 2,
+   "n_descending": 5,
+   "n_echo": 7,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 7,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -1.3259220058,
+    "wind_speed_ms": 1.619780783
+   },
+   "z": {
+    "A": 1.7536263666,
+    "D": 0.3268233937,
+    "F": 1.051842905,
+    "P": -0.0881742622,
+    "S": -0.1127556158,
+    "gamma2": -0.8904468335
+   }
+  },
+  {
+   "R_B": 0.9843578481,
+   "R_G": 0.9299376893,
+   "anchor": "2018-03-15",
+   "label": "2018-03",
+   "month": "2018-03",
+   "n": 8,
+   "n_ascending": 3,
+   "n_descending": 5,
+   "n_echo": 8,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 8,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": -0.6341366115,
+    "wind_speed_ms": 0.5516281304
+   },
+   "z": {
+    "A": 1.1232627672,
+    "D": 0.4749215108,
+    "F": 0.5725449391,
+    "P": 0.1975122674,
+    "S": 0.1296812392,
+    "gamma2": -0.9906287869
+   }
+  },
+  {
+   "R_B": 0.8628577136,
+   "R_G": 1.0396558662,
+   "anchor": "2018-04-15",
+   "label": "2018-04",
+   "month": "2018-04",
+   "n": 6,
+   "n_ascending": 2,
+   "n_descending": 4,
+   "n_echo": 6,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 6,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.1498868354,
+    "wind_speed_ms": 1.1584190739
+   },
+   "z": {
+    "A": 1.1327385572,
+    "D": 0.2408387464,
+    "F": 0.6179007794,
+    "P": 0.4610140537,
+    "S": 0.0329475389,
+    "gamma2": -0.8370950006
+   }
+  },
+  {
+   "R_B": 0.6321679218,
+   "R_G": 0.8988715541,
+   "anchor": "2018-05-15",
+   "label": "2018-05",
+   "month": "2018-05",
+   "n": 7,
+   "n_ascending": 2,
+   "n_descending": 5,
+   "n_echo": 7,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 7,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.1729463486,
+    "wind_speed_ms": 0.4613617091
+   },
+   "z": {
+    "A": 0.4271865416,
+    "D": -0.2971920765,
+    "F": 0.2986858135,
+    "P": 0.274246182,
+    "S": 0.1117367084,
+    "gamma2": -0.4594647375
+   }
+  },
+  {
+   "R_B": 0.6928876777,
+   "R_G": 1.0812522529,
+   "anchor": "2018-06-15",
+   "label": "2018-06",
+   "month": "2018-06",
+   "n": 6,
+   "n_ascending": 2,
+   "n_descending": 4,
+   "n_echo": 6,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 6,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.7724936903,
+    "wind_speed_ms": -0.7121017684
+   },
+   "z": {
+    "A": 0.9743831301,
+    "D": -0.0535473455,
+    "F": 0.6334222289,
+    "P": -0.2430808097,
+    "S": 0.2886139266,
+    "gamma2": -0.2318573414
+   }
+  },
+  {
+   "R_B": 0.8643095298,
+   "R_G": 0.7505038838,
+   "anchor": "2018-07-15",
+   "label": "2018-07",
+   "month": "2018-07",
+   "n": 7,
+   "n_ascending": 2,
+   "n_descending": 5,
+   "n_echo": 7,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 7,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 1.1183863875,
+    "wind_speed_ms": -0.2808288664
+   },
+   "z": {
+    "A": 0.4704005467,
+    "D": -0.4488452584,
+    "F": 0.3580351022,
+    "P": -0.0513994338,
+    "S": 0.5009157581,
+    "gamma2": -0.4148814707
+   }
+  },
+  {
+   "R_B": 1.1041764757,
+   "R_G": 0.7461237043,
+   "anchor": "2018-08-05",
+   "label": "2018-08 (pre)",
+   "month": "2018-08",
+   "n": 3,
+   "n_ascending": 1,
+   "n_descending": 2,
+   "n_echo": 3,
+   "n_outside": 0,
+   "n_post": 0,
+   "n_reference": 3,
+   "n_unassigned": 0,
+   "part": "pre",
+   "weather_z": {
+    "temperature_c": 1.4758088412,
+    "wind_speed_ms": -0.5616577328
+   },
+   "z": {
+    "A": 0.5369655199,
+    "D": 0.7220044319,
+    "F": 0.27716762,
+    "P": -0.6089156589,
+    "S": 0.8624223694,
+    "gamma2": -0.6687664446
+   }
+  },
+  {
+   "R_B": 0.7535931931,
+   "R_G": 1.0152087735,
+   "anchor": "2018-08-25",
+   "label": "2018-08 (post)",
+   "month": "2018-08",
+   "n": 5,
+   "n_ascending": 2,
+   "n_descending": 3,
+   "n_echo": 5,
+   "n_outside": 0,
+   "n_post": 5,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": "post",
+   "weather_z": {
+    "temperature_c": 1.2221541967,
+    "wind_speed_ms": -0.1554588368
+   },
+   "z": {
+    "A": 0.5619111576,
+    "D": -0.4561809155,
+    "F": 0.2986858135,
+    "P": 0.685766661,
+    "S": 0.2672370528,
+    "gamma2": -0.0012955604
+   }
+  },
+  {
+   "R_B": 0.5197331533,
+   "R_G": 1.0321503904,
+   "anchor": "2018-09-15",
+   "label": "2018-09",
+   "month": "2018-09",
+   "n": 4,
+   "n_ascending": 1,
+   "n_descending": 3,
+   "n_echo": 4,
+   "n_outside": 0,
+   "n_post": 4,
+   "n_reference": 0,
+   "n_unassigned": 0,
+   "part": null,
+   "weather_z": {
+    "temperature_c": 0.5361336806,
+    "wind_speed_ms": 0.0225666053
+   },
+   "z": {
+    "A": 0.2644172873,
+    "D": -0.8806290904,
+    "F": 0.2147627081,
+    "P": -0.1941057882,
+    "S": 0.9228765934,
+    "gamma2": 0.0790897202
+   }
+  }
+ ],
+ "note": "nine post chips on thirteen days: the tail is drawn and its contrast is reported with the interval it can carry, which is wide by construction.",
+ "outside": {
+  "applies": false,
+  "block": 3,
+  "dims": {},
+  "directional": {
+   "longest_run": null,
+   "runs": []
+  },
+  "draws": 2000,
+  "intervals": [],
+  "n_intervals": 0,
+  "n_outside": 0,
+  "n_reference": 198,
+  "persistence": {},
+  "reason": "the reference window is the state's own span (R2), so no healthy chip sits outside it and there is nothing for the plate to test",
+  "seed": 7
+ },
+ "post": {
+  "label": "post-event",
+  "months": 2,
+  "n_ascending": 3,
+  "n_chips": 9,
+  "n_descending": 6,
+  "n_echo": 9,
+  "note": "post-event: every chip of the registry's post state(s)",
+  "states": [
+   "post-collapse"
+  ],
+  "window": [
+   "2018-08-14",
+   "2018-09-13"
+  ]
+ },
+ "reference": {
+  "choice": "no sub-window: the state's own span",
+  "chosen": null,
+  "groups": [
+   "pooled"
+  ],
+  "label": "frozen pre-event reference",
+  "months": 25,
+  "n_ascending": 91,
+  "n_chips": 198,
+  "n_descending": 107,
+  "n_echo": 198,
+  "note": "the frozen pre-event reference: the chips the standardisation rests on (R2/R3)",
+  "outside": {
+   "months": 0,
+   "n_ascending": 0,
+   "n_chips": 0,
+   "n_descending": 0,
+   "n_echo": 0,
+   "window": null
+  },
+  "policy": "pooled over the orbits",
+  "span": {
+   "months": 25,
+   "n_ascending": 91,
+   "n_chips": 198,
+   "n_descending": 107,
+   "n_echo": 198,
+   "window": [
+    "2016-08-24",
+    "2018-08-08"
+   ]
+  },
+  "state": "pre-collapse (healthy)",
+  "window": [
+   "2016-08-24",
+   "2018-08-08"
+  ]
+ },
+ "reference_envelope": {
+  "aggregation": "monthly median of each calendar-month bin",
+  "chip": {
+   "A": {
+    "max": 2.3828084414,
+    "min": -1.4944956431,
+    "n": 198,
+    "q05": -0.8094809559,
+    "q50": 0.0,
+    "q95": 2.2859029089
+   },
+   "D": {
+    "max": 1.9655100695,
+    "min": -1.2493820033,
+    "n": 198,
+    "q05": -0.8995879585,
+    "q50": 0.0,
+    "q95": 1.5853079748
+   },
+   "F": {
+    "max": 1.402680848,
+    "min": -1.2191431155,
+    "n": 198,
+    "q05": -0.8836046739,
+    "q50": -0.0,
+    "q95": 1.3309197955
+   },
+   "P": {
+    "max": 1.8294444611,
+    "min": -2.3529424387,
+    "n": 198,
+    "q05": -1.1599646032,
+    "q50": 0.0,
+    "q95": 1.3583976161
+   },
+   "R_B": {
+    "max": 2.1081132498,
+    "min": 0.2928938647,
+    "n": 198,
+    "q05": 0.3685239102,
+    "q50": 0.7756414699,
+    "q95": 1.5599556332
+   },
+   "R_G": {
+    "max": 2.7251155259,
+    "min": 0.3018223059,
+    "n": 198,
+    "q05": 0.3969839616,
+    "q50": 0.9115234949,
+    "q95": 1.7159516692
+   },
+   "S": {
+    "max": 5.2533972282,
+    "min": -1.0114180121,
+    "n": 198,
+    "q05": -0.8905910964,
+    "q50": 0.0,
+    "q95": 3.1274236059
+   },
+   "gamma2": {
+    "max": 1.1714116657,
+    "min": -2.9418170258,
+    "n": 198,
+    "q05": -1.7811140563,
+    "q50": 0.0,
+    "q95": 0.951272121
+   }
+  },
+  "chip_note": "descriptive only: a single chip is never compared with a monthly state in this analysis",
+  "decision_level": "monthly",
+  "decision_quantile": 95,
+  "monthly": {
+   "A": {
+    "max": 1.8373677017,
+    "min": -0.5899696787,
+    "n": 25,
+    "q05": -0.5151222392,
+    "q50": 0.2463198802,
+    "q95": 1.6597340983,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": 0.8962630207
+     },
+     {
+      "month": "2016-09",
+      "value": 0.0645612596
+     },
+     {
+      "month": "2016-10",
+      "value": -0.5899696787
+     },
+     {
+      "month": "2016-11",
+      "value": -0.5263026623
+     },
+     {
+      "month": "2016-12",
+      "value": -0.2563033593
+     },
+     {
+      "month": "2017-01",
+      "value": -0.4704005467
+     },
+     {
+      "month": "2017-02",
+      "value": -0.4704005467
+     },
+     {
+      "month": "2017-03",
+      "value": -0.4186432717
+     },
+     {
+      "month": "2017-04",
+      "value": -0.1207350824
+     },
+     {
+      "month": "2017-05",
+      "value": -0.0136959437
+     },
+     {
+      "month": "2017-06",
+      "value": -0.1575271644
+     },
+     {
+      "month": "2017-07",
+      "value": -0.0422061719
+     },
+     {
+      "month": "2017-08",
+      "value": 0.6428085153
+     },
+     {
+      "month": "2017-09",
+      "value": 0.0157561374
+     },
+     {
+      "month": "2017-10",
+      "value": 0.2463198802
+     },
+     {
+      "month": "2017-11",
+      "value": 0.456290903
+     },
+     {
+      "month": "2017-12",
+      "value": 1.2841650251
+     },
+     {
+      "month": "2018-01",
+      "value": 1.8373677017
+     },
+     {
+      "month": "2018-02",
+      "value": 1.7536263666
+     },
+     {
+      "month": "2018-03",
+      "value": 1.1232627672
+     },
+     {
+      "month": "2018-04",
+      "value": 1.1327385572
+     },
+     {
+      "month": "2018-05",
+      "value": 0.4271865416
+     },
+     {
+      "month": "2018-06",
+      "value": 0.9743831301
+     },
+     {
+      "month": "2018-07",
+      "value": 0.4704005467
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 0.5369655199
+     }
+    ]
+   },
+   "D": {
+    "max": 1.3219146802,
+    "min": -0.6330839164,
+    "n": 25,
+    "q05": -0.5954993015,
+    "q50": 0.1043821399,
+    "q95": 0.8539437325,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": -0.4523247114
+     },
+     {
+      "month": "2016-09",
+      "value": -0.6330839164
+     },
+     {
+      "month": "2016-10",
+      "value": 0.3014038439
+     },
+     {
+      "month": "2016-11",
+      "value": 0.8869285577
+     },
+     {
+      "month": "2016-12",
+      "value": 0.5808318508
+     },
+     {
+      "month": "2017-01",
+      "value": 1.3219146802
+     },
+     {
+      "month": "2017-02",
+      "value": 0.0025267408
+     },
+     {
+      "month": "2017-03",
+      "value": 0.5439535965
+     },
+     {
+      "month": "2017-04",
+      "value": -0.5816068371
+     },
+     {
+      "month": "2017-05",
+      "value": -0.5659489871
+     },
+     {
+      "month": "2017-06",
+      "value": -0.5968493287
+     },
+     {
+      "month": "2017-07",
+      "value": -0.5900991929
+     },
+     {
+      "month": "2017-08",
+      "value": -0.5199878663
+     },
+     {
+      "month": "2017-09",
+      "value": -0.5064769163
+     },
+     {
+      "month": "2017-10",
+      "value": 0.7053042999
+     },
+     {
+      "month": "2017-11",
+      "value": 0.1043821399
+     },
+     {
+      "month": "2017-12",
+      "value": 0.4604998671
+     },
+     {
+      "month": "2018-01",
+      "value": 0.6088037121
+     },
+     {
+      "month": "2018-02",
+      "value": 0.3268233937
+     },
+     {
+      "month": "2018-03",
+      "value": 0.4749215108
+     },
+     {
+      "month": "2018-04",
+      "value": 0.2408387464
+     },
+     {
+      "month": "2018-05",
+      "value": -0.2971920765
+     },
+     {
+      "month": "2018-06",
+      "value": -0.0535473455
+     },
+     {
+      "month": "2018-07",
+      "value": -0.4488452584
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 0.7220044319
+     }
+    ]
+   },
+   "F": {
+    "max": 1.1220025163,
+    "min": -0.8836046739,
+    "n": 25,
+    "q05": -0.5605629461,
+    "q50": 0.0583708215,
+    "q95": 0.9807585448,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": 0.5785215347
+     },
+     {
+      "month": "2016-09",
+      "value": -0.0265515065
+     },
+     {
+      "month": "2016-10",
+      "value": -0.5636871246
+     },
+     {
+      "month": "2016-11",
+      "value": -0.5480662324
+     },
+     {
+      "month": "2016-12",
+      "value": -0.2977792009
+     },
+     {
+      "month": "2017-01",
+      "value": -0.8836046739
+     },
+     {
+      "month": "2017-02",
+      "value": -0.5480662324
+     },
+     {
+      "month": "2017-03",
+      "value": -0.5480662324
+     },
+     {
+      "month": "2017-04",
+      "value": -0.1354493062
+     },
+     {
+      "month": "2017-05",
+      "value": -0.3517888265
+     },
+     {
+      "month": "2017-06",
+      "value": -0.1585181652
+     },
+     {
+      "month": "2017-07",
+      "value": -0.1555114207
+     },
+     {
+      "month": "2017-08",
+      "value": 0.5019285143
+     },
+     {
+      "month": "2017-09",
+      "value": -0.0997155152
+     },
+     {
+      "month": "2017-10",
+      "value": 0.097088637
+     },
+     {
+      "month": "2017-11",
+      "value": 0.0583708215
+     },
+     {
+      "month": "2017-12",
+      "value": 0.6964211039
+     },
+     {
+      "month": "2018-01",
+      "value": 1.1220025163
+     },
+     {
+      "month": "2018-02",
+      "value": 1.051842905
+     },
+     {
+      "month": "2018-03",
+      "value": 0.5725449391
+     },
+     {
+      "month": "2018-04",
+      "value": 0.6179007794
+     },
+     {
+      "month": "2018-05",
+      "value": 0.2986858135
+     },
+     {
+      "month": "2018-06",
+      "value": 0.6334222289
+     },
+     {
+      "month": "2018-07",
+      "value": 0.3580351022
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 0.27716762
+     }
+    ]
+   },
+   "P": {
+    "max": 0.4991707469,
+    "min": -1.1915575692,
+    "n": 25,
+    "q05": -0.6257806232,
+    "q50": 0.1975122674,
+    "q95": 0.4818029212,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": -1.1915575692
+     },
+     {
+      "month": "2016-09",
+      "value": -0.060126472
+     },
+     {
+      "month": "2016-10",
+      "value": -0.6299968642
+     },
+     {
+      "month": "2016-11",
+      "value": -0.0132217824
+     },
+     {
+      "month": "2016-12",
+      "value": -0.0803414394
+     },
+     {
+      "month": "2017-01",
+      "value": 0.2054012978
+     },
+     {
+      "month": "2017-02",
+      "value": 0.321799306
+     },
+     {
+      "month": "2017-03",
+      "value": 0.4991707469
+     },
+     {
+      "month": "2017-04",
+      "value": 0.2478562185
+     },
+     {
+      "month": "2017-05",
+      "value": 0.408320592
+     },
+     {
+      "month": "2017-06",
+      "value": 0.0538853915
+     },
+     {
+      "month": "2017-07",
+      "value": 0.4870001381
+     },
+     {
+      "month": "2017-08",
+      "value": -0.1440463871
+     },
+     {
+      "month": "2017-09",
+      "value": 0.3032393871
+     },
+     {
+      "month": "2017-10",
+      "value": 0.280743656
+     },
+     {
+      "month": "2017-11",
+      "value": 0.2161892646
+     },
+     {
+      "month": "2017-12",
+      "value": 0.2632387199
+     },
+     {
+      "month": "2018-01",
+      "value": -0.2459541047
+     },
+     {
+      "month": "2018-02",
+      "value": -0.0881742622
+     },
+     {
+      "month": "2018-03",
+      "value": 0.1975122674
+     },
+     {
+      "month": "2018-04",
+      "value": 0.4610140537
+     },
+     {
+      "month": "2018-05",
+      "value": 0.274246182
+     },
+     {
+      "month": "2018-06",
+      "value": -0.2430808097
+     },
+     {
+      "month": "2018-07",
+      "value": -0.0513994338
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": -0.6089156589
+     }
+    ]
+   },
+   "R_B": {
+    "max": 1.1041764757,
+    "min": 0.4547559262,
+    "n": 25,
+    "q05": 0.5541141404,
+    "q50": 0.7862082592,
+    "q95": 0.9804929454,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": 0.8903516349
+     },
+     {
+      "month": "2016-09",
+      "value": 0.7139816291
+     },
+     {
+      "month": "2016-10",
+      "value": 0.7615112586
+     },
+     {
+      "month": "2016-11",
+      "value": 0.9277781897
+     },
+     {
+      "month": "2016-12",
+      "value": 0.8855308013
+     },
+     {
+      "month": "2017-01",
+      "value": 0.4547559262
+     },
+     {
+      "month": "2017-02",
+      "value": 0.7951549578
+     },
+     {
+      "month": "2017-03",
+      "value": 0.7050245547
+     },
+     {
+      "month": "2017-04",
+      "value": 0.6705799157
+     },
+     {
+      "month": "2017-05",
+      "value": 0.7862082592
+     },
+     {
+      "month": "2017-06",
+      "value": 0.7863860081
+     },
+     {
+      "month": "2017-07",
+      "value": 0.7259123784
+     },
+     {
+      "month": "2017-08",
+      "value": 0.5346006951
+     },
+     {
+      "month": "2017-09",
+      "value": 0.7219719093
+     },
+     {
+      "month": "2017-10",
+      "value": 0.9650333347
+     },
+     {
+      "month": "2017-11",
+      "value": 0.7324863799
+     },
+     {
+      "month": "2017-12",
+      "value": 0.8884893775
+     },
+     {
+      "month": "2018-01",
+      "value": 0.8668021062
+     },
+     {
+      "month": "2018-02",
+      "value": 0.6937800085
+     },
+     {
+      "month": "2018-03",
+      "value": 0.9843578481
+     },
+     {
+      "month": "2018-04",
+      "value": 0.8628577136
+     },
+     {
+      "month": "2018-05",
+      "value": 0.6321679218
+     },
+     {
+      "month": "2018-06",
+      "value": 0.6928876777
+     },
+     {
+      "month": "2018-07",
+      "value": 0.8643095298
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 1.1041764757
+     }
+    ]
+   },
+   "R_G": {
+    "max": 1.2263466168,
+    "min": 0.5687896902,
+    "n": 25,
+    "q05": 0.608215923,
+    "q50": 0.8654750162,
+    "q95": 1.207473375,
+    "role": "decision distribution: a magnitude has no sign, so only an exceedance above q95 counts",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": 0.7218576654
+     },
+     {
+      "month": "2016-09",
+      "value": 0.6738371968
+     },
+     {
+      "month": "2016-10",
+      "value": 0.9375678862
+     },
+     {
+      "month": "2016-11",
+      "value": 0.8654750162
+     },
+     {
+      "month": "2016-12",
+      "value": 1.0231011489
+     },
+     {
+      "month": "2017-01",
+      "value": 0.9969680132
+     },
+     {
+      "month": "2017-02",
+      "value": 0.6791065245
+     },
+     {
+      "month": "2017-03",
+      "value": 0.7365919625
+     },
+     {
+      "month": "2017-04",
+      "value": 1.0169908602
+     },
+     {
+      "month": "2017-05",
+      "value": 0.6021615812
+     },
+     {
+      "month": "2017-06",
+      "value": 0.6747133268
+     },
+     {
+      "month": "2017-07",
+      "value": 0.5687896902
+     },
+     {
+      "month": "2017-08",
+      "value": 0.63243329
+     },
+     {
+      "month": "2017-09",
+      "value": 0.6652051651
+     },
+     {
+      "month": "2017-10",
+      "value": 1.2156964229
+     },
+     {
+      "month": "2017-11",
+      "value": 1.1745811833
+     },
+     {
+      "month": "2017-12",
+      "value": 0.8502424098
+     },
+     {
+      "month": "2018-01",
+      "value": 1.2263466168
+     },
+     {
+      "month": "2018-02",
+      "value": 1.115231302
+     },
+     {
+      "month": "2018-03",
+      "value": 0.9299376893
+     },
+     {
+      "month": "2018-04",
+      "value": 1.0396558662
+     },
+     {
+      "month": "2018-05",
+      "value": 0.8988715541
+     },
+     {
+      "month": "2018-06",
+      "value": 1.0812522529
+     },
+     {
+      "month": "2018-07",
+      "value": 0.7505038838
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 0.7461237043
+     }
+    ]
+   },
+   "S": {
+    "max": 0.8624223694,
+    "min": -0.8074611411,
+    "n": 25,
+    "q05": -0.6429758022,
+    "q50": 0.0099612008,
+    "q95": 0.8510305932,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": 0.8612442997
+     },
+     {
+      "month": "2016-09",
+      "value": 0.8101757674
+     },
+     {
+      "month": "2016-10",
+      "value": -0.3557940061
+     },
+     {
+      "month": "2016-11",
+      "value": -0.5040785023
+     },
+     {
+      "month": "2016-12",
+      "value": -0.4761168535
+     },
+     {
+      "month": "2017-01",
+      "value": -0.8074611411
+     },
+     {
+      "month": "2017-02",
+      "value": -0.388059137
+     },
+     {
+      "month": "2017-03",
+      "value": -0.6777001271
+     },
+     {
+      "month": "2017-04",
+      "value": 0.3730989563
+     },
+     {
+      "month": "2017-05",
+      "value": -0.2126792644
+     },
+     {
+      "month": "2017-06",
+      "value": 0.1602370546
+     },
+     {
+      "month": "2017-07",
+      "value": 0.3813270564
+     },
+     {
+      "month": "2017-08",
+      "value": 0.1887213742
+     },
+     {
+      "month": "2017-09",
+      "value": -0.0719586933
+     },
+     {
+      "month": "2017-10",
+      "value": -0.0171999934
+     },
+     {
+      "month": "2017-11",
+      "value": -0.0949224672
+     },
+     {
+      "month": "2017-12",
+      "value": -0.385675394
+     },
+     {
+      "month": "2018-01",
+      "value": 0.0099612008
+     },
+     {
+      "month": "2018-02",
+      "value": -0.1127556158
+     },
+     {
+      "month": "2018-03",
+      "value": 0.1296812392
+     },
+     {
+      "month": "2018-04",
+      "value": 0.0329475389
+     },
+     {
+      "month": "2018-05",
+      "value": 0.1117367084
+     },
+     {
+      "month": "2018-06",
+      "value": 0.2886139266
+     },
+     {
+      "month": "2018-07",
+      "value": 0.5009157581
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": 0.8624223694
+     }
+    ]
+   },
+   "gamma2": {
+    "max": 0.5361055051,
+    "min": -0.9906287869,
+    "n": 25,
+    "q05": -0.879776467,
+    "q50": -0.0435135841,
+    "q95": 0.499052601,
+    "role": "directional reference distribution: outside [q05, q95] is a departure from the reference's own monthly range",
+    "values": [
+     {
+      "month": "2016-08",
+      "value": -0.4069921703
+     },
+     {
+      "month": "2016-09",
+      "value": 0.3567628702
+     },
+     {
+      "month": "2016-10",
+      "value": 0.4669869053
+     },
+     {
+      "month": "2016-11",
+      "value": 0.5361055051
+     },
+     {
+      "month": "2016-12",
+      "value": 0.112778218
+     },
+     {
+      "month": "2017-01",
+      "value": 0.3243122884
+     },
+     {
+      "month": "2017-02",
+      "value": 0.4031596645
+     },
+     {
+      "month": "2017-03",
+      "value": 0.507069025
+     },
+     {
+      "month": "2017-04",
+      "value": 0.2423965076
+     },
+     {
+      "month": "2017-05",
+      "value": 0.246245632
+     },
+     {
+      "month": "2017-06",
+      "value": 0.1331623149
+     },
+     {
+      "month": "2017-07",
+      "value": 0.002822077
+     },
+     {
+      "month": "2017-08",
+      "value": -0.0435135841
+     },
+     {
+      "month": "2017-09",
+      "value": -0.0693581349
+     },
+     {
+      "month": "2017-10",
+      "value": 0.0978002271
+     },
+     {
+      "month": "2017-11",
+      "value": -0.4664469665
+     },
+     {
+      "month": "2017-12",
+      "value": -0.7208311853
+     },
+     {
+      "month": "2018-01",
+      "value": -0.7058213736
+     },
+     {
+      "month": "2018-02",
+      "value": -0.8904468335
+     },
+     {
+      "month": "2018-03",
+      "value": -0.9906287869
+     },
+     {
+      "month": "2018-04",
+      "value": -0.8370950006
+     },
+     {
+      "month": "2018-05",
+      "value": -0.4594647375
+     },
+     {
+      "month": "2018-06",
+      "value": -0.2318573414
+     },
+     {
+      "month": "2018-07",
+      "value": -0.4148814707
+     },
+     {
+      "month": "2018-08 (pre)",
+      "value": -0.6687664446
+     }
+    ]
+   }
+  },
+  "months": [
+   "2016-08",
+   "2016-09",
+   "2016-10",
+   "2016-11",
+   "2016-12",
+   "2017-01",
+   "2017-02",
+   "2017-03",
+   "2017-04",
+   "2017-05",
+   "2017-06",
+   "2017-07",
+   "2017-08",
+   "2017-09",
+   "2017-10",
+   "2017-11",
+   "2017-12",
+   "2018-01",
+   "2018-02",
+   "2018-03",
+   "2018-04",
+   "2018-05",
+   "2018-06",
+   "2018-07",
+   "2018-08 (pre)"
+  ],
+  "n_reference_months": 25,
+  "persistence_min_months": 2,
+  "quantiles": [
+   5,
+   50,
+   95
+  ]
+ },
+ "schema": "ocv-trajectory-v2",
+ "sha256": "249c9ee6630c21dfbe3e01366c9863bf1693bc4376d08e93da7b913a0b7a2745",
+ "site": "morandi",
+ "standardisation": {
+  "pooled": {
+   "A": {
+    "centre": 3.2384861814,
+    "n": 198,
+    "rule": "all reference chips",
+    "scale": 1.4318368224,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 2.3828084414,
+    "z_min": -1.4944956431
+   },
+   "D": {
+    "centre": -3.4797787468,
+    "n": 198,
+    "rule": "all reference chips",
+    "scale": 1.7704202084,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.9655100695,
+    "z_min": -1.2493820033
+   },
+   "F": {
+    "centre": 2.5184763012,
+    "n": 198,
+    "rule": "all reference chips",
+    "scale": 2.0657757644,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.402680848,
+    "z_min": -1.2191431155
+   },
+   "P": {
+    "centre": -2.3658764508,
+    "n": 198,
+    "rule": "echo-bearing reference chips",
+    "scale": 0.7057506642,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.8294444611,
+    "z_min": -2.3529424387
+   },
+   "S": {
+    "centre": 6.6161043156,
+    "n": 198,
+    "rule": "all reference chips",
+    "scale": 6.5414143673,
+    "source": "mad",
+    "transform": "identity",
+    "z_max": 5.2533972282,
+    "z_min": -1.0114180121
+   },
+   "gamma2": {
+    "centre": -3.900355552,
+    "n": 198,
+    "rule": "echo-bearing reference chips",
+    "scale": 2.4906440303,
+    "source": "mad",
+    "transform": "log",
+    "z_max": 1.1714116657,
+    "z_min": -2.9418170258
+   }
+  }
+ },
+ "summer_2024": {
+  "applies": false,
+  "reason": "no held-out pre-event class on this site"
+ },
+ "table": "data/morandi/support/morandi_ocv_channels.csv",
+ "weather_reference": {
+  "temperature_c": {
+   "pooled": {
+    "centre": 14.7,
+    "distinct": 133,
+    "n": 198,
+    "scale": 8.67321,
+    "source": "mad",
+    "transform": "identity"
+   }
+  },
+  "wind_speed_ms": {
+   "pooled": {
+    "centre": 2.42,
+    "distinct": 155,
+    "n": 198,
+    "scale": 1.994097,
+    "source": "mad",
+    "transform": "identity"
+   }
+  }
+ }
+}

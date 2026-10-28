@@ -22,27 +22,18 @@ What this package claims, and what it does not
 ----------------------------------------------
   * **CTS is the DiD site.** The post state is *bare sand*: its intensity is
     moisture-driven, so a change in the footprint is not evidence about the
-    collapse. The three committed references (``data/cts/reference/``)
-    difference the target against the two control towers and run the
-    CTN-vs-CTE placebo; panel F is the layer that decides which chip channels
-    carry a *collapse* signal rather than a common atmosphere/soil step.
+    collapse. The three committed references (``data/cts/reference/``,
+    ``cts_ocv_did.py``) difference the target against the two control towers and
+    run the CTN-vs-CTE placebo; panel F is the layer that decides which chip
+    channels carry a *collapse* signal rather than a common atmosphere/soil step.
   * **the post side is short.** 168 of 711 chips follow the event against 543
     before it, so every post-state interval is wide. This figure is an
     **honest null**: it asks whether the states are separable here, and never
     reports a damage verdict.
-  * **a DiD without its diagnostics is not a DiD.** Every channel is reported
-    beside the pre-period comparability, the reference's own step and both
-    pre-trends (panel F): a "significant" interaction whose reference also
-    steps, or whose pre-trends diverge, is reported as such, not as evidence.
-  * **the analysed window is not on the collapsed slab**, and ``A`` is *not*
-    the site's ``coherence_masked_pixels``: that column is a fixed 640-px
-    quantile mask (constant for every row, so its OLS interaction is pure
-    floating-point noise). The degeneracy is reported, never plotted as a t/p.
-
-Pinned references (``data/cts/reference/``):
-  cts_reference_did_ctn.json               target vs CTN  (~165 m N control)
-  cts_reference_did_cte.json               target vs CTE  (~90 m N control)
-  cts_reference_did_placebo_ctn_vs_cte.json  placebo CTN vs CTE
+  * **the analysed window is not on the collapsed slab**, and ``A`` is *not* the
+    site's ``coherence_masked_pixels``: that column is a fixed 640-px quantile
+    mask, constant for every row, so its OLS interaction is pure floating-point
+    noise. The degeneracy is reported, never plotted as a t/p.
 
 Figures:
   A  raw distributions of the six channels per state (all 711 chips)

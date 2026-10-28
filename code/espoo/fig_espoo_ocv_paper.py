@@ -85,7 +85,7 @@ REF_FINDINGS = os.path.join(core.REF, "espoo_ocv_findings.json")
 REF_STATE = core.STATE_ORDER[0]     # ASCENDING
 GRP_STATE = core.STATE_ORDER[1]     # DESCENDING
 
-# The repository-wide figure style (identical to the LUMO/Morandi/CTS/YWF paper
+# The repository-wide figure style (identical to the LUMO/Morandi/CTS/Haltern paper
 # scripts and to this site's months companion): DejaVu Sans, 183 mm column width,
 # 630 dpi JPEG, no top/right spines.
 plt.rcParams.update({
@@ -1657,7 +1657,7 @@ def report(res, problems, findings_ref):
       "coverage) show every one of those numbers is geometry;")
     A("3. so at every other site of this repository the orbit-geometry contrast "
       "has to be reported **beside** the damage contrast before the latter can be "
-      "read — which is exactly what the LUMO, Morandi, YWF and Carola packages "
+      "read — which is exactly what the LUMO, Morandi, Haltern and Carola packages "
       "do.")
     A("")
     A("## Pins")

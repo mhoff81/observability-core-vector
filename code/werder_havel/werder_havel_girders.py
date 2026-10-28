@@ -8,29 +8,28 @@ external captures were cropped at).
 The question this file answers
 ------------------------------
 ``werder_havel_aoi.json`` hands over the structure as 704.043 x 35.929 m (25 295.7 m2) at
-bearing 59.59 deg, and ``werder_havel_geometry.json`` prices it in pixels: 433.7 / 529.9 /
-436.3 / 535.0 px per track, 0.68..0.84 of the record's exported "brightest decile" of an
-80 x 80 window that does not even contain the deck. Both stop before the one thing a
-**per-girder** layer needs: the deck is not divided. The record's own unit is the whole
-structure (one decile per acquisition), so no channel of the export can ask whether *this
-opening* changed. The external 400 x 400 captures can - and the division of the deck into its
-documented openings is geometry, i.e. this file.
+bearing 59.59 deg, and ``werder_havel_geometry.json`` prices it in pixels (433.7 / 529.9 /
+436.3 / 535.0 px per track, 0.68..0.84 of the exported decile of a window that does not
+contain the deck). Both stop before the one thing a **per-girder** layer needs: the deck is
+not divided. The record's own unit is the whole structure (one decile per acquisition), so no
+channel of the export can ask whether *this opening* changed. The external 400 x 400 captures
+can - and the division of the deck into its documented openings is geometry, i.e. this file.
 
 What the mask is
 ----------------
 Eleven **spans** (openings), each a rotated rectangle of the deck's own width in the map
-frame, rasterised into each track's rect indices. The division is the documented one -
-2 x 55 m end spans + 9 x 66 m inner spans = 704.0 m, eleven openings (see ``DIVISION`` for
-the source chain) - and the deck's own committed edge is 704.043 m, so the
-0.043 m residual is carried by the two end spans (55.0215 m each) while the nine inner spans
-stay exactly 66.0 m: the division sums to the deck, not to the map's rounded ``length`` tag.
+frame, rasterised into each track's rect indices: 2 x 55 m end spans + 9 x 66 m inner spans =
+704.0 m, eleven openings (``DIVISION`` carries the source chain). The deck's own committed
+edge is 704.043 m, so the 0.043 m residual is carried by the two end spans (55.0215 m each)
+while the nine inner spans stay exactly 66.0 m: the division sums to the deck, not to the
+map's rounded ``length`` tag.
 
-The masks are **static**. That is the difference to the family's carola / morandi / deck
-layers, where every chip is a fresh window payload: this record's crop rule is one coordinate
-and one fixed side, so the same pixel set is the mask on all 491 dates. The *rect* is not
-quite constant, though: five asc_44_iw3 captures are clipped by the burst edge (394..398 of
-400 lines) and are absent from the record (123 captured dates, 118 record rows) - a clipped
-rect is a truncated mask, so an extraction must drop it, never stretch it.
+The masks are **static** - the difference to the family's carola / morandi / deck layers,
+where every chip is a fresh window payload: this record's crop rule is one coordinate and one
+fixed side, so the same pixel set is the mask on all 491 dates. The *rect* is not quite
+constant: five asc_44_iw3 captures are clipped by the burst edge (394..398 of 400 lines) and
+are absent from the record (123 captured dates, 118 record rows) - a clipped rect is a
+truncated mask, so an extraction must drop it, never stretch it.
 
 The two frames
 --------------
@@ -42,10 +41,9 @@ range, the map point of index (r, c) being
     P(r, c) = CROP_POINT + (c - 200) * range_m_per_px * r_hat
                         + (r - 200) * azimuth_m_per_px * a_hat
 
-with ``r_hat`` the **range direction** (away from the satellite: the ascending geometries' own
-range axis bearing 78.51 / 80.44 deg, the descending ones' + 180 deg = 101.49 / 99.57 deg) and
-``a_hat`` the **flight direction** (r_hat - 90 deg: 348.51 / 350.44 deg, i.e. northward, on
-the ascending geometries and 191.49 / 189.57 deg, i.e. southward, on the descending ones). The
+with ``r_hat`` the **range direction** (away from the satellite: 78.51 / 80.44 deg on the
+ascending geometries, +180 deg on the descending ones) and ``a_hat`` the **flight direction**
+(``r_hat`` - 90 deg: northward on the ascending geometries, southward on the descending). The
 sense is not assumed here: it is read off the burst layer's own tag
 (``werder_havel_bursts.json`` -> ``track_geometries``, ASCENDING/146/IW1 etc.), and the file
 prices the 180 deg error it rules out - a mirrored row sense would move the deck's centre by
@@ -99,13 +97,12 @@ What this file does *not* claim
 ``status``: *derived girder masks - geometry only; no echo, no coherence, no OCV is reported
 here*. Four limits are committed with the numbers:
 
-  * the **placement is not confirmed**. The crop point is external and quoted, and ``--place``
-    measures the placed mask at 0.40..0.90 of its matched nulls' amplitude in the four tracks:
-    the deck is *not* the brightest structure in those 400 x 400 rects, so the gate fails and
-    everything below is geometry rather than a measurement of an echo (``PLACE_STATE_NOTE``
+  * the **placement is not confirmed**: the crop point is external and quoted, and ``--place``
+    measures the placed mask at 0.40..0.90 of its matched nulls' amplitude in the four tracks,
+    so everything below is geometry rather than a measurement of an echo (``PLACE_STATE_NOTE``
     keeps the numbers);
-  * the division is **documented, not surveyed**: the eleven openings come from the source chain
-    above, not from a measurement in this repository;
+  * the division is **documented, not surveyed** - it comes from the source chain above, not
+    from a measurement in this repository;
   * the mask is the **map's** rectangle. The family has measured a -81..+7 m (rms 56 m) shape
     error for polygon anchors (``werder_havel_geometry.py``); 5.7 m of it along the axis is
     1.4..1.8 px = 0.08..0.10 of a span, i.e. below the span unit and far below the whole-deck
@@ -123,16 +120,11 @@ Modes
     --check   re-derive and compare field by field (the default; offline)
     --json    print the derived file as JSON (the numbers the notes above quote)
     --place   the live gate: read one rect line per track from the external captures, test both
-              reshape orientations, and require the placed mask to sit on the echo ridge
-              (on-mask vs matched off-mask amplitude contrast, and the ridge's own line).
-              Reads the external rect files; exits non-zero if the placement is not confirmed.
-              It is *not* confirmed on the rect files read on 2026-10-14 - see
-              ``PLACE_STATE_NOTE``: the deck is not the brightest structure in those rects, so
-              the placement stays a quoted external fact rather than a validated one.
+              reshape orientations, and require the placed mask to sit on the echo ridge. Not
+              confirmed on the rect files read on 2026-10-14 (``PLACE_STATE_NOTE``), so the
+              placement stays a quoted external fact rather than a validated one.
 
-Interpreter: ``python3`` from PATH needs numpy, which this file shares with the rest of the
-package; where the PATH python is the numpy-less virtualenv, use the family's override the way
-the figure scripts document it: ``PYTHON=/usr/bin/python3 ...``.
+Interpreter: ``PYTHON=/usr/bin/python3`` where the PATH python is the numpy-less virtualenv.
 """
 
 

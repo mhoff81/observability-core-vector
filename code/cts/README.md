@@ -242,15 +242,86 @@ CTS record as an **honest null** on the collapse signal in this window; the DiD
 values stand as reported contrasts with their comparability and pre-trend
 co-variates attached, not as evidence of damage.
 
+## Quarantined asset metadata
+
+The `asset_name` and `asset_type` columns of this package are **wrong**, not
+merely unused, so they are quarantined: carried verbatim as provenance and never
+used to select, join, group, sort or label a record.
+
+On all 712 rows of `cts_measurements_full.txt` (and therefore on all 711 rows of
+`cts_ocv_channels.csv` and all 178 of the support table) the triple is
+
+```
+asset_id    6b3f7f30-edbb-53f4-b923-135a1e51658b
+asset_name  Havelbrücke Werder (A 10)          <- the Werder bridge
+asset_type  bridge
+```
+
+Three committed files decide what that means. `cts_segments.txt` labels the
+same `asset_id` **Champlain Towers South**, so the key is right and the two
+labels are broken -- the join is not what broke, a column is. `cts_asset.json`
+is the site's own asset record: `label` `Champlain Towers South`,
+`asset_id` `null`. And Werder's own meta pairs that same name with a *different*
+id (`40f420c6-...`), so the CTS rows mix a CTS key with a Werder label and
+belong to no asset at all. The defect enters upstream, in
+`erlking_mvp/tools/ocv_table.py`, which copies the columns into the support
+table as `committed_asset_name`; Haltern and Carola carry coherent triples in
+their own exports, so this is a CTS-only defect.
+
+Identity is therefore `track|day|role` (`core.identity_key`), the three columns
+that name a row unambiguously; `core.QUARANTINED_COLUMNS` and
+`core.MISNAMED_COLUMNS` (`request_id` holds the *track* under a misleading name,
+711/711 rows identical) are the machine-readable form of the quarantine. The
+register is `data/ocv_metadata_quarantine.json`, and
+`python3 code/cts/cts_ocv_quarantine.py --selftest` re-checks it: the sha256 of
+every file it names, the wrong values on every row, the uniqueness of
+`identity_key`, a poison test (rewriting the asset columns leaves every key
+unchanged) and an AST scan of `code/cts/*.py` for literal reads of a quarantined
+column. The data are untouched -- quarantining a column changes the reader, not
+the record.
+
+## The unit of `A` (why 247 is not a contradiction of 225)
+
+`A` is a **count of cells of the chip**, and the chip has three bands:
+
+| quantity | CTS value | unit |
+| --- | --- | --- |
+| chip | 39 x 145 | 5 655 cells |
+| `support_cells` | 225 | cells of the support band |
+| `guard_cells` | 420 | cells of the guard band |
+| `ring_cells` | 5 010 | cells of the reference ring |
+| `A` | 37 … 572 | cells the echo mask marks, **on the whole chip** |
+| `D` | 0 < D <= 1 | `A / bbox_area`, the mask's bounding-box fraction |
+| `coherence_masked_pixels` | 640 on every row | the export's own column — another measurement |
+
+225 + 420 + 5 010 = 5 655, so the bands partition the chip and `A` is bounded by
+5 655, not by 225. `A` exceeds `support_cells` on **74 of 178** rows; that is the
+mask reaching into the guard and ring, not an inconsistency. The three identities
+that fix the unit are checked by `code/audit_ocv_units.py` on every support table
+of the repository (`--verify` against `data/ocv_channel_units.json`):
+
+```
+support + guard + ring == rows x cols
+0 <= A <= rows x cols          (integer; 0 is an empty mask)
+A / D == bbox_area            (1e-9, so D is A over the mask's bounding box)
+A != coherence_masked_pixels  (0 of 178 rows agree here, 640 against 37..572)
+```
+
+Quote `A` as "cells of the chip (<= 5 655)", never beside `support_cells` without
+saying which raster each number counts, and never across sites: each site has its
+own chip (`data/analysis_freeze.md`), and a committed table computed on an
+80 x 80 export is not comparable row by row.
+
 ## Verification and determinism
 
 Every module is offline and deterministic (no timestamps in any output, no
-network access). The three build/verify commands above are self-checking:
+network access). The four build/verify commands above are self-checking:
 
 ```
 python3 code/cts/cts_ocv_masks.py --check           # mask rule on every cache row
 python3 code/cts/cts_ocv_channels_csv.py            # re-derive every CSV cell
 python3 code/cts/cts_ocv_did.py --verify            # pin the three DiD references
+python3 code/cts/cts_ocv_quarantine.py --selftest   # the asset-metadata quarantine
 ```
 
 The module and site names keep their `cts_` prefix although the folder already

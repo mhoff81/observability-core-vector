@@ -26,8 +26,6 @@ Above the spectrum, and **not** counted as cases: **LUMO tower** (controlled lad
 | **Champlain Towers South** | ○ (0.016, [-0.178, +0.206]) | ↓ (-0.23, [-0.419, -0.029]) | ○ (0.14, [-0.0746, +0.355]) | ○ (0.12, [-0.0903, +0.328]) |
 | **Haltern AV9** | ○ (0.22, [-0.25, +0.654]) | ○ (0.14, [-0.224, +0.5]) | ○ (0.28, [-0.269, +0.744]) | ↑ (0.44, [+0.0385, +0.776]) |
 
-**Why YWF is not a row.** On the support-sized chip 19 of 33 acquisitions cannot be cut at all — the support window runs past the raster edge — and **4 of the 6 post-collapse dates** are in that group. What remains is 12 pre and 2 post chips, which is an observation, not an interval; and because the support export carries only echo-bearing chips (14 of 14), even YWF's coverage statistic cannot be rebuilt on this chip. Haltern takes the slot; YWF stays documented in its own site package, where its record and its coverage result are complete.
-
 Morandi's row is four circles on purpose: an independent collapse is not automatically an OCV case, and the figure says so instead of borrowing Carola's arrows.
 
 A cell carries an arrow only when that case's **own** interval excludes zero **and** both sides carry at least six units; a circle means the dimension was tested and nothing was resolved; a question mark means the evidence is not there — fewer than six units on one side is an observation, not an interval. The fill is the project's SDS band of that cell — an intensity **inside** the cell, never an effect size to compare between cases.
@@ -77,7 +75,7 @@ Panel (c) is **schematic**: the geometry encodes the kind of result the case rep
 ## What this figure does not claim
 
 * **No cross-case effect size.** `SDS` is used only to shade a cell; the cases differ in structure, sensor, record length and state definition, so an arrow in one row says nothing about the size of the arrow in another.
-* **No completeness.** A `?` is a result, not a gap to be filled: YWF's honest answer is that `γ²`, `P` and `D` resolve no precursor while the echo coverage drops after the collapse, and the matrix draws exactly that.
+* **No completeness.** A `?` is a result, not a gap to be filled: where a case's contrast cannot be cut on the support chip, the cell says so and the reason is in `data/sds/sds_support.md` — not inferred from an empty axis.
 * **No pooled claim about the six.** The controlled-reference experiments (`LUMO`, `Bautzen`) are what licenses a statement about the method across structures; the six cases are the applications.
 * **No chip mixing.** All six are read on the committed chip; the support-sized chip is an additive second set for KDLO and flips the sign of `A`, `F` and `P` there, so it is not mixed into this page.
 * **Not every site is a case.** Haltern's canal bridge is a decomposition site with its own statistics; it is not part of this six-case overview.
@@ -87,8 +85,8 @@ Panel (c) is **schematic**: the geometry encodes the kind of result the case rep
 | case | file | sha256 |
 | --- | --- | --- |
 | Espoo mast | `data/espoo/fig_espoo_ocv_chips.json` | `05c9ddf4488e31d5` |
-| KDLO media tower | `data/sds/sds_support.json` | `aa4b81fbd01c8f73` |
-| Carolabrücke | `data/sds/sds_support.json` | `aa4b81fbd01c8f73` |
-| Ponte Morandi | `data/sds/sds_support.json` | `aa4b81fbd01c8f73` |
-| Champlain Towers South | `data/sds/sds_support.json` | `aa4b81fbd01c8f73` |
-| Haltern AV9 | `data/sds/sds_support.json` | `aa4b81fbd01c8f73` |
+| KDLO media tower | `data/sds/sds_support.json` | `9b54260df01001fe` |
+| Carolabrücke | `data/sds/sds_support.json` | `9b54260df01001fe` |
+| Ponte Morandi | `data/sds/sds_support.json` | `9b54260df01001fe` |
+| Champlain Towers South | `data/sds/sds_support.json` | `9b54260df01001fe` |
+| Haltern AV9 | `data/sds/sds_support.json` | `9b54260df01001fe` |

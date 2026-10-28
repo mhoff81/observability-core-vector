@@ -4,21 +4,21 @@
 Why this generator exists
 -------------------------
 The HALTERN record is a committed *window* export: ``data/haltern/haltern_windows_full.txt``
-holds the 7x7 complex payload of every committed chip (57 windows, 38 kB,
-committed in full — this site needs no separate extraction step). The mask layer
+holds the 7x7 complex payload of every committed chip (168 windows, committed in
+full — this site needs no separate extraction step). The mask layer
 is the committed cache ``data/haltern/haltern_windows_mask_cache.txt``, written by
 ``haltern_ocv_masks.py --extract`` and re-verified here.
 
 One complication is specific to this site: ``haltern_ocv_masks.echo_mask`` returns
-``None`` for a window without an echo, so the cache holds **only the 17 windows
-that carry an echo** (16 pre, 1 post) out of the record's 57, and its manifest
-records the 16 dropped ones in ``n_without_echo``. A channel table that copied
-the cache row for row would therefore hide the fact that 16 of the site's 33
-unique chips show *nothing*, which is the whole point of this site's headline
-(echo coverage). The CSV is consequently written one row per **unique chip** of
-the window file — the same de-duplicated reference set the mask layer uses — and
-``echo_mask_present`` marks the 17 that carry an echo; the build then verifies
-that the cache's 17 rows are exactly those 17, statistic by statistic.
+``None`` for a window without an echo, so the cache holds **only the 66 windows
+that carry an echo** of the record's 120 unique chips, and its manifest records the
+54 dropped ones in ``n_without_echo``. A channel table that copied the cache row
+for row would therefore hide the fact that 54 of the site's 120 chips show
+*nothing*, which is the whole point of this site's headline (echo coverage). The
+CSV is consequently written one row per **unique chip** of the window file — the
+same de-duplicated reference set the mask layer uses — and ``echo_mask_present``
+marks the 66 that carry an echo; the build then verifies that the cache's 66 rows
+are exactly those 66, statistic by statistic.
 
 What the generator does
 -----------------------
@@ -27,7 +27,7 @@ What the generator does
   2. recomputes the six mask dimensions of every unique chip with
      ``haltern_ocv_masks.vector_from_row`` — ``A``, ``D``, ``F``, ``S`` and the
      masked coherence ``gamma2`` from the re-derived mask, and ``P`` from the
-     mask frequency map of the 17 echo chips;
+     mask frequency map of the 66 echo chips;
   3. derives ``segment`` (mast section), ``section_index``, ``state``,
      ``pre_collapse``, ``day``, ``month``, ``year``, ``season``, ``echo_mode``
      and the segment-duplication provenance
@@ -62,12 +62,12 @@ window (2..7 px, 49 px in total). The CSV keeps both (``coherence_masked_pixels`
 as pipeline provenance, ``A``/``gamma2_mask`` as the recomputed mask) and reports
 how many of them coincide.
 
-24 of the record's 57 windows are byte-identical duplicates that differ only in
-the request's ``segment_index`` (2 vs. 3) on one date — the record is **not**
+48 of the record's 168 windows are byte-identical duplicates that differ only in
+the request's ``segment_index`` on their date — the record is **not**
 segment-resolved. The CSV is de-duplicated on ``(asset, day, md5(payload))``
 (first occurrence wins), so no duplicated chip can inflate a state, and the two
-provenance columns state the group size (``2``) and the sharing segments
-(``[2, 3]``) of every affected row.
+provenance columns state the group size and the sharing segments of every affected
+row.
 
 Derived columns (all recomputable from the row, no lookups):
     segment        mast-section label of the request (from the window index)

@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """CTS OCV — the two mask layers from the committed window cache.
 
-Champlain Towers South (Surfside, 25.87306 N 80.12083 W) partially collapsed on
-2021-06-24. The export in this repository observes the site along **four**
-Sentinel-1 tracks of the same orbit (ASC rel-48 IW3) — ``cts_asc_48_iw3`` (the
-tower, ``target``), ``ctn_asc_48_iw3`` (Champlain Towers North, control),
-``cte_asc_48_iw3`` (Champlain Towers East, control) and ``beach_asc_48_iw3``
-(the beach east of the site, moisture reference) — which play the role of the
-Morandi tracks: per acquisition one 80x80 complex chip per track. This module
-owns the two mask layers of the package:
+Champlain Towers South (Surfside, 25.87306 N 80.12083 W) collapsed partially on
+2021-06-24. One orbit (ASC rel-48 IW3) is exported in four footprints — the tower
+(``cts_asc_48_iw3``, ``target``), two control towers (``ctn``, ``cte``) and a
+moisture reference (``beach``) — one 80x80 complex chip per track and acquisition.
+This module owns two mask layers:
 
-  * the **echo mask** — the project-wide deck echo definition, identical to
+  * the **echo mask**, the project-wide echo definition (identical to
     ``analyze_carola_coherence.coherence_gamma2`` and to the backend's
-    ``sarsolve::coherence::coherence_mast_echo``:
+    ``sarsolve::coherence::coherence_mast_echo``):
 
         intensity = |z|^2
         peak      = max(intensity)
@@ -21,49 +18,25 @@ owns the two mask layers of the package:
         A         = count(mask)                    (no echo if A < 2)
         gamma2    = |sum(z[mask])|^2 / (A * sum(|z[mask]|^2)),  clamped to [0, 1]
 
-  * the **per-track deck mask** — the very same rule applied to that track's
-    own chip. Same six dimensions, but only the pixels of that track's window.
+  * the **per-track deck mask**: the same rule on that track's own window.
 
-Why a committed cache and not the raw payloads
-----------------------------------------------
-The site exports its chips as ``cts_windows_<track>.npz`` (one
-``(178, 80, 80)`` complex64 cube per track plus its ``dates``, a fixed 640-px
-quantile ``mask`` and a JSON ``meta``). The cache
-``data/cts/cts_windows_mask_cache.txt`` is therefore the mask layer's committed
-input, the analogue of the Morandi window cache: the *echo mask of every chip*
-(pixel coordinates) plus the sufficient statistics the six dimensions need
+The mask layer's committed input is ``data/cts/cts_windows_mask_cache.txt``, the
+analogue of Morandi's window cache: the echo mask of every chip in pixel
+coordinates plus the sufficient statistics
+(``peak, median, max_masked, min_masked, ss_re, ss_im, ss_abs2, n_masked, px``).
+Every dimension is derived from them here, nothing from a stored result:
 
-    peak, median, max_masked, min_masked, ss_re, ss_im, ss_abs2, n_masked, px
+  A = n_masked                    D = A / bbox_area      F = 8-connected parts
+  S = ||centroid - peak|| in px   gamma2 = (ss_re^2 + ss_im^2) / (A * ss_abs2)
+  P = mean pixel frequency inside the own mask, over the majority-shape chips
 
-so that everything below is recomputed here and nothing is read from a stored
-result:
+The rule is re-verified on the committed mask (``>= 0.30*peak``, ``>= 5.0*median``,
+``max_masked == peak``, ``A >= 2``), and a chip that violates it is refused.
+``--extract`` writes the cache once, offline, from the ``cts_windows_*.npz`` cubes
+and records every source sha256 in its manifest.
 
-  * ``A = n_masked``, ``D = A / bbox_area``, ``F`` = 8-connected components,
-    ``S = ||centroid - peak||`` are derived from the committed ``px`` set;
-  * ``gamma2 = (ss_re^2 + ss_im^2) / (A * ss_abs2)`` is recomputed exactly (the
-    sums are stored at full double precision);
-  * the **mask rule is re-verified on the committed mask**: every masked pixel
-    must satisfy ``|z|^2 >= 0.30*peak`` and ``>= 5.0*median``, the brightest
-    masked pixel must *be* the peak (``max_masked == peak``), and ``A >= 2``.
-    A chip whose committed mask violates the rule is refused;
-  * ``P`` — the mask persistence — is recomputed from the committed masks of
-    all chips of the majority shape (see ``add_persistence``).
-
-The cache is written once by ``--extract`` (a one-time offline step that needs
-the ``cts_windows_*.npz`` cubes, exactly as ``morandi_ocv_masks.py --extract``
-needs the rect payload files), records every source file's sha256 in its
-manifest, and is thereafter the only mask input of the build.
-
-Derivation
-----------
-  A = n_masked                       (echo pixels, ``coherence_masked_pixels``)
-  D = A / bbox_area                  (bounding-box fill of the echo)
-  F = number of 8-neighbourhood components
-  S = ||mask centroid - peak pixel|| in px
-  P = mean pixel frequency inside the own mask (over all chips of the shape)
-
-The site's own ``coherence_masked_pixels`` is a *fixed 640-px (10 %) quantile*
-mask and is **not** this echo mask; it is carried as provenance only.
+The site's own ``coherence_masked_pixels`` is a *fixed 640-px (10 %)* quantile
+mask, **not** this echo mask: provenance only.
 
 Usage
 -----

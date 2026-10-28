@@ -17,7 +17,7 @@ both sides** of the geometry break — but not from one source:
     pipeline itself wrote: the era's rows carry ``coherence_gamma2`` and
     ``coherence_masked_pixels`` (162/162), the record's carry the same two
     columns by name (its channel table re-derives them from the strips and
-    verifies them, ``kdlo_ocv_channels_csv.py --verify``);
+    verifies them, ``kdlo_ocv_channels_csv.py --verify-only``);
   * ``P``, ``D``, ``F`` and ``S`` are **recomputed from a committed full-dwell
     strip cache with the pipeline's own mask rule** (``kdlo_ocv_masks.py``), and
     there are now two such caches: ``data/kdlo/strips/`` for the record (64
@@ -30,21 +30,17 @@ both sides** of the geometry break — but not from one source:
     day);
   * the controls ``wind_speed_ms`` / ``temperature_c`` — on both sides.
 
-The era strip cache is not taken on trust: before a single era value of ``P``,
-``D``, ``F`` or ``S`` is drawn, this figure **recomputes the mask rule on all 162
-era strips and requires the recomputed ``A`` to equal the era export's
-``coherence_masked_pixels`` exactly and the recomputed coherence to equal its
-``coherence_gamma2`` to ``1e-12``** — i.e. the strips are required to be the
-strips the pipeline decoded, the same acceptance the record's channel table runs
-(``kdlo_ocv_masks.py``, here pointed at ``strips_era/``). The era's
-``P`` has its own basis — the frequency map of the 162 era strips — as the
-record's ``P`` has the channel table's 64-strip map: ``P`` is a *frequency of
-the mask*, so it is only defined relative to the strip set it is counted over,
-and this figure never mixes the two maps (it draws each stretch in units of its
-own median, and the basis is constant inside a stretch). The era's set is not one
-polarisation — the track is measured on both VV and VH bursts — so what its
-frequency map measures is the frequency of the mask across that mixed set; every
-other drawn era value is per day, from that day's own burst alone.
+The era cache is not taken on trust: before a single era ``P``/``D``/``F``/``S``
+is drawn, this figure **recomputes the mask rule on all 162 era strips and
+requires its ``A`` to equal the era export's ``coherence_masked_pixels`` exactly
+and its coherence to equal ``coherence_gamma2`` to ``1e-12``** — the same
+acceptance the record's channel table runs. ``P`` is a *frequency of the mask* and
+is therefore only defined against the strip set it is counted over: the era's map
+is over the 162 era strips, the record's over the channel table's 64, and this
+figure never mixes the two (each stretch is drawn in units of its own median).
+The era's set is not one polarisation — that track is measured on both VV and VH
+bursts — so its frequency map measures the mask frequency across that mixed set;
+every other drawn era value is per day, from that day's own burst alone.
 
 The axis has four stretches, and the figure draws all four instead of blurring
 them into one series (every date below is read from the committed availability
@@ -97,14 +93,11 @@ manifest (every strip is hashed into the artifact), and the strip set is require
 to cover exactly the era export's days.
 
 Figure (3 x 2, 183 mm wide), one dated axis 2015-03-20 .. 2022-12-11, **all six**
-dimensions drawn over both stretches:
-  a  ``gamma2``        log y — era dots (blue) vs. record dots + line (orange),
-  b  ``A`` (mask size) log y — each divided by its own stretch median (1.0 drawn);
-                              the era's per-year medians are the bars
-  c  ``P``             linear y — the record's P comes from the channel table, the
-  d  ``D``             log y — era's from the 162 era strips (its own frequency
-  e  ``F``             log y — map, stated: P is a mask frequency, so it is only
-  f  ``S``             log y — defined against the strip set it is counted over)
+dimensions drawn over both stretches — era dots (blue) and record dots + line
+(orange), each divided by its own stretch median (1.0 drawn), log y except ``P``:
+  a  ``gamma2``   b  ``A`` (mask size; the era's per-year medians are the bars)
+  c  ``P``        d  ``D``
+  e  ``F``        f  ``S``
 Every panel carries the blind gap, the catalogue-only stretch, the collapse cut
 (2022-12-11) and, hollow at the right edge, the first collapsed acquisition
 (2022-12-23), which lies outside this axis (labelled in panel a).

@@ -26,12 +26,11 @@ figures/
 │              the difference-in-differences site (panel F); its three contrast
 │              results are the committed references in ../data/cts/reference/
 │              and the companion fig_cts_ocv_months.sh|.md|.png
-├── ywf/       Yeongdeok Wind Farm, Unit 21 — fig_ywf_ocv_paper.sh|.md|[A-E].png
-│              the smallest record of the family (one mask layer, echo coverage
-│              instead of a contrast) and the one site whose reference JSON is
-│              defined by its own figure script (--write-reference)
-│              plus the companions fig_ywf_ocv_weeks.md|.png (no wrapper) and
-│              fig_ywf_ocv_series.sh|.md|.png (the whole record on one dated axis)
+├── haltern/   Haltern AV9 wind turbine — fig_haltern_ocv_paper.sh|.md|[A-E].png
+│              the one-layer record (echo coverage instead of a contrast), with the
+│              pre-window companion fig_haltern_ocv_weeks.sh|.md|.png, the
+│              whole-record series fig_haltern_ocv_series.sh|.md|.png and the
+│              support-chip trajectories fig_haltern_ocv_orbits.sh|.md|.jpg
 ├── espoo/     Espoo Kurttila mast — fig_espoo_ocv_paper.sh|.md|[A-E].jpg
 │              the **event-free control**: no damage label on any of the 150
 │              acquisitions, no mask raster either, so the only contrast is the
@@ -42,7 +41,8 @@ figures/
 │              (the chip's own three tests) and fig_espoo_ocv_orbits_chip.* (Espoo
 │              in the shared six-dimension family, one state; see `../code/espoo/README.md`)
 ├── cases/     the one page for the whole case set — fig_cases_overview.jpg|.md
-│              (map, dimension matrix, trajectories) from `../code/cases/`
+│              (map, dimension matrix, trajectories) — plus the six-site driver
+│              fig_ocv_trajectory.sh; both from `../code/cases/`
 ├── sds/       the cross-site figures (Bautzen + LUMO, one script that reads both)
 │              fig_sds_ocv_reconfigure.jpg|.md — the controlled-dose comparison,
 │              630 dpi, from `../code/sds/ocv_reconfigure.py`, plus the two
@@ -89,7 +89,7 @@ contrast the record supports is the one between its two **orbit geometries**
 `coherence_masked_pixels` — **copied and proved**, never recomputed — and `D`, `F`,
 `S` and `P` are deliberately absent. Its reference layer pins three committed JSONs
 of the upstream project field by field *and* defines its own
-`espoo_ocv_findings.json` lock with `--write-reference`, like YWF does.
+`espoo_ocv_findings.json` lock with `--write-reference`, as the Haltern package does.
 
 ```bash
 bash figures/lumo/fig_lumo_ocv_paper.sh            # full run, ~5 min
@@ -109,10 +109,12 @@ bash figures/morandi/fig_morandi_ocv_months.sh     # ~15 s, 24-month companion
 bash figures/cts/fig_cts_ocv_paper.sh              # ~15 min, permutation null
 bash figures/cts/fig_cts_ocv_paper.sh --quick      # ~50 s, no permutation null
 bash figures/cts/fig_cts_ocv_months.sh             # ~19 s, months companion (F0 + M-24..M+1)
-bash figures/ywf/fig_ywf_ocv_paper.sh              # ~8 s, echo coverage + pins
-python3 code/ywf/fig_ywf_ocv_weeks.py              # ~10 s, pre-window companion (no wrapper)
-bash figures/ywf/fig_ywf_ocv_series.sh             # ~2 s, whole-record series + pins
+bash figures/haltern/fig_haltern_ocv_paper.sh       # figures A-E + report + pins
+bash figures/haltern/fig_haltern_ocv_weeks.sh       # pre-window companion + pins
+bash figures/haltern/fig_haltern_ocv_series.sh      # whole-record series + pins
+bash figures/haltern/fig_haltern_ocv_orbits.sh      # support-chip trajectories + pins
 bash figures/espoo/fig_espoo_ocv_paper.sh          # ~4.5 min, event-free control + pins
+bash figures/cases/fig_ocv_trajectory.sh          # ~17 s, the six trajectory plates
 bash figures/espoo/fig_espoo_ocv_paper.sh --quick  # ~1.5 min, no permutation nulls
 bash figures/espoo/fig_espoo_ocv_months.sh         # ~4 s, month-by-month companion
 
@@ -122,7 +124,6 @@ PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/morandi/fig_morandi_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_paper.sh
-PYTHON=/usr/bin/python3 bash figures/ywf/fig_ywf_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/espoo/fig_espoo_ocv_paper.sh
 ```
 
@@ -655,144 +656,90 @@ bash figures/cts/fig_cts_ocv_months.sh            # ~19 s
 PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_months.sh
 ```
 
-## `ywf/fig_ywf_ocv_paper.sh` → `../code/ywf/fig_ywf_ocv_paper.py`
+## `haltern/fig_haltern_ocv_paper.sh` → `../code/haltern/fig_haltern_ocv_paper.py`
 
-Five figures on the question of what can be *observed* on the collapsed Unit 21
-tower of the Yeongdeok Wind Farm (Changpo Wind Power Complex, Samgye-ri) — the
-steel monopole that fell onto a public road on **2026-02-02** — in the two sides
-of that date (`pre-collapse (healthy)` Aug 2025 - Jan 2026, `post-collapse`
-Feb - Apr 2026) of the *same* structure. The site's record is the smallest of the
-family — **57** committed 7 x 7 windows on **32** dates, **33** unique chips
-after **24** byte-identical duplicates, all of them the *same* mast section — so
-the package carries **one** mask layer and its claim is deliberately narrow.
+The figures on the **Haltern AV9 wind turbine** (Nordex N149/4.5, Kreis
+Recklinghausen, NRW), which collapsed on **2021-09-29** — the family's **one-layer
+record with an externally anchored event**. The record holds **168** committed
+7 x 7 windows on **120** acquisition dates, **120** unique chips after 48
+byte-identical duplicates across 48 payload groups, and all of them the same mast
+section (`segment_resolved = False`), so **one** mask layer is all it supports: the
+echo mask of the whole window (`intensity >= 0.30 x peak AND >= 5 x np.median`,
+`A >= 2`). Its headline is the **echo coverage**, not a contrast — **62 of 108**
+pre-event chips carry an echo, **4 of 12** post-event chips do, Fisher exact
+**p = 0.1343**, which cannot become significant while four of the twelve post chips
+still carry an echo. No classifier is fitted: twelve post-event chips, four of them
+echo-bearing, are not a class.
 
-The script reads `../data/ywf/ywf_ocv_channels.csv` (33 rows, one per unique
-chip, built by `../code/ywf/ywf_ocv_channels_csv.py`), recomputes every aggregate
-and writes `../data/ywf/fig_ywf_ocv_paper.json`, the report
-[`ywf/fig_ywf_ocv_paper.md`](ywf/fig_ywf_ocv_paper.md) and the five PNGs:
+`data/haltern/reference/haltern_ocv_findings.json` is **defined** by this script
+(`--write-reference`) and re-derived field by field on every later run. Two facts
+the export does not carry are *resolved* from public catalogues and committed beside
+it: the **pass geometry** of every chip (`haltern_bursts.json` — the sub-swath is
+*not* fixed per direction, and VV and VH interleave) and the **turbine's own OSM
+node** `8268709968` with the anchor and burst grid derived from it
+(`haltern_osm_node.json`, `haltern_geometry.json`). The map also corroborates the
+event date: the node gained `damage:date=2021-09-29` and `destroyed=yes` in
+changeset 111912198, within a day of the collapse.
 
-| figure | content |
+| plate | content |
 | --- | --- |
-| `ywf/fig_ywf_ocv_paper_A.png` | the six echo-mask channels (`gamma2, P, D, A, F, S`) per state over the **17 echo-bearing chips** — a box where a state holds ≥ 3 chips, a single marker for the one post-event chip (`A`, `D`, `S` on a log axis) |
-| `ywf/fig_ywf_ocv_paper_B.png` | the **headline**: (a) the echo coverage per state (with/without echo, the rate and the Fisher exact p); (b) the coverage timeline across the collapse, marker area = unique chips of the day |
-| `ywf/fig_ywf_ocv_paper_C.png` | in-sample effect sizes: (a) Cliff's delta + bootstrap 95 % CI and SDS for the six mask channels (no CI where the post side holds one value); (b) the same for the co-variate controls, which move with season, weather and generation |
-| `ywf/fig_ywf_ocv_paper_D.png` | the OCV plane (`gamma2` vs `P`, `gamma2` vs `D`, `P` vs `D`) — 16 pre-event chips and 1 post-event chip, **no classifier**: one chip is not a class |
-| `ywf/fig_ywf_ocv_paper_E.png` | what else moves with the collapse date: (a) the pipeline's `coherence_masked_pixels` (75, 133 … px, a different-generation asset-point chip) against the recomputed echo `A` — 0 of 17 rows coincide; (b) the echo-mode mix; (c) the season composition; (d) the 24 duplicated windows that make the record not segment-resolved |
-
-The reading is a **coverage** statement, not a contrast: **16 of 27** pre-event
-chips carry an echo and **1 of 6** post-event chips does, so the Fisher exact test
-gives **p = 0.085** — not significant, and it cannot be, because the single
-surviving echo is in the post side. Had all six post-event chips been echo-free,
-four chips would already have sufficed at alpha = 0.05, so what limits the site is
-the surviving echo and not only the record length. The report states that instead
-of a damage verdict.
-
-This is also the one site **without an upstream analysis project**, so the
-reference layer is defined here: `bash figures/ywf/fig_ywf_ocv_paper.sh
---write-reference` writes `../data/ywf/reference/ywf_ocv_findings.json` (and proves
-the round trip), and every later run re-derives it field by field — 1179 checks
-against the reference, the channel metadata, the committed mask cache, the sha256
-digests of the committed inputs and the digests of the two references resolved
-from public catalogues (`ywf_bursts.json`, `ywf_osm_road.json`, `ywf_geometry.json`)
-— exiting non-zero on the first deviation. Two companions extend the record
-without adding a number to the A-E pin contract: `fig_ywf_ocv_weeks.py` opens the
-pre window (27 chips on 26 acquisition days) and
-`figures/ywf/fig_ywf_ocv_series.sh` draws the whole record — both stretches, every
-hole and the cut inside the 12-day step that holds it — on one dated axis.
-
-The report's four blockers are backed by the committed anchor file: its
-`road_vs_window` block proves the carriageway lies **outside** the 7 x 7 frame
-(its near edge is 8.10-9.33 px across range from the window centre, against the
-6 px the frame reaches), and `../code/ywf/ywf_mask_sensitivity.py` sweeps the
-mask rule **offline** on the committed payload — the rule is family-wide, so no
-variant is switched on and no figure depends on either.
+| `haltern/fig_haltern_ocv_paper_A.png` | the six echo-mask channels (`gamma2, P, D, A, F, S`) per state over the 66 echo-bearing chips |
+| `haltern/fig_haltern_ocv_paper_B.png` | the **headline**: (a) the echo coverage per state with the Fisher exact p; (b) the coverage timeline across the collapse |
+| `haltern/fig_haltern_ocv_paper_C.png` | in-sample effect sizes: Cliff's delta + bootstrap 95 % CI and SDS for the mask channels, and the same for the co-variate controls |
+| `haltern/fig_haltern_ocv_paper_D.png` | the OCV plane (`gamma2` vs `P`, `gamma2` vs `D`, `P` vs `D`) — **no classifier** |
+| `haltern/fig_haltern_ocv_paper_E.png` | what else moves with the collapse date: (a) the pipeline's `coherence_masked_pixels` against the recomputed echo `A` — the two agree on **6 of 66** rows; (b) the echo-mode mix; (c) the pass composition; (d) the 48 duplicated windows |
 
 ```bash
-bash figures/ywf/fig_ywf_ocv_paper.sh                    # ~8 s, figures + report + pins
-bash figures/ywf/fig_ywf_ocv_paper.sh --write-reference  # <1 s, re-define the reference
-PYTHON=/usr/bin/python3 bash figures/ywf/fig_ywf_ocv_paper.sh
+bash figures/haltern/fig_haltern_ocv_paper.sh                    # figures + report + pins
+bash figures/haltern/fig_haltern_ocv_paper.sh --write-reference  # <1 s, re-define the reference
+PYTHON=/usr/bin/python3 bash figures/haltern/fig_haltern_ocv_paper.sh
 ```
 
-## `ywf/fig_ywf_ocv_weeks.md` → `../code/ywf/fig_ywf_ocv_weeks.py` (no wrapper)
+## `haltern/fig_haltern_ocv_weeks.sh` → `../code/haltern/fig_haltern_ocv_weeks.py`
 
-The companion that opens the pre-collapse window instead of pooling it: the OCV
-time series of the **27** pre-event chips on **26** acquisition days (23 ISO
-weeks, **16** of them echo-bearing) from 2025-08-06 to the collapse line at
-`W-0`, with **no** post-event chip drawn. It adds no number to the A-E pin
-contract of the paper figure; it re-derives the pre window from the committed
-channel table and mask cache and re-verifies the three reference digests of the
-paper figure's `sources` block (422 checks in all).
-
-| panel | content |
-| --- | --- |
-| a | the echo of every acquisition (`A` of 49) as a stem, grey where the chip has no echo, coloured by echo mode, with the chip `intensity` on a twin log axis |
-| b | `gamma2` over the 16 echo-bearing chips plus its gap-aware 4-week rolling median |
-| c | `P` (the same) |
-| d | `D` (the same) |
-| e | the three OCV channels normalised to their pre-window median, one log axis |
-| f | what else moves over these weeks: temperature, wind speed and gust |
-
-The time axis is weeks before the collapse (`x = -(2026-02-02 - day)/7`, 0 at the
-event); the four **12-day repeat gaps** (12 Aug → 24 Aug, 24 Aug → 5 Sep,
-3 Jan → 15 Jan, 15 Jan → 27 Jan, when the ascending and the descending pass
-alternate) are drawn as bands and never interpolated over. The figure's point is
-the *reading*: the coordinate is not stationary — temperature falls from 33.2 C to
-0.6 C across the window — and the coverage moves with it, while the channels
-themselves show no monotone drift (Spearman against acquisition time over the 16
-echo chips: `gamma2` +0.135, p 0.62; `P` −0.17, p 0.52; `D` −0.25, p 0.35). A
-"before vs. after" statement computed from the pooled window is therefore read
-against the co-variates of panel f, never as a change at the event. `P` is a
-**window-wide reference** (the mean pixel frequency inside the own mask over the
-17 echo-bearing chips of the whole record), so these chips are not independent
-draws of it; the report says so.
+The **pre-collapse window** on its own axis, without adding a number to the A–E pin
+contract: 108 chips on 108 acquisition days, 2021-01-01 -> 2021-09-17 (38.7 -> 1.7
+weeks before the collapse, the x coordinate), 62 of them echo-bearing, **29** ISO
+weeks of which 26 hold an echo, the longest echo-free run 5 chips. The rolling median
+is the trailing 4-week median over the echo-bearing chips, with the 8 twelve-day gaps
+honoured — a chip after such a step sees the weeks before it, never an interpolated
+point. Weather is committed beside the channels (temperature median 11.4 C, wind
+3.06 m/s, gust 7.20 m/s), and the pipeline's own `coherence` column is the constant
+0.999285714286 on all 120 rows, so it cannot be a co-variate of the window. There is
+no post-event chip in this figure: the window is the subject.
 
 ```bash
-python3 code/ywf/fig_ywf_ocv_weeks.py              # ~10 s, figure + JSON + report
-python3 code/ywf/fig_ywf_ocv_weeks.py --no-figures # cross-checks only
+bash figures/haltern/fig_haltern_ocv_weeks.sh              # figure + JSON + report
+bash figures/haltern/fig_haltern_ocv_weeks.sh --no-figures # cross-checks only
 ```
 
-## `ywf/fig_ywf_ocv_series.sh` → `../code/ywf/fig_ywf_ocv_series.py`
+## `haltern/fig_haltern_ocv_series.sh` → `../code/haltern/fig_haltern_ocv_series.py`
 
-The whole record on one dated axis: **33 unique 7 x 7 chips on 32 acquisition
-days** (57 committed windows, 24 of them byte-identical duplicates of another
-request for the same chip), from 2025-08-06 to 2026-04-27, with the collapse of
-2026-02-02 drawn **inside** the axis. No chip sits on the event day — the event
-falls in the 12-day step `2026-01-27 -> 2026-02-08` — so the pre and the post
-stretch meet at a band and never at a point, and the nearest chips are 6 days
-either side. Six panels, one per dimension of the echo-mask vector
-`x = [gamma2, A, P, D, F, S]`, `y` = the value over that dimension's **own**
-pre-window median (the same 16 pre-event echo chips the paper figure's pre
-summary is computed on), so every drawn ordinate of the pre side is a pinned
-number:
-
-| panel | content |
-| --- | --- |
-| a | `gamma2`, the masked coherence (log) |
-| b | `A`, the masked pixels of 49 (log) |
-| c | `P`, the mask persistence — the only linear panel (a bounded frequency) |
-| d | `D`, the mask density `A` / bbox (log) |
-| e | `F`, the 8-connected components (log) |
-| f | `S`, the centroid-to-peak shift in px (log) |
-
-The record's step is 6 days (the ascending and the descending pass alternate) and
-**9** of its 31 steps are longer (7 x 12 days, 2 x 24 days): each of them is drawn
-as a grey band and **no line crosses it**. Dots are coloured by pass geometry, the
-single post-event echo (`2026-03-16`, ascending, `A` = 5 px) is drawn hollow and
-the 16 echo-free chips are ticks on the panel floor: on the post side 1 of the 6
-chips carries an echo, which is a coverage fact and not a level. The figure
-covers the same record as the paper figure, so it re-derives and pins the 32-day
-timeline, the coverage per state and per pass geometry, the payload groups, the
-mask rule and the pin verdict of the paper JSON field by field against five
-committed layers (the channel table's metadata, the mask-cache manifest, the
-committed mask cache, the paper result JSON and the analysis reference), and pins
-the sha256 of all nine committed inputs — 2637 checks in all, and no artifact is
-written before they agree. It writes `../data/ywf/fig_ywf_ocv_series.json`,
-`ywf/fig_ywf_ocv_series.md` and `ywf/fig_ywf_ocv_series.png`.
+The **whole record** on one dated axis, six panels for `x = [gamma2, A, P, D, F, S]`,
+each divided by its own pre-window median — taken over the 62 pre-event echo chips, so
+1.0 *is* that median and every drawn ordinate is a pinned number. 120 chips on 120
+acquisition days, 2021-01-01 -> 2021-10-17. No chip sits on the event day: the collapse
+falls inside the **14-day** step `2021-09-17 -> 2021-10-01`, the 9 steps longer than
+the cadence are drawn as bands and never interpolated over, and the post side is drawn
+as what it is — four echoes among twelve chips, no line, no median, no trend. The
+record alternates in two-day blocks, so no acquisition day carries two chips.
 
 ```bash
-bash figures/ywf/fig_ywf_ocv_series.sh              # ~2 s, figure + JSON + report
-bash figures/ywf/fig_ywf_ocv_series.sh --no-figures # cross-checks only
-PYTHON=/usr/bin/python3 bash figures/ywf/fig_ywf_ocv_series.sh
+bash figures/haltern/fig_haltern_ocv_series.sh              # figure + JSON + report
+bash figures/haltern/fig_haltern_ocv_series.sh --no-figures # cross-checks only
+```
+
+## `haltern/fig_haltern_ocv_orbits.sh` → `../code/haltern/fig_haltern_ocv_orbits.py`
+
+The **six-dimension trajectory** plate on the support-sized cut
+(`../data/haltern/support/haltern_ocv_channels.csv`, 107 overpasses, 13 of 120 dates
+refused at the raster edge): one panel per dimension x channel, `gamma2, P, D, F, A, S`
+down the rows and `ASC` / `DESC` across the columns, **44 pre / 5 post** ascending and
+**52 pre / 6 post** descending. It is the site's companion in the family's shared
+support-chip layout, and it adds no number to the paper's pin contract.
+
+```bash
+bash figures/haltern/fig_haltern_ocv_orbits.sh             # trajectories + pins
 ```
 
 ## `espoo/fig_espoo_ocv_paper.sh` → `../code/espoo/fig_espoo_ocv_paper.py`
@@ -877,6 +824,43 @@ state, one band, medians over the whole series. Espoo's `_chip` stem is delibera
 the site's `.png` of nearly the same name is the *pipeline* figure (A vs S, no
 chip), drawn by `code/espoo/fig_espoo_ocv_orbits.py`.
 
+## `figures/cases/` — the standard OCV trajectory plate, one per site
+
+`fig_ocv_trajectory.sh` draws the **same 3 × 4 plate** for every case site — the
+timeline question the six cases are actually read for, on the support-sized chip,
+with the post-event tail **drawn** instead of cut off. Each site keeps its own
+wrapper (`figures/<site>/fig_<site>_ocv_trajectory.sh`) so a plate can be rebuilt
+alone; the driver runs the six and pools nothing.
+
+| wrapper | reference window (R2) | chips | tail | contrast |
+| --- | --- | --- | --- | --- |
+| `carola/…` | 2022-09-03 → 2024-09-09 | 184 | 252 post-collapse | resolves `γ², P, S` |
+| `cts/…` | 2015-09-21 → 2021-06-21 | 136 | 42 post-collapse | resolves `P, A, D` |
+| `morandi/…` | 2016-08-24 → 2018-08-08 | 198 | 9 post-collapse | resolves `D, R_G` |
+| `kdlo/…` | 2022-06-02 → 2022-12-11 | 16 | 43 rebuild | resolves `P, A, S, R_B, R_G` |
+| `haltern/…` | 2021-01-01 → 2021-09-17 | 96 | 11 post-collapse | resolves nothing |
+| `espoo/…` | 2024-09-05 → 2026-09-07 (whole record) | 75 | none | no contrast: event-free |
+
+The rules — **R1** one cut, **R2** the case's own reference timeline, **R3**
+per-block standardisation with its own reference set, **R4** the robust z of
+`ocv_reconfigure.TRANSFORM`, **R5** monthly bins with no interpolation and a seeded
+moving-block interval, **R6** the healthy chips R2's window leaves out tested
+against the reference with that same interval — and the windows that were rejected
+are written down in
+[`../code/cases/ocv_trajectory_spec.md`](../code/cases/ocv_trajectory_spec.md).
+
+Per site: `figures/<site>/fig_<site>_ocv_trajectory.jpg|.md` and
+`../data/<site>/fig_<site>_ocv_trajectory.json`. `--selftest` runs the template's
+201 checks without writing a file; `--verify` re-derives every number from the
+table and fails on a disagreement.
+
+```bash
+bash figures/cases/fig_ocv_trajectory.sh            # ~17 s, all six plates
+bash figures/carola/fig_carola_ocv_trajectory.sh    # ~5 s, one site
+python3 code/cases/ocv_trajectory.py --selftest     # the template's rules
+bash figures/cases/fig_ocv_trajectory.sh --verify   # re-derive and compare
+```
+
 ## `figures/cases/` — the six cases on one page
 
 `fig_cases_overview.jpg` (630 dpi, from `../code/cases/fig_cases_overview.py`) is
@@ -887,9 +871,7 @@ experiments rather than further cases; (b) the dimension-response matrix for `γ
 P, D, F`, where an arrow needs that case's own
 interval to exclude zero **and** both sides carry at least six units, `○` means
 tested-but-unresolved, `?` means the evidence is not there and the fill is the
-project's SDS band *inside* the cell — YWF is not a row (19 of its 33 acquisitions
-cannot be cut on this chip, four of them post-collapse) and the report says so;
-(c) six
+project's SDS band *inside* the cell; (c) six
 schematic time lines that encode the kind of result each case reports. The report
 `fig_cases_overview.md` lists every number behind every cell and its source file
 with its sha256; the JSON is `../data/cases/fig_cases_overview.json`.

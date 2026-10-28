@@ -1,6 +1,6 @@
 # `data/` — one subfolder per site: input tables and reference results
 
-`lumo/`, `bautzen/`, `kdlo/`, `carola/`, `morandi/`, `cts/`, `ywf/` and `espoo/`. Everything in here is either a **copy**
+`lumo/`, `bautzen/`, `kdlo/`, `carola/`, `morandi/`, `cts/` and `espoo/`. Everything in here is either a **copy**
 of a committed artifact of the site's analysis project or a file **generated** by
 a script in `../code/<site>/`; nothing is edited by hand. Every script reads and
 writes only inside its own `data/<site>/`, so the sites can never overwrite each
@@ -299,68 +299,6 @@ DiD layer, so the three reference contrasts can be regenerated offline from a
 fresh clone. `cts_ocv_masks.py --extract` (needs the site's `cts_windows_*.npz`
 cubes) is the only step that must not be part of a normal run.
 
-## `data/ywf/` — Yeongdeok Wind Farm, Unit 21 (Samgye-ri), collapsed on 2026-02-02
-
-The steel monopole tower (100 m, 4.6 m base diameter) that collapsed onto a public
-road. The record is a **7 x 7 complex window** per acquisition per *mast-section
-request* — and it is **small** (57 windows x 49 complex samples = 38 kB), so unlike
-the bridge sites the payload is **committed in full** and the mask layer is
-recomputed from it directly. It is also **not segment-resolved**: 24 of the 57
-windows are byte-identical duplicates that differ only in the requested section
-(2 vs. 3) on one date, so both requests decoded the same chip at the asset point
-— the package therefore carries **one** mask layer (the echo mask of the whole
-window; a per-mast-section layer would be an artefact) and only mast section 3
-appears in the record at all.
-
-The record holds **33 unique chips** on **32 dates**; **17** of them carry an echo
-(**16** of 27 pre-event chips, **1** of 6 post-event chips). The site's collapsed
-tower therefore supports an **echo-coverage** statement with a power caveat
-rather than a contrast. The same coverage is also stated per **orbit direction**
-(ascending / descending, the record's only second cross-cut beside the state):
-**10 of 20** ascending chips carry an echo against **7 of 13** descending ones
-(Fisher exact p = 1.0000), the one post-event echo is an ascending pass, and the
-block is pinned as a *description* — both orbits straddle the collapse date.
-
-Two facts the export does not carry are committed as references resolved from
-public catalogues (`reference/ywf_bursts.json`, `reference/ywf_osm_road.json` and
-`reference/ywf_geometry.json`, each with its own offline `--check`): the record's
-33 chips are **two sub-swaths** — ascending `IW3` / relative orbit `54` at 09:2x UT
-(20 chips) and descending `IW2` / relative orbit `61` at 21:2x UT (13 chips), with
-**VV and VH interleaved in both** — and the collapsed tower stood **on** OSM way
-`577440814` (`highway=tertiary`, `surface=asphalt`). The road is an anchor only:
-a ~7 m carriageway is 2.0 px across range but 0.5 px across azimuth, and the
-window is 7 x 7 px with no pixel-spacing spec of its own, so this record supports
-no edge/band layer (see `code/ywf/README.md`, "the four structural blockers").
-
-### Inputs (committed copies)
-
-| file | what it is | read by |
-| --- | --- | --- |
-| `ywf_windows_full.txt` | the committed window payload: one line per window, `mid\|w\|h\|[[re, im], …]` (57 lines, 38 kB) | `code/ywf/ywf_ocv_masks.py`, `ywf_ocv_core.py` (`chip_table`), `ywf_ocv_channels_csv.py` |
-| `ywf_windows_index.txt` | the window index: `mid\|asset_id\|asset_name\|segment_index\|acquisition_ts\|burst_id\|w\|h` — the 6th field is the **CDSE burst id** of the SLC burst the window was cut from (**not** the measurement extract's own `request_id`, a different column with a different value); the index labels a window's mast section and is the time base of the state rule | same |
-| `ywf_segments.txt` | the five mast sections of the asset with their FEM fundamental: `asset_id\|asset_name\|segment_index\|label\|fundamental_hz\|…` | `ywf_ocv_core.py` (`load_segments`) |
-| `ywf_measurements_full.txt` | the committed measurement extract: one pipe-delimited line per measurement (58 lines, ~50 columns: `intensity`, `displacement_los_m`, `brightness_ratio`, the weather columns, `coherence`, `coherence_gamma2`, `coherence_masked_pixels`, `structural_frequency_hz`, …) | `ywf_ocv_core.py` (`load_measurements`), `ywf_ocv_channels_csv.py`, the figure script |
-| `ywf_windows_mask_cache.txt` | the committed mask cache — **only the 17 windows that carry an echo** (one line per chip: `mid`, asset, segment, date, orbit, `w h`, `peak`, `median`, the mask statistics and the masked-pixel coordinates), written by `ywf_ocv_masks.py --extract` and re-verified by `--check` | `ywf_ocv_masks.py` (`load_cache`), `ywf_ocv_core.py`, the figure script |
-| `ywf_windows_mask_cache.manifest.json` | provenance of that extraction: the three source files + sha256, the mask rule, the guard counts (`n_rows` 17, `n_without_echo` 16, `n_deduplicated_same_payload` 24, `segment_resolved` false, the section groups), written by the same run | `ywf_ocv_masks.py --check`, `ywf_ocv_core.py`, the channel meta |
-| `reference/ywf_ocv_findings.json` | the committed **analysis-layer reference** — the only reference of the repository that has *no* upstream project behind it: it is **defined** by `fig_ywf_ocv_paper.py --write-reference` and re-derived field by field (1179 checks) on every later run | `code/ywf/fig_ywf_ocv_paper.py` (`pin_all`), `fig_ywf_ocv_weeks.py` |
-| `reference/ywf_bursts.json` | the **resolved pass geometry** of the record (49 kB): all 33 burst ids of the window index queried against the public CDSE OData burst catalogue — sub-swath, relative orbit, polarisation, azimuth time, parent product, footprint, S3 path, plus the sha256 of the index it was resolved from. A **mutable external input**, so it is re-verified *structurally* offline (`code/ywf/ywf_bursts_resolve.py --check`, the default) and pinned by sha256 in the figures | `ywf_bursts_resolve.py`, `code/ywf/ywf_ocv_core.py` (`burst_provenance`) |
-| `reference/ywf_osm_road.json` | the committed **OSM map extract** of the road the collapsed tower fell on (91 kB, way `577440814`, `highway=tertiary`, © OpenStreetMap contributors, ODbL 1.0) | `code/ywf/ywf_osm_anchor.py` |
-| `reference/ywf_geometry.json` | the derived **anchor** (its `status` is `anchor reference — no edge layer claimed`): the nearest point of that way (36.85 m from the asset point), the carriageway centreline and bearing, the **estimated burst grid** (`chip_grid`: 3.35 / 3.45 m per pixel across range, 15.3 / 14.4 across azimuth), `road_vs_pixel_grid` — a 7 m carriageway is 2.0-2.1 px across range but 0.46-0.49 px across azimuth — and `road_vs_window`, the **containment proof**: the near carriageway edge is 8.10-9.33 px across range from the window centre while a 7 x 7 frame reaches 6 px, so no committed pixel crosses the road (containment would need 19-21 px per side, 27-29 px with Bautzen's ±4-row ROI) | `code/ywf/ywf_osm_anchor.py` (`--check`, the default) |
-
-### Generated files
-
-| file | written by | content |
-| --- | --- | --- |
-| `ywf_ocv_channels.csv` | `code/ywf/ywf_ocv_channels_csv.py` | one row per **unique chip** (**33 rows**, 81 columns): the 34 source columns of the measurement extract, the derived columns (`segment`, `section_index`, `state`, `pre_collapse`, `day`, `month`, `year`, `season`, `echo_mode`, `echo_mask_present`, `payload_group_size`, `payload_shared_with_segments`) and the recomputed mask columns (`A, D, F, S, P, gamma2_mask`, the bbox/centroid/peak geometry, `n_components`, the largest component, the fragmentation). `echo_mask_present` marks the 17 echo-bearing rows; the mask columns are empty on the other 16 |
-| `ywf_ocv_channels_meta.json` | same | provenance: the payload, index, segments, measurements, cache and manifest + sha256, the mask rule and window, the guard counts (`n_windows` 57, `n_unique_chips` 33, `n_duplicate_windows` 24, `n_echo_masks` 17, `n_rows_without_echo_mask` 16, `n_by_orbit` ASC 20 / DESC 13), the echo-coverage table with its Fisher test, **the same coverage split by orbit direction** (`coverage_by_orbit`: per-orbit chips / echoes / pre-post cross-tab, the ASC-vs-DESC Fisher test and the two within-orbit pre/post tests), the echo-mode cuts (cut on this site's 49-px window), the `coherence_masked_pixels` cross-check and the per-state summary of every channel |
-| `fig_ywf_ocv_paper.json` | `code/ywf/fig_ywf_ocv_paper.py` | the OCV-paper figure result: the coverage/power block, the per-orbit coverage block, the pooled Cliff's-delta blocks of the mask channels and of the co-variate controls, the echo-mode mix, the month/section composition, the 32-row timeline, the payload-digest groups and the pin verdict |
-| `fig_ywf_ocv_series.json` | `code/ywf/fig_ywf_ocv_series.py` | the whole-record series figure result: the six panel definitions (scale, base, ratios, y window), the two stretches, the 32-row timeline, the 31 step lengths with the 9 holes and the 12-day step that holds the event, the coverage per state and per pass geometry with both Fisher tests, the power block, the echo-mode mix, the month/section composition, the payload groups, the co-variate controls by state and the pin verdict of all 2637 comparisons |
-
-Neither the CSV nor the meta JSON contains anything that is not derivable from
-the committed payload, so the figures and the pin block run offline from a fresh
-clone; `ywf_ocv_masks.py --extract` is the only step that rewrites the cache (and
-it is deterministic, byte for byte).
-
 ## `data/espoo/` — Espoo Kurttila mast (Espoo, Finland), event-free
 
 The communications mast at Kurttila, whose record is the family's **event-free
@@ -415,7 +353,7 @@ generator produce the same CSV and the same meta JSON, byte for byte.
 
 | file | content |
 | --- | --- |
-| `fig_cases_overview.json` | the spectrum positions and the question each case answers, the two controlled-reference experiments, and one block per case with the symbol, the reason, the fill index (SDS band), the delta, its interval, `n` and the winning pair — plus an `excluded` block that records why YWF is not a row, the `trajectories` geometry of panel (c) and the sha256 of every source file |
+| `fig_cases_overview.json` | the spectrum positions and the question each case answers, the two controlled-reference experiments, and one block per case with the symbol, the reason, the fill index (SDS band), the delta, its interval, `n` and the winning pair — plus the `trajectories` geometry of panel (c) and the sha256 of every source file |
 | `ocv_correspondence_lumo.json` | the six LUMO campaigns with their physical vector and their OCV vector per orbit, the per-campaign date counts, the healthy reference (median/MAD of the log channel per orbit), every OCV vector with its date-level `ci_measurement`, the four tests (A repeatability with the `R` rule, B geometry share with its 720-relabelling null, C raw **and** z-scored Mantel rho with its null and cluster-bootstrap interval, D the closest physical pair with the saturation reason and the raw contrast against the visit noise), the M0/M1 leave-one-campaign-out errors with the x-permutation p, M2 marked **not identifiable**, the five-test Holm family and 17 pins |
 | `ocv_correspondence_bautzen.json` | the same schema on the paired **bridge-minus-control** vector: three campaigns (one per state), exact per-date pairing with the counts of incomplete pairs, the identity channel scale with its reason, `x` for RS and DS1 and *not available* for DS2, and the same code reporting A and C as **not defined**, B as **not informative**, D as the single RS→DS1 contrast (not identifiable as a residual model, so measured raw), and M2 as not identifiable — 16 pins |
 
@@ -467,15 +405,23 @@ anything.
 
 ## The support-sized migration (`data/<site>/support/`)
 
-CTS, KDLO, Carolabrücke, Haltern and YWF now carry a second, support-sized
+CTS, KDLO, Carolabrücke and Haltern now carry a second, support-sized
 chip bundle beside their committed table; Bautzen and LUMO already did. The
-method, the per-site numbers, the refusal finding (ASC of Haltern and YWF does
+method, the per-site numbers, the refusal finding (ASC of Haltern does
 not fit into its burst) and the reason Ponte Morandi is not cut yet are written
 down in [`support_migration.md`](support_migration.md).
 
 Nothing in this folder was replaced: each migrated site keeps its committed
 table untouched and gains `<site>/support/` with the chips, the cut manifest and
 the re-measured table (every mask column beside its `*_committed` twin).
+
+### The standard trajectory plate
+
+Every case site also carries `<site>/fig_<site>_ocv_trajectory.json` — the monthly
+z of the six dimensions, the two block magnitudes, the reference statistics per
+block and the seeded interval of the post-minus-reference contrast — written by
+`code/cases/ocv_trajectory.py` from `<site>/support/<site>_ocv_channels.csv` and
+pinned to that table's sha256.
 
 ### Orbit figures on the support chip
 
@@ -485,3 +431,31 @@ sha256 and the cut manifest's chip, band, cell counts and refusals. It is writte
 by `code/orbits/fig_ocv_orbits.py`, the companion of
 `figures/<site>/fig_<site>_ocv_orbits.{jpg,md}`; `--verify` re-derives every value
 from the table.
+
+## The metadata quarantine (`data/ocv_metadata_quarantine.json`)
+
+One file at this level is neither an input nor a result: the register of metadata
+columns that are **known to be wrong** and are therefore never used for identity.
+It holds one defect today — `asset_name`/`asset_type` of the CTS export carry the
+Werder bridge's labels while `asset_id` is CTS's — and the verified Werder triple,
+recorded only so that the identical name string there cannot be mistaken for a
+cross-reference.
+
+The register is descriptive: it pins the sha256 of every file it names, and the
+data stay byte-identical. What changed is the reader — `code/cts/cts_ocv_core.py`
+quarantines the columns as provenance and exposes `identity_key` (`track|day|role`)
+instead, and `code/cts/cts_ocv_quarantine.py` re-checks the claim, the identity
+rule (a poison test: rewriting the asset columns leaves every key unchanged) and
+the code itself (an AST scan for literal reads of a quarantined column).
+
+## The units of `A` (`data/ocv_channel_units.json`)
+
+The second file at this level is generated, and it is the counterpart of the
+register for the numbers: `code/audit_ocv_units.py` reads every
+`<site>/support/<site>_ocv_channels.csv` and writes what `A` counts — the chip and
+its three bands, `A_range`, `D_range`, how often `A` exceeds `support_cells`, and
+the mask geometry per series. Its rule: `A` is a count of the chip's cells
+(0 = an empty mask), `support_cells` is the size of the support band, `A / D` is
+the mask's `bbox_area`, and the export's `coherence_masked_pixels` is another
+measurement. The identities hold on all nine support tables (3 225 rows, 2 374 of
+them with a chip); `--verify` re-derives the file.

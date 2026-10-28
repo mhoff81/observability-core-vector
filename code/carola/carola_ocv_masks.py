@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """Carola OCV — the two mask layers from the committed window-payload cache.
 
-Carola Bruecke (Dresden) is observed as one **per-girder** record: the export
-stores, per acquisition, one 80x80 complex chip per girder request (segment
-0/1/2 -> Girder A/B/C) and, for the wrongly typed tower asset, 7x7 chips. This
-module owns the two mask layers of the package:
+Carola Bruecke (Dresden) is observed as one **per-girder** record: per acquisition
+one 80x80 complex chip per girder request (segment 0/1/2 -> Girder A/B/C) and, for
+the wrongly typed tower asset, 7x7 chips. This module owns two mask layers:
 
-  * the **echo mask** — the project-wide bridge-deck echo definition, identical
-    to ``analyze_carola_coherence.coherence_gamma2`` and to the backend's
-    ``sarsolve::coherence::coherence_mast_echo``:
+  * the **echo mask**, the project-wide bridge-deck echo definition (identical to
+    ``analyze_carola_coherence.coherence_gamma2`` and to the backend's
+    ``sarsolve::coherence::coherence_mast_echo``):
 
         intensity = |z|^2
         peak      = max(intensity)
@@ -21,48 +20,25 @@ module owns the two mask layers of the package:
         A         = count(mask)                    (no echo if A < 2)
         gamma2    = |sum(z[mask])|^2 / (A * sum(|z[mask]|^2)),  clamped to [0, 1]
 
-  * the **per-girder deck mask** — the very same rule applied to the chip that
-    the *girder's own* decode point produced (``segment_index`` of the export
-    index, labelled by ``carola_segments.txt``). Same six dimensions, but only
-    the pixels of that girder's deck window.
+  * the **per-girder deck mask**: the same rule on the chip the *girder's own*
+    decode point produced (``segment_index``, labelled by ``carola_segments.txt``).
 
-Why a committed cache and not the raw payloads
-----------------------------------------------
-The committed windows file is 182 MB (2,454 lines x 80x80 complex, JSON) — far
-beyond what belongs in this repository. The cache
-``data/carola/carola_windows_mask_cache.txt`` is therefore the mask layer's
-committed input, the Carola analogue of the KDLO strip cache: the *echo mask of
-every chip* (pixel coordinates) plus the sufficient statistics the six
-dimensions need
+The committed windows file is 182 MB (2,454 lines x 80x80 complex, JSON), far
+beyond what belongs in this repository, so the mask layer's input is the cache
+``data/carola/carola_windows_mask_cache.txt`` (the Carola analogue of the KDLO
+strip cache): the echo mask of every chip in pixel coordinates plus the sufficient
+statistics the six dimensions need
+(``peak, median, max_masked, min_masked, ss_re, ss_im, ss_abs2, n_masked, px``).
+Every dimension is derived from them here, nothing from a stored result:
 
-    peak, median, max_masked, min_masked, ss_re, ss_im, ss_abs2, n_masked, px
+  A = n_masked                    D = A / bbox_area      F = 8-connected parts
+  S = ||centroid - peak|| in px   gamma2 = (ss_re^2 + ss_im^2) / (A * ss_abs2)
+  P = mean pixel frequency inside the own mask, over the majority-shape chips
 
-so that everything below is recomputed here and nothing is read from a stored
-result:
-
-  * ``A = n_masked``, ``D = A / bbox_area``, ``F`` = 8-connected components,
-    ``S = ||centroid - peak||`` are derived from the committed ``px`` set;
-  * ``gamma2 = (ss_re^2 + ss_im^2) / (A * ss_abs2)`` is recomputed exactly (the
-    sums are stored at full double precision);
-  * the **mask rule is re-verified on the committed mask**: every masked pixel
-    must satisfy ``|z|^2 >= 0.30*peak`` and ``>= 5.0*median``, the brightest
-    masked pixel must *be* the peak (``max_masked == peak``), and ``A >= 2``.
-    A chip whose committed mask violates the rule is refused;
-  * ``P`` — the mask persistence — is recomputed from the committed masks of
-    all chips of the majority shape (see ``add_persistence``).
-
-The cache is written once by ``--extract`` (a one-time offline step that needs
-the 182 MB file, exactly as ``kdlo_ocv_channels_csv.py --fetch-db-extra`` needs
-the database), records the source file's sha256 in its manifest, and is
-thereafter the only mask input of the build.
-
-Derivation
-----------
-  A = n_masked                       (echo pixels, ``coherence_masked_pixels``)
-  D = A / bbox_area                  (bounding-box fill of the echo)
-  F = number of 8-neighbourhood components
-  S = ||mask centroid - peak pixel|| in px
-  P = mean pixel frequency inside the own mask (over all chips of the shape)
+The rule is re-verified on the committed mask (``>= 0.30*peak``, ``>= 5.0*median``,
+``max_masked == peak``, ``A >= 2``), and a chip that violates it is refused.
+``--extract`` writes the cache once, offline, from the 182 MB file and records the
+source sha256 in its manifest; thereafter it is the only mask input of the build.
 
 Usage
 -----

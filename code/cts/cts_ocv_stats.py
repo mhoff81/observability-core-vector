@@ -1,43 +1,26 @@
 #!/usr/bin/env python3
-"""Morandi OCV-Paper — statistics ports (verbatim from the Carola package).
+"""CTS OCV-Paper — statistics ports (verbatim from the LUMO package).
 
-This module invents *nothing*: every function is a byte-for-byte copy of
-``code/carola/carola_ocv_stats.py``, itself a verbatim port of
-``code/kdlo/kdlo_ocv_stats.py`` / ``code/lumo/lumo_ocv_stats.py``, which port
-the LUMO project analysis scripts
+This module invents *nothing*: it is a byte-for-byte copy of
+``code/lumo/lumo_ocv_stats.py``, the canonical port of the LUMO analysis scripts
+(that docstring lists which function comes from which ``analyze_lumo_*`` script).
 
-  * ``analyze_lumo_tower_coherence.py``            (``_stats``, ``_test``)
-  * ``analyze_lumo_gamma2_pairs.py``               (Cliff's delta, Bootstrap-CI,
-                                                    ``delta_block``, ``sign_test``,
-                                                    ``sds_from``, ``by_state``,
-                                                    ``vals``, ``season_of``)
-  * ``analyze_lumo_emv_multivariate_cv.py``        (``fit_lda``, ``predict_lda``,
-                                                    ``loo_cv``, ``permutation_test``)
-  * ``analyze_lumo_emv_pairwise_triplets_cv.py``   (``fit_linear_score``,
-                                                    ``score_row``, ``oof_scores``,
-                                                    ``delta_sds``, ``permutation_p``,
-                                                    ``paired_bootstrap_diff``)
+The CTS difference is *naming only*: the state field is ``state`` and the two
+states are the chronological collapse alphabet of the site
 
-The Morandi difference is *naming only*: the state field is ``state`` and the
-two states are the chronological collapse alphabet of the site
+    ``pre-collapse (healthy)``  <  2021-06-24  <=  ``post-collapse``
 
-    ``pre-collapse (healthy)``  <  2018-08-14  <=  ``post-collapse``
+(the day Champlain Towers South partially collapsed). The ordering is
+chronological: the second state is *after* the event, and no causal claim about
+damage follows from it — the record straddles the collapse, so season, weather
+and pipeline generation all change with the state, and the post state is bare
+sand whose intensity is moisture-driven (see ``cts_ocv_core`` and
+``code/cts/README.md``).
 
-(the day the Polesverra / Morandi viaduct fell). The ordering is chronological:
-the second state is *after* the event, and no causal claim about damage follows
-from it — the record straddles the collapse, so season, weather and pipeline
-generation all change with the state (and only 11 chips survive after the
-event, see ``code/morandi/README.md`` for why this is an honest null).
-
-Everything else — the exact formulas, the bootstrap seeds, the rank-based
-Cliff's delta, the shrinkage LDA, the leave-one-out loops — is unchanged, so a
-difference in the Morandi numbers cannot come from a difference in the
-statistics.
-
-Conventions (identical to the origin):
-  SDS  = 10 * |Cliff's delta|
-  delta(ref, grp) > 0  =>  the *group* is larger than the reference
-  bootstrap seeds 7 (in-sample) resp. 11/12/13 (OOF), permutation seed 7/8
+Everything else — formulas, seeds (SDS = 10 * |Cliff's delta|, delta(ref, grp) > 0 => the
+*group* is larger than the reference, bootstrap 7 in-sample / 11-13 OOF, permutation 7/8),
+the rank-based Cliff's delta, the shrinkage LDA and the leave-one-out loops — is the origin's,
+so a difference in the CTS numbers cannot come from a difference in the statistics.
 """
 from __future__ import annotations
 

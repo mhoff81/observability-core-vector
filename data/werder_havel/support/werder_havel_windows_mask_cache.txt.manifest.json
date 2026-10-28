@@ -1,0 +1,30 @@
+{
+ "generator": "code/werder_havel/werder_havel_ocv_channels_csv.py --extract",
+ "max_A": 85,
+ "min_A": 2,
+ "out_cache": "werder_havel_windows_mask_cache.txt",
+ "out_cache_sha256": "2342a5ba0aa940a274b5a9704594e01b975e620c80758223d6dc2beb8bdc6401",
+ "roles": {
+  "reference": 250,
+  "reference_outside": 250,
+  "target": 491
+ },
+ "rows": 991,
+ "rule": {
+  "median_mult": 5.0,
+  "min_n_masked": 2,
+  "peak_frac": 0.3,
+  "text": "intensity >= 0.30 * max(intensity) AND intensity >= 5.0 * np.median(intensity); A = count(mask)"
+ },
+ "schema": "werder-ocv-channels-v1",
+ "shapes": {
+  "80x80": 991
+ },
+ "skipped_no_echo": 0,
+ "skipped_unknown_id": 0,
+ "source_measurements": "werder_havel/werder_havel_measurements_full.txt",
+ "source_measurements_sha256": "b1f9fcc02e4645e3416e4acc5e695ef8faff9ce7d78199249337240b99b25d98",
+ "source_windows": "/home/projects/havel_werder_analysis/corrected2/werder_windows_full.txt",
+ "source_windows_sha256": "c219db252093fe8a981a55acbc5c26482d8add8d0a1509638a8323eda4b9d96f",
+ "window_note": "one 80x80 complex window per acquisition at the site point; the export committed no latitude/longitude, no segment_index and no burst id (the anchor is the OSM bridge outline, see werder_havel_aoi.py), and a window carries no pixel-spacing spec"
+}

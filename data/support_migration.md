@@ -32,7 +32,6 @@ The committed tables are untouched. Each migrated site gets
 | KDLO | 5 x 379 | 35 x 475 | 1 895 / 2 450 / 12 280 | 60 / 60 | 60 | 0 |
 | Carolabrücke | 39 x 15 | 69 x 125 | 585 / 900 / 7 140 | 436 / 436 | 436 | 0 |
 | Haltern | 5 x 109 | 35 x 229 | 545 / 852 / 6 618 | 107 / 120 | 107 | 13 |
-| YWF | 5 x 69 | 35 x 189 | 345 / 612 / 5 658 | 14 / 33 | 14 | 19 |
 | Ponte Morandi | 21 x 41 | 51 x 137 | 861 / 678 / 5 448 | 207 / 232 | 207 | 25 (alle ASC) |
 
 `support + guard + ring == chip` holds exactly in every bundled manifest, and the
@@ -46,7 +45,6 @@ ring is complete in all five chips.
 | KDLO | 75 / 84,5 | 0,0561 / 0,0306 | 10,5 / 49,5 | 15,7 / 60,7 | 0,0380 / 0,0095 | pre 16, single 1, rebuild 43 |
 | Carolabrücke | 205 / 10 | 0,0243 / 0,0078 | 65,5 / 3 | 16,4 / 14,3 | 0,0029 / 0,2086 | pre 184, post 252 |
 | Haltern | 376 / 3 | 0,0475 / 0,5000 | 189 / 2 | 19,0 / 0,95 | 0,0038 / 0,6006 | pre 96, post 11 |
-| YWF | 647 / 3 | 0,0978 / 0,3111 | 145 / 2 | 18,5 / 1,59 | 0,0033 / 0,7581 | pre 12, post 2 |
 | Ponte Morandi | 26 / 11 | 0,0243 / 0,0071 | 14 / 4 | 6,68 / 8,56 | 0,0204 / 0,0794 | pre 198, post 9 |
 
 Two effects are entangled and must not be read as one: the chip is much larger
@@ -57,9 +55,8 @@ that is why every mask column is written twice.
 
 ## The refusal finding: an ASC track can be too short for the chip
 
-Haltern refuses 13 of 120 dates, YWF 19 of 33 and Morandi 25 of 232 — **all of
-them ASCENDING**, all
-with the same reason:
+Haltern refuses 13 of 120 dates and Morandi 25 of 232 — **all of them
+ASCENDING**, all with the same reason:
 
 ```
 ValueError: the window ends at row 15137, past the raster's 15120 rows
@@ -72,9 +69,9 @@ date is not a burst), but for these dates the catalogue returns exactly one
 candidate — there is no neighbour to fall back to. The refusals are recorded per
 date with orbit and reason in the manifest.
 
-This is a consequence of the larger cell, not a defect: the committed 7 x 7 (YWF)
-and 80 x 80 (Haltern) windows fit at that edge, a 35-line support with a height
-shift does not. YWF therefore has **DESC only** (14 rows); Haltern keeps 107.
+This is a consequence of the larger cell, not a defect: the committed 80 x 80
+(Haltern) window fits at that edge, a 35-line support with a height shift does
+not. Haltern therefore keeps 107 of its 120 dates.
 
 ## Ponte Morandi: the deck comes from the project's own record
 
@@ -97,7 +94,7 @@ axis in the radar frame comes out at **152.8 deg** against the project's own
 through the two centres and a per-chip ridge fit, which is the kind of agreement
 that makes the rectangle trustworthy rather than merely plausible.
 
-The same edge effect as Haltern and YWF hits Morandi's ASC track: 25 of 232
+The same edge effect as Haltern hits Morandi's ASC track: 25 of 232
 dates are refused because the 51-line chip runs past the raster. DESC is
 complete; the refusals are listed per date in the manifest.
 

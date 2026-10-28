@@ -1,19 +1,11 @@
 #!/usr/bin/env python3
 """CTS OCV-Paper — build ``data/cts/cts_ocv_channels.csv``.
 
-Why this generator exists
--------------------------
-The CTS record is a committed *chip* export, not a table of channels: the
-analysis project's ``cts_windows_<track>.npz`` cubes (one ``(178, 80, 80)``
-complex64 cube per track, not committed) hold the 80x80 complex payload of every
-acquisition per track, and the analysis derived the echo mask from them. This
-package carries the mask layer as the committed **window cache**
-``data/cts/cts_windows_mask_cache.txt`` (see ``cts_ocv_masks.py``, built once by
-``--extract`` from the cubes) and builds its channel table from it plus the
-committed measurement extract and the track table.
+The record is a committed *chip* export (``cts_ocv_masks`` owns the two mask
+layers, ``cts_ocv_core`` the site); this generator turns the committed window
+cache and the measurement extract into the one-row-per-chip channel table every
+figure reads:
 
-What the generator does
------------------------
   1. reads the committed cache (711 80x80 chips) and the committed measurement
      extract ``cts_measurements_full.txt``;
   2. recomputes the six mask dimensions of every chip with
@@ -27,24 +19,11 @@ What the generator does
      ``cts_ocv_channels_meta.json`` (file sha256s, the mask rule, the guard
      counts, the definitions and the summary of every channel per state).
 
-The build **refuses to write** if the mask layer cannot be verified: the
-committed mask of every chip must satisfy the mask rule (checked in
-``vector_from_row`` — the threshold on every masked pixel, the peak among the
-masked pixels, ``A >= 2``), and every chip must have an echo mask.
-
-A note on ``coherence_masked_pixels``
--------------------------------------
-The site's own table carries a **fixed 640-px (10 %) quantile** mask
-(``cts_tracks.txt`` / the pipeline meta). It is **not** the echo mask of these
-chips: the pipeline used a fixed quantile count while this package recomputes
-the echo from the payloads instead. The CSV carries the site's fixed
-``coherence_masked_pixels`` = 640 as provenance beside the recomputed mask
-(``A`` / ``gamma2_mask``) and reports how many of them coincide.
-
-The record is nevertheless a **difference-in-differences** site: the four
-footprints share orbit, dates and counts, so the target tower can be contrasted
-against a control tower whose common atmosphere cancels — see ``cts_ocv_did.py``
-and the committed ``data/cts/reference/cts_reference_did_*.json``.
+The build **refuses to write** if the mask layer cannot be verified: the rule on
+every masked pixel, the peak among the masked pixels, ``A >= 2``, and every chip
+must have an echo mask. The site's own ``coherence_masked_pixels`` is a *fixed
+640-px (10 %)* quantile mask, so the CSV carries it as provenance beside the
+recomputed ``A`` / ``gamma2_mask`` and counts the rows where the two coincide.
 
 Derived columns (all recomputable from the row, no lookups):
     segment        the track (cts / ctn / cte / beach; the girder-equivalent)
