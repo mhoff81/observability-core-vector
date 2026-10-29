@@ -2,7 +2,7 @@
 
 ![the observability core vector](fig_ocv_schematic.jpg)
 
-One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (97 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
+One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (86 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
 
 ```
 physical asset -> SAR observation geometry -> asset-specific measurement
@@ -69,7 +69,7 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 
 ## The checks
 
-**97 of 97 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the eleven file checks that go with them.)
+**86 of 86 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the eleven file checks that go with them.)
 
 | family | what it pins |
 | --- | --- |
@@ -175,23 +175,11 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 | 82 | the two group names do not run into each other's brace | ok | gap 0.035 |
 | 83 | the equation sits above the braces | ok |  |
 | 84 | the equation does not touch the echo raster | ok |  |
-| 85 | JPEG width is 183 mm at 630 dpi (4539 px +/- 2) | ok | 4538 px |
-| 86 | JPEG height is 61 mm at 630 dpi (1513 px +/- 2) | ok | 1512 px |
-| 87 | JPEG pixel ratio is 3.000 | ok | 3.00132 |
-| 88 | JPEG carries 630 dpi | ok | (630, 630) |
-| 89 | JPEG is a full-colour raster | ok | RGB |
-| 90 | PDF page contains no raster image | ok |  |
-| 91 | PDF embeds its fonts as TrueType (FontType 42) | ok |  |
-| 92 | PDF has no Type-3 fonts | ok |  |
-| 93 | PDF carries no timestamp (it must be reproducible) | ok |  |
-| 94 | PDF page box is 183 x 61 mm | ok | [0.0, 0.0, 518.7401574803, 172.9133858268] |
-| 95 | re-saving the same figure gives the same JPEG bytes | ok |  |
-| 96 | two builds render identical pixels | ok | (1512, 4538, 4) |
-| 97 | two builds lay the OCV row out identically | ok |  |
+| 85 | two builds render identical pixels | ok | (1512, 4538, 4) |
+| 86 | two builds lay the OCV row out identically | ok |  |
 
 ## Files
 
-- `fig_ocv_schematic.jpg` — sha256 `94c94bddce41ba3537adc34594d69e5b4a83005de2e11443f3348a275a242b42`
-- `fig_ocv_schematic.pdf` — sha256 `eafc0e62bfa0843fe5b33dcfad68ae24a292cb662466719c8f8edfe66ad1a175`
+- no image was written (`--no-figures`)
 
 Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.4.6. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG and PDF.

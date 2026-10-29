@@ -1,8 +1,5 @@
 {
- "artifacts": {
-  "fig_ocv_schematic.jpg": "94c94bddce41ba3537adc34594d69e5b4a83005de2e11443f3348a275a242b42",
-  "fig_ocv_schematic.pdf": "eafc0e62bfa0843fe5b33dcfad68ae24a292cb662466719c8f8edfe66ad1a175"
- },
+ "artifacts": {},
  "asset": {
   "channel_note": "c is the acquisition channel: LOS_c, theta_c, Pi_c, W_{a,c} and C_{a,c} carry it; ascending and descending are never spelled out",
   "los": [
@@ -483,61 +480,6 @@
     "ok": true
    },
    {
-    "detail": "4538 px",
-    "name": "JPEG width is 183 mm at 630 dpi (4539 px +/- 2)",
-    "ok": true
-   },
-   {
-    "detail": "1512 px",
-    "name": "JPEG height is 61 mm at 630 dpi (1513 px +/- 2)",
-    "ok": true
-   },
-   {
-    "detail": "3.00132",
-    "name": "JPEG pixel ratio is 3.000",
-    "ok": true
-   },
-   {
-    "detail": "(630, 630)",
-    "name": "JPEG carries 630 dpi",
-    "ok": true
-   },
-   {
-    "detail": "RGB",
-    "name": "JPEG is a full-colour raster",
-    "ok": true
-   },
-   {
-    "detail": "",
-    "name": "PDF page contains no raster image",
-    "ok": true
-   },
-   {
-    "detail": "",
-    "name": "PDF embeds its fonts as TrueType (FontType 42)",
-    "ok": true
-   },
-   {
-    "detail": "",
-    "name": "PDF has no Type-3 fonts",
-    "ok": true
-   },
-   {
-    "detail": "",
-    "name": "PDF carries no timestamp (it must be reproducible)",
-    "ok": true
-   },
-   {
-    "detail": "[0.0, 0.0, 518.7401574803, 172.9133858268]",
-    "name": "PDF page box is 183 x 61 mm",
-    "ok": true
-   },
-   {
-    "detail": "",
-    "name": "re-saving the same figure gives the same JPEG bytes",
-    "ok": true
-   },
-   {
     "detail": "(1512, 4538, 4)",
     "name": "two builds render identical pixels",
     "ok": true
@@ -548,8 +490,8 @@
     "ok": true
    }
   ],
-  "passed": 97,
-  "total": 97
+  "passed": 86,
+  "total": 86
  },
  "echo": {
   "annotated": "nothing on the mask: no centroid or peak symbol is drawn, so S is a measured distance the plate never has to define",
