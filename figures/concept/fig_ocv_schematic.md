@@ -2,7 +2,7 @@
 
 ![the observability core vector](fig_ocv_schematic.jpg)
 
-One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (88 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
+One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (96 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
 
 ```
 physical asset -> SAR observation geometry -> asset-specific measurement
@@ -11,11 +11,17 @@ support -> radar echo representation -> OCV
 
 ## The three panels
 
-**(a) the asset and the acquisition.** A generic lattice asset `G_a^{3D}` in its own frame (the grey triad), observed from a satellite along the orange line of sight `LOS` at the look angle `θ` measured from nadir; the operator `Π_c` projects it into the radar frame `(r, x)`. The asset is drawn as four legs, five belts and alternating braces — something with a real cross-section, because that is what makes the projection lossy.
+**(a) the asset and the acquisition.** A generic lattice asset `G_a^{3D}` in its own frame (the grey triad `X`, `Y`, `Z`), observed from a satellite along the orange line of sight `LOS` at the look angle `θ` measured from nadir; the operator `Π_c` maps that frame into the radar frame `(az, r)`. The asset is drawn as four legs, five belts and alternating braces — something with a real cross-section, because that is what makes the projection lossy.
 
-**(b) the measurement support.** The projected asset `Π_c(G_a^{3D})` sits inside the asset- and channel-specific support `W_{a,c}` (blue), which sits inside the read chip `C_{a,c}` (grey, outermost). Between them is the **background ring** — dashed, lightly tinted — from which the no-echo reference is read. The panel states the set algebra `W_{a,c} ⊂ C_{a,c}` once at its foot and nothing else: no box, no legend, no count.
+The mapping is written out exactly once, at the foot of the panel, left-aligned to the radar frame's own left edge: `(X, Y, Z) ⟶^{Π_c} (az, r)`. The operator appears nowhere else on the plate, and the two frames share no symbol — the physical frame is `X`, `Y`, `Z`, the radar frame is `az`, `r`, and a check fails the build if the two symbol sets ever intersect. The radar frame is drawn 0.040 panel units above the foot so that the statement has clear air beneath it, and a check pins both the gap and the alignment.
 
-**(c) the observable representation and the vector.** Inside the same `W_{a,c}` the echo mask is a raster of green cells: 4 connected regions of 8, 6, 4, 3 cells in a 16 × 10 grid (density 0.131), one closed hole, and a dashed centroid-to-peak shift (2.63 cells) between `p̄` and `p⋆`. That is the extent, the density, the fragmentation and the spatial shift the vector has to summarise, made visible before it is made numeric. Below it:
+**(b) the measurement support.** The projected asset `Π_c(G_a^{3D})` sits inside the asset- and channel-specific support `W_{a,c}` (blue), which sits inside the read chip `C_{a,c}` (grey, outermost). Outward from the support, in this order, come the **guard** — a white band 0.020 units wide (1.1 mm) — and then the **background ring**, dashed and lightly tinted, from which the no-echo reference is read.
+
+The ring is drawn as a true annulus: its tint is knocked out over the guard, so no tint reaches inside `W_{a,c}` and no background cell can be read as support. That order — support, guard, ring, chip — is the order the audit walks (`code/lumo/lumo_ocv_masks.py`), and two pixel checks prove it on the composed canvas rather than on the geometry: W's interior must equal the blue fill at 0.13 over white and the outer band must equal the ring tint, each to within 2/255.
+
+`C_{a,c}` is set *on* the chip's own lower edge with a white knockout, so the edge breaks behind the glyphs and the label cannot be read as naming the ring it used to float between; a check pins the label's own box across that edge. The panel states the set algebra `W_{a,c} ⊂ C_{a,c}` once at its foot and nothing else: no box, no legend, no count.
+
+**(c) the observable representation and the vector.** Inside the same `W_{a,c}` the echo mask is a raster of green cells: 4 connected regions of 8, 6, 4, 3 cells in a 16 × 10 grid (density 0.131), one closed hole, and a dashed centroid-to-peak shift (2.63 cells) between the mask's centroid `p̄` and its peak pixel `p⋆`. `p⋆` is the peak *reference* the site uses, not a second epoch: both symbols belong to one acquisition, and `S` — the distance between them in cells — is a position inside `W_{a,c}`, not a movement of the asset. That is the extent, the density, the fragmentation and the spatial shift the vector has to summarise, made visible before it is made numeric. Below it:
 
 ```
 OCV(t) = [ γ², P, D, F, A, S ]
@@ -56,9 +62,9 @@ python3 code/concept/fig_ocv_schematic.py --no-figures     # checks only
 PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 ```
 
-## The guard block
+## The checks
 
-**88 of 88 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the eleven file checks that go with them.)
+**96 of 96 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the eleven file checks that go with them.)
 
 | family | what it pins |
 | --- | --- |
@@ -66,7 +72,9 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 | text inventory | exactly the declared 28 strings and no others; no title; no legend; all axes off |
 | legibility | every text ≥ 7.0 pt at 183 mm and ≥ 6.5 pt at 170 mm; every text inside its own panel; no two texts overlap |
 | vocabulary | no forbidden token in any drawn string (health, damage, fail, displace, deform, InSAR, score, threshold, px, `R_B`, `R_G`, …) |
-| set algebra | `W_{a,c}` inside the ring inside `C_{a,c}` with a visible margin; the band between `W` and the ring is ≥ 0.03 units; the projected asset lies inside `W` |
+| set algebra | `W_{a,c}` inside the guard inside the ring inside `C_{a,c}`, each with a visible margin; the guard is ≥ 0.015 units and the tinted band outside it ≥ 0.03; the projected asset lies inside `W` |
+| the annulus | the composed canvas is sampled, not the geometry: W's interior must be the blue fill over white and the outer band the ring tint, each within 2/255, so the tint provably never runs behind the support |
+| the two frames | the physical frame (`X`, `Y`, `Z`) and the radar frame (`az`, `r`) share no symbol; the mapping statement carries the operator and both frames; `C_{a,c}` sits on the chip's own edge |
 | one W, two panels | the support is **one** polygon definition mapped into (b) and into (c); normalised to its own box it is identical to 1 × 10⁻¹² in both |
 | raster integrity | cells square on the drawn canvas and ≥ 1.5 mm; every echo cell inside `W` and inside the raster; exactly 4 connected regions of 8, 6, 4 and 3 cells; exactly one enclosed hole; density in (5 %, 20 %); centroid and peak ≥ 1.5 cells apart |
 | the vector | six components in the order `γ², P, D, F, A, S`; the partition into (γ², P) and (D, F, A, S) proved from the token table; each brace spans its own group's measured extent; the two names clear each other; the row sits inside the panel |
@@ -102,73 +110,81 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 | 23 | R_B absent | ok |  |
 | 24 | R_G absent | ok |  |
 | 25 | the coherence channel is mathtext | ok |  |
-| 26 | panel a: every text inside the panel | ok |  |
-| 27 | panel a: no two texts overlap | ok |  |
-| 28 | panel b: every text inside the panel | ok |  |
-| 29 | panel b: no two texts overlap | ok |  |
-| 30 | panel c: every text inside the panel | ok |  |
-| 31 | panel c: no two texts overlap | ok |  |
-| 32 | W has eight vertices in both panels | ok |  |
-| 33 | W in (b) sits inside C with a >= 20 um margin | ok |  |
-| 34 | W in (b) sits strictly inside the background ring | ok |  |
-| 35 | the background ring is a band >= 0.03 wide | ok | 0.060 units |
-| 36 | the ring sits inside C, so it cannot be the chip edge | ok |  |
-| 37 | C sits inside the panel | ok |  |
-| 38 | the projected asset lies inside W | ok |  |
-| 39 | the projected asset is inside C, not straddling it | ok |  |
-| 40 | the ring leader ends between W and the ring | ok | y=0.762 |
-| 41 | W in (b) and W in (c) are the same polygon | ok |  |
-| 42 | W in (b) and W in (c) are the same shape, not the same place | ok |  |
-| 43 | raster cells are square on the drawn canvas | ok | 0.03625 units |
-| 44 | raster cell >= 1.5 mm on the printed page | ok | 2.02 mm |
-| 45 | the raster sits inside W in (c) | ok |  |
-| 46 | the raster sits inside W with a visible margin | ok |  |
-| 47 | every echo cell lies inside W in (c) | ok |  |
-| 48 | every echo cell lies inside the raster | ok |  |
-| 49 | the echo mask has exactly four connected regions | ok | 4 |
-| 50 | the four regions are 8, 6, 4 and 3 cells | ok | [8, 6, 4, 3] |
-| 51 | every region is 4-connected (a fragment, not a dust field) | ok |  |
-| 52 | the mask encloses exactly one hole | ok | 1 |
-| 53 | the hole is the centre of the 3x3 ring | ok | [(4, 4)] |
-| 54 | echo density is sparse and legible (5 % < d < 20 %) | ok | 0.1313 |
-| 55 | the peak lies on an echo cell | ok |  |
-| 56 | the centroid and the peak are >= 1.5 cells apart | ok | 2.626 cells |
-| 57 | the centroid is not inside an echo cell (the mask is fragmented) | ok |  |
-| 58 | the vector has six components | ok |  |
-| 59 | the order is gamma2, P, D, F, A, S | ok | gamma2,P,D,F,A,S |
-| 60 | the partition covers every component exactly once | ok |  |
-| 61 | group one is exactly gamma2 and P | ok | $\gamma^2,\ P$ |
-| 62 | group two is exactly D, F, A and S | ok | $D,\ F,\ A,\ S$ |
-| 63 | the row starts inside the panel | ok | 0.0339 |
-| 64 | the row ends inside the panel | ok | 0.9661 |
-| 65 | the row is centred in its panel | ok | 0.5000 |
-| 66 | the cross brace spans its own group only | ok | text 0.312..0.441 brace 0.312..0.441 |
-| 67 | the cross name sits under its brace | ok | top 0.279 < brace 0.285 |
-| 68 | the spatial brace spans its own group only | ok | text 0.648..0.922 brace 0.648..0.922 |
-| 69 | the spatial name sits under its brace | ok | top 0.279 < brace 0.285 |
-| 70 | the separating comma sits between the two groups | ok | 0.453..0.471 |
-| 71 | the separating comma does not touch either group | ok | 0.012 / 0.177 |
-| 72 | the two group names do not overlap | ok | 0.562 < 0.597 |
-| 73 | the two group names do not run into each other's brace | ok | gap 0.035 |
-| 74 | the equation sits above the braces | ok |  |
-| 75 | the equation does not touch the echo raster | ok |  |
-| 76 | JPEG width is 183 mm at 630 dpi (4539 px +/- 2) | ok | 4538 px |
-| 77 | JPEG height is 61 mm at 630 dpi (1513 px +/- 2) | ok | 1512 px |
-| 78 | JPEG pixel ratio is 3.000 | ok | 3.00132 |
-| 79 | JPEG carries 630 dpi | ok | (630, 630) |
-| 80 | JPEG is a full-colour raster | ok | RGB |
-| 81 | PDF page contains no raster image | ok |  |
-| 82 | PDF embeds its fonts as TrueType (FontType 42) | ok |  |
-| 83 | PDF has no Type-3 fonts | ok |  |
-| 84 | PDF carries no timestamp (it must be reproducible) | ok |  |
-| 85 | PDF page box is 183 x 61 mm | ok | [0.0, 0.0, 518.7401574803, 172.9133858268] |
-| 86 | re-saving the same figure gives the same JPEG bytes | ok |  |
-| 87 | two builds render identical pixels | ok | (1512, 4538, 4) |
-| 88 | two builds lay the OCV row out identically | ok |  |
+| 26 | the physical frame and the radar frame share no symbol | ok | [] |
+| 27 | the mapping statement names the operator and both frames | ok | no drift |
+| 28 | panel a: every text inside the panel | ok |  |
+| 29 | panel a: no two texts overlap | ok |  |
+| 30 | panel b: every text inside the panel | ok |  |
+| 31 | panel b: no two texts overlap | ok |  |
+| 32 | panel c: every text inside the panel | ok |  |
+| 33 | panel c: no two texts overlap | ok |  |
+| 34 | C_{a,c} sits on the chip's own lower edge, not between chip and ring | ok | y 0.216..0.264 across the edge 0.240 |
+| 35 | the mapping statement is the radar frame's own caption, below it | ok | top 0.088 < frame 0.140, left 0.560 vs 0.560 |
+| 36 | W has eight vertices in both panels | ok |  |
+| 37 | W in (b) sits inside C with a >= 20 um margin | ok |  |
+| 38 | W in (b) sits strictly inside the background ring | ok |  |
+| 39 | W in (b) sits inside the guard, and the guard inside the ring | ok |  |
+| 40 | the guard is a white band >= 0.015 wide between W and the ring | ok | 0.020 units |
+| 41 | the ring band outside the guard is >= 0.03 wide | ok | 0.040 units |
+| 42 | the ring sits inside C, so it cannot be the chip edge | ok |  |
+| 43 | C sits inside the panel | ok |  |
+| 44 | the projected asset lies inside W | ok |  |
+| 45 | the projected asset is inside C, not straddling it | ok |  |
+| 46 | the ring leader ends on the ring band, clear of the guard | ok | y=0.770 |
+| 47 | the ring's tint does not reach inside W (annulus, not a fill) | ok | W rgb 0.886 0.910 0.929 |
+| 48 | the band between the guard and the ring's boundary is tinted | ok | band rgb 0.914 0.914 0.914 |
+| 49 | W in (b) and W in (c) are the same polygon | ok |  |
+| 50 | W in (b) and W in (c) are the same shape, not the same place | ok |  |
+| 51 | raster cells are square on the drawn canvas | ok | 0.03625 units |
+| 52 | raster cell >= 1.5 mm on the printed page | ok | 2.02 mm |
+| 53 | the raster sits inside W in (c) | ok |  |
+| 54 | the raster sits inside W with a visible margin | ok |  |
+| 55 | every echo cell lies inside W in (c) | ok |  |
+| 56 | every echo cell lies inside the raster | ok |  |
+| 57 | the echo mask has exactly four connected regions | ok | 4 |
+| 58 | the four regions are 8, 6, 4 and 3 cells | ok | [8, 6, 4, 3] |
+| 59 | every region is 4-connected (a fragment, not a dust field) | ok |  |
+| 60 | the mask encloses exactly one hole | ok | 1 |
+| 61 | the hole is the centre of the 3x3 ring | ok | [(4, 4)] |
+| 62 | echo density is sparse and legible (5 % < d < 20 %) | ok | 0.1313 |
+| 63 | the peak lies on an echo cell | ok |  |
+| 64 | the centroid and the peak are >= 1.5 cells apart | ok | 2.626 cells |
+| 65 | the centroid is not inside an echo cell (the mask is fragmented) | ok |  |
+| 66 | the vector has six components | ok |  |
+| 67 | the order is gamma2, P, D, F, A, S | ok | gamma2,P,D,F,A,S |
+| 68 | the partition covers every component exactly once | ok |  |
+| 69 | group one is exactly gamma2 and P | ok | $\gamma^2,\ P$ |
+| 70 | group two is exactly D, F, A and S | ok | $D,\ F,\ A,\ S$ |
+| 71 | the row starts inside the panel | ok | 0.0339 |
+| 72 | the row ends inside the panel | ok | 0.9661 |
+| 73 | the row is centred in its panel | ok | 0.5000 |
+| 74 | the cross brace spans its own group only | ok | text 0.312..0.441 brace 0.312..0.441 |
+| 75 | the cross name sits under its brace | ok | top 0.279 < brace 0.285 |
+| 76 | the spatial brace spans its own group only | ok | text 0.648..0.922 brace 0.648..0.922 |
+| 77 | the spatial name sits under its brace | ok | top 0.279 < brace 0.285 |
+| 78 | the separating comma sits between the two groups | ok | 0.453..0.471 |
+| 79 | the separating comma does not touch either group | ok | 0.012 / 0.177 |
+| 80 | the two group names do not overlap | ok | 0.562 < 0.597 |
+| 81 | the two group names do not run into each other's brace | ok | gap 0.035 |
+| 82 | the equation sits above the braces | ok |  |
+| 83 | the equation does not touch the echo raster | ok |  |
+| 84 | JPEG width is 183 mm at 630 dpi (4539 px +/- 2) | ok | 4538 px |
+| 85 | JPEG height is 61 mm at 630 dpi (1513 px +/- 2) | ok | 1512 px |
+| 86 | JPEG pixel ratio is 3.000 | ok | 3.00132 |
+| 87 | JPEG carries 630 dpi | ok | (630, 630) |
+| 88 | JPEG is a full-colour raster | ok | RGB |
+| 89 | PDF page contains no raster image | ok |  |
+| 90 | PDF embeds its fonts as TrueType (FontType 42) | ok |  |
+| 91 | PDF has no Type-3 fonts | ok |  |
+| 92 | PDF carries no timestamp (it must be reproducible) | ok |  |
+| 93 | PDF page box is 183 x 61 mm | ok | [0.0, 0.0, 518.7401574803, 172.9133858268] |
+| 94 | re-saving the same figure gives the same JPEG bytes | ok |  |
+| 95 | two builds render identical pixels | ok | (1512, 4538, 4) |
+| 96 | two builds lay the OCV row out identically | ok |  |
 
 ## Files
 
-- `fig_ocv_schematic.jpg` — sha256 `8a06dfbd0e497040c4431c003f3ba9e0a67c73b3cdffb09c366e5fadf53301fc`
-- `fig_ocv_schematic.pdf` — sha256 `e5053ea80833ae4a3338986537f5dcbcea5b995806afd6fe35654b2e52bd3162`
+- `fig_ocv_schematic.jpg` — sha256 `b0c85d2fad3f42c3e9a7576904c1380f24a38c50b0c16658a22941da2e6f847c`
+- `fig_ocv_schematic.pdf` — sha256 `7578096c521be4dcb709b05d24eb44af47ec12a5b5d2fb99ca023b4f0554f6cd`
 
 Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.4.6. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG and PDF.

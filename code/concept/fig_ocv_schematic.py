@@ -12,11 +12,12 @@ vector:
 
 Three panels, left to right:
 
-    (a) the asset and the acquisition    G_a^{3D} in the SAR frame, the line of
-        sight, and the projection Pi_c into radar coordinates
+    (a) the asset and the acquisition    G_a^{3D} in its own (X,Y,Z) frame, the
+        line of sight, and the projection Pi_c stated once as the mapping
+        (X,Y,Z) -> (az,r) into radar coordinates
     (b) the measurement support          the projected asset inside its support
-        W_{a,c}, inside the read chip C_{a,c}, with the background ring between
-        them:  W_{a,c} subset C_{a,c}
+        W_{a,c}, a white guard, the background ring, and the read chip C_{a,c}
+        that encloses them:  W_{a,c} subset C_{a,c}
     (c) the observable representation    the echo mask inside W_{a,c} and the
         vector it is summarised by, OCV(t) = [gamma^2, P, D, F, A, S], in its two
         conceptual groups (cross-acquisition; spatial geometry)
@@ -34,10 +35,12 @@ and no count.
 
 Figure (183 mm x 61 mm = 3.000 : 1, three panels, no title, no legend):
 
-    a  asset + acquisition geometry   grey triad, lattice tower, satellite, orange
-                                      line of sight, Pi_c into a radar frame
-    b  measurement support            grey C_{a,c}, dashed background ring, blue
-                                      W_{a,c}, dark asset projection
+    a  asset + acquisition geometry   grey (X,Y,Z) triad, lattice tower, satellite,
+                                      orange line of sight, Pi_c stated once as
+                                      the mapping (X,Y,Z) -> (az,r)
+    b  measurement support            grey C_{a,c}, the white guard, dashed
+                                      background ring, blue W_{a,c}, dark asset
+                                      projection
     c  echo mask + OCV                4 connected echo regions in W_{a,c}, the
                                       centroid/peak shift, the vector below
 
@@ -169,6 +172,17 @@ W_UNIT = (
     (0.90, 1.00), (0.10, 1.00), (0.00, 0.90), (0.00, 0.10),
 )
 
+# The coordinate symbols of the two frames, defined once and consumed by both
+# the drawing and the text whitelist, so a label can never drift from the
+# whitelist that pins it. The physical frame and the radar frame deliberately
+# share no symbol: no letter is ever doing two jobs on this plate.
+PHYS_AX = (r"$X$", r"$Y$", r"$Z$")          # physical frame: the triad's x, y, z
+RAD_AZ = r"$\mathrm{az}$"                   # radar azimuth
+RAD_R = r"$r$"                              # radar range
+# The whole projection, stated once at the foot of panel (a). mathtext has no
+# \xrightarrow, so the operator rides above a long arrow via \overset.
+MAP = r"$(X,Y,Z)\overset{\Pi_c}{\longrightarrow}(\mathrm{az},r)$"
+
 # panel (a): the asset
 TOWER = dict(cx=0.300, y_base=0.120, y_top=0.600,
              hw_base=0.075, hw_top=0.032, depth=(0.050, 0.040), belts=5)
@@ -182,15 +196,24 @@ LOS = ((0.772, 0.868), (0.356, 0.618))      # from the satellite to the asset to
 NADIR = ((0.772, 0.880), (0.772, 0.700))    # through the LOS origin, for the angle
 THETA_R = 0.085                             # arc radius of the look angle
 
-# panel (a): the radar coordinate frame the projection lands in
-RFRAME = dict(box=(0.560, 0.100, 0.950, 0.380),
-              proj=((0.610, 0.128), (0.878, 0.128),
-                    (0.838, 0.302), (0.652, 0.302)))
+# panel (a): the radar coordinate frame the projection lands in. The frame is
+# raised by FRAME_DY so the mapping statement fits under it with clear air.
+FRAME_DY = 0.040
+RFRAME = dict(box=(0.560, 0.100 + FRAME_DY, 0.950, 0.380 + FRAME_DY),
+              proj=((0.610, 0.128 + FRAME_DY), (0.878, 0.128 + FRAME_DY),
+                    (0.838, 0.302 + FRAME_DY), (0.652, 0.302 + FRAME_DY)))
+MAP_X = RFRAME["box"][0]                     # left-aligned under the radar frame
+MAP_Y = 0.030                               # baseline, clear of the ground rule
 
-# panel (b): chip, background ring, support
+# panel (b): chip, guard, background ring, support. Outward from the support
+# the chip is guard, then ring, then the chip's own boundary — the same order
+# the audit uses, and the reason the ring is drawn as a true annulus.
 CHIP = (0.140, 0.240, 0.900, 0.860)         # C_{a,c}
 RING = (0.200, 0.310, 0.840, 0.790)         # the background ring, drawn dashed
+GUARD = 0.020                               # white gap between W and the ring
 W_BOX = (0.260, 0.370, 0.780, 0.730)        # W_{a,c} mapped into this box
+GUARD_BOX = (W_BOX[0] - GUARD, W_BOX[1] - GUARD,
+             W_BOX[2] + GUARD, W_BOX[3] + GUARD)
 B_AXIS = dict(x0=0.100, y0=0.170, x1=0.920, y1=0.900)
 B_ASSET = ((0.410, 0.485), (0.630, 0.485), (0.600, 0.700), (0.440, 0.700))
 
@@ -249,9 +272,9 @@ def _poly(ax, pts, edge=INK, fc="none", lw=0.8, ls="-", z=2, alpha=1.0):
 
 
 def _text(ax, x, y, s, fs=FS_LABEL, color=INK, ha="left", va="baseline",
-          rot=0.0, weight="normal", z=6, tag=""):
+          rot=0.0, weight="normal", z=6, tag="", bbox=None):
     t = ax.text(x, y, s, fontsize=fs, color=color, ha=ha, va=va, rotation=rot,
-                rotation_mode="anchor", fontweight=weight, zorder=z)
+                rotation_mode="anchor", fontweight=weight, zorder=z, bbox=bbox)
     TEXTS.append({"ax": ax, "t": t, "s": s, "fs": fs, "tag": tag, "color": color})
     return t
 
@@ -347,12 +370,12 @@ def draw_panel_a(ax):
     o = TRIAD["origin"]
     for key in ("x", "y", "z"):
         _arrow(ax, o, TRIAD[key], GREY, 0.50, scale=5.0, z=1)
-    _text(ax, TRIAD["z"][0] - 0.012, TRIAD["z"][1], r"$z$", fs=FS_SMALL,
+    _text(ax, TRIAD["z"][0] - 0.012, TRIAD["z"][1], PHYS_AX[2], fs=FS_SMALL,
           color=GREY, ha="right", va="center", tag="axis")
-    _text(ax, TRIAD["x"][0] + 0.008, TRIAD["x"][1], r"$x$", fs=FS_SMALL,
+    _text(ax, TRIAD["x"][0] + 0.008, TRIAD["x"][1], PHYS_AX[0], fs=FS_SMALL,
           color=GREY, ha="left", va="center", tag="axis")
-    _text(ax, TRIAD["y"][0] + 0.004, TRIAD["y"][1] + 0.026, r"$y$", fs=FS_SMALL,
-          color=GREY, ha="left", va="center", tag="axis")
+    _text(ax, TRIAD["y"][0] + 0.004, TRIAD["y"][1] + 0.026, PHYS_AX[1],
+          fs=FS_SMALL, color=GREY, ha="left", va="center", tag="axis")
 
     # the physical asset
     draw_asset(ax)
@@ -395,16 +418,19 @@ def draw_panel_a(ax):
     _text(ax, lp[0], lp[1], "LOS", fs=FS_SMALL, color=ORANGE, ha="center",
           va="center", rot=rot, tag="los")
 
-    # the projection operator, and the radar frame the asset lands in
+    # the projection into the radar frame, and the mapping that states it once.
+    # The operator lives inside the mapping expression now, so the panel carries
+    # \Pi_c exactly once: the bare label that used to sit above this arrow is
+    # gone rather than duplicated.
     _arrow(ax, (0.428, 0.165), (0.552, 0.165), INK, 0.90, scale=7.0)
-    _text(ax, 0.490, 0.186, r"$\Pi_c$", fs=FS_MATH, ha="center", va="baseline",
-          tag="operator")
+    _text(ax, MAP_X, MAP_Y, MAP, fs=FS_SMALL, ha="left", va="baseline",
+          tag="mapping")
     bx0, by0, bx1, by1 = RFRAME["box"]
     _line(ax, (bx0, by0), (bx1, by0), INK, 0.60)
     _line(ax, (bx0, by0), (bx0, by1), INK, 0.60)
-    _text(ax, bx1 + 0.010, by0 - 0.022, r"$r$", fs=FS_SMALL, color=INK,
+    _text(ax, bx1 + 0.010, by0 - 0.022, RAD_R, fs=FS_SMALL, color=INK,
           ha="left", va="center", tag="axis")
-    _text(ax, bx0 - 0.012, by1 + 0.016, r"$x$", fs=FS_SMALL, color=INK,
+    _text(ax, bx0 - 0.012, by1 + 0.016, RAD_AZ, fs=FS_SMALL, color=INK,
           ha="right", va="center", tag="axis")
     _poly(ax, RFRAME["proj"], edge=INK, fc=INK, lw=0.55, alpha=0.82, z=3)
     pj = RFRAME["proj"]
@@ -425,18 +451,22 @@ def draw_panel_b(ax):
     a = B_AXIS
     _line(ax, (a["x0"], a["y0"]), (a["x1"], a["y0"]), INK, 0.60)
     _line(ax, (a["x0"], a["y0"]), (a["x0"], a["y1"]), INK, 0.60)
-    _text(ax, a["x1"] + 0.012, a["y0"] - 0.024, r"$r$", fs=FS_SMALL,
+    _text(ax, a["x1"] + 0.012, a["y0"] - 0.024, RAD_R, fs=FS_SMALL,
           ha="left", va="center", tag="axis")
-    _text(ax, a["x0"], a["y1"] + 0.006, r"$x$", fs=FS_SMALL,
+    _text(ax, a["x0"], a["y1"] + 0.006, RAD_AZ, fs=FS_SMALL,
           ha="center", va="bottom", tag="axis")
 
-    # the read chip, the background ring and the support, outermost first
+    # the read chip, then the background ring as a true annulus. The tint is
+    # knocked out over the guard, so the ring is the band between the guard and
+    # the chip — never a filled rectangle behind the support: no tint reaches
+    # inside W_{a,c}, and no background cell sits on the support.
     cx0, cy0, cx1, cy1 = CHIP
     _poly(ax, [(cx0, cy0), (cx1, cy0), (cx1, cy1), (cx0, cy1)],
           edge=GREY, fc="none", lw=0.55, z=1)
     rx0, ry0, rx1, ry1 = RING
     _poly(ax, [(rx0, ry0), (rx1, ry0), (rx1, ry1), (rx0, ry1)],
           edge=GREY, fc=LIGHT, lw=0.50, ls=(0, (3.0, 2.0)), alpha=0.30, z=1)
+    _poly(ax, w_poly(GUARD_BOX), edge="none", fc="white", lw=0.0, z=2)
     _poly(ax, w_poly(W_BOX), edge=BLUE, fc=BLUE, lw=0.85, alpha=0.13, z=2)
 
     # the projected asset: the same flattened silhouette as in panel (a)
@@ -447,16 +477,20 @@ def draw_panel_b(ax):
         xr = B_ASSET[1][0] + frac * (B_ASSET[2][0] - B_ASSET[1][0])
         _line(ax, (xl, y), (xr, y), "white", 0.55, z=4)
 
-    # the four names this panel needs, and nothing else
-    _text(ax, cx1 - 0.012, cy0 + 0.016, r"$C_{a,c}$", fs=FS_SMALL, color=GREY,
-          ha="right", va="bottom", tag="chip")
+    # the four names this panel needs, and nothing else. C_{a,c} sits *on* the
+    # chip's lower edge with a white knockout, so the edge breaks behind it: the
+    # label names that rectangle and cannot be read as naming the ring it used
+    # to float between.
+    _text(ax, cx1 - 0.010, cy0, r"$C_{a,c}$", fs=FS_SMALL, color=GREY,
+          ha="right", va="center", tag="chip",
+          bbox=dict(facecolor="white", edgecolor="none", pad=1.2))
     _text(ax, 0.292, 0.638, r"$W_{a,c}$", fs=FS_MATH, color=BLUE,
           ha="left", va="baseline", tag="support")
     _text(ax, 0.520, 0.398, r"$\Pi_c(G_a^{3D})$", fs=FS_MATH,
           ha="center", va="baseline", tag="projected")
     _text(ax, 0.620, 0.900, "background ring", fs=FS_SMALL, color=INK,
           ha="center", va="baseline", tag="ring")
-    _line(ax, (0.620, 0.886), (0.620, 0.762), GREY, 0.45, z=3)
+    _line(ax, (0.620, 0.886), (0.620, 0.770), GREY, 0.45, z=3)
     _text(ax, 0.500, 0.070, r"$W_{a,c}\subset C_{a,c}$", fs=FS_MATH,
           ha="center", va="baseline", tag="subset")
 
@@ -682,14 +716,14 @@ def echo_holes():
 
 
 # ---------------------------------------------------------------------------
-# the guard block: nine families, every one of them fatal
+# the checks: nine families, every one of them fatal
 # ---------------------------------------------------------------------------
 def expected_texts():
     """The complete text inventory of the plate, written out, not discovered."""
     t = ["(a)", "(b)", "(c)"]
-    t += [r"$z$", r"$x$", r"$y$", r"$G_a^{3D}$", r"$\theta$", "LOS",
-          r"$\Pi_c$", r"$r$", r"$x$"]                       # panel (a)
-    t += [r"$r$", r"$x$", r"$C_{a,c}$", r"$W_{a,c}$",
+    t += [PHYS_AX[2], PHYS_AX[0], PHYS_AX[1], r"$G_a^{3D}$", r"$\theta$",
+          "LOS", MAP, RAD_R, RAD_AZ]                        # panel (a)
+    t += [RAD_R, RAD_AZ, r"$C_{a,c}$", r"$W_{a,c}$",
           r"$\Pi_c(G_a^{3D})$", "background ring",
           r"$W_{a,c}\subset C_{a,c}$"]                      # panel (b)
     t += [r"$\bar{p}$", r"$p^{\star}$", r"$\mathrm{OCV}(t)=[$",
@@ -754,6 +788,12 @@ def run_checks(fig, axes, pos):
     check("R_G absent", "r_g" not in low.replace(" ", ""))
     check("the coherence channel is mathtext",
           any("gamma^2" in g for g in got))
+    check("the physical frame and the radar frame share no symbol",
+          not (set(PHYS_AX) & {RAD_AZ, RAD_R}),
+          f"{sorted(set(PHYS_AX) & {RAD_AZ, RAD_R})}")
+    check("the mapping statement names the operator and both frames",
+          all(k in MAP for k in (r"\overset{\Pi_c}", "(X,Y,Z)",
+                                 r"(\mathrm{az},r)")), "no drift")
 
     # every text sits inside its own panel, and no two texts collide
     for ax in axes:
@@ -773,6 +813,22 @@ def run_checks(fig, axes, pos):
                     bad.append(f"{mine[i]['s']}|{mine[j]['s']}")
         check(f"panel {tag}: no two texts overlap", not bad, ";".join(bad))
 
+    # the two labels a reader could misread: C_{a,c} must name the chip's own
+    # boundary, and the mapping must sit in the foot of (a), under the frame
+    ch0, ch1 = CHIP[1], CHIP[2]
+    crec = next(r for r in TEXTS if r["s"] == r"$C_{a,c}$")
+    clx0, cly0, clx1, cly1 = _extent(crec)
+    check("C_{a,c} sits on the chip's own lower edge, not between chip and ring",
+          cly0 < ch0 < cly1 and CHIP[0] < clx0 and clx1 < ch1,
+          f"y {cly0:.3f}..{cly1:.3f} across the edge {ch0:.3f}")
+    mrec = next(r for r in TEXTS if r["s"] == MAP)
+    mpx0, _mpy0, _mpx1, mpy1 = _extent(mrec)
+    check("the mapping statement is the radar frame's own caption, below it",
+          mpy1 < RFRAME["box"][1] and mpx0 > 0.0
+          and abs(mpx0 - RFRAME["box"][0]) <= 0.02,
+          f"top {mpy1:.3f} < frame {RFRAME['box'][1]:.3f}, "
+          f"left {mpx0:.3f} vs {RFRAME['box'][0]:.3f}")
+
     # ---- 3. the support: W subset C, ring between -------------------------
     wb = w_poly(W_BOX)
     wc = w_poly(W_BOX_C)
@@ -781,10 +837,16 @@ def run_checks(fig, axes, pos):
           _in_rect(wb, CHIP, 0.02))
     check("W in (b) sits strictly inside the background ring",
           _in_rect(wb, RING, 0.0))
-    band = min(W_BOX[0] - RING[0], W_BOX[1] - RING[1],
-               RING[2] - W_BOX[2], RING[3] - W_BOX[3])
-    check("the background ring is a band >= 0.03 wide", band >= 0.03 - 1e-12,
-          f"{band:.3f} units")
+    check("W in (b) sits inside the guard, and the guard inside the ring",
+          _in_rect(wb, GUARD_BOX, 0.0))
+    guard = min(W_BOX[0] - GUARD_BOX[0], W_BOX[1] - GUARD_BOX[1],
+                GUARD_BOX[2] - W_BOX[2], GUARD_BOX[3] - W_BOX[3])
+    check("the guard is a white band >= 0.015 wide between W and the ring",
+          guard >= 0.015 - 1e-12, f"{guard:.3f} units")
+    band = min(GUARD_BOX[0] - RING[0], GUARD_BOX[1] - RING[1],
+               RING[2] - GUARD_BOX[2], RING[3] - GUARD_BOX[3])
+    check("the ring band outside the guard is >= 0.03 wide",
+          band >= 0.03 - 1e-12, f"{band:.3f} units")
     check("the ring sits inside C, so it cannot be the chip edge",
           _in_rect([(RING[0], RING[1]), (RING[2], RING[3])], CHIP, 0.04))
     check("C sits inside the panel", _in_rect([(CHIP[0], CHIP[1]),
@@ -795,9 +857,33 @@ def run_checks(fig, axes, pos):
           bool(pw.contains_points(B_ASSET).all()))
     check("the projected asset is inside C, not straddling it",
           _in_rect(B_ASSET, CHIP, 0.02))
-    lad = (0.620, 0.762)
-    check("the ring leader ends between W and the ring",
-          W_BOX[3] < lad[1] < RING[3], f"y={lad[1]:.3f}")
+    lad = (0.620, 0.770)
+    check("the ring leader ends on the ring band, clear of the guard",
+          GUARD_BOX[3] < lad[1] < RING[3], f"y={lad[1]:.3f}")
+
+    # The ring is an annulus, not a fill, and this is proved on the composed
+    # canvas rather than on the geometry: sample W's interior and the band, and
+    # compare each against its analytic composite over white. If the tint is
+    # ever painted behind the support again, these fail.
+    _arr = render_array(fig)
+    _axb = axes[1]
+
+    def _px(x, y):
+        px, py = _axb.transData.transform((x, y))
+        return _arr[int(round(_arr.shape[0] - py)), int(round(px)), :3] / 255.0
+
+    def _comp(hex_colour, alpha):
+        rgb = np.array([int(hex_colour[1:3], 16), int(hex_colour[3:5], 16),
+                        int(hex_colour[5:7], 16)]) / 255.0
+        return 1.0 - alpha * (1.0 - rgb)
+
+    _in_w, _in_band = _px(0.700, 0.430), _px(0.520, 0.330)
+    check("the ring's tint does not reach inside W (annulus, not a fill)",
+          bool(np.abs(_in_w - _comp(BLUE, 0.13)).max() <= 0.01),
+          "W rgb " + " ".join(f"{v:.3f}" for v in _in_w))
+    check("the band between the guard and the ring's boundary is tinted",
+          bool(np.abs(_in_band - _comp(LIGHT, 0.30)).max() <= 0.01),
+          "band rgb " + " ".join(f"{v:.3f}" for v in _in_band))
 
     # the one definition of W, mapped twice: the panels cannot drift apart
     def _unit(pts, box):
@@ -1017,18 +1103,41 @@ def write_md(path, pos, hashes):
     A("## The three panels")
     A("")
     A("**(a) the asset and the acquisition.** A generic lattice asset "
-      "`G_a^{3D}` in its own frame (the grey triad), observed from a satellite "
-      "along the orange line of sight `LOS` at the look angle `θ` measured from "
-      "nadir; the operator `Π_c` projects it into the radar frame `(r, x)`. The "
-      "asset is drawn as four legs, five belts and alternating braces — "
-      "something with a real cross-section, because that is what makes the "
-      "projection lossy.")
+      "`G_a^{3D}` in its own frame (the grey triad `X`, `Y`, `Z`), observed "
+      "from a satellite along the orange line of sight `LOS` at the look angle "
+      "`θ` measured from nadir; the operator `Π_c` maps that frame into the "
+      "radar frame `(az, r)`. The asset is drawn as four legs, five belts and "
+      "alternating braces — something with a real cross-section, because that "
+      "is what makes the projection lossy.")
+    A("")
+    A("The mapping is written out exactly once, at the foot of the panel, "
+      "left-aligned to the radar frame's own left edge: "
+      "`(X, Y, Z) ⟶^{Π_c} (az, r)`. The operator appears nowhere else on the "
+      "plate, and the two frames share no symbol — the physical frame is `X`, "
+      "`Y`, `Z`, the radar frame is `az`, `r`, and a check fails the build if "
+      "the two symbol sets ever intersect. The radar frame is drawn 0.040 "
+      "panel units above the foot so that the statement has clear air beneath "
+      "it, and a check pins both the gap and the alignment.")
     A("")
     A("**(b) the measurement support.** The projected asset `Π_c(G_a^{3D})` sits "
       "inside the asset- and channel-specific support `W_{a,c}` (blue), which "
-      "sits inside the read chip `C_{a,c}` (grey, outermost). Between them is "
-      "the **background ring** — dashed, lightly tinted — from which the "
-      "no-echo reference is read. The panel states the set algebra "
+      "sits inside the read chip `C_{a,c}` (grey, outermost). Outward from the "
+      "support, in this order, come the **guard** — a white band 0.020 units "
+      "wide (1.1 mm) — and then the **background ring**, dashed and lightly "
+      "tinted, from which the no-echo reference is read.")
+    A("")
+    A("The ring is drawn as a true annulus: its tint is knocked out over the "
+      "guard, so no tint reaches inside `W_{a,c}` and no background cell can "
+      "be read as support. That order — support, guard, ring, chip — is the "
+      "order the audit walks (`code/lumo/lumo_ocv_masks.py`), and two pixel "
+      "checks prove it on the composed canvas rather than on the geometry: "
+      "W's interior must equal the blue fill at 0.13 over white and the outer "
+      "band must equal the ring tint, each to within 2/255.")
+    A("")
+    A("`C_{a,c}` is set *on* the chip's own lower edge with a white knockout, "
+      "so the edge breaks behind the glyphs and the label cannot be read as "
+      "naming the ring it used to float between; a check pins the label's own "
+      "box across that edge. The panel states the set algebra "
       "`W_{a,c} ⊂ C_{a,c}` once at its foot and nothing else: no box, no "
       "legend, no count.")
     A("")
@@ -1038,9 +1147,13 @@ def write_md(path, pos, hashes):
       f"{', '.join(str(len(k)) for k in comps)} cells in a "
       f"{RAST['cols']} × {RAST['rows']} grid (density {dens:.3f}), one closed "
       "hole, and a dashed centroid-to-peak shift "
-      f"({shift:.2f} cells) between `p̄` and `p⋆`. That is the extent, the "
-      "density, the fragmentation and the spatial shift the vector has to "
-      "summarise, made visible before it is made numeric. Below it:")
+      f"({shift:.2f} cells) between the mask's centroid `p̄` and its peak "
+      "pixel `p⋆`. `p⋆` is the peak *reference* the site uses, not a second "
+      "epoch: both symbols belong to one acquisition, and `S` — the distance "
+      "between them in cells — is a position inside `W_{a,c}`, not a movement "
+      "of the asset. That is the extent, the density, the fragmentation and "
+      "the spatial shift the vector has to summarise, made visible before it "
+      "is made numeric. Below it:")
     A("")
     A("```")
     A("OCV(t) = [ γ², P, D, F, A, S ]")
@@ -1098,7 +1211,7 @@ def write_md(path, pos, hashes):
     A("PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh")
     A("```")
     A("")
-    A("## The guard block")
+    A("## The checks")
     A("")
     A(f"**{len(CHECKS) - len(fails)} of {len(CHECKS)} checks pass.** A failure "
       "exits with status 2 *after* the artefacts are written, so a broken plate "
@@ -1119,9 +1232,17 @@ def write_md(path, pos, hashes):
       "text inside its own panel; no two texts overlap |")
     A("| vocabulary | no forbidden token in any drawn string (health, damage, "
       "fail, displace, deform, InSAR, score, threshold, px, `R_B`, `R_G`, …) |")
-    A("| set algebra | `W_{a,c}` inside the ring inside `C_{a,c}` with a visible "
-      "margin; the band between `W` and the ring is ≥ 0.03 units; the projected "
-      "asset lies inside `W` |")
+    A("| set algebra | `W_{a,c}` inside the guard inside the ring inside "
+      "`C_{a,c}`, each with a visible margin; the guard is ≥ 0.015 units and "
+      "the tinted band outside it ≥ 0.03; the projected asset lies inside "
+      "`W` |")
+    A("| the annulus | the composed canvas is sampled, not the geometry: W's "
+      "interior must be the blue fill over white and the outer band the ring "
+      "tint, each within 2/255, so the tint provably never runs behind the "
+      "support |")
+    A("| the two frames | the physical frame (`X`, `Y`, `Z`) and the radar "
+      "frame (`az`, `r`) share no symbol; the mapping statement carries the "
+      "operator and both frames; `C_{a,c}` sits on the chip's own edge |")
     A("| one W, two panels | the support is **one** polygon definition mapped "
       "into (b) and into (c); normalised to its own box it is identical to "
       "1 × 10⁻¹² in both |")
@@ -1178,8 +1299,10 @@ def payload(pos, hashes):
             "what": "the observability core vector as a definition, not a result",
             "reads": "no data file at all",
             "panels": {
-                "a": "physical asset + SAR acquisition geometry + Pi_c",
-                "b": "measurement support W_{a,c} inside the chip C_{a,c}",
+                "a": "physical asset in (X,Y,Z) + acquisition geometry + the "
+                     "mapping to (az,r)",
+                "b": "support W_{a,c} in the guard, inside the background "
+                     "ring, inside the chip C_{a,c}",
                 "c": "echo mask inside W_{a,c} and the six-dimensional vector",
             },
             "not_shown": [
@@ -1209,13 +1332,29 @@ def payload(pos, hashes):
             "w_unit": [list(v) for v in W_UNIT],
             "box_b": list(W_BOX), "box_c": list(W_BOX_C),
             "chip": list(CHIP), "ring": list(RING),
-            "ring_band_units": round(min(W_BOX[0] - RING[0], W_BOX[1] - RING[1],
-                                          RING[2] - W_BOX[2],
-                                          RING[3] - W_BOX[3]), 6),
-            "subset": "W_{a,c} inside the background ring inside C_{a,c}",
+            "guard": [round(v, 6) for v in GUARD_BOX],
+            "guard_band_units": GUARD,
+            "ring_band_units": round(min(GUARD_BOX[0] - RING[0],
+                                          GUARD_BOX[1] - RING[1],
+                                          RING[2] - GUARD_BOX[2],
+                                          RING[3] - GUARD_BOX[3]), 6),
+            "subset": "W_{a,c} inside the guard inside the background ring "
+                      "inside C_{a,c}",
+            "ring_is_annulus": "the tint is knocked out over the guard, so no "
+                               "tint reaches inside W_{a,c}",
         },
         "asset": {"tower": TOWER, "los": [list(v) for v in LOS],
                   "nadir": [list(v) for v in NADIR], "theta_radius": THETA_R},
+        "frames": {
+            "physical": list(PHYS_AX), "physical_reads": "X, Y, Z",
+            "radar": [RAD_AZ, RAD_R], "radar_reads": "az, r",
+            "mapping": MAP,
+            "mapping_plain": "(X,Y,Z) -> (az,r) under Pi_c",
+            "shared_symbols": sorted(set(PHYS_AX) & {RAD_AZ, RAD_R}),
+            "why": "the two frames share no symbol, so no letter does two jobs "
+                   "and the projection cannot be misread as a coordinate change "
+                   "inside one frame",
+        },
         "echo": {
             "raster": dict(RAST),
             "regions": {k: [list(c) for c in v] for k, v in ECHO.items()},
@@ -1228,6 +1367,14 @@ def payload(pos, hashes):
             "centroid_peak_cells": round(float(np.hypot(
                 cell_xy(*ECHO_PEAK)[0] - ccx, cell_xy(*ECHO_PEAK)[1] - ccy))
                 / RAST["cell"], 6),
+            "symbols": {
+                "p_bar": "centroid of the echo mask",
+                "p_star": "peak pixel of the echo mask — the site's peak "
+                          "reference, read from the same acquisition, so the "
+                          "pair is not two epochs",
+                "S": "||p_bar - p_star|| in cells: the centroid-to-peak shift, "
+                     "a position inside W_{a,c}, not a movement of the asset",
+            },
         },
         "ocv": {
             "tokens": [{"key": k, "mathtext": s, "group": g}

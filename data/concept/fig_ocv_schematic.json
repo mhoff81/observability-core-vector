@@ -1,7 +1,7 @@
 {
  "artifacts": {
-  "fig_ocv_schematic.jpg": "8a06dfbd0e497040c4431c003f3ba9e0a67c73b3cdffb09c366e5fadf53301fc",
-  "fig_ocv_schematic.pdf": "e5053ea80833ae4a3338986537f5dcbcea5b995806afd6fe35654b2e52bd3162"
+  "fig_ocv_schematic.jpg": "b0c85d2fad3f42c3e9a7576904c1380f24a38c50b0c16658a22941da2e6f847c",
+  "fig_ocv_schematic.pdf": "7578096c521be4dcb709b05d24eb44af47ec12a5b5d2fb99ca023b4f0554f6cd"
  },
  "asset": {
   "los": [
@@ -185,6 +185,16 @@
     "ok": true
    },
    {
+    "detail": "[]",
+    "name": "the physical frame and the radar frame share no symbol",
+    "ok": true
+   },
+   {
+    "detail": "no drift",
+    "name": "the mapping statement names the operator and both frames",
+    "ok": true
+   },
+   {
     "detail": "",
     "name": "panel a: every text inside the panel",
     "ok": true
@@ -215,6 +225,16 @@
     "ok": true
    },
    {
+    "detail": "y 0.216..0.264 across the edge 0.240",
+    "name": "C_{a,c} sits on the chip's own lower edge, not between chip and ring",
+    "ok": true
+   },
+   {
+    "detail": "top 0.088 < frame 0.140, left 0.560 vs 0.560",
+    "name": "the mapping statement is the radar frame's own caption, below it",
+    "ok": true
+   },
+   {
     "detail": "",
     "name": "W has eight vertices in both panels",
     "ok": true
@@ -230,8 +250,18 @@
     "ok": true
    },
    {
-    "detail": "0.060 units",
-    "name": "the background ring is a band >= 0.03 wide",
+    "detail": "",
+    "name": "W in (b) sits inside the guard, and the guard inside the ring",
+    "ok": true
+   },
+   {
+    "detail": "0.020 units",
+    "name": "the guard is a white band >= 0.015 wide between W and the ring",
+    "ok": true
+   },
+   {
+    "detail": "0.040 units",
+    "name": "the ring band outside the guard is >= 0.03 wide",
     "ok": true
    },
    {
@@ -255,8 +285,18 @@
     "ok": true
    },
    {
-    "detail": "y=0.762",
-    "name": "the ring leader ends between W and the ring",
+    "detail": "y=0.770",
+    "name": "the ring leader ends on the ring band, clear of the guard",
+    "ok": true
+   },
+   {
+    "detail": "W rgb 0.886 0.910 0.929",
+    "name": "the ring's tint does not reach inside W (annulus, not a fill)",
+    "ok": true
+   },
+   {
+    "detail": "band rgb 0.914 0.914 0.914",
+    "name": "the band between the guard and the ring's boundary is tinted",
     "ok": true
    },
    {
@@ -500,8 +540,8 @@
     "ok": true
    }
   ],
-  "passed": 88,
-  "total": 88
+  "passed": 96,
+  "total": 96
  },
  "echo": {
   "centroid_cells": [
@@ -628,7 +668,12 @@
    6,
    4,
    3
-  ]
+  ],
+  "symbols": {
+   "S": "||p_bar - p_star|| in cells: the centroid-to-peak shift, a position inside W_{a,c}, not a movement of the asset",
+   "p_bar": "centroid of the echo mask",
+   "p_star": "peak pixel of the echo mask — the site's peak reference, read from the same acquisition, so the pair is not two epochs"
+  }
  },
  "environment": {
   "matplotlib": "3.11.1",
@@ -647,13 +692,30 @@
    "R_B and R_G (temporal reconfiguration, not the definition)"
   ],
   "panels": {
-   "a": "physical asset + SAR acquisition geometry + Pi_c",
-   "b": "measurement support W_{a,c} inside the chip C_{a,c}",
+   "a": "physical asset in (X,Y,Z) + acquisition geometry + the mapping to (az,r)",
+   "b": "support W_{a,c} in the guard, inside the background ring, inside the chip C_{a,c}",
    "c": "echo mask inside W_{a,c} and the six-dimensional vector"
   },
   "reads": "no data file at all",
   "vector": "fig_ocv_schematic.pdf",
   "what": "the observability core vector as a definition, not a result"
+ },
+ "frames": {
+  "mapping": "$(X,Y,Z)\\overset{\\Pi_c}{\\longrightarrow}(\\mathrm{az},r)$",
+  "mapping_plain": "(X,Y,Z) -> (az,r) under Pi_c",
+  "physical": [
+   "$X$",
+   "$Y$",
+   "$Z$"
+  ],
+  "physical_reads": "X, Y, Z",
+  "radar": [
+   "$\\mathrm{az}$",
+   "$r$"
+  ],
+  "radar_reads": "az, r",
+  "shared_symbols": [],
+  "why": "the two frames share no symbol, so no letter does two jobs and the projection cannot be misread as a coordinate change inside one frame"
  },
  "ocv": {
   "equation": "OCV(t) = [gamma2, P, D, F, A, S]",
@@ -778,14 +840,22 @@
    0.9,
    0.86
   ],
+  "guard": [
+   0.24,
+   0.35,
+   0.8,
+   0.75
+  ],
+  "guard_band_units": 0.02,
   "ring": [
    0.2,
    0.31,
    0.84,
    0.79
   ],
-  "ring_band_units": 0.06,
-  "subset": "W_{a,c} inside the background ring inside C_{a,c}",
+  "ring_band_units": 0.04,
+  "ring_is_annulus": "the tint is knocked out over the guard, so no tint reaches inside W_{a,c}",
+  "subset": "W_{a,c} inside the guard inside the background ring inside C_{a,c}",
   "w_unit": [
    [
     0.1,
