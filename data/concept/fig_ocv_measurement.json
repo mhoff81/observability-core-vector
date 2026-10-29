@@ -1,0 +1,1440 @@
+{
+ "artifacts": {
+  "fig_ocv_measurement.jpg": "2a4974802f9f2affef734094d4f72911f3089212b1374a382a11a527ad0d8630",
+  "fig_ocv_measurement.pdf": "f66976d1823b7964f9b6a38b05bcd8ca8237950017ae27a902eaad40c741cb7c"
+ },
+ "canvas": {
+  "bbox": "standard (a tight box would move the 183 mm edge)",
+  "dpi": 630,
+  "height_mm": 61.0,
+  "panel_height_frac": 0.96,
+  "panel_unit_mm": 55.632,
+  "panel_width_frac": 0.304,
+  "panel_x_frac": [
+   0.012,
+   0.348,
+   0.684
+  ],
+  "panel_y_frac": 0.02,
+  "ratio": 3.0,
+  "width_mm": 183.0,
+  "ylim": 1.05263158
+ },
+ "checks": {
+  "failed": 0,
+  "failures": [],
+  "list": [
+   {
+    "detail": "183.0000 mm",
+    "name": "canvas width 183 mm",
+    "ok": true
+   },
+   {
+    "detail": "61.0000 mm",
+    "name": "canvas height 61 mm",
+    "ok": true
+   },
+   {
+    "detail": "3.00000",
+    "name": "canvas ratio 3.000:1",
+    "ok": true
+   },
+   {
+    "detail": "630",
+    "name": "figure dpi is the output dpi",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel a is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel a box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel b is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel b box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel c is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel c box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "gap 0.0320",
+    "name": "panel a/b boxes do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "gap 0.0320",
+    "name": "panel b/c boxes do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "55.632 mm",
+    "name": "panel unit is 55.632 mm",
+    "ok": true
+   },
+   {
+    "detail": "[1048.685  786.514] px",
+    "name": "the chip rectangle maps to the same size in all three panels",
+    "ok": true
+   },
+   {
+    "detail": "corner offset [193.179 400.156] px from each panel's origin",
+    "name": "the chip sits at the same place inside all three panels",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "one chip rectangle, shared by all three panels",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "all three panels draw the same asset footprint",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panels (a) and (b) draw the same radar frame in the same place",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel (c) names no axes, because it labels nothing on the mask",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel (c) draws no chip plate: the vector row runs through that band",
+    "ok": true
+   },
+   {
+    "detail": "x 0.100..0.920 y 0.170..0.900",
+    "name": "the frame encloses the chip on all four sides",
+    "ok": true
+   },
+   {
+    "detail": "{'x0': 0.1, 'y0': 0.17, 'x1': 0.92, 'y1': 0.9}",
+    "name": "the frame stays inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "r arm 0.120 below the chip",
+    "name": "the frame's arm ends are clear of the chip's own edge",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel (c)'s ground is the support alone, not a second frame",
+    "ok": true
+   },
+   {
+    "detail": "8 vertices",
+    "name": "panels (b) and (c) draw the same W_{a,c}",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel (a) draws no support, so the restriction is visible",
+    "ok": true
+   },
+   {
+    "detail": "0.760000 of the panel width",
+    "name": "the chip covers the same fraction of each panel",
+    "ok": true
+   },
+   {
+    "detail": "52 x 39 cells",
+    "name": "the native sample grid is the same grid in (a) and (b)",
+    "ok": true
+   },
+   {
+    "detail": "24 objects",
+    "name": "text inventory is exactly the declared set",
+    "ok": true
+   },
+   {
+    "detail": "24",
+    "name": "text count <= 30",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no duplicate panel label",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every panel carries exactly one title",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no title anywhere",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no legend anywhere",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "axes are off (no spines, no ticks)",
+    "ok": true
+   },
+   {
+    "detail": "min 7.00 pt",
+    "name": "every text >= 7.0 pt",
+    "ok": true
+   },
+   {
+    "detail": "6.50 pt",
+    "name": "every text >= 7.0 pt at 170 mm (scale 0.929) = 6.5 pt",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel a: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel a: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "0.115..0.577",
+    "name": "panel a: the title fits its own run",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel b: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel b: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "0.115..0.928",
+    "name": "panel b: the title fits its own run",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel c: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel c: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "0.115..0.681",
+    "name": "panel c: the title fits its own run",
+    "ok": true
+   },
+   {
+    "detail": "label 0.437..0.603 x 0.577..0.635",
+    "name": "(b) names the asset on the asset: the symbol sits inside the footprint",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "(b) sets the asset symbol in paper white, on the dark footprint",
+    "ok": true
+   },
+   {
+    "detail": "knockout to 0.405, footprint from 0.396 at its base",
+    "name": "(b)'s W_{a,c} label and its knockout stay clear of the footprint",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no forbidden vocabulary in any drawn text",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "R_B absent",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "R_G absent",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no shift marker (p-bar, p-star) anywhere on the plate",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the coherence channel is mathtext",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the radar frame is az / r and nothing else",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the physical frame (X, Y, Z) is not on this plate at all",
+    "ok": true
+   },
+   {
+    "detail": "C_{a,c}, W_{a,c}, W_{a,c} subset C_{a,c}, Pi_c(G_a^{3D})",
+    "name": "every channel-dependent symbol carries c",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no channel-dependent symbol is spelled out instead",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W has eight vertices (the chamfered rectangle of the first plate)",
+    "ok": true
+   },
+   {
+    "detail": "margin 0.080",
+    "name": "W sits inside C with a visible margin",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W sits inside the guard",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the guard sits inside the ring",
+    "ok": true
+   },
+   {
+    "detail": "0.020 units = 1.11 mm",
+    "name": "the guard is a white band >= 0.015 wide",
+    "ok": true
+   },
+   {
+    "detail": "0.040 units = 2.23 mm",
+    "name": "the ring band outside the guard is >= 0.03 wide",
+    "ok": true
+   },
+   {
+    "detail": "margin 0.020",
+    "name": "the ring sits inside C, so it cannot be the chip edge",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "C sits inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the asset footprint lies inside W",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the asset footprint is inside C, not straddling it",
+    "ok": true
+   },
+   {
+    "detail": "0.800 < 0.812 < 0.840",
+    "name": "the ring leader ends on the ring band, clear of the guard",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W in (b) and W in (c) are the same shape, in the same box",
+    "ok": true
+   },
+   {
+    "detail": "0.029 / 0.015 = 2.0",
+    "name": "one mask cell is exactly 2 x 2 native samples",
+    "ok": true
+   },
+   {
+    "detail": "origin at sample (11, 12)",
+    "name": "the mask lattice sits on the native sample grid",
+    "ok": true
+   },
+   {
+    "detail": "margin 0.022",
+    "name": "the mask lattice sits inside W",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every mask cell is inside W",
+    "ok": true
+   },
+   {
+    "detail": "800 of 2028 native cells in W",
+    "name": "C holds far more cells than W (the read is not the measurement)",
+    "ok": true
+   },
+   {
+    "detail": "20 mask cells, 800 native cells",
+    "name": "the mask has fewer cells than W has native samples",
+    "ok": true
+   },
+   {
+    "detail": "0.0146 units",
+    "name": "native cells are square on the drawn canvas",
+    "ok": true
+   },
+   {
+    "detail": "0.81 mm",
+    "name": "native cell >= 0.8 mm on the printed page",
+    "ok": true
+   },
+   {
+    "detail": "2028",
+    "name": "the chip holds 52 x 39 native samples",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the raster is drawn as quads, not as an image",
+    "ok": true
+   },
+   {
+    "detail": "2028 quads",
+    "name": "the quads cover the chip exactly once",
+    "ok": true
+   },
+   {
+    "detail": "[0.1396 0.2896 0.9004 0.8604]",
+    "name": "the quad union spans the chip from edge to edge",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no native cell is counted twice",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the intensity ramp has 16 steps",
+    "ok": true
+   },
+   {
+    "detail": "87..240",
+    "name": "the ramp is monotone and has no repeated step",
+    "ok": true
+   },
+   {
+    "detail": "87/255",
+    "name": "the darkest ramp step is grey, not ink",
+    "ok": true
+   },
+   {
+    "detail": "240/255",
+    "name": "the lightest ramp step is not paper white",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the field is deterministic (no random number anywhere)",
+    "ok": true
+   },
+   {
+    "detail": "14 of 16 steps used",
+    "name": "the field uses at least half the ramp",
+    "ok": true
+   },
+   {
+    "detail": "(0.483, 0.648) = 0.782",
+    "name": "the brightest sample in the chip lies inside W",
+    "ok": true
+   },
+   {
+    "detail": "peak outside W 0.685 > reference 0.490",
+    "name": "the chip outside W does carry bright returns",
+    "ok": true
+   },
+   {
+    "detail": "0.782 inside vs 0.685 outside",
+    "name": "the strongest return in the chip is on the support",
+    "ok": true
+   },
+   {
+    "detail": "4",
+    "name": "the echo mask has exactly four connected regions",
+    "ok": true
+   },
+   {
+    "detail": "[8, 6, 4, 2]",
+    "name": "the four regions are 8, 6, 4 and 2 cells",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the regions are strictly decreasing in size",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every region is 4-connected (a fragment, not a dust field)",
+    "ok": true
+   },
+   {
+    "detail": "20",
+    "name": "the mask has 20 cells",
+    "ok": true
+   },
+   {
+    "detail": "1",
+    "name": "the mask encloses exactly one hole",
+    "ok": true
+   },
+   {
+    "detail": "[(5, 5)]",
+    "name": "the hole is enclosed, not on the lattice border",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no echo cell touches the lattice border",
+    "ok": true
+   },
+   {
+    "detail": "0.1333",
+    "name": "echo density is sparse and legible (5 % < d < 22 %)",
+    "ok": true
+   },
+   {
+    "detail": "min echo 0.551 > 0.490",
+    "name": "every echo cell is above the reference level",
+    "ok": true
+   },
+   {
+    "detail": "max inactive 0.429 < 0.490",
+    "name": "no inactive cell reaches the reference level",
+    "ok": true
+   },
+   {
+    "detail": "margins 0.061 / 0.061",
+    "name": "the mask is not knife-edge: it clears the level by 0.02 either way",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the mask is exactly the threshold set of the field, cell for cell",
+    "ok": true
+   },
+   {
+    "detail": "20 of 20 echo cells on the asset",
+    "name": "the asset footprint carries the bulk of the echo",
+    "ok": true
+   },
+   {
+    "detail": "[]",
+    "name": "no echo cell crosses the asset outline",
+    "ok": true
+   },
+   {
+    "detail": "(6, 6) = 0.782",
+    "name": "the strongest echo cell lies inside W",
+    "ok": true
+   },
+   {
+    "detail": "20 cells, all inside W",
+    "name": "echo stops at the support: bright returns outside W make no cell",
+    "ok": true
+   },
+   {
+    "detail": "1.946 cells, the quantity S measures",
+    "name": "the centroid and the peak are >= 1.5 cells apart",
+    "ok": true
+   },
+   {
+    "detail": "(0.516, 0.604) in panel units",
+    "name": "the centroid of the mask lies inside the support",
+    "ok": true
+   },
+   {
+    "detail": "7 line objects, all markers empty",
+    "name": "nothing is annotated on the mask: no marker, no dot, no label",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.502 0.502 0.502",
+    "name": "(a) paints the field cell at its own ramp step",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.827 0.827 0.827",
+    "name": "(b) shows the same cell outside the ring, pulled 65 % to white",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.396 0.427 0.459",
+    "name": "(b) keeps the field inside W at full contrast under the blue veil",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the veil is visible: (b) inside W is not (a)",
+    "ok": true
+   },
+   {
+    "detail": "rgb 1.000 1.000 1.000",
+    "name": "(b)'s guard is pure white, knocked out of the ring tint",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.914 0.914 0.914",
+    "name": "(b)'s ring band is the flat tint, not the field",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the ring tint never reaches inside W (annulus, not a fill)",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.141 0.145 0.149",
+    "name": "(b)'s footprint is a dark plate, so the white symbol reads on it",
+    "ok": true
+   },
+   {
+    "detail": "rgb 1.000 1.000 1.000",
+    "name": "(c) draws no chip plate: outside the support is bare paper",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.910 0.925 0.945",
+    "name": "(c)'s support ground is the pale blue over paper",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.914 0.914 0.914",
+    "name": "(c)'s inactive support cells are very light grey",
+    "ok": true
+   },
+   {
+    "detail": "rgb 0.247 0.490 0.247",
+    "name": "(c)'s echo cells are green",
+    "ok": true
+   },
+   {
+    "detail": "37255 exact-green pixels on the whole plate",
+    "name": "green appears in (c), and only there",
+    "ok": true
+   },
+   {
+    "detail": "left two thirds of the canvas",
+    "name": "the green is only the mask: (a) and (b) carry no green at all",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the vector has six components",
+    "ok": true
+   },
+   {
+    "detail": "gamma2,P,D,F,A,S",
+    "name": "the order is gamma2, P, D, F, A, S",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the partition covers every component exactly once",
+    "ok": true
+   },
+   {
+    "detail": "$\\gamma^2,\\ P$",
+    "name": "group one is exactly gamma2 and P",
+    "ok": true
+   },
+   {
+    "detail": "$D,\\ F,\\ A,\\ S$",
+    "name": "group two is exactly D, F, A and S",
+    "ok": true
+   },
+   {
+    "detail": "0.0339",
+    "name": "the row starts inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "0.9661",
+    "name": "the row ends inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "0.5000",
+    "name": "the row is centred in its panel",
+    "ok": true
+   },
+   {
+    "detail": "text 0.312..0.441 brace 0.312..0.441",
+    "name": "the cross brace spans its own group only",
+    "ok": true
+   },
+   {
+    "detail": "top 0.279 < brace 0.285",
+    "name": "the cross name sits under its brace",
+    "ok": true
+   },
+   {
+    "detail": "text 0.648..0.922 brace 0.648..0.922",
+    "name": "the spatial brace spans its own group only",
+    "ok": true
+   },
+   {
+    "detail": "top 0.279 < brace 0.285",
+    "name": "the spatial name sits under its brace",
+    "ok": true
+   },
+   {
+    "detail": "0.453..0.471",
+    "name": "the separating comma sits between the two groups",
+    "ok": true
+   },
+   {
+    "detail": "0.012 / 0.177",
+    "name": "the separating comma does not touch either group",
+    "ok": true
+   },
+   {
+    "detail": "0.562 < 0.597",
+    "name": "the two group names do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the equation sits above the braces",
+    "ok": true
+   },
+   {
+    "detail": "row top 0.378 < lattice 0.465",
+    "name": "the equation does not touch the mask lattice",
+    "ok": true
+   },
+   {
+    "detail": "0.382 -> 0.418 under support 0.430",
+    "name": "the arrow leaves the support's lower edge and points at the row",
+    "ok": true
+   },
+   {
+    "detail": "row top 0.378 < support 0.430",
+    "name": "the whole vector row sits below the support",
+    "ok": true
+   },
+   {
+    "detail": "4538 px",
+    "name": "JPEG width is 183 mm at 630 dpi (4539 px +/- 2)",
+    "ok": true
+   },
+   {
+    "detail": "1512 px",
+    "name": "JPEG height is 61 mm at 630 dpi (1513 px +/- 2)",
+    "ok": true
+   },
+   {
+    "detail": "3.00132",
+    "name": "JPEG pixel ratio is 3.000",
+    "ok": true
+   },
+   {
+    "detail": "(630, 630)",
+    "name": "JPEG carries 630 dpi",
+    "ok": true
+   },
+   {
+    "detail": "RGB",
+    "name": "JPEG is a full-colour raster",
+    "ok": true
+   },
+   {
+    "detail": "the raster is 2028 vector quads, not an image object",
+    "name": "PDF page contains no raster image",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF embeds its fonts as TrueType (FontType 42)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF has no Type-3 fonts",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF carries no timestamp (it must be reproducible)",
+    "ok": true
+   },
+   {
+    "detail": "0.10 MB",
+    "name": "PDF is a manageable vector page (< 1.5 MB)",
+    "ok": true
+   },
+   {
+    "detail": "[0.0, 0.0, 518.7401574803, 172.9133858268]",
+    "name": "PDF page box is 183 x 61 mm",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "re-saving the same figure gives the same JPEG bytes",
+    "ok": true
+   },
+   {
+    "detail": "(1512, 4538, 4)",
+    "name": "two builds render identical pixels",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "two builds lay the OCV row out identically",
+    "ok": true
+   },
+   {
+    "detail": "left 0.033885 vs 0.033885, width 0.932230 vs 0.932230",
+    "name": "the vector row agrees with the first schematic",
+    "ok": true
+   }
+  ],
+  "passed": 160,
+  "total": 160
+ },
+ "environment": {
+  "matplotlib": "3.11.1",
+  "numpy": "2.4.6",
+  "python": "3.13.5"
+ },
+ "field": {
+  "base": {
+   "amplitude": 0.05,
+   "frequencies": [
+    3.4,
+    2.6
+   ],
+   "offset": 0.3,
+   "phases": [
+    0.6,
+    1.2
+   ]
+  },
+  "maximum": 0.782489,
+  "minimum": 0.18601,
+  "peak_at": [
+   0.483462,
+   0.648077
+  ],
+  "peak_inside_W": true,
+  "peak_outside_W": 0.685411,
+  "ramp": {
+   "hi": 0.86,
+   "lo": 0.14,
+   "steps": 16
+  },
+  "responses": [
+   {
+    "amplitude": 0.5,
+    "centre": [
+     0.4615,
+     0.6262
+    ],
+    "kind": "ring",
+    "sigma": [
+     0.0292,
+     0.0094
+    ]
+   },
+   {
+    "amplitude": 0.4,
+    "centre": [
+     0.5785,
+     0.6408
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.0351,
+     0.0205
+    ]
+   },
+   {
+    "amplitude": 0.38,
+    "centre": [
+     0.5638,
+     0.5531
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.0205,
+     0.0205
+    ]
+   },
+   {
+    "amplitude": 0.38,
+    "centre": [
+     0.4469,
+     0.5092
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.0205,
+     0.0146
+    ]
+   },
+   {
+    "amplitude": 0.1,
+    "centre": [
+     0.6515,
+     0.7138
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.03,
+     0.026
+    ]
+   },
+   {
+    "amplitude": 0.4,
+    "centre": [
+     0.176,
+     0.836
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.0219,
+     0.0219
+    ]
+   },
+   {
+    "amplitude": 0.38,
+    "centre": [
+     0.855,
+     0.38
+    ],
+    "kind": "blob",
+    "sigma": [
+     0.0201,
+     0.0201
+    ]
+   }
+  ],
+  "texture": [
+   {
+    "amplitude": 0.045,
+    "fu": 13.0,
+    "fv": 9.0,
+    "pu": 2.0,
+    "pv": 0.5
+   },
+   {
+    "amplitude": 0.03,
+    "fu": 23.0,
+    "fv": 19.0,
+    "pu": 4.1,
+    "pv": 2.3
+   }
+  ],
+  "what": "a closed-form intensity field: no random number anywhere, so the mask derived from it is a constant of the file"
+ },
+ "figure": {
+  "file": "fig_ocv_measurement.jpg",
+  "idea": "C_{a,c} -> W_{a,c} -> M_{a,c}(t) -> OCV(t), on one frame",
+  "not_shown": [
+   "structural health",
+   "damage probability",
+   "failure detection",
+   "displacement",
+   "InSAR deformation",
+   "a universal score",
+   "R_B and R_G (temporal reconfiguration, not the definition)",
+   "any shift marker (p-bar, p-star)",
+   "the mask's centroid or peak, drawn",
+   "any reference value, count or verdict on the plate"
+  ],
+  "panels": {
+   "a": "the native SLC read chip: the full intensity field, the asset footprint as a thin outline, C_{a,c} on the chip edge, the radar axes az / r",
+   "b": "the measurement support W_{a,c} subset C_{a,c}: the same field subdued outside, knocked out in the ring and guard, blue W_{a,c} over the full-contrast field, the projected footprint as a dark plate named in white on itself",
+   "c": "the echo mask M_{a,c}(t) inside W_{a,c}: inactive support cells in very light grey, echo cells in green, and the six-dimensional vector below"
+  },
+  "reads": "no data file at all: the field is analytic",
+  "vector": "fig_ocv_measurement.pdf",
+  "what": "one radar read chip, three levels of admission, and the vector the last of them becomes"
+ },
+ "frame": {
+  "anchored": "the chip sits inside one open radar frame in (a) and (b) — az up the left side, r along the bottom — so the read is placed in a geometry, not left floating",
+  "asset": [
+   [
+    0.396,
+    0.49
+   ],
+   [
+    0.644,
+    0.49
+   ],
+   [
+    0.62,
+    0.72
+   ],
+   [
+    0.42,
+    0.72
+   ]
+  ],
+  "axes": [
+   "$\\mathrm{az}$",
+   "$r$"
+  ],
+  "axis_frame": {
+   "x0": 0.1,
+   "x1": 0.92,
+   "y0": 0.17,
+   "y1": 0.9
+  },
+  "cells_in_C": 2028,
+  "cells_in_W": 800,
+  "chip": [
+   0.14,
+   0.29,
+   0.9,
+   0.86
+  ],
+  "guard": [
+   0.25,
+   0.41,
+   0.79,
+   0.8
+  ],
+  "guard_band_units": 0.02,
+  "native": {
+   "cell": 0.014615384615384615,
+   "cols": 52,
+   "rows": 39
+  },
+  "native_cell_mm": 0.813083,
+  "promise": "one spatial frame, read by all three panels: the same chip, the same asset footprint, the same scale",
+  "ring": [
+   0.205,
+   0.365,
+   0.835,
+   0.84
+  ],
+  "ring_band_units": 0.04,
+  "subset": "W_{a,c} inside the guard inside the background ring inside C_{a,c}",
+  "w_box": [
+   0.27,
+   0.43,
+   0.77,
+   0.78
+  ],
+  "w_unit": [
+   [
+    0.1,
+    0.0
+   ],
+   [
+    0.9,
+    0.0
+   ],
+   [
+    1.0,
+    0.1
+   ],
+   [
+    1.0,
+    0.9
+   ],
+   [
+    0.9,
+    1.0
+   ],
+   [
+    0.1,
+    1.0
+   ],
+   [
+    0.0,
+    0.9
+   ],
+   [
+    0.0,
+    0.1
+   ]
+  ]
+ },
+ "mask": {
+  "annotated": "nothing on the mask: no centroid or peak symbol is drawn, so S is a measured distance the plate never has to define",
+  "cells": [
+   [
+    4,
+    1
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    4,
+    5
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    5,
+    4
+   ],
+   [
+    5,
+    6
+   ],
+   [
+    6,
+    4
+   ],
+   [
+    6,
+    5
+   ],
+   [
+    6,
+    6
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    8,
+    3
+   ],
+   [
+    8,
+    5
+   ],
+   [
+    8,
+    6
+   ],
+   [
+    9,
+    2
+   ],
+   [
+    9,
+    3
+   ],
+   [
+    9,
+    5
+   ],
+   [
+    9,
+    6
+   ],
+   [
+    10,
+    5
+   ],
+   [
+    10,
+    6
+   ]
+  ],
+  "centroid_cells": [
+   7.35,
+   4.75
+  ],
+  "centroid_peak_cells": 1.945508,
+  "centroid_units": [
+   0.515615,
+   0.604231
+  ],
+  "definition": "the support cells whose peak native sample exceeds the reference level",
+  "density": 0.133333,
+  "holes": [
+   [
+    5,
+    5
+   ]
+  ],
+  "lattice": {
+   "cell": 0.02923076923076923,
+   "cols": 15,
+   "rows": 10,
+   "x0": 0.3007692307692308,
+   "y0": 0.4653846153846154
+  },
+  "max_inactive_peak": 0.429355,
+  "min_echo_peak": 0.551447,
+  "native_per_cell": 2,
+  "peak_cell": [
+   6,
+   6
+  ],
+  "peak_value": 0.782489,
+  "reference_level": 0.49,
+  "regions": [
+   {
+    "at": [
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      6
+     ]
+    ],
+    "cells": 8
+   },
+   {
+    "at": [
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "cells": 6
+   },
+   {
+    "at": [
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "cells": 4
+   },
+   {
+    "at": [
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "cells": 2
+   }
+  ],
+  "sizes": [
+   8,
+   6,
+   4,
+   2
+  ]
+ },
+ "ocv": {
+  "equation": "OCV(t) = [gamma2, P, D, F, A, S]",
+  "groups": [
+   {
+    "colour": "#1f4e79",
+    "key": "cross",
+    "mathtext": "$\\gamma^2,\\ P$",
+    "name": "cross-acquisition"
+   },
+   {
+    "colour": "#3f7d3f",
+    "key": "spatial",
+    "mathtext": "$D,\\ F,\\ A,\\ S$",
+    "name": "spatial geometry"
+   }
+  ],
+  "row": {
+   "centre_cross": 0.37621004961458754,
+   "centre_spatial": 0.7846771410396438,
+   "g0": 0.022,
+   "g1": 0.022,
+   "gd": 0.20699574456975778,
+   "left": 0.033885102456163316,
+   "right": 0.9661148975438367,
+   "total": 0.9322297950876733,
+   "w": [
+    0.12899963935339231,
+    0.27394305435720456
+   ],
+   "w_close": 0.022466229325590614,
+   "w_pre": 0.25582512748172803,
+   "wlab": [
+    0.3715307379902395,
+    0.37540344485987287
+   ],
+   "x0": 0.033885102456163316,
+   "xdiv": 0.5442077415761626
+  },
+  "spans": {
+   "cross": [
+    0.3117102299378914,
+    0.4407098692912837
+   ],
+   "spatial": [
+    0.6477056138610415,
+    0.9216486682182461
+   ]
+  },
+  "tokens": [
+   {
+    "group": "cross",
+    "key": "gamma2",
+    "mathtext": "$\\gamma^2$"
+   },
+   {
+    "group": "cross",
+    "key": "P",
+    "mathtext": "$P$"
+   },
+   {
+    "group": "spatial",
+    "key": "D",
+    "mathtext": "$D$"
+   },
+   {
+    "group": "spatial",
+    "key": "F",
+    "mathtext": "$F$"
+   },
+   {
+    "group": "spatial",
+    "key": "A",
+    "mathtext": "$A$"
+   },
+   {
+    "group": "spatial",
+    "key": "S",
+    "mathtext": "$S$"
+   }
+  ]
+ },
+ "style": {
+  "colours": {
+   "blue_W": "#1f4e79",
+   "faint": "#d8d8d8",
+   "green_echo": "#3f7d3f",
+   "grey": "#6f6f6f",
+   "ink": "#1a1a1a",
+   "light": "#b9b9b9",
+   "mask_inactive": "#e9e9e9"
+  },
+  "font": "DejaVu Sans",
+  "gradients": null,
+  "mathtext": "STIX",
+  "ramp_steps": [
+   "#575757",
+   "#616161",
+   "#6b6b6b",
+   "#757575",
+   "#808080",
+   "#8a8a8a",
+   "#949494",
+   "#9e9e9e",
+   "#a8a8a8",
+   "#b2b2b2",
+   "#bdbdbd",
+   "#c7c7c7",
+   "#d1d1d1",
+   "#dbdbdb",
+   "#e5e5e5",
+   "#f0f0f0"
+  ],
+  "shadows": null,
+  "sizes_pt": {
+   "group": 7.0,
+   "label": 8.0,
+   "math": 9.0,
+   "panel": 9.0,
+   "small": 7.5,
+   "title": 7.0
+  },
+  "title": "one 7 pt title per panel, no plate title, no legend"
+ }
+}
