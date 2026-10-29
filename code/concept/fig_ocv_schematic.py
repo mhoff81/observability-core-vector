@@ -36,13 +36,20 @@ and no count.
 Figure (183 mm x 61 mm = 3.000 : 1, three panels, no title, no legend):
 
     a  asset + acquisition geometry   grey (X,Y,Z) triad, lattice tower, satellite,
-                                      orange line of sight, Pi_c stated once as
-                                      the mapping (X,Y,Z) -> (az,r)
+                                      orange line of sight LOS_c, the look angle
+                                      theta_c, Pi_c stated once as the mapping
+                                      (X,Y,Z) -> (az,r)
     b  measurement support            grey C_{a,c}, the white guard, dashed
                                       background ring, blue W_{a,c}, dark asset
                                       projection
-    c  echo mask + OCV                4 connected echo regions in W_{a,c}, the
-                                      centroid/peak shift, the vector below
+    c  echo mask + OCV                4 connected echo regions in W_{a,c}, nothing
+                                      annotated on the mask, the vector below
+
+Every symbol that depends on the acquisition channel carries it as a subscript:
+LOS_c and theta_c here, alongside Pi_c, W_{a,c} and C_{a,c}. Ascending and
+descending are never written out — the subscript already says it. The centroid
+and the peak of the echo mask are measured (and checked) but never drawn: S is a
+distance the raster yields, not a glyph the plate has to explain.
 
 Style: white background, thin black and grey construction lines, one muted blue
 (W), one muted orange (line of sight), one muted green (echo mask). Vector-like,
@@ -182,6 +189,17 @@ RAD_R = r"$r$"                              # radar range
 # The whole projection, stated once at the foot of panel (a). mathtext has no
 # \xrightarrow, so the operator rides above a long arrow via \overset.
 MAP = r"$(X,Y,Z)\overset{\Pi_c}{\longrightarrow}(\mathrm{az},r)$"
+
+# The acquisition channel. c is the channel — the same subscript that Pi_c,
+# W_{a,c} and C_{a,c} carry — and the line of sight and the look angle belong to
+# the pass rather than to the asset, so they carry it too. Ascending and
+# descending are never spelled out: the subscript says it, and the check below
+# fails the build if a channel-dependent symbol loses it or a frame symbol picks
+# it up.
+LOS_SYM = r"$\mathrm{LOS}_c$"
+THETA_SYM = r"$\theta_c$"
+CHANNEL_SYMS = (LOS_SYM, THETA_SYM, MAP, r"$C_{a,c}$", r"$W_{a,c}$",
+                r"$W_{a,c}\subset C_{a,c}$", r"$\Pi_c(G_a^{3D})$")
 
 # panel (a): the asset
 TOWER = dict(cx=0.300, y_base=0.120, y_top=0.600,
@@ -410,12 +428,12 @@ def draw_panel_a(ax):
     am = 0.5 * (a_los + a_nad)
     _text(ax, p0[0] + (THETA_R + 0.030) * np.cos(np.radians(am)),
           p0[1] + (THETA_R + 0.030) * np.sin(np.radians(am)),
-          r"$\theta$", fs=FS_SMALL, color=GREY, ha="center", va="center",
+          THETA_SYM, fs=FS_SMALL, color=GREY, ha="center", va="center",
           tag="angle")
     nrm = np.array([-d[1], d[0]]) / float(np.hypot(d[0], d[1]))
     lp = p0 + 0.45 * d - 0.040 * nrm
     rot = a_los - 180.0 if a_los > 90.0 else a_los    # keep the label upright
-    _text(ax, lp[0], lp[1], "LOS", fs=FS_SMALL, color=ORANGE, ha="center",
+    _text(ax, lp[0], lp[1], LOS_SYM, fs=FS_SMALL, color=ORANGE, ha="center",
           va="center", rot=rot, tag="los")
 
     # the projection into the radar frame, and the mapping that states it once.
@@ -537,18 +555,11 @@ def draw_panel_c(ax):
     _poly(ax, w_poly(W_BOX_C), edge=BLUE, fc=BLUE, lw=0.80, alpha=0.10, z=1)
     draw_raster(ax)
 
-    # the centroid-to-peak shift: the S dimension of the vector, drawn as drawn
-    (pcx, pcy), (_ci, _cj) = centroid_xy()
-    ppx, ppy = cell_xy(*ECHO_PEAK)
-    _line(ax, (pcx, pcy), (ppx, ppy), GREY, 0.55, ls=(0, (2.2, 1.6)), z=5)
-    ax.plot([pcx], [pcy], marker="o", ms=2.6, mfc="white", mec=GREY, mew=0.55,
-            ls="none", zorder=6)
-    ax.plot([ppx], [ppy], marker="o", ms=2.4, mfc=INK, mec=INK, mew=0.40,
-            ls="none", zorder=6)
-    _text(ax, pcx - 0.009, pcy - 0.050, r"$\bar{p}$", fs=FS_SMALL, color=GREY,
-          ha="center", va="center", tag="centroid")
-    _text(ax, ppx + 0.004, ppy + 0.048, r"$p^{\star}$", fs=FS_SMALL, color=INK,
-          ha="center", va="center", tag="peak")
+    # Nothing is annotated inside the mask — no centroid dot, no peak dot, no
+    # arrow between them, no symbol naming either. The centroid-to-peak distance
+    # that S measures is a number the raster yields, not a glyph the plate has to
+    # explain, so panel (c) is left with marks that need no definition: the
+    # support, the echo, the vector.
 
     # the raster becomes the vector, pointing at the middle of the finished row
     pos = layout_ocv(ax)
@@ -721,13 +732,13 @@ def echo_holes():
 def expected_texts():
     """The complete text inventory of the plate, written out, not discovered."""
     t = ["(a)", "(b)", "(c)"]
-    t += [PHYS_AX[2], PHYS_AX[0], PHYS_AX[1], r"$G_a^{3D}$", r"$\theta$",
-          "LOS", MAP, RAD_R, RAD_AZ]                        # panel (a)
+    t += [PHYS_AX[2], PHYS_AX[0], PHYS_AX[1], r"$G_a^{3D}$", THETA_SYM,
+          LOS_SYM, MAP, RAD_R, RAD_AZ]                      # panel (a)
     t += [RAD_R, RAD_AZ, r"$C_{a,c}$", r"$W_{a,c}$",
           r"$\Pi_c(G_a^{3D})$", "background ring",
           r"$W_{a,c}\subset C_{a,c}$"]                      # panel (b)
-    t += [r"$\bar{p}$", r"$p^{\star}$", r"$\mathrm{OCV}(t)=[$",
-          ocv_group_string("cross"), ",", ocv_group_string("spatial"), "]",
+    t += [r"$\mathrm{OCV}(t)=[$", ocv_group_string("cross"), ",",
+          ocv_group_string("spatial"), "]",
           "cross-acquisition", "spatial geometry"]          # panel (c)
     return t
 
@@ -794,6 +805,10 @@ def run_checks(fig, axes, pos):
     check("the mapping statement names the operator and both frames",
           all(k in MAP for k in (r"\overset{\Pi_c}", "(X,Y,Z)",
                                  r"(\mathrm{az},r)")), "no drift")
+    check("every channel-dependent symbol carries c, and no frame symbol does",
+          all("c" in s for s in CHANNEL_SYMS)
+          and not any("c" in s for s in PHYS_AX + (RAD_AZ, RAD_R)),
+          f"{len(CHANNEL_SYMS)} channel symbols")
 
     # every text sits inside its own panel, and no two texts collide
     for ax in axes:
@@ -945,7 +960,7 @@ def run_checks(fig, axes, pos):
     ppx, ppy = cell_xy(*ECHO_PEAK)
     sep_cells = float(np.hypot(ppx - ccx, ppy - ccy)) / c
     check("the centroid and the peak are >= 1.5 cells apart", sep_cells >= 1.5,
-          f"{sep_cells:.3f} cells")
+          f"{sep_cells:.3f} cells, the quantity S measures")
     check("the centroid is not inside an echo cell (the mask is fragmented)",
           not any(RAST["x0"] + i * c < ccx < RAST["x0"] + (i + 1) * c
                   and RAST["y0"] + j * c < ccy < RAST["y0"] + (j + 1) * c
@@ -1076,11 +1091,8 @@ def sha256_file(path):
 def write_md(path, pos, hashes):
     fails = checks_failed()
     comps = echo_components()
-    (ccx, ccy), (ci, cj) = centroid_xy()
     ncell = len(echo_cells())
     dens = ncell / float(RAST["cols"] * RAST["rows"])
-    shift = float(np.hypot(cell_xy(*ECHO_PEAK)[0] - ccx,
-                           cell_xy(*ECHO_PEAK)[1] - ccy)) / RAST["cell"]
     L = []
     A = L.append
     A("# `concept/fig_ocv_schematic` — the observability core vector, drawn")
@@ -1104,11 +1116,18 @@ def write_md(path, pos, hashes):
     A("")
     A("**(a) the asset and the acquisition.** A generic lattice asset "
       "`G_a^{3D}` in its own frame (the grey triad `X`, `Y`, `Z`), observed "
-      "from a satellite along the orange line of sight `LOS` at the look angle "
-      "`θ` measured from nadir; the operator `Π_c` maps that frame into the "
-      "radar frame `(az, r)`. The asset is drawn as four legs, five belts and "
-      "alternating braces — something with a real cross-section, because that "
-      "is what makes the projection lossy.")
+      "from a satellite along the orange line of sight `LOS_c` at the look "
+      "angle `θ_c` measured from nadir; the operator `Π_c` maps that frame "
+      "into the radar frame `(az, r)`. The asset is drawn as four legs, five "
+      "belts and alternating braces — something with a real cross-section, "
+      "because that is what makes the projection lossy.")
+    A("")
+    A("The subscript on `LOS_c` and `θ_c` is the acquisition channel: the same "
+      "`c` that `Π_c`, `W_{a,c}` and `C_{a,c}` carry, because the line of "
+      "sight and the incidence angle belong to the pass rather than to the "
+      "asset. Nothing is spelled out about ascending or descending — the "
+      "subscript says it, and a check fails the build if a channel-dependent "
+      "symbol ever loses it or a frame symbol picks it up.")
     A("")
     A("The mapping is written out exactly once, at the foot of the panel, "
       "left-aligned to the radar frame's own left edge: "
@@ -1145,15 +1164,16 @@ def write_md(path, pos, hashes):
       "`W_{a,c}` the echo mask is a raster of green cells: "
       f"{len(comps)} connected regions of "
       f"{', '.join(str(len(k)) for k in comps)} cells in a "
-      f"{RAST['cols']} × {RAST['rows']} grid (density {dens:.3f}), one closed "
-      "hole, and a dashed centroid-to-peak shift "
-      f"({shift:.2f} cells) between the mask's centroid `p̄` and its peak "
-      "pixel `p⋆`. `p⋆` is the peak *reference* the site uses, not a second "
-      "epoch: both symbols belong to one acquisition, and `S` — the distance "
-      "between them in cells — is a position inside `W_{a,c}`, not a movement "
-      "of the asset. That is the extent, the density, the fragmentation and "
-      "the spatial shift the vector has to summarise, made visible before it "
-      "is made numeric. Below it:")
+      f"{RAST['cols']} × {RAST['rows']} grid (density {dens:.3f}) and one "
+      "closed hole. That is the extent, the density and the fragmentation the "
+      "vector has to summarise, made visible before it is made numeric.")
+    A("")
+    A("Nothing is annotated on the mask itself — no centroid, no peak, no "
+      "arrow between them, no symbol naming either. The centroid-to-peak "
+      "distance that `S` measures is a number the raster yields, not an "
+      "element the plate has to define: every mark in this panel can be read "
+      "without a caption, and the only words on it are the vector's and its "
+      "two group names. Below the mask:")
     A("")
     A("```")
     A("OCV(t) = [ γ², P, D, F, A, S ]")
@@ -1186,6 +1206,8 @@ def write_md(path, pos, hashes):
       "and echo-geometry vector, and nothing in the plate moves;")
     A("- `R_B` and `R_G` — those belong to the temporal reconfiguration analysis "
       "(`figures/sds/`), not to the definition of the vector;")
+    A("- a centroid or a peak symbol — `S` is a distance the mask yields, not a "
+      "glyph the plate has to explain;")
     A("- a score, a threshold, a weighting or a count.")
     A("")
     A("The prohibition is mechanical, not editorial: a forbidden-token scan runs "
@@ -1243,13 +1265,17 @@ def write_md(path, pos, hashes):
     A("| the two frames | the physical frame (`X`, `Y`, `Z`) and the radar "
       "frame (`az`, `r`) share no symbol; the mapping statement carries the "
       "operator and both frames; `C_{a,c}` sits on the chip's own edge |")
+    A("| the channel | every channel-dependent symbol carries the `c` "
+      "subscript — `LOS_c`, `θ_c`, `Π_c`, `W_{a,c}`, `C_{a,c}` — and no "
+      "frame symbol does; ascending and descending are never spelled out |")
     A("| one W, two panels | the support is **one** polygon definition mapped "
       "into (b) and into (c); normalised to its own box it is identical to "
       "1 × 10⁻¹² in both |")
     A("| raster integrity | cells square on the drawn canvas and ≥ 1.5 mm; every "
       "echo cell inside `W` and inside the raster; exactly 4 connected regions "
       "of 8, 6, 4 and 3 cells; exactly one enclosed hole; density in "
-      "(5 %, 20 %); centroid and peak ≥ 1.5 cells apart |")
+      "(5 %, 20 %); the mask's centroid and its peak ≥ 1.5 cells apart — the "
+      "quantity `S` measures, measured but not drawn |")
     A("| the vector | six components in the order `γ², P, D, F, A, S`; the "
       "partition into (γ², P) and (D, F, A, S) proved from the token table; each "
       "brace spans its own group's measured extent; the two names clear each "
@@ -1344,7 +1370,12 @@ def payload(pos, hashes):
                                "tint reaches inside W_{a,c}",
         },
         "asset": {"tower": TOWER, "los": [list(v) for v in LOS],
-                  "nadir": [list(v) for v in NADIR], "theta_radius": THETA_R},
+                  "nadir": [list(v) for v in NADIR], "theta_radius": THETA_R,
+                  "los_symbol": LOS_SYM, "theta_symbol": THETA_SYM,
+                  "channel_note": "c is the acquisition channel: LOS_c, "
+                                  "theta_c, Pi_c, W_{a,c} and C_{a,c} carry "
+                                  "it; ascending and descending are never "
+                                  "spelled out"},
         "frames": {
             "physical": list(PHYS_AX), "physical_reads": "X, Y, Z",
             "radar": [RAD_AZ, RAD_R], "radar_reads": "az, r",
@@ -1367,14 +1398,9 @@ def payload(pos, hashes):
             "centroid_peak_cells": round(float(np.hypot(
                 cell_xy(*ECHO_PEAK)[0] - ccx, cell_xy(*ECHO_PEAK)[1] - ccy))
                 / RAST["cell"], 6),
-            "symbols": {
-                "p_bar": "centroid of the echo mask",
-                "p_star": "peak pixel of the echo mask — the site's peak "
-                          "reference, read from the same acquisition, so the "
-                          "pair is not two epochs",
-                "S": "||p_bar - p_star|| in cells: the centroid-to-peak shift, "
-                     "a position inside W_{a,c}, not a movement of the asset",
-            },
+            "annotated": "nothing on the mask: no centroid or peak symbol is "
+                         "drawn, so S is a measured distance the plate never "
+                         "has to define",
         },
         "ocv": {
             "tokens": [{"key": k, "mathtext": s, "group": g}

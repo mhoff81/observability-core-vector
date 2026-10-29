@@ -1,9 +1,10 @@
 {
  "artifacts": {
-  "fig_ocv_schematic.jpg": "b0c85d2fad3f42c3e9a7576904c1380f24a38c50b0c16658a22941da2e6f847c",
-  "fig_ocv_schematic.pdf": "7578096c521be4dcb709b05d24eb44af47ec12a5b5d2fb99ca023b4f0554f6cd"
+  "fig_ocv_schematic.jpg": "94c94bddce41ba3537adc34594d69e5b4a83005de2e11443f3348a275a242b42",
+  "fig_ocv_schematic.pdf": "eafc0e62bfa0843fe5b33dcfad68ae24a292cb662466719c8f8edfe66ad1a175"
  },
  "asset": {
+  "channel_note": "c is the acquisition channel: LOS_c, theta_c, Pi_c, W_{a,c} and C_{a,c} carry it; ascending and descending are never spelled out",
   "los": [
    [
     0.772,
@@ -14,6 +15,7 @@
     0.618
    ]
   ],
+  "los_symbol": "$\\mathrm{LOS}_c$",
   "nadir": [
    [
     0.772,
@@ -25,6 +27,7 @@
    ]
   ],
   "theta_radius": 0.085,
+  "theta_symbol": "$\\theta_c$",
   "tower": {
    "belts": 5,
    "cx": 0.3,
@@ -125,12 +128,12 @@
     "ok": true
    },
    {
-    "detail": "28 objects",
+    "detail": "26 objects",
     "name": "text inventory is exactly the declared set",
     "ok": true
    },
    {
-    "detail": "28",
+    "detail": "26",
     "name": "text count <= 30",
     "ok": true
    },
@@ -192,6 +195,11 @@
    {
     "detail": "no drift",
     "name": "the mapping statement names the operator and both frames",
+    "ok": true
+   },
+   {
+    "detail": "7 channel symbols",
+    "name": "every channel-dependent symbol carries c, and no frame symbol does",
     "ok": true
    },
    {
@@ -375,7 +383,7 @@
     "ok": true
    },
    {
-    "detail": "2.626 cells",
+    "detail": "2.626 cells, the quantity S measures",
     "name": "the centroid and the peak are >= 1.5 cells apart",
     "ok": true
    },
@@ -540,10 +548,11 @@
     "ok": true
    }
   ],
-  "passed": 96,
-  "total": 96
+  "passed": 97,
+  "total": 97
  },
  "echo": {
+  "annotated": "nothing on the mask: no centroid or peak symbol is drawn, so S is a measured distance the plate never has to define",
   "centroid_cells": [
    7.642857,
    5.642857
@@ -668,12 +677,7 @@
    6,
    4,
    3
-  ],
-  "symbols": {
-   "S": "||p_bar - p_star|| in cells: the centroid-to-peak shift, a position inside W_{a,c}, not a movement of the asset",
-   "p_bar": "centroid of the echo mask",
-   "p_star": "peak pixel of the echo mask — the site's peak reference, read from the same acquisition, so the pair is not two epochs"
-  }
+  ]
  },
  "environment": {
   "matplotlib": "3.11.1",

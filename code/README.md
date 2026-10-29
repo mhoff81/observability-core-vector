@@ -376,13 +376,14 @@ Because there is no record to validate it against, the script validates the
 | family | what it holds fixed |
 | --- | --- |
 | canvas | 183 × 61 mm at 630 dpi, isotropic units, every panel's contents inside its own box |
-| text inventory | 28 text objects, each matched against a written whitelist |
+| text inventory | 26 text objects, each matched against a written whitelist |
 | legibility | every string ≥ 7 pt and no two drawn strings overlapping |
 | vocabulary | no `damage`, `health`, … and no `R_B`/`R_G` anywhere on the plate |
 | set algebra | `W_{a,c} ⊂ guard ⊂ ring ⊂ C_{a,c}` with a guard ≥ 0.015 units and a tinted band ≥ 0.03, and `W` identical in (b) and (c) |
 | the annulus | the composed canvas is sampled: `W`'s interior is the blue fill over white and the outer band the ring tint, each within 2/255 |
 | the two frames | `X, Y, Z` and `az, r` share no symbol, the mapping statement carries `Π_c` and both frames, and `C_{a,c}` sits on the chip's own edge |
-| raster | four components of 8/6/4/3 cells, one closed hole, centroid and peak ≥ 1.5 cells apart, density 5–20 % |
+| the channel | every channel-dependent symbol carries the `c` subscript (`LOS_c`, `θ_c`, `Π_c`, `W_{a,c}`, `C_{a,c}`) and no frame symbol does |
+| raster | four components of 8/6/4/3 cells, one closed hole, centroid and peak ≥ 1.5 cells apart (measured, never drawn), density 5–20 % |
 | vector row | six components in order, each brace spanning its own group's measured extent, inter-group gap solved from those widths |
 | determinism | two builds render identical pixels, and both files are byte-identical across runs |
 

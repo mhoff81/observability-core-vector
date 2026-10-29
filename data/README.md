@@ -407,13 +407,15 @@ anything.
 `fig_ocv_schematic.json` is not a site table. It is the **build record** of
 `figures/concept/fig_ocv_schematic.jpg|.pdf`, and it holds what the schematic
 actually drew: the canvas in millimetres and in pixels, the three panel boxes, the two
-coordinate frames and the mapping `(X,Y,Z) → (az,r)` between them, the polygons of
-`W_{a,c}`, its guard, the background ring and `C_{a,c}` (so the same support can be
-checked across panels (b) and (c)), the resolved OCV row — the two groups, each token's
-measured extent and the brace that spans it — the echo raster it laid down (grid,
-occupied cells, the four connected regions, the hole, the centroid-to-peak offset and
-the definition of `p̄`, `p⋆` and `S`) and the result of every structural check, each
-with the value it measured.
+coordinate frames and the mapping `(X,Y,Z) → (az,r)` between them, the acquisition
+geometry — the line of sight `LOS_c` and the look angle `θ_c`, with the channel that
+subscripts both — the polygons of `W_{a,c}`, its guard, the background ring and
+`C_{a,c}` (so the same support can be checked across panels (b) and (c)), the resolved
+OCV row — the two groups, each token's measured extent and the brace that spans it —
+the echo raster it laid down (grid, occupied cells, the four connected regions, the
+hole, the centroid, the peak and the centroid-to-peak offset the vector's `S` measures,
+with the note that neither symbol is drawn) and the result of every structural check,
+each with the value it measured.
 
 Nothing here is read *by* the plate: the plate is drawn from the definition, not from
 this file, and no site pins it. It exists so that the one figure carrying no

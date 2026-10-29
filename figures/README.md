@@ -957,7 +957,7 @@ down: neither asset has a cell at or below the bootstrap block, so no plate carr
 plate in this tree that reads **no record at all**. Every other figure here is
 computed from a table and pinned to it; this one is computed from the definition the
 tables are measured with, so it says what the core vector *is* before any site's
-numbers are read. It therefore pins nothing — it carries 96 structural checks
+numbers are read. It therefore pins nothing — it carries 97 structural checks
 instead, and they are what keeps it a schematic.
 
 The plate is three panels in one direction of travel:
@@ -968,11 +968,13 @@ support -> radar echo representation -> OCV
 ```
 
 **(a) the asset and the acquisition.** A generic lattice asset `G_a^{3D}` in its own
-frame — the grey triad `X`, `Y`, `Z` — observed along the orange line of sight `LOS`
-at the look angle `θ` from nadir; the operator `Π_c` maps that frame into the radar
-frame `(az, r)`. The mapping is written out exactly once, at the foot of the panel and
-left-aligned to the radar frame's left edge, as
-`(X, Y, Z) ⟶^{Π_c} (az, r)`, and the two frames share no symbol: no letter does two
+frame — the grey triad `X`, `Y`, `Z` — observed along the orange line of sight `LOS_c`
+at the look angle `θ_c` from nadir; the operator `Π_c` maps that frame into the radar
+frame `(az, r)`. The subscript is the acquisition channel — the same `c` that `Π_c`,
+`W_{a,c}` and `C_{a,c}` carry — because the look geometry belongs to the pass, not to
+the asset; ascending and descending are never spelled out. The mapping is written out
+exactly once, at the foot of the panel and left-aligned to the radar frame's left edge,
+as `(X, Y, Z) ⟶^{Π_c} (az, r)`, and the two frames share no symbol: no letter does two
 jobs, and the projection cannot be misread as a coordinate change inside one frame.
 The asset is drawn as four legs, five belts and alternating braces — something with a
 real cross-section, because that is what makes the projection lossy.
@@ -989,14 +991,13 @@ naming the ring. The panel states `W_{a,c} ⊂ C_{a,c}` once at its foot and not
 — no box, no legend, no count.
 
 **(c) the observable representation and the vector.** The same `W_{a,c}` holds an
-echo mask of four connected regions (8, 6, 4, 3 cells, density 0.13, one closed hole)
-and the dashed centroid-to-peak shift `p̄ → p⋆` — between the mask's centroid `p̄` and
-its peak pixel `p⋆`, the site's peak *reference* read from the same acquisition, not a
-second epoch. So `S`, the distance between the two in cells, is a position inside
-`W_{a,c}`, not a movement of the asset. Together they are the extent, the density, the
-fragmentation and the spatial shift the vector has to summarise, drawn before they
-are made numeric. Below them the vector, split into its two groups by two under-
-braces rather than by boxes:
+echo mask of four connected regions (8, 6, 4, 3 cells, density 0.13, one closed hole) —
+the extent, the density and the fragmentation the vector has to summarise, drawn before
+they are made numeric. Nothing is annotated on the mask: no centroid, no peak, no dashed
+shift between them and no symbol naming either. `S`, the centroid-to-peak distance, is a
+number the raster yields rather than an element the plate has to define, so every mark
+in the panel can be read without a caption. Below the mask the vector, split into its
+two groups by two under-braces rather than by boxes:
 
 ```
 OCV(t) = [ γ², P, D, F, A, S ]
@@ -1012,7 +1013,8 @@ clear each other, with a separating comma and a thin divider rule in the gap.
 
 What the plate deliberately does **not** contain: no site, date, state or number
 readable as a result; no structural health, damage probability or failure diagnosis;
-no displacement or InSAR geometry; no `R_B`/`R_G`; no score, threshold, weighting or
+no displacement or InSAR geometry; no `R_B`/`R_G`; no centroid or peak symbol on the
+mask; no score, threshold, weighting or
 count. The prohibition is mechanical, not editorial — a forbidden-token scan runs
 over every drawn string and the whole text inventory is matched against a written
 whitelist, so the plate cannot grow a `damage` label without failing the run.
