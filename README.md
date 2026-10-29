@@ -484,6 +484,7 @@ observability-core-vector/
 │   ├── cases/     the six-case overview page, the trajectory plate, the
 │   │              correspondence and the prospective model
 │   ├── sds/       the cross-site SDS report and the reconfiguration pairs
+│   ├── concept/   the definition, drawn — one schematic, no input
 │   ├── audit_ocv_units.py   the unit audit over every channel table
 │   └── README.md
 ├── data/
@@ -491,9 +492,11 @@ observability-core-vector/
 │   │              reference JSONs) and the generated channel table
 │   ├── ocv_channel_units.json, ocv_metadata_quarantine.json, …   the cross-site
 │   │              audit files
+│   ├── concept/   the build record of the schematic (no site)
 │   └── README.md
 ├── figures/
 │   ├── <site>/    that site's .sh wrapper, .md report and plate(s)
+│   ├── concept/   the definition plate (.jpg + vector .pdf + .md report)
 │   └── README.md
 ├── .gitignore
 └── README.md
@@ -567,6 +570,9 @@ bash figures/cases/fig_ocv_trajectory.sh                 # ~17 s (the six trajec
 bash figures/cases/fig_ocv_trajectory.sh --verify        # re-derive and compare
 python3 code/cases/ocv_trajectory.py --selftest          # 201 checks, writes nothing
 python3 code/cases/fig_cases_overview.py                 # the one-page case set
+
+# the definition, drawn — the one plate with no input
+bash figures/concept/fig_ocv_schematic.sh                # ~2 s (jpg + vector pdf + JSON + report)
 
 # if `python3` of the PATH is a virtualenv without numpy/matplotlib:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh

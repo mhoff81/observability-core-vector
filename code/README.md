@@ -359,3 +359,38 @@ python3 code/audit_ocv_units.py --verify             # audit vs. the committed r
 python3 code/audit_ocv_units.py --selftest           # the rules on synthetic rows
 ```
 
+
+### `concept/fig_ocv_schematic.py` — the definition, drawn
+
+The only script in `code/` that reads no data.
+[`concept/fig_ocv_schematic.py`](concept/fig_ocv_schematic.py) draws the three-panel
+schematic of the observability core vector — asset → SAR observation → measurement
+support → echo mask → the six components — at a fixed 183 × 61 mm, and writes the
+630 dpi JPEG, the vector PDF, the JSON build record and the Markdown report behind
+it. It imports nothing from the site packages and opens nothing under `data/`: the
+plate is the definition itself.
+
+Because there is no record to validate it against, the script validates the
+**drawing** instead:
+
+| family | what it holds fixed |
+| --- | --- |
+| canvas | 183 × 61 mm at 630 dpi, isotropic units, every panel's contents inside its own box |
+| text inventory | 28 text objects, each matched against a written whitelist |
+| legibility | every string ≥ 7 pt and no two drawn strings overlapping |
+| vocabulary | no `damage`, `health`, … and no `R_B`/`R_G` anywhere on the plate |
+| set algebra | `W_{a,c} ⊂ ring ⊂ C_{a,c}`, ring band ≥ 0.03, and `W` identical in (b) and (c) |
+| raster | four components of 8/6/4/3 cells, one closed hole, centroid and peak ≥ 1.5 cells apart, density 5–20 % |
+| vector row | six components in order, each brace spanning its own group's measured extent, inter-group gap solved from those widths |
+| determinism | two builds render identical pixels, and both files are byte-identical across runs |
+
+A failure exits 2 *after* the artefacts are written, so a broken plate is reported
+rather than silently delivered.
+
+```sh
+python3 code/concept/fig_ocv_schematic.py                 # both images + JSON + report
+python3 code/concept/fig_ocv_schematic.py --no-figures    # build and check, write no image
+python3 code/concept/fig_ocv_schematic.py --figdir DIR --json J --md M
+python3 code/concept/fig_ocv_schematic.py --help          # the flags
+```
+

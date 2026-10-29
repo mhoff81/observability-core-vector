@@ -56,6 +56,10 @@ figures/
 │              KDLO's rebuilt media tower — two empty ASC panels), with
 │              fig_sds_ocv_reconfigure_haltern_kdlo.jpg|.md as the tower pair's
 │              own juxtaposition
+├── concept/   the definition, drawn — fig_ocv_schematic.sh|.md|.jpg|.pdf, the
+│              one plate in this tree that reads no record at all: asset → SAR
+│              acquisition → W ⊂ C → echo mask → the six-dimensional OCV, from
+│              `../code/concept/fig_ocv_schematic.py`
 └── README.md
 ```
 
@@ -117,6 +121,7 @@ bash figures/espoo/fig_espoo_ocv_paper.sh          # ~4.5 min, event-free contro
 bash figures/cases/fig_ocv_trajectory.sh          # ~17 s, the six trajectory plates
 bash figures/espoo/fig_espoo_ocv_paper.sh --quick  # ~1.5 min, no permutation nulls
 bash figures/espoo/fig_espoo_ocv_months.sh         # ~4 s, month-by-month companion
+bash figures/concept/fig_ocv_schematic.sh         # ~2 s, the definition drawn (no input)
 
 # if the python3 of PATH lacks numpy/matplotlib, name the interpreter:
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
@@ -127,7 +132,7 @@ PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_paper.sh
 PYTHON=/usr/bin/python3 bash figures/espoo/fig_espoo_ocv_paper.sh
 ```
 
-Images are git-ignored (`figures/**/*.png|jpg|jpeg`); the wrappers regenerate
+Images are git-ignored (`figures/**/*.png|jpg|jpeg|pdf`); the wrappers regenerate
 them from the committed `data/<site>/`. The report (`*.md`) is committed, next
 to the wrapper that writes it.
 
@@ -945,3 +950,73 @@ comparable, and the guide says how many panels are empty. Nothing else is marked
 down: neither asset has a cell at or below the bootstrap block, so no plate carries a
 `✱` legend here, and Haltern's n = 5 ASC post-collapse cell is `thin` in the report
 (the `SMALL_N = 6` threshold) without the asterisk, which marks the narrower case.
+
+## `figures/concept/` — the definition, drawn
+
+`concept/fig_ocv_schematic.sh` → `../code/concept/fig_ocv_schematic.py` is the one
+plate in this tree that reads **no record at all**. Every other figure here is
+computed from a table and pinned to it; this one is computed from the definition the
+tables are measured with, so it says what the core vector *is* before any site's
+numbers are read. It therefore pins nothing — it carries 88 structural checks
+instead, and they are what keeps it a schematic.
+
+The plate is three panels in one direction of travel:
+
+```
+physical asset -> SAR observation geometry -> asset-specific measurement
+support -> radar echo representation -> OCV
+```
+
+**(a) the asset and the acquisition.** A generic lattice asset `G_a^{3D}` in its own
+frame (grey triad), observed along the orange line of sight `LOS` at the look angle
+`θ` from nadir; the operator `Π_c` projects it into the radar frame `(r, x)`. The
+asset is drawn as four legs, five belts and alternating braces — something with a
+real cross-section, because that is what makes the projection lossy.
+
+**(b) the measurement support.** The projected asset `Π_c(G_a^{3D})` inside the
+asset- and channel-specific support `W_{a,c}` (blue), inside the read chip `C_{a,c}`
+(grey, outermost), with the dashed background ring between them: the no-echo
+reference. The panel states `W_{a,c} ⊂ C_{a,c}` once at its foot and nothing else —
+no box, no legend, no count.
+
+**(c) the observable representation and the vector.** The same `W_{a,c}` holds an
+echo mask of four connected regions (8, 6, 4, 3 cells, density 0.13, one closed
+hole) and the dashed centroid-to-peak shift `p̄ → p⋆` — the extent, the density, the
+fragmentation and the spatial shift the vector has to summarise, drawn before they
+are made numeric. Below them the vector, split into its two groups by two under-
+braces rather than by boxes:
+
+```
+OCV(t) = [ γ², P, D, F, A, S ]
+           ⏟           ⏟
+        cross-acquisition  spatial geometry
+```
+
+`γ², P` is what changes *between acquisitions* of the same place (blue); `D, F, A, S`
+is how the echo is laid out *inside* `W_{a,c}` (green). Each brace spans the measured
+extent of exactly the tokens it names — the row is laid out from the renderer's own
+text metrics at the output dpi and the inter-group gap is *solved* so the two names
+clear each other, with a separating comma and a thin divider rule in the gap.
+
+What the plate deliberately does **not** contain: no site, date, state or number
+readable as a result; no structural health, damage probability or failure diagnosis;
+no displacement or InSAR geometry; no `R_B`/`R_G`; no score, threshold, weighting or
+count. The prohibition is mechanical, not editorial — a forbidden-token scan runs
+over every drawn string and the whole text inventory is matched against a written
+whitelist, so the plate cannot grow a `damage` label without failing the run.
+
+It is the only plate that ships as **vector PDF** beside its 630 dpi JPEG
+(`fig_ocv_schematic.pdf`, 183 × 61 mm, TrueType fonts embedded, no raster layer),
+because a schematic is the one figure that may be re-set at a printer's size; the
+PDF is written without a creation date, so a rerun is byte-identical.
+
+```sh
+bash figures/concept/fig_ocv_schematic.sh                 # ~2 s, both images + JSON + report
+bash figures/concept/fig_ocv_schematic.sh --no-figures    # build and check, write no image
+python3 code/concept/fig_ocv_schematic.py --help          # the flags
+```
+
+The report (`fig_ocv_schematic.md`, with the full check table) and
+`../data/concept/fig_ocv_schematic.json` are committed; the two images are ignored
+like every other plate.
+

@@ -1,0 +1,824 @@
+{
+ "artifacts": {
+  "fig_ocv_schematic.jpg": "8a06dfbd0e497040c4431c003f3ba9e0a67c73b3cdffb09c366e5fadf53301fc",
+  "fig_ocv_schematic.pdf": "e5053ea80833ae4a3338986537f5dcbcea5b995806afd6fe35654b2e52bd3162"
+ },
+ "asset": {
+  "los": [
+   [
+    0.772,
+    0.868
+   ],
+   [
+    0.356,
+    0.618
+   ]
+  ],
+  "nadir": [
+   [
+    0.772,
+    0.88
+   ],
+   [
+    0.772,
+    0.7
+   ]
+  ],
+  "theta_radius": 0.085,
+  "tower": {
+   "belts": 5,
+   "cx": 0.3,
+   "depth": [
+    0.05,
+    0.04
+   ],
+   "hw_base": 0.075,
+   "hw_top": 0.032,
+   "y_base": 0.12,
+   "y_top": 0.6
+  }
+ },
+ "canvas": {
+  "bbox": "standard (a tight box would move the 183 mm edge)",
+  "dpi": 630,
+  "height_mm": 61.0,
+  "panel_height_frac": 0.96,
+  "panel_unit_mm": 55.632,
+  "panel_width_frac": 0.304,
+  "panel_x_frac": [
+   0.012,
+   0.348,
+   0.684
+  ],
+  "panel_y_frac": 0.02,
+  "ratio": 3.0,
+  "width_mm": 183.0,
+  "ylim": 1.05263158
+ },
+ "checks": {
+  "failed": 0,
+  "failures": [],
+  "list": [
+   {
+    "detail": "183.0000 mm",
+    "name": "canvas width 183 mm",
+    "ok": true
+   },
+   {
+    "detail": "61.0000 mm",
+    "name": "canvas height 61 mm",
+    "ok": true
+   },
+   {
+    "detail": "3.00000",
+    "name": "canvas ratio 3.000:1",
+    "ok": true
+   },
+   {
+    "detail": "630",
+    "name": "figure dpi is the output dpi",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel a is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel a box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel b is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel b box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "dx=1379.8488px dy=1379.8488px",
+    "name": "panel c is isotropic (unit = unit)",
+    "ok": true
+   },
+   {
+    "detail": "0.304000x0.960000",
+    "name": "panel c box matches the layout",
+    "ok": true
+   },
+   {
+    "detail": "gap 0.0320",
+    "name": "panel a/b boxes do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "gap 0.0320",
+    "name": "panel b/c boxes do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "55.632 mm",
+    "name": "panel unit is 55.632 mm",
+    "ok": true
+   },
+   {
+    "detail": "28 objects",
+    "name": "text inventory is exactly the declared set",
+    "ok": true
+   },
+   {
+    "detail": "28",
+    "name": "text count <= 30",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no duplicate panel label",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no title anywhere",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no legend anywhere",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "axes are off (no spines, no ticks)",
+    "ok": true
+   },
+   {
+    "detail": "min 7.00 pt",
+    "name": "every text >= 7.0 pt",
+    "ok": true
+   },
+   {
+    "detail": "6.50 pt",
+    "name": "every text >= 7.0 pt at 170 mm (scale 0.929) = 6.5 pt",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "no forbidden vocabulary in any drawn text",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "R_B absent",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "R_G absent",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the coherence channel is mathtext",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel a: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel a: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel b: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel b: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel c: every text inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "panel c: no two texts overlap",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W has eight vertices in both panels",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W in (b) sits inside C with a >= 20 um margin",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W in (b) sits strictly inside the background ring",
+    "ok": true
+   },
+   {
+    "detail": "0.060 units",
+    "name": "the background ring is a band >= 0.03 wide",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the ring sits inside C, so it cannot be the chip edge",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "C sits inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the projected asset lies inside W",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the projected asset is inside C, not straddling it",
+    "ok": true
+   },
+   {
+    "detail": "y=0.762",
+    "name": "the ring leader ends between W and the ring",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W in (b) and W in (c) are the same polygon",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "W in (b) and W in (c) are the same shape, not the same place",
+    "ok": true
+   },
+   {
+    "detail": "0.03625 units",
+    "name": "raster cells are square on the drawn canvas",
+    "ok": true
+   },
+   {
+    "detail": "2.02 mm",
+    "name": "raster cell >= 1.5 mm on the printed page",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the raster sits inside W in (c)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the raster sits inside W with a visible margin",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every echo cell lies inside W in (c)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every echo cell lies inside the raster",
+    "ok": true
+   },
+   {
+    "detail": "4",
+    "name": "the echo mask has exactly four connected regions",
+    "ok": true
+   },
+   {
+    "detail": "[8, 6, 4, 3]",
+    "name": "the four regions are 8, 6, 4 and 3 cells",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "every region is 4-connected (a fragment, not a dust field)",
+    "ok": true
+   },
+   {
+    "detail": "1",
+    "name": "the mask encloses exactly one hole",
+    "ok": true
+   },
+   {
+    "detail": "[(4, 4)]",
+    "name": "the hole is the centre of the 3x3 ring",
+    "ok": true
+   },
+   {
+    "detail": "0.1313",
+    "name": "echo density is sparse and legible (5 % < d < 20 %)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the peak lies on an echo cell",
+    "ok": true
+   },
+   {
+    "detail": "2.626 cells",
+    "name": "the centroid and the peak are >= 1.5 cells apart",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the centroid is not inside an echo cell (the mask is fragmented)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the vector has six components",
+    "ok": true
+   },
+   {
+    "detail": "gamma2,P,D,F,A,S",
+    "name": "the order is gamma2, P, D, F, A, S",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the partition covers every component exactly once",
+    "ok": true
+   },
+   {
+    "detail": "$\\gamma^2,\\ P$",
+    "name": "group one is exactly gamma2 and P",
+    "ok": true
+   },
+   {
+    "detail": "$D,\\ F,\\ A,\\ S$",
+    "name": "group two is exactly D, F, A and S",
+    "ok": true
+   },
+   {
+    "detail": "0.0339",
+    "name": "the row starts inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "0.9661",
+    "name": "the row ends inside the panel",
+    "ok": true
+   },
+   {
+    "detail": "0.5000",
+    "name": "the row is centred in its panel",
+    "ok": true
+   },
+   {
+    "detail": "text 0.312..0.441 brace 0.312..0.441",
+    "name": "the cross brace spans its own group only",
+    "ok": true
+   },
+   {
+    "detail": "top 0.279 < brace 0.285",
+    "name": "the cross name sits under its brace",
+    "ok": true
+   },
+   {
+    "detail": "text 0.648..0.922 brace 0.648..0.922",
+    "name": "the spatial brace spans its own group only",
+    "ok": true
+   },
+   {
+    "detail": "top 0.279 < brace 0.285",
+    "name": "the spatial name sits under its brace",
+    "ok": true
+   },
+   {
+    "detail": "0.453..0.471",
+    "name": "the separating comma sits between the two groups",
+    "ok": true
+   },
+   {
+    "detail": "0.012 / 0.177",
+    "name": "the separating comma does not touch either group",
+    "ok": true
+   },
+   {
+    "detail": "0.562 < 0.597",
+    "name": "the two group names do not overlap",
+    "ok": true
+   },
+   {
+    "detail": "gap 0.035",
+    "name": "the two group names do not run into each other's brace",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the equation sits above the braces",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "the equation does not touch the echo raster",
+    "ok": true
+   },
+   {
+    "detail": "4538 px",
+    "name": "JPEG width is 183 mm at 630 dpi (4539 px +/- 2)",
+    "ok": true
+   },
+   {
+    "detail": "1512 px",
+    "name": "JPEG height is 61 mm at 630 dpi (1513 px +/- 2)",
+    "ok": true
+   },
+   {
+    "detail": "3.00132",
+    "name": "JPEG pixel ratio is 3.000",
+    "ok": true
+   },
+   {
+    "detail": "(630, 630)",
+    "name": "JPEG carries 630 dpi",
+    "ok": true
+   },
+   {
+    "detail": "RGB",
+    "name": "JPEG is a full-colour raster",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF page contains no raster image",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF embeds its fonts as TrueType (FontType 42)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF has no Type-3 fonts",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "PDF carries no timestamp (it must be reproducible)",
+    "ok": true
+   },
+   {
+    "detail": "[0.0, 0.0, 518.7401574803, 172.9133858268]",
+    "name": "PDF page box is 183 x 61 mm",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "re-saving the same figure gives the same JPEG bytes",
+    "ok": true
+   },
+   {
+    "detail": "(1512, 4538, 4)",
+    "name": "two builds render identical pixels",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "two builds lay the OCV row out identically",
+    "ok": true
+   }
+  ],
+  "passed": 88,
+  "total": 88
+ },
+ "echo": {
+  "centroid_cells": [
+   7.642857,
+   5.642857
+  ],
+  "centroid_peak_cells": 2.626397,
+  "centroid_units": [
+   0.497054,
+   0.724554
+  ],
+  "density": 0.13125,
+  "hole": [
+   4,
+   4
+  ],
+  "peak": [
+   9,
+   7
+  ],
+  "raster": {
+   "cell": 0.03625,
+   "cols": 16,
+   "rows": 10,
+   "x0": 0.22,
+   "y0": 0.52
+  },
+  "regions": {
+   "block": [
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     6
+    ],
+    [
+     10,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     7
+    ],
+    [
+     10,
+     7
+    ]
+   ],
+   "patch": [
+    [
+     11,
+     2
+    ],
+    [
+     12,
+     2
+    ],
+    [
+     11,
+     3
+    ],
+    [
+     12,
+     3
+    ]
+   ],
+   "ring": [
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     5
+    ]
+   ],
+   "run": [
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     9
+    ]
+   ]
+  },
+  "sizes": [
+   8,
+   6,
+   4,
+   3
+  ]
+ },
+ "environment": {
+  "matplotlib": "3.11.1",
+  "numpy": "2.4.6",
+  "python": "3.13.5"
+ },
+ "figure": {
+  "file": "fig_ocv_schematic.jpg",
+  "not_shown": [
+   "structural health",
+   "damage probability",
+   "failure detection",
+   "displacement",
+   "InSAR deformation",
+   "a universal score",
+   "R_B and R_G (temporal reconfiguration, not the definition)"
+  ],
+  "panels": {
+   "a": "physical asset + SAR acquisition geometry + Pi_c",
+   "b": "measurement support W_{a,c} inside the chip C_{a,c}",
+   "c": "echo mask inside W_{a,c} and the six-dimensional vector"
+  },
+  "reads": "no data file at all",
+  "vector": "fig_ocv_schematic.pdf",
+  "what": "the observability core vector as a definition, not a result"
+ },
+ "ocv": {
+  "equation": "OCV(t) = [gamma2, P, D, F, A, S]",
+  "groups": [
+   {
+    "colour": "#1f4e79",
+    "key": "cross",
+    "mathtext": "$\\gamma^2,\\ P$",
+    "name": "cross-acquisition"
+   },
+   {
+    "colour": "#3f7d3f",
+    "key": "spatial",
+    "mathtext": "$D,\\ F,\\ A,\\ S$",
+    "name": "spatial geometry"
+   }
+  ],
+  "row": {
+   "centre_cross": 0.37621004961458754,
+   "centre_spatial": 0.7846771410396438,
+   "g0": 0.022,
+   "g1": 0.022,
+   "gd": 0.20699574456975778,
+   "left": 0.033885102456163316,
+   "right": 0.9661148975438367,
+   "total": 0.9322297950876733,
+   "w": [
+    0.12899963935339231,
+    0.27394305435720456
+   ],
+   "w_close": 0.022466229325590614,
+   "w_pre": 0.25582512748172803,
+   "wlab": [
+    0.3715307379902395,
+    0.37540344485987287
+   ],
+   "x0": 0.033885102456163316,
+   "xdiv": 0.5442077415761626
+  },
+  "spans": {
+   "cross": [
+    0.3117102299378914,
+    0.4407098692912837
+   ],
+   "spatial": [
+    0.6477056138610415,
+    0.9216486682182461
+   ]
+  },
+  "tokens": [
+   {
+    "group": "cross",
+    "key": "gamma2",
+    "mathtext": "$\\gamma^2$"
+   },
+   {
+    "group": "cross",
+    "key": "P",
+    "mathtext": "$P$"
+   },
+   {
+    "group": "spatial",
+    "key": "D",
+    "mathtext": "$D$"
+   },
+   {
+    "group": "spatial",
+    "key": "F",
+    "mathtext": "$F$"
+   },
+   {
+    "group": "spatial",
+    "key": "A",
+    "mathtext": "$A$"
+   },
+   {
+    "group": "spatial",
+    "key": "S",
+    "mathtext": "$S$"
+   }
+  ]
+ },
+ "style": {
+  "colours": {
+   "blue_W": "#1f4e79",
+   "faint": "#d8d8d8",
+   "green_echo": "#3f7d3f",
+   "grey": "#6f6f6f",
+   "ink": "#1a1a1a",
+   "light": "#b9b9b9",
+   "orange_los": "#b5651d"
+  },
+  "font": "DejaVu Sans",
+  "legend": null,
+  "mathtext": "STIX",
+  "shadows": null,
+  "sizes_pt": {
+   "group": 7.0,
+   "label": 8.0,
+   "math": 9.0,
+   "panel": 9.0,
+   "small": 7.5
+  },
+  "title": null
+ },
+ "support": {
+  "box_b": [
+   0.26,
+   0.37,
+   0.78,
+   0.73
+  ],
+  "box_c": [
+   0.17,
+   0.47,
+   0.85,
+   0.945
+  ],
+  "chip": [
+   0.14,
+   0.24,
+   0.9,
+   0.86
+  ],
+  "ring": [
+   0.2,
+   0.31,
+   0.84,
+   0.79
+  ],
+  "ring_band_units": 0.06,
+  "subset": "W_{a,c} inside the background ring inside C_{a,c}",
+  "w_unit": [
+   [
+    0.1,
+    0.0
+   ],
+   [
+    0.9,
+    0.0
+   ],
+   [
+    1.0,
+    0.1
+   ],
+   [
+    1.0,
+    0.9
+   ],
+   [
+    0.9,
+    1.0
+   ],
+   [
+    0.1,
+    1.0
+   ],
+   [
+    0.0,
+    0.9
+   ],
+   [
+    0.0,
+    0.1
+   ]
+  ]
+ }
+}
