@@ -103,7 +103,9 @@ python3 code/lumo/fig_lumo_ocv_orbits.py
 PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
 ```
 
-Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.2. No output carries a timestamp, so repeated runs are identical.
+The run writes three containers under one stem -- `figures/lumo/fig_lumo_ocv_orbits.jpg` (630 dpi), `.pdf` and `.eps` -- on the shared print frame of `code/figure_style.py`: 170.0 mm wide, the type on its point ladder, the pens on its line ladder. All three are measured at 170.0 mm by `code/audit_figure_style.py`.
+
+Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
 
 ## 7. Caveats
 

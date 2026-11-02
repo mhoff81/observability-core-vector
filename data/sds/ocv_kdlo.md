@@ -21,7 +21,7 @@ LUMO's measured frequency ladder is not used here — not by this asset; it is k
 
 * reference `pre`, n_ref = 16 (DESC); scale used = `mad` (DESC).
 
-| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |
+| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
 | pre | DESC | 16 | 0 | 0 | gamma2=0 P=0 | A=0 D=0 F=0 S=0 | `mad` | ok |
 | rebuild | DESC | 43 | 1.68 | 21.6 | gamma2- P- | A+ D- F+ S- | `mad` | ok |
@@ -30,10 +30,10 @@ LUMO's measured frequency ladder is not used here — not by this asset; it is k
 
 | channel | block | R by level | ΔR, top step | p (one-sided) | Holm in the asset's family |
 | --- | --- | --- | --- | ---: | ---: |
-| DESC | `behaviour` [gamma2, P] | pre 0 < rebuild 1.68 | 0.923 … 5.36 | 0.007 | 0.007 |
+| DESC | `behavior` [gamma2, P] | pre 0 < rebuild 1.68 | 0.923 … 5.36 | 0.007 | 0.007 |
 | DESC | `geometry` [A, D, F, S] | pre 0 < rebuild 21.6 | 9.89 … 64.7 | < 0.001 | < 0.001 |
 
-**Verdict — KDLO, behaviour**: the pre-to-rebuild contrast in the behaviour block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 5.4 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
+**Verdict — KDLO, behavior**: the pre-to-rebuild contrast in the behavior block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 5.4 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
 **Verdict — KDLO, geometry**: the pre-to-rebuild contrast in the geometry block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 65 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 

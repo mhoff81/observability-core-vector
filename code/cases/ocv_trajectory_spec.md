@@ -1,37 +1,43 @@
 # `code/cases/ocv_trajectory_spec.md` — the standard OCV trajectory plate
 
 **Status:** implemented by `code/cases/ocv_trajectory.py`, drawn by
-`figures/<site>/fig_<site>_ocv_trajectory.sh` (six sites) and
-`figures/cases/fig_ocv_trajectory.sh` (all six in one run). `--selftest` asserts
-every number below against the six support tables, so this document cannot drift
+`figures/<site>/fig_<site>_ocv_trajectory.sh` (five sites) and
+`figures/cases/fig_ocv_trajectory.sh` (all five in one run). `--selftest` asserts
+every number below against the five support tables, so this document cannot drift
 away from the code without a failing check.
+
+The sixth trajectory plate of `figures/` — Havelbrücke Werder,
+`fig_werder_havel_ocv_trajectory` — is
+`code/werder_havel/fig_werder_havel_ocv_trajectory.py`: the same template on an
+interval-specific registry (nine registered questions instead of one event date).
 
 ## The question the plate answers
 
 Every other figure of this repository answers a **contrast** question: does the
 state differ, and by how much? The trajectory plate answers the **timeline**
-question the six cases are actually read for:
+question the five cases are actually read for:
 
 1. *Where in the record does the vector move?*
 2. *Does it move where the event is — and does it stay moved?*
 
-and it answers it with **one design for all six sites**, because the comparison a
+and it answers it with **one design for all five sites**, because the comparison a
 reader makes is between plates. A per-site design would turn that comparison into
 a comparison of designs.
 
 ## R1 — one cut, the support-sized chip
 
-The plate reads `data/<site>/support/<site>_ocv_channels.csv`, the cut the shared
-orbit plate (`code/orbits/fig_ocv_orbits.py`), the SDS reconfiguration
-(`code/sds/ocv_reconfigure.py`) and `code/cases/fig_cases_overview.py` read. The
-committed chip is **never** mixed in: two chips are two measurements, and the
-support cut is the one every site can produce.
+The plate reads `data/<site>/support/<site>_ocv_channels.csv`, the cut the SDS
+reconfiguration (`code/sds/ocv_reconfigure.py`) and the Espoo chip plate
+(`code/espoo/fig_espoo_ocv_chips.py`) read. The committed chip is **never** mixed
+in: two chips are two measurements, and the support cut is the one every site can
+produce.
 
 ## R2 — the case's own reference timeline, and the tail drawn
 
-The reference is the case's own reference state, from its **first** to its **last**
-chip; the tail is **every** chip of the post state. Nothing is trimmed to make the
-windows look alike — the windows differ because the records differ. The
+The reference is the case's own reference state, restricted to the **window the
+registry declares** for that site — the state's own span (first chip to last)
+unless the registry chooses a sub-window, as Carola does; the tail is **every** chip
+of the post state. Nothing is trimmed to make the windows look alike — the windows differ because the records differ. The
 post-event tail is **drawn**, never cut off: a trajectory that stops at the event
 cannot show whether the vector returned, stayed or kept moving.
 
@@ -42,17 +48,18 @@ cannot show whether the vector returned, stayed or kept moving.
 | morandi | `pre-collapse (healthy)` | 2016-08-24 → 2018-08-08 | **198** | 91 | 107 | 2018-08-14 | `post-collapse` 2018-08-14 → 2018-09-13 | **9** |
 | kdlo | `pre` | 2022-06-02 → 2022-12-11 | **16** | 0 | 16 | 2022-12-11 | `rebuild` 2023-05-04 → 2024-09-19 | **43** |
 | haltern | `pre-collapse (healthy)` | 2021-01-01 → 2021-09-17 | **96** | 44 | 52 | 2021-09-29 | `post-collapse` 2021-10-01 → 2021-10-17 | **11** |
-| espoo | *all* (no state column) | 2024-09-05 → 2026-09-07 | **75** | 31 | 44 | none | none | 0 |
 
-Two states are the rule, three occur once, one occurs once:
+Two states are the rule and KDLO is the one exception, because its record
+distinguishes the collapse day itself:
 
 * **KDLO** carries `pre` / `single` / `rebuild`; `single` is **excluded before any
   statistic** — one acquisition at the collapse itself (2022-12-23) is not a state —
   and the exclusion is counted in the JSON (`cut.excluded`) and printed in the
   report. Its tail is the **rebuild**, not a collapse aftermath: the contrast there
-  answers a different question, and the plate's own subtitle says so.
-* **Espoo** has **no event and no state column**: the whole record is reference
-  *and* trajectory, and there is no contrast row at all.
+  answers a different question, and the plate's caption says so.
+* **Carola** is the one site whose reference is **chosen inside** its reference
+  state: the reference of record is 2022-09 … 2023-12 (121 of the 184 healthy
+  chips), and the 63 chips the window leaves out become R6's outside class.
 
 ### Windows that were considered and rejected
 
@@ -63,7 +70,6 @@ Two states are the rule, three occur once, one occurs once:
 | morandi | a 12-month reference (94 chips) | 9 post chips against 94 or 198 leaves the same conclusion, but the longer window is the record's own and needs no justification |
 | kdlo | folding `single` into `pre` | it is the acquisition of the collapse day itself; a state of one is not a state, and the orbit plate already drops it |
 | haltern | starting at the first *echo-bearing* chip | every chip of this cut carries an echo (see R3), so the filter would change nothing while suggesting it had |
-| espoo | splitting the record in halves and calling the first a reference | the record labels no event; a split would invent the very boundary the control exists to deny |
 
 ## R3 — per-block standardisation, each with its own reference set
 
@@ -78,12 +84,11 @@ Each block is standardised on **its own** reference set:
   (`A >= 2`), because the two channels only exist where the mask rule holds;
 * the geometry block against **every** reference chip.
 
-The standardisation is **pooled over the orbits**, except at **Espoo**, whose only
-contrast *is* the pass geometry: there the reference is per orbit (ASCENDING
-n = 31, DESCENDING n = 44) and never pooled.
+The standardisation is **pooled over the orbits** at every site: none of these
+records carries an orbit contrast that would justify splitting its reference.
 
-On the six support cuts the echo filter is a **no-op**: every chip of every one of
-the six carries an echo (`A >= 2`), which `--selftest` asserts per site. The rule
+On the five support cuts the echo filter is a **no-op**: every chip of every one of
+the five carries an echo (`A >= 2`), which `--selftest` asserts per site. The rule
 is still applied — it is the rule the committed chips need, where 54 of Haltern's
 120 chips carry none — and the report prints `n` per dimension, so a reader can see
 the two sets coincide here.
@@ -142,9 +147,9 @@ JSON's `outside` block and one table in the report, `n_ref` and `n_out` beside e
 row.
 
 Where a site has nothing outside — R2's window is the state's own span there, which
-is five of the six — the block says `applies: false` with the reason, and the report
-prints that sentence instead of the table. The section exists on every site, so the
-six reports keep one structure.
+is four of the five — the block says `applies: false` with the reason, and the
+report prints that sentence instead of the table. The section exists on every site,
+so the five reports keep one structure.
 
 Two consequences are worth stating, because the plate is easy to misread without
 them:
@@ -181,31 +186,65 @@ them:
 Reference months are filled circles with a solid line, post months hollow squares
 with a dashed line, a month that holds both a diamond, the reference window a grey
 band, and the event a dashed vertical line. The legend carries only the entries a
-given site can produce: an event-free site has no post month and no event line.
+given site can produce.
+
+The panel **tags** are all the plate writes inside itself: no header, no descriptive
+panel title. The key under the grid is the plate's only legend — it also carries the
+`ASC`/`DESC` and `echo-bearing`/`no echo` bar classes of `c2` and `c3` where the site
+draws them, which used to have a second, panel-level legend — and the sentence that
+explains the twelve tags is the report's `## Caption`. The census the header used to
+print is a table in the report, where it can be re-wrapped without touching the
+canvas.
+
+## The frame
+
+One table, `figure_style.TRAJECTORY`, serves this generator and the Werder plate:
+
+| what | value |
+| --- | --- |
+| canvas | 170.0 × 156.0 mm (`style.FINAL_WIDTH_MM` × the template's height) |
+| grid | 3 × 4, `left` 0.080, `right` 0.938, `top` 0.966, `bottom` 0.170, `wspace` 0.55, `hspace` 0.55 |
+| legend band | two rows, up to 15 mm above the canvas' bottom edge, 2 mm of white below it, at most 4 mm from either side |
+| type | `style.FS`: tag 8.8 pt bold, axis label 7.6 pt, tick and legend 6.8 pt, annotation 6.2 pt |
+| pen | `style.LW`: series 1.4 pt, plane/rule/spine 1.0, grid 0.6, marker edge 0.9 |
+| markers | `style.MS`: month 3.4 pt, plane 3.6 pt, legend 4.2 pt |
+
+The legend is re-flowed into its band rather than allowed to widen the plate: columns
+are re-cut and rows added until the key fits both the canvas width and the space
+between the band and the date ticks of the bottom row, and a key that fits neither
+aborts the run. The frame is measured on the **written file** — raster, `.pdf` and
+`.eps` — by `figure_style.save`, so a plate that came out 190 mm wide cannot pass, and
+`--verify` re-measures all three containers and fails if one of them is not the frame.
 
 ## Outputs, verification, determinism
 
 ```
-figures/<site>/fig_<site>_ocv_trajectory.jpg    the 3 x 4 plate, 630 dpi
-figures/<site>/fig_<site>_ocv_trajectory.md     the report (every number)
-data/<site>/fig_<site>_ocv_trajectory.json      the plotted values + the pins
+figures/<site>/fig_<site>_ocv_trajectory.jpg    the 3 x 4 plate, 630 dpi, 170 x 156 mm
+figures/<site>/fig_<site>_ocv_trajectory.pdf    the same plate as vector (for LaTeX)
+figures/<site>/fig_<site>_ocv_trajectory.eps    the same plate in PostScript (alpha blended)
+figures/<site>/fig_<site>_ocv_trajectory.md     the report (every number, and the caption)
+data/<site>/fig_<site>_ocv_trajectory.json      the plotted values + the pins + the frame
 ```
 
-* `--selftest` — 201 checks, no file touched: the registry, the documented
+* `--selftest` — 221 checks, no file touched: the registry, the documented
   windows of R2 (counts **and** dates), the echo filter, log positivity, the four
   shared `TRANSFORM` entries, `BLOCKS`/`GEOMETRY_PLANE`, "the reference median
   standardises to zero", "no |z| exceeds the clip", "every monthly median is the
-  median of its own bin", the RMS definition, the bootstrap's determinism, and
+  median of its own bin", the RMS definition, the bootstrap's determinism, the two
+  frame checks (the canvas is the shared table's and the report records it), and
   R6's five rules: the outside block applies exactly where R2 chooses a window,
   it holds exactly the chips the window leaves out (per site, against the census
   above), its delta is the difference of the two medians, its bootstrap is seeded
   and reproducible, and its interval brackets its own delta.
 * `--verify` — re-derives the JSON and the report from the table and fails on any
-  disagreement; the table's sha256 is carried in both.
+  disagreement; the table's sha256 is carried in both. It also measures the plate:
+  the `.jpg`, the `.pdf` and the `.eps` must each be 170.0 × 156.0 mm ± 0.5 mm, the
+  JSON's `figure` block must record that frame and its three containers, and two
+  draws of the same report must be byte-identical and equal to the committed raster.
 * Two consecutive runs are byte-identical (no wall clock, seeded bootstrap).
 
 ```bash
-bash figures/cases/fig_ocv_trajectory.sh            # all six plates
+bash figures/cases/fig_ocv_trajectory.sh            # all five plates
 bash figures/carola/fig_carola_ocv_trajectory.sh    # one site
 python3 code/cases/ocv_trajectory.py --selftest     # the template's rules
 bash figures/cases/fig_ocv_trajectory.sh --verify   # re-derive and compare
@@ -221,17 +260,18 @@ bash figures/cases/fig_ocv_trajectory.sh --verify   # re-derive and compare
   class's — are differences of medians, not bands on the curve; the monthly medians
   are drawn with their `n` and without one.
 * **No cross-site pooling.** The plate is per site by construction, and the driver
-  runs the six one after the other; nothing is averaged across sites.
-* **No orbit contrast.** R3 pools the orbits (except at Espoo, where it
-  standardises per orbit to make the two comparable). The orbit question belongs to
-  `code/orbits/fig_ocv_orbits.py` and `code/haltern/fig_haltern_ocv_orbits.py`,
-  which answer it with their own construction.
+  runs the five one after the other; nothing is averaged across sites.
+* **No orbit contrast.** R3 pools the orbits at every site. The orbit question
+  belongs to `code/lumo/fig_lumo_ocv_orbits.py` and
+  `code/bautzen/fig_bautzen_ocv_orbits.py`, which answer it with their own
+  construction.
 * **No test of the mask rule.** c3 documents coverage on this cut; because every
   support chip carries an echo, it documents rather than tests. The rule itself is
   studied offline in each site's `*_mask_sensitivity.py`.
 * **No claim for KDLO's tail as an aftermath.** Its post state is the rebuild; the
   contrast is a tower before and after a reconstruction, which is a different
   question and is labelled as such.
-* **No event line where there is no event**, and no contrast row on the control.
+* **No event line where there is no event.** Werder Havel, whose registry holds an
+  interval instead of an event date, draws the interval as a band, not as a cut.
 
 

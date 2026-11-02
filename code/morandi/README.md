@@ -1,6 +1,6 @@
 # `code/morandi/` — Morandi site package: analysis and plotting scripts
 
-Six Python modules, no package, no dependencies beyond the standard library plus
+Four Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values; without it the
 scripts still run, just with fewer p-values). This is the Ponte Morandi
 (Polcevera, Genova) half of the repository; the LUMO tower lives in `../lumo/`,
@@ -129,111 +129,20 @@ python3 code/morandi/morandi_ocv_masks.py --extract
 python3 code/morandi/morandi_ocv_masks.py --check
 ```
 
+## The shipped plate
 
-### `fig_morandi_ocv_paper.py` — figures A–E, JSON result, report, pin block
+This package's figure in `figures/` is
+[`figures/morandi/fig_morandi_ocv_trajectory.md`](../../figures/morandi/fig_morandi_ocv_trajectory.md)
+— the standard OCV trajectory plate on the **support-sized** chip, drawn by
+`code/cases/ocv_trajectory.py --site morandi` from this package's registry entry
+(reference `pre-collapse (healthy)`, 198 chips; tail `post-collapse`, 9 chips). It
+reads `data/morandi/support/morandi_ocv_channels.csv` and pins every number it
+draws; the wide interval of its contrast is a property of the 9-chip tail and is
+printed as such.
 
-The main script. `compute()` recalculates every number of the five figures from
-`data/morandi/morandi_ocv_channels.csv`; `pin_block()` then compares each number
-with the three committed references in `data/morandi/reference/` (**47 checks**).
-Recomputed and pinned number by number: the generated table's meta block (site,
-event, generator, 232 rows, 221 pre / 11 post, 59 columns, `features` / `ocv` /
-`girders`, the `coherence_masked_pixels` cross-check), the committed mask-cache
-manifest (`n_rows`, the `[160,240,160,240]` crop, the window rule, the two
-source sha256s, the 234 `400x400` and 2 no-echo counts), the per-track counts, the
-site's fixed 640-px deck-mask table (`morandi_deck_channels.json`) and the
-viaduct geometry (`morandi_geometry.json`, pinned structurally). A single
-deviation ends the run with exit code 2.
+The A–E paper plate and the 24-month companion that this package once fed were
+retired with the twelve-plate scope. Their frozen JSONs
+(`data/morandi/fig_morandi_ocv_paper.json`, `..._months.json`) stay committed as
+provenance, but no script recomputes them any more.
 
-```
-A  raw distributions of the six channels per state (all 232 chips)
-B  in-sample effect sizes: Cliff's delta + bootstrap CI and SDS, pooled and per track
-C  2-class LDA (pre vs. post) leave-one-out accuracy + permutation null
-D  the OCV plane (gamma2, P, D): does the core vector separate the states?
-E  the evidence against reading the contrast as damage: weather controls,
-   orbit/track composition, echo-mode mix, and the export-vs-recomputed mask
-```
-
-`main()` writes the five figures to `figures/morandi/`, the result JSON to
-`data/morandi/fig_morandi_ocv_paper.json` and the English report to
-`figures/morandi/fig_morandi_ocv_paper.md`.
-
-```bash
-python3 code/morandi/fig_morandi_ocv_paper.py            # full run, ~3.5 min (permutation null)
-python3 code/morandi/fig_morandi_ocv_paper.py --quick    # ~23 s, without the permutation null
-python3 code/morandi/fig_morandi_ocv_paper.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-Its headline is an **honest null**. Of the six echo-mask channels, **none**
-clears the bootstrap CI in the pooled contrast (`gamma2` +0.218, CI
-[-0.164, 0.582]; `P` -0.130, CI [-0.392, 0.221]); the only channel that does is
-`temperature_c` (+0.635, CI [0.454, 0.806]) — a co-variate, which is exactly the
-control the panels are there to show. The 6D LDA reaches 0.746 raw accuracy but
-only **0.521 balanced accuracy** (chance 0.5) on the 221 / 11 imbalance, and its
-label-permutation p is 0.077 (1000 draws), so it does not clear the null; the
-weather-only competitor reaches 0.685 / 0.662 (balanced-accuracy p 0.040), and
-the out-of-fold OCV scores carry SDS 0.06 against 1.64 for the 6D vector. The
-states are not separable in the analysed window. The per-track deck-mask table
-*does* separate within one track — `A_asc` moves (`D` -0.58, `S` +0.71, CI≠0)
-while `A_des` does not — but with only 5-6 post chips per track the report
-carries that split as one more co-variate to read, not a verdict.
-
-### `fig_morandi_ocv_months.py` — the echo-mask dimensions over the 24 months before the collapse
-
-The **standalone companion** of the paper figure. Where the A–E figures pool the
-two states (`pre-collapse (healthy)` vs. `post-collapse`), this script keeps the
-*time axis* and splits the committed chip export into the **24 rolling one-month
-windows anchored at the event** (`M-24` … `M-1`) plus the month the collapse
-opens (`M+1`), so the reader sees **when** the mask moved, not only **that** it
-moved:
-
-```
-M-24  [2016-08-14, 2016-09-14)     pre-collapse (healthy)      first record month
-…
-M-1   [2018-07-14, 2018-08-14)     pre-collapse (healthy)      last
-M+1   [2018-08-14, 2018-09-14)     post-collapse              11 chips
-```
-
-The collapse date opens M+1, so M-1 is pure pre and M+1 pure post and the two
-are the only adjacent-month contrast the script tests (per-chip Cliff's delta
-with a seeded percentile bootstrap CI, plus the same comparison against the
-24 pre windows pooled). The fingerprint baseline is the **record-start** month
-`M-24` (2016-08). `compute()` reads only
-`data/morandi/morandi_ocv_channels.csv` and recomputes each dimension's
-per-window block with `morandi_ocv_stats`; the figure is a 2 x 3 panel — (a)-(d)
-one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median and
-the IQR, (e) the `(P, D)` plane coloured by month on a symlog y axis, (f) the 6D
-fingerprint, each month's median over the `M-24` baseline median on a log axis.
-`main()` writes the figure to
-`figures/morandi/fig_morandi_ocv_months.png`, the result JSON to
-`data/morandi/fig_morandi_ocv_months.json` and the English report to
-`figures/morandi/fig_morandi_ocv_months.md`:
-
-```bash
-python3 code/morandi/fig_morandi_ocv_months.py            # ~15 s
-bash figures/morandi/fig_morandi_ocv_months.sh            # the same, via the wrapper
-python3 code/morandi/fig_morandi_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-It adds **no** number to the A–E pin contract and touches none of it (it never
-reads the committed reference JSONs), and it is deterministic like the rest of
-the package (fixed seed for the jitter and the bootstrap, no timestamps), so
-repeated runs produce byte-identical PNG, JSON and Markdown. Its reading is
-narrower still than the pooled one: the 24 pre months carry 221 chips (median 10
-per month, and the *last* pre month 10) while the first post month carries 11, so
-**no** dimension clears the bootstrap CI in either contrast (M+1 vs. M-1 or M+1
-vs. the pooled pre side) — the month axis shows the co-variate noise the pooled
-figure already flags rather than a resolvable step (`gamma2` does swing widely
-across the pre months, 0.032 … 0.790 month to month, with the *last* pre month at
-0.258).
-
-Wall-clock times are only printed to stdout, never written into an artifact: with
-the fixed seeds (RNG seed 7, 10000 bootstrap draws, 1000 label permutations) two
-runs produce identical JSON, Markdown and PNG files (the JSON's `quick` flag is
-the only difference between a `--quick` and a full run).
-
-The module and site names keep their `morandi_` prefix although the folder
-already says `morandi/`: the import statements (`import morandi_ocv_core as
-core`), the reference file names and every command line in the reports stay
-parallel to the other sites, which is what makes the packages readable as one
-diff.
 

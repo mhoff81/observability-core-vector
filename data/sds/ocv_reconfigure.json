@@ -4339,15 +4339,15 @@
    "verdict": "did not hold"
   },
   {
-   "detail": "geometry/ASC: |R(DAM 3) - R(DAM 4)| = 0.0359 against a cross-dose step of 0.241; geometry/DESC: |R(DAM 3) - R(DAM 4)| = 0.108 against a cross-dose step of 0.194; behaviour/ASC: |R(DAM 3) - R(DAM 4)| = 0.204 against a cross-dose step of 0.051; behaviour/DESC: |R(DAM 3) - R(DAM 4)| = 0.195 against a cross-dose step of 0.495",
+   "detail": "geometry/ASC: |R(DAM 3) - R(DAM 4)| = 0.0359 against a cross-dose step of 0.241; geometry/DESC: |R(DAM 3) - R(DAM 4)| = 0.108 against a cross-dose step of 0.194; behavior/ASC: |R(DAM 3) - R(DAM 4)| = 0.204 against a cross-dose step of 0.051; behavior/DESC: |R(DAM 3) - R(DAM 4)| = 0.195 against a cross-dose step of 0.495",
    "key": "P2",
    "statement": "DAM 3 and DAM 4 share one dose, so their magnitudes agree (the same-dose gap is not larger than the cross-dose step) \u2014 asked per block",
-   "verdict": "geometry held; behaviour partly"
+   "verdict": "geometry held; behavior partly"
   },
   {
-   "detail": "0 of 4 behaviour-block tests reach Holm < 0.05",
+   "detail": "0 of 4 behavior-block tests reach Holm < 0.05",
    "key": "P3",
-   "statement": "the \u03b3\u00b2/P behaviour block need not follow the dose",
+   "statement": "the \u03b3\u00b2/P behavior block need not follow the dose",
    "verdict": "consistent"
   }
  ],
@@ -4442,7 +4442,7 @@
        "DESC": true
       },
       "significant": [],
-      "verdict": "no dose ordering in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+      "verdict": "no dose ordering in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
       "widest_upper_bound": 13.9879901446686
      },
      "geometry": {
@@ -4482,7 +4482,7 @@
      "DESC": "pooled_mad"
     },
     "verdicts": {
-     "behaviour": "no dose ordering in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+     "behaviour": "no dose ordering in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
      "geometry": "no dose ordering in the geometry block survives the asset's own Holm family; the point estimate of the step is positive on DESC only"
     }
    },
@@ -4512,7 +4512,7 @@
        "DESC": true
       },
       "significant": [],
-      "verdict": "no dose ordering in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+      "verdict": "no dose ordering in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
       "widest_upper_bound": 1.4938871285443593
      },
      "geometry": {
@@ -4552,7 +4552,7 @@
      "DESC": "mad"
     },
     "verdicts": {
-     "behaviour": "no dose ordering in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+     "behaviour": "no dose ordering in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
      "geometry": "no dose ordering in the geometry block survives the asset's own Holm family, and the point estimate of the step is not monotone on either channel"
     }
    }
@@ -4759,7 +4759,7 @@
    "Channel": "ASC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "LUMO",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "healthy",
@@ -4770,7 +4770,7 @@
    "Channel": "ASC",
    "Direction": "gamma2- P- | A+ D+ F+ S+",
    "Experiment": "LUMO",
-   "R_behaviour": 0.6208696887437146,
+   "R_behavior": 0.6208696887437146,
    "R_geometry": 0.648327738879426,
    "Scale": "mad",
    "State": "DAM 3",
@@ -4781,7 +4781,7 @@
    "Channel": "ASC",
    "Direction": "gamma2+ P- | A- D- F- S+",
    "Experiment": "LUMO",
-   "R_behaviour": 0.8249346590670208,
+   "R_behavior": 0.8249346590670208,
    "R_geometry": 0.612413660565466,
    "Scale": "mad",
    "State": "DAM 4",
@@ -4792,7 +4792,7 @@
    "Channel": "ASC",
    "Direction": "gamma2- P- | A+ D+ F+ S+",
    "Experiment": "LUMO",
-   "R_behaviour": 0.8759608488814683,
+   "R_behavior": 0.8759608488814683,
    "R_geometry": 0.3403331777170762,
    "Scale": "mad",
    "State": "DAM 6",
@@ -4803,7 +4803,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "LUMO",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "healthy",
@@ -4814,7 +4814,7 @@
    "Channel": "DESC",
    "Direction": "gamma2+ P- | A- D- F- S-",
    "Experiment": "LUMO",
-   "R_behaviour": 0.3168398263396316,
+   "R_behavior": 0.3168398263396316,
    "R_geometry": 0.466695549739643,
    "Scale": "mad",
    "State": "DAM 3",
@@ -4825,7 +4825,7 @@
    "Channel": "DESC",
    "Direction": "gamma2- P+ | A=0 D- F=0 S+",
    "Experiment": "LUMO",
-   "R_behaviour": 0.12163882119900592,
+   "R_behavior": 0.12163882119900592,
    "R_geometry": 0.5747667734437867,
    "Scale": "mad",
    "State": "DAM 4",
@@ -4836,7 +4836,7 @@
    "Channel": "DESC",
    "Direction": "gamma2- P+ | A- D+ F- S+",
    "Experiment": "LUMO",
-   "R_behaviour": 0.7625723480938884,
+   "R_behavior": 0.7625723480938884,
    "R_geometry": 0.22485910614348148,
    "Scale": "mad",
    "State": "DAM 6",
@@ -4847,7 +4847,7 @@
    "Channel": "ASC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Bautzen",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "pooled_mad",
    "State": "RS",
@@ -4858,7 +4858,7 @@
    "Channel": "ASC",
    "Direction": "gamma2+ P- | A+ D- F=0 S+",
    "Experiment": "Bautzen",
-   "R_behaviour": 1.619966297696277,
+   "R_behavior": 1.619966297696277,
    "R_geometry": 1.2975312588488581,
    "Scale": "pooled_mad",
    "State": "DS1",
@@ -4869,7 +4869,7 @@
    "Channel": "ASC",
    "Direction": "gamma2+ P- | A+ D+ F- S+",
    "Experiment": "Bautzen",
-   "R_behaviour": 2.1052273964558768,
+   "R_behavior": 2.1052273964558768,
    "R_geometry": 0.9177805837565238,
    "Scale": "pooled_mad",
    "State": "DS2",
@@ -4880,7 +4880,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Bautzen",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "pooled_mad",
    "State": "RS",
@@ -4891,7 +4891,7 @@
    "Channel": "DESC",
    "Direction": "gamma2- P+ | A+ D+ F- S-",
    "Experiment": "Bautzen",
-   "R_behaviour": 0.9560493744365015,
+   "R_behavior": 0.9560493744365015,
    "R_geometry": 1.1314774013240592,
    "Scale": "pooled_mad",
    "State": "DS1",
@@ -4902,7 +4902,7 @@
    "Channel": "DESC",
    "Direction": "gamma2- P+ | A+ D+ F- S-",
    "Experiment": "Bautzen",
-   "R_behaviour": 1.3977692198616907,
+   "R_behavior": 1.3977692198616907,
    "R_geometry": 1.7458479752496272,
    "Scale": "pooled_mad",
    "State": "DS2",

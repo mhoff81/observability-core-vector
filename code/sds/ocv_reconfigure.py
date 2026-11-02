@@ -62,8 +62,8 @@ Usage
 Outputs
 -------
   data/sds/<stem>.json, <stem>.md, <stem>_table.csv
-  figures/sds/<figure stem>.jpg   (630 dpi)
-  figures/sds/<figure stem>.md
+  figures/sds/<figure stem>.jpg + .pdf + .eps   (170 mm wide, 630 dpi raster)
+  figures/sds/<figure stem>.md                  (the panel guide + the plate audit)
 where ``<stem>`` is ``ocv_reconfigure`` for the dose pair, ``ocv_carola_morandi``
 for the bridge pair, ``ocv_haltern_kdlo`` for the tower pair, and ``ocv_<site>``
 for a single asset.
@@ -75,6 +75,7 @@ import csv
 import json
 import math
 import os
+import re
 import statistics
 import sys
 
@@ -82,11 +83,12 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
-for _path in (os.path.join(REPO, "code", "lumo"),):
+for _path in (os.path.join(REPO, "code", "lumo"), os.path.join(REPO, "code")):
     if _path not in sys.path:
         sys.path.insert(0, _path)
 
 from lumo_ocv_stats import _jt_statistic  # noqa: E402  (verbatim port, see module)
+import figure_style as style             # noqa: E402  (the one typography and width)
 
 SCHEMA = "ocv-reconfigure-v1"
 SEED = 7
@@ -147,9 +149,10 @@ DIM_DISPLAY = {"gamma2": r"$\gamma^2$", "A": "A", "D": "D", "F": "F",
                "P": "P", "S": "S"}
 
 
-#: The two response blocks, in the wording the paper uses:
+#: The two response blocks, in the wording the paper uses.  The keys keep the
+#: pre-registration's spelling -- see ``BLOCK_DISPLAY`` for what a reader sees.
 #:
-#: * ``behaviour`` -- cross-acquisition echo behaviour: `gamma2` is the consistency
+#: * ``behaviour`` -- cross-acquisition echo behavior: `gamma2` is the consistency
 #:   of the echo across acquisitions, `P` its persistence/continuity across
 #:   acquisitions. `P` belongs here and not in the geometry block, even though its
 #:   computation depends on valid echo detections.
@@ -163,6 +166,13 @@ BLOCKS = {
     "behaviour": ("gamma2", "P"),
     "geometry": ("A", "D", "F", "S"),
 }
+
+#: How a block is *printed*.  The keys above are the pre-registration's tokens and
+#: stay as they are: the other generators index ``BLOCKS`` and this module keys its
+#: report, its H1/H2 ids and its plate audit on them.  The manuscript is set in
+#: American English, so every name that reaches a reader says ``behavior`` -- no
+#: key, no field name in the JSON is routed through this table, only labels.
+BLOCK_DISPLAY = {"behaviour": "behavior", "geometry": "geometry"}
 
 #: The two dimensions drawn as the plane of the geometry block; `D` and `S` are
 #: annotated beside it (see ``BLOCKS``).
@@ -1173,13 +1183,13 @@ def table_rows(report):
             cell = store["channels"][channel]
             for state in STATES[site]:
                 entry = cell["states"][state]
-                behaviour, geometry = (entry["blocks"]["behaviour"],
-                              entry["blocks"]["geometry"])
+                echo, geometry = (entry["blocks"]["behaviour"],
+                                  entry["blocks"]["geometry"])
                 rows.append({
                     "Experiment": EXPERIMENT[site], "State": state,
                     "Channel": channel, "n": entry["n_units"],
-                    "R_behaviour": behaviour["value"], "R_geometry": geometry["value"],
-                    "Direction": (f"{behaviour['direction']} | "
+                    "R_behavior": echo["value"], "R_geometry": geometry["value"],
+                    "Direction": (f"{echo['direction']} | "
                                   f"{geometry['direction']}"),
                     "Scale": cell["dims"]["A"]["scale_used"],
                     "Support": "thin" if entry["n_units"] < SMALL_N else "ok"})
@@ -1215,18 +1225,20 @@ def reading_by_site(report):
             if significant:
                 what = ("a dose ordering" if ordered else
                         f"the {CONTRAST[site]} contrast")
-                verdict = (f"{what} in the {name} block survives the asset's own "
-                           f"Holm family on " + ", ".join(significant))
+                verdict = (f"{what} in the {BLOCK_DISPLAY[name]} block survives the "
+                           f"asset's own Holm family on " + ", ".join(significant))
             elif any(monotone.values()):
                 rising = [ch for ch, flag in monotone.items() if flag]
                 where = ("both channels" if len(rising) == len(channels) == 2
                          else " ".join(rising) + " only")
                 verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
-                           f"in the {name} block survives the asset's own Holm family; "
+                           f"in the {BLOCK_DISPLAY[name]} block survives the asset's "
+                           f"own Holm family; "
                            f"the point estimate of the step is positive on " + where)
             else:
                 verdict = (f"no {('dose ordering' if ordered else 'state contrast')} "
-                           f"in the {name} block survives the asset's own Holm family, "
+                           f"in the {BLOCK_DISPLAY[name]} block survives the asset's "
+                           f"own Holm family, "
                            f"and the point estimate of the step is not monotone")
                 verdict += (" on either channel" if len(channels) > 1
                             else " on the one channel this record carries")
@@ -1305,32 +1317,35 @@ def predictions(report):
             three = states["DAM 3"]["blocks"][name]["value"]
             four = states["DAM 4"]["blocks"][name]["value"]
             levels = report["hypotheses"]["H1"][f"lumo/{channel}/{name}"]["R_by_level"]
-            step = None if (levels.get("L1") is None or levels.get("L2") is None)                 else abs(levels["L2"] - levels["L1"])
+            step = (None if levels.get("L1") is None or levels.get("L2") is None
+                    else abs(levels["L2"] - levels["L1"]))
             gap = None if (three is None or four is None) else abs(three - four)
             holds.append(gap is not None and step is not None and gap <= step)
-            details.append(f"{name}/{channel}: |R(DAM 3) - R(DAM 4)| = {_num(gap)} "
+            details.append(f"{BLOCK_DISPLAY[name]}/{channel}: "
+                           f"|R(DAM 3) - R(DAM 4)| = {_num(gap)} "
                            f"against a cross-dose step of {_num(step)}")
         verdicts.append("held" if all(holds) else
                         ("partly" if any(holds) else "did not hold"))
     out.append({"key": "P2",
-                "verdict": "; ".join(f"{name} {verdict}" for name, verdict in
-                                      zip(("geometry", "behaviour"), verdicts))
+                "verdict": "; ".join(f"{BLOCK_DISPLAY[name]} {verdict}"
+                                     for name, verdict in
+                                     zip(("geometry", "behaviour"), verdicts))
                            if len(set(verdicts)) > 1 else verdicts[0],
                 "statement": "DAM 3 and DAM 4 share one dose, so their magnitudes "
                              "agree (the same-dose gap is not larger than the "
                              "cross-dose step) — asked per block",
                 "detail": "; ".join(details)})
 
-    # P3 -- the behaviour block need not follow the dose
-    behaviour = [report["hypotheses"]["H1"][f"{site}/{channel}/behaviour"]["p_holm"]
-                 for site in (report.get("sites") or DEFAULT_SITES)
-                 for channel in ("ASC", "DESC")]
-    following = [p for p in behaviour if p is not None and p < 0.05]
+    # P3 -- the behavior block need not follow the dose
+    behavior = [report["hypotheses"]["H1"][f"{site}/{channel}/behaviour"]["p_holm"]
+                for site in (report.get("sites") or DEFAULT_SITES)
+                for channel in ("ASC", "DESC")]
+    following = [p for p in behavior if p is not None and p < 0.05]
     out.append({"key": "P3",
                 "verdict": "consistent" if not following else
-                           "the behaviour block follows the dose too",
-                "statement": "the γ²/P behaviour block need not follow the dose",
-                "detail": f"{len(following)} of {len(behaviour)} behaviour-block tests "
+                           "the behavior block follows the dose too",
+                "statement": "the γ²/P behavior block need not follow the dose",
+                "detail": f"{len(following)} of {len(behavior)} behavior-block tests "
                           f"reach Holm < 0.05"})
     return out
 
@@ -1405,7 +1420,7 @@ def markdown(report):
     left_name = EXPERIMENT[left_site] if left_site else ""
     right_name = EXPERIMENT[right_site] if right_site else ""
     if pair == DEFAULT_SITES:
-        add("# OCV reconfiguration against the controlled state dose — two assets, "
+        add("# OCV reconfiguration across controlled states — two assets, "
             "two verdicts")
     elif pair:
         add(f"# OCV reconfiguration {PAIR_NOTE[pair]['headline']} — {left_name} vs. "
@@ -1414,7 +1429,7 @@ def markdown(report):
         add(f"# OCV reconfiguration {SITE_HEADLINE.get(sites[0], 'across a collapse')} "
             f"— {EXPERIMENT[sites[0]]}, two states")
     else:
-        add(f"# OCV reconfiguration against the controlled state dose — "
+        add(f"# OCV reconfiguration across the controlled states — "
             f"{EXPERIMENT[sites[0]]}")
     add("")
     add("*generated by `code/sds/ocv_reconfigure.py`; the design is fixed in "
@@ -1524,7 +1539,7 @@ def markdown(report):
             + " / ".join(f"`{block['scale_used'][channel]}` ({channel})"
                          for channel in channels_of(report, site)) + ".")
         add("")
-        add("| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |")
+        add("| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |")
         add("| --- | --- | ---: | ---: | ---: | --- | --- | --- |")
         for row in report["table"]:
             if row["Experiment"] != EXPERIMENT[site]:
@@ -1532,7 +1547,7 @@ def markdown(report):
             add(f"| {row['State']} | {row['Channel']} | {row['n']}"
                 + ("✱" if isinstance(row["n"], int) and row["n"] <= BLOCK_BOOT else "")
                 + f" | "
-                f"{_num(row['R_behaviour'])} | {_num(row['R_geometry'])} | "
+                f"{_num(row['R_behavior'])} | {_num(row['R_geometry'])} | "
                 f"{row['Direction']} | `{row['Scale']}` | {row['Support']} |")
         add("")
         for channel, note in (report["experiments"][site].get("channels_absent")
@@ -1550,13 +1565,15 @@ def markdown(report):
                 levels = " < ".join(f"{key} {_num(value)}"
                                     for key, value in cell["R_by_level"].items())
                 interval = cell["delta_ci"] or [None, None]
-                add(f"| {channel} | `{name}` [{', '.join(cell['dims'])}] | {levels} | "
+                add(f"| {channel} | `{BLOCK_DISPLAY[name]}` "
+                    f"[{', '.join(cell['dims'])}] | {levels} | "
                     f"{_num(interval[0])} … {_num(interval[1])} | "
                     f"{_p(cell['p_increasing'])} | {_p(cell['p_holm'])} |")
         add("")
         for name in ("behaviour", "geometry"):
             item = block["blocks"][name]
-            add(f"**Verdict — {EXPERIMENT[site]}, {name}**: {item['verdict']}. Its own "
+            add(f"**Verdict — {EXPERIMENT[site]}, {BLOCK_DISPLAY[name]}**: "
+                f"{item['verdict']}. Its own "
                 f"interval still covers a top-step change of up to "
                 f"{_num(item['widest_upper_bound'], 2)} R-units, so what the asset "
                 f"**excludes** for this block is bounded by that number, and nothing "
@@ -1717,7 +1734,7 @@ def markdown(report):
             for block_name in ("behaviour", "geometry"):
                 cell = report["hypotheses"]["H2"][channel][block_name]
                 item = cell["largest"]
-                add(f"| {channel} | `{block_name}` "
+                add(f"| {channel} | `{BLOCK_DISPLAY[block_name]}` "
                     f"[{', '.join(item['dims'])}] | {_num(item['cosine'])} | "
                     f"{_ci(item['ci'])} | "
                     f"{item['sign_agreement'][0]}/{item['sign_agreement'][1]} | "
@@ -1738,7 +1755,7 @@ def markdown(report):
                if pair == DEFAULT_SITES else
                "γ² is the same exported quantity in the two chips but measured on "
                "different structures at different dates, ")
-            + "which is why the two dimensions of the behaviour block are "
+            + "which is why the two dimensions of the behavior block are "
             "also printed one by one (`z` per asset). The geometry block carries four "
             "dimensions while its plane shows two: `R_geometry` is the RMS over "
             "`A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not "
@@ -1755,9 +1772,11 @@ def markdown(report):
                      for block_name in ("behaviour", "geometry")]
             level = LEVELS[site][-1][0]
             parts = "; ".join(
-                f"{channel} {block_name} `R` = {_num(cell['R_by_level'].get(level))}, "
+                f"{channel} {BLOCK_DISPLAY[block_name]} `R` = "
+                f"{_num(cell['R_by_level'].get(level))}, "
                 f"Holm {_p(cell['p_holm'])}" for channel, block_name, cell in cells)
-            resolved = [f"{channel} {block_name}" for channel, block_name, cell in cells
+            resolved = [f"{channel} {BLOCK_DISPLAY[block_name]}"
+                        for channel, block_name, cell in cells
                         if cell["p_holm"] is not None and cell["p_holm"] < 0.05]
             if resolved:
                 resolved_sites.append(site)
@@ -1781,7 +1800,7 @@ def markdown(report):
                 low, high = item["ci"] or (None, None)
                 covers = (low is None or high is None or low <= 0.0 <= high)
                 phrases.append(
-                    f"{channel} {block_name}, cosine {_num(item['cosine'])} "
+                    f"{channel} {BLOCK_DISPLAY[block_name]}, cosine {_num(item['cosine'])} "
                     f"{_ci(item['ci'])}, {item['sign_agreement'][0]}/"
                     f"{item['sign_agreement'][1]} signs equal "
                     f"(`{item[left_site + '_direction']}` in {left_name}, "
@@ -1802,7 +1821,7 @@ def markdown(report):
             agree, total = item["sign_agreement"]
             add(f"None of the {len(cells)} cells shares a direction: in every one the "
                 f"cosine is not positive or the signs disagree in at least one "
-                f"dimension. The closest is {channel} {block_name}, cosine "
+                f"dimension. The closest is {channel} {BLOCK_DISPLAY[block_name]}, cosine "
                 f"{_num(item['cosine'])} {_ci(item['ci'])} with {agree}/{total} signs "
                 f"equal (null p {_p(item.get('p_null'))}) — a cosine that does not "
                 f"carry the block's dimensions with it.")
@@ -1956,7 +1975,7 @@ def markdown(report):
                "column calls `thin`" if below else "")
             + ". With this many post-collapse overpasses a null is a statement about "
             "what the data can resolve, not about the structure.")
-        add("* **`gamma2_mask`, not `gamma2_export`.** The behaviour block uses the "
+        add("* **`gamma2_mask`, not `gamma2_export`.** The behavior block uses the "
             "masked coherence the window rule defines; the asset-point export the same "
             "table carries is a single point of the scene, not the site's masked "
             "coherence, and is not used.")
@@ -2011,7 +2030,7 @@ def write_outputs(report, json_path=None, md_path=None, csv_path=None, quiet=Fal
         handle.write("\n")
     with open(md_path, "w") as handle:
         handle.write(markdown(report))
-    fields = ["Experiment", "State", "Channel", "n", "R_behaviour", "R_geometry",
+    fields = ["Experiment", "State", "Channel", "n", "R_behavior", "R_geometry",
               "Direction", "Scale", "Support"]
     with open(csv_path, "w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
@@ -2026,31 +2045,140 @@ def write_outputs(report, json_path=None, md_path=None, csv_path=None, quiet=Fal
 
 
 # ---------------------------------------------------------------------------
-# The figure — two rows, four panels, arrows from the reference
+# The plate — eight z-planes on one 170 mm canvas (amendment 6)
 # ---------------------------------------------------------------------------
-PANELS = (("ASC", "behaviour"), ("ASC", "geometry"),
-          ("DESC", "behaviour"), ("DESC", "geometry"))
+#: The channels, in the order an asset's two rows are drawn: ASC above DESC.
+CHANNEL_ORDER = ("ASC", "DESC")
+
+#: The two columns, in the order ``BLOCKS`` states them.
+PLATE_COLUMNS = ("behaviour", "geometry")
+
+#: The canvas.  ``style.FINAL_WIDTH_MM`` is 170 mm -- the text width every
+#: figure of this repository is set in.  The pre-registered 2 x 4 grid (rows =
+#: experiment, columns = channel x block) could not be kept at that width: four
+#: columns inside 170 mm leave 30 mm per square z-plane, and the longest state
+#: label is 24.8 mm at the ladder's 6.2 pt annotation floor, so the width rule
+#: would be met and the typography rule broken.  Amendment 6 therefore keeps
+#: *rows = experiment* and *columns = (channel x block)* as the reading order but
+#: nests them: two columns of blocks, two rows per experiment (ASC, then DESC).
+#: Eight panels in two columns is four rows, and a row can afford 44 mm of plane.
+PLATE_LEFT_MM = 14.0          # y tick labels + the rotated y label
+PLATE_RIGHT_MM = 3.0          # a tick at the axis end is labelled half outside it
+PLATE_COL_GAP_MM = 11.0       # the right column's y ticks + its label
+PLATE_PLANE_MM = 44.0         # the square z-plane: four 6.2 pt labels need it
+PLATE_ROW_GAP_MM = 12.0       # x tick labels + x label + the next row's title
+PLATE_HEADER_MM = 15.0        # the one-line header, and the ✱ line under it
+#: Where the two header lines start, measured from the top of the canvas.  The
+#: ✱ line is set on the label rung, so the band has to hold the header (3.6 mm),
+#: the line itself (2.9 mm) and 1.5 mm of air above the first row of titles --
+#: which is why the header sits at 2 mm and not at 3.
+PLATE_TEXT_MM = 2.0
+PLATE_LEGEND_MM = 6.2
+PLATE_FOOT_MM = 10.0          # x tick labels + x label under the last row
+PLATE_DPI = FIGURE_DPI        # 630, as the spec fixes it
+#: The state label inside a panel: the ladder's annotation floor, not a size of
+#: its own.  Nothing on a plate is written smaller than this.
+STATE_PT = style.FS["annotation"]
+#: The inset strip (R per level with its interval).  Its height is a tag line, one
+#: row per level and the interval's ticks -- a fixed 15 mm box for three levels
+#: was a fifth of the plane spent on white space, and it is the plane the labels
+#: need.  ``INSET_LABEL_MM`` is the width the level names take on the left,
+#: ``INSET_TICK_MM`` the height the interval ticks take at the bottom and
+#: ``INSET_TAG_MM`` the height the ``R`` tag takes above the rows; all three are
+#: subtracted before anything is drawn, so the footprint that is reserved for the
+#: strip is the box the ink actually needs.
+INSET_WIDTH_MM = 28.0
+INSET_ROW_MM = 3.4             # one row per level: a 6.8 pt label plus its gap
+INSET_LABEL_MM = 10.0          # `rebuild` is 8.6 mm at the tick rung
+INSET_TICK_MM = 3.6
+INSET_TAG_MM = 3.2
+#: The drawn content must stay this far inside the canvas: the raster is written
+#: from the canvas, so a glyph at the edge would be clipped -- a tight bbox would
+#: have hidden that by cropping, which is the defect it must not be.
+MARGIN_MIN_MM = 0.3
+#: Clearances the guards hold, in millimetres.
+LABEL_CLEAR_MM = 0.0          # boxes may touch, never overlap
+MARKER_CLEAR_MM = 0.8         # a label keeps this far off a marker
+PANEL_CLEAR_MM = 0.4          # a label stays this far inside its own slot
+INSET_CLEAR_MM = 1.0          # the R strip clears labels and markers by this
+HEADER_CLEAR_MM = 1.5         # the header clears the first row of titles
 
 
-def _magnitude_strip(ax, entry, site, anchor=(0.60, 0.05)):
-    """R per dose level with its bootstrap interval, small, inside the panel."""
+def plate_layout(rows):
+    """The canvas and the grid fractions of a plate with *rows* z-plane rows.
+
+    Pure arithmetic on the constants above, so ``--selftest`` can check the
+    canvas without matplotlib: two slots, the gutters and the gap add up to
+    exactly ``FINAL_WIDTH_MM``, and the height is the header, the planes, the
+    gaps and the foot, with nothing left over for a tight bbox to steal.
+    """
+    width_mm = style.FINAL_WIDTH_MM
+    columns = len(PLATE_COLUMNS)
+    slot_mm = (width_mm - PLATE_LEFT_MM - PLATE_RIGHT_MM
+               - (columns - 1) * PLATE_COL_GAP_MM) / columns
+    height_mm = (PLATE_HEADER_MM + rows * PLATE_PLANE_MM
+                 + (rows - 1) * PLATE_ROW_GAP_MM + PLATE_FOOT_MM)
+    return {
+        "width_mm": width_mm, "height_mm": height_mm,
+        "rows": rows, "columns": columns, "slot_mm": slot_mm,
+        "plane_mm": PLATE_PLANE_MM,
+        #: A z-plane is square (``aspect="equal"``); the slot is wider than tall,
+        #: so the x limits are stretched by exactly this factor and the plane
+        #: keeps its units.  The lateral margin is where the state labels sit.
+        "x_stretch": slot_mm / PLATE_PLANE_MM,
+        "figsize": (width_mm / 25.4, height_mm / 25.4),
+        "grid": {
+            "left": PLATE_LEFT_MM / width_mm,
+            "right": 1.0 - PLATE_RIGHT_MM / width_mm,
+            "bottom": PLATE_FOOT_MM / height_mm,
+            "top": 1.0 - PLATE_HEADER_MM / height_mm,
+            "wspace": PLATE_COL_GAP_MM / slot_mm,
+            "hspace": PLATE_ROW_GAP_MM / PLATE_PLANE_MM,
+        },
+    }
+
+
+def _magnitude_strip(panel_ax, layout, entry, site):
+    """R per level with its bootstrap interval, as a strip inside the panel.
+
+    The strip is its own axes (``inset_axes``), so its tick labels are on the
+    ladder like every other tick label.  Its height follows the levels -- one row
+    each -- because the plane is what the state labels have to live in, and a box
+    sized for the worst case would cost every two-level asset a third of its
+    pane.  It carries a 6.2 pt ``R`` tag of its own: an axis label would cost the
+    strip two thirds of its height.
+    """
     levels = [name for name, _states, _dose in LEVELS[site]]
     ci = entry["bootstrap"]["ci"]
-    if not any(ci.get(name) for name in levels):
-        return
-    inset = ax.inset_axes([anchor[0], anchor[1], 0.30, 0.17])
-    inset.tick_params(labelsize=4.0, length=1.5, pad=1.0)
-    for index, name in enumerate(levels):
-        pair = ci.get(name)
+    width = INSET_WIDTH_MM / layout["slot_mm"]
+    height = ((INSET_TAG_MM + INSET_TICK_MM + len(levels) * INSET_ROW_MM)
+              / layout["plane_mm"])
+    return {"levels": levels, "ci": {name: ci.get(name) for name in levels},
+            "size": [width, height]}
+
+
+def _draw_magnitude_strip(inset, strip):
+    """Draw one prepared strip; the numbers are the ones the JSON holds."""
+    for index, name in enumerate(strip["levels"]):
+        pair = strip["ci"].get(name)
         if not pair:
             continue
         inset.plot([pair[0], pair[1]], [index, index], color="0.35", lw=0.8)
         inset.plot([(pair[0] + pair[1]) / 2.0], [index], marker="|", ms=4.0,
                    color="#c53030")
-    inset.set_yticks(range(len(levels)))
-    inset.set_yticklabels(levels)
-    inset.set_xlabel("R", fontsize=4.4, labelpad=1.0)
-    inset.set_ylim(-0.6, len(levels) - 0.4)
+    inset.set_yticks(range(len(strip["levels"])))
+    inset.set_yticklabels(strip["levels"])
+    inset.set_ylim(-0.55, len(strip["levels"]) - 0.45)   # one row, one level
+    # R is 0 at the reference level by construction, so its marker must not sit
+    # on the axis itself where it would read as a tick
+    inset.margins(x=0.08)
+    inset.tick_params(labelsize=style.FS["tick"], length=1.5, pad=1.0)
+    # the tag is the strip's title, not a mark inside it: at (0.02, 0.98) it sat on
+    # the top row's own interval, and next to the level names it read as one of
+    # them -- the top right says what the ticks measure without joining a row
+    inset.set_title("R", loc="right", pad=1.0, fontsize=STATE_PT, color="0.35")
+    for spine in ("top", "right"):
+        inset.spines[spine].set_visible(False)
     for spine in ("top", "right"):
         inset.spines[spine].set_visible(False)
 
@@ -2061,12 +2189,12 @@ def _magnitude_strip(ax, entry, site, anchor=(0.60, 0.05)):
 STATE_LABEL = {"pre-collapse (healthy)": "pre", "post-collapse": "post"}
 
 
-def _empty_panel(ax, site, channel, block_name, note):
+def _empty_panel(ax, label, note):
     """A panel for a channel the record does not contain: empty, and says so.
 
-    It is drawn, not skipped: the plate keeps its four columns so the two rows stay
-    comparable, and the panel states that the cell does not exist. An empty cell
-    with an axis and no note would read as a null result.
+    It is drawn, not skipped: the plate keeps its two rows per asset so the
+    assets stay comparable, and the panel states that the cell does not exist.
+    An empty cell with an axis and no note would read as a null result.
     """
     ax.set_xlim(-1.0, 1.0)
     ax.set_ylim(-1.0, 1.0)
@@ -2075,25 +2203,36 @@ def _empty_panel(ax, site, channel, block_name, note):
     ax.set_yticks([])
     for spine in ("top", "right"):
         ax.spines[spine].set_visible(False)
-    ax.set_title(f"{EXPERIMENT[site]} · {channel} · {block_name}", fontsize=6.2,
-                 loc="left", color="0.55")
+    ax.set_title(label, loc="left", color="0.55")
     ax.text(0.5, 0.56, "—", transform=ax.transAxes, ha="center", va="center",
             fontsize=13.0, color="0.7")
     ax.text(0.5, 0.42, note, transform=ax.transAxes, ha="center", va="center",
-            fontsize=5.0, color="0.45", wrap=True)
+            fontsize=STATE_PT, color="0.45", wrap=True)
     ax.text(0.5, 0.30, "no cell, no test, no interval", transform=ax.transAxes,
-            ha="center", va="center", fontsize=4.8, color="0.45")
+            ha="center", va="center", fontsize=STATE_PT, color="0.45")
 
 
-def _panel(ax, report, site, channel, block_name, plt):
-    """One cell of a plate: arrows from the reference, plus the R strip."""
+def _panel(ax, report, site, channel, block_name, layout, fig):
+    """One cell of a plate: arrows from the reference, its labels, its R strip.
+
+    Returns what was drawn -- the points, the label texts, the strip -- so the
+    audit can pin it and :func:`assert_figure_matches_report` can compare it
+    with the numbers the JSON holds.  Nothing here rounds a value: the label
+    shows ``_num(value, 2)`` and the point *is* the JSON's ``z``.
+    """
     store = report["experiments"][site]
-    if channel not in store["channels"]:
-        _empty_panel(ax, site, channel, block_name,
-                     (store.get("channels_absent") or {}).get(channel,
-                                                              "no acquisition"))
-        return
     dims = GEOMETRY_PLANE if block_name == "geometry" else BLOCKS[block_name]
+    title = (f"{EXPERIMENT[site]} · {channel} · {BLOCK_DISPLAY[block_name]} "
+             f"[{', '.join(DIM_DISPLAY.get(dim, dim) for dim in dims)}]")
+    panel = {"site": site, "channel": channel, "block": block_name,
+             "title": title, "dims": list(dims), "empty": False,
+             "points": {}, "labels": {}, "note": None, "strip": None,
+             "inset": None, "limits": None}
+    if channel not in store["channels"]:
+        note = (store.get("channels_absent") or {}).get(channel, "no acquisition")
+        _empty_panel(ax, title, note)
+        panel.update(empty=True, absent=note, limits=[[-1.0, 1.0], [-1.0, 1.0]])
+        return panel
     cell = store["channels"][channel]
     span = 0.3
     marks = []
@@ -2104,112 +2243,261 @@ def _panel(ax, report, site, channel, block_name, plt):
             continue
         marks.append((state, mark, x, y))
         span = max(span, abs(x), abs(y))
-    limit = span * 1.5
-    placed = []
+    # The plane keeps its units (aspect="equal"); the slot is wider than tall, so
+    # the x limits are stretched by exactly slot/plane and the extra width is the
+    # margin the state labels are placed in -- outside the data, not over it.
+    limit = span * 1.35
+    x_lim = limit * layout["x_stretch"]
+    ax.set_xlim(-x_lim, x_lim)
+    ax.set_ylim(-limit, limit)
+    ax.set_aspect("equal")
+    ax.axhline(0.0, color="0.75", lw=0.5, ls=":")
+    ax.axvline(0.0, color="0.75", lw=0.5, ls=":")
+    ax.tick_params(labelsize=style.FS["tick"], length=2.0)
+    ax.set_xlabel(f"z({DIM_DISPLAY.get(dims[0], dims[0])})",
+                  fontsize=style.FS["label"], labelpad=1.5)
+    ax.set_ylabel(f"z({DIM_DISPLAY.get(dims[1], dims[1])})",
+                  fontsize=style.FS["label"], labelpad=1.5)
+    ax.set_title(title, loc="left", pad=3.0, fontsize=style.FS["title"])
+    renderer = fig.canvas.get_renderer()
+    to_mm = 25.4 / fig.dpi
+    reserved = []
     for state, mark, x, y in marks:
         colour = "#2b6cb0" if state == REFERENCE[site] else "#c53030"
         ax.annotate("", xy=(x, y), xytext=(0.0, 0.0),
                     arrowprops={"arrowstyle": "->", "lw": 1.0, "color": colour,
                                 "alpha": 0.9, "shrinkA": 0, "shrinkB": 0})
         ax.plot([x], [y], marker="o", ms=3.0, color=colour, zorder=3)
-        # the n of the cell is never left off a label: a cell at or below the
-        # bootstrap block carries the mark the suptitle explains
+        # a marker is a box no label may sit on
+        reserved.append(_grow(ax.lines[-1].get_window_extent(renderer),
+                              MARKER_CLEAR_MM / to_mm))
         count = cell["states"][state].get("n_units")
         thin = "✱" if count is not None and count <= BLOCK_BOOT else ""
-        label = STATE_LABEL.get(state, state)
-        text = f"{label} ({_num(mark['value'], 2)}; n={count}{thin})"
-        # the label leaves its marker on the side the other states are not on,
-        # and steps up or down until it clears the labels already placed
-        others = [other_x for other_state, _m, other_x, _y in marks
-                  if (other_state, other_x) != (state, x)]
-        ha = "right" if others and x >= sum(others) / len(others) else "left"
-        pad = "" if ha == "right" else " "
-        width = 0.0135 * len(text) + 0.02
-        shift, box = _free_shift(
-            lambda step: _label_box(x, y, width, ha, step, limit), placed)
-        placed.append(box)
-        ax.text(x, y + shift * 2.0 * limit, pad + text, fontsize=5.2, color=colour,
-                va="bottom", ha=ha,
-                bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.72,
-                      "pad": 0.6})
-    ax.axhline(0.0, color="0.75", lw=0.5, ls=":")
-    ax.axvline(0.0, color="0.75", lw=0.5, ls=":")
-    ax.set_xlim(-limit, limit)
-    ax.set_ylim(-limit, limit)
-    ax.set_aspect("equal")
-    ax.tick_params(labelsize=4.8, length=2.0)
-    ax.set_xlabel(f"z({dims[0]})", fontsize=5.4, labelpad=1.0)
-    ax.set_ylabel(f"z({dims[1]})", fontsize=5.4, labelpad=1.0)
-    ax.set_title(f"{EXPERIMENT[site]} · {channel} · {block_name} "
-                 f"[{', '.join(DIM_DISPLAY.get(dim, dim) for dim in dims)}]",
-                 fontsize=6.2, loc="left")
+        text = (f"{STATE_LABEL.get(state, state)} "
+                f"({_num(mark['value'], 2)}; n={count}{thin})")
+        panel["points"][state] = {
+            "x": x, "y": y,
+            "z": {dim: mark["z"].get(dim)
+                  for dim in ("A", "D", "F", "S", "P", "gamma2")},
+            "value": mark["value"], "n": count, "thin": bool(thin),
+            "reference": state == REFERENCE[site], "label": text}
+    # D and S stay in the block magnitude but are not on the plane: D partly
+    # inherits A algebraically, and S describes position, not morphology.  The
+    # note is placed before the labels, so they are laid out around it.
     if block_name == "geometry":
-        # D and S stay in the block magnitude but are not on the plane: D partly
-        # inherits A algebraically, and S describes position, not morphology
         mark = cell["states"][LARGEST[site]]["blocks"]["geometry"]["z"]
         note = " ".join(f"{dim}{mark[dim]:+.2f}" for dim in ("D", "S")
                         if mark.get(dim) is not None)
         if note:
-            ax.text(0.97, 0.97, note, transform=ax.transAxes, ha="right",
-                    va="top", fontsize=4.6, color="0.35")
+            artist = ax.text(0.995, 0.995, note, transform=ax.transAxes,
+                             ha="right", va="top", fontsize=STATE_PT,
+                             color="0.35",
+                             bbox={"facecolor": "white", "edgecolor": "none",
+                                   "alpha": 0.75, "pad": 0.6})
+            reserved.append(_grow(artist.get_window_extent(renderer),
+                                  LABEL_CLEAR_MM / to_mm))
+            panel["note"] = note
+    # The strip goes in before the labels, and is re-placed if they do not fit
+    # around it: it is the coarser box -- 28 mm by one row per level -- while a
+    # label can step a millimetre at a time.  The windows are tried in order of
+    # their clearance and the first one that still leaves the cell's own labels
+    # room is kept, so neither element is drawn over the other.
+    strip = _magnitude_strip(ax, layout, cell["blocks"][block_name], site)
+    inset = footprint = labels = None
+    if any(strip["ci"].values()):
+        for rect, footprint in _inset_windows(ax, fig, strip, reserved):
+            trial = reserved + [_grow(footprint, INSET_CLEAR_MM / to_mm)]
+            labels = _lay_out_labels(ax, fig, marks, panel, trial, limit, x_lim)
+            if labels is not None:
+                inset = rect
+                break
+    else:
+        labels = _lay_out_labels(ax, fig, marks, panel, reserved, limit, x_lim)
+    if labels is None:
+        raise RuntimeError(
+            "the %s panel holds %d state labels and the R strip nowhere: the "
+            "plane is too full for both -- widen it rather than shrink the type"
+            % (title, len(marks)))
+    if inset is not None:
+        _backdrop(ax, footprint, fig)
+        _draw_magnitude_strip(ax.inset_axes(inset), strip)
+        panel["strip"] = dict(strip["ci"])
+        panel["inset"] = [round(float(value), 4) for value in inset]
+    panel["limits"] = [[-x_lim, x_lim], [-limit, limit]]
+    return panel
 
-    _magnitude_strip(ax, cell["blocks"][block_name], site,
-                     anchor=_inset_anchor(placed, block_name))
 
+def _backdrop(ax, footprint, fig):
+    """A hairline box behind the whole strip: plot, level names and ticks.
 
-def _label_box(x, y, width, ha, shift, limit):
-    """A state label's box in axes fractions, for a vertical shift in fractions."""
-    fx = (x / limit + 1.0) / 2.0
-    fy = (y / limit + 1.0) / 2.0 + shift
-    left = fx - width if ha == "right" else fx
-    return (left, fy, left + width, fy + 0.07)
-
-
-def _free_shift(box_of, placed, margin=0.006):
-    """The smallest vertical shift whose label box clears every placed box."""
-    steps = (0.0, 0.09, -0.09, 0.17, -0.17, 0.25, -0.25)
-    for shift in steps:
-        box = box_of(shift)
-        if box[1] < 0.01 or box[3] > 0.97:
-            continue
-        if all(box[0] >= other[2] + margin or other[0] >= box[2] + margin or
-               box[1] >= other[3] + margin or other[1] >= box[3] + margin
-               for other in placed):
-            return shift, box
-    return 0.0, box_of(0.0)
-
-
-def _inset_anchor(labels, block_name):
-    """The free corner of the panel, in axes fractions, for the R strip.
-
-    ``labels`` are the boxes the state labels occupy; the inset is 0.30 by 0.17
-    of the panel plus room for its own tick labels, so each candidate corner is
-    scored by the distance from that rectangle to the nearest label, and the
-    largest wins. The top-right corner is never used for the geometry block,
-    where the `D`/`S` note sits.
+    The inset's own frame is the plotting box only, so without this the level
+    names and the interval ticks float in the plane as loose text.  The backdrop
+    is drawn on the parent axes, under the inset and under the parent's spines,
+    clipped to the slot, and grown by exactly the ``INSET_CLEAR_MM`` the
+    reservation uses -- the box no state label may enter is the box the reader
+    sees.
     """
-    corners = {"bl": (0.12, 0.08), "br": (0.64, 0.08), "tl": (0.12, 0.66),
-               "tr": (0.64, 0.66)}
-    if block_name == "geometry":
-        corners.pop("tr")
-    if not labels:
-        return corners["bl"]
+    from matplotlib.patches import Rectangle
 
-    def clearance(corner):
-        x0, y0 = corner[0] - 0.02, corner[1] - 0.06
-        x1, y1 = corner[0] + 0.30, corner[1] + 0.17
+    frame = ax.get_window_extent(fig.canvas.get_renderer())
+    box = _grow(footprint, INSET_CLEAR_MM / (25.4 / fig.dpi))
+    ax.add_patch(Rectangle(
+        ((box.x0 - frame.x0) / frame.width, (box.y0 - frame.y0) / frame.height),
+        box.width / frame.width, box.height / frame.height,
+        transform=ax.transAxes, facecolor="white", edgecolor="0.8", lw=0.4,
+        zorder=2.1, clip_on=True))
+
+
+def _lay_out_labels(ax, fig, marks, panel, reserved, limit, x_lim):
+    """Place every state label, or none: the artists, or ``None``.
+
+    Being able to *try* a layout is what lets the strip take a window the labels
+    can live with: a failed attempt removes its own artists, so the panel is
+    handed back untouched and the next window is tried.  A half-labelled panel
+    is not a layout to fall back on.
+    """
+    site = panel["site"]
+    placed, drawn = [], []
+    for state, _mark, x, y in marks:
+        colour = "#2b6cb0" if state == REFERENCE[site] else "#c53030"
+        text = panel["points"][state]["label"]
+        # the label leaves its marker on the side the other states are not on,
+        # and steps off that line until it clears every box already placed
+        others = [other_x for other_state, _m, other_x, _y in marks
+                  if other_state != state]
+        ha = "right" if others and x >= sum(others) / len(others) else "left"
+        found = _place_state_label(ax, fig, x, y, text, colour, ha,
+                                   placed, reserved, limit, x_lim)
+        if found is None:
+            for artist in drawn:
+                artist.remove()
+            return None
+        artist, box = found
+        placed.append(box)
+        drawn.append(artist)
+        panel["labels"][state] = text
+    return drawn
+
+
+def _grow(box, pad):
+    """*box* grown by *pad* display units on every side."""
+    return type(box).from_extents(box.x0 - pad, box.y0 - pad,
+                                  box.x1 + pad, box.y1 + pad)
+
+
+def _place_state_label(ax, fig, x, y, text, colour, ha_first, placed, reserved,
+                       limit, x_lim):
+    """Put *text* beside ``(x, y)`` where its measured box clears the panel.
+
+    The box is the renderer's, not an estimate from the character count: a
+    6.2 pt ``rebuild (0.56; n=43)`` is 24.8 mm wide and a 44 mm plane's lateral
+    margin is 13.5 mm, so whether a label fits on one side of its marker is a
+    fact about the text, and the search runs on that fact.  Candidate positions
+    step away from the marker in millimetres -- up and down, on either side --
+    and the first box that is inside the slot and clear of every other box wins.
+    ``None`` means this text fits nowhere; the caller decides whether that stops
+    the build or only this window of the panel.
+    """
+    renderer = fig.canvas.get_renderer()
+    frame = ax.get_window_extent(renderer)
+    to_mm = 25.4 / fig.dpi
+    mm_x = 2.0 * x_lim / (frame.width * to_mm)      # data units per millimetre
+    mm_y = 2.0 * limit / (frame.height * to_mm)
+    clear_mm = PANEL_CLEAR_MM / to_mm
+    steps = (0.0, 1.7, -1.7, 3.4, -3.4, 5.1, -5.1, 6.8, -6.8, 8.5, -8.5,
+             10.2, -10.2)
+    for ha in (ha_first, "left" if ha_first == "right" else "right"):
+        dx = -1.0 if ha == "right" else 1.0
+        for step in steps:
+            artist = ax.text(x + dx * mm_x, y + step * mm_y, text,
+                             fontsize=STATE_PT, color=colour, va="bottom",
+                             ha=ha,
+                             bbox={"facecolor": "white", "edgecolor": "none",
+                                   "alpha": 0.75, "pad": 0.6})
+            box = _grow(artist.get_window_extent(renderer),
+                        LABEL_CLEAR_MM / to_mm)
+            inside = (box.x0 >= frame.x0 + clear_mm
+                      and box.x1 <= frame.x1 - clear_mm
+                      and box.y0 >= frame.y0 + clear_mm
+                      and box.y1 <= frame.y1 - clear_mm)
+            if inside and not any(box.overlaps(other)
+                                  for other in placed + reserved):
+                return artist, box
+            artist.remove()
+    return None
+
+
+def _inset_windows(ax, fig, strip, reserved):
+    """The windows the R strip could take, freest first.
+
+    The strip is placed *before* the state labels, because it is the coarser box:
+    26 mm by one row per level has to find a window the data leaves empty, while
+    a label can step a millimetre at a time.  The four corners and the four edge
+    midpoints are scored by the distance from the strip's footprint to the
+    nearest marker or note; the caller takes them in that order and keeps the
+    first window whose footprint still leaves the labels room for themselves.
+
+    Each window is ``(rect, footprint)``: ``rect`` in axes fractions for
+    ``inset_axes``, ``footprint`` in display units for the caller's reservation.
+    A window with less than ``INSET_CLEAR_MM`` of clear space is not offered: the
+    strip is an annotation and the marker is the datum, so the strip moves, not
+    the datum.
+    """
+    from matplotlib.transforms import Bbox
+
+    renderer = fig.canvas.get_renderer()
+    frame = ax.get_window_extent(renderer)
+    to_mm = 25.4 / fig.dpi
+    width, height = strip["size"]                  # fractions of the slot
+    margin = 0.02
+    lo_x, hi_x = margin, 1.0 - margin - width
+    lo_y, hi_y = margin, 1.0 - margin - height
+    mid_x = 0.5 * (lo_x + hi_x)
+    mid_y = 0.5 * (lo_y + hi_y)
+    windows = {"bl": (lo_x, lo_y), "br": (hi_x, lo_y),
+               "tl": (lo_x, hi_y), "tr": (hi_x, hi_y),
+               "bottom": (mid_x, lo_y), "top": (mid_x, hi_y),
+               "left": (lo_x, mid_y), "right": (hi_x, mid_y)}
+
+    def footprint(where):
+        x0 = frame.x0 + where[0] * frame.width
+        y0 = frame.y0 + where[1] * frame.height
+        return Bbox.from_extents(x0, y0, x0 + width * frame.width,
+                                 y0 + height * frame.height)
+
+    def clearance(where):
+        box = footprint(where)
         gaps = []
-        for left, low, right, high in labels:
-            dx = max(left - x1, x0 - right, 0.0)
-            dy = max(low - y1, y0 - high, 0.0)
+        for other in reserved:
+            dx = max(other.x0 - box.x1, box.x0 - other.x1, 0.0)
+            dy = max(other.y0 - box.y1, box.y0 - other.y1, 0.0)
             gaps.append(math.hypot(dx, dy))
-        return min(gaps)
+        return min(gaps) if gaps else float("inf")
 
-    return max(corners.values(), key=clearance)
+    order = sorted(windows, key=lambda name: -clearance(windows[name]))
+    # the plotting box inside the footprint: the level names take their width on
+    # the left, the interval ticks their height at the bottom and the R tag its
+    # height above the top row
+    pad_x = INSET_LABEL_MM / (frame.width * to_mm)
+    pad_y = INSET_TICK_MM / (frame.height * to_mm)
+    pad_top = INSET_TAG_MM / (frame.height * to_mm)
+    found = []
+    for name in order:
+        where = windows[name]
+        if clearance(where) * to_mm < INSET_CLEAR_MM:
+            break
+        found.append(([where[0] + pad_x, where[1] + pad_y,
+                       width - pad_x, height - pad_y - pad_top],
+                      footprint(where)))
+    return found
 
 
 def _thin_legend(report, sites):
-    """The ✱ legend, but only on a plate that actually carries such a cell."""
+    """The ✱ legend as one line, naming the cells that carry the mark.
+
+    It is a second header line, on the label rung of the ladder, not part of the
+    title: the title says what the plate shows, the legend explains a mark.
+    """
     thin = []
     for site in sites:
         for channel in channels_of(report, site):
@@ -2221,104 +2509,359 @@ def _thin_legend(report, sites):
                     thin.append(f"{EXPERIMENT[site]} {channel} {label} n={count}")
     if not thin:
         return ""
-    return ("\n✱ n ≤ bootstrap block (%d), here %s: that cell is resampled as one "
-            "block, so its interval is the reference's uncertainty only"
-            % (BLOCK_BOOT, ", ".join(thin)))
+    return ("✱ n ≤ %d (%s): resampled as one block, so its interval carries the "
+            "reference's uncertainty only" % (BLOCK_BOOT, ", ".join(thin)))
 
 
-def _plate(report, sites, figdir, stem, suptitle):
+def _thin_rule():
+    """The same rule without the cell names, for a plate whose list is too long.
+
+    One line at 7.6 pt holds about 150 characters, and a named list grows with
+    every thin cell: on the pair whose full length it is 216 mm the names are what
+    is dropped, not the sentence -- the guide still lists the cells, and the mark
+    is on the cell in the panel.
+    """
+    return ("✱ n ≤ %d: the cell is one resampling block, so its interval carries "
+            "the reference's uncertainty only" % BLOCK_BOOT)
+
+
+def _legend_line(fig, named):
+    """The ✱ line that fits the canvas: the cells by name, else only the rule."""
+    if not named:
+        return ""
+    renderer = fig.canvas.get_renderer()
+    to_mm = 25.4 / fig.dpi
+    room = style.FINAL_WIDTH_MM - 1.5        # the line starts 1 mm in
+    for text in (named, _thin_rule()):
+        probe = fig.text(0.006, 0.5, text, fontsize=style.FS["label"])
+        width = probe.get_window_extent(renderer).width * to_mm
+        probe.remove()
+        if width <= room:
+            return text
+    raise RuntimeError(
+        "the ✱ line cannot be set on one %.0f mm row even without the cell names"
+        % style.FINAL_WIDTH_MM)
+
+
+def _plate(report, sites, figdir, stem, headline):
+    """Draw one plate at 170 mm, guard it, write jpg + pdf + eps; return the audit.
+
+    The canvas is authored, not measured from the content: 170 mm is the print
+    width and the panels are the ones ``plate_layout`` sizes.  A tight bbox would
+    re-cut this after the fact and shrink every glyph with it, which is the
+    defect the guards below exist to make impossible to hit silently.
+    """
     import matplotlib
     matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+    plt = style.apply(dpi=PLATE_DPI)
 
-    fig, axes = plt.subplots(len(sites), len(PANELS),
-                             figsize=(13.0, 3.2 * len(sites)), dpi=110,
-                             squeeze=False)
+    layout = plate_layout(len(sites) * len(CHANNEL_ORDER))
+    fig, slots = plt.subplots(layout["rows"], layout["columns"],
+                              figsize=layout["figsize"], squeeze=False)
+    fig.subplots_adjust(**layout["grid"])
+    drawn = {"stem": stem, "sites": list(sites), "layout": layout,
+             "panel_order": [], "panels": {}}
+    titles = {}
     for row, site in enumerate(sites):
-        for col, (channel, block_name) in enumerate(PANELS):
-            _panel(axes[row][col], report, site, channel, block_name, plt)
-    legend = _thin_legend(report, sites)
-    fig.suptitle(suptitle + "\narrows: reference → state, in units of the "
-                 "standardising scale; inset: block magnitude R per level with its "
-                 "moving-block 95 % interval" + legend, fontsize=7.0)
-    fig.tight_layout(rect=(0, 0, 1, 0.92))
+        for offset, channel in enumerate(CHANNEL_ORDER):
+            line = row * len(CHANNEL_ORDER) + offset
+            for column, block_name in enumerate(PLATE_COLUMNS):
+                ax = slots[line][column]
+                key = f"{site}/{channel}/{block_name}"
+                drawn["panels"][key] = _panel(ax, report, site, channel,
+                                              block_name, layout, fig)
+                titles[key] = ax._left_title          # `ax.title` is the centre one
+                drawn["panel_order"].append(key)
+    header = fig.suptitle(headline, x=0.006, ha="left", va="top",
+                          y=1.0 - PLATE_TEXT_MM / layout["height_mm"],
+                          fontsize=style.FS["suptitle"])
+    thin = _legend_line(fig, _thin_legend(report, sites))
+    legend = None
+    if thin:
+        legend = fig.text(0.006, 1.0 - PLATE_LEGEND_MM / layout["height_mm"],
+                          thin, ha="left", va="top",
+                          fontsize=style.FS["label"], color="0.35")
+    # --- guards -------------------------------------------------------------
+    # These are the checks a tight bbox hides: with the canvas as the export box
+    # a glyph is either inside it or cut off, and a panel that grew by half a
+    # point collides instead of pushing the frame wider.
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    to_mm = 25.4 / fig.dpi
+    header_box = header.get_window_extent(renderer)
+    rows_here = [("header", header_box)]
+    if legend is not None:
+        rows_here.append(("✱ legend", legend.get_window_extent(renderer)))
+    for name, span in rows_here:
+        if (span.x0 < 0 or span.x1 > fig.bbox.width
+                or span.y0 < 0 or span.y1 > fig.bbox.height):
+            raise RuntimeError("the %s leaves the canvas" % name)
+        if (fig.bbox.width - span.x1) * to_mm < MARGIN_MIN_MM:
+            raise RuntimeError(
+                "the %s stops %.1f mm from the right edge of the canvas: "
+                "shorten it" % (name, (fig.bbox.width - span.x1) * to_mm))
+    if legend is not None:
+        gap = (header_box.y0 - legend.get_window_extent(renderer).y1) * to_mm
+        if gap < 0.4:
+            raise RuntimeError("the header and the ✱ line touch (%.1f mm)" % gap)
+    first_rows = len(CHANNEL_ORDER) * len(PLATE_COLUMNS)
+    top = max(titles[key].get_window_extent(renderer).y1
+              for key in drawn["panel_order"][:first_rows])
+    low = rows_here[-1][1].y0
+    if (low - top) * to_mm < HEADER_CLEAR_MM:
+        raise RuntimeError("the header clears the first row of titles by only "
+                           "%.1f mm" % ((low - top) * to_mm))
+    tight = fig.get_tightbbox(renderer)                       # inches
+    edges = {"left": tight.x0, "right": layout["figsize"][0] - tight.x1,
+             "bottom": tight.y0, "top": layout["figsize"][1] - tight.y1}
+    worst = min(edges.values()) * 25.4
+    if worst < MARGIN_MIN_MM:
+        raise RuntimeError(
+            "the drawn content is %.2f mm from the canvas edge (min %.1f mm): "
+            "re-cut the grid -- do not crop the export" % (worst, MARGIN_MIN_MM))
+    assert_figure_matches_report(report, drawn)
+    translucent = style.alpha_artists(fig)     # counted before they are blended
     out = os.path.join(figdir, f"{stem}.jpg")
-    fig.savefig(out, dpi=FIGURE_DPI, facecolor="white")
+    style.save(fig, out, dpi=PLATE_DPI, eps="blend")
     plt.close(fig)
-    return out
+    return plate_audit(report, drawn, out, tight, edges, translucent, headline,
+                       thin)
 
 
-#: One line per plate title, so a single-asset run reads like the pair's rows.
-PLATE_TITLE = {
-    "lumo": "LUMO tower — OCV reconfiguration against the measured frequency drop",
-    "bautzen": "Bautzen bridge — OCV reconfiguration against the ordinal state "
-               "ladder (paired bridge minus control)",
-    "carola": "Carolabrücke — OCV reconfiguration between the pre- and the "
-               "post-collapse state (support-sized chip, Girder A)",
-    "morandi": "Ponte Morandi — OCV reconfiguration between the pre- and the "
-               "post-collapse state (support-sized chip, one platform track)",
-    "haltern": "Haltern AV9 — OCV reconfiguration between the pre-collapse and the "
-               "post-collapse state (support-sized chip, turbine mast section)",
-    "kdlo": "KDLO media tower — OCV reconfiguration between the standing and the "
-            "rebuilt mast (support-sized chip, DESCENDING only)",
+def plate_audit(report, drawn, fig_path, tight, edges, translucent, headline,
+                thin):
+    """The machine-readable record of a plate, written into the guide.
+
+    It answers what a reader of the file cannot see by looking: how wide each of
+    the three containers really is, what happened to the alpha in the EPS, which
+    numbers each panel pins, and where the labels and the strip ended up.
+    Nothing is recomputed -- these are the values that were drawn.
+    """
+    stem = os.path.splitext(fig_path)[0]
+    layout = drawn["layout"]
+    audit = {
+        "schema": "sds-plate-audit-v1",
+        "figure": os.path.relpath(fig_path, REPO),
+        "headline": headline,
+        "thin_legend": thin or None,
+        "target_width_mm": style.FINAL_WIDTH_MM,
+        "target_height_mm": round(layout["height_mm"], 2),
+        "figsize_inches": [round(layout["figsize"][0], 6),
+                           round(layout["figsize"][1], 6)],
+        "native_dpi": PLATE_DPI,
+        #: Keyed by the ``figure_style`` role, so a check can read its band.
+        "final_font_sizes_pt": {
+            "suptitle": style.FS["suptitle"],
+            "title": style.FS["title"],
+            "label": style.FS["label"],
+            "tick": style.FS["tick"],
+            "annotation": STATE_PT,
+        },
+        "native_width_mm": {}, "native_height_mm": {},
+        "latex_display_width_mm": style.FINAL_WIDTH_MM,
+        "latex_scaling": "the file is 170 mm wide -- included with "
+                         "`width=\\linewidth`; no trim, clip or resizebox",
+        "layout": {
+            "rows": layout["rows"], "columns": layout["columns"],
+            "plane_mm": layout["plane_mm"],
+            "slot_mm": round(layout["slot_mm"], 2),
+            "x_stretch": round(layout["x_stretch"], 4),
+            "grid": {key: round(value, 5)
+                     for key, value in layout["grid"].items()},
+            "reading_order": "rows = experiment x channel (ASC above DESC), "
+                             "columns = block ("
+                             + ", ".join(BLOCK_DISPLAY[name]
+                                         for name in PLATE_COLUMNS) + ")",
+        },
+        "bounds": {
+            "export": "canvas-authorised (figure_style.save); bbox_inches is "
+                      "never 'tight'",
+            "canvas_mm": [round(layout["width_mm"], 2),
+                          round(layout["height_mm"], 2)],
+            "content_mm": [round(tight.width * 25.4, 1),
+                           round(tight.height * 25.4, 1)],
+            "edge_mm": {key: round(value * 25.4, 2)
+                        for key, value in edges.items()},
+            "minimum_edge_mm": MARGIN_MIN_MM,
+        },
+        "eps": {"alpha_artists": len(translucent), "strategy": "blend",
+                "background": "white", "rasterised_artists": 0,
+                "vector_text": "Type 42 (pdf/ps fonttype 42)"},
+        "panel_order": list(drawn["panel_order"]),
+        "panels": {},
+    }
+    for path in (fig_path, stem + ".pdf", stem + ".eps"):
+        info = style.measure(path)
+        audit["native_width_mm"][info["format"]] = round(info["mm"], 2)
+        audit["native_height_mm"][info["format"]] = round(info["height_mm"], 2)
+    for key in drawn["panel_order"]:
+        panel = drawn["panels"][key]
+        audit["panels"][key] = {
+            "title": panel["title"], "empty": panel["empty"],
+            "dims": panel["dims"], "note": panel["note"],
+            "limits": [[round(panel["limits"][0][0], 4),
+                        round(panel["limits"][0][1], 4)],
+                       [round(panel["limits"][1][0], 4),
+                        round(panel["limits"][1][1], 4)]],
+            "states": {state: {"z": {dim: (None if value is None
+                                           else round(value, 6))
+                                     for dim, value in point["z"].items()},
+                               "x": round(point["x"], 6),
+                               "y": round(point["y"], 6),
+                               "R": (None if point["value"] is None
+                                     else round(point["value"], 6)),
+                               "n": point["n"], "thin": point["thin"],
+                               "reference": point["reference"],
+                               "label": point["label"]}
+                       for state, point in panel["points"].items()},
+            "labels": panel["labels"],
+            "strip": ({name: [round(pair[0], 6), round(pair[1], 6)]
+                       for name, pair in panel["strip"].items() if pair}
+                      if panel["strip"] else None),
+            "strip_inset": panel["inset"],
+        }
+    return audit
+
+
+def assert_figure_matches_report(report, drawn):
+    """The plate is the report: same points, same labels, same intervals.
+
+    Runs on every build, so a layout change can never quietly move a value: the
+    drawn marker has to be the JSON's ``z``, the drawn label the JSON's ``R``
+    and ``n``, and the drawn strip the JSON's interval.  A missing panel is a
+    defect too -- an empty cell is drawn, and says that it is empty.
+    """
+    problems = []
+    for key in drawn["panel_order"]:
+        site, channel, block_name = key.split("/")
+        store = report["experiments"][site]
+        panel = drawn["panels"][key]
+        if channel not in store["channels"]:
+            if not panel["empty"]:
+                problems.append(f"{key}: drawn with data, the record has none")
+            continue
+        if panel["empty"]:
+            problems.append(f"{key}: drawn empty, the record has the cell")
+            continue
+        cell = store["channels"][channel]
+        for state in STATES[site]:
+            mark = cell["states"][state]["blocks"][block_name]
+            point = panel["points"].get(state)
+            if point is None:
+                problems.append(f"{key}/{state}: not drawn")
+                continue
+            for dim in panel["dims"]:
+                if point["z"][dim] != mark["z"].get(dim):
+                    problems.append(
+                        f"{key}/{state}: z({dim}) {point['z'][dim]!r} != "
+                        f"{mark['z'].get(dim)!r}")
+            if point["n"] != cell["states"][state].get("n_units"):
+                problems.append(f"{key}/{state}: n {point['n']} != "
+                                f"{cell['states'][state].get('n_units')}")
+            if (point["value"] is None) != (mark["value"] is None):
+                problems.append(f"{key}/{state}: R {point['value']!r} != "
+                                f"{mark['value']!r}")
+            elif (point["value"] is not None
+                  and abs(point["value"] - mark["value"]) > 1e-12):
+                problems.append(f"{key}/{state}: R {point['value']!r} != "
+                                f"{mark['value']!r}")
+            if _num(mark["value"], 2) not in point["label"]:
+                problems.append(f"{key}/{state}: the label does not quote R "
+                                f"({point['label']!r})")
+            if f"n={point['n']}" not in point["label"]:
+                problems.append(f"{key}/{state}: the label does not quote n "
+                                f"({point['label']!r})")
+        strip = cell["blocks"][block_name]["bootstrap"]["ci"]
+        for level, _states, _dose in LEVELS[site]:
+            pair = strip.get(level)
+            got = (panel["strip"] or {}).get(level)
+            if (pair is None) != (got is None):
+                problems.append(f"{key}/{level}: the strip {got} != {pair}")
+            elif pair is not None and any(abs(a - b) > 1e-12
+                                          for a, b in zip(got, pair)):
+                problems.append(f"{key}/{level}: the strip {got} != {pair}")
+    if problems:
+        raise RuntimeError("the plate does not match the report:\n  "
+                           + "\n  ".join(problems))
+
+
+
+
+#: One line per asset's plate header.  On the plate the header states *what is
+#: shown*; the long description (chip, window rule, which states) lives in the
+#: guide, because a 170 mm line at 9 pt holds about 85 characters and a header
+#: that has to be shrunk to fit is a header nobody can read.
+PLATE_HEADLINE = {
+    "lumo": "OCV reconfiguration — LUMO tower, against its own reference state",
+    "bautzen": "OCV reconfiguration — Bautzen bridge, against its own ordinal "
+               "state ladder",
+    "carola": "OCV reconfiguration — Carolabrücke, pre- against post-collapse",
+    "morandi": "OCV reconfiguration — Ponte Morandi, pre- against post-collapse",
+    "haltern": "OCV reconfiguration — Haltern turbine, standing against fallen",
+    "kdlo": "OCV reconfiguration — KDLO mast, standing against rebuilt",
 }
 
-#: The juxtaposition title per registered pair; its stem comes from the site tuple.
-PAIR_TITLE = {
-    DEFAULT_SITES: ("OCV reconfiguration against the controlled state dose — "
-                    "juxtaposition of two assets (each against its own reference; "
-                    "no shared scale)"),
-    BRIDGE_PAIR: ("OCV reconfiguration across a collapse — Carolabrücke and Ponte "
-                  "Morandi side by side (each against its own pre-collapse "
-                  "reference; same window rule, no shared scale)"),
-    TOWER_PAIR: ("OCV reconfiguration across a collapse and a rebuild — Haltern and "
-                 "KDLO side by side (each against its own pre-collapse reference; "
-                 "same window rule, no shared scale; KDLO has no ascending "
-                 "acquisition)"),
+#: The juxtaposition header per registered pair; its stem comes from the site tuple.
+#: The default pair's header names the states as *controlled* and stops there: a
+#: shared scale is what the plate does **not** have, so the title must not read
+#: like a common dose axis the two assets both sit on.
+PAIR_HEADLINE = {
+    DEFAULT_SITES: "OCV reconfiguration across controlled LUMO and Bautzen states",
+    BRIDGE_PAIR: "OCV reconfiguration across a collapse — Carolabrücke and Ponte "
+                 "Morandi (no shared scale)",
+    TOWER_PAIR: "OCV reconfiguration across a collapse and a rebuild — Haltern and "
+                "KDLO (no shared scale)",
 }
 
 
 def make_figure(report, figdir=None):
-    """The plates: the juxtaposition for the pair, one plate per asset otherwise."""
+    """One juxtaposition plate for a registered pair, one plate per asset otherwise.
+
+    A pair writes **one** plate -- the juxtaposition, both assets side by side.
+    The per-asset companions of earlier revisions are no longer written: the
+    figure set of this repository is a fixed list, and the pair's plate already
+    carries each asset's panels.  An asset named alone on ``--sites`` still gets
+    its own plate.
+
+    Returns one audit per plate (see :func:`plate_audit`), each carrying the
+    path of the raster it was measured from, so the guide can print the widths
+    and the caller can name the files without guessing.
+    """
     figdir = figdir or os.path.join(REPO, "figures", "sds")
     os.makedirs(figdir, exist_ok=True)
     sites = tuple(report.get("sites") or DEFAULT_SITES)
     pair = pair_of(sites)
     if pair:
-        plates = [(figure_stem(pair), tuple(pair), PAIR_TITLE[pair])]
-        plates += [(f"fig_sds_ocv_reconfigure_{site}", (site,), PLATE_TITLE[site])
-                   for site in pair]
+        plates = [(figure_stem(pair), tuple(pair), PAIR_HEADLINE[pair])]
     else:
-        plates = [(f"fig_sds_ocv_reconfigure_{site}", (site,), PLATE_TITLE[site])
-                  for site in sites]
-    return [_plate(report, subset, figdir, stem, title)
-            for stem, subset, title in plates]
+        plates = [(f"fig_sds_ocv_reconfigure_{site}", (site,),
+                   PLATE_HEADLINE[site]) for site in sites]
+    return [_plate(report, subset, figdir, stem, headline)
+            for stem, subset, headline in plates]
 
 
-#: How a plate's role reads in the guide, one line per asset.
-PLATE_ROLE = {"lumo": "the tower alone", "bautzen": "the bridge alone",
-              "carola": "the girder alone", "morandi": "the bridge alone",
-              "haltern": "the turbine alone", "kdlo": "the media tower alone"}
+def figure_markdown(report, plates=None):
+    """The panel guide: a pair's juxtaposition, or one plate per asset.
 
-
-def figure_markdown(report):
-    """The panel guide: a pair's three plates, or one plate per asset."""
+    *plates* are the audits :func:`make_figure` returned.  When they are passed,
+    the guide also carries the plate record -- the measured width of all three
+    containers, the rungs that were used and, per panel, the numbers that were
+    drawn -- so the guide and the file cannot drift apart silently.
+    """
     sites = tuple(report.get("sites") or DEFAULT_SITES)
     stem = output_stem(sites)
     pair = pair_of(sites)
     lines = ["# `fig_sds_ocv_reconfigure*.jpg` — panel guide", "",
              f"*generated by `code/sds/ocv_reconfigure.py`; the numbers behind every "
              f"arrow are in `data/sds/{stem}.json`*", "",
-             ("Three plates, two roles:" if pair
+             ("One plate — the juxtaposition of both assets:" if pair
               else "One plate — the asset standing alone:"), "",
              "| file | role |", "| --- | --- |"]
     if pair:
-        lines.append(f"| `{figure_stem(pair)}.jpg` | the juxtaposition — rows = the "
-                     f"two assets, columns = channel × block; the caption says "
-                     f"*no shared scale* |")
-        for site in pair:
-            lines.append(f"| `fig_sds_ocv_reconfigure_{site}.jpg` | "
-                         f"{PLATE_ROLE[site]} ({_panels_note(report, site)}) |")
+        lines.append(f"| `{figure_stem(pair)}.jpg` | the juxtaposition — rows = "
+                     f"experiment × channel (ASC above DESC), columns = block "
+                     f"({' and '.join(BLOCK_DISPLAY[name] for name in PLATE_COLUMNS)}); "
+                     f"every panel has its own plane |")
     else:
         for site in sites:
             lines.append(f"| `fig_sds_ocv_reconfigure_{site}.jpg` | "
@@ -2347,8 +2890,8 @@ def figure_markdown(report):
                      + "), scale "
                      + " / ".join(f"`{block['scale_used'][channel]}`"
                                   for channel in channels_of(report, site))
-                     + f", levels {levels}; behaviour "
-                     f"`[{'`, `'.join(BLOCKS['behaviour'])}]`, geometry "
+                     + f", levels {levels}; {BLOCK_DISPLAY['behaviour']} "
+                     f"`[{'`, `'.join(BLOCKS['behaviour'])}]`, {BLOCK_DISPLAY['geometry']} "
                      f"`[{'`, `'.join(BLOCKS['geometry'])}]` (plane "
                      f"`[{', '.join(GEOMETRY_PLANE)}]`).")
     lines += ["",
@@ -2372,11 +2915,68 @@ def figure_markdown(report):
     if empty:
         lines += ["A panel for a channel the record does not contain is drawn empty "
                   "and says so — " + ", ".join(empty) + " — because the plate keeps "
-                  "its four columns so that the rows stay comparable. It carries no "
-                  "arrow, no inset and no ✱: there is no cell to mark.", ""]
+                  "its two rows per asset so that the assets stay comparable. It "
+                  "carries no arrow, no inset and no ✱: there is no cell to mark.", ""]
     lines += ["Nothing is clipped: the axis limits follow the largest coordinate in "
               "the panel.", ""]
+    lines += _plate_section(plates)
     return "\n".join(lines)
+
+
+def _plate_section(plates):
+    """The plate record: one 170 mm canvas per file, measured after it was written."""
+    if not plates:
+        return []
+    lines = ["## The plate", "",
+             "Every plate is authored at 170 mm — the text width of "
+             "`code/figure_style.py` — and written from that canvas as `.jpg` "
+             f"({PLATE_DPI} dpi), `.pdf` and `.eps`. It is never cropped to its "
+             "content: `figure_style.save()` refuses a layout that does not fit, "
+             "measures all three containers afterwards and aborts on a deviation "
+             "of more than 0.5 mm.", "",
+             "| rung | size | used for |", "| --- | --- | --- |",
+             f"| header | {style.FS['suptitle']:.1f} pt | the one-line headline, "
+             "left-aligned |",
+             f"| panel title | {style.FS['title']:.1f} pt | experiment · channel · "
+             "block · the plane's pair |",
+             f"| axis label | {style.FS['label']:.1f} pt | `z(·)` on both axes |",
+             f"| tick label | {style.FS['tick']:.1f} pt | the plane's ticks and the "
+             "inset's levels |",
+             f"| annotation | {STATE_PT:.1f} pt | the state labels, the `D`/`S` note "
+             "and the inset's `R` |", "",
+             "The plane is square (`aspect=\"equal\"`): the axes are stretched "
+             "horizontally by `slot / plane`, so the units stay equal in both "
+             "directions and the added width is the margin the state labels are "
+             "placed in — outside the data, never over it.", ""]
+    for audit in plates:
+        layout = audit["layout"]
+        lines += [f"### `{os.path.basename(audit['figure'])}`", "",
+                  f"* {layout['rows']} rows × {layout['columns']} columns, plane "
+                  f"{layout['plane_mm']:.0f} mm square in a {layout['slot_mm']:.2f} mm "
+                  f"slot, canvas {audit['bounds']['canvas_mm'][0]:.1f} × "
+                  f"{audit['bounds']['canvas_mm'][1]:.1f} mm.",
+                  f"* measured width: "
+                  + ", ".join(f"{name} {value:.2f} mm"
+                              for name, value in audit["native_width_mm"].items())
+                  + f" (target {audit['target_width_mm']:.1f} mm).",
+                  f"* the drawn content stops "
+                  f"{audit['bounds']['edge_mm']['left']:.2f} / "
+                  f"{audit['bounds']['edge_mm']['right']:.2f} / "
+                  f"{audit['bounds']['edge_mm']['bottom']:.2f} / "
+                  f"{audit['bounds']['edge_mm']['top']:.2f} mm from the left, "
+                  f"right, bottom and top edge.",
+                  f"* the EPS carries the {audit['eps']['alpha_artists']} "
+                  f"translucent artist(s) blended onto white; text stays vector "
+                  f"(Type 42).", ""]
+    lines += ["The audit below is the machine-readable record of the files that were "
+              "written — the widths from the containers themselves, and per panel "
+              "the `z` that was drawn, its `R`, its `n` and its interval. "
+              "`--verify` re-reads it and re-derives every one of those numbers "
+              "from `data/sds/` and the records.", ""]
+    for audit in plates:
+        lines += ["```json", json.dumps(audit, indent=1, ensure_ascii=False), "```",
+                  ""]
+    return lines
 
 
 def _panels_note(report, site):
@@ -2409,7 +3009,7 @@ def _synthetic(site, effect=0.0, n=40, seed=3):
 
 
 def selftest():
-    """The behaviours the metric must have, on synthetic units."""
+    """The behaviors the metric must have, on synthetic units."""
     failures = []
     counted = {"checks": 0}
 
@@ -2587,6 +3187,33 @@ def selftest():
           and comparison_channels(two_records, TOWER_PAIR) == ("DESC",),
           str(shared_channels(two_records, TOWER_PAIR)))
 
+    # 18. the plate's arithmetic: the slots, the gutters and the gap are the canvas
+    for rows in (1, 2, 4):
+        plate = plate_layout(rows)
+        filled = (PLATE_LEFT_MM + plate["columns"] * plate["slot_mm"]
+                  + (plate["columns"] - 1) * PLATE_COL_GAP_MM + PLATE_RIGHT_MM)
+        check(f"a {rows}-row plate's slots fill the canvas exactly",
+              abs(filled - style.FINAL_WIDTH_MM) < 1e-9, f"{filled!r}")
+        check(f"a {rows}-row plate's plane keeps its units",
+              abs(plate["slot_mm"] / plate["x_stretch"] - plate["plane_mm"]) < 1e-9
+              and plate["x_stretch"] > 1.0,
+              f"{plate['slot_mm']!r} / {plate['x_stretch']!r}")
+        check(f"a {rows}-row plate's height is the sum of its bands",
+              abs(plate["height_mm"] - (PLATE_HEADER_MM + PLATE_FOOT_MM
+                                        + rows * plate["plane_mm"]
+                                        + (rows - 1) * PLATE_ROW_GAP_MM)) < 1e-9,
+              f"{plate['height_mm']!r}")
+        check(f"a {rows}-row plate's grid stays inside the canvas",
+              plate["grid"]["left"] < plate["grid"]["right"]
+              and plate["grid"]["bottom"] < plate["grid"]["top"]
+              and 0.0 < plate["grid"]["wspace"] < 0.5,
+              str(plate["grid"]))
+    check("the typography floor is the annotation rung",
+          STATE_PT == style.FS["annotation"] >= 6.0
+          and all(style.FS[rung] > style.FS["annotation"]
+                  for rung in ("tick", "label", "title", "suptitle")),
+          f"{STATE_PT} {style.FS}")
+
     for line in failures:
         print(f"  SELFTEST FAIL {line}")
     print(f"  selftest: {counted['checks']} checks, {len(failures)} failure(s)")
@@ -2672,9 +3299,154 @@ def verify(report):
     return problems
 
 
+#: The containers every plate is written in, in the order the guide lists them.
+PLATE_FORMATS = ("jpg", "pdf", "eps")
+
+
+def verify_plates(report, plates, figure_md):
+    """Re-check the plates against the files on disk and against the report.
+
+    Three separate claims are tested, because each can fail on its own:
+
+    *every container is 170 mm wide* -- measured from the raster's own DPI and
+    from the PDF/EPS bounding box, not from the number the build printed;
+    *the guide quotes the plate that was built* -- the JSON blocks in the
+    markdown are compared field by field with the fresh audits, so a stale or
+    hand-edited guide is a failure rather than a silent inconsistency;
+    *the quoted numbers are the report's* -- every ``z``, ``R``, ``n`` and
+    interval in the guide is looked up in the JSON report and must agree.
+    """
+    problems = []
+    for audit in plates:
+        stem = os.path.splitext(os.path.join(REPO, audit["figure"]))[0]
+        for fmt in PLATE_FORMATS:
+            path = f"{stem}.{fmt}"
+            rel = os.path.relpath(path, REPO)
+            if not os.path.exists(path):
+                problems.append(f"{rel}: missing")
+                continue
+            try:
+                info = style.measure(path)
+            except Exception as exc:  # noqa: BLE001  (any parse failure is a defect)
+                problems.append(f"{rel}: cannot measure ({exc})")
+                continue
+            width = info.get("mm")
+            if width is None:
+                problems.append(f"{rel}: no width in the container")
+            elif abs(width - style.FINAL_WIDTH_MM) > style.WIDTH_TOL_MM:
+                problems.append(f"{rel}: {width:.2f} mm, not "
+                                f"{style.FINAL_WIDTH_MM:.1f} mm")
+            elif abs(width - audit["native_width_mm"].get(fmt, float("nan"))) > 1e-6:
+                problems.append(f"{rel}: {width:.2f} mm, the audit says "
+                                f"{audit['native_width_mm'].get(fmt):.2f} mm")
+    problems += _verify_guide(report, plates, figure_md)
+    return problems
+
+
+def _verify_guide(report, plates, figure_md):
+    """The guide's audit blocks: present, current and faithful to the report."""
+    rel = os.path.relpath(figure_md, REPO)
+    if not os.path.exists(figure_md):
+        return [f"{rel}: missing"]
+    with open(figure_md) as handle:
+        text = handle.read()
+    quoted = []
+    for chunk in re.findall(r"```json\n(.*?)\n```", text, re.S):
+        try:
+            quoted.append(json.loads(chunk))
+        except json.JSONDecodeError as exc:
+            return [f"{rel}: an audit block does not parse ({exc})"]
+    if len(quoted) != len(plates):
+        return [f"{rel}: {len(quoted)} audit block(s) for {len(plates)} plate(s)"]
+    problems = []
+    for audit, stored in zip(plates, quoted):
+        name = os.path.basename(audit["figure"])
+        if stored.get("schema") != audit["schema"]:
+            problems.append(f"{rel}/{name}: schema {stored.get('schema')!r}")
+            continue
+        for field in ("figure", "target_width_mm", "native_width_mm", "layout",
+                      "final_font_sizes_pt", "bounds", "eps"):
+            if stored.get(field) != audit[field]:
+                problems.append(f"{rel}/{name}: {field} has drifted from the plate "
+                                f"that was built "
+                                f"({_first_difference(stored.get(field), audit[field])})")
+        if stored.get("panel_order") != audit["panel_order"]:
+            problems.append(f"{rel}/{name}: the panels are not the plate's")
+            continue
+        problems += _verify_quoted_panels(report, name, stored)
+    return problems
+
+
+def _verify_quoted_panels(report, name, audit):
+    """Every number the guide quotes must still be the report's number."""
+    problems = []
+    for key in audit["panel_order"]:
+        site, channel, block_name = key.split("/")
+        panel = (audit.get("panels") or {}).get(key) or {}
+        store = report["experiments"][site]
+        if channel not in store["channels"]:
+            if not panel.get("empty"):
+                problems.append(f"{name}/{key}: quoted with data, the record has none")
+            continue
+        if panel.get("empty"):
+            problems.append(f"{name}/{key}: quoted empty, the record has the cell")
+            continue
+        cell = store["channels"][channel]
+        for state in STATES[site]:
+            mark = cell["states"][state]["blocks"][block_name]
+            point = (panel.get("states") or {}).get(state)
+            if point is None:
+                problems.append(f"{name}/{key}/{state}: not quoted")
+                continue
+            for dim in panel["dims"]:
+                if not _close(point["z"].get(dim), mark["z"].get(dim)):
+                    problems.append(f"{name}/{key}/{state}: z({dim}) "
+                                    f"{point['z'].get(dim)} vs {mark['z'].get(dim)}")
+            if point["n"] != cell["states"][state].get("n_units"):
+                problems.append(f"{name}/{key}/{state}: n {point['n']} vs "
+                                f"{cell['states'][state].get('n_units')}")
+            if not _close(point["R"], mark["value"]):
+                problems.append(f"{name}/{key}/{state}: R {point['R']} vs "
+                                f"{mark['value']}")
+            if _num(mark["value"], 2) not in point["label"]:
+                problems.append(f"{name}/{key}/{state}: the label does not quote R "
+                                f"({point['label']!r})")
+            if f"n={point['n']}" not in point["label"]:
+                problems.append(f"{name}/{key}/{state}: the label does not quote n "
+                                f"({point['label']!r})")
+        strip = cell["blocks"][block_name]["bootstrap"]["ci"]
+        for level, _states, _dose in LEVELS[site]:
+            want = strip.get(level)
+            got = (panel.get("strip") or {}).get(level)
+            if (want is None) != (got is None):
+                problems.append(f"{name}/{key}/{level}: the strip {got} vs {want}")
+            elif want is not None and not all(_close(a, b)
+                                              for a, b in zip(got, want)):
+                problems.append(f"{name}/{key}/{level}: the strip {got} vs {want}")
+    return problems
+
+
+def _close(a, b, tol=1e-6):
+    """Equal after the rounding the audit applies, or both absent."""
+    if a is None or b is None:
+        return a is None and b is None
+    return abs(a - b) <= tol
+
+
+def _first_difference(got, want, path=""):
+    """A short, addressable description of where two audit values part company."""
+    if isinstance(got, dict) and isinstance(want, dict):
+        for key in list(want) + [k for k in got if k not in want]:
+            if got.get(key) != want.get(key):
+                return _first_difference(got.get(key), want.get(key),
+                                         f"{path}.{key}" if path else str(key))
+        return f"{path or '<root>'}: equal"
+    return f"{path or '<root>'}: {got!r} != {want!r}"
+
+
 def build_parser():
     parser = argparse.ArgumentParser(
-        description=("OCV reconfiguration against the controlled state dose — the "
+        description=("OCV reconfiguration across controlled states — the "
                      "LUMO/Bautzen pair by default, the two collapsed bridges with "
                      "--sites carola,morandi, the two towers with --sites "
                      "haltern,kdlo, or a single asset"))
@@ -2734,19 +3506,27 @@ def main(argv=None):
             return 1
     json_path, md_path, csv_path = write_outputs(report, args.json, args.md,
                                                  args.csv, quiet=args.quiet)
-    figures = make_figure(report, args.figdir)
+    plates = make_figure(report, args.figdir)
     figure_md_name = ("fig_sds_ocv_reconfigure.md" if stem == "ocv_reconfigure"
                       else f"fig_sds_ocv_reconfigure_{'_'.join(sites)}.md")
-    figure_md = os.path.join(os.path.dirname(figures[0]), figure_md_name)
+    figure_md = os.path.join(os.path.dirname(
+        os.path.join(REPO, plates[0]["figure"])), figure_md_name)
     with open(figure_md, "w") as handle:
-        handle.write(figure_markdown(report))
+        handle.write(figure_markdown(report, plates))
+    if args.verify:
+        problems = verify_plates(report, plates, figure_md)
+        for problem in problems:
+            print(f"  VERIFY {problem}")
+        print(f"  verify: {len(problems)} plate problem(s)")
+        if problems:
+            return 1
     if not args.quiet:
-        for path in figures:
-            print(f"  {os.path.relpath(path, REPO)}")
+        for plate in plates:
+            print(f"  {plate['figure']}")
         print(f"  {os.path.relpath(figure_md, REPO)}")
         for site, block in report["reading"]["per_asset"].items():
             for name, verdict in block["verdicts"].items():
-                print(f"  {EXPERIMENT[site]} / {name}: {verdict}")
+                print(f"  {EXPERIMENT[site]} / {BLOCK_DISPLAY[name]}: {verdict}")
         print(f"  comparison: {report['reading']['comparison_role']}")
         for item in report["predictions"]:
             print(f"  {item['key']}: {item['verdict']}")

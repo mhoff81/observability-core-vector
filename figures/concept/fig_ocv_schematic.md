@@ -2,7 +2,7 @@
 
 ![the observability core vector](fig_ocv_schematic.jpg)
 
-One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (86 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
+One plate, three panels, no data. Every other figure in `figures/` is computed from a record and pinned to it; this one is computed from the **definition** the records are measured with, and its job is to say what the core vector is before any site's numbers are read. It therefore has no pins to a table — it has structural checks instead (102 of them, listed below and in `data/concept/fig_ocv_schematic.json`).
 
 ```
 physical asset -> SAR observation geometry -> asset-specific measurement
@@ -58,18 +58,19 @@ The prohibition is mechanical, not editorial: a forbidden-token scan runs over e
 | --- | --- |
 | `concept/fig_ocv_schematic.jpg` | 183 mm × 61 mm, 630 dpi JPEG (quality 95, 4:4:4 subsampling) |
 | `concept/fig_ocv_schematic.pdf` | the same plate as a true vector page (FontType 42; no raster object anywhere in the file) |
+| `concept/fig_ocv_schematic.eps` | the same page in PostScript: alpha pre-blended over white (`figure_style.save_eps`), FontType 42, no raster object, box 183 mm × 61 mm, byte-identical across runs |
 | `concept/fig_ocv_schematic.md` | this report |
-| `../data/concept/fig_ocv_schematic.json` | the drawn geometry, the text inventory, every check and the sha256 of both images |
+| `../data/concept/fig_ocv_schematic.json` | the drawn geometry, the text inventory, every check and the sha256 of all three images |
 
 ```bash
-bash figures/concept/fig_ocv_schematic.sh                  # both images
+bash figures/concept/fig_ocv_schematic.sh                  # all three images
 python3 code/concept/fig_ocv_schematic.py --no-figures     # checks only
 PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 ```
 
 ## The checks
 
-**86 of 86 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the eleven file checks that go with them.)
+**102 of 102 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips all three images and the sixteen file checks that go with them.)
 
 | family | what it pins |
 | --- | --- |
@@ -84,8 +85,8 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 | one W, two panels | the support is **one** polygon definition mapped into (b) and into (c); normalised to its own box it is identical to 1 × 10⁻¹² in both |
 | raster integrity | cells square on the drawn canvas and ≥ 1.5 mm; every echo cell inside `W` and inside the raster; exactly 4 connected regions of 8, 6, 4 and 3 cells; exactly one enclosed hole; density in (5 %, 20 %); the mask's centroid and its peak ≥ 1.5 cells apart — the quantity `S` measures, measured but not drawn |
 | the vector | six components in the order `γ², P, D, F, A, S`; the partition into (γ², P) and (D, F, A, S) proved from the token table; each brace spans its own group's measured extent; the two names clear each other; the row sits inside the panel |
-| determinism | two independent builds render identical pixels and lay the row out byte-identically; the PDF is written without a creation date, so both files are byte-identical across separate runs |
-| the files | JPEG 4539 × 1513 px ± 2 at 630 dpi; the PDF has no `/Subtype /Image`, embeds `/FontFile2`, carries no Type-3 font, and its page box is 183 mm × 61 mm |
+| determinism | two independent builds render identical pixels and lay the row out byte-identically; the PDF is written without a creation date and the EPS without a creation date or output path, so both vector files are byte-identical across separate runs |
+| the files | JPEG 4539 × 1513 px ± 2 at 630 dpi; the PDF has no `/Subtype /Image`, embeds `/FontFile2`, carries no Type-3 font, and its page box is 183 mm × 61 mm; the EPS is an `EPSF-3.0` with the same box, no `/ImageType`, `/FontType 42` and no `%%CreationDate` |
 
 ### Every check, in the order it runs
 
@@ -175,11 +176,29 @@ PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh
 | 82 | the two group names do not run into each other's brace | ok | gap 0.035 |
 | 83 | the equation sits above the braces | ok |  |
 | 84 | the equation does not touch the echo raster | ok |  |
-| 85 | two builds render identical pixels | ok | (1512, 4538, 4) |
-| 86 | two builds lay the OCV row out identically | ok |  |
+| 85 | JPEG width is 183 mm at 630 dpi (4539 px +/- 2) | ok | 4538 px |
+| 86 | JPEG height is 61 mm at 630 dpi (1513 px +/- 2) | ok | 1512 px |
+| 87 | JPEG pixel ratio is 3.000 | ok | 3.00132 |
+| 88 | JPEG carries 630 dpi | ok | (630, 630) |
+| 89 | JPEG is a full-colour raster | ok | RGB |
+| 90 | PDF page contains no raster image | ok |  |
+| 91 | PDF embeds its fonts as TrueType (FontType 42) | ok |  |
+| 92 | PDF has no Type-3 fonts | ok |  |
+| 93 | PDF carries no timestamp (it must be reproducible) | ok |  |
+| 94 | PDF page box is 183 x 61 mm | ok | [0.0, 0.0, 518.7401574803, 172.9133858268] |
+| 95 | re-saving the same figure gives the same JPEG bytes | ok |  |
+| 96 | EPS announces itself as an EPS (EPSF-3.0) | ok | %!PS-Adobe-3.0 EPSF-3.0 |
+| 97 | EPS page box is 183 x 61 mm | ok | [0.0, 0.0, 518.740157, 172.913386] |
+| 98 | EPS is vector (no PostScript image object) | ok |  |
+| 99 | EPS embeds its fonts as TrueType (FontType 42) | ok |  |
+| 100 | EPS carries no timestamp and no output path | ok |  |
+| 101 | two builds render identical pixels | ok | (1512, 4538, 4) |
+| 102 | two builds lay the OCV row out identically | ok |  |
 
 ## Files
 
-- no image was written (`--no-figures`)
+- `fig_ocv_schematic.jpg` — sha256 `94c94bddce41ba3537adc34594d69e5b4a83005de2e11443f3348a275a242b42`
+- `fig_ocv_schematic.pdf` — sha256 `eafc0e62bfa0843fe5b33dcfad68ae24a292cb662466719c8f8edfe66ad1a175`
+- `fig_ocv_schematic.eps` — sha256 `cb8e3153413774ea6499e0552123e438ec6765f267d64d51ed204e39b0919f59`
 
-Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.4.6. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG and PDF.
+Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.5.4. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG, PDF and EPS.

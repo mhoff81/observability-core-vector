@@ -2871,7 +2871,7 @@
       "significant": [
        "DESC"
       ],
-      "verdict": "the pre-to-post contrast in the behaviour block survives the asset's own Holm family on DESC",
+      "verdict": "the pre-to-post contrast in the behavior block survives the asset's own Holm family on DESC",
       "widest_upper_bound": 4.632352998713045
      },
      "geometry": {
@@ -2913,7 +2913,7 @@
      "DESC": "mad"
     },
     "verdicts": {
-     "behaviour": "the pre-to-post contrast in the behaviour block survives the asset's own Holm family on DESC",
+     "behaviour": "the pre-to-post contrast in the behavior block survives the asset's own Holm family on DESC",
      "geometry": "the pre-to-post contrast in the geometry block survives the asset's own Holm family on DESC"
     }
    },
@@ -2943,7 +2943,7 @@
        "DESC": true
       },
       "significant": [],
-      "verdict": "no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+      "verdict": "no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
       "widest_upper_bound": 1.8527887188342729
      },
      "geometry": {
@@ -2983,7 +2983,7 @@
      "DESC": "mad"
     },
     "verdicts": {
-     "behaviour": "no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+     "behaviour": "no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
      "geometry": "no state contrast in the geometry block survives the asset's own Holm family; the point estimate of the step is positive on both channels"
     }
    }
@@ -3190,7 +3190,7 @@
    "Channel": "ASC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Carolabr\u00fccke",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -3201,7 +3201,7 @@
    "Channel": "ASC",
    "Direction": "gamma2- P- | A+ D+ F+ S-",
    "Experiment": "Carolabr\u00fccke",
-   "R_behaviour": 0.22271694994385904,
+   "R_behavior": 0.22271694994385904,
    "R_geometry": 0.17207076919837358,
    "Scale": "mad",
    "State": "post-collapse",
@@ -3212,7 +3212,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Carolabr\u00fccke",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -3223,7 +3223,7 @@
    "Channel": "DESC",
    "Direction": "gamma2+ P- | A- D- F- S+",
    "Experiment": "Carolabr\u00fccke",
-   "R_behaviour": 1.6349400725546495,
+   "R_behavior": 1.6349400725546495,
    "R_geometry": 2.8807501986829154,
    "Scale": "mad",
    "State": "post-collapse",
@@ -3234,7 +3234,7 @@
    "Channel": "ASC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Ponte Morandi",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -3245,7 +3245,7 @@
    "Channel": "ASC",
    "Direction": "gamma2- P+ | A+ D- F+ S-",
    "Experiment": "Ponte Morandi",
-   "R_behaviour": 0.8416431205620265,
+   "R_behavior": 0.8416431205620265,
    "R_geometry": 1.161835034348598,
    "Scale": "mad",
    "State": "post-collapse",
@@ -3256,7 +3256,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Ponte Morandi",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -3267,7 +3267,7 @@
    "Channel": "DESC",
    "Direction": "gamma2+ P+ | A- D- F- S+",
    "Experiment": "Ponte Morandi",
-   "R_behaviour": 0.9834163542164506,
+   "R_behavior": 0.9834163542164506,
    "R_geometry": 0.903966096356362,
    "Scale": "mad",
    "State": "post-collapse",

@@ -23,7 +23,7 @@ LUMO's measured frequency ladder is not used here — not by either asset; it is
 
 * reference `pre-collapse (healthy)`, n_ref = 44 (ASC) / 52 (DESC); scale used = `mad` (ASC) / `mad` (DESC).
 
-| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |
+| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
 | pre-collapse (healthy) | ASC | 44 | 0 | 0 | gamma2=0 P=0 | A=0 D=0 F=0 S=0 | `mad` | ok |
 | post-collapse | ASC | 5 | 0.819 | 0.99 | gamma2- P+ | A- D- F+ S+ | `mad` | thin |
@@ -32,12 +32,12 @@ LUMO's measured frequency ladder is not used here — not by either asset; it is
 
 | channel | block | R by level | ΔR, top step | p (one-sided) | Holm in the asset's family |
 | --- | --- | --- | --- | ---: | ---: |
-| ASC | `behaviour` [gamma2, P] | pre 0 < post 0.819 | 0.438 … 2.55 | 0.585 | 1.000 |
+| ASC | `behavior` [gamma2, P] | pre 0 < post 0.819 | 0.438 … 2.55 | 0.585 | 1.000 |
 | ASC | `geometry` [A, D, F, S] | pre 0 < post 0.99 | 0.284 … 1.64 | 0.182 | 0.729 |
-| DESC | `behaviour` [gamma2, P] | pre 0 < post 0.53 | 0.284 … 1.56 | 0.811 | 1.000 |
+| DESC | `behavior` [gamma2, P] | pre 0 < post 0.53 | 0.284 … 1.56 | 0.811 | 1.000 |
 | DESC | `geometry` [A, D, F, S] | pre 0 < post 1.18 | 0.64 … 3.05 | 0.237 | 0.729 |
 
-**Verdict — Haltern, behaviour**: no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 2.6 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
+**Verdict — Haltern, behavior**: no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 2.6 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
 **Verdict — Haltern, geometry**: no state contrast in the geometry block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 3.1 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
@@ -48,7 +48,7 @@ Haltern has two states and no control track: the turbine came down on 2021-09-29
 
 * reference `pre`, n_ref = 16 (DESC); scale used = `mad` (DESC).
 
-| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |
+| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
 | pre | DESC | 16 | 0 | 0 | gamma2=0 P=0 | A=0 D=0 F=0 S=0 | `mad` | ok |
 | rebuild | DESC | 43 | 1.68 | 21.6 | gamma2- P- | A+ D- F+ S- | `mad` | ok |
@@ -57,10 +57,10 @@ Haltern has two states and no control track: the turbine came down on 2021-09-29
 
 | channel | block | R by level | ΔR, top step | p (one-sided) | Holm in the asset's family |
 | --- | --- | --- | --- | ---: | ---: |
-| DESC | `behaviour` [gamma2, P] | pre 0 < rebuild 1.68 | 0.923 … 5.36 | 0.007 | 0.007 |
+| DESC | `behavior` [gamma2, P] | pre 0 < rebuild 1.68 | 0.923 … 5.36 | 0.007 | 0.007 |
 | DESC | `geometry` [A, D, F, S] | pre 0 < rebuild 21.6 | 9.89 … 64.7 | < 0.001 | < 0.001 |
 
-**Verdict — KDLO, behaviour**: the pre-to-rebuild contrast in the behaviour block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 5.4 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
+**Verdict — KDLO, behavior**: the pre-to-rebuild contrast in the behavior block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 5.4 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
 **Verdict — KDLO, geometry**: the pre-to-rebuild contrast in the geometry block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 65 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
@@ -73,15 +73,15 @@ Not a hypothesis and not a test: the cosine of the two standardised response vec
 
 | channel | block | cosine | 95 % CI | sign agreement | null p | Haltern | KDLO |
 | --- | --- | ---: | --- | --- | ---: | --- | --- |
-| DESC | `behaviour` [gamma2, P] | 0.0608 | [-0.96, 0.791] | 1/2 | 0.960 | gamma2+ P- | gamma2- P- |
+| DESC | `behavior` [gamma2, P] | 0.0608 | [-0.96, 0.791] | 1/2 | 0.960 | gamma2+ P- | gamma2- P- |
 | DESC | `geometry` [A, D, F, S] | 0.147 | [-0.974, 0.357] | 3/4 | 0.817 | A+ D+ F+ S- | A+ D- F+ S- |
 
-`null p` is the share of random directions in 3 (or 2) dimensions whose absolute cosine is at least as large — a guard against a coarse direction space, not a significance claim. γ² is the same exported quantity in the two chips but measured on different structures at different dates, which is why the two dimensions of the behaviour block are also printed one by one (`z` per asset). The geometry block carries four dimensions while its plane shows two: `R_geometry` is the RMS over `A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not morphology) are annotated beside the plane rather than drawn as axes.
+`null p` is the share of random directions in 3 (or 2) dimensions whose absolute cosine is at least as large — a guard against a coarse direction space, not a significance claim. γ² is the same exported quantity in the two chips but measured on different structures at different dates, which is why the two dimensions of the behavior block are also printed one by one (`z` per asset). The geometry block carries four dimensions while its plane shows two: `R_geometry` is the RMS over `A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not morphology) are annotated beside the plane rather than drawn as axes.
 
 ### Two verdicts, read together
 
-* **Haltern** — ASC behaviour `R` = 0.819, Holm 1.000; ASC geometry `R` = 0.99, Holm 0.729; DESC behaviour `R` = 0.53, Holm 1.000; DESC geometry `R` = 1.18, Holm 0.729. Resolves no cell at Holm < 0.05.
-* **KDLO** — DESC behaviour `R` = 1.68, Holm 0.007; DESC geometry `R` = 21.6, Holm < 0.001. Resolves DESC behaviour, DESC geometry at Holm < 0.05.
+* **Haltern** — ASC behavior `R` = 0.819, Holm 1.000; ASC geometry `R` = 0.99, Holm 0.729; DESC behavior `R` = 0.53, Holm 1.000; DESC geometry `R` = 1.18, Holm 0.729. Resolves no cell at Holm < 0.05.
+* **KDLO** — DESC behavior `R` = 1.68, Holm 0.007; DESC geometry `R` = 21.6, Holm < 0.001. Resolves DESC behavior, DESC geometry at Holm < 0.05.
 
 None of the 2 cells shares a direction: in every one the cosine is not positive or the signs disagree in at least one dimension. The closest is DESC geometry, cosine 0.147 [-0.974, 0.357] with 3/4 signs equal (null p 0.817) — a cosine that does not carry the block's dimensions with it.
 
@@ -107,7 +107,7 @@ A unit is dropped for one dimension only when the transformed value is undefined
 
 * **One section of one mast, no control.** The support-sized chip is the `turbine-mast-section` of a single AV9 turbine and the table carries no control track, so the post-collapse signature is confounded with the calendar — unlike Bautzen, whose bridge-minus-control difference removes what the two tracks share.
 * **A thin post-collapse cell.** It holds 5 ASC and 6 DESC units against 44 ASC and 52 DESC pre-collapse ones; ASC sits below the six-unit threshold the `Support` column calls `thin`. With this many post-collapse overpasses a null is a statement about what the data can resolve, not about the structure.
-* **`gamma2_mask`, not `gamma2_export`.** The behaviour block uses the masked coherence the window rule defines; the asset-point export the same table carries is a single point of the scene, not the site's masked coherence, and is not used.
+* **`gamma2_mask`, not `gamma2_export`.** The behavior block uses the masked coherence the window rule defines; the asset-point export the same table carries is a single point of the scene, not the site's masked coherence, and is not used.
 * **No ordering claim.** `pre` and `post` are one binary event, so only the two-group version of the ordered test is reported.
 * **A rebuild, not a ruin.** KDLO's second state is the mast as rebuilt, not the mast as collapsed, so a response there is the difference between two structures — the standing one and its replacement — and not a damage state. Nothing here reads severity off the size of `ΔR`.
 * **One channel, half the tests.** The record carries no ASCENDING acquisition, so every cell is a DESC cell: two H1 tests for the asset instead of four, and two cosine cells instead of four. The missing channel is declared in the JSON (`channels_absent`) and drawn as an empty panel; it is never a null.

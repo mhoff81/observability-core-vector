@@ -21,7 +21,7 @@ LUMO's measured frequency ladder is not used here — not by either asset; it is
 
 * reference `pre-collapse (healthy)`, n_ref = 124 (ASC) / 60 (DESC); scale used = `mad` (ASC) / `mad` (DESC).
 
-| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |
+| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
 | pre-collapse (healthy) | ASC | 124 | 0 | 0 | gamma2=0 P=0 | A=0 D=0 F=0 S=0 | `mad` | ok |
 | post-collapse | ASC | 166 | 0.223 | 0.172 | gamma2- P- | A+ D+ F+ S- | `mad` | ok |
@@ -30,12 +30,12 @@ LUMO's measured frequency ladder is not used here — not by either asset; it is
 
 | channel | block | R by level | ΔR, top step | p (one-sided) | Holm in the asset's family |
 | --- | --- | --- | --- | ---: | ---: |
-| ASC | `behaviour` [gamma2, P] | pre 0 < post 0.223 | 0.0618 … 0.545 | 0.729 | 1.000 |
+| ASC | `behavior` [gamma2, P] | pre 0 < post 0.223 | 0.0618 … 0.545 | 0.729 | 1.000 |
 | ASC | `geometry` [A, D, F, S] | pre 0 < post 0.172 | 0.0643 … 0.552 | 0.999 | 1.000 |
-| DESC | `behaviour` [gamma2, P] | pre 0 < post 1.63 | 0.731 … 4.63 | < 0.001 | < 0.001 |
+| DESC | `behavior` [gamma2, P] | pre 0 < post 1.63 | 0.731 … 4.63 | < 0.001 | < 0.001 |
 | DESC | `geometry` [A, D, F, S] | pre 0 < post 2.88 | 1.52 … 4.26 | < 0.001 | < 0.001 |
 
-**Verdict — Carolabrücke, behaviour**: the pre-to-post contrast in the behaviour block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 4.6 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
+**Verdict — Carolabrücke, behavior**: the pre-to-post contrast in the behavior block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 4.6 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
 **Verdict — Carolabrücke, geometry**: the pre-to-post contrast in the geometry block survives the asset's own Holm family on DESC. Its own interval still covers a top-step change of up to 4.3 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
@@ -46,7 +46,7 @@ Carola has two states and no control track: `pre` and `post` are separated by th
 
 * reference `pre-collapse (healthy)`, n_ref = 91 (ASC) / 107 (DESC); scale used = `mad` (ASC) / `mad` (DESC).
 
-| State | Channel | n | R_behaviour | R_geometry | Direction | Scale | Support |
+| State | Channel | n | R_behavior | R_geometry | Direction | Scale | Support |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
 | pre-collapse (healthy) | ASC | 91 | 0 | 0 | gamma2=0 P=0 | A=0 D=0 F=0 S=0 | `mad` | ok |
 | post-collapse | ASC | 3✱ | 0.842 | 1.16 | gamma2- P+ | A+ D- F+ S- | `mad` | thin |
@@ -55,12 +55,12 @@ Carola has two states and no control track: `pre` and `post` are separated by th
 
 | channel | block | R by level | ΔR, top step | p (one-sided) | Holm in the asset's family |
 | --- | --- | --- | --- | ---: | ---: |
-| ASC | `behaviour` [gamma2, P] | pre 0 < post 0.842 | 0.494 … 1.21 | 0.786 | 1.000 |
+| ASC | `behavior` [gamma2, P] | pre 0 < post 0.842 | 0.494 … 1.21 | 0.786 | 1.000 |
 | ASC | `geometry` [A, D, F, S] | pre 0 < post 1.16 | 0.942 … 2.17 | 0.629 | 1.000 |
-| DESC | `behaviour` [gamma2, P] | pre 0 < post 0.983 | 0.426 … 1.85 | 0.199 | 0.797 |
+| DESC | `behavior` [gamma2, P] | pre 0 < post 0.983 | 0.426 … 1.85 | 0.199 | 0.797 |
 | DESC | `geometry` [A, D, F, S] | pre 0 < post 0.904 | 0.226 … 1.71 | 0.498 | 1.000 |
 
-**Verdict — Ponte Morandi, behaviour**: no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 1.9 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
+**Verdict — Ponte Morandi, behavior**: no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 1.9 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
 **Verdict — Ponte Morandi, geometry**: no state contrast in the geometry block survives the asset's own Holm family; the point estimate of the step is positive on both channels. Its own interval still covers a top-step change of up to 2.2 R-units, so what the asset **excludes** for this block is bounded by that number, and nothing smaller.
 
@@ -73,17 +73,17 @@ Not a hypothesis and not a test: the cosine of the two standardised response vec
 
 | channel | block | cosine | 95 % CI | sign agreement | null p | Carolabrücke | Ponte Morandi |
 | --- | --- | ---: | --- | --- | ---: | --- | --- |
-| ASC | `behaviour` [gamma2, P] | -0.0499 | [-0.981, 0.992] | 1/2 | 0.967 | gamma2- P- | gamma2- P+ |
+| ASC | `behavior` [gamma2, P] | -0.0499 | [-0.981, 0.992] | 1/2 | 0.967 | gamma2- P- | gamma2- P+ |
 | ASC | `geometry` [A, D, F, S] | -0.0156 | [-0.552, 0.414] | 3/4 | 0.979 | A+ D+ F+ S- | A+ D- F+ S- |
-| DESC | `behaviour` [gamma2, P] | -0.0392 | [-0.999, 0.885] | 1/2 | 0.974 | gamma2+ P- | gamma2+ P+ |
+| DESC | `behavior` [gamma2, P] | -0.0392 | [-0.999, 0.885] | 1/2 | 0.974 | gamma2+ P- | gamma2+ P+ |
 | DESC | `geometry` [A, D, F, S] | 0.829 | [-0.962, 0.971] | 4/4 | 0.083 | A- D- F- S+ | A- D- F- S+ |
 
-`null p` is the share of random directions in 3 (or 2) dimensions whose absolute cosine is at least as large — a guard against a coarse direction space, not a significance claim. γ² is the same exported quantity in the two chips but measured on different structures at different dates, which is why the two dimensions of the behaviour block are also printed one by one (`z` per asset). The geometry block carries four dimensions while its plane shows two: `R_geometry` is the RMS over `A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not morphology) are annotated beside the plane rather than drawn as axes.
+`null p` is the share of random directions in 3 (or 2) dimensions whose absolute cosine is at least as large — a guard against a coarse direction space, not a significance claim. γ² is the same exported quantity in the two chips but measured on different structures at different dates, which is why the two dimensions of the behavior block are also printed one by one (`z` per asset). The geometry block carries four dimensions while its plane shows two: `R_geometry` is the RMS over `A, D, F, S`, and `D` (which partly inherits `A`) and `S` (position, not morphology) are annotated beside the plane rather than drawn as axes.
 
 ### Two verdicts, read together
 
-* **Carolabrücke** — ASC behaviour `R` = 0.223, Holm 1.000; ASC geometry `R` = 0.172, Holm 1.000; DESC behaviour `R` = 1.63, Holm < 0.001; DESC geometry `R` = 2.88, Holm < 0.001. Resolves DESC behaviour, DESC geometry at Holm < 0.05.
-* **Ponte Morandi** — ASC behaviour `R` = 0.842, Holm 1.000; ASC geometry `R` = 1.16, Holm 1.000; DESC behaviour `R` = 0.983, Holm 0.797; DESC geometry `R` = 0.904, Holm 1.000. Resolves no cell at Holm < 0.05.
+* **Carolabrücke** — ASC behavior `R` = 0.223, Holm 1.000; ASC geometry `R` = 0.172, Holm 1.000; DESC behavior `R` = 1.63, Holm < 0.001; DESC geometry `R` = 2.88, Holm < 0.001. Resolves DESC behavior, DESC geometry at Holm < 0.05.
+* **Ponte Morandi** — ASC behavior `R` = 0.842, Holm 1.000; ASC geometry `R` = 1.16, Holm 1.000; DESC behavior `R` = 0.983, Holm 0.797; DESC geometry `R` = 0.904, Holm 1.000. Resolves no cell at Holm < 0.05.
 
 Of the 4 cells, exactly one shares a direction: DESC geometry, cosine 0.829 [-0.962, 0.971], 4/4 signs equal (`A- D- F- S+` in Carolabrücke, `A- D- F- S+` in Ponte Morandi), null p 0.083 — an interval that still covers zero, so the agreement is in the signs and not in the size.
 

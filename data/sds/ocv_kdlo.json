@@ -718,7 +718,7 @@
       "significant": [
        "DESC"
       ],
-      "verdict": "the pre-to-rebuild contrast in the behaviour block survives the asset's own Holm family on DESC",
+      "verdict": "the pre-to-rebuild contrast in the behavior block survives the asset's own Holm family on DESC",
       "widest_upper_bound": 5.360641545683071
      },
      "geometry": {
@@ -749,7 +749,7 @@
      "DESC": "mad"
     },
     "verdicts": {
-     "behaviour": "the pre-to-rebuild contrast in the behaviour block survives the asset's own Holm family on DESC",
+     "behaviour": "the pre-to-rebuild contrast in the behavior block survives the asset's own Holm family on DESC",
      "geometry": "the pre-to-rebuild contrast in the geometry block survives the asset's own Holm family on DESC"
     }
    }
@@ -955,7 +955,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "KDLO",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre",
@@ -966,7 +966,7 @@
    "Channel": "DESC",
    "Direction": "gamma2- P- | A+ D- F+ S-",
    "Experiment": "KDLO",
-   "R_behaviour": 1.6818253046840625,
+   "R_behavior": 1.6818253046840625,
    "R_geometry": 21.5808023446322,
    "Scale": "mad",
    "State": "rebuild",

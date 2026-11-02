@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Espoo on the **chip** — the OCV vector of the 75 support chips.
 
-This is a second instrument beside ``fig_espoo_ocv_orbits.py``, and the two are
-not interchangeable:
+This is a second instrument beside the site's pipeline figure (retired; its
+frozen lock survives as ``data/espoo/fig_espoo_ocv_orbits.json`` and its export
+as ``data/espoo/espoo_channels.csv``), and the two are not interchangeable:
 
 * the pipeline figure reads the committed export (``coherence_gamma2``,
   ``coherence_masked_pixels``, ...) over 150 overpasses;
@@ -41,9 +42,23 @@ Usage
 
 Outputs
 -------
-  figures/espoo/fig_espoo_ocv_chips.jpg   (630 dpi JPEG)
-  figures/espoo/fig_espoo_ocv_chips.md
+  figures/espoo/fig_espoo_ocv_chips.jpg   (630 dpi JPEG, the 170 mm canvas)
+  figures/espoo/fig_espoo_ocv_chips.pdf   (vector, Type-42 text: the LaTeX copy)
+  figures/espoo/fig_espoo_ocv_chips.eps   (vector, alpha pre-blended over white)
+  figures/espoo/fig_espoo_ocv_chips.md    (the caption and the figure audit)
   data/espoo/fig_espoo_ocv_chips.json
+
+The plate
+---------
+One authored canvas of 170 mm (:data:`figure_style.COL_WIDTH`) and three rows of
+two panels, exported **whole**.  ``bbox_inches="tight"`` would make the file as
+wide as the layout happens to be and shrink every glyph with it, so the bounds
+are *asserted* instead of cropped: the canvas is the print width, and the drawn
+content has to stay inside it with a visible margin
+(:func:`figure_style.assert_fits`).  The audit that records this -- target and
+native width, ``figsize``, dpi, the final point sizes, the EPS alpha policy and
+one pinned row per panel and track -- is written into the ``.md`` beside the
+caption, so the scientific JSON stays exactly what it was.
 """
 from __future__ import annotations
 
@@ -53,28 +68,33 @@ import datetime as dt
 import json
 import math
 import os
+import shutil
 import sys
+import tempfile
 
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
-for path in (HERE, os.path.join(REPO, "code", "lumo")):
+for path in (HERE, os.path.join(REPO, "code"), os.path.join(REPO, "code", "lumo")):
     if path not in sys.path:
         sys.path.insert(0, path)
 
 import espoo_ocv_stats as st  # noqa: E402
+import figure_style as style  # noqa: E402
 from lumo_ocv_stats import cliffs_delta  # noqa: E402
 
 SCHEMA = "espoo-ocv-chips-v1"
 SITE = "espoo"
 LABEL = "Espoo mast (OSM 2233589804) — support chips"
 TABLE = os.path.join(REPO, "data", SITE, "support", f"{SITE}_ocv_channels.csv")
-#: 630 dpi JPEG, like the shared orbit family in code/orbits/
+#: 630 dpi JPEG, like the other companion plates of this repository
 FIG_DPI = 630
 OUT_FIG = os.path.join(REPO, "figures", SITE, "fig_espoo_ocv_chips.jpg")
 OUT_MD = os.path.join(REPO, "figures", SITE, "fig_espoo_ocv_chips.md")
 OUT_JSON = os.path.join(REPO, "data", SITE, "fig_espoo_ocv_chips.json")
+OUT_PDF = os.path.splitext(OUT_FIG)[0] + ".pdf"
+OUT_EPS = os.path.splitext(OUT_FIG)[0] + ".eps"
 
 DIMS = {
     "A": ("A", "masked cells (echo area)", False),
@@ -89,6 +109,55 @@ ORBITS = (("ASCENDING", "ASC R160", "#2b6cb0"),
 BLOCK = 5
 BOOT = 2000
 SEED = 13
+
+
+# ---------------------------------------------------------------------------
+# The plate: one 170 mm canvas, authored and asserted, never cropped
+# ---------------------------------------------------------------------------
+#: Canvas in inches.  ``style.COL_WIDTH`` is exactly 170 mm; the height is what
+#: three rows of two panels need once the statistics band, the date labels and
+#: the one-line header are paid for -- six panels of 74.6 x 45.7 mm.
+PLATE_IN = (style.COL_WIDTH, 7.55)
+PLATE_DPI = FIG_DPI
+#: Grid fractions.  ``wspace`` is set by the widest y tick label of the right
+#: column ("0.175"): it has to clear the left panel by >= 1.5 mm.  ``hspace``
+#: is set by the two statistics rows plus the date labels of the row below.
+PLATE_GRID = dict(left=0.055, right=0.994, top=0.915, bottom=0.048,
+                  wspace=0.15, hspace=0.336)
+#: The one-line header.  Counts, dates, orbit ids and the trend semantics live
+#: in the caption: the plate states what it shows, nothing about the pipeline.
+HEADER = "Espoo mast — OCV trajectories by acquisition track"
+#: How each dimension is labelled on the plate: canonical term, unit in
+#: parentheses, and no column name -- ``gamma2_mask`` is the coherence
+#: ``gamma**2``, in math text, because that is what it measures.
+PANEL_LABEL = {
+    "A": "A — observable area (cells)",
+    "D": "D — density (fraction of bbox)",
+    "F": "F — fragmentation (components)",
+    "S": "S — spatial shift (cells)",
+    "P": "P — persistence (pixel frequency)",
+    "gamma2_mask": r"$\gamma^2$ — coherence",
+}
+#: Reading order of the panels -- pinned by the audit and by the caption.
+PANEL_ORDER = tuple(DIMS)
+#: One fixed statistics band above every axes: DESC above, ASC second,
+#: flush with the left spine, identical in all six panels.  Points from the
+#: axes top; ``TITLE_PAD`` leaves ~4 mm between the DESC row and the title.
+STAT_PT = 6.6
+STAT_ROW = {"DESCENDING": 10.0, "ASCENDING": 1.0}
+TITLE_PAD = 20.0
+#: Marks, sized for the final 170 mm plate: a white edge keeps the outline of a
+#: 3.6 pt dot visible, the trend line is heavier than the grid but lighter than
+#: the markers (the markers are drawn on top of it).
+MARKER_PT = 3.6
+MARKER_EDGE_PT = 0.5
+TREND_LW = 1.2
+GRID_ALPHA = 0.18
+GRID_LW = 0.5
+#: The drawn content must stay this far inside the canvas: the raster is
+#: written from the canvas, so a glyph at the edge would be clipped -- a tight
+#: bbox would have hidden that by cropping, which is the defect it must not be.
+MARGIN_MIN_MM = 0.3
 
 
 # ---------------------------------------------------------------------------
@@ -290,64 +359,313 @@ def analyse(table=None, boot=BOOT):
 # ---------------------------------------------------------------------------
 # The figure
 # ---------------------------------------------------------------------------
+def statistics_line(block):
+    """One statistics row: slope, interval, MK p, verdict -- nothing else.
+
+    The words that would not fit beside a 74 mm panel at 6.6 pt ("slope",
+    "95% interval", "Mann-Kendall") are in the caption; the row itself is one
+    line of numbers, formatted identically in all six panels and both tracks.
+    ``trend`` is the ported flag rule firing, ``flat`` is it not firing -- the
+    same word the console report uses.
+    """
+    slope = block.get("theil_sen_per_year")
+    ci = block.get("slope_ci95_per_year") or [float("nan"), float("nan")]
+    p = (block.get("mann_kendall") or {}).get("p")
+    flagged = "trend" in (block.get("flags") or [])
+    track = (block.get("orbit_label") or "").split()
+    return (f"{(track[0] if track else '---')} {slope:+.3g}/a "
+            f"[{ci[0]:+.3g}, {ci[1]:+.3g}] p {_p(p)} "
+            f"{'trend' if flagged else 'flat'}")
+
+
+def trend_endpoints(block, series):
+    """The Theil-Sen line exactly as it is drawn: first date to last date."""
+    x = np.array([day for day, _value in series], float)
+    y = np.array([value for _day, value in series], float)
+    per_day = block["theil_sen_per_year"] / 365.25
+    intercept = float(np.median(y - per_day * x))
+    xs = np.array([x.min(), x.max()])
+    return xs, intercept + per_day * xs
+
+
 def make_figure(report, rows, fig_path=None):
+    """Draw the 170 mm plate, write jpg + pdf + eps; return ``(audit, drawn)``.
+
+    Nothing here decides a scientific value: every number comes from *report*,
+    every point from *rows*, and the two are cross-checked before the file is
+    written (:func:`assert_figure_matches_report`).
+    """
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.dates as mdates
-    import matplotlib.pyplot as plt
+    plt = style.apply(dpi=PLATE_DPI)
+    from matplotlib.transforms import offset_copy
 
     fig_path = fig_path or OUT_FIG
     os.makedirs(os.path.dirname(os.path.abspath(fig_path)), exist_ok=True)
-    fig, axes = plt.subplots(3, 2, figsize=(11.0, 9.6), dpi=110)
-    axes = axes.ravel()
-    for index, dim in enumerate(DIMS):
+    # The canvas is authored, not measured from the content: 170 mm is the
+    # print width, and the six panels are 74.6 x 45.7 mm inside it.  A tight
+    # bbox would re-cut this after the fact and shrink every glyph with it.
+    fig, grid = plt.subplots(3, 2, figsize=PLATE_IN)
+    fig.subplots_adjust(**PLATE_GRID)
+    axes = list(grid.ravel())
+    stats_rows = {}          # per axes, for the clearance guards below
+    titles = {}              # the left-aligned panel title, for the same reason
+    drawn = {"panel_order": list(PANEL_ORDER), "panels": {}}
+    for index, dim in enumerate(PANEL_ORDER):
         ax = axes[index]
+        ax.set_axisbelow(True)
+        ax.grid(alpha=GRID_ALPHA, lw=GRID_LW)
+        tracks = {}
         for orbit, name, colour in ORBITS:
             series = series_for(rows, orbit, dim)
-            if not series:
-                continue
-            dates = [dt.date.fromordinal(int(day)) for day, _v in series]
-            values = [value for _d, value in series]
-            ax.plot(dates, values, linestyle="none", marker="o", ms=2.8,
-                    mfc=colour, mec="white", mew=0.25, alpha=0.85,
-                    label=f"{name} (n={len(values)})")
             block = report["drift"][dim].get(orbit) or {}
-            slope = block.get("theil_sen_per_year")
-            if slope is None:
+            if not series or not block.get("available"):
                 continue
-            x = np.array([day for day, _v in series], float)
-            y = np.array(values, float)
-            per_day = slope / 365.25
-            intercept = float(np.median(y - per_day * x))
-            xs = np.array([x.min(), x.max()])
+            dates = [dt.date.fromordinal(int(day)) for day, _value in series]
+            values = [value for _day, value in series]
+            # Markers above the trend line: the observations are the data, the
+            # line is the summary, so the dots must not be crossed by it.
+            ax.plot(dates, values, linestyle="none", marker="o", ms=MARKER_PT,
+                    mfc=colour, mec="white", mew=MARKER_EDGE_PT, alpha=0.9,
+                    zorder=4, label=f"{name} (n={len(values)})")
+            xs, ys = trend_endpoints(block, series)
             flagged = "trend" in (block.get("flags") or [])
-            ax.plot([dt.date.fromordinal(int(v)) for v in xs],
-                    intercept + per_day * xs, color=colour, lw=1.2,
-                    ls="-" if flagged else "--", alpha=0.9, zorder=3)
-            ci = block.get("slope_ci95_per_year") or [float("nan"), float("nan")]
-            ax.text(0.02, 0.97,
-                    f"{name}: slope {slope:+.3g}/a [{ci[0]:+.3g}, {ci[1]:+.3g}]\n"
-                    f"MK p {block['mann_kendall'].get('p')!s:.3} "
-                    f"{'trend' if flagged else 'no trend'}",
-                    transform=ax.transAxes, va="top", ha="left", fontsize=4.6,
-                    color=colour)
-        ax.set_title(f"{dim} — {DIMS[dim][1]}", fontsize=7.2)
-        ax.tick_params(labelsize=5.0)
-        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+            ax.plot([dt.date.fromordinal(int(v)) for v in xs], ys, color=colour,
+                    lw=TREND_LW, ls="-" if flagged else "--", alpha=0.9, zorder=3)
+            tracks[orbit] = {
+                "n": len(values),
+                "first": dates[0].isoformat(),
+                "last": dates[-1].isoformat(),
+                "median": float(np.median(values)),
+                "values": [[int(day), float(value)] for day, value in series],
+                "trend": {"x": [float(xs[0]), float(xs[1])],
+                          "y": [float(ys[0]), float(ys[1])],
+                          "flagged": flagged},
+            }
+        drawn["panels"][dim] = {"label": PANEL_LABEL[dim], "tracks": tracks}
+        # One fixed band per panel: DESC above, ASC second, flush with the left
+        # spine -- the same rule in all six, so the panels can be compared.
+        stats_rows[ax] = [
+            ax.text(0.0, 1.0, statistics_line(report["drift"][dim][orbit]),
+                    transform=offset_copy(ax.transAxes, fig=fig,
+                                          y=STAT_ROW[orbit], units="points"),
+                    va="bottom", ha="left", fontsize=STAT_PT, color=colour,
+                    clip_on=False)
+            for orbit, _name, colour in ORBITS
+            if (report["drift"][dim].get(orbit) or {}).get("available")]
+        # ``set_title`` returns the artist, and a left title is not ``ax.title``:
+        # the guards need the box that is actually drawn.
+        titles[ax] = ax.set_title(PANEL_LABEL[dim], loc="left", pad=TITLE_PAD,
+                                  fontsize=style.FS["title"])
+        ax.tick_params(labelsize=style.FS["tick"], length=2.4, width=0.5, pad=2)
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=4, maxticks=6))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-        ax.grid(alpha=0.18, lw=0.4)
-        ax.legend(fontsize=4.6, loc="lower right", frameon=False)
-    fig.suptitle(
-        f"{report['label']} — {report['table']['n_rows']} chips, two tracks, "
-        "no states\n"
-        f"{report['dates'][0]} … {report['dates'][1]}; ASC = relative orbit 160, "
-        f"DESC = 51; {report['shared_dates']} shared dates\n"
-        "solid trend = ported flag rule says trend, dashed = it does not",
-        fontsize=7.2)
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
-    fig.savefig(fig_path, dpi=FIG_DPI, facecolor="white")
+    for ax in axes[3:]:                 # one date label per column, at the foot
+        ax.set_xlabel("acquisition date", fontsize=style.FS["label"])
+    # One figure legend, frameless, at the right end of the header line: the
+    # counts belong to the track, not to a panel, and six small legends were
+    # six places to read the same two numbers.
+    handles = [plt.Line2D([], [], marker="o", linestyle="none", ms=MARKER_PT,
+                          mfc=colour, mec="white", mew=MARKER_EDGE_PT,
+                          label=f"{name} (n={report['by_orbit'][orbit]})")
+               for orbit, name, colour in ORBITS]
+    legend = fig.legend(handles=handles, loc="upper right", ncol=2,
+                        bbox_to_anchor=(PLATE_GRID["right"], 0.996),
+                        frameon=False, fontsize=style.FS["legend"],
+                        handletextpad=0.4, columnspacing=1.4,
+                        borderaxespad=0.0, labelspacing=0.2)
+    header = fig.suptitle(HEADER, x=0.006, y=0.996, ha="left", va="top",
+                          fontsize=style.FS["suptitle"])
+    # --- guards -------------------------------------------------------------
+    # These are the checks a tight bbox hides: with the canvas as the export
+    # box, a glyph at the edge is either inside it or cut off, and a band that
+    # grew by half a point collides instead of pushing the frame wider.
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    to_mm = 25.4 / fig.dpi
+    for ax in axes:
+        box = ax.get_window_extent(renderer)
+        rows_here = stats_rows.get(ax) or []
+        for artist in rows_here:
+            span = artist.get_window_extent(renderer)
+            if span.x0 < box.x0 or span.x1 > box.x1:
+                raise RuntimeError(
+                    "%r: the statistics line runs %.1f mm past the axes edge"
+                    % (titles[ax].get_text(),
+                       max(box.x0 - span.x0, span.x1 - box.x1) * to_mm))
+        if rows_here:
+            top = max(a.get_window_extent(renderer).y1 for a in rows_here)
+            if titles[ax].get_window_extent(renderer).y0 < top + 0.5:
+                raise RuntimeError("%r: the title touches the DESC row"
+                                   % titles[ax].get_text())
+    header_box = header.get_window_extent(renderer)
+    legend_box = legend.get_window_extent(renderer)
+    gap = (legend_box.x0 - header_box.x1) * to_mm
+    if gap < 2.0:
+        raise RuntimeError("the header and the legend leave no gap (%.1f mm): "
+                           "shorten the header" % gap)
+    for name, span in (("header", header_box), ("legend", legend_box)):
+        if (span.x0 < 0 or span.x1 > fig.bbox.width
+                or span.y0 < 0 or span.y1 > fig.bbox.height):
+            raise RuntimeError("the %s leaves the canvas" % name)
+    title_top = max(titles[ax].get_window_extent(renderer).y1 for ax in axes)
+    if (header_box.y0 - title_top) * to_mm < 1.5:
+        raise RuntimeError("the header clears the panel titles by only %.1f mm"
+                           % ((header_box.y0 - title_top) * to_mm))
+    for dim in PANEL_ORDER:
+        for orbit, name, _colour in ORBITS:
+            track = drawn["panels"][dim]["tracks"].get(orbit)
+            if track and track["n"] != report["by_orbit"][orbit]:
+                raise RuntimeError(
+                    "%s/%s: %d points drawn, the legend says n=%d"
+                    % (dim, name, track["n"], report["by_orbit"][orbit]))
+    tight = fig.get_tightbbox(renderer)                       # inches
+    edges = {"left": tight.x0, "right": PLATE_IN[0] - tight.x1,
+             "bottom": tight.y0, "top": PLATE_IN[1] - tight.y1}
+    worst = min(edges.values()) * 25.4
+    if worst < MARGIN_MIN_MM:
+        raise RuntimeError(
+            "the drawn content is %.2f mm from the canvas edge (min %.1f mm): "
+            "re-cut the grid -- do not crop the export" % (worst, MARGIN_MIN_MM))
+    assert_figure_matches_report(report, drawn)
+    translucent = style.alpha_artists(fig)     # counted before they are blended
+    limits = {dim: [axes[PANEL_ORDER.index(dim)].get_xlim(),
+                    axes[PANEL_ORDER.index(dim)].get_ylim()]
+              for dim in PANEL_ORDER}
+    style.save(fig, fig_path, dpi=PLATE_DPI, eps="blend")
     plt.close(fig)
-    return fig_path
+    return plate_audit(report, drawn, fig_path, tight, edges, translucent,
+                       limits), drawn
+def plate_audit(report, drawn, fig_path, tight, edges, translucent, limits):
+    """The machine-readable record of the plate, written into the ``.md``.
+
+    It answers what a reader of the figure cannot see by looking: how wide the
+    file really is (measured from the file, all three containers), what
+    happened to the alpha in the EPS, and which numbers each panel and track
+    pins.  Nothing here is recomputed -- these are the values that were drawn.
+    """
+    stem = os.path.splitext(fig_path)[0]
+    plate = {
+        "target_width_mm": style.FINAL_WIDTH_MM,
+        "target_height_mm": round(PLATE_IN[1] * 25.4, 2),
+        "figsize_inches": [round(PLATE_IN[0], 6), round(PLATE_IN[1], 6)],
+        "native_dpi": PLATE_DPI,
+        #: Keyed by the ``figure_style`` role, so a check can read its band.
+        "final_font_sizes_pt": {
+            "suptitle": style.FS["suptitle"],
+            "title": style.FS["title"],
+            "label": style.FS["label"],
+            "tick": style.FS["tick"],
+            "legend": style.FS["legend"],
+            "annotation": STAT_PT,
+        },
+        "native_width_mm": {},
+        "native_height_mm": {},
+        "latex_display_width_mm": style.FINAL_WIDTH_MM,
+        "latex_scaling": "the file is 170 mm wide — included with "
+                         "`width=\\linewidth`; no trim, clip or resizebox",
+        "bounds": {
+            "export": "canvas-authorised (figure_style.save); bbox_inches is "
+                      "never 'tight'",
+            "canvas_mm": [round(PLATE_IN[0] * 25.4, 2),
+                          round(PLATE_IN[1] * 25.4, 2)],
+            "content_mm": [round(tight.width * 25.4, 1),
+                           round(tight.height * 25.4, 1)],
+            "edge_mm": {key: round(value * 25.4, 2)
+                        for key, value in edges.items()},
+            "minimum_edge_mm": MARGIN_MIN_MM,
+        },
+        "eps": {"alpha_artists": len(translucent), "strategy": "blend",
+                "background": "white", "rasterised_artists": 0,
+                "vector_text": "Type 42 (pdf/ps fonttype 42)"},
+        "panel_order": list(PANEL_ORDER),
+        "statistics": {
+            "pt": STAT_PT,
+            "row_offset_pt": {orbit: STAT_ROW[orbit]
+                              for orbit, _name, _colour in ORBITS},
+            "anchor": "x=0.0 axes, ha=left, va=bottom -- one rule, six panels",
+        },
+        "panels": {},
+    }
+    for path in (fig_path, stem + ".pdf", stem + ".eps"):
+        info = style.measure(path)
+        plate["native_width_mm"][info["format"]] = round(info["mm"], 2)
+        plate["native_height_mm"][info["format"]] = round(info["height_mm"], 2)
+    for dim in PANEL_ORDER:
+        x_lim, y_lim = limits[dim]
+        panel = {"label": PANEL_LABEL[dim],
+                 "x_limits": [round(x_lim[0], 4), round(x_lim[1], 4)],
+                 "y_limits": [round(y_lim[0], 6), round(y_lim[1], 6)],
+                 "tracks": {}}
+        for orbit, _name, _colour in ORBITS:
+            track = drawn["panels"][dim]["tracks"].get(orbit)
+            block = report["drift"][dim].get(orbit) or {}
+            if track is None or not block.get("available"):
+                panel["tracks"][orbit] = {"n": 0, "available": False}
+                continue
+            panel["tracks"][orbit] = {
+                "n": track["n"],
+                "first": track["first"],
+                "last": track["last"],
+                "median": round(track["median"], 6),
+                "iqr": block.get("iqr"),
+                "theil_sen_per_year": block.get("theil_sen_per_year"),
+                "slope_ci95_per_year": block.get("slope_ci95_per_year"),
+                "mann_kendall_p": (block.get("mann_kendall") or {}).get("p"),
+                "verdict": "trend" if track["trend"]["flagged"] else "no trend",
+                "trend_line": {"first_ordinal": track["trend"]["x"][0],
+                               "last_ordinal": track["trend"]["x"][1],
+                               "dashed": not track["trend"]["flagged"]},
+            }
+        plate["panels"][dim] = panel
+    return plate
+
+
+def assert_figure_matches_report(report, drawn):
+    """The plate is the report: same points, same dates, same line.
+
+    Runs on every build, so a layout change can never quietly move a value: the
+    drawn series has to be the series the JSON was computed from, the drawn
+    dates the dates in ``date_range``, and the drawn trend line the line the
+    recorded Theil-Sen slope describes.
+    """
+    problems = []
+    for dim in drawn["panel_order"]:
+        for orbit, name, _colour in ORBITS:
+            block = report["drift"][dim][orbit]
+            track = drawn["panels"][dim]["tracks"].get(orbit)
+            where = f"{dim}/{name.split()[0]}"
+            if not block.get("available"):
+                if track is not None:
+                    problems.append(f"{where}: drawn but not available")
+                continue
+            if track is None:
+                problems.append(f"{where}: available but not drawn")
+                continue
+            if track["n"] != block["n"]:
+                problems.append(f"{where}: n {track['n']} != {block['n']}")
+            if [track["first"], track["last"]] != list(block["date_range"]):
+                problems.append(
+                    f"{where}: {track['first']}..{track['last']} != "
+                    f"{block['date_range']}")
+            if abs(track["median"] - block["median"]) > 1e-9:
+                problems.append(f"{where}: median {track['median']!r} != "
+                                f"{block['median']!r}")
+            x = np.array([day for day, _value in track["values"]], float)
+            y = np.array([value for _day, value in track["values"]], float)
+            per_day = block["theil_sen_per_year"] / 365.25
+            intercept = float(np.median(y - per_day * x))
+            want = [intercept + per_day * edge for edge in track["trend"]["x"]]
+            if not np.allclose(track["trend"]["y"], want, rtol=0, atol=1e-9):
+                problems.append(f"{where}: the line is not the recorded slope")
+            flagged = "trend" in (block.get("flags") or [])
+            if flagged != track["trend"]["flagged"]:
+                problems.append(
+                    f"{where}: the line style does not match the verdict")
+    if problems:
+        raise RuntimeError("the figure does not match the report:\n  "
+                           + "\n  ".join(problems))
 
 
 def _f(value, digits=3, signed=True):
@@ -368,7 +686,95 @@ def _p(value):
     return "<0.001" if value < 0.001 else f"{value:.3f}"
 
 
-def to_markdown(report):
+def _g(value, digits=6):
+    """A pinned float: enough digits to re-derive it, few enough to read."""
+    if value is None:
+        return "—"
+    return f"{value:.{digits}g}"
+
+
+def _pair(pair, digits=6):
+    if not pair:
+        return "—"
+    return f"[{_g(pair[0], digits)}, {_g(pair[1], digits)}]"
+
+
+def figure_section(figure):
+    """The plate as data: size, type, bounds, alpha, one pinned row per cell.
+
+    Written into the ``.md`` because these are properties of the *file*: the
+    JSON stays the analysis, the markdown carries the audit of the drawing.
+    """
+    fonts = figure["final_font_sizes_pt"]
+    bounds = figure["bounds"]
+    edges = bounds["edge_mm"]
+    widths, heights = figure["native_width_mm"], figure["native_height_mm"]
+    order = " · ".join(f"`{figure['panels'][dim]['label']}`"
+                       for dim in figure["panel_order"])
+    lines = [
+        "## The figure — one 170 mm plate", "",
+        f"* **canvas** `{figure['figsize_inches'][0]:.4f} × "
+        f"{figure['figsize_inches'][1]:.4f} in` = **{bounds['canvas_mm'][0]:.2f} × "
+        f"{bounds['canvas_mm'][1]:.2f} mm**; measured from the written files: "
+        + ", ".join(f"{fmt} {mm:.2f} × {heights[fmt]:.2f} mm"
+                    for fmt, mm in sorted(widths.items()))
+        + ". The plate is authored at the print width — it is not cropped to its "
+        "content, so nothing here is rescaled.",
+        f"* **typography** header {fonts['suptitle']} · panel title "
+        f"{fonts['title']} · axis label {fonts['label']} · ticks {fonts['tick']} · "
+        f"legend {fonts['legend']} · statistics {fonts['annotation']} pt — nothing "
+        "below 6 pt, every role inside the `figure_style` band.",
+        f"* **panels**, reading order: {order}. The column names of the table are "
+        "not on the plate: `gamma2_mask` is drawn as the coherence it measures.",
+        "* **statistics rows**: one fixed band above every panel, identical in all "
+        f"six — DESC at +{figure['statistics']['row_offset_pt']['DESCENDING']:.1f} "
+        f"pt, ASC at +{figure['statistics']['row_offset_pt']['ASCENDING']:.1f} pt, "
+        f"{figure['statistics']['pt']} pt, flush with the left spine. Each row is "
+        "the Theil–Sen slope per year, its bootstrap 95 % interval, the "
+        "Mann–Kendall p and the verdict of the ported flag rule (`trend` when it "
+        "fires, `flat` when it does not).",
+        "* **marks** 3.6 pt markers with a 0.5 pt white edge above the 1.2 pt trend "
+        "line; solid where that verdict is `trend`, dashed where it is `flat`; the "
+        "colour is the track's. One figure legend carries the track counts at the "
+        "right end of the header line.",
+        f"* **bounds** content {bounds['content_mm'][0]:.1f} × "
+        f"{bounds['content_mm'][1]:.1f} mm inside the {bounds['canvas_mm'][0]:.1f} "
+        f"× {bounds['canvas_mm'][1]:.1f} mm canvas, "
+        f"{min(edges.values()):.2f} mm to the nearest edge (floor "
+        f"{bounds['minimum_edge_mm']} mm, asserted) — a guard, not a crop. "
+        f"LaTeX: {figure['latex_scaling']}.",
+        f"* **EPS** {figure['eps']['alpha_artists']} translucent artist(s) "
+        "pre-blended over white (`eps=\"blend\"`), "
+        f"{figure['eps']['rasterised_artists']} rasterised, text "
+        f"{figure['eps']['vector_text']}: the EPS is vector, like the PDF.",
+        "* **moved into this caption**: the orbit ids (ASC = relative orbit 160, "
+        "DESC = 51), the three shared dates, the trend semantics and the "
+        "definitions of the six dimensions.",
+        "", "```json",
+        json.dumps(figure, indent=1, ensure_ascii=False),
+        "```", "",
+        "| panel | track | n | first | last | median | IQR | slope / a | 95% CI | "
+        "MK p | verdict | y-limits |",
+        "|---|---|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    for dim in figure["panel_order"]:
+        panel = figure["panels"][dim]
+        for orbit, name, _colour in ORBITS:
+            pin = panel["tracks"][orbit]
+            if not pin.get("n"):
+                continue
+            lines.append(
+                f"| {panel['label']} | {name} | {pin['n']} | {pin['first']} | "
+                f"{pin['last']} | {_g(pin['median'])} | {_pair(pin['iqr'])} | "
+                f"{_g(pin['theil_sen_per_year'])} | "
+                f"{_pair(pin['slope_ci95_per_year'])} | "
+                f"{_p(pin['mann_kendall_p'])} | {pin['verdict']} | "
+                f"{_pair(panel['y_limits'], 8)} |")
+    lines.append("")
+    return lines
+
+
+def to_markdown(report, figure=None):
     lines = []
     add = lines.append
     add(f"# {report['label']} — the OCV vector of the support chips")
@@ -379,8 +785,10 @@ def to_markdown(report):
         + ", ".join(f"{k} {v}" for k, v in sorted(report['by_orbit'].items()))
         + f"; **{report['shared_dates']} shared dates**")
     add("* **second instrument**: these are chip values, not the pipeline columns "
-        "of `fig_espoo_ocv_orbits.py` (r(log A, log `coherence_masked_pixels`) = "
-        "−0.24, r(`gamma2_mask`, `coherence_gamma2`) = 0.13)")
+        "of the retired pipeline figure (frozen at "
+        "`data/espoo/fig_espoo_ocv_orbits.json`: r(log A, log "
+        "`coherence_masked_pixels`) = −0.24, r(`gamma2_mask`, "
+        "`coherence_gamma2`) = 0.13)")
     add("* **two tracks**: ASC = relative orbit 160, DESC = 51; the other two "
         "tracks place the mast on the far range edge, where the 200 m ring runs "
         "past the swath")
@@ -390,6 +798,9 @@ def to_markdown(report):
         "`n = A` in its denominator; `A` differs by a factor 7 between the "
         "orbits, so both dimensions are dominated by the mask size")
     add("")
+    if figure:
+        lines.extend(figure_section(figure))
+        add("")
     add("## 1. Drift across the two years")
     add("")
     add("| dimension | orbit | n | slope / year | 95% CI | MK p | lag-1 | "
@@ -459,7 +870,14 @@ def to_markdown(report):
     return "\n".join(lines)
 
 
-def write_outputs(report, fig_path=None, md_path=None, json_path=None, quiet=False):
+def write_outputs(report, figure=None, fig_path=None, md_path=None,
+                  json_path=None, quiet=False):
+    """Write the analysis JSON unchanged, and the markdown with the plate.
+
+    The JSON is the scientific record and does not know about the layout: the
+    audit of the drawing goes into the markdown, next to the caption that
+    belongs to it.
+    """
     fig_path = fig_path or OUT_FIG
     md_path = md_path or OUT_MD
     json_path = json_path or OUT_JSON
@@ -469,12 +887,119 @@ def write_outputs(report, fig_path=None, md_path=None, json_path=None, quiet=Fal
         json.dump(report, handle, indent=1)
         handle.write(chr(10))
     with open(md_path, "w") as handle:
-        handle.write(to_markdown(report))
+        handle.write(to_markdown(report, figure))
         handle.write(chr(10))
     if not quiet:
         print(f"  wrote {os.path.relpath(json_path, REPO)}")
         print(f"  wrote {os.path.relpath(md_path, REPO)}")
     return fig_path, md_path, json_path
+
+
+def _figure_block(text):
+    """The audit block the markdown carries, or ``None``."""
+    start = text.find("## The figure")
+    if start < 0:
+        return None
+    fence = text.find("```json", start)
+    if fence < 0:
+        return None
+    end = text.find("```", fence + len("```json"))
+    if end < 0:
+        return None
+    return json.loads(text[fence + len("```json"):end])
+
+
+def _close(left, right, tol=1e-6):
+    return abs(left - right) <= tol * max(1.0, abs(left), abs(right))
+
+
+def verify_figure(figure, report, table=None, paths=None):
+    """Re-measure the three containers and re-derive every pinned number.
+
+    The audit in the markdown is only worth something if it can fail: the three
+    containers are measured again from disk, the point sizes are put back
+    against the ``figure_style`` bands, and each pinned row is recomputed from
+    the CSV -- n, dates, median, slope, verdict, and the y-limits the autoscaler
+    must have produced from those points.
+    """
+    table = table or TABLE
+    rows = load(table)
+    failures, checked = [], 0
+
+    def check(condition, message):
+        nonlocal checked
+        checked += 1
+        if not condition:
+            failures.append(message)
+
+    check(_close(figure["target_width_mm"], style.FINAL_WIDTH_MM, 1e-9),
+          "the target width is not the print width")
+    check(_close(figure["figsize_inches"][0] * 25.4, style.FINAL_WIDTH_MM, 1e-6),
+          "the figsize does not resolve to 170 mm")
+    check(list(figure["panel_order"]) == list(PANEL_ORDER), "panel order")
+    for path in (paths if paths is not None
+                 else (OUT_FIG, OUT_PDF, OUT_EPS)):
+        if not os.path.exists(path):
+            failures.append(f"{os.path.basename(path)}: missing")
+            continue
+        info = style.measure(path)
+        fmt = info["format"]
+        check(abs(info["mm"] - style.FINAL_WIDTH_MM) <= style.WIDTH_TOL_MM,
+              f"{fmt}: {info['mm']:.2f} mm, not 170 ± 0.5 mm")
+        check(abs(info["height_mm"] - figure["target_height_mm"]) <= 0.5,
+              f"{fmt}: {info['height_mm']:.2f} mm high")
+        check(abs(info["mm"] - figure["native_width_mm"][fmt]) <= 0.01,
+              f"{fmt}: the recorded width is not the measured one")
+    for role, (low, high) in style.BANDS.items():
+        value = figure["final_font_sizes_pt"].get(role)
+        check(value is not None and low - 1e-9 <= value
+              and (high is None or value <= high + 1e-9),
+              f"{role}: {value} pt is outside the {low}..{high} band")
+    for dim in figure["panel_order"]:
+        panel = figure["panels"][dim]
+        check(panel["label"] == PANEL_LABEL[dim], f"{dim}: label")
+        check("gamma2_mask" not in panel["label"], f"{dim}: column name drawn")
+        lows, highs = [], []
+        for orbit, name, _colour in ORBITS:
+            pin, block = panel["tracks"][orbit], report["drift"][dim][orbit]
+            where = f"{dim}/{name.split()[0]}"
+            series = series_for(rows, orbit, dim)
+            check(pin["n"] == len(series),
+                  f"{where}: n {pin['n']} != {len(series)}")
+            if not series:
+                continue
+            first = dt.date.fromordinal(int(series[0][0]))
+            last = dt.date.fromordinal(int(series[-1][0]))
+            check(pin["first"] == first.isoformat()
+                  and pin["last"] == last.isoformat(), f"{where}: dates")
+            x = np.array([day for day, _value in series], float)
+            y = np.array([value for _day, value in series], float)
+            check(_close(pin["median"], float(np.median(y))), f"{where}: median")
+            slope = st.theil_sen(x, y)
+            check(slope is not None
+                  and _close(pin["theil_sen_per_year"], slope * 365.25, 1e-9),
+                  f"{where}: slope")
+            check(_close(pin["theil_sen_per_year"],
+                         block["theil_sen_per_year"], 1e-9),
+                  f"{where}: the pin is not the report")
+            flagged = "trend" in (block.get("flags") or [])
+            check(pin["verdict"] == ("trend" if flagged else "no trend"),
+                  f"{where}: verdict")
+            check(pin["trend_line"]["dashed"] is not flagged,
+                  f"{where}: line style")
+            intercept = float(np.median(y - slope * x))
+            ends = [intercept + slope * pin["trend_line"][key]
+                    for key in ("first_ordinal", "last_ordinal")]
+            lows += [float(y.min()), min(ends)]
+            highs += [float(y.max()), max(ends)]
+        if lows:
+            low, high = min(lows), max(highs)
+            pad = 0.05 * (high - low)
+            check(_close(panel["y_limits"][0], low - pad, 1e-6)
+                  and _close(panel["y_limits"][1], high + pad, 1e-6),
+                  f"{dim}: y-limits {panel['y_limits']}, "
+                  f"expected [{low - pad:.6g}, {high + pad:.6g}]")
+    return failures, checked
 
 
 def verify(report=None, table=None):
@@ -514,10 +1039,22 @@ def verify(report=None, table=None):
             if abs(cliffs_delta(right, left) - contrast["delta"]) > 1e-9:
                 failures.append(f"{dim}: orbit delta")
     print(f"  {checked} field(s) recomputed from {os.path.relpath(table, REPO)}")
+    if os.path.exists(OUT_MD):
+        with open(OUT_MD) as handle:
+            figure = _figure_block(handle.read())
+        if figure is None:
+            failures.append("figure: the markdown carries no audit block")
+        else:
+            fig_failures, fig_checked = verify_figure(figure, report, table)
+            checked += fig_checked
+            failures += fig_failures
+            print(f"  {fig_checked} figure pin(s) re-measured and re-derived")
+    else:
+        print("  (no markdown: the figure audit is not checked)")
     if failures:
         print(f"FAILED — {len(failures)} mismatch(es): {failures[:5]}")
         return 1
-    print("  all recomputed values match the JSON")
+    print("  all recomputed values match the JSON and the figure audit")
     return 0
 
 
@@ -586,6 +1123,57 @@ def selftest():
     check("the report names the second instrument", "second instrument" in text)
     check("and the tautology", "tautology" in text)
 
+    print("\n4. The plate")
+    check("the panels are labelled canonically, no column name is drawn",
+          all("gamma2_mask" not in label for label in PANEL_LABEL.values())
+          and [dim for dim in PANEL_LABEL] == list(PANEL_ORDER),
+          " · ".join(PANEL_LABEL[dim] for dim in PANEL_ORDER))
+    check("the coherence panel is math text",
+          r"\gamma^2" in PANEL_LABEL["gamma2_mask"])
+    check("the canvas is the print width",
+          abs(PLATE_IN[0] * 25.4 - style.FINAL_WIDTH_MM) < 1e-9,
+          f"{PLATE_IN[0]:.4f} in = {PLATE_IN[0] * 25.4:.2f} mm")
+    check("the two statistics rows cannot touch",
+          (STAT_ROW["DESCENDING"] - STAT_ROW["ASCENDING"]) > 1.3 * STAT_PT,
+          f"{STAT_ROW} at {STAT_PT} pt")
+    check("the title clears the DESC row",
+          TITLE_PAD > STAT_ROW["DESCENDING"] + 1.3 * STAT_PT,
+          f"pad {TITLE_PAD} pt")
+    rows = load()
+    lines = [statistics_line(report["drift"]["A"][orbit])
+             for orbit, _name, _colour in ORBITS]
+    check("a statistics row names the track and the verdict",
+          lines[0].startswith("ASC ") and lines[0].endswith(("trend", "flat")),
+          lines[0])
+    scratch = tempfile.mkdtemp(prefix="espoo_plate_")
+    try:
+        plate, _drawn = make_figure(report, rows,
+                                    os.path.join(scratch, "plate.jpg"))
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
+    check("all three containers measure the print width",
+          sorted(plate["native_width_mm"]) == ["eps", "jpeg", "pdf"]
+          and all(abs(mm - style.FINAL_WIDTH_MM) <= style.WIDTH_TOL_MM
+                  for mm in plate["native_width_mm"].values()),
+          str(plate["native_width_mm"]))
+    check("every panel pins both tracks",
+          all(sum(1 for pin in plate["panels"][dim]["tracks"].values()
+                  if pin.get("n")) == 2 for dim in PANEL_ORDER))
+    check("the alpha is blended, not rasterised",
+          plate["eps"]["alpha_artists"] > 0
+          and plate["eps"]["rasterised_artists"] == 0,
+          f"{plate['eps']['alpha_artists']} artist(s)")
+    with_audit = to_markdown(report, plate)
+    check("the markdown carries the plate audit",
+          "## The figure — one 170 mm plate" in with_audit
+          and '"native_dpi": 630' in with_audit)
+    block = _figure_block(with_audit) or {}
+    check("and the block reads back in panel order",
+          block.get("panel_order") == list(PANEL_ORDER))
+    pin_failures, pin_checked = verify_figure(block, report, paths=())
+    check("the pins re-derive from the table", not pin_failures,
+          f"{pin_checked} pin(s), {pin_failures[:3]}")
+
     print()
     if failures:
         print(f"FAILED — {len(failures)} check(s): {failures}")
@@ -619,8 +1207,8 @@ def main(argv=None):
     print(f"{LABEL} — {LABEL and 'the OCV vector of the support chips'}")
     rows = load(args.table)
     report = analyse(args.table, boot=args.boot)
-    write_outputs(report, args.fig, args.md, args.json, quiet=args.quiet)
-    make_figure(report, rows, args.fig)
+    figure, _drawn = make_figure(report, rows, args.fig)
+    write_outputs(report, figure, args.fig, args.md, args.json, quiet=args.quiet)
     if not args.quiet:
         print(f"  {report['table']['n_rows']} chips, orbits {report['by_orbit']}, "
               f"{report['shared_dates']} shared dates")

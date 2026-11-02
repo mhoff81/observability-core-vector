@@ -174,6 +174,12 @@ No held-out class, so there is no held-out departure to compare with the environ
 | **c3** | context | observation availability: solid = an echo, hollow = a mask without one |
 | **c4** | context | the trajectory matrix: six dimensions x every month |
 
+## Caption
+
+**Figure. KDLO media tower, Garden City SD -- OCV trajectory on the support-sized chip.** Twelve panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). Row `c` is the record's own context: environment (`c1`, descriptive only), observation cadence ASC/DESC per month (`c2`), observation availability (`c3`, solid = chips with an echo) and the whole trajectory as a six-dimension by every-month matrix (`c4`). Every ordinate is a robust z against the site's own frozen pre-event reference (16 chips, 2022-06-02 → 2022-12-11): filled markers are reference months, hollow coloured squares the post-event months, the grey band the reference window, the light band the monthly q05-q95 envelope of the reference and the dashed red rule the event of 2022-12-11. The post-event tail is 43 chips over 2023-05-04 → 2024-09-19. The plate is set at the repository's print width, 170 × 156 mm, on the shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
+
+The plate draws no title and no panel titles of its own: the tags in the table above are all it carries, and this caption is what the reader is given with it. Set it under the figure as one paragraph.
+
 ## What the plate does not claim
 
 * **No damage verdict.** Every ordinate is a deviation from the case's *own* reference, in that reference's robust scales — two plates are not comparable in magnitude, which is why the comparison they support is a comparison of *shape* and of *where the movement sits*.
@@ -184,7 +190,7 @@ No held-out class, so there is no held-out departure to compare with the environ
 * **The environment is beside the OCV numbers, never inside them.** No weather correction is applied and no causal attribution is made.
 * **No interpolation.** A month without a chip, the split event month and the event itself break the line: nothing is drawn across a hole.
 * **A month is a bin, not a date.** Its median can mix both orbits; panel c2 says how many chips of each the bin holds, and on the sites with two orbits the two directions alternate in blocks of days.
-* **No pooling across sites.** The plate is per site by construction; `figures/cases/fig_ocv_trajectory.sh` runs the six and nothing else.
+* **No pooling across sites.** The plate is per site by construction; `figures/cases/fig_ocv_trajectory.sh` runs the five and nothing else.
 
 ## Pins
 

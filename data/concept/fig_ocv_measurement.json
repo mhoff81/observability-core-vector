@@ -1,5 +1,6 @@
 {
  "artifacts": {
+  "fig_ocv_measurement.eps": "510f850d9dc0d53a25a90d65de4ccec843e57267f1d2780e1de61be58092e8da",
   "fig_ocv_measurement.jpg": "2a4974802f9f2affef734094d4f72911f3089212b1374a382a11a527ad0d8630",
   "fig_ocv_measurement.pdf": "f66976d1823b7964f9b6a38b05bcd8ca8237950017ae27a902eaad40c741cb7c"
  },
@@ -810,6 +811,31 @@
     "ok": true
    },
    {
+    "detail": "%!PS-Adobe-3.0 EPSF-3.0",
+    "name": "EPS announces itself as an EPS (EPSF-3.0)",
+    "ok": true
+   },
+   {
+    "detail": "[0.0, 0.0, 518.740157, 172.913386]",
+    "name": "EPS page box is 183 x 61 mm",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "EPS is vector (no PostScript image object)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "EPS embeds its fonts as TrueType (FontType 42)",
+    "ok": true
+   },
+   {
+    "detail": "",
+    "name": "EPS carries no timestamp and no output path",
+    "ok": true
+   },
+   {
     "detail": "(1512, 4538, 4)",
     "name": "two builds render identical pixels",
     "ok": true
@@ -825,12 +851,12 @@
     "ok": true
    }
   ],
-  "passed": 160,
-  "total": 160
+  "passed": 165,
+  "total": 165
  },
  "environment": {
   "matplotlib": "3.11.1",
-  "numpy": "2.4.6",
+  "numpy": "2.5.4",
   "python": "3.13.5"
  },
  "field": {
@@ -964,6 +990,7 @@
   "what": "a closed-form intensity field: no random number anywhere, so the mask derived from it is a constant of the file"
  },
  "figure": {
+  "eps": "fig_ocv_measurement.eps",
   "file": "fig_ocv_measurement.jpg",
   "idea": "C_{a,c} -> W_{a,c} -> M_{a,c}(t) -> OCV(t), on one frame",
   "not_shown": [

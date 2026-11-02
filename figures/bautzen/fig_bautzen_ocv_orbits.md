@@ -8,6 +8,8 @@ The x coordinate is the **actual local overpass instant**, not midnight. The sta
 
 Only the bridge series is drawn. The control rectangle 500 m east is the counter-check of the paper figure, but its ASC `gamma2` range (-0.94 .. +0.93) is much wider than the bridge range (-0.14 .. +0.24); a shared panel would compress the bridge signal this figure is meant to show. The control remains in `data/bautzen/bautzen_ocv_channels.csv` and in figures A-E.
 
+The plate is drawn on the shared print frame of `code/figure_style.py`: 170.0 mm wide (the type set on its ladder, the pens on its line ladder) and written as three containers under one stem -- `figures/bautzen/fig_bautzen_ocv_orbits.jpg` (630 dpi, the raster the report checks), `.pdf` (vector) and `.eps` (vector, alpha composited on white). All three are measured at 170.0 mm by `code/audit_figure_style.py`.
+
 ## 2. Data and state model
 
 - source: `data/bautzen/bautzen_ocv_channels.csv`
@@ -64,7 +66,7 @@ python3 code/bautzen/fig_bautzen_ocv_orbits.py
 PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
 ```
 
-Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.2. No output carries a timestamp, so repeated runs are identical.
+Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
 
 ## 6. Caveats
 

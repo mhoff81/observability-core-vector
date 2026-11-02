@@ -89,6 +89,7 @@ import json
 import math
 import os
 import random
+import shutil
 import sys
 import tempfile
 import time
@@ -98,6 +99,8 @@ ROOT = os.path.abspath(os.path.join(HERE, os.pardir, os.pardir))
 CASES = os.path.join(ROOT, "code", "cases")
 sys.path.insert(0, HERE)
 sys.path.insert(0, CASES)
+if os.path.dirname(CASES) not in sys.path:
+    sys.path.insert(1, os.path.dirname(CASES))      # code/figure_style.py
 
 import matplotlib  # noqa: E402
 
@@ -108,6 +111,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import Patch  # noqa: E402
 
+import figure_style as style  # noqa: E402  the one type, pen and print width
 import ocv_trajectory as tpl  # noqa: E402  the continuous-case template
 
 #: The plate's numbers are the template's numbers. They are *aliased*, not copied:
@@ -160,7 +164,17 @@ QUANTILES = tpl.QUANTILES
 DECISION_QUANTILE = tpl.DECISION_QUANTILE
 PERSIST_MIN = tpl.PERSIST_MIN
 FIGURE_DPI = tpl.FIGURE_DPI
-COL_WIDTH = tpl.COL_WIDTH
+
+#: The frame comes from ``figure_style.TRAJECTORY``, the same table the five case
+#: plates read: 170 x 156 mm, three rows of four, one legend band under the grid.
+#: Six plates on one template cannot each own a ``figsize`` -- that is how they
+#: came out between 190.2 and 193.3 mm wide -- so this file declares the names and
+#: takes the numbers from the table.
+COL_WIDTH = style.TRAJECTORY["width_mm"] * tpl.MM
+PLATE_HEIGHT = style.TRAJECTORY["height_mm"] * tpl.MM
+FS = style.FS       # the type ladder: title 8.8, label 7.6, tick/legend 6.8
+LW = style.LW       # the pen ladder: series 1.4, rule 1.0, grid 0.6, ...
+MS = style.MS       # marker sizes: month 3.4, plane 3.6, legend 4.2
 
 #: R4, verbatim from the template and from ``ocv_reconfigure``'s rule for the sites it
 #: registers: log for every strictly positive dimension, identity for ``S``.
@@ -181,7 +195,7 @@ EVENTS_SOURCE = "/home/projects/havel_werder_analysis/havel_werder_events.json"
 OUT_JSON = os.path.join(DATA, NAME + ".json")
 OUT_MD = os.path.join(FIGDIR, NAME + ".md")
 #: The plate is a **JPEG**, like the other companion plates of this repository
-#: (``fig_kdlo_ocv_series``, ``fig_lumo_ocv_orbits``, ``fig_bautzen_ocv_orbits``):
+#: (``fig_lumo_ocv_orbits``, ``fig_bautzen_ocv_orbits``, ``fig_espoo_ocv_chips``):
 #: matplotlib picks the encoder from the extension, and ``figures/**/*.jpg`` is
 #: ignored by git exactly as the former ``.png`` was, so the plate stays a
 #: regenerated binary and never enters the history.
@@ -235,10 +249,6 @@ WEATHER = ("temperature_c", "precipitation_mm")
 ECHO_MIN = tpl.ECHO_MIN
 ORBITS = tpl.ORBITS
 ORBIT_SHORT = tpl.ORBIT_SHORT
-#: The header packer is the template's, imported rather than copied: it measures the
-#: lines on the plate's own renderer and spreads the parts over the fewest lines that
-#: fit, so the header ends where the plate ends instead of the plate growing to fit it.
-packed = tpl.packed
 #: The nine registered questions of the repair/intervention assessment, in the order the
 #: report answers them. They are a roster, not a narrative: each is answered from the
 #: frozen classes and from nothing else, and each carries its own evidence block into
@@ -1299,25 +1309,23 @@ def draw(report, path):
     edge at each end) rather than a single line, and a month never spans two classes --
     ``assign_parts`` splits the month the documented end falls inside -- so a segment is
     drawn only between two bins of the same class.
+
+    The plate carries **no title inside the drawing**: no suptitle, no descriptive panel
+    title. Each panel is tagged with its bare key (``a1`` ... ``c4``) and the plate
+    carries one legend, in the band ``style.TRAJECTORY`` reserves for it; the sentence a
+    reader needs is the report's ``## Caption``. The frame, the type ladder and the pen
+    ladder are the template's own -- ``style.TRAJECTORY`` and ``style.FS``/``LW``/``MS``
+    -- so this plate and the five case plates are one physical object.
     """
-    plt.rcParams.update({
-        "font.family": "DejaVu Sans",
+    plt = style.apply(dpi=FIGURE_DPI, **{
         "mathtext.fontset": "stix",
-        "font.size": 7.4,
-        "axes.titlesize": 7.4,
-        "axes.labelsize": 6.9,
-        "xtick.labelsize": 6.2,
-        "ytick.labelsize": 6.2,
-        "legend.fontsize": 6.2,
         "axes.spines.top": False,
         "axes.spines.right": False,
+        "axes.linewidth": LW["spine"],
         "axes.grid": True,
         "grid.alpha": 0.22,
-        "grid.linewidth": 0.4,
+        "grid.linewidth": LW["grid"],
         "figure.dpi": 110,
-        "savefig.dpi": FIGURE_DPI,
-        "savefig.bbox": "tight",
-        "pdf.fonttype": 42,
     })
     months = report["months"]
     xs = [dt.date.fromisoformat(month["anchor"]) for month in months]
@@ -1326,9 +1334,8 @@ def draw(report, path):
     start = dt.date.fromisoformat(report["event"]["start"])
     end = dt.date.fromisoformat(report["event"]["end"])
     ref_window = report["reference"]["window"]
-    fig = plt.figure(figsize=(COL_WIDTH, 0.92 * COL_WIDTH))
-    grid = fig.add_gridspec(3, 4, hspace=0.80, wspace=0.62,
-                            left=0.068, right=0.975, top=0.875, bottom=0.175)
+    fig = plt.figure(figsize=(COL_WIDTH, PLATE_HEIGHT))
+    grid = fig.add_gridspec(3, 4, **style.TRAJECTORY["grid"])
     where = {}
     for row in range(3):
         for col in range(4):
@@ -1344,17 +1351,18 @@ def draw(report, path):
         cell = envelopes.get(envelope_key) if envelope_key else None
         if cell:
             ax.axhspan(cell["q05"], cell["q95"], color=COLOUR["envelope"],
-                       alpha=0.55, zorder=0, lw=0)
+                       alpha=0.55, zorder=0, lw=LW["band"])
         if ref_window:
             ax.axvspan(dt.date.fromisoformat(ref_window[0] + "-01"),
                        dt.date.fromisoformat(ref_window[1] + "-28"),
-                       color=COLOUR["band"], alpha=0.75, zorder=0, lw=0)
-        ax.axvspan(start, end, color=COLOUR["interval"], alpha=0.10, zorder=0, lw=0)
+                       color=COLOUR["band"], alpha=0.75, zorder=0, lw=LW["band"])
+        ax.axvspan(start, end, color=COLOUR["interval"], alpha=0.10, zorder=0,
+                   lw=LW["band"])
         for boundary in (start, end):
-            ax.axvline(boundary, color=COLOUR["interval"], lw=0.8,
+            ax.axvline(boundary, color=COLOUR["interval"], lw=LW["rule"],
                        ls=(0, (4, 2)), zorder=1)
         if zero:
-            ax.axhline(0.0, color="#4a5568", lw=0.6, ls=":", zorder=1)
+            ax.axhline(0.0, color="#4a5568", lw=0.8, ls=":", zorder=1)
         ax.set_xlim(dt.date.fromisoformat(ref_window[0] + "-01") - dt.timedelta(days=25),
                     max(xs) + dt.timedelta(days=25))
         ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=3, maxticks=6))
@@ -1363,47 +1371,58 @@ def draw(report, path):
             label.set_rotation(30)
             label.set_horizontalalignment("right")
 
-    def title(ax, ident, text):
-        ax.set_title("%s  ·  %s" % (ident, text), loc="left", pad=3.0, fontsize=7.2)
+    def tag(ax, ident):
+        """The panel's key, not its title: ``a1`` ... ``c4``, nothing else.
 
-    def series(ax, values, ident, text, colour, ylabel, envelope_key=None):
+        The descriptive text stays in the report's panel table and in the caption,
+        where a reader can act on it; a tag drawn inside the panel is the one
+        character group that lets the caption address a panel by name, so the panel
+        keeps its whole area for ink.
+        """
+        ax.set_title(ident, loc="left", pad=2.0, fontsize=FS["title"],
+                     fontweight="bold")
+
+    def series(ax, values, ident, purpose, colour, ylabel, envelope_key=None):
         """One monthly series: solid inside the reference, dashed outside it."""
         decorate(ax, envelope_key=envelope_key)
         for i in range(len(xs) - 1):
             if not linked(i):
                 continue
-            style = "-" if classes[i] == "reference" else (0, (3, 2))
+            line_style = "-" if classes[i] == "reference" else (0, (3, 2))
             ax.plot(xs[i:i + 2], values[i:i + 2],
-                    color=class_colour(classes[i], colour), lw=1.0, ls=style,
-                    zorder=2)
+                    color=class_colour(classes[i], colour), lw=LW["series"],
+                    ls=line_style, zorder=2)
         for i, (x, value) in enumerate(zip(xs, values)):
             if value is None:
                 continue
-            ax.plot([x], [value], marker=MARKER[classes[i]], ms=2.6,
+            ax.plot([x], [value], marker=MARKER[classes[i]], ms=MS["month"],
                     mfc=colour if classes[i] == "reference" else "white",
-                    mec=class_colour(classes[i], colour), mew=0.7, zorder=3)
+                    mec=class_colour(classes[i], colour),
+                    mew=LW["marker_edge"], zorder=3)
         ax.set_ylabel(ylabel)
-        title(ax, ident, text)
+        tag(ax, ident)
         return ax
 
-    def plane(ax, ident, px, py, cx, cy, text):
+    def plane(ax, ident, px, py, cx, cy, purpose):
         """The two dimensions of a block, month by month -- no date axis here."""
-        ax.axhline(0.0, color="#4a5568", lw=0.5, ls=":")
-        ax.axvline(0.0, color="#4a5568", lw=0.5, ls=":")
+        ax.axhline(0.0, color="#4a5568", lw=0.8, ls=":")
+        ax.axvline(0.0, color="#4a5568", lw=0.8, ls=":")
         for i in range(len(px) - 1):
             if linked(i) and px[i] is not None and py[i] is not None \
                     and px[i + 1] is not None and py[i + 1] is not None:
-                ax.plot(px[i:i + 2], py[i:i + 2], color="#a0aec0", lw=0.6, zorder=1)
+                ax.plot(px[i:i + 2], py[i:i + 2], color="#a0aec0",
+                        lw=LW["plane"], zorder=1)
         for i in range(len(px)):
             if px[i] is None or py[i] is None:
                 continue
-            ax.plot([px[i]], [py[i]], marker=MARKER[classes[i]], ms=2.8,
+            ax.plot([px[i]], [py[i]], marker=MARKER[classes[i]],
+                    ms=MS["plane"],
                     mfc=COLOUR["reference"] if classes[i] == "reference" else "white",
-                    mec=class_colour(classes[i], COLOUR["reference"]), mew=0.7,
-                    zorder=3)
+                    mec=class_colour(classes[i], COLOUR["reference"]),
+                    mew=LW["marker_edge"], zorder=3)
         ax.set_xlabel(cx)
         ax.set_ylabel(cy)
-        title(ax, ident, text)
+        tag(ax, ident)
         return ax
     def line_only(ax, values, colour):
         for i in range(len(xs) - 1):
@@ -1411,7 +1430,8 @@ def draw(report, path):
                 continue
             if values[i] is None or values[i + 1] is None:
                 continue
-            ax.plot(xs[i:i + 2], values[i:i + 2], color=colour, lw=1.0, zorder=2)
+            ax.plot(xs[i:i + 2], values[i:i + 2], color=colour, lw=LW["series"],
+                    zorder=2)
 
     dim_series = {dim: [month["z"][dim] for month in months] for dim in DIMS}
     block_series = {name: [month[name] for month in months] for name in ("R_B", "R_G")}
@@ -1444,35 +1464,32 @@ def draw(report, path):
     ax.set_ylabel("z (own reference)")
     for index, column in enumerate(columns[:2]):
         ax.text(0.03, 0.96 - 0.11 * index, WEATHER_LABEL.get(column, column),
-                transform=ax.transAxes, fontsize=5.4, va="top",
+                transform=ax.transAxes, fontsize=FS["annotation"], va="top",
                 color=[COLOUR["context"], COLOUR["asc"]][index],
-                bbox=dict(facecolor="white", alpha=0.7, lw=0, pad=1.0))
-    title(ax, "c1", "environmental context")
+                bbox=dict(facecolor="white", alpha=0.7, lw=LW["band"], pad=1.0))
+    tag(ax, "c1")
 
     ax = where["c2"]
     decorate(ax, zero=False)
     ax.bar(xs, [month["n_ascending"] for month in months], width=20,
-           color=COLOUR["asc"], lw=0)
+           color=COLOUR["asc"], lw=LW["band"])
     ax.bar(xs, [month["n_descending"] for month in months], width=20,
-           bottom=[month["n_ascending"] for month in months], color=COLOUR["desc"], lw=0)
+           bottom=[month["n_ascending"] for month in months], color=COLOUR["desc"],
+           lw=LW["band"])
     ax.set_ylabel("chips per month")
     ax.set_ylim(0, max([month["n"] for month in months] or [1]) * 1.32)
-    ax.legend(handles=[Patch(facecolor=COLOUR["asc"], label="ASC"),
-                       Patch(facecolor=COLOUR["desc"], label="DESC")],
-              loc="upper left", frameon=False, handlelength=1.0,
-              borderaxespad=0.4, labelspacing=0.35, fontsize=5.2)
-    title(ax, "c2", "cadence")
+    tag(ax, "c2")
 
     ax = where["c3"]
     decorate(ax, zero=False)
     echo = [month["n_echo"] for month in months]
     plain = [month["n"] - month["n_echo"] for month in months]
-    ax.bar(xs, echo, width=20, color=COLOUR["behaviour"], lw=0)
+    ax.bar(xs, echo, width=20, color=COLOUR["behaviour"], lw=LW["band"])
     ax.bar(xs, plain, width=20, bottom=echo, facecolor="white",
-           edgecolor=COLOUR["behaviour"], lw=0.6)
+           edgecolor=COLOUR["behaviour"], lw=LW["bar_edge"])
     ax.set_ylabel("chips per month")
     ax.set_ylim(0, max([month["n"] for month in months] or [1]) * 1.12)
-    title(ax, "c3", "observation availability")
+    tag(ax, "c3")
 
     ax = where["c4"]
     grid_values = [[(month["z"][dim] if month["z"][dim] is not None else float("nan"))
@@ -1491,71 +1508,53 @@ def draw(report, path):
     for boundary in (start, end):
         column = sum(1 for i, month in enumerate(months)
                      if dt.date.fromisoformat(month["anchor"]) < boundary)
-        ax.axvline(column - 0.5, color=COLOUR["interval"], lw=0.8, ls=(0, (4, 2)))
+        ax.axvline(column - 0.5, color=COLOUR["interval"], lw=LW["rule"],
+                   ls=(0, (4, 2)))
     bar = fig.colorbar(image, ax=ax, fraction=0.05, pad=0.02)
-    bar.set_label("z", fontsize=6.2)
-    bar.ax.tick_params(labelsize=5.8)
-    #: Two lines, not one: this panel is the narrowest of the four columns and its
-    #: single-line title is wider than the panel, which -- with ``bbox_inches="tight"``
-    #: -- widened the whole file to fit the title. The break is where the panel ends.
-    ax.set_title("c4  ·  trajectory matrix" + chr(10) + "z per dimension × month",
-                 loc="left", pad=3.0, fontsize=7.2, linespacing=1.15)
-    # --- the plate's own header and legend --------------------------------
-    ref = report["reference"]
-    classes_audit = report["classification"]["classes"]
-    head = "%s — OCV trajectory on the support-sized chip" % report["label"]
-    parts = [("n = %d chips (%s → %s) · works %s → %s"
-              % (report["cut"]["kept"], report["cut"]["window"][0],
-                 report["cut"]["window"][1], report["event"]["start"],
-                 report["event"]["end"])),
-             "frozen pre-intervention reference: %d chips, %s → %s"
-             % (ref["n_chips"], ref["window"][0], ref["window"][1]),
-             "held-out pre-intervention: %d chips, %s → %s"
-             % (classes_audit["outside"]["n"], ref["outside_window"][0],
-                ref["outside_window"][1]),
-             "intervention %s: %d chips, %s → %s"
-             % (DURING_STATE, classes_audit["during"]["n"],
-                classes_audit["during"]["months"][0],
-                classes_audit["during"]["months"][1]),
-             "post %s: %d chips, %s → %s"
-             % (POST_STATE, classes_audit["post"]["n"],
-                classes_audit["post"]["months"][0],
-                classes_audit["post"]["months"][1])]
-    #: The header is packed to the panel block's own width, measured from the block's
-    #: leftmost ink (column one's y label) to the last column's right spine, and it starts
-    #: at that same left edge -- so it reads as part of the block rather than as a caption
-    #: laid over it. Written as one line the header is wider than the plate, and
-    #: ``bbox_inches="tight"`` would then grow the *file* to fit the header instead of the
-    #: header to fit the plate.
-    renderer = fig.canvas.get_renderer()
-    panel_left = min(ax.get_tightbbox(renderer).x0 for ax in where.values())
-    panel_left /= fig.bbox.width
-    panel_right = max(ax.get_position().x1 for ax in where.values())
-    fig.suptitle(packed(fig, [head] + parts, 7.8,
-                        (panel_right - panel_left) * COL_WIDTH),
-                 fontsize=7.8, x=panel_left, ha="left", y=0.995, va="top",
-                 linespacing=1.35)
-    #: The legend is the plate's only key, so it has to fit inside the column: seven
-    #: long labels on one row would be wider than the plate and ``bbox_inches="tight"``
-    #: would then widen the *file* to fit the key. Two rows of four, short labels.
+    bar.set_label("z", fontsize=FS["annotation"])
+    # A colourbar's labels are tick labels, so they take the tick size (the
+    # annotation size made them the smallest type on a plate whose other ticks
+    # are 6.8 pt).
+    bar.ax.tick_params(labelsize=FS["tick"])
+    bar.outline.set_linewidth(LW["spine"])
+    tag(ax, "c4")
+
+    # --- the plate's one legend, in the band the grid reserves for it ------
+    # The header used to carry the census and the panels their own titles; both are
+    # gone, so the key is now the plate's only explanatory ink. It is the template's
+    # ``fit_legend``, on the template's band, so the six plates carry the same key
+    # geometry as well as the same frame.
     handles = [
-        Line2D([], [], color=COLOUR["reference"], marker="o", ms=3.2, lw=0.9,
-               label="frozen reference month"),
-        Patch(facecolor=COLOUR["band"], alpha=0.75, label="reference window"),
-        Patch(facecolor=COLOUR["envelope"], alpha=0.55,
+        Line2D([], [], color=COLOUR["reference"], marker="o", ms=MS["legend"],
+               lw=LW["plane"], label="reference month"),
+        Line2D([], [], color=COLOUR["outside"], marker="o", ms=MS["legend"],
+               lw=LW["plane"], mfc="white", label="held-out month"),
+        Line2D([], [], color=COLOUR["during"], marker="D", ms=MS["legend"],
+               lw=LW["plane"], mfc="white", label="intervention month"),
+        Line2D([], [], color=COLOUR["post"], marker="s", ms=MS["legend"],
+               lw=LW["plane"], mfc="white", label="post-intervention month"),
+        Patch(facecolor=COLOUR["band"], alpha=0.75, lw=LW["band"],
+              label="reference window"),
+        Patch(facecolor=COLOUR["envelope"], alpha=0.55, lw=LW["band"],
               label="reference envelope (q05–q95)"),
-        Line2D([], [], color=COLOUR["outside"], marker="o", ms=3.2, lw=0.9,
-               ls=(0, (3, 2)), mfc="white", label="held-out pre-intervention month"),
-        Line2D([], [], color=COLOUR["during"], marker="D", ms=3.2, lw=0.9,
-               ls=(0, (3, 2)), mfc="white", label="intervention month"),
-        Line2D([], [], color=COLOUR["post"], marker="s", ms=3.2, lw=0.9,
-               ls=(0, (3, 2)), mfc="white", label="post-intervention month"),
-        Patch(facecolor=COLOUR["interval"], alpha=0.18, label="works interval"),
+        Patch(facecolor=COLOUR["interval"], alpha=0.18, lw=LW["band"],
+              label="works interval"),
     ]
-    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False,
-               bbox_to_anchor=(0.5, 0.045), columnspacing=0.9, handletextpad=0.45,
-               handlelength=1.1, labelspacing=0.4)
-    fig.savefig(path, dpi=FIGURE_DPI, bbox_inches="tight", facecolor="white")
+    # The bar classes of c2 and c3 are named only where the record draws them.
+    if any(month["n_ascending"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["asc"], lw=LW["band"],
+                             label="ASC chips"))
+    if any(month["n_descending"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["desc"], lw=LW["band"],
+                             label="DESC chips"))
+    if any(month["n_echo"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["behaviour"], lw=LW["band"],
+                             label="echo-bearing"))
+    if any(month["n"] - month["n_echo"] for month in months):
+        handles.append(Patch(facecolor="white", edgecolor=COLOUR["behaviour"],
+                             lw=LW["bar_edge"], label="no echo"))
+    tpl.fit_legend(fig, handles)
+    style.save(fig, path, dpi=FIGURE_DPI, eps="blend")
     plt.close(fig)
     return path
 
@@ -1677,8 +1676,9 @@ def build():
                       "kind": "circular moving-block, one resample per class"},
         "figure": {
             "file": rel(OUT_JPG), "dpi": FIGURE_DPI,
-            "size_mm": [round(COL_WIDTH * 25.4, 1),
-                        round(0.92 * COL_WIDTH * 25.4, 1)],
+            "width_mm": style.TRAJECTORY["width_mm"],
+            "height_mm": style.TRAJECTORY["height_mm"],
+            "containers": ["jpg"] + list(style.VECTOR_FORMATS),
             "panels": [
                 {"id": "a1", "block": "behaviour", "shows": "monthly z(gamma2)"},
                 {"id": "a2", "block": "behaviour", "shows": "monthly z(P)"},
@@ -2089,17 +2089,23 @@ def _md_context(report, add):
     for panel in report["figure"]["panels"]:
         add("| **%s** | %s | %s |" % (panel["id"], panel["block"], panel["shows"]))
     add("")
-    add("The plate is set at the column's own width -- `figsize = (%.3f in, %.3f in)`, "
-        "%d dpi, so %.1f mm x %.1f mm -- and saved with `bbox_inches=\"tight\"`, which "
-        "crops the figure to its ink rather than to that rectangle, so the delivered file "
-        "is a few millimetres wider than the setting (the colour bar's ticks) and shorter "
-        "than it (the empty margin the grid leaves below the key). The header is packed to "
-        "the panel block's own width, measured from column one's y label to column four's "
-        "right spine, and starts at that same left edge; panel c4's title is broken in "
-        "two. Either, left as one line, would be wider than the block, and the tight box "
-        "would then widen the *file* to hold the text instead of the text to fit the block."
-        % (COL_WIDTH, 0.92 * COL_WIDTH, FIGURE_DPI,
-           report["figure"]["size_mm"][0], report["figure"]["size_mm"][1]))
+    add("## Caption")
+    add("")
+    add(caption(report))
+    add("")
+    add("The plate draws no title and no panel titles of its own: the tags in the "
+        "table above are all it carries, and this caption is what the reader is "
+        "given with it. Set it under the figure as one paragraph.")
+    add("")
+    add("The frame is the repository's one timeline frame, `style.TRAJECTORY`: "
+        "`figsize = (%.3f in, %.3f in)`, %d dpi, so %.1f mm x %.1f mm as delivered "
+        "-- the raster, the `.pdf` and the `.eps` are each measured against it and "
+        "the run fails if one of them is not. The plate is not cropped to its ink: "
+        "the panels sit inside a fixed grid, the key inside the band that grid "
+        "reserves for it, and a layout that needs more room is a defect rather than "
+        "something the export absorbs."
+        % (COL_WIDTH, PLATE_HEIGHT, FIGURE_DPI,
+           style.TRAJECTORY["width_mm"], style.TRAJECTORY["height_mm"]))
     add("")
 
 
@@ -2219,6 +2225,47 @@ def _md_limits(report, add):
         % (report["provenance"]["template"],
            report["provenance"]["template_sha256"][:16]))
     add("")
+
+
+def caption(report):
+    """The plate's caption -- the one paragraph that explains the twelve tags.
+
+    The plate carries no title inside the drawing, so this is where a reader is
+    told what the tags mean and what the four classes are. Every number in it is
+    the report's own, and it is the reason the panels can be left with nothing but
+    their tags; the template's caption says the same for the five case plates, so
+    the six read as one series.
+    """
+    ref = report["reference"]
+    audit = report["classification"]["classes"]
+    event = report["event"]
+    pieces = [
+        "**Figure. %s -- OCV trajectory on the support-sized chip.** Twelve "
+        "panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z "
+        "of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), "
+        "the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). "
+        "Row `c` is the record's own context: environment (`c1`, descriptive "
+        "only), observation cadence ASC/DESC per month (`c2`), observation "
+        "availability (`c3`, solid = chips with an echo) and the whole trajectory "
+        "as a six-dimension by every-month matrix (`c4`)." % report["label"]]
+    pieces.append(
+        "Every ordinate is a robust z against the frozen pre-intervention "
+        "reference (%d chips, %s → %s): filled markers are reference months, hollow "
+        "grey circles the held-out pre-intervention months (%d chips), hollow amber "
+        "diamonds the intervention months (%d chips, %s → %s) and hollow red "
+        "squares the post-intervention months (%d chips); the grey band is the "
+        "reference window, the light band its monthly q05-q95 envelope, the pale "
+        "red band with dashed ends the documented works interval %s → %s."
+        % (ref["n_chips"], ref["window"][0], ref["window"][1],
+           audit["outside"]["n"], audit["during"]["n"],
+           audit["during"]["months"][0], audit["during"]["months"][1],
+           audit["post"]["n"], event["start"], event["end"]))
+    pieces.append(
+        "The plate is set at the repository's print width, 170 × 156 mm, on the "
+        "shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and "
+        "legend 6.8 pt), carries this caption's key in one legend under the grid, "
+        "and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.")
+    return " ".join(pieces)
 
 
 def report_md(report):
@@ -2471,20 +2518,49 @@ def verify():
                         % os.path.relpath(OUT_JPG, ROOT))
     else:
         digests = []
-        for _ in range(2):
-            handle, temporary = tempfile.mkstemp(suffix=".jpg")
-            os.close(handle)
-            try:
+        scratch = tempfile.mkdtemp(prefix="werder_plate_")
+        try:
+            for index in range(2):
+                temporary = os.path.join(scratch, "draw%d.jpg" % index)
                 draw(report, temporary)
                 digests.append(sha256_of(temporary))
-            finally:
-                os.unlink(temporary)
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
         if len(set(digests)) != 1:
             problems.append("%s: the plate is not deterministic (two draws differ)"
                             % os.path.relpath(OUT_JPG, ROOT))
         elif sha256_of(OUT_JPG) != digests[0]:
             problems.append("%s: the committed plate is not the one this report draws"
                             % os.path.relpath(OUT_JPG, ROOT))
+    # The plate is the shared frame or it is not a plate of this repository: the
+    # raster, the ``.pdf`` and the ``.eps`` are each measured against
+    # ``style.TRAJECTORY``, and the report has to record that frame rather than a
+    # stale copy of it.
+    frame = style.TRAJECTORY
+    stem = os.path.splitext(OUT_JPG)[0]
+    for path in [OUT_JPG] + [stem + "." + fmt for fmt in style.VECTOR_FORMATS]:
+        if not os.path.exists(path):
+            problems.append("%s: missing -- run the script first" % rel(path))
+            continue
+        info = style.measure(path)
+        for key, want in (("mm", frame["width_mm"]),
+                          ("height_mm", frame["height_mm"])):
+            got = info[key]
+            if got is None:
+                problems.append("%s: no declared density, so its print size is "
+                                "unknown" % rel(path))
+            elif abs(got - want) > style.WIDTH_TOL_MM:
+                problems.append("%s: %.1f mm %s, expected %.1f +/- %.1f mm"
+                                % (rel(path), got,
+                                   "wide" if key == "mm" else "tall", want,
+                                   style.WIDTH_TOL_MM))
+    for key, want in (("width_mm", frame["width_mm"]),
+                      ("height_mm", frame["height_mm"]),
+                      ("dpi", FIGURE_DPI),
+                      ("containers", ["jpg"] + list(style.VECTOR_FORMATS))):
+        if report["figure"].get(key) != want:
+            problems.append("figure[%r] is %r, expected %r"
+                            % (key, report["figure"].get(key), want))
     return problems
 
 

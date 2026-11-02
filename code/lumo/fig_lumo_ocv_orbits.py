@@ -31,7 +31,8 @@ complete except for **one** missing ``P`` (the healthy ASC overpass of
 persistence map); that point is drawn as a gap and never interpolated.
 
 Everything is recomputed from the committed table and checked against
-``lumo_ocv_channels_meta.json``, ``fig_lumo_ocv_paper.json`` and the committed
+``lumo_ocv_channels_meta.json``, ``fig_lumo_ocv_paper.json`` (a frozen lock; its
+generator is retired) and the committed
 ``reference/lumo_tower_coherence_states.json``: row counts, the acquisition-row
 join, the 13-run sequence, sub-swath provenance, per-state/per-orbit counts,
 row-by-row burst ids / dates / orbits / labels / gamma2 / n_masked, channel
@@ -68,8 +69,10 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+sys.path.insert(1, os.path.dirname(HERE))   # code/ -> the shared figure style
 
 import lumo_ocv_core as core    # noqa: E402
+import figure_style as style    # noqa: E402
 
 FIGDIR = core.FIGDIR
 SITE = "LUMO"
@@ -82,32 +85,25 @@ PAPER_JSON = os.path.join(core.DATA, "fig_lumo_ocv_paper.json")
 SOURCE_CSV = os.path.join(core.DATA, "lumo_channels.csv")
 
 # ---------------------------------------------------------------------------
-# Style (the same block as the other LUMO companion figures)
+# Style — the shared ladder and the one print width (code/figure_style.py).
+# Only the drawing convention stays local: spines, grid, mathtext and the
+# on-screen dpi.  The typography and ``savefig.bbox`` are the shared module's.
 # ---------------------------------------------------------------------------
-plt.rcParams.update({
-    "font.family": "DejaVu Sans",
+style.apply(dpi=FIG_DPI, **{
     "mathtext.fontset": "stix",
-    "font.size": 8.5,
-    "axes.titlesize": 8.0,
-    "axes.labelsize": 8.0,
-    "xtick.labelsize": 7.0,
-    "ytick.labelsize": 7.0,
-    "legend.fontsize": 7.2,
+    "figure.dpi": 110,
     "axes.spines.top": False,
     "axes.spines.right": False,
     "axes.grid": True,
     "grid.alpha": 0.25,
     "grid.linewidth": 0.4,
-    "figure.dpi": 110,
-    "savefig.dpi": FIG_DPI,
-    "savefig.bbox": "tight",
-    "pdf.fonttype": 42,
 })
-MM = 1.0 / 25.4
-COL_WIDTH = 183 * MM
+MM = style.MM
+COL_WIDTH = style.COL_WIDTH
 
 # Four LUMO states, in the severity order of STATE_ORDER.  The colours and
-# markers are the ones of fig_lumo_ocv_paper.py.
+# markers are the ones of the site's pooled A-E figure (retired; its frozen lock
+# is data/lumo/fig_lumo_ocv_paper.json).
 BACKSLASH = chr(92)  # a shell line continuation
 STATES = core.STATE_ORDER
 STATE_COLORS = {"healthy": "#4C72B0", "DAM3": "#DD8452",
@@ -138,7 +134,11 @@ CHANNEL_AXIS = {
     "A": "A  [px]",
     "S": "S  [px]",
 }
-FIG_CHANNEL_AXIS = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_AXIS.items()}
+# The drawing twins of the two tables above.  ``CHANNEL_AXIS`` already spells
+# ``gamma^2`` as mathtext, so the axis table is used as it stands: replacing
+# ``gamma^2`` inside it doubled the dollars and the label was drawn literally
+# as ``$$\gamma^2$$``.  Only the plain-text titles need the conversion.
+FIG_CHANNEL_AXIS = dict(CHANNEL_AXIS)
 CHANNEL_TITLE = {
     "gamma2": "coherence",
     "P": "mask persistence",
@@ -942,13 +942,13 @@ def make_figure(res, figdir):
                            labelbottom=(row == nrows - 1))
             ax.text(0.012, 0.965, f"({PANEL_LETTERS[row * ncols + col]})",
                     transform=ax.transAxes, ha="left", va="top",
-                    fontsize=6.8, color="0.2", zorder=5,
+                    fontsize=style.FS["annotation"], color="0.2", zorder=5,
                     bbox=dict(facecolor="white", edgecolor="none",
                               alpha=0.72, pad=0.7))
             if row == 0:
                 ax.set_title(f"{ORBIT_LABEL[geom]}  "
                              f"({series[geom]['n_dates']} overpasses)",
-                             fontsize=8.0, pad=6)
+                             fontsize=style.FS["title"], pad=6)
 
     for ax in axes[-1]:
         ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
@@ -961,21 +961,26 @@ def make_figure(res, figdir):
                           label="overpass series"))
     handles.append(Line2D([], [], color="0.45", lw=0.7, ls="--",
                           label="state transition"))
-    fig.legend(handles=handles, loc="lower center", ncol=6, frameon=False,
-               bbox_to_anchor=(0.5, 0.004))
+    leg = fig.legend(handles=handles, loc="lower center", ncol=6, frameon=False,
+                     bbox_to_anchor=(0.5, 0.004))
     fig.suptitle(
         "LUMO lattice tower — OCV time series by dimension and orbit\n"
         "178 overpasses, 13 consecutive state runs, actual local overpass "
         "time (Europe/Berlin)\n"
-        "bands = damage_label runs; dashed lines = run transitions; "
-        "markers = overpasses by state; line = acquisition order\n"
-        "P, D, F and A on log axes; the one missing P (2021-07-14 ASC) is a "
-        "gap, not interpolated",
-        fontsize=8.2, y=0.992)
-    fig.tight_layout(rect=(0, 0.036, 1, 0.912))
+        "bands = damage_label runs; dashed = run transitions; "
+        "markers = overpasses by state\n"
+        "line = acquisition order; P, D, F and A on log axes; "
+        "the one missing P (2021-07-14 ASC)\n"
+        "is a gap, not interpolated",
+        fontsize=style.FS["suptitle"], y=0.992)
+    fig.tight_layout(rect=style.grid_rect(fig, leg))
     os.makedirs(figdir, exist_ok=True)
     out = os.path.join(figdir, FIG_NAME + ".jpg")
-    fig.savefig(out, dpi=FIG_DPI, facecolor="white")
+    # The orbit lines are drawn at alpha 0.55 straight over each other: their
+    # alpha *is* the reading (a denser panel has to read darker), and a
+    # pre-composite cannot accumulate it, so this plate takes the EPS from the
+    # PDF by pdftops instead of blending.
+    style.save(fig, out, dpi=FIG_DPI, eps="raster")
     plt.close(fig)
     return out
 
@@ -1137,6 +1142,12 @@ def report(res):
         A("python3 code/lumo/fig_lumo_ocv_orbits.py")
         A("PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh")
     A("```")
+    A("")
+    A("The run writes three containers under one stem -- "
+      "`figures/lumo/fig_lumo_ocv_orbits.jpg` (630 dpi), `.pdf` and `.eps` -- "
+      "on the shared print frame of `code/figure_style.py`: 170.0 mm wide, the "
+      "type on its point ladder, the pens on its line ladder. All three are "
+      "measured at 170.0 mm by `code/audit_figure_style.py`.")
     A("")
     A("Needs numpy and matplotlib. This report was generated with python "
       f"{platform.python_version()}, numpy {np.__version__}, matplotlib "

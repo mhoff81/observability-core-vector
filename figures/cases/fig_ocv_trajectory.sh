@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The six OCV trajectory plates in one run — one figure per site, nothing pooled:
+# The five OCV trajectory plates in one run — one figure per site, nothing pooled:
 #   figures/<site>/fig_<site>_ocv_trajectory.jpg   the 3 x 4 plate
 #   figures/<site>/fig_<site>_ocv_trajectory.md    its report
 #   data/<site>/fig_<site>_ocv_trajectory.json     every plotted number

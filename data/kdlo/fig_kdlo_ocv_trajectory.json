@@ -288,7 +288,13 @@
  },
  "event": "2022-12-11",
  "figure": {
+  "containers": [
+   "jpg",
+   "pdf",
+   "eps"
+  ],
   "dpi": 630,
+  "height_mm": 156.0,
   "panels": [
    {
     "block": "behaviour",
@@ -350,7 +356,8 @@
     "id": "c4",
     "shows": "the trajectory matrix: six dimensions x every month"
    }
-  ]
+  ],
+  "width_mm": 170.0
  },
  "label": "KDLO media tower, Garden City SD",
  "months": [
@@ -1027,7 +1034,7 @@
    }
   }
  ],
- "note": "the tail is the **rebuild**, not a collapse aftermath: the contrast answers a different question, and the plate says so in its own subtitle rather than in a footnote.",
+ "note": "the tail is the **rebuild**, not a collapse aftermath: the contrast answers a different question, and the plate's caption says so rather than a footnote.",
  "outside": {
   "applies": false,
   "block": 3,

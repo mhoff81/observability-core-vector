@@ -12,7 +12,7 @@ read chip    support                        components
 
 One idea, three panels, one frame: **restriction**. Panel (a) holds everything the sensor returned; (b) keeps the part that belongs to this asset in this channel; (c) keeps the part of that which carries echo. Nothing in (b) is absent from (a), and nothing in (c) is absent from (b) — the panels are one observation at three levels of admission, not three pictures.
 
-Like the first schematic it carries no data, so it has no pins to a table; it has 160 structural checks instead, listed at the foot of this page and in `../data/concept/fig_ocv_measurement.json`.
+Like the first schematic it carries no data, so it has no pins to a table; it has 165 structural checks instead, listed at the foot of this page and in `../data/concept/fig_ocv_measurement.json`.
 
 ## The three panels
 
@@ -83,11 +83,12 @@ The prohibition is mechanical, not editorial: a forbidden-token scan runs over e
 | --- | --- |
 | `concept/fig_ocv_measurement.jpg` | 183 mm × 61 mm, 630 dpi JPEG (quality 95, 4:4:4 subsampling) |
 | `concept/fig_ocv_measurement.pdf` | the same plate as a true vector page (FontType 42; no raster object anywhere in the file — the intensity field is 2,028 filled quads) |
+| `concept/fig_ocv_measurement.eps` | the same page in PostScript: alpha pre-blended over white (`figure_style.save_eps`), FontType 42, no raster object, box 183 mm × 61 mm, byte-identical across runs |
 | `concept/fig_ocv_measurement.md` | this report |
-| `../data/concept/fig_ocv_measurement.json` | the drawn geometry, the field, the mask, the text inventory, every check and the sha256 of both images |
+| `../data/concept/fig_ocv_measurement.json` | the drawn geometry, the field, the mask, the text inventory, every check and the sha256 of all three images |
 
 ```bash
-bash figures/concept/fig_ocv_measurement.sh                  # both images
+bash figures/concept/fig_ocv_measurement.sh                  # all three images
 python3 code/concept/fig_ocv_measurement.py --no-figures     # checks only
 PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_measurement.sh
 ```
@@ -100,7 +101,7 @@ For the manuscript:
 
 ## The checks
 
-**160 of 160 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips both images and the file checks that go with them.)
+**165 of 165 checks pass.** A failure exits with status 2 *after* the artefacts are written, so a broken plate is reported rather than silently delivered. (`--no-figures` builds, measures and checks, writes the JSON and this report, and skips all three images and the file checks that go with them.)
 
 | family | what it pins |
 | --- | --- |
@@ -280,13 +281,19 @@ For the manuscript:
 | 155 | PDF is a manageable vector page (< 1.5 MB) | ok | 0.10 MB |
 | 156 | PDF page box is 183 x 61 mm | ok | [0.0, 0.0, 518.7401574803, 172.9133858268] |
 | 157 | re-saving the same figure gives the same JPEG bytes | ok |  |
-| 158 | two builds render identical pixels | ok | (1512, 4538, 4) |
-| 159 | two builds lay the OCV row out identically | ok |  |
-| 160 | the vector row agrees with the first schematic | ok | left 0.033885 vs 0.033885, width 0.932230 vs 0.932230 |
+| 158 | EPS announces itself as an EPS (EPSF-3.0) | ok | %!PS-Adobe-3.0 EPSF-3.0 |
+| 159 | EPS page box is 183 x 61 mm | ok | [0.0, 0.0, 518.740157, 172.913386] |
+| 160 | EPS is vector (no PostScript image object) | ok |  |
+| 161 | EPS embeds its fonts as TrueType (FontType 42) | ok |  |
+| 162 | EPS carries no timestamp and no output path | ok |  |
+| 163 | two builds render identical pixels | ok | (1512, 4538, 4) |
+| 164 | two builds lay the OCV row out identically | ok |  |
+| 165 | the vector row agrees with the first schematic | ok | left 0.033885 vs 0.033885, width 0.932230 vs 0.932230 |
 
 ## Files
 
 - `fig_ocv_measurement.jpg` — sha256 `2a4974802f9f2affef734094d4f72911f3089212b1374a382a11a527ad0d8630`
 - `fig_ocv_measurement.pdf` — sha256 `f66976d1823b7964f9b6a38b05bcd8ca8237950017ae27a902eaad40c741cb7c`
+- `fig_ocv_measurement.eps` — sha256 `510f850d9dc0d53a25a90d65de4ccec843e57267f1d2780e1de61be58092e8da`
 
-Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.4.6. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG and PDF.
+Environment: Python 3.13.5, matplotlib 3.11.1, numpy 2.5.4. The plate is deterministic: no timestamp, no seed-dependent value and no machine-dependent path reaches any output, so two runs produce byte-identical JSON, Markdown, JPEG, PDF and EPS.

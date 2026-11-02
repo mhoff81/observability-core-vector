@@ -1,10 +1,19 @@
 # `data/` — one subfolder per site: input tables and reference results
 
-`lumo/`, `bautzen/`, `kdlo/`, `carola/`, `morandi/`, `cts/` and `espoo/`. Everything in here is either a **copy**
+`lumo/`, `bautzen/`, `kdlo/`, `carola/`, `morandi/`, `cts/`, `haltern/`, `espoo/`
+and `werder_havel/`. Everything in here is either a **copy**
 of a committed artifact of the site's analysis project or a file **generated** by
 a script in `../code/<site>/`; nothing is edited by hand. Every script reads and
 writes only inside its own `data/<site>/`, so the sites can never overwrite each
 other.
+
+**Scope note.** Some rows below name a generator in `../code/<site>/` that has since
+been **retired** — the per-site A–E “paper” plates, the month, orbit, series,
+weeks and geometry companions, and the case-overview / prospective / correspondence
+analyses. Every artifact they describe is still committed here and is still the
+frozen provenance of its site, but no script recomputes it any more. `../figures/`
+ships exactly twelve plates (see `../figures/README.md`), and `../code/README.md`
+lists the generators that survive.
 
 ## `data/lumo/` — LUMO lattice tower (Hannover)
 

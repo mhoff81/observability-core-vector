@@ -62,9 +62,12 @@ Reference file (``data/haltern/reference/``)
                           co-variate controls, the timeline and the record's
                           provenance facts. This site has **no upstream analysis
                           project** to pin against (the record *is* the site's
-                          own export), so the reference is regenerated
-                          deterministically by ``fig_haltern_ocv_paper.py
-                          --write-reference`` and pinned on every later run.
+                          own export), so the reference was generated once,
+                          deterministically, by the ``--write-reference`` path
+                          of the since-retired paper generator
+                          (``fig_haltern_ocv_paper.py``), and is pinned on every
+                          run of ``haltern_mask_sensitivity.py``, its one
+                          surviving reader.
 """
 from __future__ import annotations
 

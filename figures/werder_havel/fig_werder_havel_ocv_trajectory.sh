@@ -5,12 +5,14 @@
 # data/werder_havel/reference/werder_havel_aoi.json in;
 # data/werder_havel/fig_werder_havel_ocv_trajectory.json,
 # figures/werder_havel/fig_werder_havel_ocv_trajectory.md and
-# figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg out) resolve correctly.
+# figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg/.pdf/.eps out) resolve correctly.
 # The documented works interval is read from the committed channel metadata; the
 # external operator record (EVENTS_SOURCE) may only agree with it or be reported as a
 # note -- it never supplies a date. Any argument is passed through, e.g. --selftest
 # (the registered rules and pins, nothing written), --verify (re-derive and compare with
 # the committed JSON, report and plate) or --no-figures (the JSON and the .md only).
+# The plate is one shared frame, 170 x 156 mm, from code/figure_style.py's
+# TRAJECTORY table, and its .pdf/.eps are the same drawing as vector.
 #
 # Interpreter: `python3` from PATH, unless PYTHON names another one -- needed where
 # the default python3 is a virtualenv without numpy/matplotlib, e.g.

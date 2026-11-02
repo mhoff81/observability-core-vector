@@ -1,14 +1,14 @@
 # `code/lumo/` — LUMO site package: analysis and plotting scripts
 
-Six Python modules, no package, no dependencies beyond the standard library plus
+Five Python modules, no package, no dependencies beyond the standard library plus
 numpy / matplotlib / scipy (scipy is only used for the p-values of the control
 tests; without it the scripts still run, just with fewer p-values). This is the
 LUMO half of the repository; the Bautzen bridge site lives in `../bautzen/` and
 mirrors it module for module — only the mask layer is swapped.
 
 All paths below are relative to the **repository root** and the scripts are
-always started from there (the wrappers `../../figures/lumo/fig_lumo_ocv_paper.sh`
-and `../../figures/lumo/fig_lumo_ocv_orbits.sh` do that): inputs and outputs in
+always started from there (the wrapper `../../figures/lumo/fig_lumo_ocv_orbits.sh`
+does that): inputs and outputs in
 `data/lumo/`, figures in `figures/lumo/`.
 
 ### What the state labels mean
@@ -91,35 +91,15 @@ python3 code/lumo/lumo_ocv_channels_csv.py                # build + verify
 python3 code/lumo/lumo_ocv_channels_csv.py --verify-only  # verify only
 ```
 
-### `fig_lumo_ocv_paper.py` — figures A–E, JSON result, report, pin block
-
-The main script. `compute()` recalculates every number of the five figures from
-`data/lumo/lumo_ocv_channels.csv`; `pin_all()` then compares each number with the
-committed reference JSONs in `data/lumo/reference/`, key by key and row by row
-(2982 checks in a full run, 2892 in `--quick`; the German documentation strings of
-the references are translated through `core.LABEL_EN`). A single deviation ends
-the run with exit code 1. `main()` writes the five figures to `figures/lumo/`,
-the result JSON to `data/lumo/fig_lumo_ocv_paper.json` and the English report to
-`figures/lumo/fig_lumo_ocv_paper.md`.
-
-```bash
-python3 code/lumo/fig_lumo_ocv_paper.py            # full run, ~5 min
-python3 code/lumo/fig_lumo_ocv_paper.py --quick    # ~2 min: the two permutation
-                                                   # tests are copied from the refs
-python3 code/lumo/fig_lumo_ocv_paper.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-Wall-clock times are only printed to stdout, never written into an artifact: with
-the fixed seeds (`RNG_SEED = 11`, 2000 bootstrap draws, 1000 / 500 permutation
-draws) two runs produce identical JSON, Markdown and PNG files.
-
 ### `fig_lumo_ocv_orbits.py` — 6 x 2 time-series companion
 
 The paper figure summarises the six channels per state; this companion asks the
 same channels as a **time series** and separates the two pass geometries. It
 draws six rows in the formal OCV order (`gamma2`, `P`, `D`, `F`, `A`, `S`) and
 two columns (ASC / DESC): twelve panels on `figures/lumo/fig_lumo_ocv_orbits.jpg`
-(183 mm wide, 630 dpi JPEG). The x axis is the **actual local overpass instant**:
+(170 mm wide — the repository's print width — 630 dpi JPEG, with the `.pdf` and
+`.eps` of the same page beside it). The x axis is the **actual local overpass
+instant**:
 the coherence rows carry no timestamp, so `compute()` joins the
 `record_class="acquisition"` rows by `burst_id`, converts UTC to
 `Europe/Berlin` with `zoneinfo`, sorts by acquisition instant and cuts the
@@ -130,7 +110,9 @@ the transitions. `P`, `D`, `F` and `A` use log axes; the one missing `P`
 
 The run writes `data/lumo/fig_lumo_ocv_orbits.json` and
 `figures/lumo/fig_lumo_ocv_orbits.md` as well. It carries **144 cross-checks**
-against `lumo_ocv_channels_meta.json`, `fig_lumo_ocv_paper.json` and
+against `lumo_ocv_channels_meta.json`, the frozen lock
+`data/lumo/fig_lumo_ocv_paper.json` (written by the retired A–E plate, still the
+site's reference of record) and
 `reference/lumo_tower_coherence_states.json`: row and date counts, the 482-row
 acquisition join, the 13-run sequence and lengths, sub-swath counts,
 per-state/per-orbit counts, row-by-row `burst_id` / date / orbit / label /
@@ -144,66 +126,3 @@ python3 code/lumo/fig_lumo_ocv_orbits.py              # figure + JSON + report
 python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures # checks only
 ```
 
-### `fig_lumo_ocv_physics.py` — physical dynamics against OCV behaviour
-
-Two panels, one state colour scheme, asking whether states that sit close
-together in an **independently measured physical** plane also sit close together
-in the OCV behaviour plane:
-
-| panel | x | y |
-| --- | --- | --- |
-| A physical | `df_H1 / f_H1,0` (signed, frequency loss to the left) | `dzeta_H1 / zeta_H1,0` |
-| B OCV | `z(gamma2)` | `z(P)` |
-
-Both origins are the healthy state. Panel A has **one point per state** — each
-state was measured in one controlled campaign of five healthy plus five damaged
-recordings, so there is no physical replicate; it carries a 95 % bootstrap
-interval over those ten recordings (seeded, 2000 draws) and a ±0.125 Hz
-quantisation bar on the frequency axis. Panel B has **two visits per state** (the
-two SAR state runs); colour = state, marker shape = orbit (circle ASC, square
-DESC), fill = visit (filled first, open repeat), marker area ∝ n, a grey ring
-marks n < 3. The orbits are never pooled; the dashed arrow is the state-level
-(visit-pooled) vector, which is the reproducible object.
-
-The report (`figures/lumo/fig_lumo_ocv_physics.md`) gives the direction and
-magnitude of every vector, the visit-to-visit repeatability (cosine and angle,
-with the per-visit n), the state ordering by `|v|` in both planes and the
-cross-plane cosine **as a descriptive statistic only** — a matching direction
-would be evidence of consistency between two measurement channels, not evidence
-that `(gamma2, P)` measures stiffness or damping.
-
-Data: `data/lumo/reference/lumo_state_dynamics.json` (H1 frequency change from
-the committed Welch mode consensus, H1 damping from the half-power bandwidth of
-30 recordings; built and verified by `lumo_state_dynamics_json.py`) and the
-**support** chip `data/lumo/support/lumo_ocv_channels.csv`. `--chip committed`
-repeats the whole panel on `data/lumo/lumo_ocv_channels.csv`: the two chips
-define `gamma2` differently (the support re-cut raises it by an order of
-magnitude), and the report shows how far that moves the OCV points.
-
-```bash
-python3 code/lumo/fig_lumo_ocv_physics.py                 # support chip
-python3 code/lumo/fig_lumo_ocv_physics.py --chip committed
-python3 code/lumo/fig_lumo_ocv_physics.py --selftest       # geometry helpers
-python3 code/lumo/fig_lumo_ocv_physics.py --no-figures     # checks only
-```
-
-### `lumo_state_dynamics_json.py` — builder of the damping reference
-
-The damping half of `v_phys` lives outside this repository (LUMO SHM project).
-This script reads the three sources, pins their sha256, copies the thirty
-per-recording damping values verbatim into
-`data/lumo/reference/lumo_state_dynamics.json` and cross-checks the medians
-against `lumo_dam6_analysis/lumo_damping_gamma2_modulation.json`. Without
-`--build` it only verifies the committed file (107 checks: medians, spreads,
-relative changes, campaign names, agreement with the committed frequency
-reference).
-
-```bash
-python3 code/lumo/lumo_state_dynamics_json.py --build   # rebuild (needs the SHM data)
-python3 code/lumo/lumo_state_dynamics_json.py           # verify only
-```
-
-Note that the module and site names keep their `lumo_` prefix although the folder
-already says `lumo/`: the import statements (`import lumo_ocv_core as core`),
-the reference file names and every command line in the reports stay unchanged
-between the two sites, which is what makes the mirror auditable as a diff.

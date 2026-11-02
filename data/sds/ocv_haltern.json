@@ -1340,7 +1340,7 @@
        "DESC": true
       },
       "significant": [],
-      "verdict": "no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+      "verdict": "no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
       "widest_upper_bound": 2.5541535257580086
      },
      "geometry": {
@@ -1380,7 +1380,7 @@
      "DESC": "mad"
     },
     "verdicts": {
-     "behaviour": "no state contrast in the behaviour block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
+     "behaviour": "no state contrast in the behavior block survives the asset's own Holm family; the point estimate of the step is positive on both channels",
      "geometry": "no state contrast in the geometry block survives the asset's own Holm family; the point estimate of the step is positive on both channels"
     }
    }
@@ -1586,7 +1586,7 @@
    "Channel": "ASC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Haltern",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -1597,7 +1597,7 @@
    "Channel": "ASC",
    "Direction": "gamma2- P+ | A- D- F+ S+",
    "Experiment": "Haltern",
-   "R_behaviour": 0.8186756802702015,
+   "R_behavior": 0.8186756802702015,
    "R_geometry": 0.9898519378162972,
    "Scale": "mad",
    "State": "post-collapse",
@@ -1608,7 +1608,7 @@
    "Channel": "DESC",
    "Direction": "gamma2=0 P=0 | A=0 D=0 F=0 S=0",
    "Experiment": "Haltern",
-   "R_behaviour": 0.0,
+   "R_behavior": 0.0,
    "R_geometry": 0.0,
    "Scale": "mad",
    "State": "pre-collapse (healthy)",
@@ -1619,7 +1619,7 @@
    "Channel": "DESC",
    "Direction": "gamma2+ P- | A+ D+ F+ S-",
    "Experiment": "Haltern",
-   "R_behaviour": 0.530332472116328,
+   "R_behavior": 0.530332472116328,
    "R_geometry": 1.18178874043176,
    "Scale": "mad",
    "State": "post-collapse",

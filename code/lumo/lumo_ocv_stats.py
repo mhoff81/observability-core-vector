@@ -19,8 +19,10 @@ This module invents *nothing*: every function is a verbatim port of
 
 Purpose of the port: this repo must run without the 1394-directory burst cache
 and without the LUMO project analysis scripts, yet produce *exactly* the same
-numbers. The proof of that is the hard pin block in
-``fig_lumo_ocv_paper.py`` (abort if a single number deviates).
+numbers. The proof of that was the hard pin block of the since-retired
+``fig_lumo_ocv_paper.py``, which aborted if a single number deviated; what it
+left behind is the frozen lock ``data/lumo/fig_lumo_ocv_paper.json``, pinned by
+``fig_lumo_ocv_orbits.py``.
 
 Conventions (identical to the origin):
   SDS  = 10 * |Cliff's delta|

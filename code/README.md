@@ -1,4 +1,4 @@
-# `code/` — the eight site packages
+# `code/` — the nine site packages
 
 One subfolder per site, all standalone, offline and built the same way (stats
 layer, data layer, generator, figure script). They differ in what the observability
@@ -15,7 +15,10 @@ all**: 150 acquisitions with an empty `damage_label`, `structural_state` and
 `condition_label` on every row and **no mask raster** either (56 of its 78 columns
 are empty), so its OCV is `[gamma2, A]` with `A` = the delivered mask *size*,
 **copied and proved** rather than recomputed, and the only contrast left is the
-orbit geometry (ASC / DESC) — the family's event-free control.
+orbit geometry (ASC / DESC) — the family's event-free control. Werder Havel is the
+family's **positive control in the other direction**: a record with documented
+works instead of a collapse, whose three strata (`W2_bestand`, `W3_sanierung`,
+`W4_post`) are cut on the two dates of the 2024/2025 renewal.
 
 | folder | site | states | mask layer | package README |
 | --- | --- | --- | --- | --- |
@@ -27,74 +30,18 @@ orbit geometry (ASC / DESC) — the family's event-free control.
 | [`cts/`](cts/README.md) | Champlain Towers South, Surfside (collapsed 2021-06-24) | pre-collapse (healthy), post-collapse | two layers over four footprints of one orbit (target + two controls + a beach reference), the echo mask **and** the per-track deck mask from a committed window cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px), **plus a difference-in-differences layer** | `cts/README.md` |
 | [`haltern/`](haltern/) | Haltern AV9 wind turbine, Kreis Recklinghausen (collapsed 2021-09-29) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest, and no edge/band layer is claimed because the tower base spans more than the frame reaches; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the turbine's **own OSM node**) and committed beside it | `haltern_ocv_core.py` docstring (the package carries no separate README) |
 | [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed | `espoo/README.md` |
-
-### `orbits/` — one OCV time-series figure per support-sized table
-
-`[orbits/fig_ocv_orbits.py](orbits/fig_ocv_orbits.py)` draws the twelve-panel
-companion (six where only one orbit has data — KDLO is DESC-only, so its plate
-has one column and the report names the missing channel) for the six sites
-migrated to the support-sized chip (CTS, KDLO, Carolabrücke, Haltern, Ponte
-Morandi, and Espoo): one panel per **dimension
-x observation channel**, in the order and with the axes the LUMO and Bautzen
-figures use (`gamma2, P, D, F, A, S`; `P, D, F, A` logarithmic).
-
-Two states for the five labelled sites: **pre-collapse and post-collapse**,
-except KDLO, whose record carries **pre-rebuild and post-rebuild**. A state with a
-single overpass (KDLO's `single`) is dropped and named in the markdown. A channel
-with no data is not drawn empty — the panel carries the reason (KDLO's support
-cut holds 60 overpasses, all DESCENDING, so its ASC column has nothing to draw).
-
-**One state is allowed too**, for a site whose record labels no damage at all:
-Espoo registers `states = {"all": "event-free"}` and `label_column = None`, so
-every overpass takes the single state, the band is the one run, the median is the
-level of the whole series, and the title reads *across* instead of *before and
-after*. The two-state sites keep every number: their JSON gains exactly one key,
-`out_name`, and no value, run or median changes. Everything state-dependent is now driven by the
-registry: the per-state loops, the counts column, the legend and the markdown
-tables all iterate `spec["states"]`, and `STATE_COLORS/FILL/MARKERS` carry an
-`all` slot (a neutral fill, because one state has no contrast to colour).
-
-Espoo also carries `out_name` (`fig_espoo_ocv_orbits_chip`), because the site
-already owns `fig_espoo_ocv_orbits.jpg` — the *pipeline* figure (A vs S, no chip,
-see [`espoo/README.md`](espoo/README.md)). Same base name, different figure: the
-`.png` is the pipeline record, the `.jpg`/`.json`/`.md` of the `_chip` stem are
-the shared six-dimension family on the support chip.
-
-```sh
-bash figures/orbits/fig_ocv_orbits.sh            # all six, with --verify
-bash figures/orbits/fig_ocv_orbits.sh --site cts
-```
-
-Outputs: `figures/<site>/fig_<site>_ocv_orbits.{jpg,md}` and
-`data/<site>/support/fig_<site>_ocv_orbits.json`, or the registry's `out_name`
-where a site already owns that stem (Espoo's `fig_espoo_ocv_orbits_chip.*`).
-`--verify` re-derives every plotted point, run and median from the table and
-fails on a mismatch — the figure computes nothing the JSON does not carry.
-
-### `cases/` — the six-case overview page
-
-`[cases/fig_cases_overview.py](cases/fig_cases_overview.py)` reads the six cases on
-the **support-sized chip** (`data/sds/sds_support.json` for the state contrasts,
-Espoo's chip figure for the event-free control) and draws one page: the case map on the event spectrum, the
-dimension-response matrix, and six schematic time lines. A matrix cell carries an
-arrow only when that case's own interval excludes zero **and** both sides carry at
-least six units (`○` = tested, nothing resolved; `?` = no evidence; fill = the SDS
-band inside the cell), so Haltern's single resolved dimension is `F ↑` and
-Morandi's row is four circles on purpose. `--selftest` checks the gate rules and
-the three adapters; `--verify` re-derives every cell and every source hash.
-
-```sh
-python3 code/cases/fig_cases_overview.py            # JSON + report + 630 dpi JPEG
-python3 code/cases/fig_cases_overview.py --selftest # 11 checks
-python3 code/cases/fig_cases_overview.py --verify   # every cell, every sha256
-```
+| [`werder_havel/`](werder_havel/) | Havelbrücke Werder, A 10 (documented works 2024-07-01 → 2025-09-05) | `W2_bestand`, `W3_sanierung`, `W4_post` | echo mask of the 80 x 80 complex window over the whole record, on the support-sized chip | `werder_havel_ocv_channels_csv.py` docstring (the package carries no separate README) |
 
 ### `cases/` — the standard OCV trajectory plate
 
 `[cases/ocv_trajectory.py](cases/ocv_trajectory.py)` draws the **same 3 x 4 plate**
-for every case site, on the support-sized chip, with the post-event tail **drawn**
-instead of cut off — the timeline question the six cases are read for, asked once
-and answered six times in one design. The reference timeline is defined **case by
+for every case site in its registry, on the support-sized chip, with the post-event
+tail **drawn** instead of cut off — the timeline question the five cases are read
+for, asked once and answered five times in one design. The sixth trajectory plate
+of `figures/` (Werder Havel) is
+`[werder_havel/fig_werder_havel_ocv_trajectory.py](werder_havel/fig_werder_havel_ocv_trajectory.py)`,
+which implements the same template on an interval-specific registry. The reference
+timeline is defined **case by
 case** (R2), each of the two blocks of `ocv_reconfigure.BLOCKS` is standardised on
 **its own** reference set (R3), the z is robust and clipped (R4), and the months are
 bins with holes drawn, never spanned, with one seeded moving-block interval for the
@@ -107,59 +54,17 @@ contrast (R5).
 | morandi | 2016-08-24 → 2018-08-08 | 198 | 9 post-collapse | resolves `D, R_G` |
 | kdlo | 2022-06-02 → 2022-12-11 | 16 | 43 rebuild | resolves `P, A, S, R_B, R_G` |
 | haltern | 2021-01-01 → 2021-09-17 | 96 | 11 post-collapse | resolves nothing |
-| espoo | 2024-09-05 → 2026-09-07 | 75 | none | no contrast (event-free) |
 
 Two states are the rule; KDLO carries three and its `single` acquisition (the
-collapse day itself) is excluded before any statistic, and Espoo carries one and
-standardises **per orbit**, because the pass geometry is the only contrast its
-record has. The full rule set, the rejected windows and the panel inventory are in
-[`ocv_trajectory_spec.md`](ocv_trajectory_spec.md).
+collapse day itself) is excluded before any statistic. Standardisation is pooled
+over the orbits at every site. The full rule set, the rejected windows and the panel
+inventory are in [`ocv_trajectory_spec.md`](ocv_trajectory_spec.md).
 
 ```sh
 python3 code/cases/ocv_trajectory.py --site carola   # one plate (+ JSON + report)
-python3 code/cases/ocv_trajectory.py --all           # the six
-python3 code/cases/ocv_trajectory.py --selftest      # 201 checks, writes nothing
+python3 code/cases/ocv_trajectory.py --all           # the five
+python3 code/cases/ocv_trajectory.py --selftest      # 221 checks, writes nothing
 python3 code/cases/ocv_trajectory.py --site kdlo --verify
-```
-
-### `cases/` — the correspondence model (campaign as the unit)
-
-`[cases/ocv_correspondence.py](cases/ocv_correspondence.py)` tests the question the
-two-panel figure only *shows*: do states that sit close in the physical plane also
-sit close in the OCV plane? One rule is frozen in the code and in every report:
-**the campaign / visit is the independent unit, never the single overpass** —
-several SAR acquisitions inside one structural campaign improve the estimate of
-`(gamma2, P)` but do not create additional independent measurements of `(f,
-zeta)`. Inference intervals resample **campaigns**; the date-level bootstrap
-appears only as `ci_measurement` inside a campaign and never increases n.
-
-Four tests in the order the question forces: **A** repeatability of the OCV
-response across visits (with the pre-declared rule `R = d_visit / d_between < 1`),
-**B** a state-dependent ASC-DESC contrast (permutation of the six labels), **C**
-the Spearman correlation between `d_phys` and `d_OCV` over the campaign pairs
-(Mantel permutation of the campaign labels, exact at 720 relabellings; the
-z-scored variant is a sensitivity, not a way to align the planes) and **D** the
-pre-declared contrast between the two physically closest states. Two findings are
-built into the code instead of being glossed over: `x` takes one value per state,
-so **M2 (`orbit x x`) is saturated and is reported, not fitted**, and the residual
-contrast of D is **zero by construction** for exactly that reason, which is why D
-reports the *raw* contrast against the visit noise.
-
-`--asset lumo` runs the six LUMO campaigns (17 pins: 178 overpasses, 13 runs, the
-per-campaign/per-orbit date counts, the healthy reference counts, the exact 720
-relabellings, six LOCO folds, the DAM3-DAM4 contrast pair); `--asset bautzen`
-runs the degenerate arm (16 pins) where the same code reports A and C as *not
-defined* and B as *not informative*, and where D degenerates to the single
-RS→DS1 contrast that the asset can carry — Bautzen has one campaign per state and
-no independent f/zeta for DS2. `--build-bautzen-reference` rebuilds
-`data/bautzen/reference/bautzen_state_dynamics.json` from the OpenBridgeLAB
-analysis; `--selftest` runs the synthetic positive, negative and degenerate
-controls against the real statistics.
-
-```sh
-python3 code/cases/ocv_correspondence.py --asset all   # both JSONs + reports + JPEG
-python3 code/cases/ocv_correspondence.py --selftest    # 15 checks incl. controls
-python3 code/cases/ocv_correspondence.py --build-bautzen-reference
 ```
 
 ### `sds/` — the cross-site SDS report (the one script that reads two sites)
@@ -211,7 +116,7 @@ first run: the dose (LUMO's measured first-higher-mode drop, 0 / 7.41 / 12.96 %,
 which makes `DAM 3` and `DAM 4` one level because they sit one FFT bin apart), the
 transforms (`log` for positive dimensions, identity for `S` and Bautzen's signed
 γ²), the zero rule (drop the unit for that dimension, count it), the blocks
-(`behaviour = [γ², P]` (cross-acquisition echo behaviour) and `geometry = [A, D, F, S]` (spatial mask geometry, with `D` kept off the plane because it partly inherits `A` and `S` annotated because a shift is position, not morphology);
+(`behavior = [γ², P]` (cross-acquisition echo behavior) and `geometry = [A, D, F, S]` (spatial mask geometry, with `D` kept off the plane because it partly inherits `A` and `S` annotated because a shift is position, not morphology);
 both blocks carry their dimensions into the magnitude), the tests and
 the three pre-registered predictions.
 
@@ -233,7 +138,7 @@ python3 code/sds/ocv_reconfigure.py                        # the dose pair, ~40 
 python3 code/sds/ocv_reconfigure.py --sites carola,morandi  # the bridge pair
 python3 code/sds/ocv_reconfigure.py --sites haltern,kdlo    # the tower pair
 python3 code/sds/ocv_reconfigure.py --sites kdlo            # one asset, one channel, two states
-python3 code/sds/ocv_reconfigure.py --selftest              # 27 checks, the last ten offline
+python3 code/sds/ocv_reconfigure.py --selftest              # 40 checks, the last ten offline
 python3 code/sds/ocv_reconfigure.py --verify                # re-derives every table cell
 ```
 
@@ -280,14 +185,25 @@ any statistic and reported in the audit (`{"single": 1}`), never folded into a
 neighbour.
 
 Outputs `data/sds/ocv_reconfigure.{json,md}`,
-`data/sds/ocv_reconfigure_table.csv` and three 630 dpi plates with one panel guide:
-`fig_sds_ocv_reconfigure.jpg` (the juxtaposition), `..._lumo.jpg` and
-`..._bautzen.jpg` (each asset standing alone). Each registered pair writes its own
-stem — `data/sds/ocv_carola_morandi.{json,md}`, `..._table.csv` and the plates
-`fig_sds_ocv_reconfigure_carola_morandi.jpg`, `..._carola.jpg`, `..._morandi.jpg`;
-`data/sds/ocv_haltern_kdlo.{json,md}`, `..._table.csv` and
-`fig_sds_ocv_reconfigure_haltern_kdlo.jpg`, `..._haltern.jpg`, `..._kdlo.jpg` — and
-never touches the dose files.
+`data/sds/ocv_reconfigure_table.csv` and one plate with its panel guide:
+`fig_sds_ocv_reconfigure.jpg` (the juxtaposition of both assets). The per-asset
+companions of earlier revisions are no longer written: a pair emits the
+juxtaposition only, and an asset named alone on `--sites` still gets its own plate.
+A plate is authored at 170 mm — the
+repository's text width — as four rows (ASC above DESC, per experiment) by two
+columns (behavior, geometry), written from that canvas as `.jpg` (630 dpi), `.pdf`
+and `.eps`, with a `.md` guide whose JSON blocks audit the files that were written;
+spec amendment 6 records why the pre-registered 2 × 4 grid had to give way (four
+columns leave 30 mm per plane, less than a 6.2 pt state label). The printed block
+name is American English (`behavior`), while the key stays `behaviour` in `BLOCKS`,
+the JSON and the audit, because the other generators index it by name — amendment 7
+and the `BLOCK_DISPLAY` table are where that is fixed. Each registered pair
+writes its own
+stem — `data/sds/ocv_carola_morandi.{json,md}`, `..._table.csv` and the plate
+`fig_sds_ocv_reconfigure_carola_morandi.jpg`; `data/sds/ocv_haltern_kdlo.{json,md}`,
+`..._table.csv` and `fig_sds_ocv_reconfigure_haltern_kdlo.jpg` — and never touches
+the dose files. Only the dose pair's stem is committed; the other two pairs are
+runs of the same code and are not shipped.
 
 
 The scripts are started from the **repository root** (each wrapper in
@@ -320,11 +236,11 @@ towers as `control_ctn` / `control_cte`, the beach as `reference_beach`) let it
 difference the target against a control that shares the atmosphere, so
 `code/cts/cts_ocv_did.py` pins the three committed
 `data/cts/reference/cts_reference_did_*.json` files (series and markdown, 1e-9).
-Its figure script `code/cts/fig_cts_ocv_paper.py` (run by
-`figures/cts/fig_cts_ocv_paper.sh`) mirrors the other sites' panels A–E and adds
-panel **F**, the DiD forest — the interaction t per channel for both controls and
-the placebo, the differencing assumption and the pre-trend parallelism — so the
-whole contrast, and its honest null, is readable in one place.
+Its shipped plate is the trajectory one (`figures/cts/fig_cts_ocv_trajectory.md`,
+drawn by `code/cases/ocv_trajectory.py --site cts`), and the DiD numbers keep their
+pinned home in `code/cts/cts_ocv_did.py`: the interaction t per channel for both
+controls and the placebo, the differencing assumption and the pre-trend
+parallelism, all recomputed from the committed references on every run.
 
 ### `audit_ocv_units.py` — what `A` counts, checked on every chip
 
@@ -358,6 +274,264 @@ python3 code/audit_ocv_units.py --write-reference    # (re)write data/ocv_channe
 python3 code/audit_ocv_units.py --verify             # audit vs. the committed reference
 python3 code/audit_ocv_units.py --selftest           # the rules on synthetic rows
 ```
+
+### `figure_style.py` — one type ladder and one print width
+
+Every figure in `figures/` is printed at the same width (**170 mm**) and has to
+carry the same point sizes at that width, but until this module existed each
+generator carried its own `COL_WIDTH = 183 * MM` and its own `rcParams` block.
+Because a point size is *authored* and not *printed*, a canvas that
+`bbox_inches="tight"` widens after the layout -- a long panel title, a wide
+legend, a colour bar -- shrinks every glyph with it: the same class of panel came
+out between 3.2 pt and 13.4 pt depending on which generator drew it and how much
+text it had to wrap. [`figure_style.py`](figure_style.py) fixes both ends:
+
+| role | what it is | value | band |
+| --- | --- | --- | --- |
+| `base` | `font.size`, the anchor | 8.0 pt | 8.0 (not free) |
+| `title` | `axes.titlesize`, the panel title | 8.8 pt | 8.5 – 9.0 |
+| `suptitle` | `figure.titlesize`, the one line above the grid | 9.0 pt | 8.5 – 9.0 |
+| `label` | `axes.labelsize`, the axis label | 7.6 pt | 7.0 – 8.0 |
+| `tick` | `xtick`/`ytick.labelsize` | 6.8 pt | 6.5 – 7.0 |
+| `legend` | `legend.fontsize` | 6.8 pt | 6.5 – 7.0 |
+| `annotation` | `text`/`annotate` inside a panel | 6.2 pt | >= 6.0 (a floor) |
+
+and the canvas is `FINAL_WIDTH_MM = 170` with a tolerance of ± 0.5 mm, checked
+on the **written file**, not on the intent:
+
+```python
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(os.path.dirname(HERE))
+for path in (os.path.join(REPO, "code"),):      # the same preamble as sds_support.py
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+from figure_style import FS, COL_WIDTH, apply, assert_fits, grid_rect, save  # noqa: E402
+apply()                                          # the rcParams block, once
+fig = plt.figure(figsize=(COL_WIDTH, 0.9 * COL_WIDTH))
+...
+leg = fig.legend(...)                            # a figure artist, outside the grid
+fig.tight_layout(rect=grid_rect(fig, bottom=leg))
+assert_fits(fig)                                 # canvas is 170 mm, tight box fits
+save(fig, path)                                  # write at that canvas, measure it
+```
+
+A generator that already inserts its own directory (`sys.path.insert(0, HERE)`)
+adds one line instead: `sys.path.insert(1, os.path.dirname(HERE))`.
+
+`save()` writes the canvas **uncropped** and then measures the file it wrote: a
+cropping save (`bbox_inches="tight"`) makes the file as wide as the layout
+happens to be, which is the defect itself -- the reader would get the ladder at
+a size nobody authored. `assert_fits()` runs first, so a layout that needs more
+than the canvas (too long a title, a legend that will not fit, a grid that has to
+be re-cut) is refused instead of cropped, and the width assertion then checks
+the written file at 170 ± 0.5 mm.
+
+### `figure_style.py` — the same plate in three containers
+
+Beside the raster, under the same stem, `save()` writes the plate as `.pdf` and
+as `.eps` (`VECTOR_FORMATS`) and measures **all three**: a sidecar that is
+cropped or padded is as much a defect as a cropped raster. The PDF is the copy
+for LaTeX -- full vector, transparency intact, no `/CreationDate` or `/ModDate`
+so two runs are byte-identical. PostScript has no alpha at all, so the EPS has to
+*resolve* it, and which way it does is the plate's decision (`eps=`):
+
+| `eps=` | what the EPS carries | when |
+| --- | --- | --- |
+| `"blend"` (default) | the tint the PDF shows **on white**: `alpha*C + (1-alpha)*background` per channel, then alpha 1. Text stays vector | the plate's translucent artists are tints over the page -- fills, faint guides, annotation arrows |
+| `"raster"` | the PDF itself through poppler's `pdftops`: pixel-identical to the PDF, but the page becomes one 300 dpi bitmap | alpha **is** the reading -- overlapping translucent marks, where a density has to accumulate (the orbit lines at 0.55: `code/lumo/fig_lumo_ocv_orbits.py`) |
+| `"opaque"` | matplotlib's own flattening, i.e. the raw colour at full strength | never in this repository; kept as the documented default of the PS backend |
+
+`"blend"` is the default because matplotlib's PS backend does the third row
+whatever you ask: it writes the *unmixed* colour opaque, so an arrow at alpha 0.75
+comes out at full strength next to a PDF that shows the tint. `blend_alpha(fig)`
+does the mixing instead, and `save()` then re-reads the figure and **refuses to
+write** if anything is still translucent -- a blend that silently missed an
+artist would be the same defect one layer down:
+
+```
+  eps 170.00 mm  blend, 74 artist(s) blended
+```
+
+Two artists have to be reached by name, because they are in no artist tree:
+`Text.get_children()` and `Annotation.get_children()` return `[]`, so a label's
+`bbox_patch` and an annotation's `arrow_patch` are invisible to `fig.findobj()`
+although the backend draws them like any other patch. Missing the arrow is not
+cosmetic: its alpha sits *in the arrow*, so the EPS would carry the raw colour
+while the PDF shows a tint (that is the 18-colour leftover the guard exists for).
+
+A blend cannot accumulate: two translucent marks on top of each other become two
+opaque marks at their single-layer composite. That is why a density plate takes
+`"raster"`, and why the choice is made per plate at the call site rather than in
+this module. Nor does it look *through* a mark: a translucent white label box
+over a line becomes the white box, where the PDF still shows the line at 22 %.
+Both containers are gitignored (`figures/**/*.pdf|.eps`): they are regenerated
+binaries, like the rasters.
+
+### `figure_style.py` — the layout a fixed canvas needs
+
+A fixed canvas changes one more thing that has nothing to do with type: the
+`bbox_inches="tight"` save was also what made a hand-tuned
+`tight_layout(rect=...)` look right. With a fixed canvas the same rect leaves a
+band of white as tall as the caption, because `tight_layout` **already reserves
+the suptitle** — a rect that ends below the suptitle counts it twice:
+
+```python
+fig.tight_layout(rect=(0, 0, 1, 0.900))                 # 37 mm of white under the caption
+fig.tight_layout(rect=style.grid_rect(fig, top=leg))    # the grid fills the canvas
+```
+
+`grid_rect(fig, bottom=..., top=...)` returns that rect and answers the second
+half of the problem: `tight_layout` knows only about *axes* decorations, so a
+`fig.legend()` strip under the grid or a `fig.text()` note above it is invisible
+to it and gets drawn across the axis labels unless it is declared. Pass the
+artist — its drawn bbox is measured, in millimetres — or an explicit height;
+`None` means "the canvas edge".
+
+Two rules follow for a migrated generator:
+
+* place every figure-level artist **inside** the canvas. `y=1.040` was legal only
+  while a tight bbox grew the canvas upward; on a fixed canvas it is clipped, so
+  the header block (`suptitle`, legend strip, note) moves inside and
+  `grid_rect(..., top=leg)` hands the rest of the height to the grid;
+* a caption that does not fit is a caption to **re-wrap**, not a canvas to
+  widen. The three-line Haltern note at 6.2 pt is 130 mm wide; the one-line form
+  it replaced was 206 mm — that 206 mm *was* the 235 mm file.
+
+### Migrating a generator onto `figure_style`
+
+Five edits per generator, then a run, then `audit_figure_style.py`:
+
+1. `sys.path.insert(1, os.path.dirname(HERE))` + `import figure_style as style`
+   next to the site imports;
+2. the local `plt.rcParams.update({...})` block becomes `style.apply(dpi=...)`,
+   keeping only the drawing convention (spines, grid, mathtext, on-screen dpi) as
+   overrides — `savefig.bbox` is *gone*, not overridden;
+3. `COL_WIDTH = 183 * MM` → `COL_WIDTH = style.COL_WIDTH` (and a
+   `P.cmp("figure.width_mm", ...)` pin moves to `style.FINAL_WIDTH_MM`);
+4. `fontsize=` / `labelsize=` / `titlesize=` literals → `style.FS["title" |
+   "label" | "tick" | "legend" | "annotation"]`; where a size was picked to fit a
+   narrow panel, re-cut the *text* (a shorter axis label), not the ladder;
+5. `fig.savefig(...)` → `style.save(fig, path)` and a hand-tuned
+   `tight_layout(rect=...)` → `style.grid_rect(...)`; then re-cut whatever
+   overflows, which `assert_fits` reports in millimetres.
+
+A *family* of plates — several sites on one template — takes two more edits, both
+in `figure_style.py` rather than in the generators:
+
+* the frame is a **table**, not a copy: `TRAJECTORY = {width_mm, height_mm, grid,
+  legend}` holds the canvas, the grid margins and the band the key may occupy, so
+  two generators drawing the same template cannot deliver two different plates.
+  The generators read it (`fig.add_gridspec(3, 4, **style.TRAJECTORY["grid"])`);
+* the **pen** goes with the type: `style.LW` is the line ladder (series 1.4 pt,
+  plane/rule/spine 1.0, grid 0.6, marker edge 0.9) and `style.MS` the three marker
+  sizes. They are overrides, not `rcParams`, so a plate already written keeps its
+  pens when it adopts the ladder.
+
+And one thing a plate should *lose* on the way: its titles. A plate that carries a
+header and a descriptive title per panel is a plate whose text has to be re-flowed
+every time the canvas changes. The six trajectory plates now carry their bare tags
+(`a1`…`c4`), one legend, and a `## Caption` section in the report — the caption is
+set by the journal, at the journal's width, and the plate is left to the data.
+
+Done so far (both artefacts measured from the written file):
+
+| generator | plate | width | containers |
+| --- | --- | --- | --- |
+| `lumo/fig_lumo_ocv_orbits.py` | `figures/lumo/fig_lumo_ocv_orbits.jpg` | 170.0 mm | jpg + pdf + eps (`raster`) |
+| `espoo/fig_espoo_ocv_chips.py` | `figures/espoo/fig_espoo_ocv_chips.jpg` | 170.0 mm | jpg + pdf + eps |
+| `sds/ocv_reconfigure.py` | `figures/sds/fig_sds_ocv_reconfigure.jpg` | 170.0 mm | jpg + pdf + eps (`blend`, 60) |
+| `cases/ocv_trajectory.py` (five sites) | `figures/{kdlo,carola,morandi,cts,haltern}/fig_*_ocv_trajectory.jpg` | 170.0 mm | jpg + pdf + eps (`blend`, ~150-175) |
+| `werder_havel/fig_werder_havel_ocv_trajectory.py` | `figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg` | 170.0 mm | jpg + pdf + eps (`blend`, 167) |
+| `bautzen/fig_bautzen_ocv_orbits.py` | `figures/bautzen/fig_bautzen_ocv_orbits.jpg` | 170.0 mm | jpg + pdf + eps (`blend`, 217) |
+
+The six trajectory plates share `style.TRAJECTORY` — 170.0 × 156.0 mm, a 3 × 4 grid
+with a reserved legend band — because they are one template drawn twice, so a
+per-generator `figsize` was exactly the thing that let them drift to 190.2 … 193.3 mm.
+They also carry no header and no descriptive panel titles any more: a bare tag
+(`a1`…`c4`) per panel, one legend inside the band, and the sentence a reader needs
+in the report's `## Caption`. The census a header used to print is a table in the
+report, which is the only place it can be re-flowed without touching the canvas.
+
+`bautzen/fig_bautzen_ocv_orbits.py` came last, and it was the one plate off the
+ladder: it drew a four-column grid at its own column width — 180.9 mm — and set
+type below the ladder's floor (base 8.5 pt against the 8.0 pt anchor, titles
+8.0 pt). It now runs on the same frame as the rest (`style.apply()`,
+`style.COL_WIDTH`, `grid_rect()`, `style.save()`), so all ten print plates are
+170.0 mm wide — the six trajectory plates on the shared template and Bautzen on
+its own 6 x 2 grid. The concept pair is the declared exception: it draws its own
+183 x 61 mm page (three panels of one isotropic unit) with its own type tables,
+so the audit lists its declared sizes as *symbolic* and
+`audit_figure_style.PAGE_PLATES` holds it to that page instead of to 170 mm.
+
+`figure_style.py` imports matplotlib only inside `apply()`, `assert_fits()` and
+`save()`, so the constants and the image reader (PNG `pHYs`, JPEG `JFIF`/`SOF`,
+stdlib only) are usable on an interpreter without matplotlib:
+
+```sh
+python3 code/figure_style.py figures/lumo/fig_lumo_ocv_orbits.jpg
+```
+
+### `audit_figure_style.py` — the ladder and the width, checked on every figure
+
+[`audit_figure_style.py`](audit_figure_style.py) is the gate on the section
+above, and it checks the two things independently, because a figure can be wrong
+in two independent ways:
+
+| what | how | fails when |
+| --- | --- | --- |
+| the declared type | every `code/**/*.py` that writes a figure is parsed (AST, not grep) -- a `savefig` of its own or the shared `figure_style.save`/`save_eps`: the `rcParams` block, `rcParams[...] = ...` and every `fontsize=`/`labelsize=`/`titlesize=` keyword, attributed to its call (`set_title` -> title, `set_xlabel` -> label, `tick_params` -> tick, `legend` -> legend, `text` -> annotation) and to its line. Values are resolved through the file's own numeric constants and through `FS["tick"]` | a value sits outside its band |
+| the print width | the saved width of every artefact is measured from the file itself (PNG `pHYs`, JPEG `JFIF`, EPS `%%HiResBoundingBox`, PDF `/MediaBox` with `/CropBox` as fallback, stdlib only) | any container of the plate is not its expected width (170 ± 0.5 mm, or the page it declares in `PAGE_PLATES`), or a raster declares no density at all |
+
+A plate is one row, not one row per file: the raster, the PDF and the EPS are the
+same drawing in three containers, so `artefacts()` groups them by stem and prints
+the containers side by side -- `jpg+pdf+eps` when they agree, and
+`png 179.8 + jpg 183.0` when they do not. The verdict is **per container**: one
+off-width container fails the plate and is named, because a PDF at 170 mm next to
+a 235 mm PNG is exactly the defect the fixed canvas is there to prevent. A vector
+container is judged on its page box in points, never on a dpi: it has no pixels.
+
+The report prints both at once with the **effective** size at 170 mm, so a 9.0 pt
+title on a 375 mm canvas is visible as the 4.1 pt a reader would actually see:
+
+```
+PASS  code/bautzen/fig_bautzen_ocv_orbits.py             base 8.0  title 8.8  suptitle 9.0  label 7.6  tick 6.8  legend 6.8  annotation 6.2
+PASS  bautzen/fig_bautzen_ocv_orbits.jpg                  170.0 mm  jpg+pdf+eps       -> title 8.8  label 7.6  tick 6.8  legend 6.8
+PASS  carola/fig_carola_ocv_trajectory.jpg                170.0 mm  jpg+pdf+eps
+note  concept/fig_ocv_schematic.jpg                       183.0 mm  jpg+pdf+eps       page 183 mm
+```
+
+The `->` clause is the **effective** size at 170 mm. Bautzen is the plate that
+made the argument: saved on its old 180.9 mm canvas with an 8.0 pt title, the same
+file at the print width showed a reader 7.5 pt. It now declares 8.8 pt on a
+170.0 mm canvas, so declared and effective agree — and a plate that drifts back to
+a wider canvas is reported at the size it would really print, not at the size it
+asked for. That is the whole case for the fixed canvas in one line.
+
+Scope: the site directories in `SCOPE_DIRS` are failed on, and `WALL_PLATES` is
+empty now that the oversized panels are retired — the hook stays, but no plate is
+exempt from the width check any more. `figures/concept/` and `figures/sds/` are
+documentation plates that are measured and reported only — `--strict` fails on
+those two groups as well.
+
+The one exception runs the other way: `PAGE_PLATES` registers the two concept
+plates as **183 mm pages** (three panels of one 55.632 mm unit), the deliberate
+departure from 170 mm. They are not exempt from the width check, only from that
+number: every container has to agree with the declared page, the row prints
+`page 183 mm` next to it, and a 170 mm EPS of a 183 mm page still fails. So
+`--strict` exits 0 with 12 plates in 36 files — 10 at 170.0 mm, 2 at their own
+183.0 mm.
+
+```sh
+python3 code/audit_figure_style.py                    # audit, print, write nothing
+python3 code/audit_figure_style.py --only kdlo        # one site (repeatable)
+python3 code/audit_figure_style.py --strict           # wall and documentation plates fail too
+python3 code/audit_figure_style.py --json /tmp/style.json   # machine-readable
+python3 code/audit_figure_style.py --selftest         # the rules on synthetic input
+```
+
+Exit status 0 on a clean audit, 1 on any violation (the convention of
+`audit_ocv_units.py`).
 
 
 ### `concept/fig_ocv_schematic.py` — the definition, drawn

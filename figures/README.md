@@ -1,1036 +1,310 @@
-# `figures/` — one subfolder per site: the wrapper plus the report and the figures
+# `figures/` — the twelve plates
+
+One folder per site (plus `concept/`, `sds/`, `cases/`), and inside a folder one
+**stem** per plate:
 
 ```
-figures/
-├── lumo/      LUMO lattice tower  — fig_lumo_ocv_paper.sh|.md|[A-E].png
-│              and the companions fig_lumo_ocv_orbits.sh|.md|.jpg (6 x 2 OCV
-│              time series over actual local overpass time) and
-│              fig_lumo_ocv_physics.sh|.md|.jpg (physical plane vs OCV plane,
-│              two panels, visits separate)
-├── bautzen/   Bautzen OpenLabs bridge — fig_bautzen_ocv_paper.sh|.md|[A-E].png
-│              and the companions fig_bautzen_ocv_amp_phase.sh|.md|.png and
-│              fig_bautzen_ocv_orbits.sh|.md|.jpg (6 x 2 OCV time series)
-├── kdlo/      KDLO media tower — fig_kdlo_ocv_paper.sh|.md|[A-E].jpg
-│              and the companions fig_kdlo_ocv_months.sh|.md|.jpg (calendar months
-│              over the whole record, two disjoint epochs, no 24-month pre stretch)
-│              and fig_kdlo_ocv_series.sh|.md|.jpg (one dated axis from the first
-│              ascending IW2 scene 2015-03-20 to the collapse cut 2022-12-11)
-│              plus the same three on the support-sized chip, additive and never
-│              overwriting: fig_kdlo_ocv_paper_support[A-E].jpg,
-│              fig_kdlo_ocv_months_support.jpg, fig_kdlo_ocv_series_support.jpg
-├── carola/    Carolabrücke, Dresden — fig_carola_ocv_paper.sh|.md|[A-E].png
-│              and the companion fig_carola_ocv_months.sh|.md|.png
-├── morandi/   Ponte Morandi, Genova — fig_morandi_ocv_paper.sh|.md|[A-E].png
-│              and the companion fig_morandi_ocv_months.sh|.md|.png
-├── cts/       Champlain Towers South, Surfside — fig_cts_ocv_paper.sh|.md|[A-F].png
-│              the difference-in-differences site (panel F); its three contrast
-│              results are the committed references in ../data/cts/reference/
-│              and the companion fig_cts_ocv_months.sh|.md|.png
-├── haltern/   Haltern AV9 wind turbine — fig_haltern_ocv_paper.sh|.md|[A-E].png
-│              the one-layer record (echo coverage instead of a contrast), with the
-│              pre-window companion fig_haltern_ocv_weeks.sh|.md|.png, the
-│              whole-record series fig_haltern_ocv_series.sh|.md|.png and the
-│              support-chip trajectories fig_haltern_ocv_orbits.sh|.md|.jpg
-├── espoo/     Espoo Kurttila mast — fig_espoo_ocv_paper.sh|.md|[A-E].jpg
-│              the **event-free control**: no damage label on any of the 150
-│              acquisitions, no mask raster either, so the only contrast is the
-│              orbit geometry (ASC / DESC) and `A` is the delivered mask size,
-│              copied and proved; plus the companion fig_espoo_ocv_months.sh|.md|.jpg,
-│              the pipeline orbit figure fig_espoo_ocv_orbits.jpg (A vs S, no chip)
-│              and the two figures built on the support chip: fig_espoo_ocv_chips.*
-│              (the chip's own three tests) and fig_espoo_ocv_orbits_chip.* (Espoo
-│              in the shared six-dimension family, one state; see `../code/espoo/README.md`)
-├── cases/     the one page for the whole case set — fig_cases_overview.jpg|.md
-│              (map, dimension matrix, trajectories) — plus the six-site driver
-│              fig_ocv_trajectory.sh; both from `../code/cases/`
-├── sds/       the cross-site figures (Bautzen + LUMO, one script that reads both)
-│              fig_sds_ocv_reconfigure.jpg|.md — the controlled-dose comparison,
-│              630 dpi, from `../code/sds/ocv_reconfigure.py`, plus the two
-│              single-asset plates fig_sds_ocv_reconfigure_lumo.jpg and
-│              fig_sds_ocv_reconfigure_bautzen.jpg and, for the two-state
-│              case, fig_sds_ocv_reconfigure_carola.jpg (support chip, Girder A)
-│              and fig_sds_ocv_reconfigure_morandi.jpg (Ponte Morandi's support
-│              chip), with fig_sds_ocv_reconfigure_carola_morandi.jpg|.md as the
-│              bridge pair's own juxtaposition, fig_sds_ocv_reconfigure_haltern.jpg
-│              and fig_sds_ocv_reconfigure_kdlo.jpg (Haltern's turbine mast,
-│              KDLO's rebuilt media tower — two empty ASC panels), with
-│              fig_sds_ocv_reconfigure_haltern_kdlo.jpg|.md as the tower pair's
-│              own juxtaposition
-├── concept/   the definition, drawn — fig_ocv_schematic.sh|.md|.jpg|.pdf, the
-│              one plate in this tree that reads no record at all: asset → SAR
-│              acquisition → W ⊂ C → echo mask → the six-dimensional OCV, from
-│              `../code/concept/fig_ocv_schematic.py`
-└── README.md
+figures/<folder>/<stem>.sh    the wrapper: runs that plate's generator from the repo root
+figures/<folder>/<stem>.md    the generated English report — pins, panels, caveats
+figures/<folder>/<stem>.jpg   the raster at 630 dpi
+figures/<folder>/<stem>.pdf   the same drawing as a vector page
+figures/<folder>/<stem>.eps   the same page in PostScript (alpha pre-blended over white)
+data/<folder>/<stem>.json     every number the plate draws
 ```
 
-**Channel labels are mathtext.** Wherever a figure names the coherence channel it
-prints `$\gamma^2$`, not `gamma^2`: each site's label dicts (`CHANNEL_AXIS`,
-`CHANNEL_TITLE`, `CHANNEL_LABEL`) keep their plain-text form for the markdown, and
-the figure call sites read a `FIG_CHANNEL_*` twin built with
-`.replace("gamma^2", r"$\gamma^2$")`. That way a table stays grep-able and a plot
-stays typographically correct.
+`cases/` holds no plate of its own: it holds the driver that runs five of the
+trajectory plates (Figs 5, 6, 10–12) in one go.
 
-The plotting scripts themselves live in `../code/<site>/` (they share that
-folder's Python conventions and import each other); the wrapper in each site
-folder runs them from the repository root, so that `data/<site>/…` and
-`figures/<site>/…` resolve. Each script reads only its own `data/<site>/`
-(channel table + reference JSONs) and writes its JSON artifact back to
-`data/<site>/`, the report and the images here. No network, no database, no
-burst cache, no 182 MB payload file.
+The list is **closed**. Twelve plates are shipped here; a plate that is not in
+this table is not in this repository.
 
-The CTS site is the one **difference-in-differences** site, so its figure script
-carries a sixth panel: panels A–E mirror the shapes of the other sites and panel
-**F** is the DiD layer, which re-derives and pins the three committed
-`../data/cts/reference/cts_reference_did_*.json` (also reproducible on their own
-with `../code/cts/cts_ocv_did.py --verify`).
-
-The Espoo site is the family's **event-free control**, and it is the only site
-whose figures have no damage axis at all: its 150 acquisitions carry an empty
-`damage_label`, `structural_state` and `condition_label` on every row, the only
-contrast the record supports is the one between its two **orbit geometries**
-(ASCENDING n = 70 / DESCENDING n = 80), and the record delivers **no mask raster**
-(56 of its 78 columns are empty), so `A` is the delivered
-`coherence_masked_pixels` — **copied and proved**, never recomputed — and `D`, `F`,
-`S` and `P` are deliberately absent. Its reference layer pins three committed JSONs
-of the upstream project field by field *and* defines its own
-`espoo_ocv_findings.json` lock with `--write-reference`, as the Haltern package does.
-
-```bash
-bash figures/lumo/fig_lumo_ocv_paper.sh            # full run, ~5 min
-bash figures/lumo/fig_lumo_ocv_paper.sh --quick    # ~2 min, permutation tests copied
-bash figures/lumo/fig_lumo_ocv_orbits.sh           # ~3 s, 6 x 2 time series + pins
-bash figures/bautzen/fig_bautzen_ocv_paper.sh      # ~6 min, deck-edge mask
-bash figures/bautzen/fig_bautzen_ocv_orbits.sh     # ~3 s, OCV time series 6 x 2
-bash figures/kdlo/fig_kdlo_ocv_paper.sh            # ~1 min, epoch contrast
-bash figures/kdlo/fig_kdlo_ocv_months.sh           # ~11 s, calendar-month companion
-bash figures/kdlo/fig_kdlo_ocv_series.sh           # <1 s, era-to-collapse series
-bash figures/carola/fig_carola_ocv_paper.sh        # ~21 min, bridge collapse
-bash figures/carola/fig_carola_ocv_paper.sh --quick # ~6 min, no permutation null
-bash figures/carola/fig_carola_ocv_months.sh       # ~36 s, 24-month companion
-bash figures/morandi/fig_morandi_ocv_paper.sh      # full run (permutation null)
-bash figures/morandi/fig_morandi_ocv_paper.sh --quick # ~23 s, no permutation null
-bash figures/morandi/fig_morandi_ocv_months.sh     # ~15 s, 24-month companion
-bash figures/cts/fig_cts_ocv_paper.sh              # ~15 min, permutation null
-bash figures/cts/fig_cts_ocv_paper.sh --quick      # ~50 s, no permutation null
-bash figures/cts/fig_cts_ocv_months.sh             # ~19 s, months companion (F0 + M-24..M+1)
-bash figures/haltern/fig_haltern_ocv_paper.sh       # figures A-E + report + pins
-bash figures/haltern/fig_haltern_ocv_weeks.sh       # pre-window companion + pins
-bash figures/haltern/fig_haltern_ocv_series.sh      # whole-record series + pins
-bash figures/haltern/fig_haltern_ocv_orbits.sh      # support-chip trajectories + pins
-bash figures/espoo/fig_espoo_ocv_paper.sh          # ~4.5 min, event-free control + pins
-bash figures/cases/fig_ocv_trajectory.sh          # ~17 s, the six trajectory plates
-bash figures/espoo/fig_espoo_ocv_paper.sh --quick  # ~1.5 min, no permutation nulls
-bash figures/espoo/fig_espoo_ocv_months.sh         # ~4 s, month-by-month companion
-bash figures/concept/fig_ocv_schematic.sh         # ~2 s, the definition drawn (no input)
-
-# if the python3 of PATH lacks numpy/matplotlib, name the interpreter:
-PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_paper.sh
-PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
-PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_paper.sh
-PYTHON=/usr/bin/python3 bash figures/morandi/fig_morandi_ocv_paper.sh
-PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_paper.sh
-PYTHON=/usr/bin/python3 bash figures/espoo/fig_espoo_ocv_paper.sh
-```
-
-Images are git-ignored (`figures/**/*.png|jpg|jpeg|pdf`); the wrappers regenerate
-them from the committed `data/<site>/`. The report (`*.md`) is committed, next
-to the wrapper that writes it.
-
-## `lumo/fig_lumo_ocv_paper.sh` → `../code/lumo/fig_lumo_ocv_paper.py`
-
-Five figures on the question of whether the observability core vector
-`OCV = [gamma2, P, D]` discriminates the LUMO structural states (healthy, DAM3,
-DAM4, DAM6) over the 178 coherence overpasses, plus the English report
-[`lumo/fig_lumo_ocv_paper.md`](lumo/fig_lumo_ocv_paper.md) and
-[`../data/lumo/fig_lumo_ocv_paper.json`](../data/lumo/fig_lumo_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `lumo/fig_lumo_ocv_paper_A.png` | the six channels one panel each: raw per-overpass dots and the median bar for gamma^2, mask area A, density D, fragmentation F, centroid<->peak shift S and persistence P |
-| `lumo/fig_lumo_ocv_paper_B.png` | in-sample effect sizes: SDS = 10&#124;Cliff's delta&#124; per component, pooled and per damage state, plus the ranking of the components |
-| `lumo/fig_lumo_ocv_paper_C.png` | 4-class LDA: balanced accuracy over the shrinkage grid (6D vs. gamma^2 vs. single components), the leave-one-out confusion matrix and the label-permutation null against the observed accuracy |
-| `lumo/fig_lumo_ocv_paper_D.png` | the six binary state pairs: out-of-fold Fisher-LDA scores for the four feature sets (gamma^2, [P,D,S], [gamma^2,P,D], 6D), with the SDS of the headline model and the permutation p per pair |
-| `lumo/fig_lumo_ocv_paper_E.png` | controls: severity trend of gamma^2 (Spearman, Jonckheere-Terpstra), season/orbit strata, and the mask brightness / wind covariates per state |
-
-The figures are 183 mm wide, 600 dpi PNGs with the same style as the Espoo
-figures (DejaVu Sans + STIX); Espoo itself has since moved to 630 dpi JPEG, the
-format its OCV figures are delivered in, while LUMO keeps the PNG. They are deterministic: fixed seeds, no timestamps
-in any annotation, so two runs produce byte-identical files.
-
-`lumo/fig_lumo_ocv_paper.md` is the same content in prose: question and design,
-data and mask definition, the results per figure as tables, the pin verdict
-against the committed references, the exact commands and the caveats.
-
-## `lumo/fig_lumo_ocv_orbits.sh` → `../code/lumo/fig_lumo_ocv_orbits.py`
-
-The **standalone time-series companion** of the LUMO paper figure: the same six
-channels, but on the actual local overpass clock and split by pass geometry —
-six rows in the formal OCV order (`gamma2`, `P`, `D`, `F`, `A`, `S`) and two
-columns (ASC / DESC), twelve panels. It reads only
-`../data/lumo/lumo_ocv_channels.csv` plus the committed metadata, paper JSON and
-tower reference, adds **no** number to the A–E pin contract, and writes
-[`lumo/fig_lumo_ocv_orbits.md`](lumo/fig_lumo_ocv_orbits.md),
-[`../data/lumo/fig_lumo_ocv_orbits.json`](../data/lumo/fig_lumo_ocv_orbits.json)
-and one JPEG:
-
-| file | panel content |
-| --- | --- |
-| `lumo/fig_lumo_ocv_orbits.jpg` | 6 x 2, 183 mm wide, 630 dpi: (a)-(l) `gamma2`, `P`, `D`, `F`, `A`, `S` for ASC (left) and DESC (right). Coherence rows have no timestamp, so the local instant is joined from the 482 `record_class="acquisition"` rows by `burst_id` and converted UTC → `Europe/Berlin` (DST-aware). Bands follow the **13 consecutive `damage_label` runs** (36, 8, 6, 8, 54, 17, 7, 8, 4, 8, 5, 8, 9 points), the twelve dashed lines the run transitions; markers are per-overpass, shape and colour by state, the line is acquisition order. `P`, `D`, `F` and `A` use log axes; the one missing `P` (2021-07-14 ASC) is a gap, never interpolated |
-
-Its own **144 self-checks** recompute every drawn number from the committed table
-and compare it with `lumo_ocv_channels_meta.json`, `fig_lumo_ocv_paper.json` and
-`reference/lumo_tower_coherence_states.json`: row/date counts, the 482-row
-acquisition join, run sequence and lengths, sub-swath provenance, per-state and
-per-orbit counts, row-by-row `burst_id` / date / orbit / label / `gamma2` /
-`n_masked` parity, `A == n_masked`, channel completeness, strict positivity on
-the log axes, the local-time ranges / UTC offsets and every committed sha256.
-Any deviation exits non-zero before the artifact is accepted.
-
-```bash
-bash figures/lumo/fig_lumo_ocv_orbits.sh            # ~3 s
-PYTHON=/usr/bin/python3 bash figures/lumo/fig_lumo_ocv_orbits.sh
-python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures
-```
-
-## `lumo/fig_lumo_ocv_physics.sh` → `../code/lumo/fig_lumo_ocv_physics.py`
-
-The physical counterpart of the behaviour figure: does a state that sits in a
-given place in the **independently measured** physical plane also sit in a
-comparable place in the OCV plane? Writes
-[`lumo/fig_lumo_ocv_physics.jpg`](lumo/fig_lumo_ocv_physics.jpg),
-[`lumo/fig_lumo_ocv_physics.md`](lumo/fig_lumo_ocv_physics.md) and
-[`../data/lumo/fig_lumo_ocv_physics.json`](../data/lumo/fig_lumo_ocv_physics.json).
-
-| file | panel content |
-| --- | --- |
-| `lumo/fig_lumo_ocv_physics.jpg` | two panels, 183 mm wide, 630 dpi. **(A)** physical response: x = signed `df_H1 / f_H1,0` (frequency loss to the left, never converted to a drop percentage), y = `dzeta_H1 / zeta_H1,0`, origin = the healthy block of the *same* campaign, one arrow per state with a 95 % bootstrap bar over the 5 + 5 recordings and a ±0.125 Hz quantisation bar on x. **(B)** OCV behaviour: x = `z(gamma2)`, y = `z(P)`, z against the healthy median of the same orbit in healthy MADs of the log channel; colour = state, marker shape = orbit (circle ASC, square DESC), fill = visit (filled = first, open = repeat), marker area ∝ n, grey ring when n < 3; the dashed arrow is the state-level (visit-pooled) vector. The orbits are never pooled |
-
-**One point per state in A, two visits per state in B** — that asymmetry is the
-point of the figure: each state was measured in exactly one controlled campaign
-(no physical replicate, hence the bootstrap interval), while the OCV record holds
-two state runs. The report therefore assesses repeatability on the OCV side
-(cosine and angle between the two visit vectors, with their n), reports the
-direction and magnitude of every vector, the ordering by `|v|` in both planes
-(DAM3 < DAM4 < DAM6 physically, DAM4 < DAM3 < DAM6 on the OCV side, in both
-orbits) and the cross-plane cosine **as a descriptive statistic only**.
-
-Its **121 self-checks** verify the dynamics reference (107: medians, spreads,
-relative changes, campaign names, agreement with
-`reference/lumo_state_frequencies.json`), the chip (7: 178 overpasses, 13 runs,
-the per-state and per-orbit counts, the per-visit counts, pooled = sum of
-visits), the panel data (2 + 3: three states, primary mode, orbits kept apart,
-positive healthy scale, visits kept per orbit) and the chip sensitivity (2: both
-chips carry the same 178 rows, and all six state-level vectors change). Any
-deviation exits non-zero.
-
-Panel B is drawn on the **support** chip. The two chips define `gamma2`
-differently — the support re-cut raises it by an order of magnitude — so
-`--chip committed` repeats the whole panel on
-`../data/lumo/lumo_ocv_channels.csv`; the report prints both and the angle
-between them, which reaches 113° for DAM6 ASC.
-
-```bash
-bash figures/lumo/fig_lumo_ocv_physics.sh              # ~2 s, support chip
-bash figures/lumo/fig_lumo_ocv_physics.sh --chip committed
-python3 code/lumo/fig_lumo_ocv_physics.py --selftest
-```
-
-## `bautzen/fig_bautzen_ocv_paper.sh` → `../code/bautzen/fig_bautzen_ocv_paper.py`
-
-The bridge counterpart of the LUMO package, on the **deck-edge mask** of the
-Bautzen bridge, one column per series (ASC/DESC bridge and the control rectangle
-500 m east), plus the English report
-[`bautzen/fig_bautzen_ocv_paper.md`](bautzen/fig_bautzen_ocv_paper.md) and
-[`../data/bautzen/fig_bautzen_ocv_paper.json`](../data/bautzen/fig_bautzen_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `bautzen/fig_bautzen_ocv_paper_A.png` | the six OCV components one panel each: per-overpass dots (state-coloured) and the series/state median bar, per series |
-| `bautzen/fig_bautzen_ocv_paper_B.png` | the deck-edge mask layer: band contrast per series and state against the detect gate, mask visibility (Wilson 95% CI), deck-edge pixel count, and the in-series gamma^2 effect size per state |
-| `bautzen/fig_bautzen_ocv_paper_C.png` | the two cut dates against cuts shifted by +/-2..12 weeks (placebo sweeps), for band contrast and for gamma^2 |
-| `bautzen/fig_bautzen_ocv_paper_D.png` | bridge minus control, date by date: the paired per-date difference with the RS / DS1 / DS2 bands and the step/placebo reading of that difference |
-| `bautzen/fig_bautzen_ocv_paper_E.png` | seasonality and environment controls: monthly medians per series, and gamma^2 against air temperature / relative humidity at the overpass instant |
-
-It is deliberately *not* a claim of the same result as LUMO: only the ASC bridge
-series passes the deck-edge detection gate, and state and season are perfectly
-confounded (RS / DS1 / DS2 are time intervals of one deployment) — which is why
-the four series and the shifted-cut placebos are carried through every panel.
-Both deviations are documented in `../code/bautzen/README.md` and in the report.
-
-## `bautzen/fig_bautzen_ocv_amp_phase.sh` → `../code/bautzen/fig_bautzen_ocv_amp_phase.py`
-
-The standalone companion of the Bautzen paper figure, on the **amplitude and the
-phase of the deck edge over the deck-edge pixels only** (not the whole bridge)
-and on their **paired differential phase** between the bridge and its control
-rectangle, plus the English report
-[`bautzen/fig_bautzen_ocv_amp_phase.md`](bautzen/fig_bautzen_ocv_amp_phase.md)
-and [`../data/bautzen/fig_bautzen_ocv_amp_phase.json`](../data/bautzen/fig_bautzen_ocv_amp_phase.json):
-
-| file | panel content |
-| --- | --- |
-| `bautzen/fig_bautzen_ocv_amp_phase.png` | three rows × one column per series: the coherence amplitude `A(t) = |sum z|/sqrt(N sum |z|^2)` in [0,1], the deck-edge phase `phi(t) = arg(sum z)` in (-pi, pi] and the paired differential phase `dphi(t) = wrap(phi_bridge - phi_control)` in (-pi, pi] (drawn under the bridge column of each geometry), per-overpass dots coloured by state (RS/DS1/DS2) with the state windows as background bands and the two cut dates as dashed lines |
-
-`A(t)^2` is exactly the site's coherence channel, so the figure is verified
-internally against the committed `gamma2_band_raw` column date by date (pixel
-count, band contrast and the identity `A(t)^2 == gamma2_band_raw`; **515 checks**
-counting the per-pair wrap identity `wrap_pi(dphi - (phi_bridge - phi_control))
-== 0` and the state-to-state delta checks, exit code != 0 on any failure). The
-`dphi` pairs are formed date by date without interpolation — ASC 28 pairs, DESC
-35 pairs. The report also gives the **state-to-state** shift
-`delta = wrap(circmean(state) - circmean(RS))` (RS → DS1, RS → DS2) for the paired
-`dphi` and for each series' absolute `phi`, with a seeded bootstrap interval; all
-twelve deltas turn out **not resolvable**. The figure adds one image to the site
-and does **not** touch the committed reference JSONs or the figures A–E pin block.
-
-```bash
-bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh            # ~2 s
-PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_amp_phase.sh
-```
-
-## `bautzen/fig_bautzen_ocv_orbits.sh` → `../code/bautzen/fig_bautzen_ocv_orbits.py`
-
-The second standalone companion of the Bautzen paper figure: one panel per OCV
-dimension and orbit — six rows (`gamma2`, `P`, `D`, `F`, `A`, `S`) x two columns
-(ASC IW2, DESC IW3) — as time series over the **actual local overpass instant**,
-with the RS / DS1 / DS2 windows as coloured background bands and the two cuts as
-dashed lines. It is **bridge-only** (the control's ASC `gamma2` range would
-flatten the bridge signal) and pins 142 rows against the committed metadata
-(**41 checks, 0 failures**, exit code != 0 on any failure). The image is a
-630 dpi JPEG. The report is
-[`bautzen/fig_bautzen_ocv_orbits.md`](bautzen/fig_bautzen_ocv_orbits.md), the
-result JSON
-[`../data/bautzen/fig_bautzen_ocv_orbits.json`](../data/bautzen/fig_bautzen_ocv_orbits.json):
-
-| file | panel content |
-| --- | --- |
-| `bautzen/fig_bautzen_ocv_orbits.jpg` | 6 x 2 panels: per-overpass markers (RS circle, DS1 square, DS2 triangle) in acquisition order, one row per OCV dimension with a shared ASC/DESC y axis, state windows as bands, cuts as dashed lines |
-
-```bash
-bash figures/bautzen/fig_bautzen_ocv_orbits.sh              # ~3 s
-PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
-```
-
-## `kdlo/fig_kdlo_ocv_paper.sh` → `../code/kdlo/fig_kdlo_ocv_paper.py`
-
-Five figures for the KDLO media tower, on the committed 60-acquisition record and
-its two analysis channels (`gamma2`, `A`), drawn at **630 dpi as JPEG** (the format
-the Espoo OCV figures use), plus the English report
-[`kdlo/fig_kdlo_ocv_paper.md`](kdlo/fig_kdlo_ocv_paper.md) and
-[`../data/kdlo/fig_kdlo_ocv_paper.json`](../data/kdlo/fig_kdlo_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `kdlo/fig_kdlo_ocv_paper_A.jpg` | the ranked channels one panel each: per-acquisition dots (pre vs. rebuild) and the median bar for the 6D echo-mask vector gamma^2, P, D, A, F, S and the controls (the three phase channels, intensity, wind and temperature) |
-| `kdlo/fig_kdlo_ocv_paper_B.jpg` | in-sample effect sizes: SDS = 10&#124;Cliff's delta&#124; per channel with the signed delta, plus the delta and its bootstrap CI for every channel on all rows **and** on the month-matched subset |
-| `kdlo/fig_kdlo_ocv_paper_C.jpg` | 2-class LDA (pre vs. rebuild): balanced accuracy over the shrinkage grid (gamma^2, [P,D,S], the [gamma^2,P,D] headline, the 6D vector and a weather-only competitor), the leave-one-out confusion matrix and the label-permutation verdict |
-| `kdlo/fig_kdlo_ocv_paper_D.jpg` | out-of-fold Fisher-LDA scores per acquisition and the SDS of the four models, all rows vs. month-matched, with the paired bootstrap against gamma^2 |
-| `kdlo/fig_kdlo_ocv_paper_E.jpg` | the alternative explanations: the echo-mode split (compact/intermediate/distributed), the per-month delta table, the mask-size and weather medians, and the singleton acquisition |
-
-Its two states are **epochs** (2022-06-02..2022-12-11 vs. 2023-05-04..2024-09-19,
-with 2022-12-23 belonging to neither), so the report and the figures carry the
-month-matched control and the weather competitor everywhere, state the
-non-significance of the per-acquisition classifier, and separate the four
-reference files into two that are recomputed exactly and two that are only pinned
-structurally. 3045 checks in a full run, 3035 in `--quick`; exit code != 0 on any
-failure.
-
-## `kdlo/fig_kdlo_ocv_months.sh` → `../code/kdlo/fig_kdlo_ocv_months.py`
-
-The **standalone companion** of the KDLO paper figure, on the *time axis* over the
-whole record. The other sites' month companions roll 24 one-month windows because
-their records carry a dense pre-collapse stretch; the KDLO record is 60
-acquisitions in two **disjoint** epochs, so the axis here is the whole record by
-**calendar month** (28 buckets, 4 of them empty) taken from the `acquisition_ts`
-column (`core.day_of` — the CSV has no `day` column), plus the English report
-[`kdlo/fig_kdlo_ocv_months.md`](kdlo/fig_kdlo_ocv_months.md) and
-[`../data/kdlo/fig_kdlo_ocv_months.json`](../data/kdlo/fig_kdlo_ocv_months.json):
-
-| epoch | range | acquisitions |
-| --- | --- | --- |
-| pre | 2022-06-02 … 2022-12-11 | 16 |
-| (neither) | 2022-12-23 | 1 |
-| rebuild | 2023-05-04 … 2024-09-19 | 43 |
-
-| file | panel content |
-| --- | --- |
-| `kdlo/fig_kdlo_ocv_months.jpg` | 2 x 3: (a)-(d) one dot per acquisition per calendar month for `gamma2`, `P`, `D`, `A` with the month median and the IQR, the epoch tints (pre blue, rebuild orange) and the collapse cut drawn *inside* the mixed bucket 2022-12 as a red dot and label at a fractional x; (e) the `(P, D)` plane, one dot per acquisition coloured by month (symlog y, `linthresh=0.01`); (f) the 6D fingerprint — each month's median divided by the `2022-06` (first record month) baseline median on a log axis, the 1.0 line drawn |
-
-The figure adds **one** image to the site and does **not** touch the committed
-reference JSONs or the figures A–E pin block (it never reads
-`../data/kdlo/reference/`). Two properties of the record are kept visible rather
-than smoothed away: the collapse month **2022-12 is mixed** (the last `pre`
-acquisitions to 2022-12-11 *and* the 2022-12-23 acquisition that belongs to
-neither epoch), which is why the cut sits inside that bucket instead of on a
-boundary, and the record's **4-month acquisition gap** (2023-01 … 2023-04, four
-empty buckets with a dotted gap line). The reading is descriptive: the 6 pure
-`pre` months carry 16 acquisitions (two to three per month) and the collapse
-month 2, so every interval is very wide; against the last month before the
-collapse the mixed bucket clears the bootstrap CI in **1** of six dimensions and
-the pooled epoch contrast (`rebuild` vs. `pre`) also in **1** of six, so the axis
-is read as the record's own co-variation over two disjoint windows — never as
-damage.
-
-```bash
-bash figures/kdlo/fig_kdlo_ocv_months.sh            # ~11 s
-PYTHON=/usr/bin/python3 bash figures/kdlo/fig_kdlo_ocv_months.sh
-```
-
-## `kdlo/fig_kdlo_ocv_series.sh` → `../code/kdlo/fig_kdlo_ocv_series.py`
-
-The **era-to-collapse companion**: the same echo-mask vector on **one dated axis**,
-from the first ascending IW2 scene over the tower (`2015-03-20`) to the collapse
-cut (`2022-12-11`), plus the English report
-[`kdlo/fig_kdlo_ocv_series.md`](kdlo/fig_kdlo_ocv_series.md) and
-[`../data/kdlo/fig_kdlo_ocv_series.json`](../data/kdlo/fig_kdlo_ocv_series.json).
-The axis has four stretches, and all four are read from the committed availability
-reference rather than typed:
-
-| stretch | range | days | dimensions that exist here |
-| --- | --- | --- | --- |
-| ascending IW2 era | 2015-03-20 … 2021-12-19 | 162 | the 6D vector |
-| blind gap | 2021-12-20 … 2022-02-25 | 0 | – |
-| in the catalogue, not in the record | 2022-02-26 … 2022-06-01 | 0 | – |
-| the record's pre-collapse stretch | 2022-06-02 … 2022-12-11 | 16 | the 6D vector |
-
-| file | panel content |
-| --- | --- |
-| `kdlo/fig_kdlo_ocv_series.jpg` | 3 x 2, 183 mm wide: all six panels — (a) `gamma^2`, (b) the echo-mask size `A`, (c) `P`, (d) `D`, (e) `F`, (f) `S` — on a log y axis, era dots (blue, with the per-year medians as bars) vs. record dots and line (orange), each stretch divided by **its own** median with the 1.0 line drawn |
-
-All six dimensions exist on both sides of the break. `gamma^2` and `A` are the same
-backend columns by name (`coherence_gamma2` / `coherence_masked_pixels`, which the
-era's own export carries); `P`, `D`, `F` and `S` are recomputed from a committed
-full-dwell strip cache with the pipeline's own mask rule — the channel table's 64
-strips for the record, and a **second** cache `../data/kdlo/strips_era/` for the
-era (162 strips, one per era acquisition day). The era cache is not taken on trust:
-the mask rule recomputed on those strips has to reproduce the export's `A` exactly
-and its `gamma2` to `1e-12` on every era day before a value is drawn. `P` is a mask
-*frequency*, so it is only defined against the set it is counted over — the era's
-over its own 162 strips (a mixed-polarisation set: that track carries both VV and
-VH, one burst per day), the record's over the channel table's; the two maps are
-never added, averaged or used to rescale one another. This is also the **only**
-reader of the committed era export
-`../data/kdlo/fig_kdlo_0_raw.json`: it re-verifies the sha256 the availability
-reference pins for it before using a value, and the era enters no row of the
-channel table. Both the era's clock and the geometry break are self-checked (the
-reference labels the era's hour block `00`, the export times its rows on the
-pipeline's `05:00Z` slot, and the one anomaly day `2020-08-13` sits on the
-`afternoon` slot at `16:00Z` — the catalogue burst name carries the wrong hour);
-none of it enters a drawn value. The figure carries **125 self-checks** that
-recompute every drawn number from the four committed inputs and abort before any
-file is written, adds **no** number to the A–E pin contract, touches none of it and
-never reads `../data/kdlo/reference/` beyond that one availability file. It is
-byte-deterministic across runs.
-
-```bash
-bash figures/kdlo/fig_kdlo_ocv_series.sh            # <1 s
-PYTHON=/usr/bin/python3 bash figures/kdlo/fig_kdlo_ocv_series.sh
-python3 code/kdlo/fig_kdlo_ocv_series.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-## `carola/fig_carola_ocv_paper.sh` → `../code/carola/fig_carola_ocv_paper.py`
-
-Five figures on the **collapsed Carolabrücke** (Dresden), on the 1,717 committed
-80 x 80 girder chips and the two mask layers of the same chip — the echo mask of
-the whole window and the per-girder deck mask — plus the English report
-[`carola/fig_carola_ocv_paper.md`](carola/fig_carola_ocv_paper.md) and
-[`../data/carola/fig_carola_ocv_paper.json`](../data/carola/fig_carola_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `carola/fig_carola_ocv_paper_A.png` | the six echo-mask channels one panel each (gamma^2, P, D, A, F, S): per-chip dots coloured by state (pre vs. post) and the median bar |
-| `carola/fig_carola_ocv_paper_B.png` | in-sample effect sizes: the signed Cliff's delta with its bootstrap CI and SDS = 10&#124;delta&#124; for the six channels on all chips, beside the same delta per girder (the deck-mask layer, Girder A/B/C) |
-| `carola/fig_carola_ocv_paper_C.png` | 2-class LDA (pre vs. post): balanced accuracy over the shrinkage grid (gamma^2, [P,D], [gamma^2,P,D], the 6D vector and a weather-only competitor), the leave-one-out confusion matrix of the headline model and the label-permutation null |
-| `carola/fig_carola_ocv_paper_D.png` | out-of-fold Fisher-LDA scores per chip for the five models, plus the SDS of the OOF score with the paired bootstrap CI against gamma^2 alone |
-| `carola/fig_carola_ocv_paper_E.png` | what else moves with the collapse date: the girder / orbit / season strata (SDS within each stratum), the mask-size co-variate (A vs. gamma^2 with the pooled and per-orbit rho) and the weather co-variate (wind vs. gamma^2) |
-
-The figures are 183 mm wide, 600 dpi PNGs in the style of the other four sites
-(DejaVu Sans, no matplotlib title box). They are deterministic: fixed seeds, no
-timestamps in any annotation, so two runs produce byte-identical files.
-
-The report is the same content in prose: the two mask layers, the state
-definition, the results per figure as tables, the pin verdict against the three
-committed references (**474 checks**, 414 exact, 60 within `1e-12`, exit code != 0
-on any deviation), the reading of the co-variates and the exact commands.
-
-Two caveats are carried through every panel: both states belong to the *same*
-structure around the collapse date, so season, weather, traffic and pipeline
-generation move with the state (each contrast is shown beside its co-variate
-control), and the pipeline's own `coherence_masked_pixels` is not the mask of
-these chips (it agrees with the recomputed `A` on 60 of 1,713 rows only).
-
-## `carola/fig_carola_ocv_months.sh` → `../code/carola/fig_carola_ocv_months.py`
-
-The **standalone companion** of the Carola paper figure, on the *time axis*
-around the collapse instead of the two pooled states: the same six echo-mask
-dimensions `x = [gamma2, P, D, A, F, S]` but split into the **24 rolling
-one-month windows before the event** (`M-24` 2022-09-11 … `M-1` 2024-08-11) plus
-the month the collapse opens (`2024-09-11` opens M+1, so M-1 is pure pre and M+1
-pure post), plus the English report
-[`carola/fig_carola_ocv_months.md`](carola/fig_carola_ocv_months.md) and
-[`../data/carola/fig_carola_ocv_months.json`](../data/carola/fig_carola_ocv_months.json):
-
-| window | range | state | chips |
-| --- | --- | --- | --- |
-| M-24 | [2022-09-11, 2022-10-11) | pre-collapse (healthy) | 16 |
-| … | one calendar month each | pre-collapse (healthy) | 14 … 56 |
-| M-1 | [2024-08-11, 2024-09-11) | pre-collapse (healthy) | 56 |
-| M+1 | [2024-09-11, 2024-10-11) | post-collapse | 60 |
-
-| file | panel content |
-| --- | --- |
-| `carola/fig_carola_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `M-24` (record-start) baseline median on a log axis |
-
-The figure adds **one** image to the site and does **not** touch the committed
-reference JSONs or the figures A–E pin block. Its reading is deliberately
-narrower than the pooled headline: the 24 pre months carry 892 chips (median 40
-per month) and are **not** stationary (`gamma2`'s monthly median ranges
-0.0133 … 0.2975 over M-24..M-1), and against that month-to-month noise only `D`
-clears the bootstrap CI in the single adjacent-month contrast M+1 vs. M-1 (median
-0.0073 → 0.0058, Cliff's delta −0.355); `P` — the sharpest pooled difference in
-the A–E figures — moves by only −0.192 here, with a CI that spans zero, and
-`gamma2` runs the other way (+0.078, CI spanning zero). The month axis therefore
-narrows the pooled verdict rather than reproducing it, and the report says so.
-
-```bash
-bash figures/carola/fig_carola_ocv_months.sh            # ~36 s
-PYTHON=/usr/bin/python3 bash figures/carola/fig_carola_ocv_months.sh
-```
-
-
-
-## `morandi/fig_morandi_ocv_paper.sh` → `../code/morandi/fig_morandi_ocv_paper.py`
-
-Five figures on the **collapsed Ponte Morandi / Polcevera** (Genova), on the 232
-committed 80 x 80 chips of the per-track chip export (`A_asc` 119, `A_des` 113)
-and the two mask layers of the same chip — the echo mask of the whole window and
-the per-track deck mask — plus the English report
-[`morandi/fig_morandi_ocv_paper.md`](morandi/fig_morandi_ocv_paper.md) and
-[`../data/morandi/fig_morandi_ocv_paper.json`](../data/morandi/fig_morandi_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `morandi/fig_morandi_ocv_paper_A.png` | the six echo-mask channels one panel each (gamma^2, P, D, A, F, S): per-chip dots coloured by state (pre vs. post) and the median bar, with log axes on A / D / S |
-| `morandi/fig_morandi_ocv_paper_B.png` | in-sample effect sizes: the signed Cliff's delta with its bootstrap CI for the six channels on all chips, beside the same delta per track (the deck-mask layer, `A_asc` / `A_des`) |
-| `morandi/fig_morandi_ocv_paper_C.png` | 2-class LDA (pre vs. post): leave-one-out accuracy for gamma^2, [P,D], [gamma^2,P,D], the 6D vector and a weather-only competitor, with the label-permutation p per model |
-| `morandi/fig_morandi_ocv_paper_D.png` | the OCV plane (gamma^2 vs. P, gamma^2 vs. D, P vs. D), one dot per chip coloured by state |
-| `morandi/fig_morandi_ocv_paper_E.png` | what else moves with the collapse date: the weather co-variates' effect sizes, the track composition per state, the echo-mode mix, and the export-vs-recomputed mask scatter |
-
-The figures are 183 mm wide, 600 dpi PNGs in the style of the other sites
-(DejaVu Sans, no matplotlib title box). They are deterministic: fixed seeds, no
-timestamps in any annotation, so two runs produce byte-identical files.
-
-The report is the same content in prose: the two mask layers, the state
-definition, the results per figure as tables, the pin verdict against the three
-committed references (**47 checks**, exit code != 0 on any deviation) and the
-exact commands. Its headline is an **honest null**: of the six echo-mask
-channels none clears the bootstrap CI (gamma^2 +0.218, P -0.130), the only
-channel that does is `temperature_c` (+0.635), and the 6D LDA reaches 0.746 raw
-but only 0.521 balanced accuracy on the 221 / 11 imbalance, with a
-label-permutation p of 0.077 that does not clear the null. The per-track
-deck-mask table does separate within one track (`A_asc`: D -0.58, S +0.71,
-CI≠0; `A_des`: nothing), but with only 5–6 post chips per track the report
-carries that split as one more co-variate, not a verdict.
-
-Three caveats are carried through every panel: only 11 chips survive the event;
-the analysed window is not on the collapsed span; and the site's
-`coherence_masked_pixels` is a fixed 640-px quantile mask that agrees with the
-recomputed `A` on 0 of 232 rows.
-
-
-## `morandi/fig_morandi_ocv_months.sh` → `../code/morandi/fig_morandi_ocv_months.py`
-
-The **standalone companion** of the Morandi paper figure, on the *time axis*
-around the collapse instead of the two pooled states: the same six echo-mask
-dimensions `x = [gamma2, P, D, A, F, S]` but split into the **24 rolling
-one-month windows before the event** (`M-24` 2016-08-14 … `M-1` 2018-07-14) plus
-the month the collapse opens (`2018-08-14` opens M+1, so M-1 is pure pre and M+1
-pure post), plus the English report
-[`morandi/fig_morandi_ocv_months.md`](morandi/fig_morandi_ocv_months.md) and
-[`../data/morandi/fig_morandi_ocv_months.json`](../data/morandi/fig_morandi_ocv_months.json):
-
-| window | range | state | chips |
-| --- | --- | --- | --- |
-| M-24 | [2016-08-14, 2016-09-14) | pre-collapse (healthy) | 4 |
-| … | one calendar month each | pre-collapse (healthy) | 4 … 10 |
-| M-1 | [2018-07-14, 2018-08-14) | pre-collapse (healthy) | 10 |
-| M+1 | [2018-08-14, 2018-09-14) | post-collapse | 11 |
-
-| file | panel content |
-| --- | --- |
-| `morandi/fig_morandi_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR and the collapse cut as a dashed line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `M-24` (record-start) baseline median on a log axis |
-
-The figure adds **one** image to the site and does **not** touch the committed
-reference JSONs or the figures A–E pin block. Its reading is deliberately
-narrower than the pooled one: the 24 pre months carry 221 chips (median 10 per
-month), the first post month 11, so **no** dimension clears the bootstrap CI in
-the adjacent-month contrast M+1 vs. M-1 or against the pooled pre side — the
-month axis shows the co-variate scatter the pooled figure already flags rather
-than a resolvable step (`gamma2`'s monthly median swings 0.032 … 0.790 across the
-pre months alone).
-
-```bash
-bash figures/morandi/fig_morandi_ocv_months.sh            # ~15 s
-PYTHON=/usr/bin/python3 bash figures/morandi/fig_morandi_ocv_months.sh
-```
-
-## `cts/fig_cts_ocv_paper.sh` → `../code/cts/fig_cts_ocv_paper.py`
-
-Six figures on the question of whether the observability core vector
-`OCV = [gamma2, P, D]` discriminates the pre- and post-collapse states of the
-**same** structure, plus the English report
-[`cts/fig_cts_ocv_paper.md`](cts/fig_cts_ocv_paper.md) and
-[`../data/cts/fig_cts_ocv_paper.json`](../data/cts/fig_cts_ocv_paper.json):
-
-| file | panel content |
-| --- | --- |
-| `cts/fig_cts_ocv_paper_A.png` | the six echo-mask channels (`gamma2, P, D, A, F, S`) per state — one jittered box per state with `n` (`A`, `D`, `S` on a log axis) |
-| `cts/fig_cts_ocv_paper_B.png` | in-sample effect sizes: (a) the pooled Cliff's delta per channel with its bootstrap 95 % CI and SDS; (b) the same per footprint (the four tracks) |
-| `cts/fig_cts_ocv_paper_C.png` | is the state learnable from the chips — the 2-class leave-one-out LDA accuracy for `gamma2`, `P+D`, `gamma2+P+D`, the 6 dims and the weather block, against the 0.5 chance line |
-| `cts/fig_cts_ocv_paper_D.png` | the OCV plane (`gamma2` vs `P`, `gamma2` vs `D`, `P` vs `D`), one dot per chip coloured by state |
-| `cts/fig_cts_ocv_paper_E.png` | what else moves with the state: the weather co-variates' effect sizes, the track composition per state, the echo-mode mix, and the site's fixed 640-px `A` export against the recomputed echo `A` |
-| `cts/fig_cts_ocv_paper_F.png` | the difference-in-differences layer: (a) the interaction t-statistic per channel for both controls and the CTN-vs-CTE placebo (±1.96 dashed); (b) the differencing assumption (reference-step p vs. pre-period comparability p); (c) parallel pre-trends (target rho vs. reference rho on the diagonal) |
-
-CTS is the **difference-in-differences** site: its four footprints are one orbit
-(the collapsed tower as `target`, the standing towers as `control_ctn` /
-`control_cte`, the beach as `reference_beach`, all sharing dates and counts), so
-panel **F** does what no single-structure site can — it differences the target
-against controls that see the *same* atmosphere and orbit, and pins the three
-committed `data/cts/reference/cts_reference_did_{ctn,cte,placebo_ctn_vs_cte}.json`
-series-by-series. The script's `pin_block` fails the whole run (non-zero exit) on
-any deviation, and it pins the channel table, the mask-cache manifest and the
-per-track counts beside the references. Panels A–E mirror the other sites; only
-`coherence_masked_pixels` is special-cased as the site's *fixed 640-px quantile
-mask* (pinned structurally, never on its `t`/`p`).
-
-The figures are 183 mm wide, 600 dpi PNGs in the style of the other sites
-(DejaVu Sans, no matplotlib title box). They are deterministic: fixed seeds, no
-timestamps in any annotation, so two runs produce byte-identical files.
-
-The report is the same content in prose as tables. Its headline is the **honest
-null of the DiD layer**: the post state is *bare sand* whose intensity is
-moisture-driven, so a change in the footprint is not evidence about the collapse,
-and **no** channel's interaction clears the 5 % level in either the CTN or the
-CTE contrast (smallest p ≈ 0.06, `intensity` vs. CTN — a channel whose reference
-*also* steps, p = 0.004, and whose pre-period is already incomparable, p = 0.000).
-The pooled effect sizes do separate the states on five of the six channels (P, D,
-A, F, S with CI ≠ 0), but that is season / moisture / bare-sand movement on the
-*same* footprint, not a damage verdict — panel F removes exactly those common
-confounders and returns a null.
-
-```bash
-bash figures/cts/fig_cts_ocv_paper.sh            # ~15 min, permutation null
-bash figures/cts/fig_cts_ocv_paper.sh --quick    # ~50 s, no permutation null
-PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_paper.sh
-```
-
-
-## `cts/fig_cts_ocv_months.sh` → `../code/cts/fig_cts_ocv_months.py`
-
-The time-axis **companion** of the CTS paper script (like
-[`carola/fig_carola_ocv_months.sh`](carola/fig_carola_ocv_months.sh) and
-[`morandi/fig_morandi_ocv_months.sh`](morandi/fig_morandi_ocv_months.sh) are for
-their sites): instead of the two pooled states it keeps the time axis and shows
-the **first Sentinel-1 images of the footprint** (`F0`, the 2015-09 record start),
-the **24 rolling one-month windows before the collapse** (`M-24` 2019-06-24 …
-`M-1` 2021-05-24) and the **first month after** it (`2021-06-24` opens `M+1`). It
-produces the English report
-[`cts/fig_cts_ocv_months.md`](cts/fig_cts_ocv_months.md) and
-[`../data/cts/fig_cts_ocv_months.json`](../data/cts/fig_cts_ocv_months.json):
-
-| file | panel content |
-| --- | --- |
-| `cts/fig_cts_ocv_months.png` | 2 x 3: (a)-(d) one dot per chip per month for `gamma2`, `P`, `D`, `A` with the month median, the IQR, the collapse cut as a dashed line and the record gap (`F0` -> `M-24`, labelled `gap 3.7 yr`, its length computed from the window days) as a dotted line; (e) the `(P, D)` plane, one dot per chip coloured by month (symlog y, so the near-zero `D` cluster stays visible); (f) the 6D fingerprint — each month's median divided by the `F0` (first-images) baseline median on a log axis |
-
-The 26 windows are `F0` `[2015-09-21, 2015-11-01)` followed by `M-24` …
-`M-1` (one calendar month each) and `M+1` `[2021-06-24, 2021-07-24)`, so **252
-chips** (8 in `F0`, 236 across the 24 pre months, 8 in `M+1`; 4 … 12 per month).
-The `F0` baseline is 2015 rather than 2014 because **no** Sentinel-1 data for this
-footprint exist before 2015-09-21 (the ASC rel-48 IW3 stratum's first
-acquisition; `../data/cts/cts_acquisition_census.md`) — the report states that
-rather than inventing a 2014 window, and it draws the resulting **3.7-year
-acquisition gap** between `F0` and `M-24` as a dotted line rather than
-interpolating it. The month axis is descriptive and carries the
-site's standing caveat: the post state is *bare sand*, and the long `F0 -> M+1`
-baseline spans six years of drift, season and the collapse, so the panels are
-read as co-variation, **never** as damage — **0** of the six dimensions clears the
-bootstrap CI against either `F0` or the adjacent `M-1`. This companion adds **no**
-number to the paper script's A–F pin contract.
-
-```bash
-bash figures/cts/fig_cts_ocv_months.sh            # ~19 s
-PYTHON=/usr/bin/python3 bash figures/cts/fig_cts_ocv_months.sh
-```
-
-## `haltern/fig_haltern_ocv_paper.sh` → `../code/haltern/fig_haltern_ocv_paper.py`
-
-The figures on the **Haltern AV9 wind turbine** (Nordex N149/4.5, Kreis
-Recklinghausen, NRW), which collapsed on **2021-09-29** — the family's **one-layer
-record with an externally anchored event**. The record holds **168** committed
-7 x 7 windows on **120** acquisition dates, **120** unique chips after 48
-byte-identical duplicates across 48 payload groups, and all of them the same mast
-section (`segment_resolved = False`), so **one** mask layer is all it supports: the
-echo mask of the whole window (`intensity >= 0.30 x peak AND >= 5 x np.median`,
-`A >= 2`). Its headline is the **echo coverage**, not a contrast — **62 of 108**
-pre-event chips carry an echo, **4 of 12** post-event chips do, Fisher exact
-**p = 0.1343**, which cannot become significant while four of the twelve post chips
-still carry an echo. No classifier is fitted: twelve post-event chips, four of them
-echo-bearing, are not a class.
-
-`data/haltern/reference/haltern_ocv_findings.json` is **defined** by this script
-(`--write-reference`) and re-derived field by field on every later run. Two facts
-the export does not carry are *resolved* from public catalogues and committed beside
-it: the **pass geometry** of every chip (`haltern_bursts.json` — the sub-swath is
-*not* fixed per direction, and VV and VH interleave) and the **turbine's own OSM
-node** `8268709968` with the anchor and burst grid derived from it
-(`haltern_osm_node.json`, `haltern_geometry.json`). The map also corroborates the
-event date: the node gained `damage:date=2021-09-29` and `destroyed=yes` in
-changeset 111912198, within a day of the collapse.
-
-| plate | content |
-| --- | --- |
-| `haltern/fig_haltern_ocv_paper_A.png` | the six echo-mask channels (`gamma2, P, D, A, F, S`) per state over the 66 echo-bearing chips |
-| `haltern/fig_haltern_ocv_paper_B.png` | the **headline**: (a) the echo coverage per state with the Fisher exact p; (b) the coverage timeline across the collapse |
-| `haltern/fig_haltern_ocv_paper_C.png` | in-sample effect sizes: Cliff's delta + bootstrap 95 % CI and SDS for the mask channels, and the same for the co-variate controls |
-| `haltern/fig_haltern_ocv_paper_D.png` | the OCV plane (`gamma2` vs `P`, `gamma2` vs `D`, `P` vs `D`) — **no classifier** |
-| `haltern/fig_haltern_ocv_paper_E.png` | what else moves with the collapse date: (a) the pipeline's `coherence_masked_pixels` against the recomputed echo `A` — the two agree on **6 of 66** rows; (b) the echo-mode mix; (c) the pass composition; (d) the 48 duplicated windows |
-
-```bash
-bash figures/haltern/fig_haltern_ocv_paper.sh                    # figures + report + pins
-bash figures/haltern/fig_haltern_ocv_paper.sh --write-reference  # <1 s, re-define the reference
-PYTHON=/usr/bin/python3 bash figures/haltern/fig_haltern_ocv_paper.sh
-```
-
-## `haltern/fig_haltern_ocv_weeks.sh` → `../code/haltern/fig_haltern_ocv_weeks.py`
-
-The **pre-collapse window** on its own axis, without adding a number to the A–E pin
-contract: 108 chips on 108 acquisition days, 2021-01-01 -> 2021-09-17 (38.7 -> 1.7
-weeks before the collapse, the x coordinate), 62 of them echo-bearing, **29** ISO
-weeks of which 26 hold an echo, the longest echo-free run 5 chips. The rolling median
-is the trailing 4-week median over the echo-bearing chips, with the 8 twelve-day gaps
-honoured — a chip after such a step sees the weeks before it, never an interpolated
-point. Weather is committed beside the channels (temperature median 11.4 C, wind
-3.06 m/s, gust 7.20 m/s), and the pipeline's own `coherence` column is the constant
-0.999285714286 on all 120 rows, so it cannot be a co-variate of the window. There is
-no post-event chip in this figure: the window is the subject.
-
-```bash
-bash figures/haltern/fig_haltern_ocv_weeks.sh              # figure + JSON + report
-bash figures/haltern/fig_haltern_ocv_weeks.sh --no-figures # cross-checks only
-```
-
-## `haltern/fig_haltern_ocv_series.sh` → `../code/haltern/fig_haltern_ocv_series.py`
-
-The **whole record** on one dated axis, six panels for `x = [gamma2, A, P, D, F, S]`,
-each divided by its own pre-window median — taken over the 62 pre-event echo chips, so
-1.0 *is* that median and every drawn ordinate is a pinned number. 120 chips on 120
-acquisition days, 2021-01-01 -> 2021-10-17. No chip sits on the event day: the collapse
-falls inside the **14-day** step `2021-09-17 -> 2021-10-01`, the 9 steps longer than
-the cadence are drawn as bands and never interpolated over, and the post side is drawn
-as what it is — four echoes among twelve chips, no line, no median, no trend. The
-record alternates in two-day blocks, so no acquisition day carries two chips.
-
-```bash
-bash figures/haltern/fig_haltern_ocv_series.sh              # figure + JSON + report
-bash figures/haltern/fig_haltern_ocv_series.sh --no-figures # cross-checks only
-```
-
-## `haltern/fig_haltern_ocv_orbits.sh` → `../code/haltern/fig_haltern_ocv_orbits.py`
-
-The **six-dimension trajectory** plate on the support-sized cut
-(`../data/haltern/support/haltern_ocv_channels.csv`, 107 overpasses, 13 of 120 dates
-refused at the raster edge): one panel per dimension x channel, `gamma2, P, D, F, A, S`
-down the rows and `ASC` / `DESC` across the columns, **44 pre / 5 post** ascending and
-**52 pre / 6 post** descending. It is the site's companion in the family's shared
-support-chip layout, and it adds no number to the paper's pin contract.
-
-```bash
-bash figures/haltern/fig_haltern_ocv_orbits.sh             # trajectories + pins
-```
-
-## `espoo/fig_espoo_ocv_paper.sh` → `../code/espoo/fig_espoo_ocv_paper.py`
-
-Five figures on the **event-free control**: the Espoo Kurttila mast record has **no
-damage label on any of its 150 acquisitions** (2024-09-05 … 2026-09-07, 25 months at
-exactly 6 each) and the committed upstream verdict says so itself ("This site has no
-ground-truth state label"), so there is no severity axis to regress against. The only
-contrast the record supports is the one between its two **orbit geometries**
-(ASCENDING / afternoon pass, n = 70; DESCENDING / morning pass, n = 80), and the
-figure set is read as the **baseline** every damage claim elsewhere has to beat. The
-site's OCV is `[gamma2, A]` where `A` = `coherence_masked_pixels`, the size of the
-mask the pipeline found: this export carries **no mask raster** (`peak_intensity`,
-`scatterers`, `amplitude`, `phase_rad`, `mast_peak_row/col` and every other geometry
-column are empty on all 150 rows — 56 of 78), so `D`, `F`, `S` and `P` are absent and
-`A` is copied from the committed column and proved row by row.
-
-The script recomputes and then pins the effect sizes (median `gamma^2` 0.1746 ASC vs.
-0.0258 DESC; Cliff's delta −0.7521 with CI [−0.8493, −0.6389], SDS 7.52; Welch
-t = 7.31, p = 2.7e-10), the 2-class LDA over the whole record (leave-one-out,
-balanced accuracy 0.7259 at a chance level of 0.5, label-permutation null) and the
-four no-event controls. It writes `../data/espoo/fig_espoo_ocv_paper.json`, the report
-[`espoo/fig_espoo_ocv_paper.md`](espoo/fig_espoo_ocv_paper.md) and the five **630 dpi
-JPEGs** (`A` … `E`), and
-it reads **only** `../data/espoo/` (the channel table, the three committed references
-of the upstream project and its own findings lock) — no network, no database, no
-cache, no payload file.
-
-| file | panel content |
-| --- | --- |
-| `espoo/fig_espoo_ocv_paper_A.jpg` | (a)-(b) the raw distributions of the two measured channels `gamma2` and `A` per orbit, per-acquisition dots under the box; (c) the **phase ladder** for the 80 of 150 acquisitions that carry it (and the note that `phase_snr_db` exists for 0) |
-| `espoo/fig_espoo_ocv_paper_B.jpg` | (a) the pooled effect sizes ASC vs. DESC — Cliff's delta (DESC − ASC) with its bootstrap 95 % CI and SDS for `gamma2`, `A`, the two phase columns and the two weather co-variates; (b) the same contrast recomputed **per season**, the strata of the same sign |
-| `espoo/fig_espoo_ocv_paper_C.jpg` | (a) the 2-class LDA over the whole record: leave-one-out balanced accuracy against the label-permutation null (chance **0.5**, the two-state counterpart of LUMO's four-state 0.25); (b) the LOO counts of the headline model — where the orbit is read back wrong |
-| `espoo/fig_espoo_ocv_paper_D.jpg` | (a) the out-of-fold SDS of the four feature sets with the paired CI of the difference against `gamma2` alone; (b) the **out-of-time** split (75 / 75 by acquisition order, cut at 2025-09-06) — `A` and the weather co-variates add nothing that survives it |
-| `espoo/fig_espoo_ocv_paper_E.jpg` | the four no-event controls: **E1** the 14 committed phase-coherence series (13 of 14 stationary, the flagged one marked), **E2** the month/season composition (nothing is cut on — there is no event), **E3** the same effect size recomputed *inside* each distinct wind stratum, with the pooled Spearman rho on the title line, **E4** the phase-ladder availability per month |
-
-```bash
-bash figures/espoo/fig_espoo_ocv_paper.sh                   # ~4.5 min, figures + report + pins
-bash figures/espoo/fig_espoo_ocv_paper.sh --quick           # ~1.5 min, no permutation nulls
-bash figures/espoo/fig_espoo_ocv_paper.sh --write-reference # (once) define the package lock
-PYTHON=/usr/bin/python3 bash figures/espoo/fig_espoo_ocv_paper.sh
-```
-
-## `espoo/fig_espoo_ocv_months.sh` → `../code/espoo/fig_espoo_ocv_months.py`
-
-The **standalone companion** of the Espoo paper figure, on the *time axis* instead of
-the two pooled orbits — and, because the record is event-free, on the **whole
-record**: nothing is cut, anchored or windowed, so all **150** acquisitions of the
-**25** months (exactly 6 each, 2024-09 … 2026-09) appear. It reads only the committed
-channel table and `../data/espoo/reference/espoo_phase_stationarity.json`, adds **no**
-number to the A–E pin contract, and writes
-[`espoo/fig_espoo_ocv_months.md`](espoo/fig_espoo_ocv_months.md),
-[`../data/espoo/fig_espoo_ocv_months.json`](../data/espoo/fig_espoo_ocv_months.json)
-and one 630 dpi JPEG:
-
-| file | panel content |
-| --- | --- |
-| `espoo/fig_espoo_ocv_months.jpg` | 2 x 3: (a) `gamma^2` by month, per orbit, per-acquisition dots with the monthly median; (b) the same for `A`; (c) the per-month Cliff's delta with its 2000-draw bootstrap CI, quoted only for the months in which both orbits carry ≥ 3 acquisitions (20 of 25 — the other 5 are reported as not evaluable rather than quoted on two rows); (d) the two primary stationarity series `3-8 Hz · strip400_pipeline` ASC / DESC; (e) coverage and the phase ladder by month (the two availability controls); (f) the weather co-variates by month (wind, temperature) |
-
-Its own pin block re-derives the two primary series (`ASC` 0.2474 / `DESC` 0.2165 as
-literal claims to four decimals), the 25 committed monthly means of both, the trend
-signs, the per-orbit pooled medians, the 25 x 6 cadence and the phase ladder, and it
-exits non-zero on any deviation.
-
-```bash
-bash figures/espoo/fig_espoo_ocv_months.sh            # ~4 s
-python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-## `figures/orbits/` — the support-sized OCV time series
-
-`fig_ocv_orbits.sh` draws one twelve-panel figure per migrated site into
-`figures/<site>/` (see `code/README.md`) — twelve when both orbits carry
-overpasses, six when only one does: KDLO is DESC-only, so its plate has a single
-column and the markdown names the missing channel instead of drawing it empty. The wrapper picks the first interpreter
-that has numpy and matplotlib and prints which one it used, because the figure
-has to be reproducible on a machine whose virtualenv is not the author's.
-
-Seven sites now: the six labelled ones on their state bands, plus
-`figures/espoo/fig_espoo_ocv_orbits_chip.jpg` for the event-free control — one
-state, one band, medians over the whole series. Espoo's `_chip` stem is deliberate:
-the site's `.png` of nearly the same name is the *pipeline* figure (A vs S, no
-chip), drawn by `code/espoo/fig_espoo_ocv_orbits.py`.
-
-## `figures/cases/` — the standard OCV trajectory plate, one per site
-
-`fig_ocv_trajectory.sh` draws the **same 3 × 4 plate** for every case site — the
-timeline question the six cases are actually read for, on the support-sized chip,
-with the post-event tail **drawn** instead of cut off. Each site keeps its own
-wrapper (`figures/<site>/fig_<site>_ocv_trajectory.sh`) so a plate can be rebuilt
-alone; the driver runs the six and pools nothing.
-
-| wrapper | reference window (R2) | chips | tail | contrast |
+| # | plate | folder | generator | renders |
 | --- | --- | --- | --- | --- |
-| `carola/…` | 2022-09-03 → 2024-09-09 | 184 | 252 post-collapse | resolves `γ², P, S` |
-| `cts/…` | 2015-09-21 → 2021-06-21 | 136 | 42 post-collapse | resolves `P, A, D` |
-| `morandi/…` | 2016-08-24 → 2018-08-08 | 198 | 9 post-collapse | resolves `D, R_G` |
-| `kdlo/…` | 2022-06-02 → 2022-12-11 | 16 | 43 rebuild | resolves `P, A, S, R_B, R_G` |
-| `haltern/…` | 2021-01-01 → 2021-09-17 | 96 | 11 post-collapse | resolves nothing |
-| `espoo/…` | 2024-09-05 → 2026-09-07 (whole record) | 75 | none | no contrast: event-free |
+| 1 | `fig_ocv_schematic` | `concept/` | `code/concept/fig_ocv_schematic.py` | `.jpg` `.pdf` `.eps` |
+| 2 | `fig_ocv_measurement` | `concept/` | `code/concept/fig_ocv_measurement.py` | `.jpg` `.pdf` `.eps` |
+| 3 | `fig_espoo_ocv_chips` | `espoo/` | `code/espoo/fig_espoo_ocv_chips.py` | `.jpg` `.pdf` `.eps` |
+| 4 | `fig_sds_ocv_reconfigure` | `sds/` | `code/sds/ocv_reconfigure.py` | `.jpg` `.pdf` `.eps` |
+| 5 | `fig_kdlo_ocv_trajectory` | `kdlo/` | `code/cases/ocv_trajectory.py --site kdlo` | `.jpg` `.pdf` `.eps` |
+| 6 | `fig_carola_ocv_trajectory` | `carola/` | `code/cases/ocv_trajectory.py --site carola` | `.jpg` `.pdf` `.eps` |
+| 7 | `fig_werder_havel_ocv_trajectory` | `werder_havel/` | `code/werder_havel/fig_werder_havel_ocv_trajectory.py` | `.jpg` `.pdf` `.eps` |
+| 8 | `fig_lumo_ocv_orbits` | `lumo/` | `code/lumo/fig_lumo_ocv_orbits.py` | `.jpg` `.pdf` `.eps` |
+| 9 | `fig_bautzen_ocv_orbits` | `bautzen/` | `code/bautzen/fig_bautzen_ocv_orbits.py` | `.jpg` `.pdf` `.eps` |
+| 10 | `fig_morandi_ocv_trajectory` | `morandi/` | `code/cases/ocv_trajectory.py --site morandi` | `.jpg` `.pdf` `.eps` |
+| 11 | `fig_cts_ocv_trajectory` | `cts/` | `code/cases/ocv_trajectory.py --site cts` | `.jpg` `.pdf` `.eps` |
+| 12 | `fig_haltern_ocv_trajectory` | `haltern/` | `code/cases/ocv_trajectory.py --site haltern` | `.jpg` `.pdf` `.eps` |
 
-The rules — **R1** one cut, **R2** the case's own reference timeline, **R3**
-per-block standardisation with its own reference set, **R4** the robust z of
-`ocv_reconfigure.TRANSFORM`, **R5** monthly bins with no interpolation and a seeded
-moving-block interval, **R6** the healthy chips R2's window leaves out tested
-against the reference with that same interval — and the windows that were rejected
-are written down in
-[`../code/cases/ocv_trajectory_spec.md`](../code/cases/ocv_trajectory_spec.md).
+Two plates (`3`, `4`) are run through their generator directly — they have no
+`.sh` because they were never shell-driven; every other plate has its wrapper.
 
-Per site: `figures/<site>/fig_<site>_ocv_trajectory.jpg|.md` and
-`../data/<site>/fig_<site>_ocv_trajectory.json`. `--selftest` runs the template's
-201 checks without writing a file; `--verify` re-derives every number from the
-table and fails on a disagreement.
+## Three kinds of plate
+
+* **A definition plate** (Figs 1–2) is computed from the *definition* the records
+  are measured with, not from a record. It has no table input and therefore no
+  pin to a table: it carries structural self-checks instead.
+* **A contrast plate** (Figs 3, 4, 8, 9) compares *states* — two pass geometries at
+  Espoo, the controlled states of LUMO and Bautzen, the documented states of the
+  same structure — and standardises inside the asset so that two panels can be
+  compared in shape.
+* **A timeline plate** (Figs 5–7, 10–12) answers *where in the record* the vector
+  moves: one reference state on the left, the post state drawn, never cut off, and
+  a monthly median per dimension with its `n`.
+
+## The rules every plate keeps
+
+1. **One cut, named and hashed.** Every plate that reads a record reads exactly
+   one committed table, named in its report together with its sha256, and never
+   mixes two chips: the support-sized chip and the committed export are two
+   measurements.
+2. **Every number is pinned.** Each generator recomputes every number it draws
+   from its table and the frozen inputs, and refuses to write — or, where it has
+   one, fails its `--verify` — on a single deviation. Two runs of one generator
+   produce byte-identical files: the bootstrap is seeded and no wall-clock value
+   enters any output.
+3. **One page, one measured width.** Every raster is a 630 dpi JPEG, and beside it
+   stand the same drawing as `.pdf` and as `.eps` (`figure_style.save`), all three
+   measured after they are written. The ten print plates are authored at the
+   170 mm text width of `code/figure_style.py` — the six trajectory plates on the
+   one shared frame of **170.0 × 156.0 mm**, `figure_style.TRAJECTORY` — and are
+   never cropped to their content: a layout that does not fit fails the run rather
+   than growing the canvas. The concept pair (Figs 1–2) is the declared exception:
+   a **183 mm page** of three equal panels, registered in
+   `audit_figure_style.PAGE_PLATES` and held to that page in every container
+   instead of to 170 mm. A plate carries no title and no panel titles of its own:
+   it carries its bare tags (`a1`…`c4`), one legend in the band its grid reserves,
+   and a `## Caption` in its report.
+4. **No verdict.** A plate reports a departure, a direction and an interval. It
+   does not report damage, failure, a precursor or a cause, and the word it does
+   print (`resolves …`, `sustained … departure`) is a function of frozen rules
+   stated in the report, never of the shape of the curve.
+
+## 1–2. The concept pair — `concept/`
+
+**`fig_ocv_schematic`** — the observability core vector, drawn: three panels that
+carry the reader from the physical asset, through the SAR observation geometry and
+the asset-specific measurement support, to the radar echo representation and the
+six components. No input file at all; 86 structural checks stand in for the pin.
+
+**`fig_ocv_measurement`** — one chip, three stages, one number set: the native read
+chip `C`, the measurement support `W`, the echo mask `M` and finally `OCV(t)`, each
+stage admitting less than the one before. 148 checks, 24 text objects, 20 echo
+cells in 4 regions, and a stated pixel size (55.632 mm) for the drawn chip.
+
+Both are read as the *definition* of the other ten plates — no site's numbers
+enter either of them.
+
+## 3. `espoo/fig_espoo_ocv_chips` — one chip site, six dimensions
+
+The Espoo Kurttila mast on the **support-sized chip**: 75 chips
+(2024-09-05 … 2026-09-07, ASCENDING 31 / DESCENDING 44, three shared dates), one
+170.00 × 191.77 mm plate. It is the only plate that reads a site's chip table with
+no state column and no event: what it has instead is the **pass geometry**.
+
+* **Two tracks.** ASC is relative orbit 160, DESC 51; the other two tracks place
+  the mast on the far range edge, where the 200 m ring runs past the swath.
+* **No pairing.** The tracks share three dates, so the orbit contrast is a
+  two-sample comparison, and the report says so.
+* **A tautology, stated.** `D = A / bbox_area` exactly, and `gamma2_mask` carries
+  `n = A` in its denominator; `A` differs by a factor 7 between the orbits, so both
+  dimensions are dominated by mask size.
+* **A second instrument.** These are chip values, not the pipeline columns: the
+  two agree only loosely (r(log A, log `coherence_masked_pixels`) = −0.24,
+  r(`gamma2_mask`, `coherence_gamma2`) = 0.13). Neither is wrong; they measure
+  different things. The pipeline figure that produced the second reading is no
+  longer shipped; its frozen lock stays at `data/espoo/fig_espoo_ocv_orbits.json`.
+
+## 4. `sds/fig_sds_ocv_reconfigure` — two assets, one metric
+
+The cross-site plate: the **controlled-dose** experiments of LUMO (healthy, DAM 3,
+DAM 4, DAM 6 on a 0 / 7.4 / 13 % frequency drop) and of Bautzen (`RS`, `DS1`,
+`DS2`) side by side, drawn as one juxtaposition — rows = experiment × channel (ASC
+above DESC), columns = block (behaviour `[gamma2, P]` and geometry
+`[A, D, F, S]`), every panel on its own plane.
+
+In every panel the origin is that asset's **reference state** and the arrows end at
+its standardised responses (`z = (median − median_ref) / scale`), so the geometry is
+within-asset and no scale is shared between assets. The inset repeats the block
+magnitude `R` per level with its moving-block 95 % interval — the quantity the
+hypotheses test, each asset inside its own Holm family.
+
+Its reading is deliberately a **null about ordering**: no dose ordering survives in
+either block at either asset (`P1` does not hold: LUMO's geometry magnitude goes
+0 < 0.581 < 0.34 ASC, 0 < 0.419 < 0.225 DESC), the same-dose states `DAM 3` /
+`DAM 4` differ more than the cross-dose levels do in the geometry block (`P2`
+holds for geometry, partly for behaviour), and the behaviour block need not follow
+the dose at all (`P3` consistent: 0 of 4 behaviour tests reach Holm < 0.05). The
+cross-asset comparison is descriptive — the same metric applied twice, not a
+transferability test.
+
+## 8–9. The orbit plates — one panel per dimension × orbit
+
+**`lumo/fig_lumo_ocv_orbits`** — six dimensions × two orbit directions, twelve
+panels over the tower's 178 coherence rows joined to its 482 acquisition rows. The
+x coordinate is the **actual local overpass instant** (`Europe/Berlin`, joined by
+`burst_id`), not midnight, and the background bands follow the **13 consecutive
+`damage_label` runs** of the time-sorted cohort, with the twelve run transitions
+dashed — the states are read where the record puts them.
+
+**`bautzen/fig_bautzen_ocv_orbits`** — six rows in the formal OCV order
+(`gamma2`, `P`, `D`, `F`, `A`, `S`) × two columns (ASC IW2, DESC IW3) over the
+bridge's `RS` / `DS1` / `DS2` states, again on the actual overpass instant, because
+the state boundaries fall mid-day. The control rectangle 500 m east is **not**
+drawn: its ASC `gamma2` range (−0.94 … +0.93) is an order of magnitude wider than
+the bridge's (−0.14 … +0.24) and would compress the signal the plate exists to
+show. It stays in `data/bautzen/bautzen_ocv_channels.csv`.
+
+Both plates are the *time-series* reading of a table the site's own package builds;
+neither computes a pooled contrast.
+
+## 5–7, 10–12. The trajectory family — six plates, two generators, one design
+
+Six plates over six sites, one design: five of them are emitted by
+`code/cases/ocv_trajectory.py` from a registry of sites, the sixth (Fig 7, the
+Werder crossing) by `code/werder_havel/fig_werder_havel_ocv_trajectory.py`, which
+implements the same template with an interval-specific registry. The question is
+the timeline one — *where in the record does the vector move, and does it move
+where the event is?* Every other plate of this repository answers a contrast
+question; these answer "when".
+
+### The rules the report states (R1–R6)
+
+* **R1 — one cut.** The plate reads the **support-sized** chip
+  (`data/<site>/support/<site>_ocv_channels.csv`), the same cut the SDS plate
+  standardises with. The committed export is never mixed in: two chips are two
+  measurements.
+* **R2 — the case's own reference, and the window is chosen per asset.** The
+  reference timeline is the case's own reference state (`pre` /
+  `pre-collapse (healthy)` / the crossing's `W2_bestand`), restricted to the window
+  the registry declares for that site. A healthy chip outside that window is a
+  third class: drawn, in the reference frame, and standardising nothing.
+* **R3 — per-block standardisation.** `behaviour = [gamma2, P]` against the
+  reference chips that carry an echo; `geometry = [A, D, F, S]` against every
+  reference chip. Pooled over the orbits at every site.
+* **R4 — a robust z.** Transform first (log for `gamma2, P, A, D, F`, identity for
+  `S`), then `z = (x − median_ref) / (1.4826 · MAD_ref)`, falling back to the IQR
+  and then to the SD, clipped at ±6; a block magnitude is the RMS of its
+  standardised dimensions.
+* **R5 — no interpolation.** A month with no chip is a hole: the line breaks there
+  and never spans it, and neither does the event. The monthly median is drawn where
+  a month holds a chip, with its `n`.
+* **R6 — the outside class is tested too.** The healthy chips the window leaves out
+  are drawn and read against the reference with the same interval, so the plate
+  never shows a chip it does not also measure.
+
+### The twelve panels
+
+`a1` z(gamma2) · `a2` z(P) · `a3` behaviour plane · `a4` R_B · `b1` z(A) · `b2` z(F)
+· `b3` geometry plane · `b4` R_G · `c1` weather · `c2` observation cadence · `c3`
+echo coverage · `c4` the trajectory matrix (six dimensions, one row each).
+
+### The six plates
+
+| # | site | kept chips | reference (chosen) | tail | what the frozen rules print |
+| --- | --- | --- | --- | --- | --- |
+| 5 | KDLO media tower | 59 | `pre`, 16 (2022-06-02 → 2022-12-11) | `rebuild`, 43 | resolves `P`, `A`, `S`, `R_B`, `R_G` |
+| 6 | Carolabrücke, Dresden | 436 | `pre-collapse (healthy)`, 121 of 184 (window 2022-09 … 2023-12) | `post-collapse`, 252 | resolves `gamma2`, `P`, `S` · held-out class: isolated unusual departure |
+| 7 | Havelbrücke Werder, A 10 | 491 of 991 rows | `W2_bestand`, 119 | `W3_sanierung` 189 / `W4_post` 61 | sustained unusual geometry departure, confined to the intervention interval |
+| 10 | Ponte Morandi, Genova | 207 | `pre-collapse (healthy)`, 198 | `post-collapse`, 9 | resolves `D`, `R_G` |
+| 11 | Champlain Towers South | 178 | `pre-collapse (healthy)`, 136 | `post-collapse`, 42 | resolves `P`, `A`, `D` |
+| 12 | Haltern AV9 turbine | 107 | `pre-collapse (healthy)`, 96 | `post-collapse`, 11 | resolves nothing |
+
+What each plate adds to its row:
+
+* **The frame is one table, not six choices.** All six are drawn on
+  `figure_style.TRAJECTORY` — 170.0 × 156.0 mm, three rows of four, one legend band
+  under the grid — and written by `figure_style.save` as `.jpg` (630 dpi) + `.pdf` +
+  `.eps`, each measured against that frame before the run is allowed to finish. The
+  type is the repository ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend
+  6.8 pt) and the pen is `figure_style.LW` (series 1.4 pt, rule 1.0, grid 0.6). The
+  plate carries **no header and no descriptive panel titles**: each panel is tagged
+  with its bare key (`a1`…`c4`), the single legend names every mark, and the census
+  the header used to carry is a table in the report, under `## Caption`.
+
+* **Fig 5, KDLO.** The tail is the **rebuild**, not a collapse aftermath, and the
+  plate's caption says so rather than a footnote: the contrast answers a different
+  question. The reference is 16 chips only, and the acquisition at the
+  collapse itself (2022-12-23) is excluded by the registry because one acquisition
+  is not a state.
+* **Fig 6, Carola.** The window is a *choice* (2022-09 … 2023-12, 121 of the 184
+  healthy chips), so 63 held-out chips are drawn and measured in their own block.
+  The verdict is an **isolated unusual departure**, and the plate also prints the
+  one directional statement it can carry: `z(P)` below the reference envelope in 5
+  of 9 held-out months, with the joint `z(gamma2) > 0, z(P) < 0` pattern holding for
+  four consecutive months — direction, not size, and not a verdict input.
+* **Fig 7, Werder Havel.** Not a collapse but a **documented works interval**
+  (2024-07-01 → 2025-09-05, 431 d) over three strata of the export
+  (`W2_bestand` / `W3_sanierung` / `W4_post`), with the held-out pre-intervention
+  year as the outside class. It answers nine registered questions in order and
+  keeps three statements apart: directional departure, departure magnitude and
+  sustained departure. `R_G` sits above the monthly reference q95 in 10 of the 15
+  interval months and for three consecutive months (2025-02 → 2025-04); one
+  acquisition of the operator record is cross-checked against
+  `/home/projects/havel_werder_analysis/havel_werder_events.json` **when that file
+  exists** — the cross-check is skipped, not failed, when it does not.
+* **Fig 10, Morandi.** 9 post chips against 198 reference chips: the tail is drawn
+  and its contrast reported with the interval it can carry, which is wide by
+  construction.
+* **Fig 11, CTS.** One orbit only (ASCENDING, relative orbit 48): the orbit columns
+  are empty on the other direction, so pooling is the whole record here, and the
+  reference is the site's six-year pre-trend, deliberately not cut.
+* **Fig 12, Haltern.** 13 of the record's 120 dates are refused at the raster edge,
+  all ascending: the cut's own manifest carries them, and the plate does not
+  pretend the missing 11 % are months without data.
+
+## Running them
 
 ```bash
-bash figures/cases/fig_ocv_trajectory.sh            # ~17 s, all six plates
-bash figures/carola/fig_carola_ocv_trajectory.sh    # ~5 s, one site
-python3 code/cases/ocv_trajectory.py --selftest     # the template's rules
-bash figures/cases/fig_ocv_trajectory.sh --verify   # re-derive and compare
+bash figures/concept/fig_ocv_schematic.sh
+bash figures/concept/fig_ocv_measurement.sh
+python3 code/espoo/fig_espoo_ocv_chips.py            # no .sh wrapper
+python3 code/sds/ocv_reconfigure.py                  # no .sh wrapper
+bash figures/kdlo/fig_kdlo_ocv_trajectory.sh
+bash figures/carola/fig_carola_ocv_trajectory.sh
+bash figures/werder_havel/fig_werder_havel_ocv_trajectory.sh
+bash figures/lumo/fig_lumo_ocv_orbits.sh
+bash figures/bautzen/fig_bautzen_ocv_orbits.sh
+bash figures/morandi/fig_morandi_ocv_trajectory.sh
+bash figures/cts/fig_cts_ocv_trajectory.sh
+bash figures/haltern/fig_haltern_ocv_trajectory.sh
 ```
 
-## `figures/cases/` — the six cases on one page
-
-`fig_cases_overview.jpg` (630 dpi, from `../code/cases/fig_cases_overview.py`) is
-the figure that says **why the cases exist**, read on the **support-sized chip**: (a) places Espoo, CTS, Carola,
-Morandi, Haltern and KDLO on the spectrum *stable → degradation → collapse →
-reconstruction*, with LUMO and Bautzen above it as controlled-reference
-experiments rather than further cases; (b) the dimension-response matrix for `γ²,
-P, D, F`, where an arrow needs that case's own
-interval to exclude zero **and** both sides carry at least six units, `○` means
-tested-but-unresolved, `?` means the evidence is not there and the fill is the
-project's SDS band *inside* the cell; (c) six
-schematic time lines that encode the kind of result each case reports. The report
-`fig_cases_overview.md` lists every number behind every cell and its source file
-with its sha256; the JSON is `../data/cases/fig_cases_overview.json`.
-
-## `figures/cases/` — the correspondence model, per asset
-
-`fig_ocv_correspondence_lumo.jpg` (630 dpi, from
-`../code/cases/ocv_correspondence.py --asset lumo`) shows the two tests that can
-be drawn: **(a)** every campaign pair as `d_phys` against `d_OCV` (marker shape =
-orbit, fill = within/between state), with the visit repeats sitting on the
-vertical `d_phys = 0` line because both visits of a state share the same physical
-vector, and the Mantel rho/p per orbit; **(b)** the six visit-repeat distances and
-the DAM3-DAM4 contrast, each with its date-level bootstrap interval, against the
-median between-state distance. Everything else is in the report:
-[`cases/fig_ocv_correspondence_lumo.md`](cases/fig_ocv_correspondence_lumo.md) —
-repeatability, the geometry contrast, the distance correspondence (raw and
-z-scored), the not-identifiable residual contrast, the M0/M1 leave-one-campaign-out
-comparison with its permutation p, the Holm family, the pins and the caveats.
-
-`fig_ocv_correspondence_bautzen.md` is the degenerate arm of the same code: one
-campaign per state, no independent f/zeta for DS2, so A and C are reported as
-**not defined** rather than computed from dates, B as **not informative**, and D
-shrinks to the single RS→DS1 contrast (with the saturation stated: two distinct
-x vectors against three parameters). The image is deliberately not drawn — there
-are no distance matrices to draw.
+The five trajectory plates also run in one go — the same generator, one process per
+site, nothing pooled across sites:
 
 ```bash
-python3 code/cases/ocv_correspondence.py --asset all
-python3 code/cases/ocv_correspondence.py --selftest
+bash figures/cases/fig_ocv_trajectory.sh              # all five
+bash figures/cases/fig_ocv_trajectory.sh --verify     # re-derive, write nothing
 ```
 
-## `figures/sds/` — the two experiments side by side
+`--verify` is the check to reach for after touching a table or a generator: it
+re-derives every number of the JSON and the report from the table and fails on one
+deviation. `--no-figures` computes and writes the report only; `--quiet` prints
+nothing but the failures. Every wrapper passes its arguments through, and every one
+of them honours `PYTHON=/usr/bin/python3` where the `python3` of `PATH` is a
+virtualenv without numpy/matplotlib.
 
-`fig_sds_ocv_reconfigure.jpg` (630 dpi, from `../code/sds/ocv_reconfigure.py`)
-is the one cross-site plate that is not a site package: rows are the two assets
-(LUMO, Bautzen), columns are `ASC`/`DESC` crossed with the two blocks — `behaviour` (`γ², P`, plane `γ²`×`P`) and `geometry` (`A, D, F, S`, plane `A`×`F` with `D` and `S` annotated), and
-every arrow starts at that asset's **own** reference state. The inset in each panel
-carries the block magnitude `R` per dose level with its moving-block interval — the
-quantity H1 tests, while the arrows carry the direction the comparison section
-describes. The same script also writes `fig_sds_ocv_reconfigure_lumo.jpg` and
-`fig_sds_ocv_reconfigure_bautzen.jpg` (and, from `--sites carola` or
-`--sites morandi`, `fig_sds_ocv_reconfigure_carola.jpg` /
-`fig_sds_ocv_reconfigure_morandi.jpg`), one plate per asset, because each asset is
-concluded on its own numbers and on its **own** Holm family; the joint plate is a
-juxtaposition, not a shared scale. The panel guide is
-`fig_sds_ocv_reconfigure.md`; the numbers behind all three are
-`../data/sds/ocv_reconfigure.json`, and the design was fixed in
-`../code/sds/ocv_reconfigure_spec.md` before the first run.
+## The audits that watch these plates
 
-The **bridge pair** (`--sites carola,morandi`, spec amendment 4) has its own plate
-and guide: `fig_sds_ocv_reconfigure_carola_morandi.jpg|.md`, rows = Carolabrücke and
-Ponte Morandi, same 2 × 4 layout, every arrow from that bridge's own pre-collapse
-reference, and the numbers in `../data/sds/ocv_carola_morandi.json`. It carries what
-amendment 4 added to **every** plate: each state label ends in its cell's `n`, and a
-cell at or below the bootstrap block (3 units) is marked `✱` with a legend line in
-the suptitle — Morandi's ASC post-collapse cell is the one such cell, and its
-interval therefore reflects the reference's uncertainty only. (The report's
-`Support: thin` flag is a different, older threshold — `SMALL_N = 6` — so Bautzen's
-`DS2` cell, n = 5, is thin in the table and unmarked on the plate.) The inset keeps
-to whichever corner of the panel the response leaves free, so no label crosses it.
+* `python3 code/audit_figure_style.py` — the type ladder and the width of every
+  generator and of every written file (`--strict` also fails the documentation
+  plates of `concept/` and `sds/`). The ten print plates read
+  `PASS … 170.0 mm jpg+pdf+eps`: the width line fails a plate that came out 190 mm
+  wide, the type line fails a 7.2 pt panel title, and the `jpg+pdf+eps` column fails
+  a plate that wrote only the raster. The concept pair reads
+  `note … 183.0 mm jpg+pdf+eps   page 183 mm`: it is registered in
+  `audit_figure_style.PAGE_PLATES` and held to its own page in every container
+  rather than to the 170 mm print width.
+* `python3 code/audit_ocv_units.py` — what `A` counts, checked on every chip of
+  every committed table.
 
-The **tower pair** (`--sites haltern,kdlo`, spec amendment 5) adds
-`fig_sds_ocv_reconfigure_haltern_kdlo.jpg|.md` in the same 2 × 4 layout, rows = the
-Haltern turbine and the KDLO media tower, each arrow from that asset's own
-pre-collapse reference, with the numbers in `../data/sds/ocv_haltern_kdlo.json`. Its
-one structural departure is forced by the record, not chosen: KDLO was acquired
-DESCENDING only, so the two ASC panels of its row are drawn **empty and labelled**
-("no ASCENDING acquisition", "no cell, no test, no interval") rather than left blank
-or filled with a null. The juxtaposition keeps its four columns so the rows stay
-comparable, and the guide says how many panels are empty. Nothing else is marked
-down: neither asset has a cell at or below the bootstrap block, so no plate carries a
-`✱` legend here, and Haltern's n = 5 ASC post-collapse cell is `thin` in the report
-(the `SMALL_N = 6` threshold) without the asterisk, which marks the narrower case.
+## What is not here any more
 
-## `figures/concept/` — the definition, drawn
-
-`concept/fig_ocv_schematic.sh` → `../code/concept/fig_ocv_schematic.py` is the one
-plate in this tree that reads **no record at all**. Every other figure here is
-computed from a table and pinned to it; this one is computed from the definition the
-tables are measured with, so it says what the core vector *is* before any site's
-numbers are read. It therefore pins nothing — it carries 97 structural checks
-instead, and they are what keeps it a schematic.
-
-The plate is three panels in one direction of travel:
-
-```
-physical asset -> SAR observation geometry -> asset-specific measurement
-support -> radar echo representation -> OCV
-```
-
-**(a) the asset and the acquisition.** A generic lattice asset `G_a^{3D}` in its own
-frame — the grey triad `X`, `Y`, `Z` — observed along the orange line of sight `LOS_c`
-at the look angle `θ_c` from nadir; the operator `Π_c` maps that frame into the radar
-frame `(az, r)`. The subscript is the acquisition channel — the same `c` that `Π_c`,
-`W_{a,c}` and `C_{a,c}` carry — because the look geometry belongs to the pass, not to
-the asset; ascending and descending are never spelled out. The mapping is written out
-exactly once, at the foot of the panel and left-aligned to the radar frame's left edge,
-as `(X, Y, Z) ⟶^{Π_c} (az, r)`, and the two frames share no symbol: no letter does two
-jobs, and the projection cannot be misread as a coordinate change inside one frame.
-The asset is drawn as four legs, five belts and alternating braces — something with a
-real cross-section, because that is what makes the projection lossy.
-
-**(b) the measurement support.** The projected asset `Π_c(G_a^{3D})` inside the
-asset- and channel-specific support `W_{a,c}` (blue); outward from it come a white
-guard 0.020 units wide (1.1 mm) and then the dashed, lightly tinted background ring —
-the no-echo reference — and all of it sits inside the read chip `C_{a,c}` (grey,
-outermost). The ring is a true annulus: its tint is knocked out over the guard, so none
-of it reaches inside `W_{a,c}`, and two pixel checks sample the composed canvas to prove
-the order rather than assuming it. `C_{a,c}` is set *on* the chip's own lower edge with
-a white knockout, so the edge breaks behind the glyphs and the label cannot be read as
-naming the ring. The panel states `W_{a,c} ⊂ C_{a,c}` once at its foot and nothing else
-— no box, no legend, no count.
-
-**(c) the observable representation and the vector.** The same `W_{a,c}` holds an
-echo mask of four connected regions (8, 6, 4, 3 cells, density 0.13, one closed hole) —
-the extent, the density and the fragmentation the vector has to summarise, drawn before
-they are made numeric. Nothing is annotated on the mask: no centroid, no peak, no dashed
-shift between them and no symbol naming either. `S`, the centroid-to-peak distance, is a
-number the raster yields rather than an element the plate has to define, so every mark
-in the panel can be read without a caption. Below the mask the vector, split into its
-two groups by two under-braces rather than by boxes:
-
-```
-OCV(t) = [ γ², P, D, F, A, S ]
-           ⏟           ⏟
-        cross-acquisition  spatial geometry
-```
-
-`γ², P` is what changes *between acquisitions* of the same place (blue); `D, F, A, S`
-is how the echo is laid out *inside* `W_{a,c}` (green). Each brace spans the measured
-extent of exactly the tokens it names — the row is laid out from the renderer's own
-text metrics at the output dpi and the inter-group gap is *solved* so the two names
-clear each other, with a separating comma and a thin divider rule in the gap.
-
-What the plate deliberately does **not** contain: no site, date, state or number
-readable as a result; no structural health, damage probability or failure diagnosis;
-no displacement or InSAR geometry; no `R_B`/`R_G`; no centroid or peak symbol on the
-mask; no score, threshold, weighting or
-count. The prohibition is mechanical, not editorial — a forbidden-token scan runs
-over every drawn string and the whole text inventory is matched against a written
-whitelist, so the plate cannot grow a `damage` label without failing the run.
-
-It is the only plate that ships as **vector PDF** beside its 630 dpi JPEG
-(`fig_ocv_schematic.pdf`, 183 × 61 mm, TrueType fonts embedded, no raster layer),
-because a schematic is the one figure that may be re-set at a printer's size; the
-PDF is written without a creation date, so a rerun is byte-identical.
-
-```sh
-bash figures/concept/fig_ocv_schematic.sh                 # ~2 s, both images + JSON + report
-bash figures/concept/fig_ocv_schematic.sh --no-figures    # build and check, write no image
-python3 code/concept/fig_ocv_schematic.py --help          # the flags
-```
-
-The report (`fig_ocv_schematic.md`, with the full check table) and
-`../data/concept/fig_ocv_schematic.json` are committed; the two images are ignored
-like every other plate.
-
+The per-site "paper" plates (panels A–E / A–F), the month companions, the orbit,
+geometry, series and weeks companions, the case-overview page and the
+prospective/correspondence analyses were **retired** with this scope. No generator,
+wrapper, report or image for them ships in `figures/`; the plates above are the
+whole set. Their committed numbers stay under `data/` as frozen provenance — a
+retired plate's JSON remains the record of what it drew, and two of those locks are
+still read: `data/lumo/fig_lumo_ocv_paper.json` by the LUMO orbit plate and
+`data/haltern/reference/haltern_ocv_findings.json` by the Haltern mask-sensitivity
+script. The nine site packages still build, pin and report the numbers behind their
+remaining plates (see `code/README.md`).

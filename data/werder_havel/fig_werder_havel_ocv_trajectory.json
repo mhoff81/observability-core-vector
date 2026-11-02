@@ -4636,8 +4636,14 @@
   "tolerance_days": 7
  },
  "figure": {
+  "containers": [
+   "jpg",
+   "pdf",
+   "eps"
+  ],
   "dpi": 630,
   "file": "figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg",
+  "height_mm": 156.0,
   "panels": [
    {
     "block": "behaviour",
@@ -4700,10 +4706,7 @@
     "shows": "trajectory matrix, z per dimension and bin"
    }
   ],
-  "size_mm": [
-   183.0,
-   168.4
-  ]
+  "width_mm": 170.0
  },
  "inputs": [
   {
@@ -6327,10 +6330,10 @@
   "note": "no wall-clock value enters this report: two runs are identical",
   "python": "3.13.5",
   "script": "code/werder_havel/fig_werder_havel_ocv_trajectory.py",
-  "script_sha256": "6010ecd1522cbe65746394c737d44eb0493bd1d74be0a79a6ffbd6c0c194802c",
+  "script_sha256": "b2a59b0cbada289c25de6194fd364f4e847f4d6074f92069ead11cd9387e8621",
   "seed": 7,
   "template": "code/cases/ocv_trajectory.py",
-  "template_sha256": "2b87ffb0092fb5978322d59880fb8fe1004d182bd101c0b29fa04fa5706a9818"
+  "template_sha256": "873baa81acbedf9ee16b06ad5fc909f224393172bcc7b3953013bdc6349d60dc"
  },
  "reference": {
   "choice": "stated choice, frozen before any result of this plate was read",

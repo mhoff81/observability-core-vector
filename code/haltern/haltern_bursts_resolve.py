@@ -26,9 +26,10 @@ and the S3 object the pixels live in. That is what turns the ASC/DESC cross-cut 
 of the IW mode on two relative orbits (ascending IW1/rel. orbit 15 and IW3/rel.
 orbit 88, descending IW1/rel. orbit 37 and IW3/rel. orbit 139) at two times of
 day — and it is the reason that block may only be read as a
-*description*. ``fig_haltern_ocv_orbits.py`` reads this file and cross-checks
-every id's ``OrbitDirection`` against the measurement extract's own
-``orbit_direction`` column.
+*description*. The since-retired ``fig_haltern_ocv_orbits.py`` read this file
+and cross-checked every id's ``OrbitDirection`` against the measurement
+extract's own ``orbit_direction`` column; the committed file keeps that
+evidence.
 
 Two steps, like ``haltern_ocv_masks.py`` separates ``--extract``
 ------------------------------------------------------------

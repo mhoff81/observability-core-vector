@@ -927,7 +927,13 @@
  },
  "event": "2024-09-11",
  "figure": {
+  "containers": [
+   "jpg",
+   "pdf",
+   "eps"
+  ],
   "dpi": 630,
+  "height_mm": 156.0,
   "panels": [
    {
     "block": "behaviour",
@@ -989,7 +995,8 @@
     "id": "c4",
     "shows": "the trajectory matrix: six dimensions x every month"
    }
-  ]
+  ],
+  "width_mm": 170.0
  },
  "label": "Carolabr\u00fccke, Dresden",
  "months": [
@@ -2366,7 +2373,7 @@
    }
   }
  ],
- "note": "28 months of reference before the collapse, 24 months of tail after it: the longest pair of the six, and the only one whose post side is longer than many whole records here.",
+ "note": "28 months of reference before the collapse, 24 months of tail after it: the longest pair of the five, and the only one whose post side is longer than many whole records here.",
  "outside": {
   "applies": true,
   "block": 3,

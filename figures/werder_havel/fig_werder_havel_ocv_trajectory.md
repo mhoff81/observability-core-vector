@@ -344,7 +344,13 @@ Pronounced months: 2023-11, 2024-02, 2024-07, 2024-08, 2024-10, 2024-12, 2025-02
 | **c3** | context | echo-bearing share per bin |
 | **c4** | context | trajectory matrix, z per dimension and bin |
 
-The plate is set at the column's own width -- `figsize = (7.205 in, 6.628 in)`, 630 dpi, so 183.0 mm x 168.4 mm -- and saved with `bbox_inches="tight"`, which crops the figure to its ink rather than to that rectangle, so the delivered file is a few millimetres wider than the setting (the colour bar's ticks) and shorter than it (the empty margin the grid leaves below the key). The header is packed to the panel block's own width, measured from column one's y label to column four's right spine, and starts at that same left edge; panel c4's title is broken in two. Either, left as one line, would be wider than the block, and the tight box would then widen the *file* to hold the text instead of the text to fit the block.
+## Caption
+
+**Figure. Havelbrücke Werder, A 10 -- OCV trajectory on the support-sized chip.** Twelve panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). Row `c` is the record's own context: environment (`c1`, descriptive only), observation cadence ASC/DESC per month (`c2`), observation availability (`c3`, solid = chips with an echo) and the whole trajectory as a six-dimension by every-month matrix (`c4`). Every ordinate is a robust z against the frozen pre-intervention reference (119 chips, 2022-07 → 2023-06): filled markers are reference months, hollow grey circles the held-out pre-intervention months (122 chips), hollow amber diamonds the intervention months (189 chips, 2024-07 → 2025-09) and hollow red squares the post-intervention months (61 chips); the grey band is the reference window, the light band its monthly q05-q95 envelope, the pale red band with dashed ends the documented works interval 2024-07-01 → 2025-09-05. The plate is set at the repository's print width, 170 × 156 mm, on the shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
+
+The plate draws no title and no panel titles of its own: the tags in the table above are all it carries, and this caption is what the reader is given with it. Set it under the figure as one paragraph.
+
+The frame is the repository's one timeline frame, `style.TRAJECTORY`: `figsize = (6.693 in, 6.142 in)`, 630 dpi, so 170.0 mm x 156.0 mm as delivered -- the raster, the `.pdf` and the `.eps` are each measured against it and the run fails if one of them is not. The plate is not cropped to its ink: the panels sit inside a fixed grid, the key inside the band that grid reserves for it, and a layout that needs more room is a defect rather than something the export absorbs.
 
 ## What the plate does not claim
 
@@ -380,4 +386,4 @@ bash figures/werder_havel/fig_werder_havel_ocv_trajectory.sh --verify      # re-
 bash figures/werder_havel/fig_werder_havel_ocv_trajectory.sh --selftest    # rules and pins, nothing written
 ```
 
-The generator of the cut is `code/werder_havel/werder_havel_ocv_channels_csv.py`; the template this plate follows is `code/cases/ocv_trajectory.py` (sha256 `2b87ffb0092fb597`), imported rather than copied, so the seed, the transforms, the block definitions and the monthly-bin machinery cannot drift between the two plates.
+The generator of the cut is `code/werder_havel/werder_havel_ocv_channels_csv.py`; the template this plate follows is `code/cases/ocv_trajectory.py` (sha256 `873baa81acbedf9e`), imported rather than copied, so the seed, the transforms, the block definitions and the monthly-bin machinery cannot drift between the two plates.

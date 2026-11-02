@@ -7,6 +7,13 @@ scripts still run, just with fewer p-values). This is the Espoo Kurttila mast
 Bautzen in `../bautzen/`, KDLO in `../kdlo/`, Carola in `../carola/`, Morandi in
 `../morandi/`, CTS in `../cts/` and Haltern in `../haltern/`.
 
+The plotting half needs **matplotlib** (`pip install matplotlib`, 3.11.1 here),
+which draws the pdf/eps/jpg of every `fig_*.py`; its own dependencies arrive with
+it, and its `numpy>=1.25` floor is already met by the numpy the committed `*.json`
+was computed with (2.5.4), so a plain install upgrades nothing. matplotlib is
+imported inside the drawing functions, never at module level, so the analysis
+half of this package also runs on an interpreter without it.
+
 ## What this site is, and what it is for
 
 The asset is the **Espoo Kurttila communications mast** (Kurttila, Espoo; the
@@ -174,109 +181,6 @@ The build is byte-idempotent: two runs produce the same CSV and the same meta
 JSON.
 
 
-### `fig_espoo_ocv_paper.py` — figures A–E, JSON result, the report and the pins
-
-```bash
-python3 code/espoo/fig_espoo_ocv_paper.py                   # recompute everything (~4.5 min)
-python3 code/espoo/fig_espoo_ocv_paper.py --quick           # no permutation nulls
-python3 code/espoo/fig_espoo_ocv_paper.py --write-reference # (once) define the lock
-python3 code/espoo/fig_espoo_ocv_paper.py --no-figures      # JSON + report + pins only
-bash   figures/espoo/fig_espoo_ocv_paper.sh                 # the same, from the root
-```
-
-Panels: **A** raw distributions of the two measured channels per orbit (+ the
-phase ladder), **B** in-sample effect sizes (Cliff's delta with a bootstrap CI,
-SDS, the season strata and the two weather controls), **C** the 2-class LDA with
-leave-one-out and the label-permutation null (chance 0.5, the two-state
-counterpart of LUMO's four-state 0.25), **D** the headline pair across the four
-feature sets plus the out-of-time split, **E** the no-event controls — E1 the 14
-committed stationarity series, E2 the month/season composition, E3 the same effect
-size recomputed *inside* each wind stratum, E4 the phase-ladder availability.
-
-Every number it draws is recomputed from the channel table and then **pinned
-field by field** against the three committed reference JSONs in
-`data/espoo/reference/` — `espoo_mast_observability.json`,
-`espoo_phase_stationarity.json`, `fig_espoo_channels.json` — plus the generator's
-own `output_sha256`. `--write-reference` defines the package's **own** lock
-`espoo_ocv_findings.json` once; every later run re-derives it and pins it too. Any
-deviation aborts with exit code ≠ 0, and the claim of the package is not "we
-assert" but **"we reproduce and read off"**.
-
-### `fig_espoo_ocv_months.py` — the record month by month (the companion)
-
-The **standalone companion** of the A–E figures, in the shape of
-`../carola/fig_carola_ocv_months.py` and `../cts/fig_cts_ocv_months.py`. Where A–E
-pool the whole record, this one keeps the *time axis*: the record is event-free,
-so nothing is cut, anchored or windowed and all 150 acquisitions (25 months at
-exactly 6 each) appear. Its six panels are (a) `gamma^2` per month, (b) `A` per
-month — both with per-acquisition dots and the monthly median per orbit —
-(c) the per-month Cliff's delta with a 2000-draw bootstrap CI, quoted only for the
-months where both geometries carry ≥ 3 acquisitions (20 of 25), (d) the two
-primary stationarity series of `3-8 Hz · strip400_pipeline`, (e) coverage and the
-phase ladder, (f) the monthly weather medians.
-
-It reads only `data/espoo/espoo_ocv_channels.csv` and
-`data/espoo/reference/espoo_phase_stationarity.json`, adds **no** number to the
-A–E pin contract and touches none of it; its own pin block re-derives the two
-primary series (`ASC` 0.2474 / `DESC` 0.2165 as literal claims to 4 decimals, the
-25 committed monthly means of both, the trend signs), the per-orbit pooled
-medians, the 25 × 6 cadence and the phase ladder, and exits non-zero on any
-deviation.
-
-```bash
-python3 code/espoo/fig_espoo_ocv_months.py            # ~4 s
-bash figures/espoo/fig_espoo_ocv_months.sh            # the same, via the wrapper
-python3 code/espoo/fig_espoo_ocv_months.py --figdir /tmp/x --json /tmp/y.json --md /tmp/z.md
-```
-
-
-### `fig_espoo_ocv_orbits.py` — two years, two orbits, no states
-
-Espoo is the **event-free control**: `damage_label` and `structural_state` are
-empty in every row, so this figure has no state bands at all — the axis is time
-only, and the question is stability.
-
-The record gives two full years (2024-09-05 … 2026-09-07), a regular
-six-rows-per-month cadence, and 69 dates that carry **both** an afternoon ASC and
-a morning DESC. Six panels (`gamma2`, `A`, `displacement`, `brightness`,
-`phase_coherence`, `phase_rms`), two series each, points per overpass. The trend
-is a **Theil–Sen line**, drawn solid only where the ported stationarity rule says
-trend (block interval excludes zero *and* Mann-Kendall p < 0.05), dashed otherwise
-— a statement with an interval, not a smoother.
-
-```bash
-python3 code/espoo/fig_espoo_ocv_orbits.py            # ~3 min, writes JPG + MD + JSON
-python3 code/espoo/fig_espoo_ocv_orbits.py --boot 300 --selftest
-python3 code/espoo/fig_espoo_ocv_orbits.py --verify    # 42 fields recomputed
-```
-
-Outputs `figures/espoo/fig_espoo_ocv_orbits.{jpg,md}` (630 dpi JPEG) and
-`data/espoo/fig_espoo_ocv_orbits.json`. Three tests, pre-registered:
-
-1. **drift** (`espoo_ocv_stats.stationarity_of`, reused): **no dimension and no
-   orbit gets the trend flag.** The one borderline cell is `gamma2` DESC
-   (+0.0071/a, interval [+4.9e-05, +0.0156], but Mann-Kendall p = 0.088 — the flag
-   rule needs both, so the line stays dashed).
-2. **year repeat**, twelve month pairs between the two 365-day campaign windows:
-   `gamma2` ASC +0.070 [−0.030, +0.143] (8 of 12 months positive) and DESC
-   +0.0156 [−0.0015, +0.0165] (8 of 12) — no systematic year difference. The one
-   clear exception is **`A` in DESC: −3.5 masked pixels [−12, −0.5], 2 of 10**
-   months positive; the mask is systematically smaller in year two. `brightness`
-   ASC sits on the boundary (0.0, [−0.075, 0], 1 of 11 months positive). The two
-   phase dimensions cannot run this test: they cover 2024-09 … 2025-10 only, so
-   just two months fall in both windows (reported with that reason).
-3. **orbit contrast, paired by date** (n = 69, no event in it): ASC − DESC is
-   +0.113 for `gamma2` [+0.071, +0.224], 93 % of days positive; −4 masked pixels
-   [−5, −1] for `A`, 28 %; −0.0024 m for `displacement`, 17 %; +0.261 for
-   `brightness`, 67 %; the phase dimensions are not distinguishable from zero.
-   **The difference itself does not drift** in any dimension — the geometry effect
-   is stable across the two years.
-
-That last table is the number the event sites lack: a geometry offset measured
-with no event in it, and stable. Espoo has **no mask layer** (`A` is the
-pipeline's `coherence_masked_pixels`; `D, F, S, P` and `gamma2_mask` do not
-exist here), so a chip-sized version still waits on a confirmed `base_width_m`.
-
 ### `espoo_base_width.py` — the one geometric number the record does not carry
 
 `asset_evidence.json` holds `base_width_m` as `unconfirmed_default` (12.0 m, the
@@ -371,17 +275,43 @@ DESC 392-708) - a property of the observation geometry, not of the tower.
 ### `fig_espoo_ocv_chips.py` — the first OCV vector of the chip, and its three tests
 
 The 75 support chips carry what the pipeline export never had: `A, D, F, S, P`
-and `gamma2_mask`. This module runs the same three tests as the pipeline figure on
+and `gamma2_mask`. This module runs the same three tests as the pipeline figure — retired with the
+twelve-plate scope, its numbers frozen at `data/espoo/fig_espoo_ocv_orbits.json` —
+on
 that vector — with one structural change: **the pairing is gone**. The cut is
 restricted to the two tracks that place the mast inside the swath (ASC =
 relative orbit **160**, DESC = **51**), and those tracks have only **three shared
 dates**, so the orbit contrast is a two-sample comparison.
 
 ```bash
-python3 code/espoo/fig_espoo_ocv_chips.py            # ~20 s, writes JPG + MD + JSON
-python3 code/espoo/fig_espoo_ocv_chips.py --selftest  # 9 checks
-python3 code/espoo/fig_espoo_ocv_chips.py --verify    # 42 fields recomputed
+python3 code/espoo/fig_espoo_ocv_chips.py             # ~25 s, JPG + PDF + EPS + MD + JSON
+python3 code/espoo/fig_espoo_ocv_chips.py --selftest  # 22 checks, the last twelve draw a plate
+python3 code/espoo/fig_espoo_ocv_chips.py --verify    # 42 fields + 120 figure pins
 ```
+
+The figure is one **170 mm plate**: `6.6929 × 7.5500 in`, six panels of
+74.6 × 45.7 mm in reading order `A D / F S / P γ²`, written as JPG (630 dpi),
+PDF (Type-42 vector) and EPS (alpha pre-blended over white). The canvas *is*
+the print width — `bbox_inches="tight"` is never used, so the file is not
+re-cut after the fact and no glyph shrinks; the content has to stay inside the
+canvas instead, which four guards assert on every build: the statistics row
+inside its axes, the title above that row, the header clear of both the legend
+and the panel titles, and the drawn content at least 0.3 mm from every edge.
+`--verify` measures all three containers again and re-derives the 120 pinned
+numbers from the CSV.
+
+Typography follows `figure_style`: header 9.0, panel title 8.8, axis label
+7.6, ticks and legend 6.8, statistics 6.6 pt — nothing below 6 pt. The panels
+are labelled canonically (`A — observable area (cells)` … `γ² — coherence`),
+the column names of the table are not drawn, and the two statistics rows sit in
+one fixed band above every panel: DESC at +10.0 pt, ASC at +1.0 pt, each the
+slope per year, its bootstrap interval, the Mann–Kendall p and the verdict.
+
+The caption and a machine-readable audit of the plate — target and measured
+width, `figsize`, dpi, final point sizes, bounds, EPS alpha policy, one pinned
+row per panel and track — are in `figures/espoo/fig_espoo_ocv_chips.md`. The
+scientific JSON is untouched by the layout: it stays byte-identical, which is
+what `--verify` re-derives field by field.
 
 Result, in three lines:
 
@@ -400,51 +330,6 @@ series is flat over two years, and the two acquisition geometries sit at
 completely different levels. And the tautology travels with every number:
 `D = A / bbox_area` exactly, `gamma2_mask` has `n = A` in its denominator, and
 `A` itself differs sevenfold between the tracks.
-
-### Espoo in the shared orbit family — one state, drawn as one band
-
-`code/orbits/fig_ocv_orbits.py` now knows Espoo, so the twelve-panel family that
-carries the six labelled sites carries the control too:
-
-```bash
-bash figures/orbits/fig_ocv_orbits.sh --site espoo   # + --verify
-```
-
-Outputs `figures/espoo/fig_espoo_ocv_orbits_chip.{jpg,md}` and
-`data/espoo/support/fig_espoo_ocv_orbits_chip.json`. The `_chip` stem is not
-decoration: the site's `fig_espoo_ocv_orbits.jpg` is the **pipeline** figure
-(A vs S, no chip, section above), and two different figures must not share a name.
-
-What the figure had to learn. The family assumed **exactly two states** — the
-loops over `("pre", "post")`, the counts table, the legend, the title's "before
-and after". An event-free site has one, so the registry entry sets
-
-```python
-"label_column": None,              # no state column in the table
-"states": {"all": "event-free"},   # every overpass takes this state
-"out_name": "fig_espoo_ocv_orbits_chip",
-```
-
-and everything state-dependent now iterates `spec["states"]`. The `all` slot of
-`STATE_COLORS/FILL/MARKERS` is a **neutral fill** on purpose: with one state there
-is no contrast to colour, and a second colour would imply a comparison the record
-does not make. The title reads *across* the event-free record, not *before and
-after* it.
-
-The result is the flattest figure in the family: two columns (ASC 31, DESC 44),
-one run per column, six medians per column and no boundary to draw —
-`gamma2` 0.0164 / 0.0007, `P` 0.234 / 0.147, `D` 0.021 / 0.117, `F` 19 / 133,
-`A` 76 / 528, `S` 25.7 / 14.4. The horizontal median line is the whole series, and
-the separation that matters is **between the columns**, not along the time axis —
-the same reading the chip figure reaches with KS tests.
-
-The six labelled sites keep every number. For them the generalisation is an
-identity on the data — `spec["states"]` holds the same two keys in the same order
-— and the diff agrees: Carola's JSON (`data/carola/support/fig_carola_ocv_orbits.json`,
-436 overpasses) gains exactly one line, `"out_name": "fig_carola_ocv_orbits"`, and
-no value, run or median moves. `--verify` re-derives all seven without a failure.
-Note that `A` here is the chip amplitude, so it is not the pipeline figure's `A`;
-the two figures are complementary, not interchangeable.
 
 ### Width sensitivity — run at 11, 12 and 13 m, and it does **not** reach the cells
 

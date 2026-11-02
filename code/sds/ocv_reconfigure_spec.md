@@ -117,7 +117,7 @@ licenses a dose gradient.* Each half stands or falls on its own numbers.
 
 ---
 
-## Amendment 2 — 2026-10-22: the blocks are behaviour and geometry
+## Amendment 2 — 2026-10-22: the blocks are behavior and geometry
 
 *The first amendment separated the two assets. This one splits the response the
 other way — by what the dimension *is*, not by how it is observed.*
@@ -126,7 +126,7 @@ other way — by what the dimension *is*, not by how it is observed.*
 
 | block | dimensions | meaning |
 |---|---|---|
-| `behaviour` | `γ²`, `P` | **cross-acquisition echo behaviour** — `γ²` is the consistency of the echo across acquisitions, `P` its persistence/continuity across acquisitions. `P` belongs here even though its computation depends on valid echo detections: it describes how the echo behaves *between* acquisitions, not how the mask looks. |
+| `behavior` | `γ²`, `P` | **cross-acquisition echo behavior** — `γ²` is the consistency of the echo across acquisitions, `P` its persistence/continuity across acquisitions. `P` belongs here even though its computation depends on valid echo detections: it describes how the echo behaves *between* acquisitions, not how the mask looks. |
 | `geometry` | `A`, `D`, `F`, `S` | **spatial echo-mask geometry** — `A` extent (how much is observable), `D` occupancy, `F` fragmentation (how spatially organised the mask is), `S` the spatial shift. |
 
 `D` was previously paired with `A` and `F` in a "mask" block that omitted `S`;
@@ -137,7 +137,7 @@ inside a two-dimension block, it is one of four geometry dimensions.
 
 **Consequences, fixed before the run.**
 
-* the magnitudes are `R_behaviour = rms(z_γ², z_P)` and
+* the magnitudes are `R_behavior = rms(z_γ², z_P)` and
   `R_geometry = rms(z_A, z_D, z_F, z_S)`; the two are **not** comparable with each
   other (two dimensions against four) and are never compared across assets;
 * `R_geometry` keeps all four dimensions even though the figure's plane draws only
@@ -148,13 +148,14 @@ inside a two-dimension block, it is one of four geometry dimensions.
   multiplicity does not change;
 * the pre-registered predictions are re-stated per block: **P1** and **P2** are asked
   of the `geometry` block (the dose hypothesis is a mask-geometry hypothesis), and
-  **P3** becomes "the `behaviour` block need not follow the dose";
+  **P3** becomes "the `behavior` block need not follow the dose";
 * the H2 comparison keeps one cosine per block and channel; the former
   "other block without γ²" variant is replaced by the two single-dimension `z`
-  readings of the behaviour block, because a one-dimension "vector" has no cosine.
+  readings of the behavior block, because a one-dimension "vector" has no cosine.
 
 The order of the blocks in the table, the figure and the report is
-`behaviour`, then `geometry`.
+`behavior`, then `geometry`. The keys themselves keep the original spelling
+(`behaviour`) — see amendment 7.
 
 
 
@@ -267,7 +268,7 @@ support:
 **What the pair may claim.** That Carola resolves a large, coherent DESC
 reconfiguration (both blocks, Holm < 0.001) and Morandi resolves nothing — its
 post-collapse cell holds 3 ASC and 6 DESC chips, the ASC one at the bootstrap block,
-its largest point estimate (DESC behaviour, `R` = 0.98) sits at Holm 0.797 and every
+its largest point estimate (DESC behavior, `R` = 0.98) sits at Holm 0.797 and every
 other cell at 1.000 — and that exactly one of the four cells shares a direction. It
 may **not** claim that the two bridges reorganised alike, and no magnitude crosses
 between them — each `R` is on its own reference's scale.
@@ -408,6 +409,110 @@ agreement and `ΔR` with its CI). This is not a test of H1; it is what makes LUM
 interpretable, and it is the only place where the record itself can reproduce a state
 effect.
 
+## Amendment 6 — 2026-10-30: the plate, authored at 170 mm
+
+*Every amendment so far changed what is computed. This one changes only the sheet the
+numbers are drawn on — and it does so because the pre-registered grid could not be
+built at the repository's type floor.*
+
+**What the pre-registration asked for.** A 2 × 4 plate: rows = experiment, columns =
+channel × block (ASC-behavior, ASC-geometry, DESC-behavior, DESC-geometry), one
+arrow per state from the reference into standardised space, and the bootstrap
+interval of `R` as a thin bar.
+
+**Why that grid cannot carry the type.** `figure_style.FINAL_WIDTH_MM` is 170 mm and
+the ladder's floor is the annotation rung, 6.2 pt. Four columns inside 170 mm leave
+`(170 − 14 − 3 − 3 × 11) / 4 = 30.0 mm` per square z-plane. At that rung the longest
+state label measured on the real type is `DAM 6 (+2.4; n=17)` at 24.3 mm and
+`rebuild (0.56; n=43)` at 24.8 mm; the median label is 21.6 mm. Add the marker and
+its 0.8 mm clearance and a 30 mm plane has no side on which a label fits without
+sitting on the data or leaving its slot. A plate that meets the width rule by
+shrinking the type to 4 pt is not the same plate, so the width rule wins on width
+and the grid gives way on grid.
+
+**What replaces it.** Two columns (the block) and one row per experiment × channel:
+ASC above DESC, four rows, eight panels. The reading order of the pre-registered
+grid survives — experiment first, then channel, then block — and so does the
+juxtaposition, because each experiment still carries both blocks in one band of two
+rows. Geometry: plane 44 mm square, slot 71.0 mm, `x_stretch = slot / plane` so the
+plane keeps its units and the added width is the margin the state labels sit in.
+Canvas 170 × 237 mm for a pair, 170 × 125 mm for a single asset.
+
+**Authored at 170 mm, never rescaled.** The canvas *is* the export box: `.jpg` at
+630 dpi, `.pdf` (vector) and `.eps` (alpha blended, text Type 42) written from it,
+`bbox_inches` never `tight`. A figure that is later rescaled by LaTeX has a type size
+nobody chose; a figure that is cropped to its content has a width nobody measured.
+`--verify` re-measures all three containers from their own headers and fails on a
+0.5 mm deviation.
+
+**The type ladder on the plate.** Header 9.0 pt, panel title 8.8, axis label 7.6,
+tick label 6.8, annotation 6.2 — every one of them read from `style.FS`, so the plate
+cannot drift from the rest of the corpus, and nothing on it is set below the
+annotation rung.
+
+**The `R` strip.** One inset per panel repeats the block magnitude per level with its
+moving-block interval, the quantity H1 tests. Its height follows the number of levels
+instead of a fixed box: 28 mm wide, one row per level at 3.4 mm (a 6.8 pt label plus
+its gap), the level names on the left (10 mm — `rebuild` is 8.6 mm at that rung), the
+interval's ticks below (3.6 mm) and the `R` tag above (3.2 mm): 17.0 mm for three
+levels, 13.6 mm for two. The strip is placed *before* the state labels, in whichever
+of eight windows (four corners, four edge midpoints) is freest of markers, and if the
+labels do not fit around the strip's footprint the next window is tried; the labels
+themselves step in millimetres off their marker and are measured by the renderer, not
+estimated from character counts. Nothing is drawn over anything, and if no window
+works the build stops rather than covering a datum.
+
+**What the guards hold.** The header and the ✱ line stay inside the canvas and 0.3 mm
+from its edge; the header clears the first row of titles by 1.5 mm and the ✱ line by
+0.4 mm; the drawn content stays 0.3 mm inside every edge. The ✱ line names its thin
+cells when they fit on one 170 mm row and states the rule alone when they do not (the
+guide keeps the list either way). Every plate is then re-read against the report:
+`assert_figure_matches_report` compares each drawn `z`, `R`, `n` and interval with the
+JSON, so a layout change cannot move a number.
+
+**Self-test and verify.** `--selftest` (40 checks) gains the plate arithmetic: for
+1, 2 and 4 row plates the slots, the gap and the gutters sum to exactly
+`FINAL_WIDTH_MM`, `slot / x_stretch` is the plane, the height is the sum of its bands,
+the grid stays inside the canvas, and the typography floor is the annotation rung.
+`--verify` additionally re-measures the width of every container, re-compares the
+audit block in each guide with the plate that was built, and re-derives every number
+the guide quotes from `data/sds/`.
+
+
+## Amendment 7 — 2026-10-30: American spelling, and a header that names the states
+
+*Neither change touches a number. The first is the manuscript's variety of English;
+the second removes a phrase that read like a claim the design refuses.*
+
+**Every printed name is American English.** The manuscript is set in American
+English, so the plate says `behavior` — in the panel titles, the guide, the tables
+and the CSV column `R_behavior`. The **key** keeps the spelling this document
+registered (`behaviour`): `BLOCKS`, the report's JSON, the H1/H2 cell ids and the
+plate audit all key on it, and the other generators index `BLOCKS` by name — one of
+them asserts the dict verbatim against its own copy. One table, `BLOCK_DISPLAY` in
+`code/sds/ocv_reconfigure.py`, maps key to printed name, and nothing but a label goes
+through it — no JSON key, no CSV field of the report itself, no audit field. A reader
+therefore never sees two spellings of the same block in one document; a program never
+sees two names for one key.
+
+**The pair header.** It read *OCV reconfiguration against the state dose — LUMO and
+Bautzen (no shared scale)*. "State dose" reads like one ordered loading axis that
+both assets sit on, and then the parenthesis has to take the claim back. There is no
+such axis: LUMO's ladder is a measured frequency-drop dose, Bautzen's is an ordinal
+rank, and no panel of the plate shares a scale with any other — each arrow starts at
+its own reference and is standardised by its own scale. The header now reads
+
+> OCV reconfiguration across controlled LUMO and Bautzen states
+
+and the parenthetical is gone, because the title no longer claims a shared scale for
+the guide to deny: the standardisation is stated where it is made, in the panel
+geometry and in the guide's first paragraph. The two registered pairs keep their
+headers ("across a collapse", "across a collapse and a rebuild"): a collapse *is* a
+common event, and its "(no shared scale)" names the one thing a reader might still
+assume. The `--sites` help text and the default report's title line follow the same
+wording.
+
+
 ## Multiplicity
 
 Eight primary tests: 2 experiments × 2 channels × 2 blocks for H1 — four per asset since
@@ -460,11 +565,14 @@ Pre-registered predictions, written before the run:
 
 * `data/sds/ocv_reconfigure.json` — every number, the drop counts, the scale chain.
 * `data/sds/ocv_reconfigure.md` — the table and its reading.
-* `data/sds/ocv_reconfigure_table.csv` — `Experiment, State, Channel, n, R_mask,
-  R_other, Direction, Support`.
-* `figures/sds/fig_sds_ocv_reconfigure.jpg` — 630 dpi: rows = experiment, columns =
-  ASC-mask, ASC-other, DESC-mask, DESC-other, arrows from the reference state to each
-  state in standardised space, bootstrap intervals as thin bars.
+* `data/sds/ocv_reconfigure_table.csv` — `Experiment, State, Channel, n, R_behavior,
+  R_geometry, Direction, Scale, Support`.
+* `figures/sds/fig_sds_ocv_reconfigure.jpg` — 630 dpi, authored at 170 × 237 mm:
+  rows = experiment × channel (ASC above DESC), columns = behavior | geometry
+  (amendment 6), arrows from the reference state to each state in standardised
+  space, the bootstrap interval of `R` in the panel's inset. Beside the jpg:
+  `.pdf` (vector) and `.eps` (alpha blended), and a `.md` guide whose JSON blocks
+  carry the audit of the plate that was written.
 
 A registered pair writes its own stem beside those: `ocv_carola_morandi`
 (amendment 4) and `ocv_haltern_kdlo` (amendment 5), each with `.json`, `.md`,

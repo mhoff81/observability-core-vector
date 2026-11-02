@@ -57,10 +57,14 @@ no shadows, no decoration. All geometry is laid out in panel units where one uni
 is the same length in x and y, so circles, arcs and raster cells are round; the
 unit is 55.632 mm, so 7 pt text is 7 pt on the printed page at 183 mm.
 
-Deliverables: ``figures/concept/fig_ocv_schematic.jpg`` (630 dpi) and
-``figures/concept/fig_ocv_schematic.pdf`` (true vector, FontType 42),
+Deliverables: ``figures/concept/fig_ocv_schematic.jpg`` (630 dpi),
+``figures/concept/fig_ocv_schematic.pdf`` (true vector, FontType 42) and
+``figures/concept/fig_ocv_schematic.eps`` (the same page in PostScript, its
+alpha pre-blended over white by :func:`figure_style.save_eps` -- PostScript
+cannot express a tint, so the EPS shows the colours the PDF shows on white),
 ``data/concept/fig_ocv_schematic.json`` (the drawn geometry, every check and the
-sha256 of both images) and ``figures/concept/fig_ocv_schematic.md`` (the report).
+sha256 of all three images) and ``figures/concept/fig_ocv_schematic.md`` (the
+report).
 
 Usage:
   python3 code/concept/fig_ocv_schematic.py
@@ -87,8 +91,11 @@ from matplotlib.path import Path  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(1, os.path.dirname(HERE))   # code/ -> the shared figure style
 FIGDIR = os.path.join(ROOT, "figures", "concept")
 DATADIR = os.path.join(ROOT, "data", "concept")
+
+import figure_style as style  # noqa: E402  (its EPS sidecar, nothing else)
 
 # ---------------------------------------------------------------------------
 # canvas: 183 mm x 61 mm, three equal panels, no title, no legend
@@ -140,6 +147,7 @@ RC = {
 
 OUT_JPG = "fig_ocv_schematic.jpg"
 OUT_PDF = "fig_ocv_schematic.pdf"
+OUT_EPS = "fig_ocv_schematic.eps"
 OUT_MD = "fig_ocv_schematic.md"
 OUT_JSON = "fig_ocv_schematic.json"
 
@@ -1080,6 +1088,35 @@ def check_images(jpg, pdf):
     check("PDF page box is 183 x 61 mm", ok, f"{nums}")
 
 
+def check_eps(eps):
+    """The EPS sidecar: its own box, vector, FontType 42, and reproducible.
+
+    The EPS is not a copy of the PDF -- PostScript has no alpha, so the
+    translucent artists are composited over white first
+    (``figure_style.save_eps``).  What is checked here is that the result is the
+    same page: the declared box, no rasterised fallback, no Type-3 font, and no
+    header line that would change between two runs.
+    """
+    raw = open(eps, "rb").read()
+    check("EPS announces itself as an EPS (EPSF-3.0)",
+          raw.startswith(b"%!PS-Adobe-3.0 EPSF-3.0"),
+          raw[:23].decode("latin-1", "replace"))
+    box = None
+    for line in raw.splitlines():
+        if line.startswith(b"%%HiResBoundingBox:"):
+            box = [float(v) for v in line.split(b":", 1)[1].split()]
+            break
+    want = (FIG_W_MM / 25.4 * 72.0, FIG_H_MM / 25.4 * 72.0)
+    ok = box is not None and len(box) == 4 \
+        and abs(box[2] - want[0]) < 0.01 and abs(box[3] - want[1]) < 0.01
+    check("EPS page box is 183 x 61 mm", ok, f"{box}")
+    check("EPS is vector (no PostScript image object)", b"/ImageType" not in raw)
+    check("EPS embeds its fonts as TrueType (FontType 42)",
+          b"FontType 42" in raw and b"FontType 3" not in raw)
+    check("EPS carries no timestamp and no output path",
+          b"%%CreationDate" not in raw and b"%%Title" not in raw)
+
+
 def sha256_file(path):
     h = hashlib.sha256()
     with open(path, "rb") as fh:
@@ -1223,12 +1260,15 @@ def write_md(path, pos, hashes):
       "(quality 95, 4:4:4 subsampling) |")
     A("| `concept/fig_ocv_schematic.pdf` | the same plate as a true vector page "
       "(FontType 42; no raster object anywhere in the file) |")
+    A("| `concept/fig_ocv_schematic.eps` | the same page in PostScript: alpha "
+      "pre-blended over white (`figure_style.save_eps`), FontType 42, no raster "
+      "object, box 183 mm × 61 mm, byte-identical across runs |")
     A("| `concept/fig_ocv_schematic.md` | this report |")
     A("| `../data/concept/fig_ocv_schematic.json` | the drawn geometry, the text "
-      "inventory, every check and the sha256 of both images |")
+      "inventory, every check and the sha256 of all three images |")
     A("")
     A("```bash")
-    A("bash figures/concept/fig_ocv_schematic.sh                  # both images")
+    A("bash figures/concept/fig_ocv_schematic.sh                  # all three images")
     A("python3 code/concept/fig_ocv_schematic.py --no-figures     # checks only")
     A("PYTHON=/usr/bin/python3 bash figures/concept/fig_ocv_schematic.sh")
     A("```")
@@ -1238,8 +1278,8 @@ def write_md(path, pos, hashes):
     A(f"**{len(CHECKS) - len(fails)} of {len(CHECKS)} checks pass.** A failure "
       "exits with status 2 *after* the artefacts are written, so a broken plate "
       "is reported rather than silently delivered. (`--no-figures` builds, "
-      "measures and checks, writes the JSON and this report, and skips both "
-      "images and the eleven file checks that go with them.)")
+      "measures and checks, writes the JSON and this report, and skips all "
+      "three images and the sixteen file checks that go with them.)")
     A("")
     A("| family | what it pins |")
     A("| --- | --- |")
@@ -1282,10 +1322,12 @@ def write_md(path, pos, hashes):
       "other; the row sits inside the panel |")
     A("| determinism | two independent builds render identical pixels and lay "
       "the row out byte-identically; the PDF is written without a creation "
-      "date, so both files are byte-identical across separate runs |")
+      "date and the EPS without a creation date or output path, so both "
+      "vector files are byte-identical across separate runs |")
     A("| the files | JPEG 4539 × 1513 px ± 2 at 630 dpi; the PDF has no "
       "`/Subtype /Image`, embeds `/FontFile2`, carries no Type-3 font, and its "
-      "page box is 183 mm × 61 mm |")
+      "page box is 183 mm × 61 mm; the EPS is an `EPSF-3.0` with the same box, "
+      "no `/ImageType`, `/FontType 42` and no `%%CreationDate` |")
     A("")
     A("### Every check, in the order it runs")
     A("")
@@ -1307,7 +1349,7 @@ def write_md(path, pos, hashes):
       f"{matplotlib.__version__}, numpy {np.__version__}. The plate is "
       "deterministic: no timestamp, no seed-dependent value and no "
       "machine-dependent path reaches any output, so two runs produce "
-      "byte-identical JSON, Markdown, JPEG and PDF.")
+      "byte-identical JSON, Markdown, JPEG, PDF and EPS.")
     with open(path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(L) + "\n")
     return path
@@ -1322,6 +1364,7 @@ def payload(pos, hashes):
         "figure": {
             "file": OUT_JPG,
             "vector": OUT_PDF,
+            "eps": OUT_EPS,
             "what": "the observability core vector as a definition, not a result",
             "reads": "no data file at all",
             "panels": {
@@ -1435,13 +1478,13 @@ def main(argv=None):
         description="Draw the observability core vector as a three-panel "
                     "schematic, and check every structural promise it makes.")
     ap.add_argument("--figdir", default=FIGDIR,
-                    help="where the JPEG and the PDF go (default figures/concept)")
+                    help="where the JPEG, the PDF and the EPS go (default figures/concept)")
     ap.add_argument("--json", default=os.path.join(DATADIR, OUT_JSON),
                     help="the JSON artifact (default data/concept/...)")
     ap.add_argument("--md", default=None,
                     help="the report (default <figdir>/fig_ocv_schematic.md)")
     ap.add_argument("--no-figures", action="store_true",
-                    help="build, measure and check, but write neither image")
+                    help="build, measure and check, but write no image")
     args = ap.parse_args(argv)
 
     fig, axes, pos = make_figure()
@@ -1452,6 +1495,7 @@ def main(argv=None):
         os.makedirs(args.figdir, exist_ok=True)
         jpg = os.path.join(args.figdir, OUT_JPG)
         pdf = os.path.join(args.figdir, OUT_PDF)
+        eps = os.path.join(args.figdir, OUT_EPS)
         fig.savefig(jpg, dpi=DPI, facecolor="white", format="jpg",
                     pil_kwargs={"quality": 95, "subsampling": 0})
         fig.savefig(pdf, facecolor="white", format="pdf",
@@ -1466,6 +1510,15 @@ def main(argv=None):
         os.remove(again)
         check("re-saving the same figure gives the same JPEG bytes", same)
         hashes[OUT_JPG] = sha256_file(jpg)
+        # The EPS is written last, and comes from the shared module: PostScript
+        # cannot express either tint, so ``save_eps`` composites the translucent
+        # artists over white first, which rewrites their colours.  The raster and
+        # the PDF are taken from the untouched figure above, so the blend is
+        # harmless -- and ``expect_mm`` is this plate's own 183 mm page, not the
+        # 170 mm print width the site plates are set at.
+        style.save_eps(fig, eps, eps="blend", expect_mm=FIG_W_MM)
+        check_eps(eps)
+        hashes[OUT_EPS] = sha256_file(eps)
 
     plt.close(fig)
     check_deterministic()

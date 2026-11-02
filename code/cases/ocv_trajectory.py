@@ -4,7 +4,7 @@
 The question, and why it needs its own template
 -----------------------------------------------
 Every other figure of this repository answers a *contrast* question ("does the
-state differ?"). This one answers the **timeline** question the six cases are
+state differ?"). This one answers the **timeline** question the five cases are
 actually read for: *where in the record does the vector move, and does it move
 where the event is?* It is deliberately the **same plate for every site** -- same
 twelve panels, same standardisation, same axes logic -- because the comparison a
@@ -24,7 +24,7 @@ The five rules the template enforces
   in: two chips are two measurements.
 * **R2 -- the case's own reference, and the window is chosen per asset.** The
   reference timeline is the case's own reference state (``pre`` /
-  ``pre-collapse (healthy)`` / *all* for the event-free control) **restricted to
+  ``pre-collapse (healthy)``) **restricted to
   the window the registry declares for that site**
   (``SITES[...]["reference_window"]``, inclusive calendar months; ``None`` means
   "the state's own span"). The post tail is every chip of the post state. A
@@ -35,9 +35,9 @@ The five rules the template enforces
   ``ocv_reconfigure.BLOCKS`` are standardised on **their own** reference sets:
   the behaviour block (``gamma2, P``) against the reference chips that **carry an
   echo** (the two channels only exist where the mask rule holds), the geometry
-  block (``A, D, F, S``) against **every** reference chip. Pooled over the orbits,
-  except Espoo, whose only contrast is the orbit geometry and which is therefore
-  standardised **per orbit**.
+  block (``A, D, F, S``) against **every** reference chip. Pooled over the
+  orbits at every site: no site of this family carries an orbit contrast of its
+  own, so no site is standardised per orbit.
 * **R4 -- a robust z.** Transform first (log for ``gamma2, P, A, D, F``, identity
   for ``S``, exactly ``ocv_reconfigure.TRANSFORM``), then
   ``z = (x - median_ref) / (1.4826 * MAD_ref)``, falling back to the IQR and then
@@ -94,6 +94,7 @@ import json
 import math
 import os
 import random
+import shutil
 import sys
 import tempfile
 
@@ -110,6 +111,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, os.pardir, os.pardir))
 DATA = os.path.join(REPO, "data")
 
+# ``code/`` holds ``figure_style.py``, the one type ladder, pen ladder and print
+# width of every plate in this repository.  It is one directory up from the
+# package, so it is imported the way the site packages import each other.
+if os.path.dirname(HERE) not in sys.path:
+    sys.path.insert(1, os.path.dirname(HERE))
+import figure_style as style  # noqa: E402
+
 SCHEMA = "ocv-trajectory-v2"
 FIGURE_DPI = 630
 BOOT = 2000
@@ -117,7 +125,18 @@ BLOCK = 3
 SEED = 7
 Z_CLIP = 6.0
 MM = 1.0 / 25.4
-COL_WIDTH = 183 * MM
+
+#: The plate's frame comes from ``figure_style.TRAJECTORY``: the five case plates
+#: and the interval plate of ``werder_havel/`` are one 170 x 156 mm template, and
+#: a second copy of those numbers here is how the six once came out between 190.2
+#: and 193.3 mm wide.  ``COL_WIDTH`` is kept as the name the rest of this module
+#: uses; it is the print width, nothing else.
+COL_WIDTH = style.TRAJECTORY["width_mm"] * MM
+PLATE_HEIGHT = style.TRAJECTORY["height_mm"] * MM
+
+FS = style.FS       # the type ladder: title 8.8, label 7.6, tick/legend 6.8
+LW = style.LW       # the pen ladder: series 1.4, rule 1.0, grid 0.6, ...
+MS = style.MS       # marker sizes: month 3.4, plane 3.6, legend 4.2
 
 #: The frozen pins of the held-out assessment. They are constants, not choices
 #: made after looking at 2024: the seed, the block length and the quantile
@@ -167,9 +186,8 @@ DIM_MD = {"gamma2": "γ²", "P": "P", "A": "A", "D": "D", "F": "F", "S": "S"}
 BLOCK_OF = {dim: name for name, dims in BLOCKS.items() for dim in dims}
 
 
-#: The six sites. ``reference`` is the state the standardisation is taken from
-#: (``None`` means "no state column": every chip is the reference, the event-free
-#: control), ``reference_window`` the **chosen** slice of that state as an
+#: The five sites. ``reference`` is the state the standardisation is taken from,
+#: ``reference_window`` the **chosen** slice of that state as an
 #: inclusive range of calendar months (``None`` = the state's own span, first
 #: chip to last), ``post`` are the states drawn as the post-event tail and
 #: ``excluded`` the states the registry removes before any statistic, with the
@@ -188,7 +206,7 @@ SITES = {
         "excluded": {},
         "weather": ("temperature_c", "wind_speed_ms"),
         "note": "28 months of reference before the collapse, 24 months of tail "
-                "after it: the longest pair of the six, and the only one whose "
+                "after it: the longest pair of the five, and the only one whose "
                 "post side is longer than many whole records here.",
     },
     "cts": {
@@ -228,8 +246,8 @@ SITES = {
                                "(2022-12-23): one unit is not a state"},
         "weather": ("temperature_c", "wind_speed_ms"),
         "note": "the tail is the **rebuild**, not a collapse aftermath: the "
-                "contrast answers a different question, and the plate says so in "
-                "its own subtitle rather than in a footnote.",
+                "contrast answers a different question, and the plate's caption "
+                "says so rather than a footnote.",
     },
     "haltern": {
         "label": "Haltern AV9 wind turbine",
@@ -243,19 +261,6 @@ SITES = {
         "note": "13 of the record's 120 dates are refused at the raster edge, all "
                 "ascending: the cut's own manifest carries them, and the plate "
                 "does not pretend the missing 11 % are months without data.",
-    },
-    "espoo": {
-        "label": "Espoo Kurttila mast (event-free control)",
-        "event": None,
-        "reference": None,
-        "reference_window": None,
-        "states": ("all",),
-        "post": (),
-        "excluded": {},
-        "weather": ("temperature_c", "wind_speed_ms"),
-        "note": "no event to anchor on and no state column: the whole record is "
-                "the reference *and* the trajectory, standardised **per orbit** "
-                "(the only contrast the record carries), with no contrast row.",
     },
 }
 
@@ -542,7 +547,7 @@ def in_reference(site, chip):
 
 
 def event_day(site):
-    """The documented event as a date, or ``None`` on the event-free control."""
+    """The documented event as a date, or ``None`` if the registry declares none."""
     text = SITES[site]["event"]
     return dt.date.fromisoformat(text) if text else None
 
@@ -618,10 +623,10 @@ def reference_split(site, chips):
 def group_label(site, chip):
     """The reference group a chip is standardised with (R3).
 
-    Pooled over the orbits everywhere except Espoo, whose only contrast *is* the
-    pass geometry -- there the two orbits are their own reference sets.
+    Pooled over the orbits at every site: the family no longer contains a site
+    whose only contrast *is* the pass geometry, so there is one group per site.
     """
-    return chip["orbit"] if site == "espoo" else "pooled"
+    return "pooled"
 
 
 def load_chips(site):
@@ -669,10 +674,6 @@ def load_chips(site):
 def reference_groups(site, chips):
     """The reference sets R3 standardises against, as ``{label: [chips]}``."""
     refs = [chip for chip in chips if in_reference(site, chip)]
-    if site == "espoo":
-        # Espoo's only contrast *is* the pass geometry (ASCENDING n = 31,
-        # DESCENDING n = 44), so its reference is per orbit and never pooled.
-        return {orbit: [c for c in refs if c["orbit"] == orbit] for orbit in ORBITS}
     return {"pooled": refs}
 
 
@@ -1672,7 +1673,7 @@ def build(site, chips=None):
             state=reference_label(site),
             chosen=list(reference_window(site)) if reference_window(site)
             else None,
-            policy=("per orbit" if site == "espoo" else "pooled over the orbits"),
+            policy="pooled over the orbits",
             groups=labels,
             # The whole reference state, and what the choice leaves out of it --
             # both counts are censuses, never statistics (R2).
@@ -1743,9 +1744,14 @@ def build(site, chips=None):
         "months": months,
         "contrast": con,
         "outside": out_con,
-        "figure": {"dpi": FIGURE_DPI, "panels": [
-            {"id": pid, "block": block, "shows": shows}
-            for pid, block, shows in PANELS]},
+        "figure": {
+            "dpi": FIGURE_DPI,
+            "width_mm": style.TRAJECTORY["width_mm"],
+            "height_mm": style.TRAJECTORY["height_mm"],
+            "containers": ["jpg"] + list(style.VECTOR_FORMATS),
+            "panels": [{"id": pid, "block": block, "shows": shows}
+                       for pid, block, shows in PANELS],
+        },
     }
     # The prospective additions are emitted only when the build actually has
     # them: the registry's own windows leave no chip before them, so every
@@ -1810,132 +1816,94 @@ def month_class(entry):
     return "mixed"
 
 
-def packed(fig, parts, fontsize, width_in, sep=" · "):
-    """``parts`` joined by ``sep``, broken into the fewest lines that fit ``width_in``.
+def fit_legend(fig, handles, spec=None):
+    """The plate's one legend, re-flowed into the band the grid reserves for it.
 
-    A header written as one line is wider than the plate and, because the plate is
-    saved with ``bbox_inches="tight"``, the *file* is then widened to hold the header
-    -- the plate stops being the size the figure says it is (the Carola plate came out
-    16.7 in wide for a 7.2 in column). The lines are measured on the figure's own
-    renderer at ``fontsize``, so the break falls where the text actually ends instead
-    of where a character count guesses it does.
+    Two constraints, both measured on the figure's own renderer instead of
+    guessed. The key has to be narrower than the canvas: a legend wider than the
+    plate is what ``bbox_inches="tight"`` used to absorb by widening the *file*,
+    and a widened file shrinks every point size with it. And the key has to stay
+    below the block's lowest ink -- the rotated date ticks of the bottom row --
+    because the band under the grid is the only space the layout gave it.
 
-    The break is not greedy. The parts are distributed over ``k`` lines, ``k`` as small
-    as fits, so that the longest line is as short as it can be; between equally long
-    choices the last line is given as much as it can take, because a header whose last
-    line is a lonely date reads as an accident rather than as a design.
+    Rows are added, and the columns re-cut with them, until both constraints
+    hold. A key that fits neither raises instead of being drawn over the panels:
+    the alternatives are a plate nobody authored or a plate nobody can read.
+    ``style.TRAJECTORY["legend"]`` holds the defaults -- two rows, a band of
+    ``band_mm`` measured up from the canvas' bottom edge, ``gap_mm`` of white
+    below the key and ``margin_mm`` of white at each side -- and *spec* overrides
+    any of them. The key is centred on the canvas, not on the panel block: it
+    hangs below the panels, where the block's own edges mean nothing.
+
+    Returns the legend, so a caller that wants the measured geometry can ask for
+    it again with ``legend.get_window_extent()``.
     """
-    try:
-        renderer = fig.canvas.get_renderer()
-    except AttributeError:                    # a backend without an Agg renderer
-        renderer = None
-    probe = fig.text(0.0, 0.0, "", fontsize=fontsize)
-    cache = {}
-
-    def width(first, last):
-        """The width in inches of ``parts[first:last]`` joined on one line."""
-        if (first, last) not in cache:
-            text = sep.join(parts[first:last])
-            if renderer is None:
-                cache[(first, last)] = 0.5 * fontsize / 72.0 * len(text)
-            else:
-                probe.set_text(text)
-                cache[(first, last)] = (probe.get_window_extent(renderer).width
-                                        / fig.dpi)
-        return cache[(first, last)]
-
-    def splits(lines):
-        """For every prefix of ``parts``, the best way to spread it over ``lines``."""
-        table = [{} for _ in range(len(parts) + 1)]
-        table[0][0] = ((0.0, 0.0), 0)
-        for end in range(1, len(parts) + 1):
-            for count in range(1, lines + 1):
-                for cut in range(count - 1, end):
-                    if count - 1 not in table[cut]:
-                        continue
-                    here = width(cut, end)
-                    worst = max(table[cut][count - 1][0][0], here)
-                    trial = ((worst, -here), cut)
-                    if count not in table[end] or trial < table[end][count]:
-                        table[end][count] = trial
-        return table
-
-    lines = len(parts)
-    for wanted in range(1, len(parts) + 1):
-        table = splits(wanted)
-        if wanted in table[len(parts)] and table[len(parts)][wanted][0][0] <= width_in:
-            lines = wanted
-            break
-    out, end = [], len(parts)
-    while lines:
-        cut = table[end][lines][1]
-        out.append(sep.join(parts[cut:end]))
-        end, lines = cut, lines - 1
-    probe.remove()
-    return chr(10).join(reversed(out))
-
-
-def fit_legend(fig, handles, width_in, centre, gap_in=0.07):
-    """``fig.legend`` hung under the panels, in as few rows as fit ``width_in``.
-
-    The same trap as the header: one row of long labels is wider than the plate, and
-    ``bbox_inches="tight"`` then widens the *file* to hold the key instead of the key
-    being re-flowed to the plate. Columns are dropped one at a time -- widest row
-    first -- until the legend, measured by the figure's own renderer, fits, and the rows
-    are centred on ``centre`` (the panel block's own centre, not the canvas'). The key
-    hangs from the bottom of the panels' own ink, tick labels included, so a second row
-    grows downwards into the tight box instead of upwards into the month labels.
-    """
+    spec = dict(style.TRAJECTORY["legend"], **(spec or {}))
+    width_mm = fig.get_size_inches()[0] * 25.4
+    height_mm = fig.get_size_inches()[1] * 25.4
+    gap = float(spec["gap_mm"])
+    band = float(spec["band_mm"])
+    side = float(spec.get("margin_mm", 4.0))
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
-    lowest = min(ax.get_tightbbox(renderer).y0 for ax in fig.axes)
-    anchor = (centre, (lowest - gap_in * fig.dpi) / fig.bbox.height)
-    legend = None
-    for ncol in range(len(handles), 0, -1):
-        if legend is not None:
-            legend.remove()
-        legend = fig.legend(handles=handles, loc="upper center", ncol=ncol,
-                            frameon=False, bbox_to_anchor=anchor)
+    boxes = [ax.get_tightbbox(renderer) for ax in fig.axes]
+    ceiling = min(box.y0 for box in boxes) * 25.4 / fig.dpi
+    tried = []
+    for rows in range(int(spec["rows"]), len(handles) + 1):
+        ncol = int(math.ceil(len(handles) / float(rows)))
+        legend = fig.legend(handles=handles, loc="lower center", ncol=ncol,
+                            frameon=False, fontsize=FS["legend"],
+                            bbox_to_anchor=(0.5, gap / height_mm),
+                            borderpad=0.1, borderaxespad=0.0,
+                            handlelength=1.5, handletextpad=0.5,
+                            columnspacing=1.2, labelspacing=0.30)
         fig.canvas.draw()
-        if (legend.get_window_extent(fig.canvas.get_renderer()).width / fig.dpi
-                <= width_in):
-            break
-    return legend
+        box = legend.get_window_extent(fig.canvas.get_renderer())
+        got_w = box.width * 25.4 / fig.dpi
+        got_h = box.height * 25.4 / fig.dpi
+        tried.append("%dx%d %.1fx%.1f mm" % (rows, ncol, got_w, got_h))
+        if (got_w <= width_mm - 2 * side
+                and gap + got_h <= min(band, ceiling - 1.0)):
+            return legend
+        legend.remove()
+    raise RuntimeError(
+        "the plate's key fits neither the canvas nor its band: %.1f mm of width "
+        "available, band %.1f mm up to the date ticks at %.1f mm, tried %s -- "
+        "shorten a label, or widen style.TRAJECTORY['legend']['band_mm'] and the "
+        "grid's bottom margin together"
+        % (width_mm - 2 * side, band, ceiling, "; ".join(tried)))
 
 
-def draw(report, path, caption=None):
+def draw(report, path):
     """The 3 x 4 plate. Every ordinate drawn here is a number of ``report``.
 
-    ``caption`` replaces the first header line, which is all the prospective run
-    changes: its report is drawn from a rule-selected window, and the header
-    says so rather than calling it a choice. It is not called ``title`` because
-    ``draw`` has a nested ``title`` of its own and the parameter would be
-    shadowed by it.
+    The plate carries **no title inside the drawing** -- neither a suptitle nor a
+    descriptive panel title. Each panel is tagged with its bare key (``a1`` ...
+    ``c4``), the code the caption and the report's panel table address it by, and
+    the sentence a reader needs lives in the report's ``## Caption`` section,
+    where it is set by the journal and not by matplotlib. What the tags and the
+    one legend leave out is deliberately not drawn: the census the header used to
+    carry is a table in the report, not a line of 8 pt text above the panels.
 
-    One design for all six sites: the frozen reference months filled, the
+    One design for all five sites: the frozen reference months filled, the
     held-out pre-event months hollow grey circles, the post-event months hollow
     coloured squares, the event a red dashed line, the frozen reference window a
     grey band, and the monthly reference envelope (q05-q95 of the reference
     months' monthly medians) a light band behind each magnitude panel.
+
+    The frame is ``style.TRAJECTORY`` -- 170 x 156 mm, three rows of four, one
+    legend band under the grid -- and the plate is written by ``style.save``,
+    which measures the raster, the ``.pdf`` and the ``.eps`` before it returns.
     """
-    plt.rcParams.update({
-        "font.family": "DejaVu Sans",
+    plt = style.apply(dpi=FIGURE_DPI, **{
         "mathtext.fontset": "stix",
-        "font.size": 7.4,
-        "axes.titlesize": 7.4,
-        "axes.labelsize": 6.9,
-        "xtick.labelsize": 6.2,
-        "ytick.labelsize": 6.2,
-        "legend.fontsize": 6.2,
         "axes.spines.top": False,
         "axes.spines.right": False,
+        "axes.linewidth": LW["spine"],
         "axes.grid": True,
         "grid.alpha": 0.22,
-        "grid.linewidth": 0.4,
+        "grid.linewidth": LW["grid"],
         "figure.dpi": 110,
-        "savefig.dpi": FIGURE_DPI,
-        "savefig.bbox": "tight",
-        "pdf.fonttype": 42,
     })
     months = report["months"]
     keys = [bin_key(month) for month in months]
@@ -1944,9 +1912,8 @@ def draw(report, path, caption=None):
     envelopes = report["reference_envelope"]["monthly"]
     event = dt.date.fromisoformat(report["event"]) if report["event"] else None
     ref_window = report["reference"]["window"]
-    fig = plt.figure(figsize=(COL_WIDTH, 0.92 * COL_WIDTH))
-    grid = fig.add_gridspec(3, 4, hspace=0.80, wspace=0.62,
-                            left=0.068, right=0.975, top=0.875, bottom=0.145)
+    fig = plt.figure(figsize=(COL_WIDTH, PLATE_HEIGHT))
+    grid = fig.add_gridspec(3, 4, **style.TRAJECTORY["grid"])
     where = {}
     for row in range(3):
         for col in range(4):
@@ -1966,21 +1933,23 @@ def draw(report, path, caption=None):
         cell = envelopes.get(envelope_key) if envelope_key else None
         if cell:
             ax.axhspan(cell["q05"], cell["q95"], color=COLOUR["envelope"],
-                       alpha=0.55, zorder=0, lw=0)
+                       alpha=0.55, zorder=0, lw=LW["band"])
         span = report["reference"]["span"]["window"]
         if span and report["reference"]["outside"]["n_chips"]:
             ax.axvspan(dt.date.fromisoformat(span[0]),
                        dt.date.fromisoformat(span[1]),
-                       color=COLOUR["outside"], alpha=0.30, zorder=0, lw=0)
+                       color=COLOUR["outside"], alpha=0.30, zorder=0,
+                       lw=LW["band"])
         if ref_window:
             ax.axvspan(dt.date.fromisoformat(ref_window[0]),
                        dt.date.fromisoformat(ref_window[1]),
-                       color=COLOUR["band"], alpha=0.75, zorder=0, lw=0)
+                       color=COLOUR["band"], alpha=0.75, zorder=0,
+                       lw=LW["band"])
         if event:
-            ax.axvline(event, color=COLOUR["post"], lw=0.8, ls=(0, (4, 2)),
-                       zorder=1)
+            ax.axvline(event, color=COLOUR["post"], lw=LW["rule"],
+                       ls=(0, (4, 2)), zorder=1)
         if zero:
-            ax.axhline(0.0, color="#4a5568", lw=0.6, ls=":", zorder=1)
+            ax.axhline(0.0, color="#4a5568", lw=0.8, ls=":", zorder=1)
         ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=3,
                                                           maxticks=6))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
@@ -1988,48 +1957,58 @@ def draw(report, path, caption=None):
             label.set_rotation(30)
             label.set_horizontalalignment("right")
 
-    def title(ax, ident, text):
-        ax.set_title("%s  ·  %s" % (ident, text), loc="left", pad=3.0,
-                     fontsize=7.2)
+    def tag(ax, ident):
+        """The panel's key, not its title: ``a1`` ... ``c4``, nothing else.
 
-    def series(ax, values, ident, text, colour, ylabel, envelope_key=None):
+        The descriptive text stays in ``PANELS``/``report["figure"]["panels"]``,
+        where the report's panel table and the caption read it. A tag drawn
+        inside the panel is not a title -- it is the one character group the
+        caption needs to address a panel by -- so the panel keeps its full area
+        for ink and the plate carries its own explanation in the caption.
+        """
+        ax.set_title(ident, loc="left", pad=2.0, fontsize=FS["title"],
+                     fontweight="bold")
+
+    def series(ax, values, ident, purpose, colour, ylabel, envelope_key=None):
         """One monthly series: solid while reference, dashed once post."""
         decorate(ax, envelope_key=envelope_key)
         for i in range(len(xs) - 1):
             if not linked(i):
                 continue
-            style = ("-" if classes[i] in ("ref", "outside", "prefix")
-                     else (0, (3, 2)))
+            line_style = ("-" if classes[i] in ("ref", "outside", "prefix")
+                          else (0, (3, 2)))
             ax.plot(xs[i:i + 2], values[i:i + 2],
-                    color=class_colour(classes[i], colour), lw=1.0,
-                    ls=style, zorder=2)
+                    color=class_colour(classes[i], colour), lw=LW["series"],
+                    ls=line_style, zorder=2)
         for i, (x, value) in enumerate(zip(xs, values)):
             if value is None:
                 continue
-            ax.plot([x], [value], marker=MARKER[classes[i]], ms=2.6,
+            ax.plot([x], [value], marker=MARKER[classes[i]], ms=MS["month"],
                     mfc=colour if classes[i] == "ref" else "white",
-                    mec=class_colour(classes[i], colour), mew=0.7, zorder=3)
+                    mec=class_colour(classes[i], colour),
+                    mew=LW["marker_edge"], zorder=3)
         ax.set_ylabel(ylabel)
-        title(ax, ident, text)
+        tag(ax, ident)
         return ax
 
-    def plane(ax, ident, px, py, cx, cy, text):
+    def plane(ax, ident, px, py, cx, cy, purpose):
         """The two dimensions of a block, month by month -- no date axis here."""
-        ax.axhline(0.0, color="#4a5568", lw=0.5, ls=":")
-        ax.axvline(0.0, color="#4a5568", lw=0.5, ls=":")
+        ax.axhline(0.0, color="#4a5568", lw=0.8, ls=":")
+        ax.axvline(0.0, color="#4a5568", lw=0.8, ls=":")
         for i in range(len(px) - 1):
             if linked(i):
-                ax.plot(px[i:i + 2], py[i:i + 2], color="#a0aec0", lw=0.6,
-                        zorder=1)
+                ax.plot(px[i:i + 2], py[i:i + 2], color="#a0aec0",
+                        lw=LW["plane"], zorder=1)
         for i in range(len(px)):
-            ax.plot([px[i]], [py[i]], marker=MARKER[classes[i]], ms=2.8,
+            ax.plot([px[i]], [py[i]], marker=MARKER[classes[i]],
+                    ms=MS["plane"],
                     mfc=COLOUR["reference"] if classes[i] == "ref" else "white",
                     mec=(COLOUR["post"] if classes[i] == "post" else
                          class_colour(classes[i], COLOUR["reference"])),
-                    mew=0.7, zorder=3)
+                    mew=LW["marker_edge"], zorder=3)
         ax.set_xlabel(cx)
         ax.set_ylabel(cy)
-        title(ax, ident, text)
+        tag(ax, ident)
         return ax
 
     def line_only(ax, values, colour):
@@ -2037,7 +2016,7 @@ def draw(report, path, caption=None):
             if not linked(i):
                 continue
             ax.plot(xs[i:i + 2], values[i:i + 2],
-                    color=class_colour(classes[i], colour), lw=1.0,
+                    color=class_colour(classes[i], colour), lw=LW["series"],
                     ls="-" if classes[i] in ("ref", "outside") else (0, (3, 2)),
                     zorder=2)
         for i, value in enumerate(values):
@@ -2045,8 +2024,10 @@ def draw(report, path, caption=None):
                 continue
             ax.plot([xs[i]], [value],
                     marker=MARKER[classes[i]],
-                    ms=2.4, mfc=colour if classes[i] == "ref" else "white",
-                    mec=class_colour(classes[i], colour), mew=0.6, zorder=3)
+                    ms=MS["month"] - 0.4,
+                    mfc=colour if classes[i] == "ref" else "white",
+                    mec=class_colour(classes[i], colour), mew=LW["marker_edge"],
+                    zorder=3)
 
     dim_series = {dim: [m["z"][dim] for m in months] for dim in DIMS}
     block_series = {name: [m[name] for m in months] for name in ("R_B", "R_G")}
@@ -2084,36 +2065,33 @@ def draw(report, path, caption=None):
     ax.set_ylabel("z (own reference)")
     for index, column in enumerate(columns[:2]):
         ax.text(0.03, 0.96 - 0.11 * index, WEATHER_LABEL.get(column, column),
-                transform=ax.transAxes, fontsize=5.4, va="top",
+                transform=ax.transAxes, fontsize=FS["annotation"], va="top",
                 color=[COLOUR["context"], COLOUR["asc"]][index],
-                bbox=dict(facecolor="white", alpha=0.7, lw=0, pad=1.0))
-    title(ax, "c1", "environmental context")
+                bbox=dict(facecolor="white", alpha=0.7, lw=LW["band"], pad=1.0))
+    tag(ax, "c1")
 
     ax = where["c2"]
     decorate(ax, zero=False)
     ax.bar(xs, [m["n_ascending"] for m in months], width=20,
-           color=COLOUR["asc"], lw=0)
+           color=COLOUR["asc"], lw=LW["band"])
     ax.bar(xs, [m["n_descending"] for m in months], width=20,
-           bottom=[m["n_ascending"] for m in months], color=COLOUR["desc"], lw=0)
+           bottom=[m["n_ascending"] for m in months], color=COLOUR["desc"],
+           lw=LW["band"])
     ax.set_ylabel("chips per month")
     tallest = max([m["n"] for m in months] or [1])
     ax.set_ylim(0, tallest * 1.32)
-    ax.legend(handles=[Patch(facecolor=COLOUR["asc"], label="ASC"),
-                       Patch(facecolor=COLOUR["desc"], label="DESC")],
-              loc="upper left", frameon=False, handlelength=1.0,
-              borderaxespad=0.4, labelspacing=0.35, fontsize=5.2)
-    title(ax, "c2", "cadence")
+    tag(ax, "c2")
 
     ax = where["c3"]
     decorate(ax, zero=False)
     echo = [m["n_echo"] for m in months]
     plain = [m["n"] - m["n_echo"] for m in months]
-    ax.bar(xs, echo, width=20, color=COLOUR["behaviour"], lw=0)
+    ax.bar(xs, echo, width=20, color=COLOUR["behaviour"], lw=LW["band"])
     ax.bar(xs, plain, width=20, bottom=echo, facecolor="white",
-           edgecolor=COLOUR["behaviour"], lw=0.6)
+           edgecolor=COLOUR["behaviour"], lw=LW["bar_edge"])
     ax.set_ylabel("chips per month")
     ax.set_ylim(0, max([m["n"] for m in months] or [1]) * 1.12)
-    title(ax, "c3", "observation availability")
+    tag(ax, "c3")
 
     ax = where["c4"]
     grid_values = [[(m["z"][dim] if m["z"][dim] is not None else float("nan"))
@@ -2134,90 +2112,77 @@ def draw(report, path, caption=None):
         column = sum(1 for key in keys if key[:2] < (event.year, event.month))
         ax.axvline(column - 0.5, color=COLOUR["post"], lw=0.8, ls=(0, (4, 2)))
     bar = fig.colorbar(image, ax=ax, fraction=0.05, pad=0.02)
-    bar.set_label("z", fontsize=6.2)
-    bar.ax.tick_params(labelsize=5.8)
-    # Two lines, not one: c4 is the narrowest column and its one-line title is wider
-    # than the panel, which -- with ``bbox_inches="tight"`` -- widened the whole file
-    # to fit the title. The break is where the column ends.
-    ax.set_title("c4  ·  trajectory matrix" + chr(10) + "z per dimension × month",
-                 loc="left", pad=3.0, fontsize=7.2, linespacing=1.15)
+    bar.set_label("z", fontsize=FS["annotation"])
+    # A colourbar's labels are tick labels, so they take the tick size: at the
+    # annotation size they were the smallest type on a plate whose other ticks
+    # are 6.8 pt, which is a per-panel exception the ladder does not have.
+    bar.ax.tick_params(labelsize=FS["tick"])
+    bar.outline.set_linewidth(LW["spine"])
+    tag(ax, "c4")
 
-    # --- the plate's own header and legend --------------------------------
+    # --- the plate's one legend, in the band the grid reserves for it ------
+    # One key for the whole plate.  The header used to carry the census and the
+    # panels used to carry their own titles; both are gone, so the legend is now
+    # the plate's only explanatory ink and it has to name every mark it draws --
+    # including the ASC/DESC and echo/plain bars of c2 and c3, which used to be
+    # explained by a second, panel-level legend on c2.
     prefix_class = report["classes"].get("prefix")
-    head = caption or ("%s — OCV trajectory on the support-sized chip"
-                     % report["label"])
-    parts = ["n = %d chips (%s → %s)"
-             % (report["cut"]["kept"], report["cut"]["window"][0],
-                report["cut"]["window"][1]),
-             "frozen pre-event reference%s: %d chips, %s → %s"
-             % (" (rule-selected %s → %s)"
-                % (ref["chosen"][0], ref["chosen"][1])
-                if ref["chosen"] and ref.get("choice_rule") else
-                " (chosen %s → %s)" % (ref["chosen"][0], ref["chosen"][1])
-                if ref["chosen"] else "",
-                ref["n_chips"], ref["window"][0], ref["window"][1])]
-    if ref["outside"]["n_chips"]:
-        parts.append("held-out pre-event: %d chips, %s → %s"
-                     % (ref["outside"]["n_chips"],
-                        ref["outside"]["window"][0],
-                        ref["outside"]["window"][1]))
-    if prefix_class and prefix_class["n_chips"]:
-        parts.append(("before the frozen reference: %d chips, %s → %s")
-                     % (prefix_class["n_chips"],
-                        prefix_class["window"][0], prefix_class["window"][1]))
-    if post:
-        parts.append("post-event %s: %d chips, %s → %s"
-                     % ("/".join(post["states"]), post["n_chips"],
-                        post["window"][0], post["window"][1]))
-    if event:
-        parts.append("event %s" % report["event"])
-    # The header is packed to the panel block's own width and starts at the block's own
-    # left edge, measured rather than guessed: flush with the leftmost ink of the block
-    # (the y labels of column one) and ending at the right spine of the last column
-    # (a4/b4 span it in full; c4's is narrowed by its colourbar). Written as one line
-    # the header is wider than the plate, and ``bbox_inches="tight"`` would then grow
-    # the *file* to fit the header instead of the header to fit the plate.
-    renderer = fig.canvas.get_renderer()
-    panel_left = min(ax.get_tightbbox(renderer).x0
-                     for ax in where.values()) / fig.bbox.width
-    panel_right = max(ax.get_position().x1 for ident, ax in where.items()
-                      if ident.endswith("4"))
-    fig.suptitle(packed(fig, [head] + parts, 8.0,
-                        (panel_right - panel_left) * COL_WIDTH),
-                 fontsize=8.0, x=panel_left, ha="left", y=0.995, va="top",
-                 linespacing=1.30)
+    # The order is the reading order of the key: the month classes first, then the
+    # two spans and the event rule, then the four bar classes of c2 and c3. The
+    # legend fills its columns top-down, so consecutive pairs share a column and
+    # adjacent classes stay adjacent.
     handles = [
-        Line2D([], [], color=COLOUR["reference"], marker="o", ms=3.2, lw=0.9,
-               label="frozen pre-event reference month"),
-        Patch(facecolor=COLOUR["band"], alpha=0.75,
-              label="frozen reference window"),
-        Patch(facecolor=COLOUR["envelope"], alpha=0.55,
-              label="reference envelope (q05–q95)"),
+        Line2D([], [], color=COLOUR["reference"], marker="o", ms=MS["legend"],
+               lw=LW["plane"], label="reference month"),
     ]
     if ref["outside"]["n_chips"]:
         handles.append(
-            Line2D([], [], color=COLOUR["outside"], marker="o", ms=3.2, lw=0.9,
-                   mfc="white", label="held-out pre-event month"))
+            Line2D([], [], color=COLOUR["outside"], marker="o", ms=MS["legend"],
+                   lw=LW["plane"], mfc="white", label="held-out month"))
     if prefix_class and prefix_class["n_chips"]:
         handles.append(
-            Line2D([], [], color=COLOUR["prefix"], marker="o", ms=3.2, lw=0.9,
-                   mfc="white", label="month before the frozen reference"))
+            Line2D([], [], color=COLOUR["prefix"], marker="o", ms=MS["legend"],
+                   lw=LW["plane"], mfc="white",
+                   label="month before the window"))
     if post:
         handles.append(
-            Line2D([], [], color=COLOUR["post"], marker="s", ms=3.2, lw=0.9,
-                   ls=(0, (3, 2)), mfc="white", label="post-event month"))
+            Line2D([], [], color=COLOUR["post"], marker="s", ms=MS["legend"],
+                   lw=LW["plane"], ls=(0, (3, 2)), mfc="white",
+                   label="post-event month"))
         if any(month_class(m) == "mixed" for m in months):
             handles.append(
-                Line2D([], [], color=COLOUR["mixed"], marker="D", ms=3.2, lw=0,
-                       mfc="white", label="month on both sides"))
+                Line2D([], [], color=COLOUR["mixed"], marker="D", ms=MS["legend"],
+                       lw=LW["band"], mfc="white", label="month on both sides"))
+    handles += [
+        Patch(facecolor=COLOUR["band"], alpha=0.75, lw=LW["band"],
+              label="reference window"),
+        Patch(facecolor=COLOUR["envelope"], alpha=0.55, lw=LW["band"],
+              label="reference envelope (q05–q95)"),
+    ]
     if event:
-        handles.append(Line2D([], [], color=COLOUR["post"], lw=0.8,
+        handles.append(Line2D([], [], color=COLOUR["post"], lw=LW["rule"],
                               ls=(0, (4, 2)), label="the event"))
-    # The key is the plate's only legend, so it is re-flowed until it fits the column
-    # rather than allowed to widen the file: widest row first, then more rows.
-    fit_legend(fig, handles, (panel_right - panel_left) * COL_WIDTH,
-               (panel_left + panel_right) / 2.0)
-    fig.savefig(path, dpi=FIGURE_DPI, bbox_inches="tight")
+    # The bar classes of c2 and c3 are named only where the site draws them: a
+    # key entry for a class the record does not have is a promise the plate does
+    # not keep.
+    if any(month["n_ascending"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["asc"], lw=LW["band"],
+                             label="ASC chips"))
+    if any(month["n_descending"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["desc"], lw=LW["band"],
+                             label="DESC chips"))
+    if any(month["n_echo"] for month in months):
+        handles.append(Patch(facecolor=COLOUR["behaviour"], lw=LW["band"],
+                             label="echo-bearing"))
+    if any(month["n"] - month["n_echo"] for month in months):
+        handles.append(Patch(facecolor="white",
+                             edgecolor=COLOUR["behaviour"],
+                             lw=LW["bar_edge"], label="no echo"))
+    # The key is re-flowed into the band the grid reserves for it -- never allowed to
+    # widen the canvas, never allowed to grow into the date ticks -- and the save is
+    # measured: the raster, the PDF and the EPS all have to be the print width.
+    fit_legend(fig, handles)
+    style.save(fig, path, dpi=FIGURE_DPI, eps="blend")
     plt.close(fig)
     return path
 
@@ -2235,6 +2200,19 @@ def signed(value, digits=2):
     return "–" if value is None else "%+.*f" % (digits, value)
 
 
+def sentence(parts):
+    """A list of phrases as one clause -- ``a, b and c``, the empty ones dropped.
+
+    The caption names the marks a plate actually draws, and which marks those are
+    depends on the site (an outside class, a prefix month, a tail, an event). The
+    join is one place so a site without one of them cannot leave a comma behind.
+    """
+    kept = [part for part in parts if part]
+    if len(kept) <= 1:
+        return "".join(kept)
+    return ", ".join(kept[:-1]) + " and " + kept[-1]
+
+
 def reference_lead(ref):
     """The sentence that says where the frozen window comes from.
 
@@ -2247,6 +2225,55 @@ def reference_lead(ref):
                 "which reads acquisition dates and per-month counts only and "
                 "is frozen before any held-out number is computed;" % rule)
     return "The reference window is a **stated choice per asset** (R2):"
+
+
+def caption(report):
+    """The plate's caption -- the one sentence set that explains the twelve tags.
+
+    The plate carries no title inside the drawing, so this paragraph is where a
+    reader is told what they are looking at. It is built from the report's own
+    numbers, like every other sentence in the report, so it cannot describe a
+    plate the table does not contain; and it is the reason the panels can be left
+    with nothing but their tags.
+    """
+    ref = report["reference"]
+    post = report["post"]
+    pieces = ["**Figure. %s -- OCV trajectory on the support-sized chip.** Twelve "
+              "panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: "
+              "monthly z of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` "
+              "z(A), `b2` z(F)), the block's plane (`a3`, `b3`) and its magnitude "
+              "(`a4` R_B, `b4` R_G). Row `c` is the record's own context: "
+              "environment (`c1`, descriptive only), observation cadence ASC/DESC "
+              "per month (`c2`), observation availability (`c3`, solid = chips "
+              "with an echo) and the whole trajectory as a six-dimension by "
+              "every-month matrix (`c4`)."
+              % report["label"]]
+    pieces.append(
+        "Every ordinate is a robust z against the site's own frozen pre-event "
+        "reference (%d chips, %s → %s): %s."
+        % (ref["n_chips"], ref["window"][0], ref["window"][1],
+           sentence([
+               "filled markers are reference months",
+               ("hollow grey circles the held-out pre-event months the reference "
+                "choice left out") if ref["outside"]["n_chips"] else "",
+               ("hollow pale circles the months before the frozen window")
+               if report["classes"].get("prefix", {}).get("n_chips") else "",
+               "hollow coloured squares the post-event months" if post else "",
+               "the grey band the reference window",
+               "the light band the monthly q05-q95 envelope of the reference",
+               ("the dashed red rule the event of %s" % report["event"])
+               if report["event"] else "no event rule, as this record has none",
+           ])))
+    if post:
+        pieces.append(
+            "The post-event tail is %d chips over %s."
+            % (post["n_chips"], " → ".join(post["window"])))
+    pieces.append(
+        "The plate is set at the repository's print width, 170 × 156 mm, on the "
+        "shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and "
+        "legend 6.8 pt), carries this caption's key in one legend under the grid, "
+        "and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.")
+    return " ".join(pieces)
 
 
 def report_md(report):
@@ -2696,6 +2723,14 @@ def report_md(report):
         add("| **%s** | %s | %s |" % (panel["id"], panel["block"],
                                       panel["shows"]))
     add("")
+    add("## Caption")
+    add("")
+    add(caption(report))
+    add("")
+    add("The plate draws no title and no panel titles of its own: the tags in the "
+        "table above are all it carries, and this caption is what the reader is "
+        "given with it. Set it under the figure as one paragraph.")
+    add("")
     add("## What the plate does not claim")
     add("")
     add("* **No damage verdict.** Every ordinate is a deviation from the case's "
@@ -2722,7 +2757,7 @@ def report_md(report):
         "panel c2 says how many chips of each the bin holds, and on the sites "
         "with two orbits the two directions alternate in blocks of days.")
     add("* **No pooling across sites.** The plate is per site by construction; "
-        "`figures/cases/fig_ocv_trajectory.sh` runs the six and nothing else.")
+        "`figures/cases/fig_ocv_trajectory.sh` runs the five and nothing else.")
     if not report["post"]:
         add("* **No contrast at all on this site.** The event-free control has "
             "no tail, so the plate is the trajectory alone — which is the point "
@@ -2784,10 +2819,6 @@ EXPECTED = {
                 "post_window": ("2021-10-01", "2021-10-17"), "excluded": {},
                 "chosen": None, "state": 96,
                 "state_window": ("2021-01-01", "2021-09-17"), "outside": 0},
-    "espoo": {"reference": 75, "ascending": 31, "descending": 44, "post": 0,
-              "reference_window": ("2024-09-05", "2026-09-07"),
-              "post_window": None, "excluded": {}, "chosen": None, "state": 75,
-              "state_window": ("2024-09-05", "2026-09-07"), "outside": 0},
 }
 
 
@@ -2828,7 +2859,7 @@ def selftest():
     def check(name, ok, detail=""):
         checks.append((name, bool(ok), detail))
 
-    check("registry: exactly the six case sites",
+    check("registry: exactly the five case sites",
           sorted(SITES) == sorted(EXPECTED), "%s" % sorted(SITES))
     problems = []
     for site, spec in SITES.items():
@@ -3337,6 +3368,32 @@ def selftest():
                                       for k in frozen_keys}),
                         sort_keys=True))
 
+    # The frame is one table for six plates, so it is checked as a table: the
+    # canvas is the print width, the grid leaves a panel area, and the band under
+    # it is big enough for the key plus the date ticks it must clear. A plate that
+    # quietly authored its own ``figsize`` would fail the first of these.
+    frame = style.TRAJECTORY
+    grid = frame["grid"]
+    band = frame["legend"]
+    check("plate: the frame is the shared one, not a per-generator copy",
+          frame["width_mm"] == style.FINAL_WIDTH_MM
+          and frame["height_mm"] == 156.0
+          and COL_WIDTH == frame["width_mm"] * MM
+          and PLATE_HEIGHT == frame["height_mm"] * MM
+          and 0.0 < grid["left"] < grid["right"] < 1.0
+          and 0.0 < grid["bottom"] < grid["top"] < 1.0
+          and band["rows"] >= 2 and band["band_mm"] > band["gap_mm"] > 0.0,
+          "%r" % ({k: grid[k] for k in ("left", "right", "top", "bottom")},))
+    figure = plain["figure"]
+    check("plate: the report records the frame and every container it writes",
+          figure["width_mm"] == frame["width_mm"]
+          and figure["height_mm"] == frame["height_mm"]
+          and figure["dpi"] == FIGURE_DPI
+          and figure["containers"] == ["jpg"] + list(style.VECTOR_FORMATS)
+          and [panel["id"] for panel in figure["panels"]]
+          == [pid for pid, _block, _shows in PANELS],
+          "%r" % (figure.get("containers"),))
+
     width = max(len(name) for name, _ok, _detail in checks)
     failed = 0
     for name, ok, detail in checks:
@@ -3367,8 +3424,76 @@ def publish(site, paths=None, draw_figures=True):
     return report, paths
 
 
+def plate_problems(report, jpg):
+    """Everything checkable about the delivered plate: its box, its sidecars, its bytes.
+
+    Three questions, all of them about the artefact rather than the code that
+    made it:
+
+    * is the plate **the shared frame**?  The raster, the ``.pdf`` and the
+      ``.eps`` must each measure ``style.TRAJECTORY`` -- 170.0 x 156.0 mm, within
+      ``style.WIDTH_TOL_MM`` -- so a plate that crept wider than the print width
+      cannot pass, whichever generator wrote it;
+    * is the **JSON honest** about that frame?  ``report["figure"]`` records the
+      width, the height, the density and the containers beside the raster, and
+      they have to be the frame's, not a stale copy;
+    * is the plate **deterministic**?  Two draws of the same report are
+      byte-identical, and the committed raster is that draw.
+    """
+    problems = []
+    frame = style.TRAJECTORY
+    stem = os.path.splitext(jpg)[0]
+    containers = [jpg] + [stem + "." + fmt for fmt in style.VECTOR_FORMATS]
+    for path in containers:
+        if not os.path.exists(path):
+            problems.append("%s: missing — run the script first"
+                            % os.path.relpath(path, REPO))
+    if problems:
+        return problems
+    for path in containers:
+        info = style.measure(path)
+        for key, want in (("mm", frame["width_mm"]),
+                          ("height_mm", frame["height_mm"])):
+            got = info[key]
+            if got is None:
+                problems.append("%s: no declared density, so its print size is "
+                                "unknown" % os.path.relpath(path, REPO))
+            elif abs(got - want) > style.WIDTH_TOL_MM:
+                problems.append("%s: %.1f mm %s, expected %.1f ± %.1f mm — the "
+                                "plate is not the shared frame"
+                                % (os.path.relpath(path, REPO), got,
+                                   "wide" if key == "mm" else "tall", want,
+                                   style.WIDTH_TOL_MM))
+    figure = report["figure"]
+    for key, want in (("width_mm", frame["width_mm"]),
+                      ("height_mm", frame["height_mm"]),
+                      ("dpi", FIGURE_DPI),
+                      ("containers", ["jpg"] + list(style.VECTOR_FORMATS))):
+        if figure.get(key) != want:
+            problems.append("figure[%r] is %r, expected %r"
+                            % (key, figure.get(key), want))
+    digests = []
+    scratch = tempfile.mkdtemp(prefix="ocv_plate_")
+    try:
+        for index in range(2):
+            temporary = os.path.join(scratch, "draw%d.jpg" % index)
+            draw(report, temporary)
+            digests.append(sha256_of(temporary))
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
+    if len(set(digests)) != 1:
+        problems.append("%s: the plate is not deterministic (two draws differ)"
+                        % os.path.relpath(jpg, REPO))
+    elif sha256_of(jpg) != digests[0]:
+        problems.append("%s: the committed plate is not the one this report "
+                        "draws (%s vs %s)"
+                        % (os.path.relpath(jpg, REPO),
+                           sha256_of(jpg)[:16], digests[0][:16]))
+    return problems
+
+
 def verify(site):
-    """Re-derive everything and compare it with the committed JSON and report."""
+    """Re-derive everything and compare it with the committed JSON, report and plate."""
     report = build(site)
     paths = out_paths(site)
     problems = []
@@ -3391,31 +3516,7 @@ def verify(site):
         if committed_text != report_md(report):
             problems.append("%s: the report does not match the table"
                             % os.path.relpath(paths["md"], REPO))
-    # The publication plate must reproduce deterministically too: two draws of
-    # the same report are byte-identical, and the committed file is that draw.
-    if not os.path.exists(paths["jpg"]):
-        problems.append("%s: missing — run the script first"
-                        % os.path.relpath(paths["jpg"], REPO))
-    else:
-        digests = []
-        for _ in range(2):
-            handle, temporary = tempfile.mkstemp(suffix=".jpg")
-            os.close(handle)
-            try:
-                draw(report, temporary)
-                digests.append(sha256_of(temporary))
-            finally:
-                os.unlink(temporary)
-        if len(set(digests)) != 1:
-            problems.append("%s: the plate is not deterministic (two draws differ)"
-                            % os.path.relpath(paths["jpg"], REPO))
-        else:
-            committed = sha256_of(paths["jpg"])
-            if committed != digests[0]:
-                problems.append("%s: the committed plate is not the one this "
-                                "report draws (%s vs %s)"
-                                % (os.path.relpath(paths["jpg"], REPO),
-                                   committed[:16], digests[0][:16]))
+    problems.extend(plate_problems(report, paths["jpg"]))
     return problems
 
 

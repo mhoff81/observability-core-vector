@@ -289,7 +289,13 @@
  },
  "event": "2018-08-14",
  "figure": {
+  "containers": [
+   "jpg",
+   "pdf",
+   "eps"
+  ],
   "dpi": 630,
+  "height_mm": 156.0,
   "panels": [
    {
     "block": "behaviour",
@@ -351,7 +357,8 @@
     "id": "c4",
     "shows": "the trajectory matrix: six dimensions x every month"
    }
-  ]
+  ],
+  "width_mm": 170.0
  },
  "label": "Ponte Morandi, Genova",
  "months": [

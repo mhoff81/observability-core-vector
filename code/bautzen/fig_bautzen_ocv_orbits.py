@@ -37,6 +37,12 @@ date/state counts and the rect-file sha256s.  Any failed check makes the run
 exit non-zero.  No output carries a wall-clock timestamp, so repeated runs are
 byte-identical.
 
+Deliverables: ``figures/bautzen/fig_bautzen_ocv_orbits.jpg`` (630 dpi) plus the
+``.pdf`` and ``.eps`` under the same stem.  The plate is drawn on the shared
+print frame -- 170.0 mm wide (``figure_style.COL_WIDTH``), the type and pens of
+``figure_style`` -- and written by ``figure_style.save``, so a layout that
+overflows the print width fails the run instead of being cropped to fit.
+
 Usage:
   python3 code/bautzen/fig_bautzen_ocv_orbits.py
   python3 code/bautzen/fig_bautzen_ocv_orbits.py --no-figures
@@ -62,8 +68,10 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+sys.path.insert(1, os.path.dirname(HERE))   # code/ -> the shared figure style
 
 import bautzen_ocv_core as core    # noqa: E402
+import figure_style as style       # noqa: E402
 
 FIGDIR = core.FIGDIR
 FIG_NAME = "fig_bautzen_ocv_orbits"
@@ -72,29 +80,23 @@ OUT_JSON = os.path.join(core.DATA, FIG_NAME + ".json")
 OUT_MD = os.path.join(FIGDIR, FIG_NAME + ".md")
 
 # ---------------------------------------------------------------------------
-# Style (the same block as the other Bautzen companion figures)
+# Style -- the shared ladder and the one print width (code/figure_style.py).
+# Only the drawing convention stays local: spines, grid and mathtext.  The
+# typography, the pen widths, ``savefig.bbox`` and the font embedding are the
+# shared module's, so this plate is measured like every other print plate:
+# 170.0 mm wide, whatever the layout does.
 # ---------------------------------------------------------------------------
-plt.rcParams.update({
-    "font.family": "DejaVu Sans",
+style.apply(dpi=FIG_DPI, **{
     "mathtext.fontset": "stix",
-    "font.size": 8.5,
-    "axes.titlesize": 8.0,
-    "axes.labelsize": 8.0,
-    "xtick.labelsize": 7.0,
-    "ytick.labelsize": 7.0,
-    "legend.fontsize": 7.2,
+    "figure.dpi": 110,
     "axes.spines.top": False,
     "axes.spines.right": False,
     "axes.grid": True,
     "grid.alpha": 0.25,
     "grid.linewidth": 0.4,
-    "figure.dpi": 110,
-    "savefig.dpi": FIG_DPI,
-    "savefig.bbox": "tight",
-    "pdf.fonttype": 42,
 })
-MM = 1.0 / 25.4
-COL_WIDTH = 183 * MM
+MM = style.MM
+COL_WIDTH = style.COL_WIDTH
 
 # State colours/markers (three states, in the severity order of STATE_ORDER).
 STATE_COLORS = {"RS": "#4C72B0", "DS1": "#DD8452", "DS2": "#C44E52"}
@@ -340,10 +342,10 @@ def _shade_states(ax, x0, x1):
     for state, lo, hi in _state_bounds(x0, x1):
         lo, hi = min(lo, hi), max(lo, hi)
         if hi > lo:
-            ax.axvspan(lo, hi, color=STATE_FILL[state], alpha=0.9, lw=0,
-                       zorder=0)
+            ax.axvspan(lo, hi, color=STATE_FILL[state], alpha=0.9,
+                       lw=style.LW["band"], zorder=0)
     for cut in (core.CUT_DS1, core.CUT_DS2):
-        ax.axvline(cut, color="0.45", ls="--", lw=0.7, zorder=1)
+        ax.axvline(cut, color="0.45", ls="--", lw=style.LW["rule"], zorder=1)
 
 
 def _label_states(ax, x0, x1):
@@ -353,8 +355,8 @@ def _label_states(ax, x0, x1):
             continue
         ax.text(lo + (hi - lo) / 2.0, 0.965, state,
                 transform=ax.get_xaxis_transform(), ha="center", va="top",
-                fontsize=6.2, color=STATE_COLORS[state], fontweight="bold",
-                zorder=4)
+                fontsize=style.FS["annotation"], color=STATE_COLORS[state],
+                fontweight="bold", zorder=4)
 
 
 def _channel_ylim(dim, series):
@@ -382,7 +384,7 @@ def _draw_panel(ax, points, dim, geom):
     ts = _times(points)
     ys = [np.nan if not finite(p["values"][dim])
           else float(p["values"][dim]) for p in points]
-    ax.plot(ts, ys, color=ORBIT_COLOR[geom], lw=0.85, alpha=0.55,
+    ax.plot(ts, ys, color=ORBIT_COLOR[geom], lw=style.LW["plane"], alpha=0.55,
             zorder=2)
     for state in core.STATES:
         keep = [(t, float(p["values"][dim]))
@@ -390,9 +392,9 @@ def _draw_panel(ax, points, dim, geom):
                 if p["state"] == state and finite(p["values"][dim])]
         if keep:
             ax.plot([t for t, _v in keep], [v for _t, v in keep],
-                    linestyle="none", marker=STATE_MARKERS[state], ms=4.0,
-                    mfc=STATE_COLORS[state], mec="white", mew=0.45,
-                    zorder=3)
+                    linestyle="none", marker=STATE_MARKERS[state],
+                    ms=style.MS["month"], mfc=STATE_COLORS[state], mec="white",
+                    mew=style.LW["marker_edge"], zorder=3)
 
 
 def make_figure(res, figdir):
@@ -415,7 +417,8 @@ def make_figure(res, figdir):
             ax.set_xlim(x0, x1)
             ax.set_ylim(*ylim)
             if dim == "gamma2":
-                ax.axhline(0.0, color="0.55", lw=0.7, ls=":", zorder=1)
+                ax.axhline(0.0, color="0.55", lw=style.LW["rule"], ls=":",
+                           zorder=1)
             _draw_panel(ax, series[geom]["points"], dim, geom)
 
             # One y label per row, one x label per column, panel letters in
@@ -428,9 +431,9 @@ def make_figure(res, figdir):
                 ax.yaxis.set_major_locator(MaxNLocator(integer=True))
             ax.text(0.012, 0.955, f"({PANEL_LETTERS[row * ncols + col]})",
                     transform=ax.transAxes, ha="left", va="top",
-                    fontsize=6.8, color="0.25", zorder=5)
+                    fontsize=style.FS["annotation"], color="0.25", zorder=5)
             if row == 0:
-                ax.set_title(ORBIT_LABEL[geom], fontsize=8.0, pad=5)
+                ax.set_title(ORBIT_LABEL[geom], pad=5)
             if row == 0 and col == 0:
                 _label_states(ax, x0, x1)
 
@@ -441,19 +444,22 @@ def make_figure(res, figdir):
 
     handles = [Patch(facecolor=STATE_FILL[s], edgecolor=STATE_COLORS[s],
                      label=STATE_LABEL[s]) for s in core.STATES]
-    fig.legend(handles=handles, loc="lower center", ncol=3, frameon=False,
-               bbox_to_anchor=(0.5, 0.004))
+    leg = fig.legend(handles=handles, loc="lower center", ncol=3,
+                     frameon=False, bbox_to_anchor=(0.5, 0.004))
     fig.suptitle(
         "Bautzen OpenLabs bridge — OCV time series by dimension and orbit\n"
-        "bridge deck edge; markers = overpasses (shape and colour by state), "
-        "line = acquisition order\n"
+        "bridge deck edge; markers = overpasses by state, line = acquisition "
+        "order\n"
         "state bands RS / DS1 / DS2; dashed cuts 2025-05-12 and 2025-09-29, "
         "10:00 local",
-        fontsize=8.3, y=0.985)
-    fig.tight_layout(rect=(0, 0.035, 1, 0.925))
+        y=0.985)
+    # ``tight_layout`` already reserves the suptitle height, so the rect only
+    # has to declare the legend; the fit guard then refuses this save if any
+    # line is wider than the 170 mm canvas, instead of cropping the plate to it.
+    fig.tight_layout(rect=style.grid_rect(fig, bottom=leg))
     os.makedirs(figdir, exist_ok=True)
     out = os.path.join(figdir, FIG_NAME + ".jpg")
-    fig.savefig(out, dpi=FIG_DPI, facecolor="white")
+    style.save(fig, out, dpi=FIG_DPI, eps="blend")
     plt.close(fig)
     return out
 
@@ -489,6 +495,14 @@ def report(res):
       "a shared panel would compress the bridge signal this figure is meant "
       "to show. The control remains in `data/bautzen/bautzen_ocv_channels.csv` "
       "and in figures A-E.")
+    A("")
+    A("The plate is drawn on the shared print frame of `code/figure_style.py`: "
+      "170.0 mm wide (the type set on its ladder, the pens on its line ladder) "
+      "and written as three containers under one stem -- "
+      "`figures/bautzen/fig_bautzen_ocv_orbits.jpg` (630 dpi, the raster the "
+      "report checks), `.pdf` (vector) and `.eps` (vector, alpha composited on "
+      "white). All three are measured at 170.0 mm by "
+      "`code/audit_figure_style.py`.")
     A("")
     A("## 2. Data and state model")
     A("")
