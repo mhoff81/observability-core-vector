@@ -1375,12 +1375,12 @@ def draw(report, path):
         """The panel's key, not its title: ``a1`` ... ``c4``, nothing else.
 
         The descriptive text stays in the report's panel table and in the caption,
-        where a reader can act on it; a tag drawn inside the panel is the one
-        character group that lets the caption address a panel by name, so the panel
-        keeps its whole area for ink.
+        where a reader can act on it. The drawing is
+        :func:`figure_style.tag_axes`'s -- one size and one placement for every
+        plate of this repository -- so the panel keeps its whole area for ink and
+        the key cannot drift off the ladder.
         """
-        ax.set_title(ident, loc="left", pad=2.0, fontsize=FS["title"],
-                     fontweight="bold")
+        return style.tag_axes(ax, ident)
 
     def series(ax, values, ident, purpose, colour, ylabel, envelope_key=None):
         """One monthly series: solid inside the reference, dashed outside it."""

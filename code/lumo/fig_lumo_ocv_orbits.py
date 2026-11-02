@@ -40,6 +40,14 @@ completeness and the local-time ranges.  Any failed check makes the run exit
 non-zero.  No output carries a wall-clock timestamp, so repeated runs are
 byte-identical.
 
+The plate carries **keys, not titles**.  Every panel is tagged with its position
+in the grid, ``a1`` ... ``f2`` (:func:`figure_style.panel_id`): the letter is the
+dimension row, the number the orbit column.  There is no figure title and no
+panel title; the five header lines this plate used to carry are the report's
+``## Caption`` now, and the legend band under the grid names the two columns
+once, with their overpass counts and their local clock.  The height stays
+245 mm: the band the removed titles kept free goes to the panels.
+
 Usage:
   python3 code/lumo/fig_lumo_ocv_orbits.py
   python3 code/lumo/fig_lumo_ocv_orbits.py --no-figures
@@ -122,6 +130,13 @@ ORBIT_OF = {"ASC": "ASCENDING", "DESC": "DESCENDING"}
 ORBIT_LABEL = {"ASC": "ASC", "DESC": "DESC"}
 ORBIT_LINE = {"ASC": "0.42", "DESC": "0.42"}
 
+# The canvas: the shared print width and the height this six-row plate needs.
+# The legend band is measured from the canvas' bottom edge in mm -- the key line
+# at the bottom, the six legend entries above it.
+PLATE_HEIGHT_MM = 245.0
+KEY_LINE_MM = 3.0
+KEY_LEGEND_MM = 9.0
+
 # The formal OCV definition order: [gamma2, P, D, F, A, S].  This is the panel
 # row order of the figure; it deliberately differs from the CSV column order.
 CHANNELS = ["gamma2", "P", "D", "F", "A", "S"]
@@ -148,7 +163,6 @@ CHANNEL_TITLE = {
     "S": "centroid-to-peak shift",
 }
 FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
-PANEL_LETTERS = "abcdefghijkl"
 X_PAD_DAYS = 10
 
 # The 13 consecutive runs of the committed table.  These two lists are the
@@ -905,6 +919,35 @@ def _draw_panel(ax, points, dim, geom):
                     mfc=STATE_COLORS[state], mec="white", mew=0.4, zorder=3)
 
 
+def columns_text(res):
+    """``1 = ASC, 57 overpasses, 17:09–19:09 local · 2 = DESC, ...``.
+
+    Orbit, overpass count and the local clock the plotted points actually carry
+    (``data.local.<orbit>.clock_min/max``, the DST-aware join) -- the numbers
+    the removed column titles used to hold.  No inner parentheses: the caption
+    already puts this in one, and a nested pair reads badly in print.
+    """
+    parts = []
+    for col, geom in enumerate(ORBITS):
+        loc = res["data"]["local"][geom]
+        lo = dt.datetime.fromisoformat(loc["clock_min"])
+        hi = dt.datetime.fromisoformat(loc["clock_max"])
+        parts.append("%d = %s, %d overpasses, %s–%s local"
+                     % (col + 1, ORBIT_LABEL[geom],
+                        res["series"][geom]["n_dates"],
+                        lo.strftime("%H:%M"), hi.strftime("%H:%M")))
+    return " · ".join(parts)
+
+
+def column_key(res):
+    """The key line of the legend band: what column 1 and column 2 are.
+
+    A tag says where a panel sits, never what its column is, so the two columns
+    are named once, under the grid.
+    """
+    return "columns — " + columns_text(res)
+
+
 def make_figure(res, figdir):
     """Draw the 6 x 2 time-series grid and return the JPEG path."""
     series = res["series"]
@@ -914,7 +957,7 @@ def make_figure(res, figdir):
 
     nrows, ncols = len(CHANNELS), len(ORBITS)
     fig, axes = plt.subplots(
-        nrows, ncols, figsize=(COL_WIDTH, 245 * MM),
+        nrows, ncols, figsize=(COL_WIDTH, PLATE_HEIGHT_MM * MM),
         sharex="col", sharey="row", squeeze=False)
 
     for row, dim in enumerate(CHANNELS):
@@ -940,15 +983,9 @@ def make_figure(res, figdir):
                               f"{CHANNEL_TITLE[dim]}")
             ax.tick_params(labelleft=(col == 0),
                            labelbottom=(row == nrows - 1))
-            ax.text(0.012, 0.965, f"({PANEL_LETTERS[row * ncols + col]})",
-                    transform=ax.transAxes, ha="left", va="top",
-                    fontsize=style.FS["annotation"], color="0.2", zorder=5,
-                    bbox=dict(facecolor="white", edgecolor="none",
-                              alpha=0.72, pad=0.7))
-            if row == 0:
-                ax.set_title(f"{ORBIT_LABEL[geom]}  "
-                             f"({series[geom]['n_dates']} overpasses)",
-                             fontsize=style.FS["title"], pad=6)
+            # A bare key at the title rung, outside the axes: 8.8 pt, not the
+            # 6.2 pt of the old ``(a)`` corner mark, and no sentence.
+            style.tag_axes(ax, style.panel_id(row, col))
 
     for ax in axes[-1]:
         ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
@@ -961,19 +998,18 @@ def make_figure(res, figdir):
                           label="overpass series"))
     handles.append(Line2D([], [], color="0.45", lw=0.7, ls="--",
                           label="state transition"))
+    # One legend band under the grid, in the space the five header lines and the
+    # two column titles used to occupy: the key line names the two columns -- a
+    # tag cannot -- and the six entries sit above it.  Both are figure artists,
+    # so ``grid_rect`` declares the band to ``tight_layout``.
+    fig.text(0.5, KEY_LINE_MM / PLATE_HEIGHT_MM, column_key(res), ha="center",
+             va="bottom", fontsize=style.FS["legend"], color="0.35")
     leg = fig.legend(handles=handles, loc="lower center", ncol=6, frameon=False,
-                     bbox_to_anchor=(0.5, 0.004))
-    fig.suptitle(
-        "LUMO lattice tower — OCV time series by dimension and orbit\n"
-        "178 overpasses, 13 consecutive state runs, actual local overpass "
-        "time (Europe/Berlin)\n"
-        "bands = damage_label runs; dashed = run transitions; "
-        "markers = overpasses by state\n"
-        "line = acquisition order; P, D, F and A on log axes; "
-        "the one missing P (2021-07-14 ASC)\n"
-        "is a gap, not interpolated",
-        fontsize=style.FS["suptitle"], y=0.992)
-    fig.tight_layout(rect=style.grid_rect(fig, leg))
+                     bbox_to_anchor=(0.5, KEY_LEGEND_MM / PLATE_HEIGHT_MM))
+    # With no suptitle the top of the rect stays 1.0, so this declares the band
+    # and nothing else; the fit guard then refuses this save if any line is
+    # wider than the 170 mm canvas, instead of cropping the plate to it.
+    fig.tight_layout(rect=style.grid_rect(fig, bottom=leg))
     os.makedirs(figdir, exist_ok=True)
     out = os.path.join(figdir, FIG_NAME + ".jpg")
     # The orbit lines are drawn at alpha 0.55 straight over each other: their
@@ -988,6 +1024,37 @@ def make_figure(res, figdir):
 # ---------------------------------------------------------------------------
 # Markdown report
 # ---------------------------------------------------------------------------
+def caption(res):
+    """The caption of the plate: the text that goes under the figure.
+
+    The figure itself carries keys, not titles -- ``a1`` ... ``f2`` -- so this
+    paragraph is what a reader is given with it.  It absorbs the five header
+    lines the plate used to carry and is generated from the same result the
+    plate is drawn from, so a count cannot go stale.
+    """
+    d = res["data"]
+    rows = ", ".join("`%s` %s" % (style.PANEL_LETTERS[i], FIG_CHANNEL_TITLE[dim])
+                     for i, dim in enumerate(CHANNELS))
+    state_names = ", ".join(STATE_LABEL[s] for s in EXPECTED_N_BY_STATE)
+    return (
+        "**Figure. LUMO lattice tower — OCV time series by dimension and orbit.** "
+        "Twelve panels, tagged `a1`–`f2`: the row letter is the OCV dimension in "
+        "the formal order (%s) and the column number the Sentinel-1 orbit (%s). "
+        "Every panel draws one point per overpass in acquisition order and the "
+        "line joining them; the marker is the state the overpass falls in — %s — "
+        "the background bands are the %d consecutive `damage_label` runs and the "
+        "dashed rules their %d transitions. `P`, `D`, `F` and `A` are on log "
+        "axes; the one missing `P` (2021-07-14 ASC) is a gap and is never "
+        "interpolated. The x coordinate is the actual local overpass instant "
+        "(Europe/Berlin, DST-aware), so a day boundary is not a clean cut. "
+        "The plate is 170 × 245 mm on the repository's point-size ladder (panel "
+        "tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this "
+        "caption's key in one legend band under the grid, and is delivered as "
+        "`.jpg` (630 dpi), `.pdf` and `.eps`."
+        % (rows, columns_text(res), state_names, len(d["runs"]),
+           len(d["runs"]) - 1))
+
+
 def report(res):
     d = res["data"]
     L = []
@@ -1130,7 +1197,15 @@ def report(res):
                      (c.get("committed") or "")[:80]]
                     for c in res["superseded"]]))
         A("")
-    A("## 6. Reproduce")
+    A("## 6. Caption")
+    A("")
+    A(caption(res))
+    A("")
+    A("The plate draws no title and no panel titles of its own: the tags "
+      "`a1`-`f2` are all it carries, and this caption is what the reader "
+      "is given with it. Set it under the figure as one paragraph.")
+    A("")
+    A("## 7. Reproduce")
     A("")
     A("```sh")
     A("cd <repo root>")
@@ -1154,7 +1229,7 @@ def report(res):
       f"{matplotlib.__version__}. No output carries a timestamp, so repeated "
       "runs are identical.")
     A("")
-    A("## 7. Caveats")
+    A("## 8. Caveats")
     A("")
     A("- **The 13 runs are one deployment, not 13 independent experiments.** "
       "States repeat (healthy seven times, each damage state twice), but the "

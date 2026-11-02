@@ -386,4 +386,4 @@ bash figures/werder_havel/fig_werder_havel_ocv_trajectory.sh --verify      # re-
 bash figures/werder_havel/fig_werder_havel_ocv_trajectory.sh --selftest    # rules and pins, nothing written
 ```
 
-The generator of the cut is `code/werder_havel/werder_havel_ocv_channels_csv.py`; the template this plate follows is `code/cases/ocv_trajectory.py` (sha256 `873baa81acbedf9e`), imported rather than copied, so the seed, the transforms, the block definitions and the monthly-bin machinery cannot drift between the two plates.
+The generator of the cut is `code/werder_havel/werder_havel_ocv_channels_csv.py`; the template this plate follows is `code/cases/ocv_trajectory.py` (sha256 `f83e25f80a3f0298`), imported rather than copied, so the seed, the transforms, the block definitions and the monthly-bin machinery cannot drift between the two plates.

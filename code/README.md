@@ -138,7 +138,7 @@ python3 code/sds/ocv_reconfigure.py                        # the dose pair, ~40 
 python3 code/sds/ocv_reconfigure.py --sites carola,morandi  # the bridge pair
 python3 code/sds/ocv_reconfigure.py --sites haltern,kdlo    # the tower pair
 python3 code/sds/ocv_reconfigure.py --sites kdlo            # one asset, one channel, two states
-python3 code/sds/ocv_reconfigure.py --selftest              # 40 checks, the last ten offline
+python3 code/sds/ocv_reconfigure.py --selftest              # 44 checks, the plate arithmetic offline
 python3 code/sds/ocv_reconfigure.py --verify                # re-derives every table cell
 ```
 
@@ -289,12 +289,52 @@ text it had to wrap. [`figure_style.py`](figure_style.py) fixes both ends:
 | role | what it is | value | band |
 | --- | --- | --- | --- |
 | `base` | `font.size`, the anchor | 8.0 pt | 8.0 (not free) |
-| `title` | `axes.titlesize`, the panel title | 8.8 pt | 8.5 – 9.0 |
-| `suptitle` | `figure.titlesize`, the one line above the grid | 9.0 pt | 8.5 – 9.0 |
+| `title` | `axes.titlesize`, the panel tag (`tag_axes`) | 8.8 pt | 8.5 – 9.0 |
+| `suptitle` | `figure.titlesize`, the headline -- no print plate draws one | 9.0 pt | 8.5 – 9.0 |
 | `label` | `axes.labelsize`, the axis label | 7.6 pt | 7.0 – 8.0 |
 | `tick` | `xtick`/`ytick.labelsize` | 6.8 pt | 6.5 – 7.0 |
 | `legend` | `legend.fontsize` | 6.8 pt | 6.5 – 7.0 |
 | `annotation` | `text`/`annotate` inside a panel | 6.2 pt | >= 6.0 (a floor) |
+
+`suptitle` stays on the ladder but **no plate draws one**: the print plates carry
+*keys, not titles*, and since amendment 8 of the SDS pre-registration a
+documentation plate carries no headline either — the synthesis plate names its
+blocks in the band instead, and the sentence that used to sit above the grid is its
+`## Caption`. The audit drops the `apply()` default when the source draws no
+suptitle, so the role is not attributed to any row.
+
+### `figure_style.py` — a panel is addressed by its key
+
+A panel used to be addressed by a sentence -- a figure title, a column title above
+the grid, a `(a)` in the corner at 6.2 pt -- which is type the journal sets, not
+type the plate carries, and which no two plates agreed on. The grammar is one key
+per panel:
+
+```python
+from figure_style import panel_id, tag_axes
+
+for row, dim in enumerate(CHANNELS):
+    for col, geometry in enumerate(ORBITS):
+        ax = axes[row][col]
+        ...
+        tag_axes(ax, panel_id(row, col))       # a1 ... f2, 8.8 pt, left, 2 pt up
+```
+
+`panel_id(row, col)` is the key of the cell: the row letter (`PANEL_LETTERS`,
+`a` for the first row) and the column number from 1. It is **derived from the
+grid**, so two plates with the same grid address their panels the same way and a
+row/column mixed up is a Python error, not a silent mislabel. `tag_axes()` draws
+it on the `title` rung -- 8.8 pt, bold, left-aligned, 2 pt above the axes
+(`PANEL_TAG_PAD_PT`) -- and returns the artist, so a caller's clearance guards can
+measure it.
+
+Two rules come with it, and the audit enforces both: a plate carries **no**
+`suptitle` and no descriptive `set_title` (the words belong in the report's
+`## Caption`, which is the text that goes under the figure), and **every** panel
+gets its key from the helper. Where a plate already draws in the band above its
+axes -- Espoo's two statistics rows at +1 and +10 pt -- the tag takes the pad that
+band needs (`tag_axes(ax, key, pad=TAG_PAD_PT)`) instead of moving inside the axes,
+where it was measured to cover a data point.
 
 and the canvas is `FINAL_WIDTH_MM = 170` with a tolerance of ± 0.5 mm, checked
 on the **written file**, not on the intent:
@@ -430,9 +470,12 @@ in `figure_style.py` rather than in the generators:
 
 And one thing a plate should *lose* on the way: its titles. A plate that carries a
 header and a descriptive title per panel is a plate whose text has to be re-flowed
-every time the canvas changes. The six trajectory plates now carry their bare tags
-(`a1`…`c4`), one legend, and a `## Caption` section in the report — the caption is
-set by the journal, at the journal's width, and the plate is left to the data.
+every time the canvas changes. The twelve print plates now carry their bare keys
+(`a1`…`c4`, `a1`…`f2`) from `style.tag_axes`/`style.panel_id`, one legend band,
+and a `## Caption` section in the report that absorbs what the header said — the
+caption is set by the journal, at the journal's width, and the plate is left to the
+data. A plate that needs more air above its axes than the tag's 2 pt passes the pad
+it needs (`tag_axes(ax, key, pad=...)`), which is measured, not chosen.
 
 Done so far (both artefacts measured from the written file):
 
@@ -475,13 +518,16 @@ python3 code/figure_style.py figures/lumo/fig_lumo_ocv_orbits.jpg
 ### `audit_figure_style.py` — the ladder and the width, checked on every figure
 
 [`audit_figure_style.py`](audit_figure_style.py) is the gate on the section
-above, and it checks the two things independently, because a figure can be wrong
-in two independent ways:
+above, and it checks the things independently, because a figure can be wrong in
+independent ways:
 
 | what | how | fails when |
 | --- | --- | --- |
 | the declared type | every `code/**/*.py` that writes a figure is parsed (AST, not grep) -- a `savefig` of its own or the shared `figure_style.save`/`save_eps`: the `rcParams` block, `rcParams[...] = ...` and every `fontsize=`/`labelsize=`/`titlesize=` keyword, attributed to its call (`set_title` -> title, `set_xlabel` -> label, `tick_params` -> tick, `legend` -> legend, `text` -> annotation) and to its line. Values are resolved through the file's own numeric constants and through `FS["tick"]` | a value sits outside its band |
+| the grammar | the same AST is asked whether the source calls `suptitle`, calls `set_title` with anything that is not a panel key (`a1` ...), or addresses no panel through `style.tag_axes`/`style.panel_id` | a plate carries a **headline** — on every plate, documentation plates included; or a heading instead of a key, or no key at all (the documentation plates of `DOC_DIRS` are exempt from that half **by name**, and the row prints which of the two they took) |
 | the print width | the saved width of every artefact is measured from the file itself (PNG `pHYs`, JPEG `JFIF`, EPS `%%HiResBoundingBox`, PDF `/MediaBox` with `/CropBox` as fallback, stdlib only) | any container of the plate is not its expected width (170 ± 0.5 mm, or the page it declares in `PAGE_PLATES`), or a raster declares no density at all |
+| the height | the height of every container, from the same readers | the containers of one plate disagree by more than 0.25 mm (`HEIGHT_TOL_MM`): a sidecar re-cut to a taller page passes every width check and is still a different shape |
+| the fonts | `/FontType` in the EPS, `/FontFile2` in the PDF, read from the bytes | the EPS is not Type 42 (glyph procedures are not text), or the PDF embeds no TrueType program |
 
 A plate is one row, not one row per file: the raster, the PDF and the EPS are the
 same drawing in three containers, so `artefacts()` groups them by stem and prints
@@ -495,10 +541,13 @@ The report prints both at once with the **effective** size at 170 mm, so a 9.0 p
 title on a 375 mm canvas is visible as the 4.1 pt a reader would actually see:
 
 ```
-PASS  code/bautzen/fig_bautzen_ocv_orbits.py             base 8.0  title 8.8  suptitle 9.0  label 7.6  tick 6.8  legend 6.8  annotation 6.2
-PASS  bautzen/fig_bautzen_ocv_orbits.jpg                  170.0 mm  jpg+pdf+eps       -> title 8.8  label 7.6  tick 6.8  legend 6.8
-PASS  carola/fig_carola_ocv_trajectory.jpg                170.0 mm  jpg+pdf+eps
-note  concept/fig_ocv_schematic.jpg                       183.0 mm  jpg+pdf+eps       page 183 mm
+PASS  code/bautzen/fig_bautzen_ocv_orbits.py             base 8.0  title 8.8  label 7.6  tick 6.8  legend 6.8  annotation 6.2-6.8  keys: 2 tag call(s)
+PASS  code/sds/ocv_reconfigure.py                        base 8.0  title 8.8  label 7.6  tick 6.8  legend 6.8  annotation 7.6-13.0  grammar: synthesis plate, block identifiers by name
+FAIL  code/site/fig_site_ocv_orbits.py                   base 8.0  title 8.8  ...
+      grammar   L966 suptitle 'Site — OCV time series by dimension ...': a plate carries keys, not titles!
+PASS  bautzen/fig_bautzen_ocv_orbits.jpg                  170.0 mm  jpg+pdf+eps       h245.0  fonts 42  -> title 8.8  label 7.6  tick 6.8  legend 6.8
+PASS  carola/fig_carola_ocv_trajectory.jpg                170.0 mm  jpg+pdf+eps       h156.0  fonts 42
+note  concept/fig_ocv_schematic.jpg                       183.0 mm  jpg+pdf+eps       page 183 mm  h61.0  fonts 42
 ```
 
 The `->` clause is the **effective** size at 170 mm. Bautzen is the plate that
@@ -512,15 +561,22 @@ Scope: the site directories in `SCOPE_DIRS` are failed on, and `WALL_PLATES` is
 empty now that the oversized panels are retired — the hook stays, but no plate is
 exempt from the width check any more. `figures/concept/` and `figures/sds/` are
 documentation plates that are measured and reported only — `--strict` fails on
-those two groups as well.
+those two groups as well. They are also the **named exception** to half the
+grammar: a page mock-up has its own typographic brief, and the SDS plate's panels
+are blocks rather than grid cells, so it names a block (`LUMO / ASC / behavior`)
+instead of keying it, and every row prints which exception it took —
+`grammar: synthesis plate, block identifiers by name`, or
+`grammar: documentation plate, no heading, no key` for a mock-up that addresses no
+panel at all. The exemption stops there: **a headline fails on a documentation
+plate too**, so `grammar_verdict` asks about `suptitle` before it looks at `DOC_DIRS`.
 
-The one exception runs the other way: `PAGE_PLATES` registers the two concept
+The one exception that runs the other way: `PAGE_PLATES` registers the two concept
 plates as **183 mm pages** (three panels of one 55.632 mm unit), the deliberate
 departure from 170 mm. They are not exempt from the width check, only from that
 number: every container has to agree with the declared page, the row prints
 `page 183 mm` next to it, and a 170 mm EPS of a 183 mm page still fails. So
 `--strict` exits 0 with 12 plates in 36 files — 10 at 170.0 mm, 2 at their own
-183.0 mm.
+183.0 mm — and the documentation plates named where they are reported.
 
 ```sh
 python3 code/audit_figure_style.py                    # audit, print, write nothing
@@ -530,8 +586,19 @@ python3 code/audit_figure_style.py --json /tmp/style.json   # machine-readable
 python3 code/audit_figure_style.py --selftest         # the rules on synthetic input
 ```
 
-Exit status 0 on a clean audit, 1 on any violation (the convention of
-`audit_ocv_units.py`).
+```sh
+$ python3 code/audit_figure_style.py --strict | tail -2
+8 generators, 12 plate(s) in 36 file(s): 0 type violation(s), 0 grammar violation(s), 0 width violation(s), 0 font violation(s), 9 symbolic size(s)
+$ echo $?
+0
+```
+
+Exit status 0 on a clean audit, 1 on any violation — type, grammar, width or font
+(the convention of `audit_ocv_units.py`). `--selftest` runs 44 checks on synthetic
+sources and files: a `suptitle` source fails the grammar — on a documentation plate
+too — while a `tag_axes(panel_id(...))` source passes it and a documentation plate
+may name its panels, a 5 mm taller EPS fails the height clause, and a Type 3 EPS and
+a PDF without `/FontFile2` fail the font clause.
 
 
 ### `concept/fig_ocv_schematic.py` — the definition, drawn

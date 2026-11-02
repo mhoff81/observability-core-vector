@@ -24,6 +24,12 @@ print check needs:
     (:data:`TRAJECTORY`): the six timeline plates of this repository are the
     same 170 x 156 mm template and are read from one table, so they cannot
     drift apart the way six hard-coded ``figsize`` calls do;
+  * a **panel is addressed by its bare key** (:func:`panel_id`, :func:`tag_axes`):
+    ``a1`` ... ``f2`` at the title rung, never a descriptive heading -- the row
+    letter is the block and the number the column, so a key is derivable from
+    the grid; what the panel shows is carried by its axis labels, its legend
+    and the report's caption, which is type the journal sets, not type the
+    plate carries;
   * a drawn figure is **measured after it is written** (``measure``) and a
     deviation from 170 ± 0.5 mm aborts the run, exactly like a failed pin.
 
@@ -94,6 +100,14 @@ COL_WIDTH = FINAL_WIDTH_MM * MM
 
 #: A saved figure may deviate this much from :data:`FINAL_WIDTH_MM` (mm).
 WIDTH_TOL_MM = 0.5
+
+#: The three containers of one plate have to agree on the **height** this
+#: closely (mm).  The JPEG's height comes from its dpi and the vectors' from
+#: their box, so they never match bit for bit -- but a plate that is 245 mm in
+#: the ``.pdf`` and 250 mm in the ``.eps`` is two different figures, and no
+#: width check would notice.  A quarter millimetre is the rounding of the three
+#: readers, not a taste.
+HEIGHT_TOL_MM = 0.25
 
 #: The point-size ladder.  One value per role, used by *every* figure.
 FS = {
@@ -739,6 +753,61 @@ def save(fig, path, dpi=FIGURE_DPI, verify=True, vector=VECTOR_FORMATS,
     if "eps" in vector:
         save_eps(fig, stem + ".eps", eps=eps, source=pdf, verify=verify)
     return path
+
+
+# ---------------------------------------------------------------------------
+# The panel tag: a key, not a title
+# ---------------------------------------------------------------------------
+#: The row letters a panel key can use; ``a`` is the first row of the grid.
+PANEL_LETTERS = "abcdefgh"
+
+#: How far above the axes a tag sits, in points.  A tag is one short character
+#: group, not a title: it needs a fraction of the padding a title took, and the
+#: band it frees belongs to the panel.
+PANEL_TAG_PAD_PT = 2.0
+
+
+def panel_id(row, col):
+    """The bare key of the panel at *row*, *col*: ``a1`` ... ``f2``.
+
+    A panel is addressed by its **position**, not by a sentence: the row letter
+    names the block the panel belongs to and the number names its column, so
+    ``b2`` is derived from the grid instead of being looked up in a table, and
+    two plates with the same grid address their panels the same way.
+
+    What a panel *shows* is not in the key.  It is carried by the axis labels,
+    the legend and the report's ``## Caption`` -- see :func:`tag_axes`.
+    """
+    if not 0 <= row < len(PANEL_LETTERS):
+        raise ValueError("row %r: the tag letters run a-%s"
+                         % (row, PANEL_LETTERS[-1]))
+    if col < 0:
+        raise ValueError("column %r: columns are numbered from 1" % col)
+    return "%s%d" % (PANEL_LETTERS[row], col + 1)
+
+
+def tag_axes(ax, ident, pad=PANEL_TAG_PAD_PT):
+    """Tag *ax* with its bare key -- a tag, not a title.
+
+    One size, one placement: the key is always the ``title`` rung of :data:`FS`
+    (8.8 pt, bold), left-aligned where a panel title would sit and ``pad`` points
+    above the axes.  A tag is one short character group, not a sentence, so it
+    keeps 2 pt of air by default (:data:`PANEL_TAG_PAD_PT`) and the rest of the
+    band a title took belongs to the panel.
+
+    *pad* is the one exception the grammar allows, and it is a *measurement*, not
+    a taste: a plate that already draws in the band above its axes -- the Espoo
+    plate carries two statistics rows there, at +1 and +10 pt -- has to put its
+    tags above that drawing, and passing the pad it needs says so.  A tag inside
+    the axes is not an alternative: it would cover data, and a hidden datum is a
+    worse defect than a wider band.
+
+    Only the key is drawn: a descriptive heading is the caption's job, not 8 pt
+    of ink above the panels.  Returns the artist, so a caller's clearance guards
+    can measure it.
+    """
+    return ax.set_title(ident, loc="left", pad=pad,
+                        fontsize=FS["title"], fontweight="bold")
 
 
 def grid_rect(fig, bottom=None, top=None, pad_mm=2.0):

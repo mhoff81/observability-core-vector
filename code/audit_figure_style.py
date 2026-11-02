@@ -28,14 +28,33 @@ A plate is one row, not one per container: the raster, the ``.pdf`` and the
 ``.eps`` that :func:`figure_style.save` writes under one stem are listed
 together, and **every** container is judged on its own width -- a plate can be
 170.0 mm as a JPEG and cropped as an EPS.  A vector container is judged on its
-box, never on a density it cannot have.
+box, never on a density it cannot have.  The three containers also have to
+agree on the **height** (:data:`figure_style.HEIGHT_TOL_MM`): a sidecar re-cut
+to a taller page passes every width check and is still a different shape.
+
+  (iii) **the grammar of the plate.**  A plate carries *keys, not titles*
+       (:func:`figure_style.tag_axes`): one bare key per panel, ``a1`` ...
+       ``f2``, and the words that used to be a header or a panel heading in the
+       report's ``## Caption``.  So the source is asked three questions -- does
+       it call ``suptitle``, does it call ``set_title`` with anything that is not
+       a key, does it address its panels by key -- and the containers are asked
+       one: are the fonts actually embedded as Type 42 (``/FontType 42`` in the
+       EPS, ``/FontFile2`` in the PDF), or was the text turned into glyph
+       procedures a reader cannot search?
 
 Scope.  The site directories in ``SCOPE_DIRS`` are the figures of this project
 and are failed on.  The wall plates (``WALL_PLATES``, empty now that the
 oversized panels are retired) are measured and listed but not failed while
 their final width is an open decision, and ``figures/concept/`` and
 ``figures/sds/`` are documentation plates that are measured and reported only.
-``--strict`` fails on those two groups as well.
+They are the *named* exception to the grammar, but only to the part of it they
+cannot have: a page mock-up has its own typographic brief, and a synthesis plate
+has *blocks*, not cells of a trajectory grid, so it may name a block in the band
+above the plane instead of keying it ``a1``.  The exception stops there -- no
+plate of either directory draws a headline over its panels, so ``suptitle`` is
+fatal on a documentation plate too, and every report row says which of the two
+it was (a synthesis plate naming its blocks, or no key at all).  ``--strict``
+fails on those two groups as well.
 
 One exception runs the other way.  The plates of ``PAGE_PLATES`` are authored on
 their own page -- 183 mm, three panels of one isotropic unit -- and are
@@ -60,6 +79,7 @@ import argparse
 import ast
 import json
 import os
+import re
 import sys
 
 import figure_style as style
@@ -72,7 +92,9 @@ FIGURES = os.path.join(ROOT, "figures")
 SCOPE_DIRS = ("bautzen", "carola", "cases", "cts", "espoo", "haltern", "kdlo",
               "lumo", "morandi", "werder_havel")
 
-#: Documentation plates: measured and reported, never failed (unless --strict).
+#: Documentation plates: measured and reported, never failed (unless --strict),
+#: and exempt from the *key* half of the grammar only -- see
+#: :func:`grammar_verdict`, which still fails them on a ``suptitle``.
 DOC_DIRS = ("concept", "sds")
 
 #: Plates whose final width is an open decision (the oversized wall panels).
@@ -270,6 +292,124 @@ def scan_source(path):
             "writes_figure": writes_figure}
 
 
+#: Calls that draw a figure-level title -- the thing this grammar retires.
+SUPTITLE_CALLEES = ("suptitle", "set_suptitle")
+
+#: A panel key: one row letter and one column number, ``a1`` ... ``h9``.
+PANEL_KEY_RE = re.compile(r"^[a-h][1-9]$")
+
+
+def _text(node, consts):
+    """The text behind a title argument, or ``None`` when it is not a literal.
+
+    Only literals and the file's own string constants resolve.  An f-string that
+    builds a heading at run time is unreadable from the AST, so it is reported
+    as an expression rather than guessed at -- the point of the check is that a
+    title has to *be* a key, and an expression is not one.
+    """
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return node.value
+    if isinstance(node, ast.Name) and isinstance(consts.get(node.id), str):
+        return consts[node.id]
+    return None
+
+
+def _is_key_call(node):
+    """Is *node* a call that builds a panel key (``panel_id``/``tag_axes``)?"""
+    if not isinstance(node, ast.Call):
+        return False
+    return _callee_name(node.func) in ("panel_id", "tag_axes")
+
+
+def scan_grammar(path):
+    """The *shape* of the plate in the source: keys, or titles.
+
+    Three questions an AST answers about a generator, and a fourth it answers
+    about the file:
+
+      * does it call ``suptitle`` -- a headline above the grid?
+      * does it call ``set_title`` with text that is not a panel key -- a
+        per-panel heading?
+      * does it address its panels by key (``style.tag_axes`` /
+        ``style.panel_id``)?
+      * does it reach for the shared figure style at all
+        (``import figure_style``)?
+
+    A key is ``a1`` ...: the row letter is the block, the number the column.
+    Anything else in a title is a sentence the caption should carry, so it is
+    reported with its line number rather than argued about.
+    """
+    with open(path, encoding="utf-8") as fh:
+        tree = ast.parse(fh.read(), filename=path)
+    str_consts = {}
+    for node in tree.body:
+        if (isinstance(node, ast.Assign) and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and isinstance(node.value, ast.Constant)
+                and isinstance(node.value.value, str)):
+            str_consts[node.targets[0].id] = node.value.value
+    found = {"suptitle": [], "titles": [], "tags": 0, "shared": False}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name in ("figure_style",):
+                    found["shared"] = True
+        elif isinstance(node, ast.ImportFrom) and node.module == "figure_style":
+            found["shared"] = True
+        if not isinstance(node, ast.Call):
+            continue
+        callee = _callee_name(node.func)
+        base = _callee_name(node.func.value) if isinstance(node.func,
+                                                           ast.Attribute) else ""
+        arg = node.args[0] if node.args else None
+        if callee in SUPTITLE_CALLEES:
+            found["suptitle"].append({"line": node.lineno,
+                                      "text": _text(arg, str_consts)})
+        elif callee == "set_title":
+            text = _text(arg, str_consts) if arg is not None else None
+            if text is not None:
+                if not PANEL_KEY_RE.match(text.strip()):
+                    found["titles"].append({"line": node.lineno, "text": text})
+            elif not _is_key_call(arg):
+                found["titles"].append({"line": node.lineno, "text": None})
+        elif callee in ("tag_axes", "panel_id") and base in ("style",
+                                                             "figure_style"):
+            found["tags"] += 1
+    return found
+
+
+def grammar_verdict(grammar, doc=False):
+    """Why a plate is off the grammar, or ``None`` when it keeps it.
+
+    A plate carries **keys, not titles**: a bare key per panel, and the words
+    that used to be a header in the report's ``## Caption``.
+
+    *doc* marks the documentation plates of ``DOC_DIRS``, and it exempts them
+    from the *key* half of the grammar only.  A page mock-up has its own
+    typographic brief, and a synthesis plate addresses its panels by the blocks
+    they show -- ``LUMO / ASC / behavior`` rather than ``a1`` -- because that
+    plate has no trajectory grid to key.  That is the whole exception.  A
+    headline over the panels is not part of it on any plate: it is the caption's
+    first line, and a 170 mm plate that carries one spends a band it needs for
+    the panels on words the reader has already read.  So the ``suptitle`` branch
+    runs before *doc* is looked at.
+    """
+    if grammar["suptitle"]:
+        first = grammar["suptitle"][0]
+        return ("L%d suptitle %r: a plate carries keys, not titles"
+                % (first["line"],
+                   (first["text"] or "<expression>")[:40]))
+    if doc:
+        return None
+    if grammar["titles"]:
+        first = grammar["titles"][0]
+        return ("L%d set_title %r: a heading, not a key"
+                % (first["line"], (first["text"] or "<expression>")[:40]))
+    if not grammar["tags"]:
+        return "no panel key: call style.tag_axes(ax, style.panel_id(...))"
+    return None
+
+
 def generators():
     """Relative paths of every source under ``code/`` that writes a figure."""
     found = []
@@ -345,11 +485,15 @@ def artefacts(only=()):
                     info = style.measure(path)
                 except (ValueError, OSError) as exc:
                     entry.update({"mm": None, "dpi": None, "px": None,
-                                  "vector": suffix in (".pdf", ".eps"),
+                                  "height_mm": None, "vector":
+                                  suffix in (".pdf", ".eps"),
                                   "error": str(exc)})
                 else:
                     entry.update({"mm": info["mm"], "dpi": info["dpi"],
-                                  "px": info["px"], "vector": info["vector"]})
+                                  "px": info["px"],
+                                  "height_mm": info["height_mm"],
+                                  "vector": info["vector"]})
+                entry["fonts"] = font_report(path)
                 row["formats"][suffix] = entry
                 raster = not entry["vector"]
                 if row["path"] is None or raster:
@@ -374,13 +518,71 @@ def _width_verdict(mm, expect_mm=style.FINAL_WIDTH_MM):
     return None
 
 
+def font_report(path):
+    """Which fonts a container embeds, read from its bytes.
+
+    Text a reader can search, select and re-set is text the container actually
+    *embeds* as a font program.  Two things can go wrong silently:
+
+    * the ``.eps`` falls back to **Type 3**, which turns each glyph into a
+      PostScript procedure: it prints, and it is no longer text (this is what
+      ``ps.fonttype`` below 42 does);
+    * the ``.pdf`` carries a font object with no ``/FontFile2`` -- a
+      non-embedded face, so the words on the plate depend on the reader's
+      machine.
+
+    Returns ``{"types": [...], "embedded": int, "problem": str|None}``; a raster
+    container has no fonts of its own and reports ``None``.
+    """
+    suffix = os.path.splitext(path)[1].lower()
+    if suffix not in (".pdf", ".eps"):
+        return None
+    try:
+        with open(path, "rb") as fh:
+            data = fh.read()
+    except OSError as exc:
+        return {"types": [], "embedded": 0, "problem": str(exc)}
+    if suffix == ".eps":
+        types = sorted({int(t) for t in re.findall(rb"/FontType\s+(\d+)", data)})
+        problem = None
+        if not types:
+            problem = "no /FontType: the text is not embedded"
+        elif any(t != 42 for t in types):
+            problem = ("FontType %s: only Type 42 (TrueType) is text a reader "
+                       "can re-set" % ",".join(str(t) for t in types))
+        return {"types": types, "embedded": len(re.findall(rb"/FontFile", data)),
+                "problem": problem}
+    types = sorted({42} if b"/TrueType" in data else set())
+    embedded = len(re.findall(rb"/FontFile2", data))
+    problem = None
+    if re.search(rb"/FontFile3", data):
+        problem = "/FontFile3: the text is a CFF program, not the TrueType the ladder writes"
+    elif not embedded:
+        problem = "no /FontFile2: the text is not embedded"
+    return {"types": types, "embedded": embedded, "problem": problem}
+
+
+def _font_verdict(row):
+    """The first container whose fonts are not embedded Type 42, or ``None``."""
+    for suffix in sorted(row["formats"]):
+        report = row["formats"][suffix].get("fonts")
+        if report and report.get("problem"):
+            return "%s %s" % (suffix.lstrip("."), report["problem"])
+    return None
+
+
 def _plate_verdict(row):
-    """Why a plate is off its width, naming the container, or ``None``.
+    """Why a plate is off its width or its height, naming the container.
 
     Every container is judged on its own: a JPEG at 170.0 mm says nothing about
     the EPS beside it, which can be cropped, padded, or -- in the worst case --
     carry no box at all, so its width is not unknown but wrong.  A page plate
     (``PAGE_PLATES``) is judged the same way, against the page it declares.
+
+    The same containers also have to agree on the **height**
+    (:data:`figure_style.HEIGHT_TOL_MM`): the width check cannot see a vector
+    sidecar that was re-cut to a taller page, and a plate whose parts are two
+    different shapes is not one plate.
     """
     expect = row.get("expect_mm", style.FINAL_WIDTH_MM)
     for suffix, info in sorted(row["formats"].items()):
@@ -390,6 +592,16 @@ def _plate_verdict(row):
         problem = _width_verdict(info.get("mm"), expect)
         if problem:
             return "%s %s" % (name, problem)
+    heights = {suffix.lstrip("."): info["height_mm"]
+               for suffix, info in row["formats"].items()
+               if info.get("height_mm")}
+    if len(heights) > 1:
+        low, high = min(heights.values()), max(heights.values())
+        if high - low > style.HEIGHT_TOL_MM:
+            return ("the containers disagree on the height by %.2f mm (%s)"
+                    % (high - low,
+                       ", ".join("%s %.2f" % (name, mm)
+                                 for name, mm in sorted(heights.items()))))
     return None
 
 
@@ -426,6 +638,7 @@ def audit(only=(), strict=False):
     for rel in sources:
         by_stem.setdefault(os.path.splitext(os.path.basename(rel))[0], rel)
     rows, totals = [], {"generators": 0, "type_violations": 0,
+                        "grammar_violations": 0, "font_violations": 0,
                         "artefacts": 0, "containers": 0,
                         "width_violations": 0, "unresolved": 0}
     for rel in sources:
@@ -436,6 +649,17 @@ def audit(only=(), strict=False):
         if base.startswith("audit_") or rel == "code/figure_style.py":
             continue  # the audit's own helpers, not a figure generator
         scan = scan_source(os.path.join(ROOT, rel))
+        # The grammar: keys, not titles.  The documentation plates are the
+        # named exception, so they are exempt by *name* and their row says so.
+        grammar = scan_grammar(os.path.join(ROOT, rel))
+        exempt = site in DOC_DIRS
+        problem = grammar_verdict(grammar, doc=exempt)
+        if not grammar["suptitle"]:
+            # ``style.apply()`` writes ``figure.titlesize`` for every plate; a
+            # plate that draws no suptitle is not declaring one, so the ladder's
+            # 9.0 pt is not attributed to it.  An explicit ``suptitle(...)`` call
+            # is still listed -- and is what the grammar fails on.
+            scan["roles"].pop("suptitle", None)
         verdicts = []
         for role in sorted(scan["roles"], key=_role_order):
             for entry in scan["roles"][role]:
@@ -447,8 +671,12 @@ def audit(only=(), strict=False):
         totals["unresolved"] += len(scan["unresolved"])
         if any(v["problem"] for v in verdicts):
             totals["type_violations"] += 1
+        if problem:
+            totals["grammar_violations"] += 1
         rows.append({"path": rel, "group": "source", "verdicts": verdicts,
-                     "unresolved": scan["unresolved"]})
+                     "unresolved": scan["unresolved"], "site": site,
+                     "grammar": grammar, "grammar_exempt": exempt,
+                     "grammar_problem": problem})
     arts = artefacts(only=only)
     for row in arts:
         # A page plate is held to its own page, so it is judged like a site
@@ -457,8 +685,11 @@ def audit(only=(), strict=False):
         fails = row["group"] in ("scope", "page") or (
             strict and row["group"] in ("wall", "doc"))
         row["problem"] = _plate_verdict(row) if fails else None
+        row["font_problem"] = _font_verdict(row) if fails else None
         if row["problem"]:
             totals["width_violations"] += 1
+        if row["font_problem"]:
+            totals["font_violations"] += 1
         row["generator"] = by_stem.get(row["stem"])
     totals["artefacts"] = len(arts)
     totals["containers"] = sum(len(row["formats"]) for row in arts)
@@ -483,16 +714,27 @@ def report_lines(result, scans=None):
     for row in result["sources"]:
         verdicts = row["verdicts"]
         bad = [v for v in verdicts if v["problem"]]
-        status = "FAIL" if bad else ("NOTE" if not verdicts else "PASS")
+        grammar_problem = row.get("grammar_problem")
+        status = "FAIL" if (bad or grammar_problem) else (
+            "NOTE" if not verdicts else "PASS")
         parts = []
         for role in ("base", "title", "suptitle", "label", "tick", "legend",
                      "annotation"):
             entries = [v for v in verdicts if v["role"] == role]
             if entries:
                 parts.append(_compact(role, entries))
+        grammar = row.get("grammar") or {}
+        if row.get("grammar_exempt"):
+            parts.append("grammar: synthesis plate, block identifiers by name"
+                         if grammar.get("titles")
+                         else "grammar: documentation plate, no heading, no key")
+        elif grammar.get("tags"):
+            parts.append("keys: %d tag call(s)" % grammar["tags"])
         out.append("%s  %-50s %s" % (status, row["path"],
                                      "  ".join(parts) if parts
                                      else "no size declared"))
+        if grammar_problem:
+            out.append("      grammar   %s!" % grammar_problem)
         for v in bad:
             out.append("      L%-5d %-10s %.1f pt  %-24s %s!"
                        % (v["line"], v["role"], v["pt"], v["where"],
@@ -510,11 +752,19 @@ def report_lines(result, scans=None):
             out.append("FAIL  %-50s %s"
                        % (label, row.get("error") or "no print width"))
             continue
-        status = "FAIL" if row.get("problem") else (
+        status = "FAIL" if (row.get("problem") or row.get("font_problem")) else (
             "PASS" if row["group"] == "scope" else "note")
         page = ""
         if row.get("expect_mm", style.FINAL_WIDTH_MM) != style.FINAL_WIDTH_MM:
             page = "  page %.0f mm" % row["expect_mm"]
+        elif row["group"] == "doc":
+            page = "  doc plate (%s)" % "/".join(DOC_DIRS)
+        heights = [info["height_mm"] for info in row["formats"].values()
+                   if info.get("height_mm")]
+        size = "  h%.1f" % max(heights) if heights else ""
+        types = sorted({t for info in row["formats"].values()
+                        for t in ((info.get("fonts") or {}).get("types") or [])})
+        fonts = "  fonts %s" % ",".join(str(t) for t in types) if types else ""
         eff = ""
         scan = scans.get(row.get("generator"))
         if scan:
@@ -525,21 +775,29 @@ def report_lines(result, scans=None):
                     pt = style.effective_pt(entries[0]["pt"], mm)
                     pieces.append("%s %.1f" % (role, pt))
             eff = "  -> " + "  ".join(pieces) if pieces else ""
-        out.append("%s  %-50s %6.1f mm  %-16s%s%s"
+        out.append("%s  %-50s %6.1f mm  %-16s%s%s%s%s"
                    % (status, label, mm, _formats_summary(row["formats"]),
-                      page, eff))
+                      page, size, fonts, eff))
+        if row.get("font_problem"):
+            out.append("      fonts: %s" % row["font_problem"])
         if row.get("problem") and row["group"] != "scope":
-            out.append("      %s -- %s plate, %s"
-                       % (row["problem"], row["group"],
-                          "held to its own page" if row["group"] == "page"
-                          else "reported only"))
+            if row["group"] == "page":
+                reason = "page plate, held to its own page"
+            elif row["group"] == "doc":
+                reason = ("documentation plate (%s; the named exception), "
+                          "reported only" % ", ".join(DOC_DIRS))
+            else:
+                reason = "wall plate, reported only"
+            out.append("      %s -- %s" % (row["problem"], reason))
     totals = result["totals"]
     out.append("")
     out.append("%s, %d plate(s) in %d file(s): %d type violation(s), "
-               "%d width violation(s), %d symbolic size(s)"
+               "%d grammar violation(s), %d width violation(s), "
+               "%d font violation(s), %d symbolic size(s)"
                % (_plural(totals["generators"], "generator"),
                   totals["artefacts"], totals["containers"],
-                  totals["type_violations"], totals["width_violations"],
+                  totals["type_violations"], totals["grammar_violations"],
+                  totals["width_violations"], totals["font_violations"],
                   totals["unresolved"]))
     return out
 
@@ -773,6 +1031,117 @@ def selftest():
                   for mm in PAGE_PLATES.values()),
           "183 mm is a declared page, not a width violation")
 
+    keyless = os.path.join(tmpdir, "titled.py")
+    with open(keyless, "w", encoding="utf-8") as fh:
+        fh.write("import figure_style as style\n"
+                 "def draw(fig, axes):\n"
+                 "    fig.suptitle('Site - OCV trajectories')\n"
+                 "    axes[0].set_title('A - observable area')\n"
+                 "    style.save(fig, 'x.jpg')\n")
+    grammar = scan_grammar(keyless)
+    check("a suptitle is seen, with its line, as a title and not a key",
+          len(grammar["suptitle"]) == 1 and grammar["suptitle"][0]["line"] == 3
+          and grammar_verdict(grammar).startswith("L3 suptitle"),
+          grammar_verdict(grammar) or "no verdict")
+    tagged = os.path.join(tmpdir, "tagged.py")
+    with open(tagged, "w", encoding="utf-8") as fh:
+        fh.write("import figure_style as style\n"
+                 "def draw(ax, row, col):\n"
+                 "    style.tag_axes(ax, style.panel_id(row, col))\n"
+                 "    style.save(ax.figure, 'x.jpg')\n")
+    grammar = scan_grammar(tagged)
+    check("tag_axes(panel_id(...)) is the grammar and passes it",
+          grammar["tags"] == 2 and not grammar["suptitle"]
+          and not grammar["titles"] and grammar_verdict(grammar) is None,
+          "%d key call(s), no title" % grammar["tags"])
+    heading = os.path.join(tmpdir, "heading.py")
+    with open(heading, "w", encoding="utf-8") as fh:
+        fh.write("import figure_style as style\n"
+                 "def draw(ax):\n"
+                 "    ax.set_title('ASC (57 overpasses)')\n"
+                 "    style.tag_axes(ax, 'a1')\n"
+                 "    style.save(ax.figure, 'x.jpg')\n")
+    grammar = scan_grammar(heading)
+    check("a descriptive set_title fails even when a key is also drawn",
+          grammar["tags"] >= 1 and len(grammar["titles"]) == 1
+          and "a heading, not a key" in (grammar_verdict(grammar) or ""),
+          grammar_verdict(grammar) or "no verdict")
+    bare = os.path.join(tmpdir, "bare.py")
+    with open(bare, "w", encoding="utf-8") as fh:
+        fh.write("import figure_style as style\n"
+                 "def draw(ax):\n"
+                 "    style.save(ax.figure, 'x.jpg')\n")
+    check("a plate with no key at all fails the grammar",
+          grammar_verdict(scan_grammar(bare)) ==
+          "no panel key: call style.tag_axes(ax, style.panel_id(...))",
+          "no panel key")
+    check("a documentation plate may name its panels, but not carry a headline",
+          grammar_verdict(scan_grammar(heading), doc=True) is None
+          and grammar_verdict(scan_grammar(keyless), doc=True) is not None,
+          "the synthesis plate of DOC_DIRS names its blocks; a headline still "
+          "fails")
+    check("the documentation exemption is the key, not the heading",
+          grammar_verdict(scan_grammar(bare), doc=True) is None
+          and "suptitle" in (grammar_verdict(scan_grammar(keyless), doc=True)
+                             or ""),
+          "a mock-up with no key passes; a plate with a headline does not")
+    check("a key is a row letter and a column number",
+          PANEL_KEY_RE.match("a1") and PANEL_KEY_RE.match("f2")
+          and not PANEL_KEY_RE.match("key") and not PANEL_KEY_RE.match("(a)"),
+          "a1, f2 pass; 'key' and '(a)' do not")
+    check("the containers have to agree on the height",
+          _plate_verdict({"formats": {".jpg": {"mm": 170.0, "height_mm": 245.0},
+                                      ".pdf": {"mm": 170.0, "height_mm": 245.0},
+                                      ".eps": {"mm": 170.0,
+                                               "height_mm": 250.0}}})
+          .startswith("the containers disagree on the height by 5.00 mm")
+          and _plate_verdict({"formats": {
+              ".jpg": {"mm": 169.98, "height_mm": 244.97},
+              ".pdf": {"mm": 170.0, "height_mm": 245.0},
+              ".eps": {"mm": 170.0, "height_mm": 245.0}}}) is None,
+          "a 5 mm taller EPS is a different plate, a 0.03 mm JPEG is not")
+    type3 = os.path.join(tmpdir, "type3.eps")
+    with open(type3, "wb") as fh:
+        fh.write(b"%!PS-Adobe-3.0 EPSF-3.0\n"
+                 b"%%HiResBoundingBox: 0 0 481.889764 481.889764\n"
+                 b"%%EndComments\n/FontType 3 def\nshowpage\n")
+    report = font_report(type3)
+    check("a Type 3 EPS is text no reader can re-set",
+          report["types"] == [3] and "only Type 42" in report["problem"],
+          report["problem"] or "no problem seen")
+    good_eps = os.path.join(tmpdir, "type42.eps")
+    with open(good_eps, "wb") as fh:
+        fh.write(b"%!PS-Adobe-3.0 EPSF-3.0\n"
+                 b"%%HiResBoundingBox: 0 0 481.889764 481.889764\n"
+                 b"%%EndComments\n/FontType 42 def\n/FontFile def\nshowpage\n")
+    report = font_report(good_eps)
+    check("a Type 42 EPS passes the font check",
+          report["types"] == [42] and report["problem"] is None,
+          "Type 42, embedded")
+    loose = os.path.join(tmpdir, "loose.pdf")
+    with open(loose, "wb") as fh:
+        fh.write(b"%PDF-1.4\n1 0 obj\n<< /Type /Page /MediaBox "
+                 b"[0 0 481.889764 481.889764] >>\nendobj\n"
+                 b"2 0 obj\n<< /Type /Font /Subtype /TrueType >>\nendobj\n"
+                 b"trailer\n<< /Root 1 0 R >>\n%%EOF\n")
+    report = font_report(loose)
+    check("a PDF font object with no /FontFile2 is not embedded",
+          "not embedded" in (report["problem"] or ""),
+          report["problem"] or "no problem seen")
+    embedded_pdf = os.path.join(tmpdir, "embedded.pdf")
+    with open(embedded_pdf, "wb") as fh:
+        fh.write(b"%PDF-1.4\n1 0 obj\n<< /Type /Page /MediaBox "
+                 b"[0 0 481.889764 481.889764] >>\nendobj\n"
+                 b"2 0 obj\n<< /Type /Font /Subtype /TrueType /FontDescriptor "
+                 b"3 0 R >>\nendobj\n3 0 obj\n<< /FontFile2 4 0 R >>\nendobj\n"
+                 b"trailer\n<< /Root 1 0 R >>\n%%EOF\n")
+    report = font_report(embedded_pdf)
+    check("a PDF with /FontFile2 passes the font check",
+          report["embedded"] == 1 and report["problem"] is None,
+          "TrueType, embedded")
+    check("a raster container has no fonts of its own",
+          font_report(jpg) is None, "the JPEG is judged as a raster")
+
     shared = os.path.join(tmpdir, "shared.py")
     with open(shared, "w", encoding="utf-8") as fh:
         fh.write("import figure_style as style\n"
@@ -838,7 +1207,9 @@ def main(argv=None):
             json.dump(result, fh, indent=1, sort_keys=True)
             fh.write("\n")
         print("\nwrote %s" % args.json)
-    return 1 if (totals["type_violations"] or totals["width_violations"]) else 0
+    return 1 if (totals["type_violations"] or totals["width_violations"]
+                 or totals["grammar_violations"]
+                 or totals["font_violations"]) else 0
 
 
 if __name__ == "__main__":

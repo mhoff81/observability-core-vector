@@ -10,13 +10,13 @@
 ## The figure — one 170 mm plate
 
 * **canvas** `6.6929 × 7.5500 in` = **170.00 × 191.77 mm**; measured from the written files: eps 170.00 × 191.77 mm, jpeg 169.98 × 191.75 mm, pdf 170.00 × 191.77 mm. The plate is authored at the print width — it is not cropped to its content, so nothing here is rescaled.
-* **typography** header 9.0 · panel title 8.8 · axis label 7.6 · ticks 6.8 · legend 6.8 · statistics 6.6 pt — nothing below 6 pt, every role inside the `figure_style` band.
-* **panels**, reading order: `A — observable area (cells)` · `D — density (fraction of bbox)` · `F — fragmentation (components)` · `S — spatial shift (cells)` · `P — persistence (pixel frequency)` · `$\gamma^2$ — coherence`. The column names of the table are not on the plate: `gamma2_mask` is drawn as the coherence it measures.
+* **typography** panel id 8.8 · axis label 7.6 · ticks 6.8 · legend 6.8 · statistics 6.6 pt — no title, nothing below 6 pt, every role inside the `figure_style` band.
+* **panels**, reading order: `A — observable area (cells)` · `D — density (fraction of bbox)` · `F — fragmentation (components)` · `S — spatial shift (cells)` · `P — persistence (pixel frequency)` · `$\gamma^2$ — coherence`, tagged `a1` A, `a2` D, `b1` F, `b2` S, `c1` P, `c2` $\gamma^2$. The plate carries no title and no panel titles: a tag says where a panel sits, its one-line y label names the dimension (`A  [cells]`, `D  [1]`, `F  [components]`, `S  [cells]`, `P  [1]`, `$\gamma^2$  [1]`), and the column names of the table are not drawn at all — `gamma2_mask` is drawn as the coherence it measures.
 * **statistics rows**: one fixed band above every panel, identical in all six — DESC at +10.0 pt, ASC at +1.0 pt, 6.6 pt, flush with the left spine. Each row is the Theil–Sen slope per year, its bootstrap 95 % interval, the Mann–Kendall p and the verdict of the ported flag rule (`trend` when it fires, `flat` when it does not).
-* **marks** 3.6 pt markers with a 0.5 pt white edge above the 1.2 pt trend line; solid where that verdict is `trend`, dashed where it is `flat`; the colour is the track's. One figure legend carries the track counts at the right end of the header line.
-* **bounds** content 168.0 × 190.1 mm inside the 170.0 × 191.8 mm canvas, 0.77 mm to the nearest edge (floor 0.3 mm, asserted) — a guard, not a crop. LaTeX: the file is 170 mm wide — included with `width=\linewidth`; no trim, clip or resizebox.
+* **marks** 3.6 pt markers with a 0.5 pt white edge above the 1.2 pt trend line; solid where that verdict is `trend`, dashed where it is `flat`; the colour is the track's. One figure legend carries the track counts in the band above the first row.
+* **bounds** content 168.0 × 190.3 mm inside the 170.0 × 191.8 mm canvas, 0.58 mm to the nearest edge (floor 0.3 mm, asserted) — a guard, not a crop. LaTeX: the file is 170 mm wide — included with `width=\linewidth`; no trim, clip or resizebox.
 * **EPS** 108 translucent artist(s) pre-blended over white (`eps="blend"`), 0 rasterised, text Type 42 (pdf/ps fonttype 42): the EPS is vector, like the PDF.
-* **moved into this caption**: the orbit ids (ASC = relative orbit 160, DESC = 51), the three shared dates, the trend semantics and the definitions of the six dimensions.
+* **moved into this caption**: the title line (*Espoo mast — OCV trajectories by acquisition track*), the orbit ids (ASC = relative orbit 160, DESC = 51), the three shared dates, the trend semantics and the definitions of the six dimensions.
 
 ```json
 {
@@ -28,8 +28,7 @@
  ],
  "native_dpi": 630,
  "final_font_sizes_pt": {
-  "suptitle": 9.0,
-  "title": 8.8,
+  "panel_ids": 8.8,
   "label": 7.6,
   "tick": 6.8,
   "legend": 6.8,
@@ -55,13 +54,13 @@
   ],
   "content_mm": [
    168.0,
-   190.1
+   190.3
   ],
   "edge_mm": {
    "left": 1.02,
    "right": 1.02,
    "bottom": 0.91,
-   "top": 0.77
+   "top": 0.58
   },
   "minimum_edge_mm": 0.3
  },
@@ -91,6 +90,8 @@
  "panels": {
   "A": {
    "label": "A — observable area (cells)",
+   "tag": "a1",
+   "y_label": "A  [cells]",
    "x_limits": [
     19934.4,
     20739.6
@@ -148,6 +149,8 @@
   },
   "D": {
    "label": "D — density (fraction of bbox)",
+   "tag": "a2",
+   "y_label": "D  [1]",
    "x_limits": [
     19934.4,
     20739.6
@@ -205,6 +208,8 @@
   },
   "F": {
    "label": "F — fragmentation (components)",
+   "tag": "b1",
+   "y_label": "F  [components]",
    "x_limits": [
     19934.4,
     20739.6
@@ -262,6 +267,8 @@
   },
   "S": {
    "label": "S — spatial shift (cells)",
+   "tag": "b2",
+   "y_label": "S  [cells]",
    "x_limits": [
     19934.4,
     20739.6
@@ -319,6 +326,8 @@
   },
   "P": {
    "label": "P — persistence (pixel frequency)",
+   "tag": "c1",
+   "y_label": "P  [1]",
    "x_limits": [
     19934.4,
     20739.6
@@ -376,6 +385,8 @@
   },
   "gamma2_mask": {
    "label": "$\\gamma^2$ — coherence",
+   "tag": "c2",
+   "y_label": "$\\gamma^2$  [1]",
    "x_limits": [
     19934.4,
     20739.6

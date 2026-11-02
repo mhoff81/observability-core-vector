@@ -59,6 +59,15 @@ content has to stay inside it with a visible margin
 native width, ``figsize``, dpi, the final point sizes, the EPS alpha policy and
 one pinned row per panel and track -- is written into the ``.md`` beside the
 caption, so the scientific JSON stays exactly what it was.
+
+The plate carries **keys, not titles**, like every other plate of this
+repository: no title line, no panel titles.  Each panel is tagged with its
+position in the grid, ``a1`` ... ``c2`` (:func:`figure_style.panel_id`), names
+its dimension in a one-line y label (``A  [cells]``), and the two track counts
+sit in one legend in the band the title used to start.  The tag is placed above
+this plate's statistics rows rather than 2 pt above the axes -- that band is
+already drawn on, and a tag *inside* the axes was measured to cover a data point
+(panel ``c1``), which is the defect the guards refuse.
 """
 from __future__ import annotations
 
@@ -116,17 +125,17 @@ SEED = 13
 # ---------------------------------------------------------------------------
 #: Canvas in inches.  ``style.COL_WIDTH`` is exactly 170 mm; the height is what
 #: three rows of two panels need once the statistics band, the date labels and
-#: the one-line header are paid for -- six panels of 74.6 x 45.7 mm.
+#: the one-line legend above the first row are paid for.
 PLATE_IN = (style.COL_WIDTH, 7.55)
 PLATE_DPI = FIG_DPI
 #: Grid fractions.  ``wspace`` is set by the widest y tick label of the right
-#: column ("0.175"): it has to clear the left panel by >= 1.5 mm.  ``hspace``
-#: is set by the two statistics rows plus the date labels of the row below.
-PLATE_GRID = dict(left=0.055, right=0.994, top=0.915, bottom=0.048,
+#: column ("0.175") plus the y label of that column: it has to clear the left
+#: panel by >= 1.5 mm.  ``hspace`` is set by the two statistics rows plus the
+#: date labels of the row below.  ``top`` leaves the legend band and the first
+#: row's statistics band above the grid -- the band the removed header used to
+#: share, now free for the panels and the one legend.
+PLATE_GRID = dict(left=0.075, right=0.994, top=0.921, bottom=0.048,
                   wspace=0.15, hspace=0.336)
-#: The one-line header.  Counts, dates, orbit ids and the trend semantics live
-#: in the caption: the plate states what it shows, nothing about the pipeline.
-HEADER = "Espoo mast — OCV trajectories by acquisition track"
 #: How each dimension is labelled on the plate: canonical term, unit in
 #: parentheses, and no column name -- ``gamma2_mask`` is the coherence
 #: ``gamma**2``, in math text, because that is what it measures.
@@ -138,14 +147,33 @@ PANEL_LABEL = {
     "P": "P — persistence (pixel frequency)",
     "gamma2_mask": r"$\gamma^2$ — coherence",
 }
+#: The one-line y label of each panel.  With the panel titles gone this is what
+#: names the dimension on the plate: the term and its unit, one line, the axis
+#: label rung.  The prose definition of ``PANEL_LABEL`` -- "observable area",
+#: "centroid to peak" -- is in the caption, not above the axes.
+PANEL_YLABEL = {
+    "A": "A  [cells]",
+    "D": "D  [1]",
+    "F": "F  [components]",
+    "S": "S  [cells]",
+    "P": "P  [1]",
+    "gamma2_mask": r"$\gamma^2$  [1]",
+}
 #: Reading order of the panels -- pinned by the audit and by the caption.
 PANEL_ORDER = tuple(DIMS)
 #: One fixed statistics band above every axes: DESC above, ASC second,
 #: flush with the left spine, identical in all six panels.  Points from the
-#: axes top; ``TITLE_PAD`` leaves ~4 mm between the DESC row and the title.
+#: axes top; the panel tags sit *above* this band, at ``TAG_PAD_PT`` -- inside
+#: the axes a tag was measured to cover a drawn point (panel c1), so the pad is
+#: the one the old panel title needed.
 STAT_PT = 6.6
 STAT_ROW = {"DESCENDING": 10.0, "ASCENDING": 1.0}
-TITLE_PAD = 20.0
+#: The tag's distance above the axes, in points: above the DESC row (+10 pt, its
+#: text 6.6 pt tall) with ~2 mm of air, so the tag reads as the panel's key and
+#: not as a third statistics line.  The guard below re-measures the clearance.
+TAG_PAD_PT = 24.0
+#: The clearance the tag and the legend have to leave, in mm (asserted).
+TAG_CLEAR_MM = 1.0
 #: Marks, sized for the final 170 mm plate: a white edge keeps the outline of a
 #: 3.6 pt dot visible, the trend line is heavier than the grid but lighter than
 #: the markers (the markers are drawn on top of it).
@@ -410,7 +438,7 @@ def make_figure(report, rows, fig_path=None):
     fig.subplots_adjust(**PLATE_GRID)
     axes = list(grid.ravel())
     stats_rows = {}          # per axes, for the clearance guards below
-    titles = {}              # the left-aligned panel title, for the same reason
+    tags = {}                # the panel tag, for the same reason
     drawn = {"panel_order": list(PANEL_ORDER), "panels": {}}
     for index, dim in enumerate(PANEL_ORDER):
         ax = axes[index]
@@ -443,7 +471,9 @@ def make_figure(report, rows, fig_path=None):
                           "y": [float(ys[0]), float(ys[1])],
                           "flagged": flagged},
             }
-        drawn["panels"][dim] = {"label": PANEL_LABEL[dim], "tracks": tracks}
+        drawn["panels"][dim] = {"label": PANEL_LABEL[dim],
+                                "tag": style.panel_id(index // 2, index % 2),
+                                "tracks": tracks}
         # One fixed band per panel: DESC above, ASC second, flush with the left
         # spine -- the same rule in all six, so the panels can be compared.
         stats_rows[ax] = [
@@ -454,29 +484,30 @@ def make_figure(report, rows, fig_path=None):
                     clip_on=False)
             for orbit, _name, colour in ORBITS
             if (report["drift"][dim].get(orbit) or {}).get("available")]
-        # ``set_title`` returns the artist, and a left title is not ``ax.title``:
-        # the guards need the box that is actually drawn.
-        titles[ax] = ax.set_title(PANEL_LABEL[dim], loc="left", pad=TITLE_PAD,
-                                  fontsize=style.FS["title"])
+        # The panel carries its key, not a title: ``a1`` ... ``c2``, on the title
+        # rung, placed above this plate's statistics band (``TAG_PAD_PT``) --
+        # inside the axes it would cover a drawn point, which the guard below
+        # used to prove before the pad was raised.
+        tags[ax] = style.tag_axes(ax, drawn["panels"][dim]["tag"],
+                                  pad=TAG_PAD_PT)
+        ax.set_ylabel(PANEL_YLABEL[dim], fontsize=style.FS["label"])
         ax.tick_params(labelsize=style.FS["tick"], length=2.4, width=0.5, pad=2)
         ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=4, maxticks=6))
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
     for ax in axes[3:]:                 # one date label per column, at the foot
         ax.set_xlabel("acquisition date", fontsize=style.FS["label"])
-    # One figure legend, frameless, at the right end of the header line: the
-    # counts belong to the track, not to a panel, and six small legends were
-    # six places to read the same two numbers.
+    # One figure legend, frameless, in the band the header used to start: the
+    # counts belong to the track, not to a panel, and six small legends were six
+    # places to read the same two numbers.
     handles = [plt.Line2D([], [], marker="o", linestyle="none", ms=MARKER_PT,
                           mfc=colour, mec="white", mew=MARKER_EDGE_PT,
                           label=f"{name} (n={report['by_orbit'][orbit]})")
                for orbit, name, colour in ORBITS]
-    legend = fig.legend(handles=handles, loc="upper right", ncol=2,
-                        bbox_to_anchor=(PLATE_GRID["right"], 0.996),
+    legend = fig.legend(handles=handles, loc="upper left", ncol=2,
+                        bbox_to_anchor=(0.006, 0.997),
                         frameon=False, fontsize=style.FS["legend"],
                         handletextpad=0.4, columnspacing=1.4,
                         borderaxespad=0.0, labelspacing=0.2)
-    header = fig.suptitle(HEADER, x=0.006, y=0.996, ha="left", va="top",
-                          fontsize=style.FS["suptitle"])
     # --- guards -------------------------------------------------------------
     # These are the checks a tight bbox hides: with the canvas as the export
     # box, a glyph at the edge is either inside it or cut off, and a band that
@@ -492,27 +523,29 @@ def make_figure(report, rows, fig_path=None):
             if span.x0 < box.x0 or span.x1 > box.x1:
                 raise RuntimeError(
                     "%r: the statistics line runs %.1f mm past the axes edge"
-                    % (titles[ax].get_text(),
+                    % (tags[ax].get_text(),
                        max(box.x0 - span.x0, span.x1 - box.x1) * to_mm))
+        # The tag sits above the statistics band, not inside the panel: a tag
+        # drawn over the axes was measured to cover a drawn point (panel c1), so
+        # the guard here is the one the panel title used to have -- the tag must
+        # clear the DESC row, not touch it.
         if rows_here:
-            top = max(a.get_window_extent(renderer).y1 for a in rows_here)
-            if titles[ax].get_window_extent(renderer).y0 < top + 0.5:
-                raise RuntimeError("%r: the title touches the DESC row"
-                                   % titles[ax].get_text())
-    header_box = header.get_window_extent(renderer)
+            band = max(a.get_window_extent(renderer).y1 for a in rows_here)
+            clear = (tags[ax].get_window_extent(renderer).y0 - band) * to_mm
+            if clear < TAG_CLEAR_MM:
+                raise RuntimeError(
+                    "%s: the tag clears the DESC row by only %.1f mm"
+                    % (tags[ax].get_text(), clear))
     legend_box = legend.get_window_extent(renderer)
-    gap = (legend_box.x0 - header_box.x1) * to_mm
-    if gap < 2.0:
-        raise RuntimeError("the header and the legend leave no gap (%.1f mm): "
-                           "shorten the header" % gap)
-    for name, span in (("header", header_box), ("legend", legend_box)):
-        if (span.x0 < 0 or span.x1 > fig.bbox.width
-                or span.y0 < 0 or span.y1 > fig.bbox.height):
-            raise RuntimeError("the %s leaves the canvas" % name)
-    title_top = max(titles[ax].get_window_extent(renderer).y1 for ax in axes)
-    if (header_box.y0 - title_top) * to_mm < 1.5:
-        raise RuntimeError("the header clears the panel titles by only %.1f mm"
-                           % ((header_box.y0 - title_top) * to_mm))
+    if (legend_box.x0 < 0 or legend_box.x1 > fig.bbox.width
+            or legend_box.y0 < 0 or legend_box.y1 > fig.bbox.height):
+        raise RuntimeError("the legend leaves the canvas")
+    band_top = max((a.get_window_extent(renderer).y1
+                    for ax in axes[:2] for a in (stats_rows.get(ax) or [])),
+                   default=fig.bbox.height)
+    if (legend_box.y0 - band_top) * to_mm < TAG_CLEAR_MM:
+        raise RuntimeError("the legend clears the first statistics band by only "
+                           "%.1f mm" % ((legend_box.y0 - band_top) * to_mm))
     for dim in PANEL_ORDER:
         for orbit, name, _colour in ORBITS:
             track = drawn["panels"][dim]["tracks"].get(orbit)
@@ -552,9 +585,10 @@ def plate_audit(report, drawn, fig_path, tight, edges, translucent, limits):
         "figsize_inches": [round(PLATE_IN[0], 6), round(PLATE_IN[1], 6)],
         "native_dpi": PLATE_DPI,
         #: Keyed by the ``figure_style`` role, so a check can read its band.
+        #: There is no ``suptitle``: this plate draws no title.  The panel ids
+        #: are the ``title`` rung, declared under the name of what they are.
         "final_font_sizes_pt": {
-            "suptitle": style.FS["suptitle"],
-            "title": style.FS["title"],
+            "panel_ids": style.FS["title"],
             "label": style.FS["label"],
             "tick": style.FS["tick"],
             "legend": style.FS["legend"],
@@ -595,6 +629,8 @@ def plate_audit(report, drawn, fig_path, tight, edges, translucent, limits):
     for dim in PANEL_ORDER:
         x_lim, y_lim = limits[dim]
         panel = {"label": PANEL_LABEL[dim],
+                 "tag": drawn["panels"][dim]["tag"],
+                 "y_label": PANEL_YLABEL[dim],
                  "x_limits": [round(x_lim[0], 4), round(x_lim[1], 4)],
                  "y_limits": [round(y_lim[0], 6), round(y_lim[1], 6)],
                  "tracks": {}}
@@ -720,12 +756,19 @@ def figure_section(figure):
                     for fmt, mm in sorted(widths.items()))
         + ". The plate is authored at the print width — it is not cropped to its "
         "content, so nothing here is rescaled.",
-        f"* **typography** header {fonts['suptitle']} · panel title "
-        f"{fonts['title']} · axis label {fonts['label']} · ticks {fonts['tick']} · "
-        f"legend {fonts['legend']} · statistics {fonts['annotation']} pt — nothing "
-        "below 6 pt, every role inside the `figure_style` band.",
-        f"* **panels**, reading order: {order}. The column names of the table are "
-        "not on the plate: `gamma2_mask` is drawn as the coherence it measures.",
+        f"* **typography** panel id {fonts['panel_ids']} · axis label "
+        f"{fonts['label']} · ticks {fonts['tick']} · legend {fonts['legend']} · "
+        f"statistics {fonts['annotation']} pt — no title, nothing below 6 pt, "
+        "every role inside the `figure_style` band.",
+        f"* **panels**, reading order: {order}, tagged "
+        + ", ".join(f"`{figure['panels'][dim]['tag']}` "
+                    f"{figure['panels'][dim]['label'].split(' —')[0]}"
+                    for dim in figure["panel_order"])
+        + ". The plate carries no title and no panel titles: a tag says where a "
+        "panel sits, its one-line y label names the dimension ("
+        + ", ".join(f"`{PANEL_YLABEL[dim]}`" for dim in PANEL_ORDER)
+        + "), and the column names of the table are not drawn at all — "
+        "`gamma2_mask` is drawn as the coherence it measures.",
         "* **statistics rows**: one fixed band above every panel, identical in all "
         f"six — DESC at +{figure['statistics']['row_offset_pt']['DESCENDING']:.1f} "
         f"pt, ASC at +{figure['statistics']['row_offset_pt']['ASCENDING']:.1f} pt, "
@@ -735,8 +778,8 @@ def figure_section(figure):
         "fires, `flat` when it does not).",
         "* **marks** 3.6 pt markers with a 0.5 pt white edge above the 1.2 pt trend "
         "line; solid where that verdict is `trend`, dashed where it is `flat`; the "
-        "colour is the track's. One figure legend carries the track counts at the "
-        "right end of the header line.",
+        "colour is the track's. One figure legend carries the track counts in the "
+        "band above the first row.",
         f"* **bounds** content {bounds['content_mm'][0]:.1f} × "
         f"{bounds['content_mm'][1]:.1f} mm inside the {bounds['canvas_mm'][0]:.1f} "
         f"× {bounds['canvas_mm'][1]:.1f} mm canvas, "
@@ -747,9 +790,10 @@ def figure_section(figure):
         "pre-blended over white (`eps=\"blend\"`), "
         f"{figure['eps']['rasterised_artists']} rasterised, text "
         f"{figure['eps']['vector_text']}: the EPS is vector, like the PDF.",
-        "* **moved into this caption**: the orbit ids (ASC = relative orbit 160, "
-        "DESC = 51), the three shared dates, the trend semantics and the "
-        "definitions of the six dimensions.",
+        "* **moved into this caption**: the title line (*Espoo mast — OCV "
+        "trajectories by acquisition track*), the orbit ids (ASC = relative "
+        "orbit 160, DESC = 51), the three shared dates, the trend semantics and "
+        "the definitions of the six dimensions.",
         "", "```json",
         json.dumps(figure, indent=1, ensure_ascii=False),
         "```", "",
@@ -950,14 +994,21 @@ def verify_figure(figure, report, table=None, paths=None):
               f"{fmt}: {info['height_mm']:.2f} mm high")
         check(abs(info["mm"] - figure["native_width_mm"][fmt]) <= 0.01,
               f"{fmt}: the recorded width is not the measured one")
-    for role, (low, high) in style.BANDS.items():
-        value = figure["final_font_sizes_pt"].get(role)
-        check(value is not None and low - 1e-9 <= value
-              and (high is None or value <= high + 1e-9),
+    fonts = figure["final_font_sizes_pt"]
+    check(set(fonts) == {"panel_ids", "label", "tick", "legend", "annotation"},
+          "the declared font roles are not the ones this plate draws")
+    for role, value in fonts.items():
+        low, high = style.BANDS["title" if role == "panel_ids" else role]
+        check(low - 1e-9 <= value and (high is None or value <= high + 1e-9),
               f"{role}: {value} pt is outside the {low}..{high} band")
-    for dim in figure["panel_order"]:
+    check(fonts.get("panel_ids") == style.FS["title"],
+          "the panel ids are not on the title rung")
+    for index, dim in enumerate(figure["panel_order"]):
         panel = figure["panels"][dim]
         check(panel["label"] == PANEL_LABEL[dim], f"{dim}: label")
+        check(panel.get("tag") == style.panel_id(index // 2, index % 2),
+              f"{dim}: tag {panel.get('tag')!r}, not its grid position")
+        check(panel.get("y_label") == PANEL_YLABEL[dim], f"{dim}: y label")
         check("gamma2_mask" not in panel["label"], f"{dim}: column name drawn")
         lows, highs = [], []
         for orbit, name, _colour in ORBITS:
@@ -1136,9 +1187,15 @@ def selftest():
     check("the two statistics rows cannot touch",
           (STAT_ROW["DESCENDING"] - STAT_ROW["ASCENDING"]) > 1.3 * STAT_PT,
           f"{STAT_ROW} at {STAT_PT} pt")
-    check("the title clears the DESC row",
-          TITLE_PAD > STAT_ROW["DESCENDING"] + 1.3 * STAT_PT,
-          f"pad {TITLE_PAD} pt")
+    check("the panels are tagged by grid position, not by a title",
+          [style.panel_id(index // 2, index % 2)
+           for index in range(len(PANEL_ORDER))]
+          == ["a1", "a2", "b1", "b2", "c1", "c2"],
+          ", ".join(style.panel_id(index // 2, index % 2)
+                    for index in range(len(PANEL_ORDER))))
+    check("and every panel names its dimension in a one-line y label",
+          all("\n" not in PANEL_YLABEL[dim] for dim in PANEL_ORDER),
+          " · ".join(PANEL_YLABEL[dim] for dim in PANEL_ORDER))
     rows = load()
     lines = [statistics_line(report["drift"]["A"][orbit])
              for orbit, _name, _colour in ORBITS]
@@ -1159,6 +1216,10 @@ def selftest():
     check("every panel pins both tracks",
           all(sum(1 for pin in plate["panels"][dim]["tracks"].values()
                   if pin.get("n")) == 2 for dim in PANEL_ORDER))
+    check("the plate declares no title size, its tags are on the title rung",
+          "suptitle" not in plate["final_font_sizes_pt"]
+          and plate["final_font_sizes_pt"]["panel_ids"] == style.FS["title"],
+          str(plate["final_font_sizes_pt"]))
     check("the alpha is blended, not rasterised",
           plate["eps"]["alpha_artists"] > 0
           and plate["eps"]["rasterised_artists"] == 0,

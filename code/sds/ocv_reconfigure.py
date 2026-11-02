@@ -2061,19 +2061,26 @@ PLATE_COLUMNS = ("behaviour", "geometry")
 #: would be met and the typography rule broken.  Amendment 6 therefore keeps
 #: *rows = experiment* and *columns = (channel x block)* as the reading order but
 #: nests them: two columns of blocks, two rows per experiment (ASC, then DESC).
-#: Eight panels in two columns is four rows, and a row can afford 44 mm of plane.
+#: Eight panels in two columns is four rows, and a row can afford a 46 mm plane.
+#: The band above the first row used to be a flat 15 mm: a 9 pt headline, the ✱
+#: line and the clearance.  The headline is gone -- the caption carries it, as on
+#: every other plate of this repository -- so the band is now the sum of what a
+#: plate actually draws, and the millimetres that are left over went into the
+#: plane (44 -> 46 mm on every row), where the state labels and the strip live.
 PLATE_LEFT_MM = 14.0          # y tick labels + the rotated y label
 PLATE_RIGHT_MM = 3.0          # a tick at the axis end is labelled half outside it
 PLATE_COL_GAP_MM = 11.0       # the right column's y ticks + its label
-PLATE_PLANE_MM = 44.0         # the square z-plane: four 6.2 pt labels need it
-PLATE_ROW_GAP_MM = 12.0       # x tick labels + x label + the next row's title
-PLATE_HEADER_MM = 15.0        # the one-line header, and the ✱ line under it
-#: Where the two header lines start, measured from the top of the canvas.  The
-#: ✱ line is set on the label rung, so the band has to hold the header (3.6 mm),
-#: the line itself (2.9 mm) and 1.5 mm of air above the first row of titles --
-#: which is why the header sits at 2 mm and not at 3.
-PLATE_TEXT_MM = 2.0
-PLATE_LEGEND_MM = 6.2
+PLATE_PLANE_MM = 46.0         # the square z-plane: four 6.2 pt labels need it
+PLATE_ROW_GAP_MM = 12.0       # x tick labels + x label + the next row's identifier
+#: What the band above the first row holds, measured from the top of the canvas:
+#: 2 mm of air, the block identifier's own line (an 8.8 pt title plus the 2 pt pad
+#: it sits above its axes with) -- and, only on a plate that draws one, the ✱ line
+#: with 1.5 mm of air under it.  A plate with no thin cell reserves nothing for a
+#: line it does not draw, which is where most of the 15 mm went.
+PLATE_MARGIN_MM = 2.0
+PLATE_IDENT_MM = 4.7          # the identifier line + its pad, down to the axes
+PLATE_THIN_MM = 3.1           # the ✱ line (2.9 mm) and a little air
+PLATE_CLEAR_MM = 1.5          # the ✱ line clears the identifiers by this
 PLATE_FOOT_MM = 10.0          # x tick labels + x label under the last row
 PLATE_DPI = FIGURE_DPI        # 630, as the spec fixes it
 #: The state label inside a panel: the ladder's annotation floor, not a size of
@@ -2101,27 +2108,36 @@ LABEL_CLEAR_MM = 0.0          # boxes may touch, never overlap
 MARKER_CLEAR_MM = 0.8         # a label keeps this far off a marker
 PANEL_CLEAR_MM = 0.4          # a label stays this far inside its own slot
 INSET_CLEAR_MM = 1.0          # the R strip clears labels and markers by this
-HEADER_CLEAR_MM = 1.5         # the header clears the first row of titles
 
 
-def plate_layout(rows):
+def plate_layout(rows, thin=False):
     """The canvas and the grid fractions of a plate with *rows* z-plane rows.
 
     Pure arithmetic on the constants above, so ``--selftest`` can check the
     canvas without matplotlib: two slots, the gutters and the gap add up to
-    exactly ``FINAL_WIDTH_MM``, and the height is the header, the planes, the
-    gaps and the foot, with nothing left over for a tight bbox to steal.
+    exactly ``FINAL_WIDTH_MM``, and the height is the band above the first row
+    of identifiers, the planes, the gaps and the foot, with nothing left over
+    for a tight bbox to steal.
+
+    The band is the one the plate draws, not the one a headline would need:
+    2 mm of air, the identifiers, and -- only when *thin* says this plate marks
+    a resampled cell -- the ✱ line with its clearance.  A plate without one
+    reserves nothing for it; the width is still ``FINAL_WIDTH_MM``, so what the
+    band gives up goes to the plane.
     """
     width_mm = style.FINAL_WIDTH_MM
     columns = len(PLATE_COLUMNS)
+    band_mm = PLATE_MARGIN_MM + PLATE_IDENT_MM
+    if thin:
+        band_mm += PLATE_THIN_MM + PLATE_CLEAR_MM
     slot_mm = (width_mm - PLATE_LEFT_MM - PLATE_RIGHT_MM
                - (columns - 1) * PLATE_COL_GAP_MM) / columns
-    height_mm = (PLATE_HEADER_MM + rows * PLATE_PLANE_MM
+    height_mm = (band_mm + rows * PLATE_PLANE_MM
                  + (rows - 1) * PLATE_ROW_GAP_MM + PLATE_FOOT_MM)
     return {
         "width_mm": width_mm, "height_mm": height_mm,
         "rows": rows, "columns": columns, "slot_mm": slot_mm,
-        "plane_mm": PLATE_PLANE_MM,
+        "plane_mm": PLATE_PLANE_MM, "band_mm": band_mm, "thin": bool(thin),
         #: A z-plane is square (``aspect="equal"``); the slot is wider than tall,
         #: so the x limits are stretched by exactly this factor and the plane
         #: keeps its units.  The lateral margin is where the state labels sit.
@@ -2131,7 +2147,7 @@ def plate_layout(rows):
             "left": PLATE_LEFT_MM / width_mm,
             "right": 1.0 - PLATE_RIGHT_MM / width_mm,
             "bottom": PLATE_FOOT_MM / height_mm,
-            "top": 1.0 - PLATE_HEADER_MM / height_mm,
+            "top": 1.0 - band_mm / height_mm,
             "wspace": PLATE_COL_GAP_MM / slot_mm,
             "hspace": PLATE_ROW_GAP_MM / PLATE_PLANE_MM,
         },
@@ -2189,6 +2205,23 @@ def _draw_magnitude_strip(inset, strip):
 STATE_LABEL = {"pre-collapse (healthy)": "pre", "post-collapse": "post"}
 
 
+def block_identifier(site, channel, block_name):
+    """``LUMO / ASC / behavior`` -- how this plate addresses one of its panels.
+
+    Not a heading and not a title: a synthesis plate has *blocks*, not cells of a
+    trajectory grid, and the audit's ``DOC_DIRS`` exception allows it to name them
+    in the band above the plane.  The hierarchy is the experiment, the channel and
+    the block, in that order, one separator each -- and nothing else.
+
+    The pair the plane draws is **not** repeated here.  The axes already say
+    ``z(gamma2)``, ``z(P)``, ``z(A)``, ``z(F)``, so a ``[gamma2, P]`` bracket
+    above them would be the same words twice on a 46 mm plane; the block's
+    magnitude is the ``R`` the strip repeats, and the machine-readable record
+    still carries the pair as ``dims``.
+    """
+    return f"{EXPERIMENT[site]} / {channel} / {BLOCK_DISPLAY[block_name]}"
+
+
 def _empty_panel(ax, label, note):
     """A panel for a channel the record does not contain: empty, and says so.
 
@@ -2203,7 +2236,8 @@ def _empty_panel(ax, label, note):
     ax.set_yticks([])
     for spine in ("top", "right"):
         ax.spines[spine].set_visible(False)
-    ax.set_title(label, loc="left", color="0.55")
+    ax.set_title(label, loc="left", color="0.55", pad=style.PANEL_TAG_PAD_PT,
+                 fontsize=style.FS["title"])
     ax.text(0.5, 0.56, "—", transform=ax.transAxes, ha="center", va="center",
             fontsize=13.0, color="0.7")
     ax.text(0.5, 0.42, note, transform=ax.transAxes, ha="center", va="center",
@@ -2222,8 +2256,7 @@ def _panel(ax, report, site, channel, block_name, layout, fig):
     """
     store = report["experiments"][site]
     dims = GEOMETRY_PLANE if block_name == "geometry" else BLOCKS[block_name]
-    title = (f"{EXPERIMENT[site]} · {channel} · {BLOCK_DISPLAY[block_name]} "
-             f"[{', '.join(DIM_DISPLAY.get(dim, dim) for dim in dims)}]")
+    title = block_identifier(site, channel, block_name)
     panel = {"site": site, "channel": channel, "block": block_name,
              "title": title, "dims": list(dims), "empty": False,
              "points": {}, "labels": {}, "note": None, "strip": None,
@@ -2258,7 +2291,8 @@ def _panel(ax, report, site, channel, block_name, layout, fig):
                   fontsize=style.FS["label"], labelpad=1.5)
     ax.set_ylabel(f"z({DIM_DISPLAY.get(dims[1], dims[1])})",
                   fontsize=style.FS["label"], labelpad=1.5)
-    ax.set_title(title, loc="left", pad=3.0, fontsize=style.FS["title"])
+    ax.set_title(title, loc="left", pad=style.PANEL_TAG_PAD_PT,
+                 fontsize=style.FS["title"])
     renderer = fig.canvas.get_renderer()
     to_mm = 25.4 / fig.dpi
     reserved = []
@@ -2390,8 +2424,8 @@ def _place_state_label(ax, fig, x, y, text, colour, ha_first, placed, reserved,
     """Put *text* beside ``(x, y)`` where its measured box clears the panel.
 
     The box is the renderer's, not an estimate from the character count: a
-    6.2 pt ``rebuild (0.56; n=43)`` is 24.8 mm wide and a 44 mm plane's lateral
-    margin is 13.5 mm, so whether a label fits on one side of its marker is a
+    6.2 pt ``rebuild (0.56; n=43)`` is 24.8 mm wide and a 46 mm plane's lateral
+    margin is 12.5 mm, so whether a label fits on one side of its marker is a
     fact about the text, and the search runs on that fact.  Candidate positions
     step away from the marker in millimetres -- up and down, on either side --
     and the first box that is inside the slot and clear of every other box wins.
@@ -2543,19 +2577,25 @@ def _legend_line(fig, named):
         % style.FINAL_WIDTH_MM)
 
 
-def _plate(report, sites, figdir, stem, headline):
+def _plate(report, sites, figdir, stem, caption):
     """Draw one plate at 170 mm, guard it, write jpg + pdf + eps; return the audit.
 
     The canvas is authored, not measured from the content: 170 mm is the print
     width and the panels are the ones ``plate_layout`` sizes.  A tight bbox would
     re-cut this after the fact and shrink every glyph with it, which is the
     defect the guards below exist to make impossible to hit silently.
+
+    *caption* is not drawn.  A plate carries a key per panel, not a headline over
+    them: this one names its eight blocks in the band, and what the plate is
+    about is the caption's first line -- in the guide's ``## Caption`` and in the
+    manuscript, one place, where it is read next to the argument.
     """
     import matplotlib
     matplotlib.use("Agg")
     plt = style.apply(dpi=PLATE_DPI)
 
-    layout = plate_layout(len(sites) * len(CHANNEL_ORDER))
+    thin_text = _thin_legend(report, sites)
+    layout = plate_layout(len(sites) * len(CHANNEL_ORDER), thin=bool(thin_text))
     fig, slots = plt.subplots(layout["rows"], layout["columns"],
                               figsize=layout["figsize"], squeeze=False)
     fig.subplots_adjust(**layout["grid"])
@@ -2572,27 +2612,25 @@ def _plate(report, sites, figdir, stem, headline):
                                               block_name, layout, fig)
                 titles[key] = ax._left_title          # `ax.title` is the centre one
                 drawn["panel_order"].append(key)
-    header = fig.suptitle(headline, x=0.006, ha="left", va="top",
-                          y=1.0 - PLATE_TEXT_MM / layout["height_mm"],
-                          fontsize=style.FS["suptitle"])
-    thin = _legend_line(fig, _thin_legend(report, sites))
+    thin = _legend_line(fig, thin_text)
     legend = None
     if thin:
-        legend = fig.text(0.006, 1.0 - PLATE_LEGEND_MM / layout["height_mm"],
+        legend = fig.text(0.006, 1.0 - PLATE_MARGIN_MM / layout["height_mm"],
                           thin, ha="left", va="top",
                           fontsize=style.FS["label"], color="0.35")
     # --- guards -------------------------------------------------------------
     # These are the checks a tight bbox hides: with the canvas as the export box
     # a glyph is either inside it or cut off, and a panel that grew by half a
-    # point collides instead of pushing the frame wider.
+    # point collides instead of pushing the frame wider.  With the headline gone
+    # the band has no second row any more: what is guarded is the ✱ line -- on a
+    # plate that draws one -- and the first row of block identifiers.
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
     to_mm = 25.4 / fig.dpi
-    header_box = header.get_window_extent(renderer)
-    rows_here = [("header", header_box)]
+    band = []
     if legend is not None:
-        rows_here.append(("✱ legend", legend.get_window_extent(renderer)))
-    for name, span in rows_here:
+        band.append(("✱ legend", legend.get_window_extent(renderer)))
+    for name, span in band:
         if (span.x0 < 0 or span.x1 > fig.bbox.width
                 or span.y0 < 0 or span.y1 > fig.bbox.height):
             raise RuntimeError("the %s leaves the canvas" % name)
@@ -2600,17 +2638,20 @@ def _plate(report, sites, figdir, stem, headline):
             raise RuntimeError(
                 "the %s stops %.1f mm from the right edge of the canvas: "
                 "shorten it" % (name, (fig.bbox.width - span.x1) * to_mm))
-    if legend is not None:
-        gap = (header_box.y0 - legend.get_window_extent(renderer).y1) * to_mm
-        if gap < 0.4:
-            raise RuntimeError("the header and the ✱ line touch (%.1f mm)" % gap)
     first_rows = len(CHANNEL_ORDER) * len(PLATE_COLUMNS)
     top = max(titles[key].get_window_extent(renderer).y1
               for key in drawn["panel_order"][:first_rows])
-    low = rows_here[-1][1].y0
-    if (low - top) * to_mm < HEADER_CLEAR_MM:
-        raise RuntimeError("the header clears the first row of titles by only "
-                           "%.1f mm" % ((low - top) * to_mm))
+    head = (fig.bbox.height - top) * to_mm
+    if head < PLATE_MARGIN_MM:
+        raise RuntimeError(
+            "the block identifiers sit %.1f mm below the top of the canvas "
+            "(min %.1f mm): re-cut the band" % (head, PLATE_MARGIN_MM))
+    if band:
+        low = band[-1][1].y0
+        if (low - top) * to_mm < PLATE_CLEAR_MM - 0.05:
+            raise RuntimeError(
+                "the ✱ line clears the first row of block identifiers by only "
+                "%.1f mm" % ((low - top) * to_mm))
     tight = fig.get_tightbbox(renderer)                       # inches
     edges = {"left": tight.x0, "right": layout["figsize"][0] - tight.x1,
              "bottom": tight.y0, "top": layout["figsize"][1] - tight.y1}
@@ -2624,11 +2665,11 @@ def _plate(report, sites, figdir, stem, headline):
     out = os.path.join(figdir, f"{stem}.jpg")
     style.save(fig, out, dpi=PLATE_DPI, eps="blend")
     plt.close(fig)
-    return plate_audit(report, drawn, out, tight, edges, translucent, headline,
+    return plate_audit(report, drawn, out, tight, edges, translucent, caption,
                        thin)
 
 
-def plate_audit(report, drawn, fig_path, tight, edges, translucent, headline,
+def plate_audit(report, drawn, fig_path, tight, edges, translucent, caption,
                 thin):
     """The machine-readable record of a plate, written into the guide.
 
@@ -2636,22 +2677,29 @@ def plate_audit(report, drawn, fig_path, tight, edges, translucent, headline,
     the three containers really is, what happened to the alpha in the EPS, which
     numbers each panel pins, and where the labels and the strip ended up.
     Nothing is recomputed -- these are the values that were drawn.
+
+    ``caption`` is recorded, not drawn: the plate has no headline of its own (see
+    :func:`_plate`), so the audit names the sentence the caption carries and the
+    ``headline_on_plate`` field is ``None`` -- a plate either draws a headline or
+    it does not, and this one says which.
     """
     stem = os.path.splitext(fig_path)[0]
     layout = drawn["layout"]
     audit = {
         "schema": "sds-plate-audit-v1",
         "figure": os.path.relpath(fig_path, REPO),
-        "headline": headline,
+        "caption": caption,
+        "headline_on_plate": None,
         "thin_legend": thin or None,
         "target_width_mm": style.FINAL_WIDTH_MM,
         "target_height_mm": round(layout["height_mm"], 2),
         "figsize_inches": [round(layout["figsize"][0], 6),
                            round(layout["figsize"][1], 6)],
         "native_dpi": PLATE_DPI,
-        #: Keyed by the ``figure_style`` role, so a check can read its band.
+        #: Keyed by the ``figure_style`` role, so a check can read its band.  No
+        #: ``suptitle``: the plate draws no headline, so it declares no rung for
+        #: one -- the bands listed are the ones with ink in them.
         "final_font_sizes_pt": {
-            "suptitle": style.FS["suptitle"],
             "title": style.FS["title"],
             "label": style.FS["label"],
             "tick": style.FS["tick"],
@@ -2664,6 +2712,7 @@ def plate_audit(report, drawn, fig_path, tight, edges, translucent, headline,
         "layout": {
             "rows": layout["rows"], "columns": layout["columns"],
             "plane_mm": layout["plane_mm"],
+            "band_mm": round(layout["band_mm"], 2),
             "slot_mm": round(layout["slot_mm"], 2),
             "x_stretch": round(layout["x_stretch"], 4),
             "grid": {key: round(value, 5)
@@ -2787,11 +2836,13 @@ def assert_figure_matches_report(report, drawn):
 
 
 
-#: One line per asset's plate header.  On the plate the header states *what is
-#: shown*; the long description (chip, window rule, which states) lives in the
-#: guide, because a 170 mm line at 9 pt holds about 85 characters and a header
-#: that has to be shrunk to fit is a header nobody can read.
-PLATE_HEADLINE = {
+#: One line per asset, and what it is *not* is a plate header: since amendment 8 the
+#: plate carries no headline at all, so this string is the **caption's first line**
+#: in the guide (`## Caption`), where the long description -- chip, window rule,
+#: which states -- already lives.  It stays a full sentence because it is the
+#: sentence a reader meets over the figure in the manuscript; it is simply set in
+#: the caption and not on the canvas.
+PLATE_CAPTION = {
     "lumo": "OCV reconfiguration — LUMO tower, against its own reference state",
     "bautzen": "OCV reconfiguration — Bautzen bridge, against its own ordinal "
                "state ladder",
@@ -2801,11 +2852,11 @@ PLATE_HEADLINE = {
     "kdlo": "OCV reconfiguration — KDLO mast, standing against rebuilt",
 }
 
-#: The juxtaposition header per registered pair; its stem comes from the site tuple.
-#: The default pair's header names the states as *controlled* and stops there: a
-#: shared scale is what the plate does **not** have, so the title must not read
-#: like a common dose axis the two assets both sit on.
-PAIR_HEADLINE = {
+#: The juxtaposition caption per registered pair; its stem comes from the site
+#: tuple.  The default pair's wording names the states as *controlled* and stops
+#: there: a shared scale is what the plate does **not** have, so the sentence must
+#: not read like a common dose axis the two assets both sit on.
+PAIR_CAPTION = {
     DEFAULT_SITES: "OCV reconfiguration across controlled LUMO and Bautzen states",
     BRIDGE_PAIR: "OCV reconfiguration across a collapse — Carolabrücke and Ponte "
                  "Morandi (no shared scale)",
@@ -2832,12 +2883,12 @@ def make_figure(report, figdir=None):
     sites = tuple(report.get("sites") or DEFAULT_SITES)
     pair = pair_of(sites)
     if pair:
-        plates = [(figure_stem(pair), tuple(pair), PAIR_HEADLINE[pair])]
+        plates = [(figure_stem(pair), tuple(pair), PAIR_CAPTION[pair])]
     else:
         plates = [(f"fig_sds_ocv_reconfigure_{site}", (site,),
-                   PLATE_HEADLINE[site]) for site in sites]
-    return [_plate(report, subset, figdir, stem, headline)
-            for stem, subset, headline in plates]
+                   PLATE_CAPTION[site]) for site in sites]
+    return [_plate(report, subset, figdir, stem, caption)
+            for stem, subset, caption in plates]
 
 
 def figure_markdown(report, plates=None):
@@ -2919,6 +2970,16 @@ def figure_markdown(report, plates=None):
                   "carries no arrow, no inset and no ✱: there is no cell to mark.", ""]
     lines += ["Nothing is clipped: the axis limits follow the largest coordinate in "
               "the panel.", ""]
+    caption = (plates[0]["caption"] if plates
+               else PAIR_CAPTION.get(pair) or PLATE_CAPTION.get(sites[0], ""))
+    lines += ["## Caption", "",
+              "The plate carries no headline of its own: a synthesis plate has no "
+              "subject line that is not the caption's. The eight block "
+              "identifiers say what each panel is, and the sentence below says "
+              "what the plate is about — it is the caption's first line, and it "
+              "is the only place it is written.", ""]
+    if caption:
+        lines += [f"> {caption}", ""]
     lines += _plate_section(plates)
     return "\n".join(lines)
 
@@ -2935,15 +2996,19 @@ def _plate_section(plates):
              "measures all three containers afterwards and aborts on a deviation "
              "of more than 0.5 mm.", "",
              "| rung | size | used for |", "| --- | --- | --- |",
-             f"| header | {style.FS['suptitle']:.1f} pt | the one-line headline, "
-             "left-aligned |",
-             f"| panel title | {style.FS['title']:.1f} pt | experiment · channel · "
-             "block · the plane's pair |",
+             f"| block identifier | {style.FS['title']:.1f} pt | experiment / "
+             "channel / block, one line above each plane — the pair the plane "
+             "draws is on its axes, not in the identifier |",
              f"| axis label | {style.FS['label']:.1f} pt | `z(·)` on both axes |",
              f"| tick label | {style.FS['tick']:.1f} pt | the plane's ticks and the "
              "inset's levels |",
              f"| annotation | {STATE_PT:.1f} pt | the state labels, the `D`/`S` note "
              "and the inset's `R` |", "",
+             "No rung is spent on a headline. The band above the first row holds "
+             "the identifiers, 2 mm of air and — only where a cell is thin — the "
+             "✱ line; a plate without one reserves nothing for it, and what the "
+             "band gave up went into the plane: 46 mm square on every row "
+             "instead of 44.", "",
              "The plane is square (`aspect=\"equal\"`): the axes are stretched "
              "horizontally by `slot / plane`, so the units stay equal in both "
              "directions and the added width is the margin the state labels are "
@@ -2953,7 +3018,8 @@ def _plate_section(plates):
         lines += [f"### `{os.path.basename(audit['figure'])}`", "",
                   f"* {layout['rows']} rows × {layout['columns']} columns, plane "
                   f"{layout['plane_mm']:.0f} mm square in a {layout['slot_mm']:.2f} mm "
-                  f"slot, canvas {audit['bounds']['canvas_mm'][0]:.1f} × "
+                  f"slot, band {layout['band_mm']:.1f} mm above the first row, "
+                  f"canvas {audit['bounds']['canvas_mm'][0]:.1f} × "
                   f"{audit['bounds']['canvas_mm'][1]:.1f} mm.",
                   f"* measured width: "
                   + ", ".join(f"{name} {value:.2f} mm"
@@ -3199,7 +3265,7 @@ def selftest():
               and plate["x_stretch"] > 1.0,
               f"{plate['slot_mm']!r} / {plate['x_stretch']!r}")
         check(f"a {rows}-row plate's height is the sum of its bands",
-              abs(plate["height_mm"] - (PLATE_HEADER_MM + PLATE_FOOT_MM
+              abs(plate["height_mm"] - (plate["band_mm"] + PLATE_FOOT_MM
                                         + rows * plate["plane_mm"]
                                         + (rows - 1) * PLATE_ROW_GAP_MM)) < 1e-9,
               f"{plate['height_mm']!r}")
@@ -3208,6 +3274,28 @@ def selftest():
               and plate["grid"]["bottom"] < plate["grid"]["top"]
               and 0.0 < plate["grid"]["wspace"] < 0.5,
               str(plate["grid"]))
+    plain = plate_layout(4)
+    thin = plate_layout(4, thin=True)
+    check("the band above the panels holds only what a plate draws",
+          abs(plain["band_mm"] - (PLATE_MARGIN_MM + PLATE_IDENT_MM)) < 1e-9
+          and abs(thin["band_mm"] - (PLATE_MARGIN_MM + PLATE_IDENT_MM
+                                     + PLATE_THIN_MM + PLATE_CLEAR_MM)) < 1e-9,
+          f"{plain['band_mm']!r} / {thin['band_mm']!r}")
+    check("no plate reserves a band for a headline any more",
+          plain["band_mm"] < 8.0 and plain["band_mm"] < thin["band_mm"] < 15.0,
+          f"{plain['band_mm']:.2f} / {thin['band_mm']:.2f} mm "
+          f"(the header band was 15.0)")
+    check("the band a headline freed went into the plane",
+          plain["plane_mm"] == PLATE_PLANE_MM == 46.0
+          and abs(plain["height_mm"] - (thin["height_mm"] - PLATE_THIN_MM
+                                        - PLATE_CLEAR_MM)) < 1e-9,
+          f"{plain['plane_mm']!r} mm plane, {plain['height_mm']!r} mm canvas")
+    check("a block identifier is asset / channel / block, nothing else",
+          block_identifier("lumo", "ASC", "behaviour")
+          == "LUMO / ASC / behavior"
+          and "[" not in block_identifier("bautzen", "DESC", "geometry")
+          and block_identifier("bautzen", "DESC", "geometry").count("/") == 2,
+          block_identifier("lumo", "ASC", "behaviour"))
     check("the typography floor is the annotation rung",
           STATE_PT == style.FS["annotation"] >= 6.0
           and all(style.FS[rung] > style.FS["annotation"]
@@ -3364,8 +3452,8 @@ def _verify_guide(report, plates, figure_md):
         if stored.get("schema") != audit["schema"]:
             problems.append(f"{rel}/{name}: schema {stored.get('schema')!r}")
             continue
-        for field in ("figure", "target_width_mm", "native_width_mm", "layout",
-                      "final_font_sizes_pt", "bounds", "eps"):
+        for field in ("figure", "caption", "target_width_mm", "native_width_mm",
+                      "layout", "final_font_sizes_pt", "bounds", "eps"):
             if stored.get(field) != audit[field]:
                 problems.append(f"{rel}/{name}: {field} has drifted from the plate "
                                 f"that was built "

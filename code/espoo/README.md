@@ -285,8 +285,8 @@ dates**, so the orbit contrast is a two-sample comparison.
 
 ```bash
 python3 code/espoo/fig_espoo_ocv_chips.py             # ~25 s, JPG + PDF + EPS + MD + JSON
-python3 code/espoo/fig_espoo_ocv_chips.py --selftest  # 22 checks, the last twelve draw a plate
-python3 code/espoo/fig_espoo_ocv_chips.py --verify    # 42 fields + 120 figure pins
+python3 code/espoo/fig_espoo_ocv_chips.py --selftest  # 24 checks, the last twelve draw a plate
+python3 code/espoo/fig_espoo_ocv_chips.py --verify    # 42 fields + 133 figure pins
 ```
 
 The figure is one **170 mm plate**: `6.6929 × 7.5500 in`, six panels of
@@ -294,18 +294,29 @@ The figure is one **170 mm plate**: `6.6929 × 7.5500 in`, six panels of
 PDF (Type-42 vector) and EPS (alpha pre-blended over white). The canvas *is*
 the print width — `bbox_inches="tight"` is never used, so the file is not
 re-cut after the fact and no glyph shrinks; the content has to stay inside the
-canvas instead, which four guards assert on every build: the statistics row
-inside its axes, the title above that row, the header clear of both the legend
-and the panel titles, and the drawn content at least 0.3 mm from every edge.
-`--verify` measures all three containers again and re-derives the 120 pinned
+canvas instead, which four guards assert on every build: the statistics line
+inside its axes, the panel tag clear of the DESC row by 1 mm, the legend clear of
+the first statistics band, and the drawn content at least 0.3 mm from every edge.
+`--verify` measures all three containers again and re-derives the 133 pinned
 numbers from the CSV.
 
-Typography follows `figure_style`: header 9.0, panel title 8.8, axis label
-7.6, ticks and legend 6.8, statistics 6.6 pt — nothing below 6 pt. The panels
-are labelled canonically (`A — observable area (cells)` … `γ² — coherence`),
-the column names of the table are not drawn, and the two statistics rows sit in
-one fixed band above every panel: DESC at +10.0 pt, ASC at +1.0 pt, each the
-slope per year, its bootstrap interval, the Mann–Kendall p and the verdict.
+The plate carries **keys, not titles**: no headline and no panel titles. Each
+cell is tagged with its grid position, `a1` … `c2` (`style.panel_id`), names its
+dimension in a one-line y label (`A  [cells]`, `D  [1]`, …), and the two track
+counts sit in one legend in the band the headline used to start. The tag takes
+`TAG_PAD_PT = 24` instead of the grammar's 2 pt, because this plate's statistics
+band already owns the space above its axes — an *inside* tag was measured to cover
+a drawn point in panel `c1`, so it is drawn above the band and the guard re-checks
+the clearance on every build.
+
+Typography follows `figure_style`: panel tag 8.8, axis label 7.6, ticks and
+legend 6.8, statistics 6.6 pt — no title, nothing below 6 pt. The dimensions are
+labelled canonically in the y labels and in the pinned `label` of each panel
+(`A — observable area (cells)` … `γ² — coherence`); the column names of the table
+are not drawn, and the two statistics rows sit in one fixed band above every
+panel: DESC at +10.0 pt, ASC at +1.0 pt, each the slope per year, its bootstrap
+interval, the Mann–Kendall p and the verdict. The prose definitions — "observable
+area", "centroid to peak" — and the definition of the metric are in the caption.
 
 The caption and a machine-readable audit of the plate — target and measured
 width, `figsize`, dpi, final point sizes, bounds, EPS alpha policy, one pinned

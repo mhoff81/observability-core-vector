@@ -6330,10 +6330,10 @@
   "note": "no wall-clock value enters this report: two runs are identical",
   "python": "3.13.5",
   "script": "code/werder_havel/fig_werder_havel_ocv_trajectory.py",
-  "script_sha256": "b2a59b0cbada289c25de6194fd364f4e847f4d6074f92069ead11cd9387e8621",
+  "script_sha256": "3bea6b81b68ac918a7940b1e33a58809c0d6c6ef9d16804ea1802afbe55bb481",
   "seed": 7,
   "template": "code/cases/ocv_trajectory.py",
-  "template_sha256": "873baa81acbedf9ee16b06ad5fc909f224393172bcc7b3953013bdc6349d60dc"
+  "template_sha256": "f83e25f80a3f0298a6dc11375bc7ad4138bc86cc32596dc3706fa345df024cb1"
  },
  "reference": {
   "choice": "stated choice, frozen before any result of this plate was read",

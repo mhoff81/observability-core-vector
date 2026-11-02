@@ -93,6 +93,16 @@ The bridge series are complete (all six channels on all 36 ASC and 35 DESC
 overpasses); the plotting path would leave a missing value as a gap, and nothing
 is interpolated.
 
+The plate carries **keys, not titles**: each panel is tagged with its position in
+the grid by `figure_style.tag_axes(ax, figure_style.panel_id(row, col))` — `a1`
+… `f2`, the letter the dimension row and the number the orbit column — there is
+no figure title and no column title, and the columns are named once, in the key
+line of the legend band under the grid (`columns — 1: ASC, IW2, ~18:51 local ·
+2: DESC, IW3, ~07:08 local`, built from `core.OVERPASS_LOCAL`, the same constant
+the state rule reads). The height stays 245 mm: the band the removed titles kept
+free goes to the panels. What the plate shows is the report's `## Caption`, the
+text that goes under the figure.
+
 The figure is **bridge only** (ASC/DESC `Brücke`). The control rectangle is the
 counter-check of figures A–E, but its ASC `gamma2` range (-0.94 .. +0.93) is much
 wider than the bridge range (-0.14 .. +0.24); a shared panel would compress the

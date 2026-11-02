@@ -95,7 +95,13 @@ The script recomputes every plotted point from the table it reads (`data/lumo/lu
 | series | 8 |
 | subswath | 1 |
 
-## 6. Reproduce
+## 6. Caption
+
+**Figure. LUMO lattice tower — OCV time series by dimension and orbit.** Twelve panels, tagged `a1`–`f2`: the row letter is the OCV dimension in the formal order (`a` coherence, `b` mask persistence, `c` mask density, `d` mask fragmentation, `e` mask area, `f` centroid-to-peak shift) and the column number the Sentinel-1 orbit (1 = ASC, 57 overpasses, 17:09–19:09 local · 2 = DESC, 121 overpasses, 05:33–07:42 local). Every panel draws one point per overpass in acquisition order and the line joining them; the marker is the state the overpass falls in — healthy (DAM0), DAM3, DAM4, DAM6 — the background bands are the 13 consecutive `damage_label` runs and the dashed rules their 12 transitions. `P`, `D`, `F` and `A` are on log axes; the one missing `P` (2021-07-14 ASC) is a gap and is never interpolated. The x coordinate is the actual local overpass instant (Europe/Berlin, DST-aware), so a day boundary is not a clean cut. The plate is 170 × 245 mm on the repository's point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend band under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
+
+The plate draws no title and no panel titles of its own: the tags `a1`-`f2` are all it carries, and this caption is what the reader is given with it. Set it under the figure as one paragraph.
+
+## 7. Reproduce
 
 ```sh
 cd <repo root>
@@ -107,7 +113,7 @@ The run writes three containers under one stem -- `figures/lumo/fig_lumo_ocv_orb
 
 Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
 
-## 7. Caveats
+## 8. Caveats
 
 - **The 13 runs are one deployment, not 13 independent experiments.** States repeat (healthy seven times, each damage state twice), but the repeats are separated in time and season. The bands make the sequence visible; they do not turn it into a randomized treatment.
 - **State and season are confounded.** The first healthy block covers late summer and autumn 2020, the long healthy block spans winter 2020/21, and the damage states are short visits in spring and summer 2021.

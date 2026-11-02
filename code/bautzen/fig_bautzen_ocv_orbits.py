@@ -43,6 +43,15 @@ print frame -- 170.0 mm wide (``figure_style.COL_WIDTH``), the type and pens of
 ``figure_style`` -- and written by ``figure_style.save``, so a layout that
 overflows the print width fails the run instead of being cropped to fit.
 
+The plate carries **keys, not titles**.  Every panel is tagged with its position
+in the grid, ``a1`` ... ``f2`` (:func:`figure_style.panel_id`): the letter is the
+dimension row, the number the orbit column, so the tag is derivable from the
+grid instead of being a sentence.  There is no figure title and no panel title;
+what the plate shows is said once in the legend band -- the three state patches
+and the column key line -- and in full in the report's ``## Caption``, which is
+the text that goes under the figure.  The height stays 245 mm: the band the
+removed titles kept free goes to the panels.
+
 Usage:
   python3 code/bautzen/fig_bautzen_ocv_orbits.py
   python3 code/bautzen/fig_bautzen_ocv_orbits.py --no-figures
@@ -106,11 +115,36 @@ STATE_LABEL = {"RS": "RS (reference)", "DS1": "DS1", "DS2": "DS2"}
 STATE_FILL = {"RS": "#E4EEF8", "DS1": "#FBE7D5", "DS2": "#F6D8D8"}
 
 ORBITS = ("ASC", "DESC")
-ORBIT_LABEL = {
-    "ASC": "ASC — IW2, ~18:51 local",
-    "DESC": "DESC — IW3, ~07:08 local",
-}
+#: The relative track each column was flown on.  The local overpass instant is
+#: *not* repeated here: it is ``core.OVERPASS_LOCAL``, the constant the state
+#: rule itself uses, so a key line and the state bands cannot disagree.
+ORBIT_TRACK = {"ASC": "IW2", "DESC": "IW3"}
+
+
+def orbit_local(geom):
+    """The local overpass instant of *geom*, as ``HH:MM local``."""
+    hh, mm = core.OVERPASS_LOCAL[geom]
+    return "%02d:%02d local" % (hh, mm)
+
+
+ORBIT_LABEL = {g: "%s, %s, ~%s" % (g, ORBIT_TRACK[g], orbit_local(g))
+               for g in ORBITS}
+
+#: The key line of the legend band: what column 1 and column 2 are.  A tag says
+#: where a panel sits, never what its column is, so the two columns are named
+#: once, under the grid, in the space the removed orbit titles kept free.
+COLUMN_KEY = ("columns — " + " · ".join(
+    "%d = %s" % (col + 1, ORBIT_LABEL[geom])
+    for col, geom in enumerate(ORBITS)))
+
 ORBIT_COLOR = {"ASC": "#4C72B0", "DESC": "#55A868"}
+
+# The canvas: the shared print width and the height this six-row plate needs.
+# The legend band is measured from the canvas' bottom edge in mm -- the key line
+# at the bottom, the three state patches above it.
+PLATE_HEIGHT_MM = 245.0
+KEY_LINE_MM = 3.0
+KEY_LEGEND_MM = 9.0
 
 # The formal OCV definition order: [gamma2, P, D, F, A, S].  This is the panel
 # row order of the figure; it deliberately differs from the CSV column order.
@@ -133,7 +167,6 @@ CHANNEL_TITLE = {
     "S": "centroid-to-peak shift",
 }
 FIG_CHANNEL_TITLE = {k: v.replace("gamma^2", r"$\gamma^2$") for k, v in CHANNEL_TITLE.items()}
-PANEL_LETTERS = "abcdefghijkl"
 
 
 # ---------------------------------------------------------------------------
@@ -406,7 +439,7 @@ def make_figure(res, figdir):
 
     nrows, ncols = len(CHANNELS), len(ORBITS)
     fig, axes = plt.subplots(
-        nrows, ncols, figsize=(COL_WIDTH, 245 * MM),
+        nrows, ncols, figsize=(COL_WIDTH, PLATE_HEIGHT_MM * MM),
         sharex="all", sharey="row", squeeze=False)
 
     for row, dim in enumerate(CHANNELS):
@@ -421,19 +454,17 @@ def make_figure(res, figdir):
                            zorder=1)
             _draw_panel(ax, series[geom]["points"], dim, geom)
 
-            # One y label per row, one x label per column, panel letters in
-            # the corner; with sharex/sharey the inner tick labels are hidden.
+            # One y label per row, one bare key per panel, one x label per
+            # column; with sharex/sharey the inner tick labels are hidden.  The
+            # tag sits outside the axes at the title rung -- 8.8 pt, not the
+            # 6.2 pt of the old ``(a)`` corner mark, and a key, not a sentence.
             if col == 0:
                 ax.set_ylabel(FIG_CHANNEL_AXIS[dim])
             ax.tick_params(labelleft=(col == 0),
                            labelbottom=(row == nrows - 1))
             if dim == "F":
                 ax.yaxis.set_major_locator(MaxNLocator(integer=True))
-            ax.text(0.012, 0.955, f"({PANEL_LETTERS[row * ncols + col]})",
-                    transform=ax.transAxes, ha="left", va="top",
-                    fontsize=style.FS["annotation"], color="0.25", zorder=5)
-            if row == 0:
-                ax.set_title(ORBIT_LABEL[geom], pad=5)
+            style.tag_axes(ax, style.panel_id(row, col))
             if row == 0 and col == 0:
                 _label_states(ax, x0, x1)
 
@@ -442,20 +473,20 @@ def make_figure(res, figdir):
         ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
         ax.set_xlabel("2025 — local overpass time")
 
+    # One legend band under the grid, in the space the header and the two orbit
+    # titles used to occupy.  The key line names the two columns -- a tag cannot
+    # -- and the three state patches sit above it; both are figure artists, so
+    # ``grid_rect`` declares the band to ``tight_layout``.
+    fig.text(0.5, KEY_LINE_MM / PLATE_HEIGHT_MM, COLUMN_KEY, ha="center",
+             va="bottom", fontsize=style.FS["legend"], color="0.35")
     handles = [Patch(facecolor=STATE_FILL[s], edgecolor=STATE_COLORS[s],
                      label=STATE_LABEL[s]) for s in core.STATES]
     leg = fig.legend(handles=handles, loc="lower center", ncol=3,
-                     frameon=False, bbox_to_anchor=(0.5, 0.004))
-    fig.suptitle(
-        "Bautzen OpenLabs bridge — OCV time series by dimension and orbit\n"
-        "bridge deck edge; markers = overpasses by state, line = acquisition "
-        "order\n"
-        "state bands RS / DS1 / DS2; dashed cuts 2025-05-12 and 2025-09-29, "
-        "10:00 local",
-        y=0.985)
-    # ``tight_layout`` already reserves the suptitle height, so the rect only
-    # has to declare the legend; the fit guard then refuses this save if any
-    # line is wider than the 170 mm canvas, instead of cropping the plate to it.
+                     frameon=False,
+                     bbox_to_anchor=(0.5, KEY_LEGEND_MM / PLATE_HEIGHT_MM))
+    # With no suptitle the top of the rect stays 1.0, so this declares the band
+    # and nothing else; the fit guard then refuses this save if any line is
+    # wider than the 170 mm canvas, instead of cropping the plate to it.
     fig.tight_layout(rect=style.grid_rect(fig, bottom=leg))
     os.makedirs(figdir, exist_ok=True)
     out = os.path.join(figdir, FIG_NAME + ".jpg")
@@ -467,6 +498,38 @@ def make_figure(res, figdir):
 # ---------------------------------------------------------------------------
 # Markdown report
 # ---------------------------------------------------------------------------
+def caption(res):
+    """The caption of the plate: the text that goes under the figure.
+
+    The figure itself carries keys, not titles -- ``a1`` ... ``f2`` -- so this
+    paragraph is what a reader is given with it.  It is generated from the same
+    result the plate is drawn from, so a count or a cut date cannot go stale.
+    """
+    n = {geom: res["series"][geom]["n_dates"] for geom in ORBITS}
+    rows = ", ".join("`%s` %s" % (style.PANEL_LETTERS[i], FIG_CHANNEL_TITLE[dim])
+                     for i, dim in enumerate(CHANNELS))
+    return (
+        "**Figure. Bautzen OpenLabs bridge deck edge — OCV time series by "
+        "dimension and orbit.** Twelve panels, tagged `a1`–`f2`: the row letter "
+        "is the OCV dimension in the formal order (%s) and the column number "
+        "the Sentinel-1 orbit (%s). Every panel draws one point per overpass of "
+        "the bridge series in acquisition order and the line joining them; the "
+        "marker is the state the overpass falls in (RS reference, DS1, DS2), "
+        "the background bands are the three state windows and the two dashed "
+        "rules the deployment cuts of %s and %s (10:00 local). %d overpasses "
+        "are drawn (%d ASC, %d DESC); a missing value would be a gap, nothing "
+        "is interpolated. The plate is 170 × 245 mm on the repository's "
+        "point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and "
+        "legend 6.8 pt), carries this caption's key in one legend band under "
+        "the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`."
+        % (rows,
+           "; ".join("%d = %s" % (col + 1, ORBIT_LABEL[geom])
+                     for col, geom in enumerate(ORBITS)),
+           core.CUT_DS1.strftime("%Y-%m-%d"),
+           core.CUT_DS2.strftime("%Y-%m-%d"),
+           sum(n.values()), n["ASC"], n["DESC"]))
+
+
 def report(res):
     d = res["data"]
     L = []
@@ -572,7 +635,15 @@ def report(res):
           "every per-series count and date list reproduces the committed "
           "metadata, and every rect-file sha256 matches.")
     A("")
-    A("## 5. Reproduce")
+    A("## 5. Caption")
+    A("")
+    A(caption(res))
+    A("")
+    A("The plate draws no title and no panel titles of its own: the tags "
+      "`a1`-`f2` are all it carries, and this caption is what the reader is "
+      "given with it. Set it under the figure as one paragraph.")
+    A("")
+    A("## 6. Reproduce")
     A("")
     A("```sh")
     A("cd <repo root>")
@@ -585,7 +656,7 @@ def report(res):
       f"{matplotlib.__version__}. No output carries a timestamp, so repeated "
       "runs are identical.")
     A("")
-    A("## 6. Caveats")
+    A("## 7. Caveats")
     A("")
     A("- **States are consecutive time intervals, not a randomized "
       "treatment.** RS, DS1 and DS2 are one deployment observed over six "

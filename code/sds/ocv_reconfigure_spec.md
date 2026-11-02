@@ -450,6 +450,16 @@ tick label 6.8, annotation 6.2 — every one of them read from `style.FS`, so th
 cannot drift from the rest of the corpus, and nothing on it is set below the
 annotation rung.
 
+**Why this plate keeps its headline.** The print plates of the corpus carry *keys,
+not titles*: a bare tag per panel (`a1` … `f2`, `figure_style.tag_axes`), a key line
+in the legend band and a `## Caption` in the report. This one does not, and the
+exception is **named** instead of implied: it is a documentation plate of
+`audit_figure_style.DOC_DIRS` (`concept/`, `sds/`), the audit's grammar clause skips
+it by that name, and its row prints `grammar: documentation plate, header by name`
+(source) and `doc plate (concept/sds)` (artefact). A page mock-up is read as a page,
+not as the finished figure; the moment this pair is cut for print it moves under the
+grammar — tags, a key line, a caption — rather than carrying the exception with it.
+
 **The `R` strip.** One inset per panel repeats the block magnitude per level with its
 moving-block interval, the quantity H1 tests. Its height follows the number of levels
 instead of a fixed box: 28 mm wide, one row per level at 3.4 mm (a 6.8 pt label plus
@@ -513,6 +523,85 @@ assume. The `--sites` help text and the default report's title line follow the s
 wording.
 
 
+## Amendment 8 — 2026-10-30: the headline comes off the plate, and the band goes to the plane
+
+*Amendment 7 settled what the header said. This one removes it. Presentation only: no
+number, label, sample size, interval or state order changes — `git diff data/sds/` is
+empty for this amendment.*
+
+**What was redundant.** The plate carried one 9.0 pt headline above the grid, *OCV
+reconfiguration across controlled LUMO and Bautzen states* (amendment 7). The same
+sentence is the report's first line and the caption's first line, and on the plate it
+sat 2 mm above a band that already names every panel. A reader who has reached the
+figure has read the section; a plate that repeats its own caption spends a band it
+needs for the panels on words the page is not missing.
+
+**What the band is now: the sum of what is drawn, not a constant.**
+`plate_layout(rows, thin=...)` composes it — 2.0 mm of air, the block identifier's own
+line (an 8.8 pt title plus the 2 pt pad it sits above its axes with, 4.7 mm), and only
+on a plate that marks a thin cell the ✱ line (3.1 mm) with its 1.5 mm of clearance:
+**6.7 mm** on the shipped pair, 11.3 mm on a plate that draws a ✱ line, against the
+15.0 mm that was reserved for all of them before. The freed millimetres went into the
+plane: **46 mm square on every row instead of 44** (`x_stretch` 1.5435 in the same
+71.0 mm slot, 12.5 mm of lateral margin per side where the state labels sit). Canvas
+170.0 × 236.7 mm for the pair — 0.3 mm shorter than amendment 6, because the band gave
+up 8.3 mm and the planes took 8.0.
+
+**The identifiers, and no bracket.** Each panel is addressed by
+`block_identifier(site, channel, block)`:
+
+> LUMO / ASC / behavior · LUMO / DESC / behavior · Bautzen / DESC / geometry
+
+Same 8.8 pt, same title rung, no heading and no pair in brackets. Amendment 6 put
+`[gamma2, P]` and `[A, F]` after the block because nothing else on the plate listed
+the plane's dimensions. The axes do: `z(gamma2)`, `z(P)`, `z(A)`, `z(F)` sit on the
+two edges of every plane, so the bracket was the same two words twice on the same
+46 mm square. What the identifier does not say is said by the drawing — and `D` and
+`S` appear **only** in the block magnitude `R` (the inset) and in the `D… S…` note at
+the geometry panel's top right, never as an axis: `D` partly inherits `A`
+algebraically and `S` describes position, not morphology. The panel's plane is still
+recorded as `dims` in the audit and in the guide's JSON, so a machine still knows
+exactly which two dimensions a plane draws.
+
+**A key's pad, not a title's.** The identifier sits `PANEL_TAG_PAD_PT` (2.0 pt) above
+its axes, as a `tag_axes` key does, instead of the 3.0 pt a title took; the band's
+4.7 mm is that pad plus one 8.8 pt line, and the guard measures the renderer instead
+of trusting the arithmetic. The rung itself is unchanged — nothing on the plate is set
+smaller than it was, and nothing is set larger: the freed space is *plane*, not type.
+
+**The guards, rewritten for a band with no second row.** The first row of identifiers
+stays `PLATE_MARGIN_MM` (2.0 mm) below the top edge of the canvas and the drawn
+content 0.3 mm inside every edge (`get_tightbbox`, so a tight bbox cannot hide a
+collision); a plate that draws a ✱ line keeps `PLATE_CLEAR_MM` (1.5 mm) between that
+line and the identifiers, and the line still has to fit one 170 mm row and stop
+0.3 mm short of the right edge. The export contract is untouched: one canvas, three
+containers from it, `ps.fonttype = 42` → `/FontFile2` and `/FontType 42`, no
+`bbox="tight"`, no clipping.
+
+**The caption, and the audit clause.** The sentence is not deleted, it is moved: the
+report and the guide carry it, and the guide's new `## Caption` is the one place the
+plate's sentence is written. The plate's own record says so — the audit block now
+holds `"caption"` and `"headline_on_plate": null`, adds `layout.band_mm`, and drops
+`suptitle` from `final_font_sizes_pt`, because a plate that draws no headline
+declares no rung for one. The audit clause narrows to match:
+`audit_figure_style.grammar_verdict(grammar, doc=...)` fails a `suptitle` on **every**
+plate, documentation plates included, and exempts `DOC_DIRS` only from the *key* half
+— this plate's identifiers are admitted **by name**, and its row prints `grammar:
+synthesis plate, block identifiers by name` (a mock-up that keys nothing prints
+`grammar: documentation plate, no heading, no key`). The artefact row is unchanged:
+`doc plate (concept/sds)`, `170.0 mm`, `h236.7`, `fonts 42`.
+
+**Self-test and verify.** `--selftest` goes 40 → 44: the band is checked to be exactly
+the items it draws, on both variants (with and without a ✱ line), to stay below the
+8 mm a headline-free band must not exceed and below the 15.0 mm it replaced; the
+identifier is checked to be `asset / channel / block` with no bracket; and the plane
+is checked to have taken what the band gave up. The audit's `--selftest` goes 42 → 44
+with the two halves of the narrowed clause — a documentation plate may name its
+panels, and a `suptitle` still fails there. `--verify` follows: the guide's audit
+block is compared on `caption`, `layout` and `final_font_sizes_pt` as well, so a stale
+guide fails instead of ageing quietly.
+
+
 ## Multiplicity
 
 Eight primary tests: 2 experiments × 2 channels × 2 blocks for H1 — four per asset since
@@ -567,9 +656,10 @@ Pre-registered predictions, written before the run:
 * `data/sds/ocv_reconfigure.md` — the table and its reading.
 * `data/sds/ocv_reconfigure_table.csv` — `Experiment, State, Channel, n, R_behavior,
   R_geometry, Direction, Scale, Support`.
-* `figures/sds/fig_sds_ocv_reconfigure.jpg` — 630 dpi, authored at 170 × 237 mm:
-  rows = experiment × channel (ASC above DESC), columns = behavior | geometry
-  (amendment 6), arrows from the reference state to each state in standardised
+* `figures/sds/fig_sds_ocv_reconfigure.jpg` — 630 dpi, authored at the 170 mm print
+  width, 236.7 mm tall for the pair: rows = experiment × channel (ASC above DESC),
+  columns = behavior | geometry (amendment 6), one block identifier per panel
+  (amendment 8), arrows from the reference state to each state in standardised
   space, the bootstrap interval of `R` in the panel's inset. Beside the jpg:
   `.pdf` (vector) and `.eps` (alpha blended), and a `.md` guide whose JSON blocks
   carry the audit of the plate that was written.

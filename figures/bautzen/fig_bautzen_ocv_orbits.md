@@ -58,7 +58,13 @@ The script recomputes every plotted point from the committed channel table and c
 
 **Failures: none.** Every state value reproduces `core.state_of`, every per-series count and date list reproduces the committed metadata, and every rect-file sha256 matches.
 
-## 5. Reproduce
+## 5. Caption
+
+**Figure. Bautzen OpenLabs bridge deck edge — OCV time series by dimension and orbit.** Twelve panels, tagged `a1`–`f2`: the row letter is the OCV dimension in the formal order (`a` deck-band coherence, `b` mask persistence, `c` mask density, `d` mask fragmentation, `e` mask area, `f` centroid-to-peak shift) and the column number the Sentinel-1 orbit (1 = ASC, IW2, ~18:51 local; 2 = DESC, IW3, ~07:08 local). Every panel draws one point per overpass of the bridge series in acquisition order and the line joining them; the marker is the state the overpass falls in (RS reference, DS1, DS2), the background bands are the three state windows and the two dashed rules the deployment cuts of 2025-05-12 and 2025-09-29 (10:00 local). 71 overpasses are drawn (36 ASC, 35 DESC); a missing value would be a gap, nothing is interpolated. The plate is 170 × 245 mm on the repository's point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend band under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
+
+The plate draws no title and no panel titles of its own: the tags `a1`-`f2` are all it carries, and this caption is what the reader is given with it. Set it under the figure as one paragraph.
+
+## 6. Reproduce
 
 ```sh
 cd <repo root>
@@ -68,7 +74,7 @@ PYTHON=/usr/bin/python3 bash figures/bautzen/fig_bautzen_ocv_orbits.sh
 
 Needs numpy and matplotlib. This report was generated with python 3.13.5, numpy 2.5.4, matplotlib 3.11.1. No output carries a timestamp, so repeated runs are identical.
 
-## 6. Caveats
+## 7. Caveats
 
 - **States are consecutive time intervals, not a randomized treatment.** RS, DS1 and DS2 are one deployment observed over six months; state and season are confounded. The background bands make that structure visible, they do not remove it.
 - **No control series in this figure.** The control rectangle is the counter-check in figures A-E; it is omitted here only because its ASC `gamma2` range would flatten the bridge signal in a shared panel.

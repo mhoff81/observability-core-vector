@@ -108,6 +108,18 @@ the coherence rows carry no timestamp, so `compute()` joins the
 the transitions. `P`, `D`, `F` and `A` use log axes; the one missing `P`
 (2021-07-14 ASC) is drawn as a gap and never interpolated.
 
+The plate carries **keys, not titles**. Its five header lines and its two column
+titles are gone: every panel is tagged with its position in the grid by
+`figure_style.tag_axes(ax, figure_style.panel_id(row, col))` — `a1` … `f2`, the
+letter the dimension row and the number the orbit column — and the columns are
+named once, in the key line of the legend band under the grid, with what the
+removed titles used to say: `columns — 1 = ASC, 57 overpasses, 17:09–19:09 local ·
+2 = DESC, 121 overpasses, 05:33–07:42 local`, the counts from
+`series[<orbit>].n_dates` and the clock from `data.local.<orbit>.clock_min/max`
+(the DST-aware join). The 245 mm height is unchanged — the band the header kept
+free goes to the panels — and the header's content is the report's `## Caption`,
+the text that goes under the figure.
+
 The run writes `data/lumo/fig_lumo_ocv_orbits.json` and
 `figures/lumo/fig_lumo_ocv_orbits.md` as well. It carries **144 cross-checks**
 against `lumo_ocv_channels_meta.json`, the frozen lock

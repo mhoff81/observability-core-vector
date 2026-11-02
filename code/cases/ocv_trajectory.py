@@ -1961,13 +1961,12 @@ def draw(report, path):
         """The panel's key, not its title: ``a1`` ... ``c4``, nothing else.
 
         The descriptive text stays in ``PANELS``/``report["figure"]["panels"]``,
-        where the report's panel table and the caption read it. A tag drawn
-        inside the panel is not a title -- it is the one character group the
-        caption needs to address a panel by -- so the panel keeps its full area
-        for ink and the plate carries its own explanation in the caption.
+        where the report's panel table and the caption read it. The drawing is
+        :func:`figure_style.tag_axes`'s -- one size and one placement for every
+        plate of this repository, so a tag cannot drift off the ladder -- and
+        the panel keeps its full area for ink meanwhile.
         """
-        ax.set_title(ident, loc="left", pad=2.0, fontsize=FS["title"],
-                     fontweight="bold")
+        return style.tag_axes(ax, ident)
 
     def series(ax, values, ident, purpose, colour, ylabel, envelope_key=None):
         """One monthly series: solid while reference, dashed once post."""

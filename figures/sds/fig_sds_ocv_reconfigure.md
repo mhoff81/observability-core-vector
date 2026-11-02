@@ -19,25 +19,32 @@ Every state label carries its cell's `n`; a cell at or below the bootstrap block
 
 Nothing is clipped: the axis limits follow the largest coordinate in the panel.
 
+## Caption
+
+The plate carries no headline of its own: a synthesis plate has no subject line that is not the caption's. The eight block identifiers say what each panel is, and the sentence below says what the plate is about â€” it is the caption's first line, and it is the only place it is written.
+
+> OCV reconfiguration across controlled LUMO and Bautzen states
+
 ## The plate
 
 Every plate is authored at 170 mm â€” the text width of `code/figure_style.py` â€” and written from that canvas as `.jpg` (630 dpi), `.pdf` and `.eps`. It is never cropped to its content: `figure_style.save()` refuses a layout that does not fit, measures all three containers afterwards and aborts on a deviation of more than 0.5 mm.
 
 | rung | size | used for |
 | --- | --- | --- |
-| header | 9.0 pt | the one-line headline, left-aligned |
-| panel title | 8.8 pt | experiment Â· channel Â· block Â· the plane's pair |
+| block identifier | 8.8 pt | experiment / channel / block, one line above each plane â€” the pair the plane draws is on its axes, not in the identifier |
 | axis label | 7.6 pt | `z(Â·)` on both axes |
 | tick label | 6.8 pt | the plane's ticks and the inset's levels |
 | annotation | 6.2 pt | the state labels, the `D`/`S` note and the inset's `R` |
+
+No rung is spent on a headline. The band above the first row holds the identifiers, 2 mm of air and â€” only where a cell is thin â€” the âœ± line; a plate without one reserves nothing for it, and what the band gave up went into the plane: 46 mm square on every row instead of 44.
 
 The plane is square (`aspect="equal"`): the axes are stretched horizontally by `slot / plane`, so the units stay equal in both directions and the added width is the margin the state labels are placed in â€” outside the data, never over it.
 
 ### `fig_sds_ocv_reconfigure.jpg`
 
-* 4 rows Ã— 2 columns, plane 44 mm square in a 71.00 mm slot, canvas 170.0 Ã— 237.0 mm.
+* 4 rows Ã— 2 columns, plane 46 mm square in a 71.00 mm slot, band 6.7 mm above the first row, canvas 170.0 Ã— 236.7 mm.
 * measured width: jpeg 169.98 mm, pdf 170.00 mm, eps 170.00 mm (target 170.0 mm).
-* the drawn content stops 1.02 / 0.76 / 1.83 / 2.00 mm from the left, right, bottom and top edge.
+* the drawn content stops 2.76 / 3.00 / 1.83 / 3.41 mm from the left, right, bottom and top edge.
 * the EPS carries the 60 translucent artist(s) blended onto white; text stays vector (Type 42).
 
 The audit below is the machine-readable record of the files that were written â€” the widths from the containers themselves, and per panel the `z` that was drawn, its `R`, its `n` and its interval. `--verify` re-reads it and re-derives every one of those numbers from `data/sds/` and the records.
@@ -46,17 +53,17 @@ The audit below is the machine-readable record of the files that were written â€
 {
  "schema": "sds-plate-audit-v1",
  "figure": "figures/sds/fig_sds_ocv_reconfigure.jpg",
- "headline": "OCV reconfiguration across controlled LUMO and Bautzen states",
+ "caption": "OCV reconfiguration across controlled LUMO and Bautzen states",
+ "headline_on_plate": null,
  "thin_legend": null,
  "target_width_mm": 170.0,
- "target_height_mm": 237.0,
+ "target_height_mm": 236.7,
  "figsize_inches": [
   6.692913,
-  9.330709
+  9.318898
  ],
  "native_dpi": 630,
  "final_font_sizes_pt": {
-  "suptitle": 9.0,
   "title": 8.8,
   "label": 7.6,
   "tick": 6.8,
@@ -68,25 +75,26 @@ The audit below is the machine-readable record of the files that were written â€
   "eps": 170.0
  },
  "native_height_mm": {
-  "jpeg": 236.99,
-  "pdf": 237.0,
-  "eps": 237.0
+  "jpeg": 236.66,
+  "pdf": 236.7,
+  "eps": 236.7
  },
  "latex_display_width_mm": 170.0,
  "latex_scaling": "the file is 170 mm wide -- included with `width=\\linewidth`; no trim, clip or resizebox",
  "layout": {
   "rows": 4,
   "columns": 2,
-  "plane_mm": 44.0,
+  "plane_mm": 46.0,
+  "band_mm": 6.7,
   "slot_mm": 71.0,
-  "x_stretch": 1.6136,
+  "x_stretch": 1.5435,
   "grid": {
    "left": 0.08235,
    "right": 0.98235,
-   "bottom": 0.04219,
-   "top": 0.93671,
+   "bottom": 0.04225,
+   "top": 0.97169,
    "wspace": 0.15493,
-   "hspace": 0.27273
+   "hspace": 0.26087
   },
   "reading_order": "rows = experiment x channel (ASC above DESC), columns = block (behavior, geometry)"
  },
@@ -94,17 +102,17 @@ The audit below is the machine-readable record of the files that were written â€
   "export": "canvas-authorised (figure_style.save); bbox_inches is never 'tight'",
   "canvas_mm": [
    170.0,
-   237.0
+   236.7
   ],
   "content_mm": [
-   168.2,
-   233.2
+   164.2,
+   231.5
   ],
   "edge_mm": {
-   "left": 1.02,
-   "right": 0.76,
+   "left": 2.76,
+   "right": 3.0,
    "bottom": 1.83,
-   "top": 2.0
+   "top": 3.41
   },
   "minimum_edge_mm": 0.3
  },
@@ -127,7 +135,7 @@ The audit below is the machine-readable record of the files that were written â€
  ],
  "panels": {
   "lumo/ASC/behaviour": {
-   "title": "LUMO Â· ASC Â· behavior [$\\gamma^2$, P]",
+   "title": "LUMO / ASC / behavior",
    "empty": false,
    "dims": [
     "gamma2",
@@ -136,8 +144,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": null,
    "limits": [
     [
-     -2.5822,
-     2.5822
+     -2.4699,
+     2.4699
     ],
     [
      -1.6002,
@@ -236,13 +244,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.6755,
+    0.6887,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "lumo/ASC/geometry": {
-   "title": "LUMO Â· ASC Â· geometry [A, F]",
+   "title": "LUMO / ASC / geometry",
    "empty": false,
    "dims": [
     "A",
@@ -251,8 +259,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": "D+0.32 S+0.20",
    "limits": [
     [
-     -2.4406,
-     2.4406
+     -2.3345,
+     2.3345
     ],
     [
      -1.5125,
@@ -351,13 +359,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.7265,
-    0.1018,
+    0.0983,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "lumo/DESC/behaviour": {
-   "title": "LUMO Â· DESC Â· behavior [$\\gamma^2$, P]",
+   "title": "LUMO / DESC / behavior",
    "empty": false,
    "dims": [
     "gamma2",
@@ -366,8 +374,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": null,
    "limits": [
     [
-     -2.3211,
-     2.3211
+     -2.2202,
+     2.2202
     ],
     [
      -1.4384,
@@ -466,13 +474,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.7265,
-    0.6755,
+    0.6887,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "lumo/DESC/geometry": {
-   "title": "LUMO Â· DESC Â· geometry [A, F]",
+   "title": "LUMO / DESC / geometry",
    "empty": false,
    "dims": [
     "A",
@@ -481,8 +489,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": "D+0.09 S+0.31",
    "limits": [
     [
-     -1.0121,
-     1.0121
+     -0.9681,
+     0.9681
     ],
     [
      -0.6272,
@@ -581,13 +589,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.6755,
+    0.6887,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "bautzen/ASC/behaviour": {
-   "title": "Bautzen Â· ASC Â· behavior [$\\gamma^2$, P]",
+   "title": "Bautzen / ASC / behavior",
    "empty": false,
    "dims": [
     "gamma2",
@@ -596,8 +604,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": null,
    "limits": [
     [
-     -5.4984,
-     5.4984
+     -5.2593,
+     5.2593
     ],
     [
      -3.4075,
@@ -678,13 +686,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.6755,
+    0.0983,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "bautzen/ASC/geometry": {
-   "title": "Bautzen Â· ASC Â· geometry [A, F]",
+   "title": "Bautzen / ASC / geometry",
    "empty": false,
    "dims": [
     "A",
@@ -693,8 +701,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": "D+1.13 S+0.97",
    "limits": [
     [
-     -2.3288,
-     2.3288
+     -2.2276,
+     2.2276
     ],
     [
      -1.4432,
@@ -775,13 +783,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.6755,
+    0.6887,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "bautzen/DESC/behaviour": {
-   "title": "Bautzen Â· DESC Â· behavior [$\\gamma^2$, P]",
+   "title": "Bautzen / DESC / behavior",
    "empty": false,
    "dims": [
     "gamma2",
@@ -790,8 +798,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": null,
    "limits": [
     [
-     -4.1586,
-     4.1586
+     -3.9778,
+     3.9778
     ],
     [
      -2.5771,
@@ -872,13 +880,13 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.1018,
+    0.0983,
     0.2535,
-    0.2318
+    0.2217
    ]
   },
   "bautzen/DESC/geometry": {
-   "title": "Bautzen Â· DESC Â· geometry [A, F]",
+   "title": "Bautzen / DESC / geometry",
    "empty": false,
    "dims": [
     "A",
@@ -887,8 +895,8 @@ The audit below is the machine-readable record of the files that were written â€
    "note": "D+0.44 S-2.66",
    "limits": [
     [
-     -4.3273,
-     4.3273
+     -4.1391,
+     4.1391
     ],
     [
      -2.6817,
@@ -969,9 +977,9 @@ The audit below is the machine-readable record of the files that were written â€
    },
    "strip_inset": [
     0.1608,
-    0.1018,
+    0.0983,
     0.2535,
-    0.2318
+    0.2217
    ]
   }
  }

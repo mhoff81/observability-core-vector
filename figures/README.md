@@ -70,8 +70,23 @@ Two plates (`3`, `4`) are run through their generator directly — they have no
    a **183 mm page** of three equal panels, registered in
    `audit_figure_style.PAGE_PLATES` and held to that page in every container
    instead of to 170 mm. A plate carries no title and no panel titles of its own:
-   it carries its bare tags (`a1`…`c4`), one legend in the band its grid reserves,
-   and a `## Caption` in its report.
+   it carries its bare tags (`a1`…`c4`, `a1`…`f2`), one legend in the band its grid
+   reserves, and a `## Caption` in its report.
+   **A tag is a key, not a heading** — `figure_style.panel_id(row, col)` and
+   `figure_style.tag_axes(ax, key)` are the only way a panel is addressed, so the
+   key is derived from the grid rather than written beside it, and it sits on the
+   title rung (8.8 pt) 2 pt above the axes. Where a plate already draws in that
+   band — Espoo's two statistics rows — the tag takes the pad that band needs
+   (`code/espoo/…`, `TAG_PAD_PT`); it never moves inside the axes, where it was
+   measured to cover a data point. The `sds/` plate is the **one named exception**
+   to this grammar, and only to half of it: it is a documentation plate of
+   `DOC_DIRS` whose panels are *blocks* rather than cells of a trajectory grid, so
+   it names a block — `LUMO / ASC / behavior`, one line above the plane, on the
+   title rung — instead of keying it `a1`. It carries no headline: as on every
+   other plate, the sentence that used to sit above the grid is the `## Caption`,
+   and `audit_figure_style.py --strict` prints which exception the row took
+   (`grammar: synthesis plate, block identifiers by name`) instead of leaving it
+   implicit.
 4. **No verdict.** A plate reports a departure, a direction and an interval. It
    does not report damage, failure, a precursor or a cause, and the word it does
    print (`resolves …`, `sustained … departure`) is a function of frozen rules
@@ -101,6 +116,12 @@ no state column and no event: what it has instead is the **pass geometry**.
 
 * **Two tracks.** ASC is relative orbit 160, DESC 51; the other two tracks place
   the mast on the far range edge, where the 200 m ring runs past the swath.
+* **A tag per panel, a y label per dimension.** The plate carries no title and no
+  panel titles: the six cells are tagged `a1`–`c2` (row-major, `a1` = `A`), each
+  names its own dimension in a one-line y label (`A  [cells]`), and the two track
+  counts sit in one legend in the band the title used to start. The statistics rows
+  are unchanged — still one fixed band per panel at +1 and +10 pt — and the tag sits
+  above them, not inside the axes.
 * **No pairing.** The tracks share three dates, so the orbit contrast is a
   two-sample comparison, and the report says so.
 * **A tautology, stated.** `D = A / bbox_area` exactly, and `gamma2_mask` carries
@@ -117,14 +138,22 @@ no state column and no event: what it has instead is the **pass geometry**.
 The cross-site plate: the **controlled-dose** experiments of LUMO (healthy, DAM 3,
 DAM 4, DAM 6 on a 0 / 7.4 / 13 % frequency drop) and of Bautzen (`RS`, `DS1`,
 `DS2`) side by side, drawn as one juxtaposition — rows = experiment × channel (ASC
-above DESC), columns = block (behaviour `[gamma2, P]` and geometry
-`[A, D, F, S]`), every panel on its own plane.
+above DESC), columns = block (behaviour `[gamma2, P]` and geometry `[A, D, F, S]`),
+every panel on its own plane. Each panel is addressed by its block rather than by a
+key — `LUMO / ASC / behavior` — and the plate has no headline: that sentence is the
+caption's first line, and the band it used to occupy is a **46 mm** plane on every
+row instead of 44.
 
 In every panel the origin is that asset's **reference state** and the arrows end at
 its standardised responses (`z = (median − median_ref) / scale`), so the geometry is
-within-asset and no scale is shared between assets. The inset repeats the block
-magnitude `R` per level with its moving-block 95 % interval — the quantity the
-hypotheses test, each asset inside its own Holm family.
+within-asset and no scale is shared between assets. The axes draw **two** dimensions
+per plane: `z(gamma2)` and `z(P)` in the behaviour column, `z(A)` and `z(F)` in the
+geometry column — `D` and `S` are not drawn, because `D` partly inherits `A`
+algebraically and `S` describes position rather than morphology. Both stay in the
+block magnitude `R` and in the small `D… S…` note at the plane's top right, so a
+reader is never invited to compare a `D` the axes do not carry with an `A` they do.
+The inset repeats `R` per level with its moving-block 95 % interval — the quantity
+the hypotheses test, each asset inside its own Holm family.
 
 Its reading is deliberately a **null about ordering**: no dose ordering survives in
 either block at either asset (`P1` does not hold: LUMO's geometry magnitude goes
@@ -154,6 +183,15 @@ show. It stays in `data/bautzen/bautzen_ocv_channels.csv`.
 
 Both plates are the *time-series* reading of a table the site's own package builds;
 neither computes a pooled contrast.
+
+Both also draw **one panel per cell of a 6 × 2 grid**, so both address their panels
+the same way: row `a`–`f` is the dimension in the formal order, column `1`–`2` the
+orbit, and the tag is the key that combination earns (`a1` … `f2`). What the columns
+*are* is said once, in the key line of the legend band under the grid — `columns —
+1 = ASC, IW2, ~18:51 local · 2 = DESC, IW3, ~07:08 local` at Bautzen, with the
+overpass counts and the DST-aware local clock at LUMO — because a two-character tag
+cannot carry it and a column title would be a heading again. The figures' former
+header lines are the `## Caption` of each report.
 
 ## 5–7, 10–12. The trajectory family — six plates, two generators, one design
 
@@ -284,12 +322,26 @@ virtualenv without numpy/matplotlib.
 
 ## The audits that watch these plates
 
-* `python3 code/audit_figure_style.py` — the type ladder and the width of every
-  generator and of every written file (`--strict` also fails the documentation
-  plates of `concept/` and `sds/`). The ten print plates read
+* `python3 code/audit_figure_style.py` — the type ladder, the grammar and the width
+  of every generator and of every written file (`--strict` also fails the
+  documentation plates of `concept/` and `sds/`). The ten print plates read
   `PASS … 170.0 mm jpg+pdf+eps`: the width line fails a plate that came out 190 mm
   wide, the type line fails a 7.2 pt panel title, and the `jpg+pdf+eps` column fails
-  a plate that wrote only the raster. The concept pair reads
+  a plate that wrote only the raster. Three clauses were added with the grammar:
+  * the **grammar line** — a `suptitle`, a descriptive `set_title`, or a plate that
+    addresses no panel by key (`figure_style.tag_axes` / `panel_id`) fails. The
+    documentation plates of `DOC_DIRS` are exempt from the *key* half only: the SDS
+    plate names its blocks and prints `grammar: synthesis plate, block identifiers
+    by name`, a mock-up that keys nothing prints `grammar: documentation plate, no
+    heading, no key`, and a headline fails on either of them, so the exception is
+    named on the row and is never wider than it has to be;
+  * the **height** — the three containers of one plate have to agree on their height
+    within 0.25 mm (`figure_style.HEIGHT_TOL_MM`), because a sidecar re-cut to a
+    taller page passes every width check;
+  * **fonts** — the `fonts 42` column means the `.eps` carries `/FontType 42` and the
+    `.pdf` a `/FontFile2`, i.e. text a reader can search and re-set; Type 3 glyph
+    procedures fail.
+  The concept pair reads
   `note … 183.0 mm jpg+pdf+eps   page 183 mm`: it is registered in
   `audit_figure_style.PAGE_PLATES` and held to its own page in every container
   rather than to the 170 mm print width.
