@@ -6,10 +6,23 @@ committed inputs and its own pin block. They all measure the same thing on every
 site — the **observability core vector**
 
 ```
-OCV = [gamma2, P, D] = [interferometric coherence, mask persistence, mask density]
+OCV(t) = [gamma2, P, D, F, A, S]
 ```
 
-— and none of them claims an answer. Each package **recomputes** the committed
+| symbol | dimension | paper definition | reads as | block |
+| --- | --- | --- | --- | --- |
+| `gamma2` (drawn `γ²`) | coherence | consistency of the radar response across acquisitions | echo consistency | behavior `[gamma2, P]` |
+| `P` | persistence | fraction of observations with a valid echo | observation continuity | behavior |
+| `D` | density | fraction of the observation region occupied by echo-mask pixels (`D = A / bbox_area`, so it partly inherits `A` algebraically) | spatial concentration | geometry `[D, F, A, S]` |
+| `F` | fragmentation | number of connected components in the echo mask (the deck-mask sites carry `1 − largest component / A` instead) | spatial organisation | geometry |
+| `A` | area | spatial extent of the echo mask | observable extent | geometry |
+| `S` | shift | displacement of the echo mask relative to a reference position | spatial displacement | geometry |
+
+The six are what every plate draws and standardises, in the order the two
+definition plates pin (Figs 1–2) — and none of them claims an answer.
+`[gamma2, P, D]`, the first three, is the *analysis slice* the site packages
+call the OCV proper — all six are tabulated and pinned in their channel tables.
+Each package **recomputes** the committed
 numbers of its site from a small input table, renders its plate and report, and
 **pins every number against the committed JSONs**: a single deviation makes the run
 exit non-zero. The claim of the repository is not "we assert", but "we reproduce
@@ -115,7 +128,7 @@ pipeline export, agreeing with it only loosely (r(log A, log
 
 Six sites, one template: the same twelve panels (`a1`–`a4` behaviour, `b1`–`b4`
 geometry, `c1`–`c4` context), the same standardisation (`z = (x − median_ref) /
-1.4826 · MAD_ref`, log for `gamma2, P, A, D, F`, identity for `S`, clipped at ±6,
+1.4826 · MAD_ref`, log for `gamma2, P, D, F, A`, identity for `S`, clipped at ±6,
 block magnitudes as the RMS of their standardised dimensions), the same rule that a
 month without a chip is a **hole** and never a line across it, and the same
 possibility of a third **held-out** class — the healthy chips the chosen reference
