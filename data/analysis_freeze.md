@@ -146,7 +146,9 @@ The reading:
   because the state *is* a campaign phase. Bautzen is descriptive/supporting by
   construction and stays outside the four-site tally.
 
-Command and checks: `python3 code/orbits/ocv_dose.py` (~30 s), `--selftest`
-(5 checks, including a planted bridge-only step that the pairing finds and an
-identical step in both tracks that the pairing removes) and `--verify`
-(30 fields recomputed from the table).
+Command and checks: the dose was computed by `code/orbits/ocv_dose.py`, retired with
+that folder in `b7bd1b9`; its `--selftest` ran 5 checks (including a planted
+bridge-only step that the pairing finds and an identical step in both tracks that the
+pairing removes) and its `--verify` recomputed 30 fields from the table. Neither runs
+any more: the numbers are frozen in
+`data/bautzen/support/bautzen_ocv_dose.{json,md}`, and nothing re-derives them.

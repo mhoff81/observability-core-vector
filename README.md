@@ -51,17 +51,31 @@ one measured page, no verdict).
 
 ## The nine site packages
 
-| site | package | states | mask layer |
-| --- | --- | --- | --- |
-| LUMO lattice tower (Hannover) | `code/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) |
-| Bautzen OpenLabs bridge | `code/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) |
-| KDLO media tower (Garden City SD) | `code/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache |
-| Carolabrücke (Dresden) | `code/carola/` | pre-collapse (healthy), post-collapse | **two layers** over one chip: the echo mask of the 80 x 80 window and the per-girder deck mask |
-| Ponte Morandi / Polcevera (Genova) | `code/morandi/` | pre-collapse (healthy), post-collapse | two layers as Carola, the two tracks in place of the girders |
-| Champlain Towers South (Surfside) | `code/cts/` | pre-collapse (healthy), post-collapse | two layers as Morandi, plus a **difference-in-differences** layer against two control towers |
-| Haltern AV9 wind turbine | `code/haltern/` | pre-collapse (healthy), post-collapse | **one layer**: the echo mask on the support-sized chip |
-| Espoo Kurttila mast | `code/espoo/` | **no event** — the control | the delivered mask size, copied and proved |
-| Havelbrücke Werder (A 10) | `code/werder_havel/` | W2_bestand, W3_sanierung, W4_post | echo mask on the support-sized chip |
+| site | package | states | mask layer | chip the plate reads |
+| --- | --- | --- | --- | --- |
+| LUMO lattice tower (Hannover) | `code/lumo/` | healthy, DAM3, DAM4, DAM6 | echo mask (`0.30 x peak`, `5 x median`) | 11 x 400 dwell strip |
+| Bautzen OpenLabs bridge | `code/bautzen/` | RS, DS1, DS2 | deck-edge mask (geometrically anchored deck band) | 80 x 80 window (the band is inside it) |
+| KDLO media tower (Garden City SD) | `code/kdlo/` | pre-collapse, during-rebuild (**epochs**) | echo mask recomputed from a committed 64-strip full-dwell cache | 35 x 475 support chip |
+| Carolabrücke (Dresden) | `code/carola/` | pre-collapse (healthy), post-collapse | **two layers** over the committed 80 x 80 window: the echo mask of the window and the per-girder deck mask | 69 x 125 support chip |
+| Ponte Morandi / Polcevera (Genova) | `code/morandi/` | pre-collapse (healthy), post-collapse | two layers as Carola, the two tracks in place of the girders | 51 x 137 support chip |
+| Champlain Towers South (Surfside) | `code/cts/` | pre-collapse (healthy), post-collapse | two layers as Morandi, plus a **difference-in-differences** layer against two control towers | 39 x 145 support chip |
+| Haltern AV9 wind turbine | `code/haltern/` | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload | 35 x 229 support chip |
+| Espoo Kurttila mast | `code/espoo/` | **no event** — the control | the delivered mask size, copied and proved: `A` is never recomputed **in the committed table** — the chip plate reads the cut's own `A` | 35 x 129 support chip (75 chips, the two in-swath tracks) |
+| Havelbrücke Werder (A 10) | `code/werder_havel/` | W2_bestand, W3_sanierung, W4_post | echo mask of the export's 80 x 80 complex window, one window per acquisition — the window **is** the chip (6 400 cells, no band cut; `support/` holds the *role* cut) | 80 x 80 window |
+
+The last column is what each site's plate actually measures — the grid on which
+`A`, `D`, `F` and `S` are counted, and so the grid the six dimensions describe.
+Five of the six trajectory plates read a **support-sized chip**,
+`data/<site>/support/<site>_ocv_channels.csv`: the band the asset's own geometry
+supports, plus its 30 m guard and its 200 m reference ring (KDLO 35 x 475,
+Carola 69 x 125, Morandi 51 x 137, CTS 39 x 145, Haltern 35 x 229 cells). Werder
+is the exception, and the one place where `support/` does **not** mean a band:
+the export cut one **80 x 80** complex window per acquisition at the site point,
+so the window *is* the chip and `A` counts over all 6 400 cells, while
+`support/` names the *role* cut of that same window (491 `target` of 991 rows).
+Where a site also holds a **committed 80 x 80 layer** beside its chip (Carola,
+Morandi, CTS), that layer is a second instrument: the two are reported side by
+side and never mixed, and the trajectory plate measures the chip.
 
 Each package README lists its scripts, its inputs, the numbers it pins and what its
 numbers do *not* say. Six of them are the collapse, rebuild and works cases of the
@@ -125,6 +139,13 @@ pipeline export, agreeing with it only loosely (r(log A, log
 `coherence_masked_pixels`) = −0.24, r(`gamma2_mask`, `coherence_gamma2`) = 0.13).
 
 ## What the six trajectory plates show (Figs 5–7, 10–12)
+
+Every plate in this section reads its site's own table
+(`data/<site>/support/<site>_ocv_channels.csv`): the support chip for the five
+case sites, and the export's 80 x 80 window for Werder, whose site has no band.
+None of them reads the committed 80 x 80 layer that Carola, Morandi and CTS also
+carry — the nine-site table at the top says on which grid each plate counts, and
+that grid is the chip.
 
 Six sites, one template: the same twelve panels (`a1`–`a4` behaviour, `b1`–`b4`
 geometry, `c1`–`c4` context), the same standardisation (`z = (x − median_ref) /

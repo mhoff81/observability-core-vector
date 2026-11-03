@@ -33,9 +33,10 @@ The committed tables are untouched. Each migrated site gets
 | Carolabrücke | 39 x 15 | 69 x 125 | 585 / 900 / 7 140 | 436 / 436 | 436 | 0 |
 | Haltern | 5 x 109 | 35 x 229 | 545 / 852 / 6 618 | 107 / 120 | 107 | 13 |
 | Ponte Morandi | 21 x 41 | 51 x 137 | 861 / 678 / 5 448 | 207 / 232 | 207 | 25 (alle ASC) |
+| Espoo | 5 x 33 | 35 x 129 | 165 / 374 / 3 976 | 75 / 145 | 75 | 1 |
 
 `support + guard + ring == chip` holds exactly in every bundled manifest, and the
-ring is complete in all five chips.
+ring is complete in all six chips.
 
 ## What the chip did to the numbers (median per site, new / committed)
 
@@ -52,6 +53,11 @@ Two effects are entangled and must not be read as one: the chip is much larger
 of the measurement (so `gamma2` drops by one to two orders of magnitude). Neither
 number is "better" than the committed one — they are different measurements, and
 that is why every mask column is written twice.
+
+Espoo is deliberately absent from this table: its committed table ships no mask
+raster, so `A_committed` is the only committed twin that exists and there is
+nothing to set beside the chip's `D`, `F`, `S`, `P` or `gamma2`. The chip's own
+reading is a second instrument there, in `code/espoo/fig_espoo_ocv_chips.py`.
 
 ## The refusal finding: an ASC track can be too short for the chip
 
@@ -98,13 +104,22 @@ The same edge effect as Haltern hits Morandi's ASC track: 25 of 232
 dates are refused because the 51-line chip runs past the raster. DESC is
 complete; the refusals are listed per date in the manifest.
 
-## Espoo: the one site whose asset geometry needs an image
+## Espoo: the control, cut on the two tracks that image it
 
-Espoo is the event-free control and the only site with **no mask layer** (its `A`
-is the record's mask size, copied and proved), so it cannot be migrated to a
-support chip at all. What is missing there is `base_m`: OSM carries the mast as a
-point, the registry default for a lattice tower is 12 m, and the documented height
-is 36 m.
+Espoo is the event-free control and the only site with **no mask layer in its
+committed table** (its `A` is the record's mask size, copied and proved), but that
+does not make it uncuttable: the same `tools/ocv_migrate.py` cut a **35 x 129** chip
+there, on the **75** dates of the two relative orbits that place the mast inside the
+swath (R160 ASC, 31 dates; R51 DESC, 44 dates), with **one** geometry refusal
+(2026-07-04 ASC: the window ends at row 13 535, past the raster's 13 518 rows) and
+69 dates skipped because their orbit does not image the site. The chip's
+`A, D, F, S, P` and `gamma2_mask` live in
+`data/espoo/support/espoo_ocv_channels.csv`, beside their `*_committed` twins, and
+`code/espoo/fig_espoo_ocv_chips.py` is the plate that reads them.
+
+What the imagery recorded below was for is the **width**, `base_m`: OSM carries the
+mast as a point, the registry default for a lattice tower is 12 m, and the
+documented height is 36 m.
 
 A Google Maps Platform key works: `streetview/metadata` answers `OK` at the site
 (pano `wk6r5QGt3DnY8yBZhL_KDw`, captured 2026-07, 49.2 m from the repository
@@ -137,6 +152,13 @@ The imagery itself stays outside the repository (`/tmp/espoo_streetview/`): the
 Maps Platform terms forbid storing it, and the model that runs these tools cannot
 see images, so only a human reading can be recorded — with its provenance and
 without a pretence of measurement.
+
+The width cannot reach a cell anyway. Re-cutting the chip at **11 m and 13 m** on the
+same 75 dates gives a byte-identical table (row hash `41fc35be…`) and the same
+`(5, 33)` band: one metre of base is 0.07 lines in azimuth and 0.27 bins in range,
+against a support dominated by the 36 m height layover (12.88 bins). A confirmed
+width would make "the support is the mast base" literally true; it would not move a
+number (`code/espoo/README.md`, *Width sensitivity*).
 
 ## Reproduce one site
 

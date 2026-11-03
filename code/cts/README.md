@@ -40,7 +40,8 @@ cleared-lot window is *not* evidence about the collapse.
 The observability core vector is `OCV = [gamma2, P, D]`; the full mask vector is
 `x = [gamma2, P, D, A, F, S]`, carried in **two layers**:
 
-* **echo mask** — the whole 80 x 80 chip (the layer of the 6D vector), the
+* **echo mask** — the whole committed 80 x 80 window (the layer of the 6D vector;
+  the trajectory plate measures the 39 x 145 support chip instead), the
   project-wide deck echo rule `intensity >= 0.30 x peak` **and**
   `intensity >= 5 x np.median(intensity)`, `A >= 2`;
 * **per-track deck mask** — the very same rule on the *track's own* chip, i.e.

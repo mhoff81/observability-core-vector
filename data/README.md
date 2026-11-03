@@ -434,11 +434,15 @@ writing an image.
 
 ## The support-sized migration (`data/<site>/support/`)
 
-CTS, KDLO, Carolabrücke and Haltern now carry a second, support-sized
-chip bundle beside their committed table; Bautzen and LUMO already did. The
-method, the per-site numbers, the refusal finding (ASC of Haltern does
-not fit into its burst) and the reason Ponte Morandi is not cut yet are written
-down in [`support_migration.md`](support_migration.md).
+Six sites now carry a second, support-sized chip beside their committed table —
+CTS 39 x 145, KDLO 35 x 475, Carolabrücke 69 x 125, Haltern 35 x 229, Espoo
+35 x 129 and Ponte Morandi 51 x 137 — while Bautzen (an 80 x 80 window) and LUMO
+(an 11 x 400 dwell strip) were support-sized in their own shapes from the start.
+Werder is the exception: its `support/` folder holds the *role* cut and the mask
+cache of the export's 80 x 80 window, not a band. The method, the per-site numbers
+and the refusal finding (13 of Haltern's 120 dates and 25 of Morandi's 232, all
+ASCENDING, refused because the chip runs past the raster) are written down in
+[`support_migration.md`](support_migration.md).
 
 Nothing in this folder was replaced: each migrated site keeps its committed
 table untouched and gains `<site>/support/` with the chips, the cut manifest and
@@ -454,12 +458,14 @@ pinned to that table's sha256.
 
 ### Orbit figures on the support chip
 
-Each migrated site carries `fig_<site>_ocv_orbits.json` in its `support/` folder:
-the plotted overpasses, the state runs and the per-state medians, with the table's
-sha256 and the cut manifest's chip, band, cell counts and refusals. It is written
-by `code/orbits/fig_ocv_orbits.py`, the companion of
-`figures/<site>/fig_<site>_ocv_orbits.{jpg,md}`; `--verify` re-derives every value
-from the table.
+Each site's `support/` folder carries `fig_<site>_ocv_orbits.json`
+(`fig_espoo_ocv_orbits_chip.json` for Espoo): the plotted overpasses, the state
+runs and the per-state medians, with the table's sha256 and the cut manifest's
+chip, band, cell counts and refusals. Their generator was retired — `code/orbits/`
+is no longer in the tree — so these files are **frozen locks**: nothing re-derives
+them, and nothing should. The live orbit plates are Figs 8–9,
+`code/lumo/fig_lumo_ocv_orbits.py` and `code/bautzen/fig_bautzen_ocv_orbits.py`,
+which pin their own committed data.
 
 ## The metadata quarantine (`data/ocv_metadata_quarantine.json`)
 

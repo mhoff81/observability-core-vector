@@ -29,8 +29,8 @@ works instead of a collapse, whose three strata (`W2_bestand`, `W3_sanierung`,
 | [`morandi/`](morandi/README.md) | Ponte Morandi / Polcevera, Genova (collapsed 2018-08-14) | pre-collapse (healthy), post-collapse | two layers: the echo mask of every chip **and** the per-track deck mask, both from a committed window-payload cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px) | `morandi/README.md` |
 | [`cts/`](cts/README.md) | Champlain Towers South, Surfside (collapsed 2021-06-24) | pre-collapse (healthy), post-collapse | two layers over four footprints of one orbit (target + two controls + a beach reference), the echo mask **and** the per-track deck mask from a committed window cache (`0.30 x peak`, `5 x np.median`, ≥ 2 px), **plus a difference-in-differences layer** | `cts/README.md` |
 | [`haltern/`](haltern/) | Haltern AV9 wind turbine, Kreis Recklinghausen (collapsed 2021-09-29) | pre-collapse (healthy), post-collapse | **one layer**: the echo mask of the committed 7 x 7 window payload (`0.30 x peak`, `5 x np.median`, ≥ 2 px) — the record is not segment-resolved, so a per-mast-section layer would be dishonest, and no edge/band layer is claimed because the tower base spans more than the frame reaches; two further references are *resolved* from public catalogues (the CDSE burst pass of every chip, the turbine's **own OSM node**) and committed beside it | `haltern_ocv_core.py` docstring (the package carries no separate README) |
-| [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed | `espoo/README.md` |
-| [`werder_havel/`](werder_havel/) | Havelbrücke Werder, A 10 (documented works 2024-07-01 → 2025-09-05) | `W2_bestand`, `W3_sanierung`, `W4_post` | echo mask of the 80 x 80 complex window over the whole record, on the support-sized chip | `werder_havel_ocv_channels_csv.py` docstring (the package carries no separate README) |
+| [`espoo/`](espoo/README.md) | Espoo Kurttila mast, Espoo, Finland (**event-free** 2024-09-05 … 2026-09-07) | none — the record has no damage label at all; the contrast is the orbit geometry (ASCENDING n = 70 / DESCENDING n = 80) | **no mask layer**: the record delivers only the mask *size* `A` (`coherence_masked_pixels`) and no raster (56 of 78 columns empty), so the OCV is `[gamma2, A]` and `A` is **copied and proved**, never recomputed *in this table* — the support cut in `data/espoo/support/` does recompute it, and `fig_espoo_ocv_chips.py` is the plate that reads that cut | `espoo/README.md` |
+| [`werder_havel/`](werder_havel/) | Havelbrücke Werder, A 10 (documented works 2024-07-01 → 2025-09-05) | `W2_bestand`, `W3_sanierung`, `W4_post` | echo mask of the 80 x 80 complex window over the whole record — the window **is** the chip (6 400 cells, one window per acquisition, no band cut); the `support/` folder names the *role* cut of that same window | `werder_havel_ocv_channels_csv.py` docstring (the package carries no separate README) |
 
 ### `cases/` — the standard OCV trajectory plate
 
@@ -225,12 +225,15 @@ record supports — so its `espoo_ocv_channels_csv.py` **proves** the copied `A`
 against the committed column and the committed reference statistics instead of
 recomputing a mask, and its reports read every effect size against the record's own
 no-event controls (stationarity, season, weather, coverage). The Carola package is the
-example of a site *with two* mask layers over one chip: the echo mask of the
-whole 80 x 80 window and the same rule on the girder's own window. The Morandi
-package is the same shape one more time, with the two Sentinel-1 tracks
-(`A_asc` / `A_des`) in place of the girders; because only 11 of its 232 chips
+example of a site *with two* mask layers over one committed 80 x 80 window: the echo
+mask of the whole window and the same rule on the girder's own window — and its
+trajectory plate reads a third input, the **69 x 125 support chip**, never mixed
+with either layer. The Morandi package is the same shape one more time, with the two
+Sentinel-1 tracks (`A_asc` / `A_des`) in place of the girders and a **51 x 137**
+support chip on the plate; because only 11 of its 232 chips
 survive the collapse, its figures are an honest null rather than a contrast. The
-CTS package keeps the same shape but adds what no single-structure site can: the
+CTS package keeps the same shape, with a **39 x 145** support chip on its plate,
+and adds what no single-structure site can: the
 four footprints of its one orbit (the collapsed tower as `target`, two standing
 towers as `control_ctn` / `control_cte`, the beach as `reference_beach`) let it
 difference the target against a control that shares the atmosphere, so

@@ -1,4 +1,4 @@
-# Havelbrücke Werder, A 10 — OCV trajectory on the support-sized chip
+# Havelbrücke Werder, A 10 — OCV trajectory on the 80 x 80 window
 
 **Asset** `havelbruecke_werder_a10` · **documented interval** 2024-07-01 → 2025-09-05 (431 d) · **reference state** `W2_bestand` (pooled over the orbits) · **table** `data/werder_havel/support/werder_havel_ocv_channels.csv` (sha256 `5915a80fdf9841a2`) · **plate** `figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg`
 
@@ -37,7 +37,7 @@ The export's strata are cut on the documented dates: W2_bestand 2022-07-02 -> 20
 
 ## The record and its cut
 
-The support cut holds **491** of the table's **991** rows (0 refused, 500 not a target chip), over **491** distinct acquisition dates from 2022-07-02 to 2025-12-04. The plate draws **43** monthly bins.
+The `support/` folder names a cut of *roles*, not of the chip: of the table's **991** rows of one 80 x 80 window (6 400 cells per acquisition), **491** are `target` chips (0 refused, 500 not a target chip), over **491** distinct acquisition dates from 2022-07-02 to 2025-12-04. The plate draws **43** monthly bins.
 
 | class | label in this report | state | chips | ASC | DESC | echo-bearing | months |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -346,7 +346,7 @@ Pronounced months: 2023-11, 2024-02, 2024-07, 2024-08, 2024-10, 2024-12, 2025-02
 
 ## Caption
 
-**Figure. Havelbrücke Werder, A 10 -- OCV trajectory on the support-sized chip.** Twelve panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). Row `c` is the record's own context: environment (`c1`, descriptive only), observation cadence ASC/DESC per month (`c2`), observation availability (`c3`, solid = chips with an echo) and the whole trajectory as a six-dimension by every-month matrix (`c4`). Every ordinate is a robust z against the frozen pre-intervention reference (119 chips, 2022-07 → 2023-06): filled markers are reference months, hollow grey circles the held-out pre-intervention months (122 chips), hollow amber diamonds the intervention months (189 chips, 2024-07 → 2025-09) and hollow red squares the post-intervention months (61 chips); the grey band is the reference window, the light band its monthly q05-q95 envelope, the pale red band with dashed ends the documented works interval 2024-07-01 → 2025-09-05. The plate is set at the repository's print width, 170 × 156 mm, on the shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
+**Figure. Havelbrücke Werder, A 10 -- OCV trajectory on the export's 80 x 80 window.** Twelve panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). Row `c` is the record's own context: environment (`c1`, descriptive only), observation cadence ASC/DESC per month (`c2`), observation availability (`c3`, solid = chips with an echo) and the whole trajectory as a six-dimension by every-month matrix (`c4`). Every ordinate is a robust z against the frozen pre-intervention reference (119 chips, 2022-07 → 2023-06): filled markers are reference months, hollow grey circles the held-out pre-intervention months (122 chips), hollow amber diamonds the intervention months (189 chips, 2024-07 → 2025-09) and hollow red squares the post-intervention months (61 chips); the grey band is the reference window, the light band its monthly q05-q95 envelope, the pale red band with dashed ends the documented works interval 2024-07-01 → 2025-09-05. The plate is set at the repository's print width, 170 × 156 mm, on the shared point-size ladder (panel tag 8.8 pt, axis label 7.6 pt, tick and legend 6.8 pt), carries this caption's key in one legend under the grid, and is delivered as `.jpg` (630 dpi), `.pdf` and `.eps`.
 
 The plate draws no title and no panel titles of its own: the tags in the table above are all it carries, and this caption is what the reader is given with it. Set it under the figure as one paragraph.
 

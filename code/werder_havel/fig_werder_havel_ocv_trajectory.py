@@ -4,8 +4,11 @@
 Figure: ``figures/werder_havel/fig_werder_havel_ocv_trajectory.jpg`` (+ ``.md``)
 Result: ``data/werder_havel/fig_werder_havel_ocv_trajectory.json``
 
-The record is the support-sized cut of the Havelbrücke Werder (A 10): **491** target
-chips, one per acquisition, 2022-07-02 -> 2025-12-04, each carrying the six registered
+The record is the Havelbrücke Werder (A 10) as the export cut it: one **80 x 80**
+complex window per acquisition, 6 400 cells and no band, so the window *is* the chip.
+The plate reads that window's **491** ``target`` rows (the other 500 of its 991 rows
+are the reference and reference-outside roles), one per acquisition, 2022-07-02 ->
+2025-12-04, each carrying the six registered
 OCV dimensions of ``ocv_reconfigure`` -- ``gamma2``, ``P`` (behaviour) and ``A``, ``D``,
 ``F``, ``S`` (geometry) -- computed once, from the committed mask cache, by
 ``werder_havel_ocv_channels_csv.py``. ``P`` is a *within-patch* persistence: the target,
@@ -46,7 +49,8 @@ cycle the record holds, so it cannot be moved towards the result it is read agai
 
 Rules the plate enforces (the template's, verbatim):
 
-  * **R1 -- one cut.** Only the support cut, only its ``target`` role (491 of 991 rows).
+  * **R1 -- one cut.** One window (80 x 80, 6 400 cells), one role: ``target``, 491 of
+    the table's 991 rows.
   * **R2 -- a chosen window, and its third class drawn.** The window is inclusive
     calendar months; a reference-state chip outside it and strictly before the
     intervention is OUTSIDE, a reference-state chip on or after the start is reported
@@ -1717,7 +1721,7 @@ def _md_head(report, add):
     """Title, the site line and the numbers that define the whole reading."""
     event = report["event"]
     ref = report["reference"]
-    add("# %s — OCV trajectory on the support-sized chip" % report["label"])
+    add("# %s — OCV trajectory on the 80 x 80 window" % report["label"])
     add("")
     add("**Asset** `%s` · **documented interval** %s → %s (%d d) · **reference state** "
         "`%s` (%s) · **table** `%s` (sha256 `%s`) · **plate** `%s`"
@@ -1749,10 +1753,11 @@ def _md_window(report, add):
     classes = report["classification"]["classes"]
     add("## The record and its cut")
     add("")
-    add("The support cut holds **%d** of the table's **%d** rows (%d refused, %d not a "
-        "target chip), over **%d** distinct acquisition dates from %s to %s. The plate "
-        "draws **%d** monthly bins."
-        % (cut["kept"], cut["rows"], len(cut["refused"]),
+    add("The `support/` folder names a cut of *roles*, not of the chip: of the table's "
+        "**%d** rows of one 80 x 80 window (6 400 cells per acquisition), **%d** are "
+        "`target` chips (%d refused, %d not a target chip), over **%d** distinct "
+        "acquisition dates from %s to %s. The plate draws **%d** monthly bins."
+        % (cut["rows"], cut["kept"], len(cut["refused"]),
            cut["rows"] - cut["kept"] - len(cut["refused"]), cut["n_dates"],
            cut["window"][0], cut["window"][1], len(report["months"])))
     add("")
@@ -2240,7 +2245,7 @@ def caption(report):
     audit = report["classification"]["classes"]
     event = report["event"]
     pieces = [
-        "**Figure. %s -- OCV trajectory on the support-sized chip.** Twelve "
+        "**Figure. %s -- OCV trajectory on the export's 80 x 80 window.** Twelve "
         "panels, tagged `a1`-`c4`. Rows `a` and `b` are the two blocks: monthly z "
         "of the block's dimensions (`a1` z(γ²), `a2` z(P), `b1` z(A), `b2` z(F)), "
         "the block's plane (`a3`, `b3`) and its magnitude (`a4` R_B, `b4` R_G). "
