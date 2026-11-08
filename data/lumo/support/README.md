@@ -97,6 +97,134 @@ Three consequences worth stating plainly:
    exactly. That is the `min_n_masked = 2` floor, i.e. the mask now measures a
    core, not an extent.
 
+## The pooled SDS of the whole tower
+
+The number the paper quotes for this site is a **pooled** one: `healthy` against
+all three damaged campaigns at once, with both orbits in the same sample. It is
+also the aggregation the committed EMV reference used (`sds_pooled_all_damaged`),
+which is why it is reproduced here and not replaced. `gamma2` is the whole-tower
+coherence of this record — one scatterer, so the record splits into no segments —
+and pooling ASC with DESC therefore pools the whole tower, not a part of it.
+
+```
+SDS      = 10 * |Cliff's delta|
+delta    = (#{y > x} - #{y < x}) / (n1 * n2)      ties count for neither side
+95 % CI  = percentile bootstrap, both groups resampled independently,
+           10 000 resamples, seed 7 — one interval per comparison
+```
+
+Committed window (left) and this ring chip (right), healthy versus all damaged:
+
+| dimension | committed SDS | delta | 95 % CI | ring SDS | delta | 95 % CI |
+| --- | --- | --- | --- | --- | --- | --- |
+| `gamma2` | 0.10 | +0.010 | [-0.165, +0.185] | 0.26 | +0.026 | [-0.157, +0.212] |
+| `P` | 1.05 | -0.105 | [-0.292, +0.089] | 0.54 | -0.054 | [-0.237, +0.128] |
+| `D` | 0.86 | -0.086 | [-0.272, +0.098] | 0.20 | +0.020 | [-0.159, +0.198] |
+| `F` | 0.67 | -0.067 | [-0.244, +0.107] | 0.51 | -0.051 | [-0.219, +0.119] |
+| `A` | 0.81 | -0.081 | [-0.255, +0.090] | 0.40 | -0.040 | [-0.215, +0.138] |
+| `S` | 0.10 | -0.010 | [-0.196, +0.172] | 0.22 | -0.022 | [-0.205, +0.162] |
+
+n = 121 healthy / 57 damaged on both sides, 178 overpasses. `P` is missing for
+the healthy 2021-07-14 ASC overpass in the committed table, so that cell rests on
+120 / 57. **Every interval includes zero**, on both chips.
+
+Three readings:
+
+1. **The pooled score separates nothing, and the ring does not change that.**
+   The whole-tower coherence moves from SDS 0.10 to 0.26 and its interval covers
+   zero either way. Pooling two observation geometries was always the
+   compatibility pin and the context, never the primary evidence; that is now
+   true of the ring chip as well.
+2. **The mask geometry flattens towards its floor.** `P` 1.05 -> 0.54, `D` 0.86 ->
+   0.20, `A` 0.81 -> 0.40, and the medians say why: `A` 15 -> 12 cells commits to
+   `A` 4 -> 4 cells, `D` 0.0128 -> 0.0088 to 0.0071 -> 0.0077. With
+   `min_n_masked = 2` the pooled mask is a core in every state, so pooling the
+   states leaves nothing to rank — the opposite of a threshold that tracks the
+   signal. Pooled is doing work in that sentence: the medians are weighted
+   towards DESC, and on ASC alone the mask keeps 10-11 cells (see *By orbit*).
+3. **Only `gamma2` carries its meaning across the change.** `A/D/F/S` are not
+   comparable between the two sides and `P` cannot cross chips at all (it is a
+   per-chip-shape pixel-frequency map), so the column pair is a comparison of
+   *rules*, not of two measurements of the same quantity.
+
+The committed column is pinned, which is what keeps this section a measurement
+instead of a retyping: `gamma2` = 0.1029433 is the pooled score the paper's
+reference transcribes (Table 4 and section 4.1: "the pooled
+Healthy-versus-all-damaged comparison yielded SDS = 0.10"), and `A D F S P`
+reproduce `sds_pooled_all_damaged` of
+`data/lumo/reference/lumo_echo_mask_vector.json` to 1e-9. The ring column is the
+same number `data/sds/sds_support.md` section 3 reports for `lumo / support`,
+counts included.
+
+```sh
+python3 code/sds/sds_support.py --site lumo --out /tmp/sds_lumo
+```
+
+recomputes all four levels from the two tables alone. Section 3 of
+`/tmp/sds_lumo/sds_support.md` (*Compatibility pin and context*) carries the same
+twelve numbers, with `n1 / n2` and the CI flags spelled out per row.
+
+### By orbit
+
+The same contrast one orbit at a time — the level the cross-site report calls
+`per_channel_pooled_damage`, and exactly the aggregation its reading rules keep
+out of the primary number. Ring chip:
+
+| dimension | ASC SDS | delta | 95 % CI | DESC SDS | delta | 95 % CI |
+| --- | --- | --- | --- | --- | --- | --- |
+| `gamma2` | 0.62 | +0.062 | [-0.276, +0.400] | 0.25 | -0.025 | [-0.252, +0.199] |
+| `P` | 1.29 | -0.129 | [-0.453, +0.188] | 0.61 | -0.061 | [-0.283, +0.169] |
+| `D` | 1.93 | +0.193 | [-0.146, +0.512] | 0.32 | -0.032 | [-0.243, +0.180] |
+| `F` | 1.71 | -0.171 | [-0.472, +0.140] | 0.17 | +0.017 | [-0.178, +0.215] |
+| `A` | 0.38 | -0.038 | [-0.363, +0.300] | 0.45 | +0.045 | [-0.163, +0.259] |
+| `S` | 0.59 | +0.059 | [-0.279, +0.403] | 0.10 | +0.010 | [-0.212, +0.236] |
+
+n = 40 healthy / 17 damaged ascending, 81 / 40 descending — the two orbits
+partition the 121 / 57 above. **All twelve intervals include zero.** Splitting
+the orbit halves the sample (40 / 17 on ASC) and buys width, not a separation.
+
+Three things the split shows that the pooled number hides:
+
+1. **The point estimates differ by geometry, without supported directional
+   effects.** `gamma2` (+0.062 vs -0.025), `D` (+0.193 vs -0.032), `F` (-0.171
+   vs +0.017) and `A` (-0.038 vs +0.045) have opposite delta signs on the two
+   orbits. Every one of those intervals is wide and centred near zero on both
+   sides, so the difference is a property of the geometry each orbit samples:
+   neither orbit supports "damaged differs", in either direction.
+2. **The collapse to the `min_n_masked` floor is predominantly DESC-driven.**
+   Ring `A` keeps a median of 10 cells healthy / 11 damaged ascending against
+   4 / 4 descending, and `D` 0.0042 / 0.0047 against 0.0102 / 0.0106. The
+   support-ring echo population is materially larger on ASC: mean `A` 10.3
+   against 4.6, and 19 % of ASC rows sit at 5 cells or fewer against 81 % of
+   DESC rows. DESC supplies 121 of the 178 rows, so the pooled median (4, mean
+   6.4) falls on the DESC value — the collapse quoted under *What changed* is
+   mostly this population, not a property of the chip as such.
+3. **The one non-straddling orbit result of the whole set does not survive this
+   chip.** On the committed window, ascending `P` separates: SDS 4.98, delta
+   -0.498, CI [-0.768, -0.192], n 39 / 17 (39 because of the missing 2021-07-14
+   ASC overpass). On the ring the same contrast gives 1.29 and an interval that
+   includes zero. It is the only orbit-specific interval in either table that
+   excludes zero, out of 24, and the ring drops it — which is context, not a
+   separation: one cell, on the chip that is being replaced.
+
+The committed counterpart of the two columns, for scale only:
+
+| dimension | committed ASC (40 / 17) | committed DESC (81 / 40) |
+| --- | --- | --- |
+| `gamma2` | 1.35, -0.135, [-0.435, +0.176] | 0.85, +0.085, [-0.123, +0.294] |
+| `P` | 4.98, -0.498, [-0.768, -0.192] (39 / 17) | 0.79, +0.079, [-0.148, +0.302] |
+| `D` | 0.18, -0.018, [-0.332, +0.300] | 1.11, -0.111, [-0.338, +0.121] |
+| `F` | 2.15, +0.215, [-0.101, +0.512] | 1.56, -0.156, [-0.367, +0.060] |
+| `A` | 0.85, +0.085, [-0.232, +0.396] | 1.40, -0.140, [-0.348, +0.070] |
+| `S` | 0.21, -0.021, [-0.332, +0.303] | 0.12, -0.012, [-0.241, +0.214] |
+
+Both columns are the `per_channel_pooled_damage` level of the committed report,
+`data/sds/sds_support.json` →
+`sites.lumo.levels.{committed,support}.per_channel_pooled_damage`, produced by
+`code/sds/sds_support.py` (`level_per_channel_pooled_damage`, line 315). The
+level is carried in the JSON only — `data/sds/sds_support.md` prints per state
+(section 1), the maximum (section 2) and the pooled pair (section 3).
+
 ## Verification
 
 `fig_lumo_ocv_orbits.md` / `.json` / `.jpg` are produced by the committed
